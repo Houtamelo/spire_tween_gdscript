@@ -1,0 +1,80 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "PropertyItem",
+	"title": "Property",
+	"definitions": {
+		"PropertyType": {
+			"type": "string", "enum": [
+				"f32",
+				"f64",
+				"i32",
+				"i64",
+				"Vector2",
+				"Vector2i",
+				"Vector3",
+				"Vector3i",
+				"Color",
+				"String"
+			], "description": "The data type of the property."
+		}, "Group": {
+			"type": "string", "enum": [
+				"2D",
+				"3D",
+				"UI",
+				"Misc"
+			]
+		}, "PropertyItem": {
+			"type": "object", "properties": {
+				"name": {
+					"type": "string", "description": "The name of the property.", "minLength": 1
+				}, "ty": {
+					"$ref": "#/definitions/PropertyType",
+					"description": "The data type of the property."
+				}, "func": {
+					"type": "string",
+					"description": "If present, overrides the auto-generated func name.",
+					"minLength": 1
+				}, "alias": {
+					"type": "string",
+					"description": "Alternative name for the func that creates the tween.",
+					"minLength": 1
+				}, "get": {
+					"type": "string",
+					"description": "If present, overrides the auto-generated getter expression."
+				}, "set": {
+					"type": "string",
+					"description": "If present, overrides the auto-generated setter expression."
+				}
+			}, "required": [
+				"name",
+				"ty"
+			], "additionalProperties": false
+		}, "GodotClass": {
+			"type": "object", "properties": {
+				"class": {
+					"type": "string",
+					"description": "The name of the Godot class that contains the property.",
+					"minLength": 1
+				}, "group": {
+					"$ref": "#/definitions/Group",
+					"description": "The group this class belongs to. Used for organizing properties in different GDScript files."
+					
+				}, "tweens": {
+					"type": "array",
+					"description": "A list of properties that can be tweened.",
+					"items": {
+						"$ref": "#/definitions/PropertyItem"
+					}
+				}
+			}, "required": [
+				"class",
+				"tweens"
+			], "additionalProperties": false
+		}
+	},
+	"type": "array",
+	"items": {
+		"$ref": "#/definitions/GodotClass"
+	},
+	"uniqueItems": true
+}

@@ -1,0 +1,18 @@
+[workspace]
+default-members = ["spire_tween_gdscript/rust"]
+members = ["gdscript_bindgen", "spire_tween", "spire_tween_gdscript/rust"]
+resolver = "3"
+
+[workspace.dependencies]
+spire_tween = { path = "spire_tween" }
+
+[profile.release]
+opt-level = 3
+debug-assertions = false
+overflow-checks = false
+lto = true
+debug = "none"
+
+[profile.samply]
+inherits = "release"
+debug = true

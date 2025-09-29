@@ -1,0 +1,54 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="SpireTweener Test Runner"
+run/main_scene="res://test_scene.tscn"
+config/use_hidden_project_data_directory=false
+config/features=PackedStringArray("4.4")
+run/flush_stdout_on_print=true
+boot_splash/show_image=false
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/window_width_override=1280
+window/size/window_height_override=720
+window/stretch/mode="viewport"
+window/vsync/vsync_mode=0
+
+[editor]
+
+scene_naming=2
+
+[gui]
+
+common/drop_mouse_on_gui_input_disabled=true
+
+[locale]
+
+translations=PackedStringArray()
+
+[node]
+
+name_num_separator=2
+name_casing=2
+
+[physics]
+
+3d/active_soft_world=false
+
+[rendering]
+
+quality/intended_usage/framebuffer_allocation=1
+misc/lossless_compression/webp_compression_level=6
+quality/shadows/filter_mode=0

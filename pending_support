@@ -1,0 +1,10 @@
+	{
+		"class": "SubViewport", "group": "Misc", "tweens": [
+		{
+			"name": "size", "ty": "Vector2i", "func": "subview_do_size"
+		},
+		{
+			"name": "size_2d_override", "ty": "Vector2i", "func": "subview_do_size_2d_override"
+		}
+	]
+	},

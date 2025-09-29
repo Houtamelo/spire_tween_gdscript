@@ -1,0 +1,11 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
+# Rider ignored files
+/.idea.test_runner.iml
+/contentModel.xml
+/projectSettingsUpdater.xml
+/modules.xml
