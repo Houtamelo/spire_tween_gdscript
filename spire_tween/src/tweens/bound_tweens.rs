@@ -6,8 +6,7 @@ pub trait CompleteBoundTweens {
 
 impl<T: Inherits<Node>> CompleteBoundTweens for Gd<T> {
     fn complete_bound_tweens(&mut self) {
-        let node_id = self.instance_id_unchecked().to_i64();
-        TWEENS.object_remove_and_edit_bound_tweens(node_id, |tween| tween.complete());
+        TM.node_bound_tweens_force_complete(self.clone().upcast());
     }
 }
 
@@ -16,8 +15,5 @@ pub trait KillBoundTweens {
 }
 
 impl<T: Inherits<Node>> KillBoundTweens for Gd<T> {
-    fn kill_bound_tweens(&mut self) {
-        let node_id = self.instance_id_unchecked().to_i64();
-        TWEENS.object_remove_and_edit_bound_tweens(node_id, |tween| tween.stop());
-    }
+    fn kill_bound_tweens(&mut self) { TM.node_bound_tweens_kill(self.clone().upcast()); }
 }

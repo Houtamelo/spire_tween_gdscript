@@ -1,65 +1,61 @@
 use super::*;
 
-pub trait DoMethod<TVal, Marker = ()> {
-    type Return;
-
+pub trait DoMethod<T, Marker = ()>
+where
+    T: ILerpable,
+    LerpMethodData<T>: ITweenable,
+{
     fn do_method(
         &self,
-        method: impl Into<StringName>,
-        start_val: TVal,
-        end_val: TVal,
+        method: impl AsArg<StringName>,
+        start_val: T,
+        end_val: T,
         duration: f64,
-    ) -> SpireTween<MethodData<Self::Return>>;
+    ) -> SpireTween<LerpMethodData<T>>;
 }
 
-impl<T, Val> DoMethod<Val, ()> for Gd<T>
+impl<C, T> DoMethod<T, ()> for Gd<C>
 where
-    T: Inherits<Object>,
-    Val: SpireLerp,
-    AnyTween: From<SpireTween<MethodData<Val>>>,
+    C: Inherits<Object>,
+    T: ILerpable<BasicLerper: Default>,
+    AnyTween: From<RcPtr<SpireTween<LerpMethodData<T>>>>,
+    LerpMethodData<T>: ITweenable,
 {
-    type Return = Val;
-
     fn do_method(
         &self,
-        method: impl Into<StringName>,
-        start_val: Val,
-        end_val: Val,
+        method: impl AsArg<StringName>,
+        start_val: T,
+        end_val: T,
         duration: f64,
-    ) -> SpireTween<MethodData<Val>> {
-        SpireTween::<MethodData<Val>>::new(
-            method.into(),
-            ObjectOrNode::from_unchecked_object(self.to_godot().upcast()),
+    ) -> SpireTween<LerpMethodData<T>> {
+        SpireTween::<LerpMethodData<T>>::new(
+            Callable::from_object_method(self, method),
             start_val,
             end_val,
             duration,
-            AutoPlay(true),
         )
     }
 }
 
-impl<T, Val> DoMethod<Val, BaseMarker> for T
+impl<C, T> DoMethod<T, BaseMarker> for C
 where
-    T: WithBaseField + Inherits<Object>,
-    Val: SpireLerp + 'static,
-    AnyTween: From<SpireTween<MethodData<Val>>>,
+    C: WithBaseField + Inherits<Object>,
+    T: ILerpable<BasicLerper: Default> + 'static,
+    AnyTween: From<RcPtr<SpireTween<LerpMethodData<T>>>>,
+    LerpMethodData<T>: ITweenable,
 {
-    type Return = Val;
-
     fn do_method(
         &self,
-        method: impl Into<StringName>,
-        start_val: Val,
-        end_val: Val,
+        method: impl AsArg<StringName>,
+        start_val: T,
+        end_val: T,
         duration: f64,
-    ) -> SpireTween<MethodData<Val>> {
-        SpireTween::<MethodData<Val>>::new(
-            method.into(),
-            ObjectOrNode::from_unchecked_object(self.to_gd().upcast()),
+    ) -> SpireTween<LerpMethodData<T>> {
+        SpireTween::<LerpMethodData<T>>::new(
+            Callable::from_object_method(&self.to_gd(), method),
             start_val,
             end_val,
             duration,
-            AutoPlay(true),
         )
     }
 }
@@ -67,33 +63,28 @@ where
 pub trait DoVarMethod {
     fn do_var_method(
         &self,
-        method: impl Into<StringName>,
+        method: impl AsArg<StringName>,
         start_val: Variant,
         end_val: Variant,
         duration: f64,
-        lerp_fn: impl Fn(&Variant, &Variant, f64) -> Variant + 'static,
-    ) -> SpireTween<MethodData<Variant>>;
+    ) -> SpireTween<LerpMethodData<Variant>>;
 }
 
-impl<T> DoVarMethod for Gd<T>
-where T: Inherits<Object>
+impl<C> DoVarMethod for Gd<C>
+where C: Inherits<Object>
 {
     fn do_var_method(
         &self,
-        method: impl Into<StringName>,
+        method: impl AsArg<StringName>,
         start_val: Variant,
         end_val: Variant,
         duration: f64,
-        lerp_fn: impl Fn(&Variant, &Variant, f64) -> Variant + 'static,
-    ) -> SpireTween<MethodData<Variant>> {
-        SpireTween::<MethodData<Variant>>::new(
-            method.into(),
-            ObjectOrNode::from_unchecked_object(self.to_godot().upcast()),
+    ) -> SpireTween<LerpMethodData<Variant>> {
+        SpireTween::<LerpMethodData<Variant>>::new(
+            Callable::from_object_method(self, method),
             start_val,
             end_val,
             duration,
-            AutoPlay(true),
-            lerp_fn,
         )
     }
 }

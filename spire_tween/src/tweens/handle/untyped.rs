@@ -1,44 +1,37 @@
 use super::*;
 
-#[derive(Debug, Clone)]
-pub struct UntypedHandle {
-    pub(crate) id: TweenId,
-}
-
-impl Default for UntypedHandle {
-    fn default() -> Self { Self { id: TweenId(0) } }
-}
+/*
+#[derive(Clone)]
+pub struct UntypedHandle(PtrTween);
 
 impl UntypedHandle {
-    pub fn new(id: TweenId) -> Self { Self { id } }
+    pub fn new(tween: PtrTween) -> Self { Self(tween) }
 
     pub fn map_untyped<TMap>(&self, f: impl FnOnce(&AnyTween) -> TMap) -> Option<TMap> {
-        TWEENS.inspect(self.id, f)
+        TM.inspect(self.id, f)
     }
 
     pub fn map_mut_untyped<TMap>(&self, f: impl FnOnce(&mut AnyTween) -> TMap) -> Option<TMap> {
-        TWEENS.edit(self.id, f)
+        TM.edit(self.id, f)
     }
 
-    pub fn is_valid(&self) -> bool { TWEENS.is_valid(self.id) }
+    pub fn is_valid(&self) -> bool { TM.is_valid(self.id) }
 
     pub fn kill(self) {
-        if let Some(mut tween) = TWEENS.remove(self.id) {
+        if let Some(mut tween) = TM.tween_unregister(self.id) {
             tween.stop()
         }
     }
 
-    pub fn complete(self) {
-        if let Some(mut tween) = TWEENS.remove(self.id) {
-            tween.complete();
-        }
+    pub fn force_complete(self) {
+        tween_any_mut(self.id, |tween| tween.force_complete()).log_if_err();
     }
 }
 
 impl UntypedHandle {
-    pub fn state(&self) -> Option<TweenState> { self.map_untyped(|tween| tween.get_state()) }
+    pub fn state(&self) -> Option<State> { self.map_untyped(|tween| tween.get_state()) }
 
-    pub fn set_state(&self, state: TweenState) -> bool {
+    pub fn set_state(&self, state: State) -> bool {
         self.map_mut_untyped(|tween| tween.set_state(state))
             .is_some()
     }
@@ -70,3 +63,4 @@ impl UntypedHandle {
         .is_some()
     }
 }
+*/

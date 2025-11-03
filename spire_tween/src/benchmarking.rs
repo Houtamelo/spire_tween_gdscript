@@ -1,3 +1,4 @@
+/*
 #![allow(unused_imports)]
 use std::{
     hash::{BuildHasherDefault, DefaultHasher, RandomState},
@@ -5,13 +6,18 @@ use std::{
 };
 
 use super::*;
+*/
 
+/*
 pub(crate) static RESULTS: scc::HashMap<
     &'static str,
     Vec<Duration>,
     BuildHasherDefault<DefaultHasher>,
 > = scc::HashMap::with_hasher(BuildHasherDefault::new());
+*/
 
+/*
+#[allow(unused_macros)]
 macro_rules! benchmark {
     ($Caller: ident . $FnName: path [$($TT:tt)*]) => {{
         $Caller.$FnName($($TT)*)
@@ -25,6 +31,7 @@ macro_rules! benchmark {
         $Caller.$FnName($($TT)*) $($OtherTT)*
     }};
 }
+*/
 
 /*
 macro_rules! benchmark {
@@ -68,6 +75,7 @@ macro_rules! benchmark {
     }};
 }
 */
+/*
 
 pub(crate) use benchmark;
 
@@ -86,3 +94,5 @@ pub fn print_results() {
 
     godot_print!("{builder}");
 }
+
+*/

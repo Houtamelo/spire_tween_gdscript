@@ -1,50 +1,56 @@
 use super::*;
 
 pub trait DoDelayedCall<Marker = ()> {
-    fn do_delayed_call(
-        &self,
-        call: impl FnMut() + 'static,
-        delay: f64,
-    ) -> SpireTween<DelayedCallData>;
+    fn do_delayed_call(&self, call: impl FnMut() + 'static, delay: f64) -> SpireTween<Callable>;
 }
 
 impl<T: Inherits<Object>> DoDelayedCall<()> for Gd<T> {
     fn do_delayed_call(
         &self,
-        call: impl FnMut() + 'static,
+        mut call: impl FnMut() + 'static,
         delay: f64,
-    ) -> SpireTween<DelayedCallData> {
-        SpireTween::<DelayedCallData>::new(call, delay, AutoPlay(true))
-            .maybe_bound(self.clone().upcast())
+    ) -> SpireTween<Callable> {
+        SpireTween::<Callable>::new(
+            Callable::from_local_fn("anonymous_closure", move |_| {
+                call();
+                Ok(Variant::nil())
+            }),
+            delay,
+        )
+        .maybe_bound(self.clone().upcast())
     }
 }
 
 impl<T: WithBaseField + Inherits<Object>> DoDelayedCall<BaseMarker> for T {
     fn do_delayed_call(
         &self,
-        call: impl FnMut() + 'static,
+        mut call: impl FnMut() + 'static,
         delay: f64,
-    ) -> SpireTween<DelayedCallData> {
-        SpireTween::<DelayedCallData>::new(call, delay, AutoPlay(true))
-            .maybe_bound(self.to_gd().upcast())
+    ) -> SpireTween<Callable> {
+        SpireTween::<Callable>::new(
+            Callable::from_local_fn("anonymous_closure", move |_| {
+                call();
+                Ok(Variant::nil())
+            }),
+            delay,
+        )
+        .maybe_bound(self.to_gd().upcast())
     }
 }
 
 pub trait DoDelayedCallable<Marker = ()> {
-    fn do_delayed_callable(&self, callable: Callable, delay: f64) -> SpireTween<DelayedCallData>;
+    fn do_delayed_callable(&self, callable: Callable, delay: f64) -> SpireTween<Callable>;
 }
 
 impl<T: Inherits<Object>> DoDelayedCallable<()> for Gd<T> {
-    fn do_delayed_callable(&self, callable: Callable, delay: f64) -> SpireTween<DelayedCallData> {
-        SpireTween::<DelayedCallData>::new_callable(callable, delay, AutoPlay(true))
-            .maybe_bound(self.clone().upcast()) // The callable might not belong to this object so we explicitly bind here.
+    fn do_delayed_callable(&self, callable: Callable, delay: f64) -> SpireTween<Callable> {
+        SpireTween::<Callable>::new(callable, delay).maybe_bound(self.clone().upcast()) // The callable might not belong to this object so we explicitly bind here.
     }
 }
 
 impl<T: WithBaseField + Inherits<Object>> DoDelayedCallable<BaseMarker> for T {
-    fn do_delayed_callable(&self, callable: Callable, delay: f64) -> SpireTween<DelayedCallData> {
-        SpireTween::<DelayedCallData>::new_callable(callable, delay, AutoPlay(true))
-            .maybe_bound(self.to_gd().upcast()) // The callable might not belong to this object so we explicitly bind here.
+    fn do_delayed_callable(&self, callable: Callable, delay: f64) -> SpireTween<Callable> {
+        SpireTween::<Callable>::new(callable, delay).maybe_bound(self.to_gd().upcast()) // The callable might not belong to this object so we explicitly bind here.
     }
 }
 

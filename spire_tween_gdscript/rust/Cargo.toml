@@ -9,4 +9,4 @@ crate-type = ["lib", "cdylib"]
 
 [dependencies]
 spire_tween = { workspace = true }
-godot = { git = "https://github.com/Houtamelo/dead_gds_have_rights", features = ["experimental-threads"] }
+godot = { git = "https://github.com/Houtamelo/dead_gds_have_rights", features = ["experimental-threads", "register-docs"] }

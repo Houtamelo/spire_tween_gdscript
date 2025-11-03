@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://b87c0aae3givu"]
+
+[ext_resource type="Script" uid="uid://c1ad2bohs6b00" path="res://benchmarks/disco_balls.gd" id="1_eelpq"]
+
+[node name="DiscoBalls" type="Node2D"]
+script = ExtResource("1_eelpq")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+show_behind_parent = true
+offset_left = -184.0
+offset_top = -130.0
+offset_right = 2069.0
+offset_bottom = 1231.0
+color = Color(0, 0, 0, 1)

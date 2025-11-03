@@ -13,7 +13,7 @@ config_version=5
 config/name="SpireTweener Test Runner"
 run/main_scene="res://test_scene.tscn"
 config/use_hidden_project_data_directory=false
-config/features=PackedStringArray("4.4")
+config/features=PackedStringArray("4.5")
 run/flush_stdout_on_print=true
 boot_splash/show_image=false
 
@@ -32,11 +32,19 @@ scene_naming=2
 
 [gui]
 
+theme/custom="uid://dg7r7u4ioy8bc"
 common/drop_mouse_on_gui_input_disabled=true
 
 [locale]
 
 translations=PackedStringArray()
+
+[network]
+
+limits/debugger/max_chars_per_second=524288
+limits/debugger/max_queued_messages=8192
+limits/debugger/max_errors_per_second=1024
+limits/debugger/max_warnings_per_second=1024
 
 [node]
 

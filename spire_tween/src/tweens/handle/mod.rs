@@ -1,3 +1,4 @@
+/*
 use std::{
     marker::PhantomData,
     ops::{Deref, DerefMut},
@@ -44,19 +45,18 @@ impl<T> SpireHandle<T> {
 
     pub fn map<TMap>(&self, f: impl FnOnce(&SpireTween<T>) -> TMap) -> Result<TMap, FetchError>
     where SpireTween<T>: FromEnumRef<AnyTween> {
-        TWEENS
-            .inspect(self.id, |any_tween| {
-                let found_type = any_tween.inner_type_name();
-                let tween = SpireTween::<T>::from_enum_ref(any_tween).ok_or_else(|| {
-                    FetchError::TypeMismatch {
-                        expected: type_name::<T>(),
-                        found: found_type,
-                    }
-                })?;
+        TM.inspect(self.id, |any_tween| {
+            let found_type = any_tween.inner_type_name();
+            let tween = SpireTween::<T>::from_enum_ref(any_tween).ok_or_else(|| {
+                FetchError::TypeMismatch {
+                    expected: type_name::<T>(),
+                    found: found_type,
+                }
+            })?;
 
-                Ok(f(tween))
-            })
-            .ok_or(FetchError::NotFound)?
+            Ok(f(tween))
+        })
+        .ok_or(FetchError::NotFound)?
     }
 
     pub fn map_mut<TMap>(
@@ -66,19 +66,18 @@ impl<T> SpireHandle<T> {
     where
         SpireTween<T>: FromEnumMut<AnyTween>,
     {
-        TWEENS
-            .edit(self.id, |any_tween| {
-                let found_type = any_tween.inner_type_name();
-                let tween = SpireTween::<T>::from_enum_mut(any_tween).ok_or_else(|| {
-                    FetchError::TypeMismatch {
-                        expected: type_name::<T>(),
-                        found: found_type,
-                    }
-                })?;
+        TM.edit(self.id, |any_tween| {
+            let found_type = any_tween.inner_type_name();
+            let tween = SpireTween::<T>::from_enum_mut(any_tween).ok_or_else(|| {
+                FetchError::TypeMismatch {
+                    expected: type_name::<T>(),
+                    found: found_type,
+                }
+            })?;
 
-                Ok(f(tween))
-            })
-            .ok_or(FetchError::NotFound)?
+            Ok(f(tween))
+        })
+        .ok_or(FetchError::NotFound)?
     }
 }
 
@@ -89,3 +88,4 @@ pub fn cast_handle<T, U>(handle: SpireHandle<T>) -> SpireHandle<U> {
         _marker: PhantomData,
     }
 }
+*/

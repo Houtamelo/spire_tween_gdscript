@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://d0danp8mix742"]
+
+[ext_resource type="Script" uid="uid://c1ynjexw1nh8a" path="res://examples/tests/delays.gd" id="1_w8x1j"]
+[ext_resource type="PackedScene" uid="uid://dch68fgy4y1q7" path="res://examples/world_bounds.tscn" id="2_85a2x"]
+[ext_resource type="PackedScene" uid="uid://6rq2rospka1k" path="res://examples/bouncy_ball.tscn" id="3_wwn7s"]
+
+[node name="Delays" type="Node2D"]
+script = ExtResource("1_w8x1j")
+
+[node name="WorldBounds" parent="." instance=ExtResource("2_85a2x")]
+
+[node name="BouncyBall" parent="." instance=ExtResource("3_wwn7s")]
+position = Vector2(702, 264)
+gravity_scale = 1.0

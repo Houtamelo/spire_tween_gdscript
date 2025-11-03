@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://d0mjciudeo8ra"]
+
+[ext_resource type="Script" uid="uid://bv5tnoosplc7p" path="res://examples/tests/lerp_modes.gd" id="1_e7ydc"]
+
+[sub_resource type="Gradient" id="Gradient_bpmit"]
+offsets = PackedFloat32Array(0, 0.309524, 0.313492)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_qiwqy"]
+gradient = SubResource("Gradient_bpmit")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="LerpModes" type="Node2D"]
+script = ExtResource("1_e7ydc")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(928, 820)
+texture = SubResource("GradientTexture2D_qiwqy")

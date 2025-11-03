@@ -1,44 +1,17 @@
-use replace_with::replace_with_or_abort;
-
 use super::*;
-use crate::{
-    benchmarking::benchmark,
-    cow_fn::{CowDistanceFn, CowRelativeFn, CowStepFn},
-};
 
 pub struct LerpPropertyData<T: PropertyType> {
     pub data: T::Data,
     pub lerp_mode: LerpMode<T>,
-    pub ease: Ease,
+    pub ease: EaseKind,
     pub to: Evaluator<T>,
-    pub lerp_fn: CowLerpFn<T>,
-    pub relative_fn: CowRelativeFn<T>,
-    pub step_fn: CowStepFn<T>,
-    pub distance_fn: CowDistanceFn<T>,
-}
-
-impl<Val> SpireTweener for SpireTween<LerpPropertyData<Val>>
-where Val: PropertyType
-{
-    #[inline]
-    fn get_state(&self) -> TweenState { self.state }
-
-    #[inline]
-    fn set_state(&mut self, state: TweenState) {
-        match state {
-            TweenState::Stopped => {
-                self.elapsed_time = 0.0;
-                self.cycle_count = 0;
-            }
-            | TweenState::Playing | TweenState::Paused => {}
-        }
-
-        self.state = state;
-    }
+    pub lerper: T::Lerper,
 }
 
 impl<T> SpireTween<LerpPropertyData<T>>
-where T: PropertyType + Clone + Default + FromGodot
+where
+    T: PropertyType + Clone + Default + FromGodot,
+    LerpPropertyData<T>: ITweenable,
 {
     #[inline]
     pub fn get_property_path(&self) -> NodePath { self.t.data.get_property_path() }
@@ -57,9 +30,9 @@ where T: PropertyType + Clone + Default + FromGodot
     }
 
     #[inline]
-    pub fn get_ease(&self) -> Ease { self.t.ease.clone() }
+    pub fn get_ease(&self) -> &EaseKind { &self.t.ease }
     #[inline]
-    pub fn set_ease(&mut self, ease: Ease) { self.t.ease = ease; }
+    pub fn set_ease(&mut self, ease: EaseKind) { self.t.ease = ease; }
 
     #[inline]
     pub fn get_final_value(&mut self) -> T
@@ -70,87 +43,79 @@ where T: PropertyType + Clone + Default + FromGodot
     #[inline]
     pub fn set_final_value(&mut self, to: T) { self.t.to = Evaluator::Static(to); }
 
+    #[inline]
+    pub fn set_dynamic_target(&mut self, evaluator: Callable) {
+        self.t.to = Evaluator::Callable(evaluator);
+    }
+
     pub fn set_begin_value(&mut self, value: T) {
         match &mut self.t.lerp_mode {
             LerpMode::Absolute { from, .. } => {
-                *from = Some(value);
+                *from = FromValue::Explicit(value);
             }
             LerpMode::SpeedBased { .. } => {
-                godot_warn!("Starting value is not used in current lerp mode `SpeedBased`.");
+                godot_warn!(
+                    "[b]Warning:[/b] Starting value(set by calling `from(value)`) is ignored in \
+                    Speed-Based tweens (created with `as_speed_based`)."
+                );
             }
-            LerpMode::Relative { origin, .. } => {
-                *origin = value;
+            LerpMode::Relative { .. } => {
+                godot_warn!(
+                    "[b]Warning:[/b] Starting value is ignored in Relative tweens (created with `as_relative`)."
+                );
             }
         }
     }
 }
 
 impl<T> SpireTween<LerpPropertyData<T>>
-where T: PropertyType + Clone + Default + FromGodot
+where
+    T: PropertyType + Clone + Default + FromGodot,
+    LerpPropertyData<T>: ITweenable,
 {
     #[inline]
-    pub fn set_relative(&mut self, relative_to: T) {
-        replace_with_or_abort(&mut self.t.lerp_mode, |lerp_mode| {
-            match lerp_mode {
-                LerpMode::Absolute { duration, .. } => {
-                    LerpMode::Relative {
-                        duration,
-                        origin: relative_to,
-                    }
-                }
-                LerpMode::SpeedBased { speed, .. } => {
-                    let distance = (self.t.distance_fn)(&relative_to, &self.t.to.eval());
-                    let duration = distance / speed;
-
-                    LerpMode::Relative {
-                        duration,
-                        origin: relative_to,
-                    }
-                }
-                LerpMode::Relative { duration, .. } => {
-                    LerpMode::Relative {
-                        duration,
-                        origin: relative_to,
-                    }
-                }
+    pub fn set_relative(&mut self, relative_to_value: T) {
+        match &mut self.t.lerp_mode {
+            | &mut LerpMode::Absolute { duration, .. }
+            | &mut LerpMode::SpeedBased {
+                speed: duration, ..
+            } => {
+                self.t.lerp_mode = LerpMode::relative(duration, relative_to_value);
             }
-        })
+            LerpMode::Relative { relative_to, .. } => {
+                *relative_to = relative_to_value;
+            }
+        }
     }
 
     #[inline]
     pub fn set_absolute(&mut self) {
-        replace_with_or_abort(&mut self.t.lerp_mode, |lerp_mode| {
-            match lerp_mode {
-                LerpMode::SpeedBased { speed, .. } => {
-                    let val_at_obj = self.t.data.get_property_value();
-
-                    let distance = (self.t.distance_fn)(&val_at_obj, &self.t.to.eval());
-                    let duration = distance / speed;
-
-                    LerpMode::Absolute {
-                        duration,
-                        from: None,
-                    }
-                }
-                LerpMode::Relative { duration, .. } => {
-                    LerpMode::Absolute {
-                        duration,
-                        from: None,
-                    }
-                }
-                already_abs @ LerpMode::Absolute { .. } => already_abs,
+        match &mut self.t.lerp_mode {
+            | &mut LerpMode::Relative { duration, .. }
+            | &mut LerpMode::SpeedBased {
+                speed: duration, ..
+            } => {
+                self.t.lerp_mode = LerpMode::absolute(duration);
             }
-        })
+            LerpMode::Absolute { .. } => {}
+        }
     }
 
     #[inline]
-    pub fn set_speed_based(&mut self, speed: f64) {
-        self.t.lerp_mode = LerpMode::SpeedBased { speed, t_sum: 0. };
+    pub fn set_speed_based(&mut self) {
+        match &mut self.t.lerp_mode {
+            LerpMode::Absolute { duration, .. } | LerpMode::Relative { duration, .. } => {
+                self.t.lerp_mode = LerpMode::speed_based(*duration);
+            }
+            LerpMode::SpeedBased { .. } => {}
+        }
     }
 }
 
-impl<Val> SpireTween<LerpPropertyData<Val>>
-where Val: PropertyType
+impl<T> SpireTween<LerpPropertyData<T>>
+where
+    T: PropertyType,
+    LerpPropertyData<T>: ITweenable,
 {
     #[inline]
     pub fn is_absolute(&self) -> bool { matches!(self.t.lerp_mode, LerpMode::Absolute { .. }) }
@@ -163,11 +128,16 @@ where Val: PropertyType
 
     #[inline]
     pub fn get_duration(&mut self) -> f64
-    where Val: Clone + Default + FromGodot {
+    where T: Clone + Default + FromGodot {
         match self.t.lerp_mode {
             LerpMode::Absolute { duration, .. } => duration,
             LerpMode::SpeedBased { speed, .. } => {
-                (self.t.distance_fn)(&self.t.data.get_property_value(), &self.t.to.eval()) / speed
+                let distance = self
+                    .t
+                    .lerper
+                    .spire_distance(&self.t.data.get_property_value(), &self.t.to.eval());
+
+                distance / speed
             }
             LerpMode::Relative { duration, .. } => duration,
         }
@@ -175,137 +145,24 @@ where Val: PropertyType
 
     #[inline]
     pub fn set_duration(&mut self, new_duration: f64)
-    where Val: Clone + Default + FromGodot {
+    where T: Clone + Default + FromGodot {
         match &mut self.t.lerp_mode {
-            LerpMode::Absolute { duration, .. } => *duration = new_duration,
-            LerpMode::Relative { duration, .. } => *duration = new_duration,
-            LerpMode::SpeedBased { speed, .. } => {
-                godot_warn!(
-                    "Setting duration on a speed-based tween is not recommended since it requires recalculating speed."
-                );
-
-                let distance =
-                    (self.t.distance_fn)(&self.t.data.get_property_value(), &self.t.to.eval());
-                if new_duration > 0.0 {
-                    *speed = distance / new_duration;
-                } else {
-                    godot_error!(
-                        "Expected duration to be greater than zero, got: `{new_duration:.2}`."
-                    );
-                }
+            | LerpMode::Absolute { duration, .. }
+            | LerpMode::Relative { duration, .. }
+            | LerpMode::SpeedBased {
+                speed: duration, ..
+            } => {
+                *duration = new_duration;
             }
         }
     }
 }
 
-impl<Val> SpireTween<LerpPropertyData<Val>>
-where Val: PropertyType + Clone + Default + FromGodot + Debug
+impl<T: PropertyType> SpireTween<LerpPropertyData<T>>
+where LerpPropertyData<T>: ITweenable
 {
-    fn do_step(&mut self, delta_time: f64) -> Option<(Val, Option<f64>)> {
-        match &mut self.t.lerp_mode {
-            LerpMode::Absolute { duration, from } => {
-                let start_val = match &from {
-                    Some(val) => val,
-                    None => {
-                        let val_at_obj = self.t.data.get_property_value();
-                        from.replace(val_at_obj);
-                        from.as_ref().unwrap()
-                    }
-                };
-
-                let target_value = {
-                    let elapsed_ratio =
-                        ratio_with_delay_duration(self.delay, *duration, self.elapsed_time);
-
-                    let eased_ratio = self.t.ease.sample(elapsed_ratio.min(1.));
-
-                    (self.t.lerp_fn)(start_val, &self.t.to.eval(), eased_ratio)
-                };
-
-                let excess_time = {
-                    let total_duration = self.delay + *duration;
-                    let excess = self.elapsed_time - total_duration;
-                    if excess > 0. {
-                        Some(excess)
-                    } else {
-                        None
-                    }
-                };
-
-                Some((target_value, excess_time))
-            }
-            LerpMode::SpeedBased { speed, t_sum } => {
-                let (target_value, step_result) = {
-                    let val_at_obj = self.t.data.get_property_value();
-
-                    (self.t.step_fn)(&val_at_obj, &self.t.to.eval(), *speed, delta_time + *t_sum)
-                };
-
-                let excess_time = match step_result {
-                    StepResult::Unfinished {
-                        accumulated_time: accumulated_t,
-                    } => {
-                        *t_sum = accumulated_t;
-                        None
-                    }
-                    StepResult::Finished { excess_time } => {
-                        *t_sum = 0.;
-                        Some(excess_time)
-                    }
-                };
-
-                Some((target_value, excess_time))
-            }
-            LerpMode::Relative { duration, origin } => {
-                let target_value = {
-                    let val_at_obj = self.t.data.get_property_value();
-
-                    let previous_eased_ratio = {
-                        let previous_ratio = ratio_with_delay_duration(
-                            self.delay,
-                            *duration,
-                            self.elapsed_time - delta_time,
-                        );
-
-                        self.t.ease.sample(previous_ratio)
-                    };
-
-                    let next_eased_ratio = {
-                        let elapsed_ratio =
-                            ratio_with_delay_duration(self.delay, *duration, self.elapsed_time);
-
-                        self.t.ease.sample(elapsed_ratio)
-                    };
-
-                    let end = self.t.to.eval();
-
-                    let previous_relative = (self.t.lerp_fn)(origin, &end, previous_eased_ratio);
-
-                    let next_relative = (self.t.lerp_fn)(origin, &end, next_eased_ratio);
-
-                    (self.t.relative_fn)(&val_at_obj, &previous_relative, &next_relative)
-                };
-
-                let excess_time = {
-                    let total_duration = self.delay + *duration;
-                    let excess = self.elapsed_time - total_duration;
-
-                    if excess > 0. {
-                        Some(excess)
-                    } else {
-                        None
-                    }
-                };
-
-                Some((target_value, excess_time))
-            }
-        }
-    }
-}
-
-impl<Val: PropertyType> SpireTween<LerpPropertyData<Val>> {
     fn try_seek_end(&mut self) -> anyhow::Result<()>
-    where Val: Clone + Default + FromGodot {
+    where T: Clone + Default + FromGodot {
         if !self.t.data.get_owner().is_instance_valid() {
             let prop_name = &self.t.data.get_property_path();
             bail!(
@@ -315,42 +172,66 @@ impl<Val: PropertyType> SpireTween<LerpPropertyData<Val>> {
 
         let target_value = match &mut self.t.lerp_mode {
             LerpMode::Absolute { .. } => self.t.to.eval(),
-            LerpMode::SpeedBased { t_sum, .. } => {
-                *t_sum = 0.;
+            LerpMode::SpeedBased { step_sum, .. } => {
+                *step_sum = 0.;
                 self.t.to.eval()
             }
-            LerpMode::Relative { duration, origin } => {
+            LerpMode::Relative {
+                duration: _,
+                relative_to,
+                previous_anim_pos,
+            } => {
                 let val_at_obj = self.t.data.get_property_value();
-
                 let end = self.t.to.eval();
-
-                let previous_relative = {
-                    let previous_eased_ratio = {
-                        let previous_ratio =
-                            ratio_with_delay_duration(self.delay, *duration, self.elapsed_time);
-
-                        self.t.ease.sample(previous_ratio)
-                    };
-
-                    (self.t.lerp_fn)(origin, &end, previous_eased_ratio)
-                };
-
-                (self.t.relative_fn)(&val_at_obj, &previous_relative, &end)
+                let previous_relative =
+                    self.t
+                        .lerper
+                        .spire_lerp(relative_to, &end, *previous_anim_pos);
+                self.t
+                    .lerper
+                    .add_relative(&val_at_obj, &previous_relative, &end)
             }
         };
 
         self.t.data.set_property_value(target_value);
-
         Ok(())
     }
 }
 
-impl<Val> AdvanceTime for SpireTween<LerpPropertyData<Val>>
-where Val: PropertyType + FromGodot + ToGodot + Clone + Default + Debug
+impl<T> SpireTweener for SpireTween<LerpPropertyData<T>>
+where
+    T: PropertyType + FromGodot + ToGodot + Clone + Default + Debug,
+    LerpPropertyData<T>: ITweenable,
 {
-    fn complete(&mut self) {
+    #[inline]
+    fn play(&mut self) {
+        if self.is_stopped() {
+            self.reset_counters();
+
+            if let LoopMode::Restart = self.loop_mode {
+                self.t.lerp_mode.reset_state();
+            }
+        }
+
+        self.state = State::Playing;
+    }
+
+    #[inline]
+    fn pause(&mut self) {
+        if !self.is_stopped() {
+            self.state = State::Paused;
+        }
+    }
+
+    #[inline]
+    fn stop(&mut self) {
+        self.t.lerp_mode.reset_state();
+        self.state = State::Stopped;
+    }
+
+    fn force_complete(&mut self) {
         match self.state {
-            | TweenState::Playing | TweenState::Paused => {
+            | State::Playing | State::Paused => {
                 match self.try_seek_end() {
                     Ok(_) => {}
                     Err(err) => {
@@ -360,81 +241,147 @@ where Val: PropertyType + FromGodot + ToGodot + Clone + Default + Debug
 
                 self.handle_finished();
             }
-            TweenState::Stopped => {}
+            State::Stopped => {}
         }
     }
 
-    fn advance_time(&mut self, delta_time: f64) -> f64 {
-        match self.t.data.get_owner() {
-            ObjectOrNode::Object(obj) => {
-                let id = obj.instance_id_unchecked().to_i64();
-                if !is_instance_id_valid(id) {
-                    self.stop();
-                    return -1.0;
-                }
-            }
-            ObjectOrNode::Node(node) => {
-                match TWEENS.node_get_status_fresh(*node) {
-                    NodeStatus::InsideTree => {
-                        if let SpirePauseMode::Bound = self.pause_mode
-                            && !node.is_processing()
-                        {
-                            return -1.0;
-                        }
-                    }
-                    NodeStatus::OutsideTreeMaybeDead => {
-                        if let SpirePauseMode::Bound = self.pause_mode {
-                            return -1.0;
-                        }
-                    }
-                    NodeStatus::Dead => {
-                        self.stop();
-                        return -1.0;
-                    }
-                }
+    fn process(&mut self, delta_time: f64, _is_tree_paused: bool) -> AdvanceTimeResult {
+        match self.check_owner_validity_and_pause_mode(self.t.data.get_owner()) {
+            ObjectValidityResult::CanProcess => {}
+            ObjectValidityResult::DontProcess => return AdvanceTimeResult::Paused,
+            ObjectValidityResult::SomeObjectsDead => {
+                self.stop();
+                return AdvanceTimeResult::ShouldDespawn;
             }
         }
 
-        self.elapsed_time += delta_time * self.speed_scale;
+        let Some(step) = self.handle_time_step(delta_time)
+        else { return AdvanceTimeResult::Playing };
 
-        if self.elapsed_time < self.delay {
-            return -1.0;
-        }
+        let set_fn = <T as PropertyType>::Data::set_property_value;
 
-        let Some((target_value, maybe_excess_time)) =
-            (benchmark! { Self::do_step[self, delta_time] })
-        else {
-            return -1.0
-        };
-        /*
-        let Some((target_value, maybe_excess_time)) = self.do_step(delta_time)
-        else { return -1.0 };
-        */
+        let step_excess = match &mut self.t.lerp_mode {
+            LerpMode::Absolute { duration, from } => {
+                let start_val = match &from {
+                    FromValue::AlreadyEvaluated(val) | FromValue::Explicit(val) => val,
+                    FromValue::PendingEvaluation => {
+                        let val_at_obj = self.t.data.get_property_value();
+                        from.set_evaluated(val_at_obj)
+                    }
+                };
 
-        //self.t.data.set_property_value(target_value);
+                let anim_pos = calc_animation_position(
+                    *duration,
+                    self.loop_time,
+                    self.loop_counter,
+                    self.loop_mode,
+                    &self.t.ease,
+                );
 
-        let f = <Val as PropertyType>::Data::set_property_value;
-        benchmark! { f[&mut self.t.data, target_value] }
+                let target_val = self
+                    .t
+                    .lerper
+                    .spire_lerp(start_val, &self.t.to.eval(), anim_pos);
 
-        let Some(excess_time) = maybe_excess_time
-        else { return -1.0 };
-
-        self.cycle_count += 1;
-
-        match &mut self.loop_mode {
-            LoopMode::Infinite => {
-                self.elapsed_time = self.delay + excess_time;
-                -1.0
+                set_fn(&mut self.t.data, target_val);
+                self.loop_time - *duration
             }
-            LoopMode::Finite(loop_count) => {
-                if self.cycle_count < *loop_count {
-                    self.elapsed_time = self.delay + excess_time;
-                    -1.0
+            LerpMode::SpeedBased {
+                speed,
+                from,
+                start_distance,
+                step_sum,
+            } => {
+                let curr_val = self.t.data.get_property_value();
+
+                let end_val = self.t.to.eval();
+
+                let start_distance_val = *start_distance.get_or_insert_with(|| {
+                    let start_val = from.get_or_evaluate(|| curr_val.clone());
+                    self.t.lerper.spire_distance(start_val, &end_val)
+                });
+
+                let remaining_distance = self.t.lerper.spire_distance(&curr_val, &end_val);
+
+                if start_distance_val.is_zero_approx() {
+                    *step_sum = 0.;
+                    set_fn(&mut self.t.data, end_val);
+                    step
                 } else {
-                    self.elapsed_time -= excess_time;
-                    self.handle_finished();
-                    excess_time
+                    const EPS: f64 = 0.01;
+                    let distance_ratio =
+                        f64::max(0., 1. - (remaining_distance / start_distance_val));
+                    let gain = (EPS + self.t.ease.sample(distance_ratio))
+                        / (EPS + f64::abs(distance_ratio));
+
+                    let actual_speed = *speed * gain;
+
+                    let (target_val, step_result) = self.t.lerper.spire_step(
+                        &curr_val,
+                        &end_val,
+                        actual_speed,
+                        step + *step_sum,
+                    );
+
+                    set_fn(&mut self.t.data, target_val);
+
+                    match step_result {
+                        StepResult::Unfinished { accumulated_time } => {
+                            *step_sum = accumulated_time;
+                            -1.0
+                        }
+                        StepResult::Finished { excess_time } => {
+                            *step_sum = 0.;
+                            excess_time
+                        }
+                    }
                 }
+            }
+            LerpMode::Relative {
+                duration,
+                relative_to,
+                previous_anim_pos,
+            } => {
+                let curr_val = self.t.data.get_property_value();
+
+                let next_anim_pos = calc_animation_position(
+                    *duration,
+                    self.loop_time,
+                    self.loop_counter,
+                    self.loop_mode,
+                    &self.t.ease,
+                );
+
+                let end = self.t.to.eval();
+
+                let previous_relative =
+                    self.t
+                        .lerper
+                        .spire_lerp(relative_to, &end, *previous_anim_pos);
+                let next_relative = self.t.lerper.spire_lerp(relative_to, &end, next_anim_pos);
+
+                *previous_anim_pos = next_anim_pos;
+                let target_val =
+                    self.t
+                        .lerper
+                        .add_relative(&curr_val, &previous_relative, &next_relative);
+
+                set_fn(&mut self.t.data, target_val);
+                self.loop_time - *duration
+            }
+        };
+
+        if step_excess < 0. {
+            AdvanceTimeResult::Playing
+        } else {
+            if let LoopMode::Restart = self.loop_mode {
+                self.t.lerp_mode.reset_state();
+            }
+
+            if let Some(excess_time) = self.handle_loop_finished(step_excess) {
+                AdvanceTimeResult::Completed { excess_time }
+            } else {
+                AdvanceTimeResult::Playing
             }
         }
     }
@@ -443,270 +390,101 @@ where Val: PropertyType + FromGodot + ToGodot + Clone + Default + Debug
 // Builder Methods
 
 // ------------------------------------------------------------
-impl<Val> SpireTween<LerpPropertyData<Val>>
-where Val: PropertyType + Clone + Default + FromGodot
+impl<T> SpireTween<LerpPropertyData<T>>
+where
+    T: PropertyType + Clone + Default + FromGodot,
+    LerpPropertyData<T>: ITweenable,
 {
-    pub fn with_duration(self, duration: f64) -> Self {
-        match self.t.lerp_mode {
-            LerpMode::Absolute { from, .. } => {
-                Self {
-                    t: LerpPropertyData {
-                        lerp_mode: LerpMode::Absolute { duration, from },
-                        ..self.t
-                    },
-                    ..self
-                }
-            }
-            LerpMode::Relative { origin, .. } => {
-                Self {
-                    t: LerpPropertyData {
-                        lerp_mode: LerpMode::Relative { duration, origin },
-                        ..self.t
-                    },
-                    ..self
-                }
-            }
-            LerpMode::SpeedBased { .. } => {
-                godot_warn!("Duration is not used in current lerp mode (SpeedBased).");
-                self
-            }
-        }
+    #[inline]
+    pub fn with_duration(mut self, duration: f64) -> Self {
+        self.set_duration(duration);
+        self
     }
 
-    pub fn with_ease(self, ease: Ease) -> Self {
-        Self {
-            t: LerpPropertyData { ease, ..self.t },
-            ..self
-        }
+    #[inline]
+    pub fn with_ease(mut self, ease: EaseKind) -> Self {
+        self.set_ease(ease);
+        self
     }
 
-    pub fn begin_from(mut self, value: Val) -> Self {
+    #[inline]
+    pub fn begin_from(mut self, value: T) -> Self {
         self.set_begin_value(value);
         self
     }
 
-    pub fn end_at(self, value: Val) -> Self {
-        Self {
-            t: LerpPropertyData {
-                to: Evaluator::Static(value),
-                ..self.t
-            },
-            ..self
-        }
+    #[inline]
+    pub fn end_at(mut self, value: T) -> Self {
+        self.set_final_value(value);
+        self
     }
 
-    pub fn absolute(mut self) -> Self
-    where Val: SpireLerp + Default {
-        match self.t.lerp_mode {
-            LerpMode::SpeedBased { speed, .. } => {
-                let val_at_obj = self.t.data.get_property_value();
-
-                let distance = (self.t.distance_fn)(&val_at_obj, &self.t.to.eval());
-                let duration = distance / speed;
-
-                Self {
-                    t: LerpPropertyData {
-                        lerp_mode: LerpMode::Absolute {
-                            duration,
-                            from: None,
-                        },
-                        ..self.t
-                    },
-                    ..self
-                }
-            }
-            LerpMode::Relative { duration, origin } => {
-                Self {
-                    t: LerpPropertyData {
-                        lerp_mode: LerpMode::Absolute {
-                            duration,
-                            from: Some(origin),
-                        },
-                        ..self.t
-                    },
-                    ..self
-                }
-            }
-            LerpMode::Absolute { .. } => self,
-        }
+    #[inline]
+    pub fn as_absolute(mut self) -> Self
+    where T: Default {
+        self.set_absolute();
+        self
     }
 
-    pub fn speed_based(self, speed: f64) -> Self {
-        Self {
-            t: LerpPropertyData {
-                lerp_mode: LerpMode::SpeedBased { speed, t_sum: 0. },
-                ..self.t
-            },
-            ..self
-        }
+    #[inline]
+    pub fn as_speed_based(mut self) -> Self {
+        self.set_speed_based();
+        self
     }
 
-    pub fn relative(mut self, to: Val) -> Self
-    where Val: Default + Clone + FromGodot {
-        match self.t.lerp_mode {
-            LerpMode::Absolute { duration, .. } => {
-                Self {
-                    t: LerpPropertyData {
-                        lerp_mode: LerpMode::Relative {
-                            duration,
-                            origin: to,
-                        },
-                        ..self.t
-                    },
-                    ..self
-                }
-            }
-            LerpMode::SpeedBased { speed, .. } => {
-                let distance = (self.t.distance_fn)(&to, &self.t.to.eval());
-                let duration = distance / speed;
-
-                Self {
-                    t: LerpPropertyData {
-                        lerp_mode: LerpMode::Relative {
-                            duration,
-                            origin: to,
-                        },
-                        ..self.t
-                    },
-                    ..self
-                }
-            }
-            LerpMode::Relative { duration, .. } => {
-                Self {
-                    t: LerpPropertyData {
-                        lerp_mode: LerpMode::Relative {
-                            duration,
-                            origin: to,
-                        },
-                        ..self.t
-                    },
-                    ..self
-                }
-            }
-        }
+    #[inline]
+    pub fn as_relative(mut self, relative_to: T) -> Self
+    where T: Default + Clone + FromGodot {
+        self.set_relative(relative_to);
+        self
     }
 }
 
-impl<Val> SpireTween<LerpPropertyData<Val>>
+impl<T> SpireTween<LerpPropertyData<T>>
 where
-    Val: PropertyType + SpireLerp,
-    AnyTween: From<Self>,
+    T: PropertyType,
+    <T as ILerpable>::Lerper: Default,
+    AnyTween: From<RcPtr<Self>>,
+    LerpPropertyData<T>: ITweenable,
 {
-    pub fn new(data: Val::Data, to: Evaluator<Val>, duration: f64, auto_play: AutoPlay) -> Self {
-        Self {
-            bound_nodes: Default::default(),
-            state: match auto_play.0 {
-                true => TweenState::Playing,
-                false => TweenState::Paused,
-            },
-            delay: 0.,
-            speed_scale: 1.,
-            elapsed_time: 0.,
-            cycle_count: 0,
-            pause_mode: SpirePauseMode::Stop,
-            process_mode: SpireProcessMode::Idle,
-            loop_mode: LoopMode::Finite(0),
-            calls_on_finish: Vec::new(),
-            t: LerpPropertyData {
-                data,
-                lerp_mode: LerpMode::Absolute {
-                    duration,
-                    from: None,
-                },
-                ease: Default::default(),
-                to,
-                lerp_fn: CowLerpFn::from_static(Val::spire_lerp),
-                relative_fn: CowRelativeFn::from_static(Val::add_relative),
-                step_fn: CowStepFn::from_static(Val::spire_step),
-                distance_fn: CowDistanceFn::from_static(Val::spire_distance),
-            },
-        }
+    pub fn new(data: T::Data, to: Evaluator<T>, duration: f64) -> Self {
+        Self::new_with_data(LerpPropertyData {
+            data,
+            lerp_mode: LerpMode::absolute(duration),
+            ease: Default::default(),
+            to,
+            lerper: Default::default(),
+        })
     }
 
-    pub fn new_registered(
-        data: Val::Data,
-        end: Evaluator<Val>,
-        duration: f64,
-        auto_play: AutoPlay,
-    ) -> SpireHandle<LerpPropertyData<Val>> {
-        Self::new(data, end, duration, auto_play).register()
+    pub fn new_registered(data: T::Data, end: Evaluator<T>, duration: f64) -> RcPtr<Self>
+    where AnyTween: From<RcPtr<Self>> {
+        Self::new(data, end, duration).register()
     }
 }
 
 // Variant Builder
 impl SpireTween<LerpPropertyData<Variant>> {
-    pub fn new(
+    pub fn new_custom(
         property_path: impl AsArg<NodePath>,
         owner: impl Into<ObjectOrNode>,
         to: Evaluator<Variant>,
         duration: f64,
-        auto_play: AutoPlay,
-        lerp_fn: CowLerpFn<Variant>,
-        relative_fn: CowRelativeFn<Variant>,
-        step_fn: CowStepFn<Variant>,
-        distance_fn: CowDistanceFn<Variant>,
+        lerper: CustomLerper,
     ) -> Self {
-        Self {
-            bound_nodes: Default::default(),
-            state: match auto_play.0 {
-                true => TweenState::Playing,
-                false => TweenState::Paused,
+        Self::new_with_data(LerpPropertyData {
+            data: PropertyDataCustom {
+                path:  property_path.into_arg().cow_into_owned(),
+                owner: owner.into(),
             },
-            delay: 0.,
-            speed_scale: 1.,
-            elapsed_time: 0.,
-            cycle_count: 0,
-            pause_mode: SpirePauseMode::Stop,
-            process_mode: SpireProcessMode::Idle,
-            loop_mode: LoopMode::Finite(0),
-            calls_on_finish: Vec::new(),
-            t: LerpPropertyData {
-                data: PropertyDataCustom {
-                    path:  property_path.into_arg().cow_into_owned(),
-                    owner: owner.into(),
-                },
-                lerp_mode: LerpMode::Absolute {
-                    duration,
-                    from: None,
-                },
-                ease: Default::default(),
-                to: match to {
-                    Evaluator::Static(val) => Evaluator::Static(val.to_variant()),
-                    Evaluator::Dynamic(mut f) => {
-                        Evaluator::Dynamic(Box::new(move || f().to_variant()))
-                    }
-                    Evaluator::Callable(call) => Evaluator::Callable(call),
-                },
-                lerp_fn,
-                relative_fn,
-                step_fn,
-                distance_fn,
+            lerp_mode: LerpMode::absolute(duration),
+            ease: Default::default(),
+            to: match to {
+                Evaluator::Static(val) => Evaluator::Static(val.to_variant()),
+                Evaluator::Dynamic(mut f) => Evaluator::Dynamic(Box::new(move || f().to_variant())),
+                Evaluator::Callable(call) => Evaluator::Callable(call),
             },
-        }
-    }
-
-    pub fn new_registered(
-        property_path: impl AsArg<NodePath>,
-        owner: impl Into<ObjectOrNode>,
-        to: Evaluator<Variant>,
-        duration: f64,
-        auto_play: AutoPlay,
-        lerp_fn: CowLerpFn<Variant>,
-        relative_fn: CowRelativeFn<Variant>,
-        step_fn: CowStepFn<Variant>,
-        distance_fn: CowDistanceFn<Variant>,
-    ) -> SpireHandle<LerpPropertyData<Variant>> {
-        Self::new(
-            property_path,
-            owner,
-            to,
-            duration,
-            auto_play,
-            lerp_fn,
-            relative_fn,
-            step_fn,
-            distance_fn,
-        )
-        .register()
+            lerper,
+        })
     }
 }

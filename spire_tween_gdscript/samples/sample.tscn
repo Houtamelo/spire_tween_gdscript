@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://cuckqpvtlwe8n"]
+
+[ext_resource type="Script" uid="uid://byrtsp3pkf60v" path="res://samples/sample.gd" id="1_uledb"]
+
+[sub_resource type="Gradient" id="Gradient_yimkj"]
+offsets = PackedFloat32Array(0.367347, 0.742857)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_f6qp0"]
+gradient = SubResource("Gradient_yimkj")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Curve" id="Curve_fla7w"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.8933, 0.124207), 0.302308, 0.302308, 0, 0, Vector2(1, 1), 1.4, 0.0, 0, 0]
+point_count = 3
+
+[node name="Sample" type="Node2D"]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -186.0
+offset_top = -125.0
+offset_right = 2102.0
+offset_bottom = 1225.0
+color = Color(0, 0, 0, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(806.5, 453.5)
+scale = Vector2(8.54688, 8.54688)
+texture = SubResource("GradientTexture2D_f6qp0")
+script = ExtResource("1_uledb")
+curve = SubResource("Curve_fla7w")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(965, 539)

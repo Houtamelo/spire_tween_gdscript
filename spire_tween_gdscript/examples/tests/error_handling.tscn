@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://04da65h47bai"]
+
+[ext_resource type="Script" uid="uid://cpgtvkmrmsrmd" path="res://examples/tests/error_handling.gd" id="1_maiw5"]
+[ext_resource type="PackedScene" uid="uid://dch68fgy4y1q7" path="res://examples/world_bounds.tscn" id="2_8hko0"]
+[ext_resource type="PackedScene" uid="uid://6rq2rospka1k" path="res://examples/bouncy_ball.tscn" id="3_1hl6s"]
+
+[node name="ErrorHandling" type="Node2D"]
+script = ExtResource("1_maiw5")
+
+[node name="WorldBounds" parent="." instance=ExtResource("2_8hko0")]
+
+[node name="BouncyBall" parent="." instance=ExtResource("3_1hl6s")]
+position = Vector2(702, 264)
+gravity_scale = 1.0

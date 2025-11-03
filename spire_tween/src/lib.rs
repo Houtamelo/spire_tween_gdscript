@@ -4,104 +4,113 @@
 #![feature(unboxed_closures)]
 #![feature(fn_traits)]
 #![feature(slice_swap_unchecked)]
+#![feature(macro_metavar_expr)]
+#![feature(concat_idents)]
+#![feature(macro_metavar_expr_concat)]
+#![feature(iter_intersperse)]
+#![feature(never_type)]
+#![feature(arbitrary_self_types)]
 #![allow(non_camel_case_types)]
 #![allow(clippy::too_many_arguments)]
 #![allow(clippy::manual_try_fold)]
 #![allow(clippy::result_large_err)]
 #![allow(clippy::large_enum_variant)]
 #![allow(clippy::new_without_default)]
+#![allow(clippy::empty_docs)]
+#![allow(unsafe_op_in_unsafe_fn)]
+#![allow(clippy::mut_from_ref)]
 #![doc = include_str!("../README.md")]
 
 mod benchmarking;
-mod cow_fn;
-mod ease;
-mod id;
-mod modes;
+//mod connection;
+//mod cow_fn;
+mod enums;
+mod gdscript_bridge;
+mod global;
 mod object_or_node;
-mod shared_ptr;
-mod singleton;
+mod rc_ptr;
 mod tweens;
-mod tweens_map;
 mod util;
 
+use ::godot::meta::Signature;
+use enums::ProcessMode;
 use internal_prelude::*;
 
 pub mod prelude {
     #[doc(hidden)]
     pub struct BaseMarker;
 
-    pub use id::TweenId;
-
-    use crate::id;
+    pub use crate::tweens::{BasicLerp, CustomLerper, LerpMode, SpireLerp};
     pub use crate::{
-        ease::Ease,
+        //connection::Connection,
+        enums::{EaseKind, Evaluator, LoopMode, PauseMode, ProcessMode, State},
+        rc_ptr::*,
         tweens::{
-            AutoPlay,
             CompleteBoundTweens,
-            DelayedCallData,
             DoDelayedCall,
             DoDelayedCallable,
             DoMethod,
             DoProperty,
             DoVarMethod,
-            Duration,
-            FetchError,
             KillBoundTweens,
-            LerpMode,
+            LerpMethodData,
             LerpPropertyData,
-            LoopMode,
-            MethodData,
             Sequence,
-            SpireHandle,
-            SpireLerp,
             SpireTween,
             SpireTweener,
-            TweenState,
-            generated_classes::*,
+            generated_classes_data::*,
         },
     };
-
-    pub type SpireSequence = SpireTween<Sequence>;
-    pub type SpireDelayedCall = SpireTween<DelayedCallData>;
-    pub type SpireProperty<T> = SpireTween<LerpPropertyData<T>>;
-    pub type SpireMethod<T> = SpireTween<MethodData<T>>;
 }
 
 #[allow(unused_imports)]
 pub(crate) mod internal_prelude {
     pub(crate) use std::{
-        any::type_name,
+        any::{Any, type_name},
+        cell::UnsafeCell,
         collections::HashMap,
         fmt::Debug,
+        hash::{Hash, Hasher},
         iter::Cloned,
         ops::{Deref, DerefMut},
+        ptr::addr_eq,
+        sync::LazyLock,
     };
 
     pub(crate) use anyhow::{anyhow, bail};
+    pub(crate) use class_macros::{
+        meta::{PropertyHintInfo, PropertyInfo},
+        sys::GDExtensionClassMethodArgumentMetadata,
+    };
+    #[cfg(feature = "dashmap")]
+    pub(crate) use dashmap::Equivalent;
     pub(crate) use derived_deref::{Deref, DerefMut};
     pub(crate) use godot::{
         classes::{
             tween::{TweenPauseMode, TweenProcessMode},
             *,
         },
-        meta::AsArg,
+        global::{PropertyHint, PropertyUsageFlags},
+        meta::{AsArg, ClassName, GodotType, InParamTuple, ParamTuple, error::FromGodotError},
         obj::WithBaseField,
         prelude::*,
     };
+    #[cfg(feature = "indexmap")]
+    pub(crate) use indexmap::Equivalent;
+    pub(crate) use replace_with::replace_with_or_abort;
+    pub(crate) use smallvec::SmallVec;
     pub(crate) use smolset::{SmolSet, SmolSetIter};
     pub(crate) use spire_enum::prelude::*;
 
     pub(crate) use crate::{
-        cow_fn::*,
-        ease::*,
-        id::*,
-        modes::*,
+        // connection::*,
+        // cow_fn::*,
+        enums::*,
+        global::*,
         object_or_node::*,
         prelude::*,
-        shared_ptr::*,
-        singleton::*,
+        rc_ptr::*,
         tweens::*,
-        tweens_map::*,
         util::*,
     };
 }

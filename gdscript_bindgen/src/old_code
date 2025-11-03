@@ -1,0 +1,298 @@
+/*
+
+const BASE_HANDLE_SCRIPT: &str = "SpireHandle";
+const INTERNAL_TWEEN_PREFIX: &str = "InternalSpireProperty";
+#[allow(unused)]
+fn create_gd_handles_files() -> anyhow::Result<()> {
+    let tys = [
+        ("float", "F32", "0.0"),
+        ("float", "F64", "0.0"),
+        ("int", "I32", "0"),
+        ("int", "I64", "0"),
+        ("Vector2", "Vector2", "Vector2.ZERO"),
+        ("Vector3", "Vector3", "Vector3.ZERO"),
+        ("Color", "Color", "Color(0, 0, 0, 0)"),
+        ("String", "String", "\"\""),
+    ];
+
+    for (ty, ty_name, default) in &tys {
+        create_gd_handle(ty, ty_name, default)?;
+    }
+
+    Ok(())
+}
+
+fn create_gd_handle(ty: &str, ty_name: &str, default: &str) -> anyhow::Result<()> {
+    let internal_ty = format!("{INTERNAL_TWEEN_PREFIX}{ty_name}");
+    let self_ty = format!("{PROPERTY_HANDLE_GD}{ty_name}");
+
+    let contents = format!(
+        "\
+extends {BASE_HANDLE_SCRIPT}
+class_name {self_ty}
+const State = preload(\"res://handle/tween_handle.gd\").State
+
+var _tween: {internal_ty}   
+
+func _init(tween: {internal_ty}):
+    _tween = tween
+
+var state: State:
+    get: return _tween.get_state() as State
+    set(val): _tween.set_state(val)
+
+var is_playing: bool:
+    get: return _tween.is_playing()
+    set(val):
+        if val: _tween.play()
+        else: _tween.pause()
+
+var is_paused: bool:
+    get: return _tween.is_paused()
+    set(val):
+        if val: _tween.pause()
+        else: _tween.play()
+
+func play() -> void: _tween.play()
+
+func pause() -> void: _tween.pause()
+
+func stop() -> void: _tween.stop()
+
+var property_path: NodePath:
+    get: return _tween.get_property_path()
+    set(val): _tween.set_property_path(val)
+
+var owner: Object:
+    get: return _tween.get_owner()
+    set(val): _tween.set_owner(val)
+
+var easing: Variant:
+    get: return _tween.get_ease()
+    set(val): _tween.set_ease(val)
+
+var duration: float:
+    get: return _tween.get_duration()
+    set(val): _tween.set_duration(val)
+
+var delay: float:
+    get: return _tween.get_delay()
+    set(val): _tween.set_delay(val)
+
+var start_value: {ty}:
+    set(val): _tween.set_start_value(val)
+
+var final_value: {ty}:
+    get: return _tween.get_final_value()
+    set(val): _tween.set_final_value(val)
+
+func is_absolute() -> bool: return _tween.is_absolute()
+
+func is_relative() -> bool: return _tween.is_relative()
+
+func is_speed_based() -> bool: return _tween.is_speed_based()
+
+## Builder methods
+
+func from(value: {ty}) -> {self_ty}:
+    _tween.set_start_value(value)
+    return self
+
+func with_ease(_ease: Variant) -> {self_ty}:
+    _tween.set_ease(_ease)
+    return self
+
+func with_delay(delay: float) -> {self_ty}:
+    _tween.set_delay(delay)
+    return self
+
+func set_absolute() -> {self_ty}:
+    _tween.set_absolute()
+    return self
+
+func set_speed_based(speed: float) -> {self_ty}:
+    _tween.set_speed_based(speed)
+    return self
+
+func set_relative(to: {ty} = {default}) -> {self_ty}:
+    _tween.set_relative(to)
+    return self
+"
+    );
+
+    let path_str = format!(
+        "./spire_tween_gdscript/handle/property/tween_property_{}.gd",
+        ty_name.to_lowercase()
+    );
+    let path = std::path::Path::new(&path_str);
+    std::fs::write(path, contents).map_err(anyhow::Error::new)
+}
+
+fn create_gd_tween_builder_files(classes: &[ClassData]) -> anyhow::Result<()> {
+    let mut tweens_by_group = ClassGroupDiscriminantTable::filled_with(Vec::new());
+
+    /*
+    {
+        let mut builder = String::with_capacity(256 * 256);
+        write!(builder, "class_name Spire\n\n")?;
+
+        for ClassData {
+            ident: class_ident,
+            gd_bridge,
+            tweens_map,
+            group,
+            ..
+        } in classes
+        {
+            if let Some(group) = group {
+                tweens_by_group[*group].push((class_ident, gd_bridge, tweens_map));
+            } else {
+                write_gd_class_tweens(&mut builder, class_ident, gd_bridge, tweens_map)?;
+            }
+        }
+
+        write!(
+            builder,
+            "static func do_fade(canvas_item: CanvasItem, to: float, duration: float) -> {PROPERTY_HANDLE_GD}F32:\n\
+                        \treturn do_color_a(canvas_item, to, duration)\n\n"
+        )?;
+
+        let path = std::path::Path::new("./spire_tween_gdscript/spire.gd");
+        std::fs::write(path, builder).map_err(anyhow::Error::new)?;
+    }
+    */
+
+    for ClassData {
+        ident: class_ident,
+        gd_bridge,
+        tweens_map,
+        group,
+        ..
+    } in classes
+    {
+        tweens_by_group[*group].push((class_ident, gd_bridge, tweens_map));
+    }
+
+    // Grouped classes
+    for (group, tweens) in tweens_by_group {
+        let mut builder = String::with_capacity(256 * 256);
+
+        let (group_class_name, file_name) = match group {
+            ClassGroup::Control => ("SpireUI", "spire_ui"),
+            ClassGroup::Node2D => ("Spire2D", "spire_2d"),
+            ClassGroup::Node3D => ("Spire3D", "spire_3d"),
+            ClassGroup::Misc => ("SpireMisc", "spire_misc"),
+        };
+
+        write!(builder, "class_name {group_class_name}\n\n")?;
+
+        match group {
+            ClassGroup::Control => {}
+            ClassGroup::Node2D => {
+                // Custom methods
+                {
+                    write!(
+                        builder,
+                        "static func do_follow(node: Node2D, follow_this: Node2D, speed: float) -> {PROPERTY_HANDLE_GD}Vector2:\n\
+                        \treturn {PROPERTY_HANDLE_GD}Vector2.new(CustomTweener.node2d_do_follow(node, follow_this, speed))\n\n"
+                    )?;
+                }
+            }
+            ClassGroup::Node3D => {}
+            ClassGroup::Misc => {}
+        }
+
+        for (class_ident, gd_bridge, tweens_map) in tweens {
+            write_gd_class_tweens(&mut builder, class_ident, gd_bridge, tweens_map)?;
+        }
+
+        let path_str = format!("./spire_tween_gdscript/{file_name}.gd");
+        let path = std::path::Path::new(&path_str);
+        std::fs::write(path, builder).map_err(anyhow::Error::new)?;
+    }
+
+    Ok(())
+}
+
+fn write_gd_class_tweens(
+    builder: &mut String,
+    class_ident: &Ident,
+    gd_bridge: &Ident,
+    tweens_map: &TweenTypeDiscriminantTable<TweensMap>,
+) -> std::fmt::Result {
+    write!(builder, "## {class_ident}\n\n")?;
+
+    for (ty, TweensMap { methods, .. }) in tweens_map {
+        let gd_ty = gd_ty(ty);
+        let gd_tween_ty = gd_tween_ty(ty);
+
+        for TweenFunc {
+            alias,
+            bridge_fn_name,
+            ..
+        } in methods
+        {
+            write!(
+                builder,
+                "static func {bridge_fn_name}(node: {class_ident}, to: {gd_ty}, duration: float) -> {gd_tween_ty}:\n\
+                    \treturn {gd_tween_ty}.new({gd_bridge}.{bridge_fn_name}(node, to, duration))\n\n"
+            )?;
+
+            if let Some((alias_bridge, _)) = alias {
+                write!(
+                    builder,
+                    "static func {alias_bridge}(node: {class_ident}, to: {gd_ty}, duration: float) -> {gd_tween_ty}:\n\
+                    \treturn {gd_tween_ty}.new({gd_bridge}.{bridge_fn_name}(node, to, duration))\n\n"
+                )?;
+            }
+        }
+    }
+
+    Ok(())
+}
+*/
+
+/*
+    let gd_bridge_def = quote! {
+        #[derive(GodotClass)]
+        #[class(base = RefCounted, no_init)]
+        pub struct #gd_bridge {}
+    };
+
+    let gd_bridge_fns = tweens_map.iter().flat_map(|(ty, TweensMap { methods, .. })| {
+        let class_ident = class_ident.clone();
+
+        methods.iter().flat_map(move |TweenFunc { alias, bridge_fn_name, trait_fn_name, .. }| {
+            let mut items = Vec::new();
+
+            let non_raw = bridge_fn_name.unraw();
+
+            items.push(quote! {
+                #[func(rename = #non_raw)]
+                fn #bridge_fn_name(node: Gd<#class_ident>, to: #ty, duration: f64) -> Gd<<#ty as TyToPropertyTween>::GdTween> {
+                    let gd = <#ty as TyToPropertyTween>::GdTween::new_gd();
+                    let tween = node.#trait_fn_name(to, duration);
+                    register_gd_handle! { tween, gd }
+                }
+            });
+
+            if let Some((alias_bridge, _)) = alias {
+                let non_raw = alias_bridge.unraw();
+                items.push(quote! {
+                    #[func(rename = #non_raw)]
+                    fn #alias_bridge(node: Gd<#class_ident>, to: #ty, duration: f64) -> Gd<<#ty as TyToPropertyTween>::GdTween> {
+                        Self::#bridge_fn_name(node, to, duration)
+                    }
+                });
+            }
+            items
+        })
+    });
+
+    let gd_bridge_impl = quote! {
+        #[godot_api]
+        impl #gd_bridge {
+            #(#gd_bridge_fns)*
+        }
+    };
+    */

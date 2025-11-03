@@ -14,3 +14,4 @@ convert_case = "0.8.0"
 spire_enum = "0.7.0"
 prettyplease = "0.2.37"
 anyhow = "1.0.100"
+const_format = { version = "0.2.34", features = ["fmt"] }

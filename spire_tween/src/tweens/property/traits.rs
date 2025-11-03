@@ -20,11 +20,11 @@ pub trait IGeneralPropertyData: Sized {
     fn from_path_and_owner(path_str: &str, path: NodePath, owner: Gd<Object>) -> Self;
 }
 
-pub trait PropertyType: Sized {
+pub trait PropertyType: Sized + ILerpable {
     type Data: IProperty<Self> + IPropertyData + IGeneralPropertyData;
 }
 
-pub trait TyToGdTween {
+pub trait TyToPropertyTween {
     type GdTween;
 }
 

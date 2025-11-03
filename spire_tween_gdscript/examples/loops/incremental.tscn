@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://cobs4s17po4a1"]
+
+[ext_resource type="Script" uid="uid://riwwymj60lol" path="res://examples/loops/incremental.gd" id="1_462og"]
+[ext_resource type="PackedScene" uid="uid://6rq2rospka1k" path="res://examples/bouncy_ball.tscn" id="2_sb5am"]
+[ext_resource type="PackedScene" uid="uid://dch68fgy4y1q7" path="res://examples/world_bounds.tscn" id="3_xe4xf"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_sb5am"]
+font_size = 64
+
+[node name="Incremental" type="Node2D"]
+script = ExtResource("1_462og")
+
+[node name="BouncyBall" parent="." instance=ExtResource("2_sb5am")]
+position = Vector2(591, 285)
+
+[node name="WorldBounds" parent="." instance=ExtResource("3_xe4xf")]
+
+[node name="Label" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Gravity: "
+label_settings = SubResource("LabelSettings_sb5am")

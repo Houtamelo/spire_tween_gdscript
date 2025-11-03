@@ -1,3 +1,4 @@
+/*
 #[allow(unused_imports)]
 use super::*;
 
@@ -60,3 +61,4 @@ cow_fn! { CowLerpFn (from: &T, to: &T, t: f64) -> T }
 cow_fn! { CowRelativeFn (current_at_obj: &T, previous_relative: &T, new_relative: &T) -> T }
 cow_fn! { CowStepFn (from: &T, to: &T, speed: f64, t: f64) -> (T, StepResult) }
 cow_fn! { CowDistanceFn (from: &T, to: &T) -> f64 }
+*/

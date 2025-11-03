@@ -1,7 +1,6 @@
 use super::*;
-use crate::modes::SpireProcessMode;
 
-impl<T> SpireTween<T> {
+impl<T: ITweenable> SpireTween<T> {
     pub fn bound_to(mut self, node: Gd<Node>) -> Self {
         // Binding process is finished in TweensMap::register
         self.bound_nodes.insert(node);
@@ -25,52 +24,27 @@ impl<T> SpireTween<T> {
         }
     }
 
-    pub fn with_pause_mode(self, pause_mode: SpirePauseMode) -> Self { Self { pause_mode, ..self } }
+    pub fn with_pause_mode(self, pause_mode: PauseMode) -> Self { Self { pause_mode, ..self } }
 
-    pub fn with_process_mode(self, process_mode: SpireProcessMode) -> Self {
+    pub fn with_process_mode(self, process_mode: ProcessMode) -> Self {
         Self {
             process_mode,
             ..self
         }
     }
 
-    pub fn run_once(self) -> Self {
-        Self {
-            loop_mode: LoopMode::Finite(0),
-            ..self
-        }
-    }
-
-    pub fn looped(self, loops: u32) -> Self {
-        Self {
-            loop_mode: LoopMode::Finite(loops),
-            ..self
-        }
-    }
-
-    pub fn infinite(self) -> Self {
-        Self {
-            loop_mode: LoopMode::Infinite,
-            ..self
-        }
-    }
-
-    pub fn on_finish(mut self, f: impl FnMut() + 'static) -> Self {
-        self.calls_on_finish.push(f.into());
-        self
-    }
-
-    pub fn on_finish_callable(mut self, callable: Callable) -> Self {
-        self.calls_on_finish.push(callable.into());
+    pub fn with_handle(mut self, handle: T::GdHandle) -> Self {
+        self.gd_handle = Some(handle);
         self
     }
 }
 
-impl<T> SpireTween<T>
-where AnyTween: From<Self>
+impl<T: ITweenable> SpireTween<T>
+where AnyTween: From<RcPtr<Self>>
 {
-    pub fn register(self) -> SpireHandle<T> {
-        let id = TWEENS.register(self.into());
-        SpireHandle::new(id)
+    pub fn register(self) -> RcPtr<Self> {
+        let tween = RcPtr::new(self);
+        TM.tween_register(tween.clone());
+        tween
     }
 }

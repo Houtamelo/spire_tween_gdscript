@@ -13,6 +13,12 @@ overflow-checks = false
 lto = true
 debug = "none"
 
+[profile.dev]
+debug-assertions = true
+opt-level = 3
+lto = false
+debug = true
+
 [profile.samply]
 inherits = "release"
 debug = true

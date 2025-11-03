@@ -27,8 +27,8 @@
 	},
 	{
 		"class": "CanvasItem", "tweens": [
-		{ "name": "modulate", "ty": "Color", "alias": "do_color" },
-		{ "name": "self_modulate", "ty": "Color", "alias": "do_self_color" },
+		{ "name": "modulate", "ty": "Color", "alias": "color" },
+		{ "name": "self_modulate", "ty": "Color", "alias": "self_color" },
 		{ "name": "z_index", "ty": "i32" }
 	]
 	},
@@ -40,25 +40,25 @@
 			"name": "drag_left_margin",
 			"ty": "f32",
 			"get": "obj.get_drag_margin(Side::LEFT)",
-			"set": "obj.set_drag_margin(Side::LEFT, val);"
+			"set": "obj.set_drag_margin(Side::LEFT, val as f32);"
 		},
 		{
 			"name": "drag_right_margin",
 			"ty": "f32",
 			"get": "obj.get_drag_margin(Side::RIGHT)",
-			"set": "obj.set_drag_margin(Side::RIGHT, val);"
+			"set": "obj.set_drag_margin(Side::RIGHT, val as f32);"
 		},
 		{
 			"name": "drag_top_margin",
 			"ty": "f32",
 			"get": "obj.get_drag_margin(Side::TOP)",
-			"set": "obj.set_drag_margin(Side::TOP, val);"
+			"set": "obj.set_drag_margin(Side::TOP, val as f32);"
 		},
 		{
 			"name": "drag_bottom_margin",
 			"ty": "f32",
 			"get": "obj.get_drag_margin(Side::BOTTOM)",
-			"set": "obj.set_drag_margin(Side::BOTTOM, val);"
+			"set": "obj.set_drag_margin(Side::BOTTOM, val as f32);"
 		},
 		{ "name": "zoom", "ty": "Vector2" },
 		{ "name": "offset", "ty": "Vector2" }
@@ -66,19 +66,15 @@
 	},
 	{
 		"class": "CanvasLayer", "tweens": [
-		{ "name": "rotation", "ty": "f32", "func": "canvas_layer_do_rotation" },
-		{
-			"name": "follow_viewport_scale",
-			"ty": "f32",
-			"func": "canvas_layer_do_follow_viewport_scale"
-		},
-		{ "name": "offset", "ty": "Vector2", "func": "canvas_layer_do_offset" },
-		{ "name": "scale", "ty": "Vector2", "func": "canvas_layer_do_scale" }
+		{ "name": "rotation", "ty": "f32" },
+		{ "name": "follow_viewport_scale", "ty": "f32" },
+		{ "name": "offset", "ty": "Vector2" },
+		{ "name": "scale", "ty": "Vector2" }
 	]
 	},
 	{
 		"class": "CanvasModulate", "tweens": [
-		{ "name": "color", "ty": "Color", "func": "canvas_modulate_do_color" }
+		{ "name": "color", "ty": "Color", "func": "canvas_color" }
 	]
 	},
 	{
@@ -87,83 +83,75 @@
 			"name": "anchor_bottom",
 			"ty": "f32",
 			"get": "obj.get_anchor(Side::BOTTOM)",
-			"set": "obj.set_anchor(Side::BOTTOM, val);"
+			"set": "obj.set_anchor(Side::BOTTOM, val as f32);"
 		},
 		{
 			"name": "anchor_left",
 			"ty": "f32",
 			"get": "obj.get_anchor(Side::LEFT)",
-			"set": "obj.set_anchor(Side::LEFT, val);"
+			"set": "obj.set_anchor(Side::LEFT, val as f32);"
 		},
 		{
 			"name": "anchor_right",
 			"ty": "f32",
 			"get": "obj.get_anchor(Side::RIGHT)",
-			"set": "obj.set_anchor(Side::RIGHT, val);"
+			"set": "obj.set_anchor(Side::RIGHT, val as f32);"
 		},
 		{
 			"name": "anchor_top",
 			"ty": "f32",
 			"get": "obj.get_anchor(Side::TOP)",
-			"set": "obj.set_anchor(Side::TOP, val);"
+			"set": "obj.set_anchor(Side::TOP, val as f32);"
 		},
-		{ "name": "rotation", "ty": "f32", "func": "control_do_rotation" },
-		{ "name": "rotation_degrees", "ty": "f32", "func": "control_do_rotation_degrees" },
+		{ "name": "rotation", "ty": "f32" },
+		{ "name": "rotation_degrees", "ty": "f32" },
 		{ "name": "custom_minimum_size", "ty": "Vector2" },
-		{
-			"name": "position",
-			"ty": "Vector2",
-			"func": "control_do_position",
-			"alias": "control_do_move"
-		},
-		{ "name": "global_position", "ty": "Vector2", "func": "control_do_global_position" },
+		{ "name": "position", "ty": "Vector2", "alias": "move_local" },
+		{ "name": "global_position", "ty": "Vector2", "alias": "move" },
 		{ "name": "pivot_offset", "ty": "Vector2" },
-		{ "name": "scale", "ty": "Vector2", "func": "control_do_scale" },
+		{ "name": "scale", "ty": "Vector2" },
 		{ "name": "size", "ty": "Vector2" }
 	]
 	},
 	{
-		"class": "Button", "group": "UI", "tweens": [
-		{ "name": "text", "ty": "String", "func": "button_do_text" }
+		"class": "Button", "tweens": [
+		{ "name": "text", "ty": "String" }
 	]
 	},
 	{
-		"class": "LinkButton", "group": "UI", "tweens": [
-		{ "name": "text", "ty": "String", "func": "link_button_do_text" }
+		"class": "LinkButton", "tweens": [
+		{ "name": "text", "ty": "String" }
 	]
 	},
 	{
-		"class": "Label", "group": "UI", "tweens": [
-		{ "name": "visible_ratio", "ty": "f32", "func": "label_do_visible_ratio" },
-		{ "name": "max_lines_visible", "ty": "i32", "func": "label_do_max_lines_visible" },
-		{ "name": "visible_characters", "ty": "i32", "func": "label_do_visible_characters" },
-		{ "name": "text", "ty": "String", "func": "label_do_text" }
+		"class": "Label", "tweens": [
+		{ "name": "visible_ratio", "ty": "f32" },
+		{ "name": "max_lines_visible", "ty": "i32" },
+		{ "name": "visible_characters", "ty": "i32" },
+		{ "name": "text", "ty": "String" }
 	]
 	},
 	{
-		"class": "LineEdit", "group": "UI", "tweens": [
+		"class": "LineEdit", "tweens": [
 		{ "name": "max_length", "ty": "i32" },
-		{ "name": "text", "ty": "String", "func": "line_edit_do_text" },
+		{ "name": "text", "ty": "String" },
 		{
 			"name": "placeholder_text",
 			"ty": "String",
-			"func": "line_edit_do_placeholder",
 			"get": "obj.get_placeholder()",
 			"set": "obj.set_placeholder(&val);"
 		}
 	]
 	},
 	{
-		"class": "RichTextLabel", "group": "UI", "tweens": [
-		{ "name": "visible_ratio", "ty": "f32", "func": "rich_do_visible_ratio" },
-		{
-			"name": "visible_characters", "ty": "i32", "func": "rich_do_visible_characters"
-		},
-		{ "name": "text", "ty": "String", "func": "rich_do_text" }
+		"class": "RichTextLabel", "tweens": [
+		{ "name": "visible_ratio", "ty": "f32" },
+		{ "name": "visible_characters", "ty": "i32" },
+		{ "name": "text", "ty": "String" }
 	]
 	},
 	{
-		"class": "TextEdit", "group": "UI", "tweens": [
+		"class": "TextEdit", "tweens": [
 		{
 			"name": "scroll_vertical",
 			"ty": "f64",
@@ -175,13 +163,12 @@
 			"name": "scroll_horizontal",
 			"ty": "i32",
 			"get": "obj.get_h_scroll()",
-			"set": "obj.set_h_scroll(val);"
+			"set": "obj.set_h_scroll(val as i32);"
 		},
-		{ "name": "text", "ty": "String", "func": "text_edit_do_text" },
+		{ "name": "text", "ty": "String" },
 		{
 			"name": "placeholder_text",
 			"ty": "String",
-			"func": "text_edit_do_placeholder",
 			"get": "obj.get_placeholder()",
 			"set": "obj.set_placeholder(&val);"
 		}
@@ -189,8 +176,8 @@
 	},
 	{
 		"class": "Node2D", "group": "2D", "tweens": [
-		{ "name": "position", "ty": "Vector2", "alias": "do_move" },
-		{ "name": "global_position", "ty": "Vector2", "alias": "do_global_move" },
+		{ "name": "position", "ty": "Vector2", "alias": "move_local" },
+		{ "name": "global_position", "ty": "Vector2", "alias": "move" },
 		{ "name": "scale", "ty": "Vector2" },
 		{ "name": "global_scale", "ty": "Vector2" },
 		{ "name": "rotation", "ty": "f32" },
@@ -210,7 +197,7 @@
 	]
 	},
 	{
-		"class": "Range", "group": "UI", "tweens": [
+		"class": "Range", "tweens": [
 		{ "name": "value", "ty": "f64" },
 		{
 			"name": "ratio",
@@ -218,12 +205,8 @@
 			"get": "obj.get_as_ratio()",
 			"set": "obj.set_as_ratio(val);"
 		},
-		{
-			"name": "min_value", "ty": "f64", "get": "obj.get_min()", "set": "obj.set_min(val);"
-		},
-		{
-			"name": "max_value", "ty": "f64", "get": "obj.get_max()", "set": "obj.set_max(val);"
-		}
+		{ "name": "min_value", "ty": "f64", "get": "obj.get_min()", "set": "obj.set_min(val);" },
+		{ "name": "max_value", "ty": "f64", "get": "obj.get_max()", "set": "obj.set_max(val);" }
 	]
 	},
 	{
@@ -237,7 +220,7 @@
 			"name": "radial_fill_degrees",
 			"ty": "f32",
 			"get": "obj.clone().get_fill_degrees()",
-			"set": "obj.set_fill_degrees(val);"
+			"set": "obj.set_fill_degrees(val as f32);"
 		},
 		{ "name": "tint_under", "ty": "Color" },
 		{ "name": "tint_over", "ty": "Color" },
@@ -250,9 +233,9 @@
 	]
 	},
 	{
-		"class": "VideoStreamPlayer", "group": "UI", "tweens": [
-		{ "name": "volume_db", "ty": "f32", "func": "video_do_volume_db" },
-		{ "name": "volume", "ty": "f32", "func": "video_do_volume" }
+		"class": "VideoStreamPlayer", "tweens": [
+		{ "name": "volume_db", "ty": "f32" },
+		{ "name": "volume", "ty": "f32" }
 	]
 	},
 	{
@@ -279,58 +262,36 @@
 	},
 	{
 		"class": "ConfirmationDialog", "group": "Misc", "tweens": [
-		{
-			"name": "cancel_button_text", "ty": "String"
-		}
+		{ "name": "cancel_button_text", "ty": "String" }
 	]
 	},
 	{
 		"class": "AspectRatioContainer", "group": "UI", "tweens": [
-		{
-			"name": "ratio", "ty": "f32", "func": "container_do_ratio"
-		}
+		{ "name": "ratio", "ty": "f32", "func": "container_ratio" }
 	]
 	},
 	{
 		"class": "StatusIndicator", "group": "Misc", "tweens": [
-		{
-			"name": "tooltip", "ty": "String"
-		}
+		{ "name": "tooltip", "ty": "String" }
 	]
 	},
 	{
 		"class": "ColorRect", "group": "UI", "tweens": [
-		{
-			"name": "color", "ty": "Color", "func": "rect_do_color"
-		}
+		{ "name": "color", "ty": "Color", "func": "rect_color" }
 	]
 	},
 	{
 		"class": "Area2D", "group": "2D", "tweens": [
-		{
-			"name": "gravity", "ty": "f32", "func": "area_do_gravity"
-		},
-		{
-			"name": "gravity_point_unit_distance",
-			"ty": "f32",
-			"func": "area_do_gravity_point_unit_distance"
-		},
-		{
-			"name": "gravity_direction", "ty": "Vector2", "func": "area_do_gravity_direction"
-		},
-		{
-			"name": "gravity_point_center", "ty": "Vector2", "func": "area_do_gravity_point_center"
-		},
-		{
-			"name": "linear_damp", "ty": "f32", "func": "area_do_linear_damp"
-		}
+		{ "name": "gravity", "ty": "f32", "func": "area_gravity" },
+		{ "name": "gravity_point_unit_distance", "ty": "f32" },
+		{ "name": "gravity_direction", "ty": "Vector2" },
+		{ "name": "gravity_point_center", "ty": "Vector2" },
+		{ "name": "linear_damp", "ty": "f32", "func": "area_linear_damp" }
 	]
 	},
 	{
 		"class": "CharacterBody2D", "group": "2D", "tweens": [
-		{
-			"name": "velocity", "ty": "Vector2", "func": "chara_do_velocity"
-		}
+		{ "name": "velocity", "ty": "Vector2", "func": "character_velocity" }
 	]
 	},
 	{
@@ -343,21 +304,14 @@
 		{ "name": "gravity_scale", "ty": "f32" },
 		{ "name": "inertia", "ty": "f32" },
 		{ "name": "linear_damp", "ty": "f32" },
+		{ "name": "linear_velocity", "ty": "Vector2", "alias": "velocity" },
 		{ "name": "mass", "ty": "f32" }
 	]
 	},
 	{
 		"class": "StaticBody2D", "group": "2D", "tweens": [
-		{
-			"name": "constant_angular_velocity",
-			"ty": "f32",
-			"func": "static_do_constant_angular_velocity"
-		},
-		{
-			"name": "constant_linear_velocity",
-			"ty": "Vector2",
-			"func": "static_do_constant_linear_velocity"
-		}
+		{ "name": "constant_angular_velocity", "ty": "f32" },
+		{ "name": "constant_linear_velocity", "ty": "Vector2" }
 	]
 	}
 ]

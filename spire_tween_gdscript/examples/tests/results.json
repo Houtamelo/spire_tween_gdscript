@@ -1,0 +1,65 @@
+{
+	"res://examples/tests/delays.tscn": {
+		"hash": 303566448,
+		"test_delay_is_respected": true,
+		"test_delayed_call": true,
+		"test_extra_loops_dont_have_delay": true,
+		"test_sequence_respects_delay": true
+	},
+	"res://examples/tests/error_handling.tscn": {
+		"hash": 145186426,
+		"test_free_while_playing": true,
+		"test_invalid_enum": true,
+		"test_invalid_sequence_adding": true,
+		"test_invalid_tween": true
+	},
+	"res://examples/tests/lerp_callable.tscn": {
+		"hash": 1932482770,
+		"test_lerp_call": true,
+		"test_lerp_call_with_ease": true,
+		"test_lerp_call_with_loop": true
+	},
+	"res://examples/tests/lerp_modes.tscn": {
+		"hash": 2689437004,
+		"test_relative": true,
+		"test_speed_based": true,
+		"test_speed_based_plus_relative": true,
+		"test_two_relatives": true
+	},
+	"res://examples/tests/misc.tscn": {
+		"hash": 969817421,
+		"test_dyn_target": true,
+		"test_force_complete": true,
+		"test_property_path": true
+	},
+	"res://examples/tests/pause_process_modes.tscn": {
+		"hash": 490521640,
+		"test_pause_mode_bound": true,
+		"test_pause_mode_bound_process_mode_physics": true,
+		"test_pause_mode_process": true,
+		"test_pause_mode_stop": true,
+		"test_process_mode_idle": true,
+		"test_process_mode_physics": true
+	},
+	"res://examples/tests/play_pause_stop.tscn": {
+		"hash": 1994721528,
+		"test_pause_play_works": true,
+		"test_play_stop_play_works": true,
+		"test_play_works": true
+	},
+	"res://examples/tests/register_unregister.tscn": {
+		"hash": 3746576514,
+		"test_unregistered_can_be_manually_stepped": true,
+		"test_unregistered_does_not_affect_game": true
+	},
+	"res://examples/tests/sequences.tscn": {
+		"hash": 19794875,
+		"test_append_many": true,
+		"test_default_children_ease": true,
+		"test_proper_ordering": true,
+		"test_remove": true,
+		"test_remove_call": true,
+		"test_remove_midway": true,
+		"test_stopped_child_does_not_halt_sequence": true
+	}
+}

@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://msv41llxmi4m"]
+
+[ext_resource type="Script" uid="uid://dg2oohyu28m7i" path="res://examples/tests/play_pause_stop.gd" id="1_tsxc5"]
+[ext_resource type="PackedScene" uid="uid://dch68fgy4y1q7" path="res://examples/world_bounds.tscn" id="2_3igq3"]
+
+[sub_resource type="Gradient" id="Gradient_u57kn"]
+offsets = PackedFloat32Array(0, 0.309524, 0.313492)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_qiwqy"]
+gradient = SubResource("Gradient_u57kn")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="PlayPauseStop" type="Node2D"]
+script = ExtResource("1_tsxc5")
+
+[node name="WorldBounds" parent="." instance=ExtResource("2_3igq3")]
+
+[node name="Ball" type="Sprite2D" parent="."]
+position = Vector2(609, 399)
+scale = Vector2(3.85, 3.85)
+texture = SubResource("GradientTexture2D_qiwqy")

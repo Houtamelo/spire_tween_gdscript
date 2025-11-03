@@ -17,7 +17,7 @@ impl ObjectOrNode {
         match self {
             ObjectOrNode::Object(obj) => is_instance_id_valid(obj.instance_id_unchecked().to_i64()),
             ObjectOrNode::Node(node) => {
-                match TWEENS.node_get_status_fresh(*node) {
+                match TM.node_get_status_fresh(*node) {
                     NodeStatus::InsideTree | NodeStatus::OutsideTreeMaybeDead => true,
                     NodeStatus::Dead => false,
                 }

@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://x2phlacdyv4d"]
+
+[ext_resource type="Script" uid="uid://bmswfm1xnee1n" path="res://examples/position_2d/pursuit.gd" id="1_hrydf"]
+
+[sub_resource type="Gradient" id="Gradient_gx0oc"]
+offsets = PackedFloat32Array(0, 0.313492, 0.31746)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_glwhm"]
+gradient = SubResource("Gradient_gx0oc")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="Pursuit" type="Node2D"]
+script = ExtResource("1_hrydf")
+_chaser_speed = 300.0
+
+[node name="Chaser" type="Sprite2D" parent="."]
+modulate = Color(1, 0, 0, 1)
+position = Vector2(220, 689)
+texture = SubResource("GradientTexture2D_glwhm")
+
+[node name="Target" type="Sprite2D" parent="."]
+modulate = Color(0, 0.123024, 1, 1)
+position = Vector2(337, 310)
+texture = SubResource("GradientTexture2D_glwhm")

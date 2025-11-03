@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://cu7s0xbgbfi3t"]
+
+[ext_resource type="Script" uid="uid://x2e5jiwc214q" path="res://examples/screen_saver/screen_saver.gd" id="1_g3of0"]
+[ext_resource type="PackedScene" uid="uid://6rq2rospka1k" path="res://examples/bouncy_ball.tscn" id="2_g3of0"]
+[ext_resource type="PackedScene" uid="uid://dch68fgy4y1q7" path="res://examples/world_bounds.tscn" id="2_qiwqy"]
+
+[node name="ScreenSaver" type="Node2D"]
+script = ExtResource("1_g3of0")
+
+[node name="WorldBounds" parent="." instance=ExtResource("2_qiwqy")]
+
+[node name="BouncyBall" parent="." instance=ExtResource("2_g3of0")]
+position = Vector2(1025, 590)

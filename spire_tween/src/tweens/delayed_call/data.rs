@@ -1,144 +1,64 @@
 use super::*;
 
-pub enum DelayedCallData {
-    Callable(Callable),
-    Closure(Box<dyn FnMut()>),
-}
+impl SpireTweener for SpireTween<Callable> {
+    #[inline]
+    fn play(&mut self) {
+        if self.is_stopped() {
+            self.reset_counters();
+        }
 
-impl DelayedCallData {
-    pub fn invoke(&mut self) {
-        match self {
-            DelayedCallData::Callable(callable) => {
-                if callable.is_valid() {
-                    callable.callv(&VariantArray::new());
-                } else {
-                    godot_warn!(
-                        "Cannot invoke callable: {:?}, it is invalid",
-                        callable.method_name()
-                    );
-                }
-            }
-            DelayedCallData::Closure(closure) => {
-                closure();
-            }
+        self.state = State::Playing;
+    }
+
+    #[inline]
+    fn pause(&mut self) {
+        if !self.is_stopped() {
+            self.state = State::Paused;
         }
     }
-}
-
-impl<T: FnMut() + 'static> From<T> for DelayedCallData {
-    fn from(value: T) -> Self { Self::Closure(Box::new(value)) }
-}
-
-impl From<Callable> for DelayedCallData {
-    fn from(value: Callable) -> Self { Self::Callable(value) }
-}
-
-impl SpireTweener for SpireTween<DelayedCallData> {
-    #[inline]
-    fn get_state(&self) -> TweenState { self.state }
 
     #[inline]
-    fn set_state(&mut self, state: TweenState) { self.state = state; }
-}
+    fn stop(&mut self) { self.state = State::Stopped; }
 
-impl AdvanceTime for SpireTween<DelayedCallData> {
-    fn complete(&mut self) {
+    #[inline]
+    fn force_complete(&mut self) {
         match self.state {
-            | TweenState::Playing | TweenState::Paused => {
+            | State::Playing | State::Paused => {
                 self.seek_end();
             }
-            TweenState::Stopped => {}
+            State::Stopped => {}
         }
     }
 
-    fn advance_time(&mut self, delta_time: f64) -> f64 {
-        self.elapsed_time += delta_time * self.speed_scale;
+    fn process(&mut self, delta_time: f64, _is_tree_paused: bool) -> AdvanceTimeResult {
+        if let Some(step) = self.handle_time_step(delta_time) {
+            self.t.call(&[]);
 
-        let excess = self.elapsed_time - self.delay;
-        if excess <= 0. {
-            return -1.0;
-        }
-
-        self.t.invoke();
-
-        self.cycle_count += 1;
-        self.elapsed_time = excess;
-
-        match &mut self.loop_mode {
-            LoopMode::Infinite => -1.0,
-            LoopMode::Finite(loop_count) => {
-                if self.cycle_count < *loop_count {
-                    -1.0
-                } else {
-                    self.elapsed_time = self.delay;
-                    self.handle_finished();
-                    excess
-                }
+            if let Some(excess_time) = self.handle_loop_finished(step) {
+                AdvanceTimeResult::Completed { excess_time }
+            } else {
+                AdvanceTimeResult::Playing
             }
+        } else {
+            AdvanceTimeResult::Playing
         }
     }
 }
 
-impl SpireTween<DelayedCallData> {
+impl SpireTween<Callable> {
     fn seek_end(&mut self) {
-        self.elapsed_time = self.delay;
-        self.t.invoke();
+        self.loop_time = self.delay;
+        self.t.call(&[]);
         self.handle_finished();
     }
 }
 
-impl SpireTween<DelayedCallData> {
-    pub fn new(f: impl FnMut() + 'static, delay: f64, auto_play: AutoPlay) -> Self {
-        Self {
-            bound_nodes: Default::default(),
-            state: match auto_play.0 {
-                true => TweenState::Playing,
-                false => TweenState::Paused,
-            },
-            delay,
-            speed_scale: 1.,
-            elapsed_time: 0.,
-            cycle_count: 0,
-            pause_mode: SpirePauseMode::Stop,
-            process_mode: SpireProcessMode::Idle,
-            loop_mode: LoopMode::Finite(0),
-            calls_on_finish: Vec::new(),
-            t: f.into(),
-        }
+impl SpireTween<Callable> {
+    pub fn new(callable: Callable, delay: f64) -> Self {
+        Self::new_with_data(callable).with_delay(delay)
     }
 
-    pub fn new_registered(
-        f: impl FnMut() + 'static,
-        delay: f64,
-        auto_play: AutoPlay,
-    ) -> SpireHandle<DelayedCallData> {
-        Self::new(f, delay, auto_play).register()
-    }
-
-    pub fn new_callable(callable: Callable, delay: f64, auto_play: AutoPlay) -> Self {
-        Self {
-            bound_nodes: Default::default(),
-            state: match auto_play.0 {
-                true => TweenState::Playing,
-                false => TweenState::Paused,
-            },
-            delay,
-            speed_scale: 1.,
-            elapsed_time: 0.,
-            cycle_count: 0,
-            pause_mode: SpirePauseMode::Stop,
-            process_mode: SpireProcessMode::Idle,
-            loop_mode: LoopMode::Finite(0),
-            calls_on_finish: Vec::new(),
-            t: callable.into(),
-        }
-    }
-
-    pub fn new_callable_registered(
-        callable: Callable,
-        delay: f64,
-        auto_play: AutoPlay,
-    ) -> SpireHandle<DelayedCallData> {
-        Self::new_callable(callable, delay, auto_play).register()
+    pub fn new_registered(callable: Callable, delay: f64) -> RcPtr<Self> {
+        Self::new(callable, delay).register()
     }
 }

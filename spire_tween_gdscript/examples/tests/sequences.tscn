@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://btwyuh8ljmg8d"]
+
+[ext_resource type="Script" uid="uid://dlfvpppqva22p" path="res://examples/tests/sequences.gd" id="1_nusqi"]
+[ext_resource type="PackedScene" uid="uid://dch68fgy4y1q7" path="res://examples/world_bounds.tscn" id="2_q1fiq"]
+[ext_resource type="PackedScene" uid="uid://6rq2rospka1k" path="res://examples/bouncy_ball.tscn" id="3_byhu8"]
+
+[node name="Sequences" type="Node2D"]
+script = ExtResource("1_nusqi")
+
+[node name="WorldBounds" parent="." instance=ExtResource("2_q1fiq")]
+
+[node name="BouncyBall" parent="." instance=ExtResource("3_byhu8")]
+position = Vector2(702, 264)
+gravity_scale = 1.0

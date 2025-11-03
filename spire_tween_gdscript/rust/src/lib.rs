@@ -91,7 +91,7 @@ enum State {
 #[class(base = Node2D)]
 pub struct Tester {
     base: Base<Node2D>,
-    sequence: Option<SpireHandle<Sequence>>,
+    sequence: Option<RcPtr<SpireTween<Sequence>>>,
     reports: Vec<Report>,
     frame_count: i64,
     state: State,
@@ -116,20 +116,20 @@ impl Test {
         match self {
             Test::Absolute => {
                 let expected_x = match time {
-                    ..=D_1 => f64::spire_lerp(&0., &1000., time / D_1),
-                    ..=D_2 => f64::spire_lerp(&1000., &-500., (time - D_1) / D_1),
+                    ..=D_1 => ().spire_lerp(&0., &1000., time / D_1),
+                    ..=D_2 => ().spire_lerp(&1000., &-500., (time - D_1) / D_1),
                     _ => -500.,
                 };
 
                 let expected_y = match time {
-                    ..=D_1 => f64::spire_lerp(&0., &-1000., time / D_1),
+                    ..=D_1 => ().spire_lerp(&0., &-1000., time / D_1),
                     ..=D_15 => -1000.,
-                    ..=D_2 => f64::spire_lerp(&-1000., &0., (time - D_15) / (D_2 - D_15)),
+                    ..=D_2 => ().spire_lerp(&-1000., &0., (time - D_15) / (D_2 - D_15)),
                     _ => 0.,
                 };
 
                 let expected_color_r = match time {
-                    ..=D_2 => f64::spire_lerp(&0., &0.5, time / D_2),
+                    ..=D_2 => ().spire_lerp(&0., &0.5, time / D_2),
                     _ => 0.5,
                 };
 
@@ -141,21 +141,21 @@ impl Test {
             }
             Test::SpeedBased => {
                 let expected_x = match time {
-                    ..=10.0 => f64::spire_step(&0., &1000., 100., time).0,
-                    ..=19.0 => f64::spire_step(&1000., &-800., 200., time - 10.).0,
+                    ..=10.0 => ().spire_step(&0., &1000., 100., time).0,
+                    ..=19.0 => ().spire_step(&1000., &-800., 200., time - 10.).0,
                     _ => -800.,
                 };
 
                 let expected_y = match time {
-                    ..=10.0 => f64::spire_step(&0., &-1000., 100., time).0,
-                    ..=17.0 => f64::spire_step(&-1000., &400., 200., time - 10.).0,
+                    ..=10.0 => ().spire_step(&0., &-1000., 100., time).0,
+                    ..=17.0 => ().spire_step(&-1000., &400., 200., time - 10.).0,
                     _ => 400.,
                 };
 
                 let expected_color_r = match time {
-                    ..=10.0 => f64::spire_step(&0., &0.5, 0.05, time).0,
+                    ..=10.0 => ().spire_step(&0., &0.5, 0.05, time).0,
                     ..=12.0 => 0.5,
-                    ..=12.5 => f64::spire_step(&0.5, &0., 1., time - 12.).0,
+                    ..=12.5 => ().spire_step(&0.5, &0., 1., time - 12.).0,
                     _ => 0.,
                 };
 
@@ -167,23 +167,23 @@ impl Test {
             }
             Test::Relative => {
                 let expected_x = match time {
-                    ..=D_1 => f64::spire_lerp(&0., &1000., time / D_1),
+                    ..=D_1 => ().spire_lerp(&0., &1000., time / D_1),
                     ..=D_2 => 1000. - 500. * (time - D_1) / D_1,
                     _ => 500.,
                 };
 
                 let expected_y = match time {
-                    ..=2.0 => f64::spire_lerp(&0., &-1000., time / D_1),
+                    ..=2.0 => ().spire_lerp(&0., &-1000., time / D_1),
                     ..=D_1 => {
-                        f64::spire_lerp(&0., &-1000., time / D_1)
-                            + f64::spire_lerp(&0., &1500., (time - 2.0) / D_1)
+                        ().spire_lerp(&0., &-1000., time / D_1)
+                            + ().spire_lerp(&0., &1500., (time - 2.0) / D_1)
                     }
-                    ..=6.0 => -1000. + f64::spire_lerp(&0., &1500., (time - 2.0) / D_1),
+                    ..=6.0 => -1000. + ().spire_lerp(&0., &1500., (time - 2.0) / D_1),
                     _ => 500.,
                 };
 
                 let expected_color_r = match time {
-                    ..=D_2 => f64::spire_lerp(&0., &1., time / D_2),
+                    ..=D_2 => ().spire_lerp(&0., &1., time / D_2),
                     _ => 1.,
                 };
 
@@ -196,23 +196,23 @@ impl Test {
             Test::Delay => {
                 let expected_x = match time {
                     ..=3. => 0.,
-                    ..=7.0 => f64::spire_lerp(&0., &1000., (time - 3.) / D_1),
+                    ..=7.0 => ().spire_lerp(&0., &1000., (time - 3.) / D_1),
                     ..=12. => 1000.,
-                    ..=16. => f64::spire_lerp(&1000., &-500., (time - D_1 - 8.) / D_1),
+                    ..=16. => ().spire_lerp(&1000., &-500., (time - D_1 - 8.) / D_1),
                     _ => -500.,
                 };
 
                 let expected_y = match time {
                     ..=3. => 0.,
-                    ..=7. => f64::spire_lerp(&0., &-1000., (time - 3.) / D_1),
+                    ..=7. => ().spire_lerp(&0., &-1000., (time - 3.) / D_1),
                     ..=9. => -1000.,
-                    ..=11. => f64::spire_lerp(&-1000., &0., (time - D_15 - 3.) / (D_2 - D_15)),
+                    ..=11. => ().spire_lerp(&-1000., &0., (time - D_15 - 3.) / (D_2 - D_15)),
                     _ => 0.,
                 };
 
                 let expected_color_r = match time {
                     ..=0.5 => 0.,
-                    ..=8.5 => f64::spire_lerp(&0., &0.5, (time - 0.5) / D_2),
+                    ..=8.5 => ().spire_lerp(&0., &0.5, (time - 0.5) / D_2),
                     _ => 0.5,
                 };
 
@@ -226,7 +226,7 @@ impl Test {
     }
 
     #[must_use]
-    fn start(&self, sprite: &Gd<Node2D>) -> SpireHandle<Sequence> {
+    fn start(&self, sprite: &Gd<Node2D>) -> RcPtr<SpireTween<Sequence>> {
         match self {
             Test::Absolute => {
                 sprite.do_color_r(0.5, D_2).register();
@@ -239,17 +239,17 @@ impl Test {
                 seq.register()
             }
             Test::SpeedBased => {
-                sprite.do_color_r(0.5, 0.).speed_based(0.05).register();
+                sprite.do_color_r(0.5, 0.05).as_speed_based().register();
 
                 let mut seq = SpireTween::<Sequence>::new().bound_to(sprite.upcast());
-                seq.append(sprite.do_move_x(1000.0, D_1).speed_based(100.));
-                seq.join(sprite.do_move_y(-1000.0, D_1).speed_based(100.));
+                seq.append(sprite.do_move_x(1000.0, 100.).as_speed_based());
+                seq.join(sprite.do_move_y(-1000.0, 100.).as_speed_based());
                 seq.append(
                     sprite
-                        .do_move(Vector2::new(-800., 400.), D_1)
-                        .speed_based(200.),
+                        .do_move(Vector2::new(-800., 400.), 200.)
+                        .as_speed_based(),
                 );
-                seq.insert(12.0, sprite.do_color_r(0., 0.).speed_based(1.));
+                seq.insert(12.0, sprite.do_color_r(0., 1.).as_speed_based());
                 seq.register()
             }
             Test::Relative => {
@@ -257,9 +257,9 @@ impl Test {
 
                 let mut seq = SpireTween::<Sequence>::new().bound_to(sprite.upcast());
                 seq.append(sprite.do_move_x(1000.0, D_1));
-                seq.join(sprite.do_move_y(-1000.0, D_1).relative(0.));
-                seq.append(sprite.do_move_x(-500.0, D_1).relative(0.));
-                seq.insert(2.0, sprite.do_move_y(1500., D_1).relative(0.));
+                seq.join(sprite.do_move_y(-1000.0, D_1).as_relative(0.));
+                seq.append(sprite.do_move_x(-500.0, D_1).as_relative(0.));
+                seq.insert(2.0, sprite.do_move_y(1500., D_1).as_relative(0.));
                 seq.register()
             }
             Test::Delay => {
@@ -342,11 +342,7 @@ impl INode2D for Tester {
     fn process(&mut self, _delta: f64) {
         match &mut self.state {
             State::Running { test } => {
-                if let Some(time) = self
-                    .sequence
-                    .as_mut()
-                    .and_then(|id| id.map_mut(|seq| seq.elapsed_time).ok())
-                {
+                if let Some(time) = self.sequence.as_mut().map(|tween| tween.loop_time) {
                     let sprite = self.sprite.unwrap();
                     test.clone().report(self, &sprite, time);
                 } else {
