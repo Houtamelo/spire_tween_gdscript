@@ -12,7 +12,7 @@ const DIALOGUES := [
 @export var _chars_per_second: float = 30.0
 
 var _idx: int = -1
-var _tween: SpirePropertyI32
+var _tween: SpirePropertyInt
 
 func _ready() -> void:
 	_button_next.pressed.connect(_next_line)

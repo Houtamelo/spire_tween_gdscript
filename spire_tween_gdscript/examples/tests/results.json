@@ -1,20 +1,20 @@
 {
 	"res://examples/tests/delays.tscn": {
-		"hash": 303566448,
+		"hash": 476170961,
 		"test_delay_is_respected": true,
 		"test_delayed_call": true,
 		"test_extra_loops_dont_have_delay": true,
 		"test_sequence_respects_delay": true
 	},
 	"res://examples/tests/error_handling.tscn": {
-		"hash": 145186426,
+		"hash": 4076409300,
 		"test_free_while_playing": true,
 		"test_invalid_enum": true,
 		"test_invalid_sequence_adding": true,
 		"test_invalid_tween": true
 	},
 	"res://examples/tests/lerp_callable.tscn": {
-		"hash": 1932482770,
+		"hash": 2257389484,
 		"test_lerp_call": true,
 		"test_lerp_call_with_ease": true,
 		"test_lerp_call_with_loop": true
@@ -42,18 +42,18 @@
 		"test_process_mode_physics": true
 	},
 	"res://examples/tests/play_pause_stop.tscn": {
-		"hash": 1994721528,
+		"hash": 2046200832,
 		"test_pause_play_works": true,
 		"test_play_stop_play_works": true,
 		"test_play_works": true
 	},
 	"res://examples/tests/register_unregister.tscn": {
-		"hash": 3746576514,
+		"hash": 2591203535,
 		"test_unregistered_can_be_manually_stepped": true,
 		"test_unregistered_does_not_affect_game": true
 	},
 	"res://examples/tests/sequences.tscn": {
-		"hash": 19794875,
+		"hash": 493658965,
 		"test_append_many": true,
 		"test_default_children_ease": true,
 		"test_proper_ordering": true,

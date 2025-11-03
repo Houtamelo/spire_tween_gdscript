@@ -22,13 +22,13 @@ static func print_results(
 	builder += "\n"
 	builder += "|---------------------------------------------------------|\n"
 	builder += "|          frames per second - higher is better           |\n"
-	builder += "| tween |     min |     max |  median |    mean |  stddev |\n"
+	builder += "| tween |     min |     max |  median |    mean |  std-dev|\n"
 	builder += "|-------|---------|---------|---------|---------|---------|\n"
 	builder += fmt_engine_fps_results(results_builtin, "Godot")
 	builder += fmt_engine_fps_results(results_spire, "Spire")
 	builder += "|---------------------------------------------------------|\n"
-	builder += "|         miliseconds per frame - lower is better         |\n"
-	builder += "| tween |     min |     max |  median |    mean |  stddev |\n"
+	builder += "|         milliseconds per frame - lower is better        |\n"
+	builder += "| tween |     min |     max |  median |    mean |  std-dev|\n"
 	builder += "|-------|---------|---------|---------|---------|---------|\n"
 	builder += fmt_delta_times_results(results_builtin, "Godot")
 	builder += fmt_delta_times_results(results_spire, "Spire")

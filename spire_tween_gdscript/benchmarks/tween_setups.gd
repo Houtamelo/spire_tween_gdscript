@@ -44,11 +44,23 @@ static func ensure_builtin_tweeners(nodes: Array[Node2D], tweeners: Array[Tween]
 	for i in range(tweeners_size, nodes_size):
 		tweeners.push_back(nodes[i].create_tween().set_parallel(true))
 
+
+static func ensure_spire_tweeners(nodes: Array[Node2D], tweeners: Array[SpireSequence]) -> void:
+	var tweeners_size := tweeners.size()
+	var nodes_size := nodes.size()
+	if tweeners_size >= nodes_size: return
+	
+	for i in range(tweeners_size, nodes_size):
+		#tweeners.push_back(Spire.sequence().bind_node(nodes[i]))
+		tweeners.push_back(Spire.sequence())
+
+
 static func tween_global_positions(
 	duration: float,
 	is_builtin: bool,
 	nodes: Array[Node2D],
-	tweeners: Array[Tween],
+	tweeners_untyped,
+	use_sequence: bool = false,
 	froms: PackedVector2Array = [], 
 	tos: PackedVector2Array = [],
 ):
@@ -57,19 +69,27 @@ static func tween_global_positions(
 	if tos.is_empty(): tos = generate_random_positions(amount)
 	
 	if is_builtin:
+		var tweeners: Array[Tween] = tweeners_untyped
 		ensure_builtin_tweeners(nodes, tweeners)
 		for i in range(froms.size()):
 			tweeners[i].tween_property(nodes[i], "global_position", tos[i], duration).from(froms[i])
 	else:
-		for i in range(froms.size()):
-			DoNode2D.global_position(nodes[i], tos[i], duration).from(froms[i])
+		if use_sequence:
+			var tweeners: Array[SpireSequence] = tweeners_untyped
+			ensure_spire_tweeners(nodes, tweeners)
+			for i in range(froms.size()):
+				tweeners[i].join(DoNode2D.global_position(nodes[i], tos[i], duration).from(froms[i]))
+		else:
+			for i in range(froms.size()):
+				DoNode2D.global_position(nodes[i], tos[i], duration).from(froms[i])
 
 
 static func tween_modulates(
 	duration: float,
 	is_builtin: bool,
 	nodes: Array[Node2D],
-	tweeners: Array[Tween],
+	tweeners_untyped,
+	use_sequence: bool = false,
 	froms: PackedColorArray = [], 
 	tos: PackedColorArray = [],
 ):
@@ -78,9 +98,16 @@ static func tween_modulates(
 	if tos.is_empty(): tos = generate_random_colors(amount)
 	
 	if is_builtin:
+		var tweeners: Array[Tween] = tweeners_untyped
 		ensure_builtin_tweeners(nodes, tweeners)
 		for i in range(froms.size()):
 			tweeners[i].tween_property(nodes[i], "modulate", tos[i], duration).from(froms[i])
 	else:
-		for i in range(froms.size()):
-			DoCanvasItem.color(nodes[i], tos[i], duration).from(froms[i])
+		if use_sequence:
+			var tweeners: Array[SpireSequence] = tweeners_untyped
+			ensure_spire_tweeners(nodes, tweeners)
+			for i in range(froms.size()):
+				tweeners[i].join(DoCanvasItem.color(nodes[i], tos[i], duration).from(froms[i]))
+		else:
+			for i in range(froms.size()):
+				DoCanvasItem.color(nodes[i], tos[i], duration).from(froms[i])

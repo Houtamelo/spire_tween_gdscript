@@ -15,6 +15,14 @@ These are the priorities of SpireTween:
 - At minimum, feature parity with Godot's built-in tweening system (after all, why would you want a downgrade?).
   SpireTween also provides more features, such as: speed-based tweens, more loop modes, etc.
 
+# Table of Contents
+
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Cheat Sheets](#cheat-sheets-built-in-tween---spiretween)
+- [Examples](#examples)
+- [Benchmarks](#benchmarks)
+
 # Installation
 
 SpireTween is an addon like any other, just copy the addon folder into "res://addons/".
@@ -34,7 +42,7 @@ func _ready():
 
 If not set, the default is `Spire.EASE_LINEAR`.
 
-# Cheat Sheets: Builtin Tween -> SpireTween
+# Cheat Sheets: Built-in Tween -> SpireTween
 
 ## Cheat Sheet: Type analogies
 
@@ -170,8 +178,8 @@ specific class, these are presented in the format:
 
 ```
 Do{NodeClass}.{property_name}(node: {NodeClass}, to: {Type}, duration: float) -> SpireProperty{Type}
-   ^^^^^^^^^                                          ^^^^^^^^^^^^
-# Node2D, CanvasItem, etc.                          float, Vector2, etc.
+   ^^^^^^^^^                                          ^^^^
+# Node2D, CanvasItem, etc.                      float, Vector2, etc.
 ```
 
 Examples: `DoNode2D.global_position`, `DoCanvasItem.modulate_a`, `DoControl.rotation`.
@@ -282,7 +290,7 @@ Example: Moving a sprite along the sides of a rectangle, as well as making it fl
 ```gdscript
 extends Sprite
 
-var vertices := [
+const vertices := [
     Vector2(100, 100),
     Vector2(500, 100),
     Vector2(500, 400),
@@ -293,10 +301,10 @@ var speed := 200.0 # pixels per second
 var flash_duration := 0.5
 
 func _ready():
-    var seq := Spire.sequence().set_loops(-1) # Make the sprite run around the rectangle indefinitely.
+    var seq := Spire.sequence().set_loops(-1) # Make the sequence loop infinitely.
     
     for vert: Vector2 in vertices:
-        # `append` creates a new "step" in the sequence with a single tween inside.
+        # `append` creates a new "step" in the sequence, which means that the tween "appended" will run after all previous steps finish.
         seq.append(DoNode2D.move(self, vert, speed).as_speed_based())
         
         # `join` adds another tween to the current step of the sequence.
@@ -309,3 +317,179 @@ func _ready():
 ```
 
 # Benchmarks
+
+Note that the main priority of SpireTween is ergonomics, not performance. It currently outperforms Godot's built-in
+tweening system in terms of runtime speed (Godot's built-in wins in terms of setup speed though), I cannot guarantee that
+this will always be the case, SpireTween may become slower if more features/configurations are added (though I doubt the
+performance difference will ever be significant).
+
+I decided to make these benchmarks to at least give you peace of my mind that you're not(currently) losing on performance
+by switching to SpireTween. Note that the amount of nodes being tweened in these benchmarks is ridiculously high, you're unlikely
+to ever notice any performance difference between the two libraries in a real project.
+
+The benchmarks are in the folder [benchmarks](spire_tween_gdscript/benchmarks), to run them on your machine, just open one
+of the scenes and run it.
+
+The following results were obtained on my machine, here's the system info provided by Godot:
+
+- Godot v4.5.1.stable
+- Linux Mint 22.1 (Xia) on X11
+- X11 display driver, Multi-window, 1 monitor
+- Vulkan (Forward+)
+- dedicated NVIDIA GeForce GTX 1080 Ti (nvidia; 570.195.03)
+- AMD Ryzen 9 9900X 12-Core Processor (24 threads)
+- 30.95 GiB memory
+
+## Bench: Tweening "Node2D.global_position" - Black 4x4 Dots
+
+### 1k Nodes
+
+![black_dots_1k.png](readme_images/bench_black_dots_1k.png)
+
+Setup time (lower is better)
+
+| tween | setup(ms) |
+|-------|-----------|
+| Godot | 009.7300  |
+| Spire | 005.5060  |
+
+Frames per second (higher is better)
+
+| tween | min     | max     | median  | mean    | std-dev |
+|-------|---------|---------|---------|---------|---------|
+| Godot | 4912.00 | 5046.00 | 5027.00 | 5012.46 | 37.4388 |
+| Spire | 6064.00 | 6316.00 | 6219.00 | 6206.08 | 76.1396 |
+
+Milliseconds per frame (lower is better)
+
+| tween | min  | max  | median | mean | std-dev |
+|-------|------|------|--------|------|---------|
+| Godot | 0.18 | 1.39 | 0.20   | 0.20 | 00.0161 |
+| Spire | 0.14 | 1.39 | 0.16   | 0.16 | 00.0167 |
+
+### 10k Nodes
+
+![black_dots_10k.png](readme_images/bench_black_dots_10k.png)
+
+Setup time (lower is better)
+
+| tween | setup(ms) |
+|-------|-----------|
+| Godot | 045.3460  |
+| Spire | 069.4680  |
+
+Frames per second (higher is better)
+
+| tween | min    | max    | median | mean   | std-dev |
+|-------|--------|--------|--------|--------|---------|
+| Godot | 564.00 | 575.00 | 570.00 | 569.04 | 02.9928 |
+| Spire | 939.00 | 972.00 | 965.00 | 962.70 | 09.5829 |
+
+Milliseconds per frame (lower is better)
+
+| tween | min  | max  | median | mean | std-dev |
+|-------|------|------|--------|------|---------|
+| Godot | 1.67 | 7.54 | 1.74   | 1.76 | 00.0960 |
+| Spire | 0.13 | 4.17 | 1.03   | 1.04 | 00.0909 |
+
+### 50k Nodes
+
+![black_dots_50k.png](readme_images/bench_black_dots_50k.png)
+
+Setup time (lower is better)
+
+| tween | setup(ms) |
+|-------|-----------|
+| Godot | 410.7380  |
+| Spire | 532.1270  |
+
+Frames per second (higher is better)
+
+| tween | min   | max   | median | mean  | std-dev |
+|-------|-------|-------|--------|-------|---------|
+| Godot | 62.00 | 63.00 | 63.00  | 62.75 | 00.4330 |
+| Spire | 84.00 | 86.00 | 85.00  | 84.65 | 00.6920 |
+
+Millisecond per frame (lower is better)
+
+| tween | min   | max   | median | mean  | std-dev |
+|-------|-------|-------|--------|-------|---------|
+| Godot | 15.28 | 16.67 | 15.96  | 15.96 | 00.3692 |
+| Spire | 11.29 | 16.67 | 11.89  | 11.82 | 00.2444 |
+
+## Bench: Tweening "Node2D.global_position" & "CanvasItem.modulate" - 16x16 Circles - 1 Tween per property
+
+### 1k Nodes
+
+Setup Time (lower is better)
+
+| tween | setup(ms) |
+|-------|-----------|
+| Godot | 004.6090  |
+| Spire | 007.5260  |
+
+Frames per second (higher is better)
+
+| tween | min     | max     | median  | mean    | std-dev |
+|-------|---------|---------|---------|---------|---------|
+| Godot | 3417.00 | 3633.00 | 3612.00 | 3590.84 | 66.4161 |
+| Spire | 5078.00 | 5239.00 | 5207.00 | 5169.92 | 61.8067 |
+
+Milliseconds per frame (lower is better)
+
+| tween | min  | max  | median | mean | std-dev |
+|-------|------|------|--------|------|---------|
+| Godot | 0.26 | 1.39 | 0.28   | 0.28 | 00.0290 |
+| Spire | 0.17 | 1.39 | 0.19   | 0.19 | 00.0201 |
+
+### 10k Nodes
+
+Setup time (lower is better)
+
+| tween | setup(ms) |
+|-------|-----------|
+| Godot | 054.8460  |
+| Spire | 082.2870  |
+
+Frames per second (higher is better)
+
+| tween | min    | max    | median | mean   | std-dev |
+|-------|--------|--------|--------|--------|---------|
+| Godot | 313.00 | 317.00 | 316.00 | 315.59 | 01.3201 |
+| Spire | 634.00 | 646.00 | 644.00 | 641.66 | 03.8848 |
+
+Milliseconds per frame (lower is better)
+
+| tween | min  | max   | median | mean | std-dev |
+|-------|------|-------|--------|------|---------|
+| Godot | 2.78 | 12.13 | 3.12   | 3.17 | 00.2072 |
+| Spire | 0.20 | 1.74  | 1.55   | 1.56 | 00.0568 |
+
+### 50k Nodes
+
+Setup time (lower is better)
+
+| tween | setup(ms) |
+|-------|-----------|
+| Godot | 462.8850  |
+| Spire | 598.6750  |
+
+Frames per second (higher is better)
+
+| tween | min   | max   | median | mean  | std-dev |
+|-------|-------|-------|--------|-------|---------|
+| Godot | 38.00 | 40.00 | 39.00  | 39.08 | 00.5719 |
+| Spire | 60.00 | 61.00 | 60.00  | 60.37 | 00.4825 |
+
+Milliseconds per frame (lower is better)
+
+| tween | min   | max   | median | mean  | std-dev |
+|-------|-------|-------|--------|-------|---------|
+| Godot | 23.91 | 33.28 | 25.26  | 25.57 | 00.9573 |
+| Spire | 15.28 | 20.83 | 16.65  | 16.57 | 00.3078 |
+
+![disco_balls_1k.png](readme_images/bench_disco_balls_1k.png)
+
+![disco_balls_10k.png](readme_images/bench_disco_balls_10k.png)
+
+![disco_balls_50k.png](readme_images/bench_disco_balls_50k.png)
