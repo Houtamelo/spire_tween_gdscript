@@ -293,7 +293,7 @@ func print_value(value: Vector2i) -> void:
 
 Example: Moving a sprite along the sides of a rectangle, as well as making it flash red every time it reaches a corner.
 
-[01-2025-11-04_10.49.49.mkv](01-2025-11-04_10.49.49.mkv)
+[01-2025-11-04_10.49.49.mp4](01-2025-11-04_10.49.49.mp4)
 
 ```gdscript
 extends Sprite2D
