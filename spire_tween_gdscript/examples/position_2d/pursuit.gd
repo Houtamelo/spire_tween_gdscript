@@ -18,7 +18,7 @@ func _ready():
 	]
 	
 	DoNode2D.follow(_chaser, _target, _chaser_speed) \
-		.set_ease(Spire.EASE_OUT_EXPO)
+		.set_ease(Spire.EASE_IN_CIRC)
 	
 	var sequence := Spire.sequence()
 	for corner in _corners:

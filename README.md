@@ -61,6 +61,8 @@ If not set, the default is `Spire.EASE_LINEAR`.
 Note 1: A `SpireSequence` is itself a `SpireTween`, so you can append sequences into others,
 recursively.
 
+---
+
 **Note:** In the tables below, the columns "Godot Class(es)" and "Spire Class(es)" indicate which classes support the feature.
 
 ## Cheat Sheet: Properties
@@ -123,6 +125,8 @@ child "tweeners". In Spire, the behavior is the same for `SpireSequence`, but it
 **Note 4**: Godot only supports binding to a single node, while Spire supports binding to multiple nodes. Also, the semantics of binding are slightly different on each
 system, see their documentation for more details.
 
+---
+
 ## Cheat Sheet: Methods
 
 | Feature                            | Godot Class(es) |                                                  Godot "how to"                                                   | Spire Class(es) |                                          Spire "how to"                                          |
@@ -147,6 +151,8 @@ system, see their documentation for more details.
 
 <a name="note-loop-count"></a>
 **Note 1**: `loop_count` isn't provided with the signal but can be retrieved with `get_loops_finished()`.
+
+---
 
 ## Cheat Sheet: Creating a Tween(er)
 
@@ -287,33 +293,34 @@ func print_value(value: Vector2i) -> void:
 
 Example: Moving a sprite along the sides of a rectangle, as well as making it flash red every time it reaches a corner.
 
+[01-2025-11-04_10.55.06.mpg](01-2025-11-04_10.55.06.mpg)
+
 ```gdscript
-extends Sprite
+extends Sprite2D
 
 const vertices := [
-    Vector2(100, 100),
-    Vector2(500, 100),
-    Vector2(500, 400),
-    Vector2(100, 400),
+	Vector2(100, 100),
+	Vector2(500, 100),
+	Vector2(500, 400),
+	Vector2(100, 400),
 ]
 
 var speed := 200.0 # pixels per second
 var flash_duration := 0.5
 
 func _ready():
-    var seq := Spire.sequence().set_loops(-1) # Make the sequence loop infinitely.
-    
-    for vert: Vector2 in vertices:
-        # `append` creates a new "step" in the sequence, which means that the tween "appended" will run after all previous steps finish.
-        seq.append(DoNode2D.move(self, vert, speed).as_speed_based())
-        
-        # `join` adds another tween to the current step of the sequence.
-        # In this case, it makes the tween bellow run(flash) at the same time as the tween above(movement).
-        seq.join(
-            DoCanvasItem.modulate(self, Color(1, 0, 0, 1), flash_duration)
-                .set_loops(2, Spire.LOOP_MODE_YOYO) # yoyo loop will make it go red then back to the original color.
-        )
-
+	var seq := Spire.sequence().set_loops(-1) # Make the sequence loop infinitely.
+	
+	for vert: Vector2 in vertices:
+		# `append` creates a new "step" in the sequence, which means that the tween "appended" will run after all previous steps finish.
+		seq.append(DoNode2D.move(self, vert, speed).as_speed_based())
+		
+		# `join` adds another tween to the current step of the sequence.
+		# In this case, it makes the tween bellow run(flash) at the same time as the tween above(movement).
+		seq.join(
+			DoCanvasItem.modulate(self, Color(1, 0, 0, 1), flash_duration)
+				.set_loops(2, Spire.LOOP_MODE_YOYO) # yoyo loop will make it go red then back to the original color.
+		)
 ```
 
 # Benchmarks

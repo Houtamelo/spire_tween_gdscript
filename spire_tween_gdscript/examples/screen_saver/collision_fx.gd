@@ -13,9 +13,11 @@ func _ready():
 			.set_ease(ease_mode)
 	)
 	
+	var rand_color = Color(randf_range(0, 1), randf_range(0, 1), randf_range(0, 1), 1)
+	
 	seq.join(
-		DoCanvasItem.color_a(self, 0, duration)
-			.from(1)
+		DoCanvasItem.color(self, Color(1, 1, 1, 0), duration)
+			.from(rand_color)
 			.set_ease(ease_mode)
 	)
 	

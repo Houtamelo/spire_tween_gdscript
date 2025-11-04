@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=3 uid="uid://f4iknedqdqy3"]
+
+[ext_resource type="Script" uid="uid://b1lbyh6lc83mg" path="res://samples/example_sequence.gd" id="1_bob6v"]
+
+[sub_resource type="Gradient" id="Gradient_bob6v"]
+offsets = PackedFloat32Array(0, 0.34274194, 0.3467742)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_lklse"]
+gradient = SubResource("Gradient_bob6v")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="Camera2D" type="Camera2D"]
+anchor_mode = 0
+
+[node name="Corner_top_left" type="Sprite2D" parent="."]
+position = Vector2(100, 100)
+scale = Vector2(0.25, 0.25)
+texture = SubResource("GradientTexture2D_lklse")
+
+[node name="Corner_top_right" type="Sprite2D" parent="."]
+position = Vector2(500, 100)
+scale = Vector2(0.25, 0.25)
+texture = SubResource("GradientTexture2D_lklse")
+
+[node name="Corner_bottom_left" type="Sprite2D" parent="."]
+position = Vector2(500, 400)
+scale = Vector2(0.25, 0.25)
+texture = SubResource("GradientTexture2D_lklse")
+
+[node name="Corner_bottom_right" type="Sprite2D" parent="."]
+position = Vector2(100, 400)
+scale = Vector2(0.25, 0.25)
+texture = SubResource("GradientTexture2D_lklse")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(440, 285)
+texture = SubResource("GradientTexture2D_lklse")
+script = ExtResource("1_bob6v")

@@ -89,7 +89,10 @@ impl Spire {
     /// a tween from a sequence, use [method SpireSequence.remove] instead.
     #[func]
     pub fn unregister(tween: Option<Gd<RefCounted>>) {
-        if let Some(tween) = tween.log_bad_spire_arg(|| "tween") {
+        let Some(handle) = tween
+        else { return }; // Passing null is fine, don't print errors for it.
+
+        if let Some(tween) = handle.log_bad_spire_arg(|| "tween") {
             TM.tween_unregister(&tween);
         }
     }

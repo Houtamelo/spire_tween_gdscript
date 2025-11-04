@@ -13,7 +13,9 @@ fill_from = Vector2(0.5, 0.5)
 
 [node name="Pursuit" type="Node2D"]
 script = ExtResource("1_hrydf")
-_chaser_speed = 300.0
+_chaser_speed = 600.0
+_bounds_min = Vector2(32, 32)
+_bounds_max = Vector2(1888, 1048)
 
 [node name="Chaser" type="Sprite2D" parent="."]
 modulate = Color(1, 0, 0, 1)
