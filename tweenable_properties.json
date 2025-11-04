@@ -65,11 +65,18 @@
 	]
 	},
 	{
-		"class": "CanvasLayer", "tweens": [
+		"class": "CanvasLayer", "group": "Misc", "tweens": [
 		{ "name": "rotation", "ty": "f32" },
 		{ "name": "follow_viewport_scale", "ty": "f32" },
 		{ "name": "offset", "ty": "Vector2" },
 		{ "name": "scale", "ty": "Vector2" }
+	]
+	},
+	{
+		"class": "ParallaxBackground", "group": "Misc", "tweens": [
+		{ "name": "scroll_base_offset", "ty": "Vector2" },
+		{ "name": "scroll_base_scale", "ty": "Vector2" },
+		{ "name": "scroll_offset", "ty": "Vector2" }
 	]
 	},
 	{
@@ -312,6 +319,212 @@
 		"class": "StaticBody2D", "group": "2D", "tweens": [
 		{ "name": "constant_angular_velocity", "ty": "f32" },
 		{ "name": "constant_linear_velocity", "ty": "Vector2" }
+	]
+	},
+	{
+		"class": "Viewport", "group": "Misc", "tweens": [
+		{ "name": "scaling_3d_scale", "ty": "f32" }
+	]
+	},
+	{
+		"class": "SubViewport", "group": "Misc", "tweens": [
+		{ "name": "size", "ty": "Vector2i", "func": "subview_do_size" },
+		{ "name": "size_2d_override", "ty": "Vector2i", "func": "subview_do_size_2d_override" }
+	]
+	},
+	{
+		"class": "Window", "group": "Misc", "tweens": [
+		{ "name": "position", "ty": "Vector2i" },
+		{ "name": "size", "ty": "Vector2i" }
+	]
+	},
+	{
+		"class": "Node3D", "group": "3D", "tweens": [
+		{ "name": "position", "ty": "Vector3", "alias": "move_local" },
+		{ "name": "global_position", "ty": "Vector3", "alias": "move" },
+		{ "name": "scale", "ty": "Vector3" },
+		{ "name": "rotation", "ty": "Vector3" },
+		{ "name": "rotation_degrees", "ty": "Vector3" },
+		{ "name": "global_rotation", "ty": "Vector3" },
+		{ "name": "global_rotation_degrees", "ty": "Vector3" }
+	]
+	},
+	{
+		"class": "Camera3D", "group": "3D", "tweens": [
+		{ "name": "fov", "ty": "f32" },
+		{ "name": "size", "ty": "f32" },
+		{ "name": "frustum_offset", "ty": "Vector2" },
+		{ "name": "h_offset", "ty": "f32" },
+		{ "name": "v_offset", "ty": "f32" }
+	]
+	},
+	{
+		"class": "Area3D", "group": "3D", "tweens": [
+		{ "name": "angular_damp", "ty": "f32" },
+		{ "name": "gravity", "ty": "f32" },
+		{ "name": "gravity_direction", "ty": "Vector3" },
+		{ "name": "gravity_point_center", "ty": "Vector3" },
+		{ "name": "gravity_point_unit_distance", "ty": "f32" },
+		{ "name": "linear_damp", "ty": "f32" },
+		{
+			"name": "reverb_bus_amount",
+			"ty": "f32",
+			"get": "obj.get_reverb_amount()",
+			"set": "obj.set_reverb_amount(val as f32);"
+		},
+		{
+			"name": "reverb_bus_uniformity",
+			"ty": "f32",
+			"get": "obj.get_reverb_uniformity()",
+			"set": "obj.set_reverb_uniformity(val as f32);"
+		},
+		{ "name": "wind_attenuation_factor", "ty": "f32" },
+		{ "name": "wind_force_magnitude", "ty": "f32" }
+	]
+	},
+	{
+		"class": "CharacterBody3D", "group": "3D", "tweens": [
+		{ "name": "velocity", "ty": "Vector3" }
+	]
+	},
+	{
+		"class": "PhysicalBone3D", "group": "3D", "tweens": [
+		{ "name": "angular_damp", "ty": "f32" },
+		{ "name": "angular_velocity", "ty": "Vector3" },
+		{ "name": "bounce", "ty": "f32" },
+		{ "name": "friction", "ty": "f32" },
+		{ "name": "gravity_scale", "ty": "f32" },
+		{ "name": "joint_rotation", "ty": "Vector3" },
+		{ "name": "linear_damp", "ty": "f32" },
+		{ "name": "linear_velocity", "ty": "Vector3" },
+		{ "name": "mass", "ty": "f32" }
+	]
+	},
+	{
+		"class": "RigidBody3D", "group": "3D", "tweens": [
+		{ "name": "angular_damp", "ty": "f32" },
+		{ "name": "angular_velocity", "ty": "Vector3" },
+		{ "name": "center_of_mass", "ty": "Vector3" },
+		{ "name": "constant_force", "ty": "Vector3" },
+		{ "name": "constant_torque", "ty": "Vector3" },
+		{ "name": "gravity_scale", "ty": "f32" },
+		{ "name": "inertia", "ty": "Vector3" },
+		{ "name": "linear_damp", "ty": "f32" },
+		{ "name": "linear_velocity", "ty": "Vector3" },
+		{ "name": "mass", "ty": "f32" }
+	]
+	},
+	{
+		"class": "StaticBody3D", "group": "3D", "tweens": [
+		{ "name": "constant_angular_velocity", "ty": "Vector3" },
+		{ "name": "constant_linear_velocity", "ty": "Vector3" }
+	]
+	},
+	{
+		"class": "PathFollow3D", "group": "3D", "tweens": [
+		{ "name": "h_offset", "ty": "f32" },
+		{ "name": "v_offset", "ty": "f32" },
+		{ "name": "progress", "ty": "f32" },
+		{ "name": "progress_ratio", "ty": "f32" }
+	]
+	},
+	{
+		"class": "Skeleton3D", "group": "3D", "tweens": [
+		{ "name": "motion_scale", "ty": "f32" }
+	]
+	},
+	{
+		"class": "Decal", "group": "3D", "tweens": [
+		{ "name": "albedo_mix", "ty": "f32" },
+		{ "name": "emission_energy", "ty": "f32" },
+		{ "name": "modulate", "ty": "Color", "alias": "color" },
+		{ "name": "size", "ty": "Vector3" }
+	]
+	},
+	{
+		"class": "FogVolume", "group": "3D", "tweens": [
+		{ "name": "size", "ty": "Vector3" }
+	]
+	},
+	{
+		"class": "GeometryInstance3D", "group": "3D", "tweens": [
+		{ "name": "transparency", "ty": "f32" }
+	]
+	},
+	{
+		"class": "Label3D", "group": "3D", "tweens": [
+		{ "name": "font_size", "ty": "i32" },
+		{ "name": "text", "ty": "String", "func": "label3d_do_text" },
+		{ "name": "line_spacing", "ty": "f32" },
+		{ "name": "modulate", "ty": "Color", "alias": "color" },
+		{ "name": "offset", "ty": "Vector2" },
+		{ "name": "outline_modulate", "ty": "Color", "alias": "outline_color" },
+		{ "name": "outline_size", "ty": "i32" },
+		{ "name": "pixel_size", "ty": "f32" }
+	]
+	},
+	{
+		"class": "SpriteBase3D", "group": "3D", "tweens": [
+		{ "name": "modulate", "ty": "Color", "alias": "color" },
+		{ "name": "offset", "ty": "Vector2" },
+		{ "name": "pixel_size", "ty": "f32" }
+	]
+	},
+	{
+		"class": "AnimatedSprite3D", "group": "3D", "tweens": [
+		{ "name": "frame", "ty": "i32" },
+		{ "name": "frame_progress", "ty": "f32" },
+		{ "name": "speed_scale", "ty": "f32" }
+	]
+	},
+	{
+		"class": "GpuParticlesAttractor3D", "group": "3D", "tweens": [
+		{ "name": "attenuation", "ty": "f32" },
+		{ "name": "directionality", "ty": "f32" },
+		{ "name": "strength", "ty": "f32" }
+	]
+	},
+	{
+		"class": "GpuParticlesAttractorBox3D", "group": "3D", "tweens": [
+		{ "name": "size", "ty": "Vector3" }
+	]
+	},
+	{
+		"class": "GpuParticlesAttractorSphere3D", "group": "3D", "tweens": [
+		{ "name": "radius", "ty": "f32" }
+	]
+	},
+	{
+		"class": "GpuParticlesAttractorVectorField3D", "group": "3D", "tweens": [
+		{ "name": "size", "ty": "Vector3" }
+	]
+	},
+	{
+		"class": "Light3D", "group": "3D", "tweens": [
+		{
+			"name": "light_color",
+			"ty": "Color",
+			"get": "obj.get_color()",
+			"set": "obj.set_color(val);",
+			"alias": "color"
+		},
+		{
+			"name": "light_temperature",
+			"ty": "f32",
+			"get": "obj.get_temperature()",
+			"set": "obj.set_temperature(val as f32);"
+		}
+	]
+	},
+	{
+		"class": "ReflectionProbe", "group": "3D", "tweens": [
+		{ "name": "ambient_color", "ty": "Color" },
+		{ "name": "ambient_color_energy", "ty": "f32" },
+		{ "name": "blend_distance", "ty": "f32" },
+		{ "name": "intensity", "ty": "f32" },
+		{ "name": "max_distance", "ty": "f32" },
+		{ "name": "origin_offset", "ty": "Vector3" },
+		{ "name": "size", "ty": "Vector3" }
 	]
 	}
 ]

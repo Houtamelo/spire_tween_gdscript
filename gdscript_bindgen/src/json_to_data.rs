@@ -148,20 +148,18 @@ impl TweenFunc {
 
         let get_ident = format_ident!("get_{}", name);
 
-        let get_expr = {
-            let expr = if let Some(get) = get {
+        let (get_expr, get_expr_direct) = {
+            let (expr, expr_direct) = if let Some(get) = get {
                 let get_ts = TokenStream::from_str(get).unwrap();
-                quote! { #get_ts.#inner_field_ident }
+                (quote! { #get_ts.#inner_field_ident }, get_ts)
             } else {
-                quote! { obj.#get_ident().#inner_field_ident }
+                (quote! { obj.#get_ident().#inner_field_ident }, quote! { obj.#get_ident() })
             };
 
             match ty {
-                TweenType::Vector2i | TweenType::Vector3i => quote! { (#expr) as i64 },
-                TweenType::Vector2 | TweenType::Vector3 | TweenType::Color => {
-                    quote! { (#expr) as f64 }
-                }
-                _ => expr,
+                TweenType::Vector2i | TweenType::Vector3i => (quote! { (#expr) as i64 }, expr_direct),
+                TweenType::Vector2 | TweenType::Vector3 | TweenType::Color => (quote! { (#expr) as f64 }, expr_direct),
+                _ => (expr, expr_direct),
             }
         };
 
@@ -171,7 +169,7 @@ impl TweenFunc {
             match ty {
                 TweenType::Vector2i | TweenType::Vector3i => {
                     quote! {
-                        let mut prop_val = #get_expr;
+                        let mut prop_val = #get_expr_direct;
                         prop_val.#inner_field_ident = val as i32;
                         let val = prop_val;
                         #set_ts
@@ -179,7 +177,7 @@ impl TweenFunc {
                 }
                 TweenType::Vector2 | TweenType::Vector3 | TweenType::Color => {
                     quote! {
-                        let mut prop_val = #get_expr;
+                        let mut prop_val = #get_expr_direct;
                         prop_val.#inner_field_ident = val as f32;
                         let val = prop_val;
                         #set_ts
@@ -187,7 +185,7 @@ impl TweenFunc {
                 }
                 _ => {
                     quote! {
-                        let mut prop_val = #get_expr;
+                        let mut prop_val = #get_expr_direct;
                         prop_val.#inner_field_ident = val;
                         let val = prop_val;
                         #set_ts
@@ -245,7 +243,7 @@ pub fn gen_class_data(json: ClassJson) -> ClassData {
     let tweens_map = gen_class_type_tweens_map(&json);
 
     ClassData {
-        name: json.class.clone(),
+        name: json.class,
         ident,
         trait_ident,
         gdscript_bridge,

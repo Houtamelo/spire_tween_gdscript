@@ -21,6 +21,8 @@
 #![allow(clippy::mut_from_ref)]
 #![doc = include_str!("../README.md")]
 
+// TODO: Skeleton3D.do_bone_pose methods
+
 mod benchmarking;
 //mod connection;
 //mod cow_fn;
