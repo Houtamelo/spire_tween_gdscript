@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://bgtx6wwxyr2fi"]
+
+[ext_resource type="Script" uid="uid://cu30e8fwdftjr" path="res://examples/readme/example_common_property.gd" id="1_2dqgx"]
+
+[sub_resource type="Gradient" id="Gradient_g3q36"]
+offsets = PackedFloat32Array(0, 0.18548387, 0.18951613)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_sm182"]
+gradient = SubResource("Gradient_g3q36")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="ExampleCommonProperty" type="Node2D"]
+script = ExtResource("1_2dqgx")
+
+[node name="Circle" type="Sprite2D" parent="."]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(280, 164)
+texture = SubResource("GradientTexture2D_sm182")

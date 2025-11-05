@@ -97,7 +97,7 @@ impl MethodTween {
     #[inline]
     pub fn set_start_value(&mut self, value: Variant) -> Result<(), ConvertError> {
         delegate_method_tween!(self => |this| {
-            this.t.from = value.try_to()?;
+            this.t.from = value.try_to_relaxed()?;
             Ok(())
         })
     }
@@ -110,7 +110,7 @@ impl MethodTween {
     #[inline]
     pub fn set_final_value(&mut self, value: Variant) -> Result<(), ConvertError> {
         delegate_method_tween!(self => |this| {
-            this.t.to = value.try_to()?;
+            this.t.to = value.try_to_relaxed()?;
             Ok(())
         })
     }

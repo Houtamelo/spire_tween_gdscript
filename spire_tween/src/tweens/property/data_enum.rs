@@ -155,14 +155,14 @@ impl PropertyTween {
 
     pub fn set_final_value(&mut self, value: Variant) -> Result<(), ConvertError> {
         delegate_property_tween!(self => |this| {
-            this.t.to = value.try_to()?;
+            this.t.to = value.try_to_relaxed()?;
             Ok(())
         })
     }
 
     pub fn set_relative(&mut self, relative_to: Variant) {
         delegate_property_tween!(self => |this| {
-            if let Some(relative_to) = relative_to.try_to().log_if_err() {
+            if let Some(relative_to) = relative_to.try_to_relaxed().log_if_err() {
                 this.t.lerp_mode = LerpMode::Relative {
                     duration: 0.0 ,
                     relative_to,

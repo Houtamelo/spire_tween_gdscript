@@ -590,15 +590,7 @@ impl Ease {
             Ease::InQuint => keyframe::functions::EaseInQuint.y(x),
             Ease::InCirc => {
                 let sq_target = 1. - x * x;
-                if sq_target < 0. {
-                    if x > 1. {
-                        1.
-                    } else {
-                        0.
-                    }
-                } else {
-                    1. - f64::sqrt(sq_target)
-                }
+                if sq_target < 0. { if x > 1. { 1. } else { 0. } } else { 1. - f64::sqrt(sq_target) }
             }
             //Ease::InExpo => f64::powf(2., 10. * x - 10.) - 0.000976562,
             // 2 (((C^(10 x-B))/(D))-J)
@@ -611,15 +603,7 @@ impl Ease {
             Ease::OutCirc => {
                 let x_minus_1 = x - 1.;
                 let sq_target = 1. - x_minus_1 * x_minus_1;
-                if sq_target < 0. {
-                    if x < 0. {
-                        0.
-                    } else {
-                        2.
-                    }
-                } else {
-                    f64::sqrt(sq_target)
-                }
+                if sq_target < 0. { if x < 0. { 0. } else { 2. } } else { f64::sqrt(sq_target) }
             }
             // Ease::OutExpo => 1. - f64::powf(2., -10. * x),
             // 1+2 (J+((-C^(-B x))/(D)))
@@ -633,27 +617,11 @@ impl Ease {
                 if x < 0.5 {
                     let sq_target = 1. - 4. * x * x;
 
-                    if sq_target < 0. {
-                        if x <= -0.5 {
-                            -0.5
-                        } else {
-                            0.5
-                        }
-                    } else {
-                        (1. - f64::sqrt(sq_target)) / 2.
-                    }
+                    if sq_target < 0. { if x <= -0.5 { -0.5 } else { 0.5 } } else { (1. - f64::sqrt(sq_target)) / 2. }
                 } else {
                     let w = 2. - 2. * x;
                     let sq_target = 1. - w * w;
-                    if sq_target < 0. {
-                        if x >= 1.5 {
-                            1.5
-                        } else {
-                            0.5
-                        }
-                    } else {
-                        (f64::sqrt(sq_target) + 1.) / 2.
-                    }
+                    if sq_target < 0. { if x >= 1.5 { 1.5 } else { 0.5 } } else { (f64::sqrt(sq_target) + 1.) / 2. }
                 }
             }
             Ease::InOutExpo => {
@@ -693,7 +661,7 @@ impl FromGodot for EaseKind {
             Ok(EaseKind::GodotCurve(curve))
         } else if let Ok(callable) = via.clone().try_to::<Callable>() {
             Ok(EaseKind::Callable(callable))
-        } else if let Ok(basic) = via.try_to::<Ease>() {
+        } else if let Ok(basic) = via.try_to_relaxed::<Ease>() {
             Ok(EaseKind::Basic(basic))
         } else {
             Err(ConvertError::with_error_value("Could not convert Variant to `EaseKind`", via))
@@ -712,8 +680,8 @@ impl ToGodot for EaseKind {
             EaseKind::Custom(f) => {
                 let f = Rc::clone(f);
                 Callable::from_local_fn("anonymous_easing_fn", move |args| {
-                    let x = args.first().ok_or(())?;
-                    let x = x.try_to::<f64>().map_err(|_| ())?;
+                    let arg = args.first().ok_or(())?;
+                    let x = arg.try_to_relaxed::<f64>().log_if_err().unwrap_or_default();
                     Ok(f.y(x).to_variant())
                 })
                 .to_variant()
@@ -734,7 +702,7 @@ impl EaseKind {
             EaseKind::Custom(custom) => custom.y(x),
             EaseKind::Callable(callable) => {
                 let result = callable.call(&[x.to_variant()]);
-                match result.try_to::<f64>() {
+                match result.try_to_relaxed::<f64>() {
                     Ok(variant) => variant,
                     Err(err) => {
                         godot_error!("Error calling easing function: {err:?}");
@@ -751,11 +719,7 @@ impl Debug for EaseKind {
         match self {
             EaseKind::Basic(basic) => <Ease as Debug>::fmt(basic, f),
             EaseKind::GodotCurve(curve) => f.debug_tuple("GodotCurve").field(curve).finish(),
-            EaseKind::Custom(_) => {
-                f.debug_tuple("Custom")
-                    .field(&"..anonymous dyn object..")
-                    .finish()
-            }
+            EaseKind::Custom(_) => f.debug_tuple("Custom").field(&"..anonymous dyn object..").finish(),
             EaseKind::Callable(callable) => f.debug_tuple("Callable").field(callable).finish(),
         }
     }

@@ -661,7 +661,7 @@ impl SpireLerp<Variant> for CustomLerper {
             .step_fn
             .call(&[from.clone(), to.clone(), speed.to_variant(), weight.to_variant()]);
 
-        let Ok(dict) = result.try_to::<Dictionary>()
+        let Ok(dict) = result.try_to_relaxed::<Dictionary>()
         else {
             return (from.clone(), StepResult::Finished { excess_time: 0. });
         };
@@ -675,7 +675,7 @@ impl SpireLerp<Variant> for CustomLerper {
             return (from.clone(), StepResult::Finished { excess_time: 0. });
         };
 
-        let Some(is_finished) = dict.get("is_finished").and_then(|v| v.try_to::<bool>().ok())
+        let Some(is_finished) = dict.get("is_finished").and_then(|v| v.try_to_relaxed::<bool>().ok())
         else {
             godot_warn!(
                 "Expected lerp step callable `{:?}` 's returned Dictionary to contain an 'is_finished' key of type \
@@ -685,7 +685,7 @@ impl SpireLerp<Variant> for CustomLerper {
             return (value, StepResult::Unfinished { accumulated_time: 0. });
         };
 
-        let Some(time) = dict.get("fuel").and_then(|v| v.try_to::<f64>().ok())
+        let Some(time) = dict.get("fuel").and_then(|v| v.try_to_relaxed::<f64>().ok())
         else {
             godot_warn!(
                 "Expected lerp step callable `{:?}` 's returned Dictionary to contain a 'fuel' key of type `f64`.",
@@ -724,7 +724,7 @@ impl SpireLerp<Variant> for CustomLerper {
         if self.distance_fn.is_valid() {
             self.distance_fn
                 .call(&[from.clone(), to.clone()])
-                .try_to::<f64>()
+                .try_to_relaxed::<f64>()
                 .map_err(|err| {
                     godot_error!(
                         "Expected distance callable `{:?}` to return a `f64`, got conversion error: {:?}",

@@ -100,11 +100,7 @@ impl LogBadArg for Result<AnyTween, Gd<RefCounted>> {
         match self {
             Ok(tween) => Some(tween),
             Err(non_spire) => {
-                godot_error!(
-                    "Parameter `{}`: expected Spire type, got `{}`.",
-                    arg_name(),
-                    non_spire.get_class()
-                );
+                godot_error!("Parameter `{}`: expected Spire type, got `{}`.", arg_name(), non_spire.get_class());
                 None
             }
         }
@@ -120,7 +116,7 @@ impl TryVarAt for Dictionary {
     fn try_var_at<T: FromGodot>(&self, key: &str) -> Result<T, ConvertError> {
         self.get(key.to_godot())
             .ok_or_else(|| ConvertError::new("Expected Dictionary to contain key `{key}`."))?
-            .try_to()
+            .try_to_relaxed()
     }
 }
 
@@ -133,11 +129,7 @@ pub fn is_instance_id_valid(id: i64) -> bool {
     let args = (id,);
     unsafe {
         let utility_fn = *IS_INSTANCE_ID_VALID_FN;
-        Signature::<CallParams, CallRet>::out_utility_ptrcall(
-            utility_fn,
-            "is_instance_id_valid",
-            args,
-        )
+        Signature::<CallParams, CallRet>::out_utility_ptrcall(utility_fn, "is_instance_id_valid", args)
     }
 }
 

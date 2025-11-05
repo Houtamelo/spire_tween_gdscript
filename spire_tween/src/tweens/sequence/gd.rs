@@ -179,17 +179,14 @@ impl SpireSequence {
         while let Some(item) = tweens.get(idx) {
             if let Ok(callable) = item.try_to::<Callable>() {
                 sequence.append_call(callable);
-            } else if let Ok(seconds) = item.try_to::<f64>() {
-                sequence.append_interval(seconds);
             } else if let Ok(handle) = item.try_to::<Gd<RefCounted>>() {
                 if let Some(tween) = handle.log_bad_spire_arg(|| format!("item at index {idx}")) {
                     sequence.append_ptr(tween);
                 }
+            } else if let Ok(seconds) = item.try_to_relaxed::<f64>() {
+                sequence.append_interval(seconds);
             } else {
-                godot_error!(
-                    "Expected Callable, Spire type, or interval(float); got: {:?}",
-                    item.get_type()
-                );
+                godot_error!("Expected Callable, Spire type, or interval(float); got: {:?}", item.get_type());
             }
 
             idx += 1;
@@ -273,17 +270,14 @@ impl SpireSequence {
         while let Some(item) = tweens.get(idx) {
             if let Ok(callable) = item.try_to::<Callable>() {
                 sequence.join_call(callable);
-            } else if let Ok(seconds) = item.try_to::<f64>() {
-                sequence.join_interval(seconds);
             } else if let Ok(handle) = item.try_to::<Gd<RefCounted>>() {
                 if let Some(tween) = handle.log_bad_spire_arg(|| format!("item at index {idx}")) {
                     sequence.join_ptr(tween);
                 }
+            } else if let Ok(seconds) = item.try_to_relaxed::<f64>() {
+                sequence.join_interval(seconds);
             } else {
-                godot_error!(
-                    "Expected Callable, Spire object, or interval(float); got: {:?}",
-                    item.get_type()
-                );
+                godot_error!("Expected Callable, Spire object, or interval(float); got: {:?}", item.get_type());
             }
 
             idx += 1;
@@ -336,11 +330,7 @@ impl SpireSequence {
     /// [b]Returns:[/b] `true` if the tween was found; `false` otherwise.
     #[func]
     pub fn remove(&self, tween: Option<Gd<RefCounted>>) -> bool {
-        if let Some(to_remove) = tween.log_bad_spire_arg(|| "tween") {
-            self.to_mut().remove(&to_remove)
-        } else {
-            false
-        }
+        if let Some(to_remove) = tween.log_bad_spire_arg(|| "tween") { self.to_mut().remove(&to_remove) } else { false }
     }
 
     /// [b]Behavior:[/b] Searches for [param func] among the sequence's blocks and inserts, then removes it

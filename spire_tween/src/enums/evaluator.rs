@@ -13,10 +13,7 @@ impl<T: Clone + FromGodot + Default> Evaluator<T> {
             Evaluator::Dynamic(f) => f(),
             Evaluator::Callable(call) => {
                 let result = call.call(&[]);
-                result.try_to::<T>().unwrap_or_else(|err| {
-                    godot_error!("{err:?}");
-                    T::default()
-                })
+                result.try_to_relaxed::<T>().log_if_err().unwrap_or_default()
             }
         }
     }
@@ -30,7 +27,7 @@ impl<T: FromGodot> FromGodot for Evaluator<T> {
     fn try_from_godot(via: Self::Via) -> Result<Self, ConvertError> {
         if let Ok(call) = via.try_to::<Callable>() {
             Ok(Evaluator::Callable(call))
-        } else if let Ok(t) = via.try_to::<T>() {
+        } else if let Ok(t) = via.try_to_relaxed::<T>() {
             Ok(Evaluator::Static(t))
         } else {
             Err(ConvertError::new("Cannot convert to Evaluator"))

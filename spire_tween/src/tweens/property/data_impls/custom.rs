@@ -17,30 +17,22 @@ impl TyToPropertyTween for Variant {
 impl<T: Default + FromGodot + ToGodot> IProperty<T> for PropertyDataCustom {
     fn get_property_value(&self) -> T {
         match &self.owner {
-            ObjectOrNode::Object(obj) => {
-                obj.get_indexed(&self.path)
-                    .try_to::<T>()
-                    .map_err(|err| {
-                        godot_warn!(
-                            "Failed to convert property '{}' value to target type. Error: {err:?}",
-                            self.path
-                        );
-                    })
-                    .log_if_err()
-                    .unwrap_or_default()
-            }
-            ObjectOrNode::Node(obj) => {
-                obj.get_indexed(&self.path)
-                    .try_to::<T>()
-                    .map_err(|err| {
-                        godot_warn!(
-                            "Failed to convert property '{}' value to target type. Error: {err:?}",
-                            self.path
-                        );
-                    })
-                    .log_if_err()
-                    .unwrap_or_default()
-            }
+            ObjectOrNode::Object(obj) => obj
+                .get_indexed(&self.path)
+                .try_to_relaxed::<T>()
+                .map_err(|err| {
+                    godot_warn!("Failed to convert property '{}' value to target type. Error: {err:?}", self.path);
+                })
+                .log_if_err()
+                .unwrap_or_default(),
+            ObjectOrNode::Node(obj) => obj
+                .get_indexed(&self.path)
+                .try_to_relaxed::<T>()
+                .map_err(|err| {
+                    godot_warn!("Failed to convert property '{}' value to target type. Error: {err:?}", self.path);
+                })
+                .log_if_err()
+                .unwrap_or_default(),
         }
     }
 

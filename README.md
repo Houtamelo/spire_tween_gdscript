@@ -201,90 +201,94 @@ These static functions are available in the `Spire` class:
 do_property(owner: Object, property_path: NodePath, to: Variant, duration: float) -> SpireProperty
 do_property_int(owner: Object, property_path: NodePath, to: int, duration: float) -> SpirePropertyInt
 do_property_float(owner: Object, property_path: NodePath, to: float, duration: float) -> SpirePropertyFloat
-do_property_vec2(owner: Object, property_path: NodePath, to: Vector2, duration: float) -> SpirePropertyVector2
+do_property_vector2(owner: Object, property_path: NodePath, to: Vector2, duration: float) -> SpirePropertyVector2
 do_property_color(owner: Object, property_path: NodePath, to: Color, duration: float) -> SpirePropertyColor
 # ... and so on for Vector2i, Vector3, Vector3i, String and Variant.
 ```
 
-Example: Tweening the property `global_position` of a Node2D.
+Example: Tweening the property `global_position` of a Node2D, as well as the `r` component of the `modulate` property of a `CanvasItem`.
+
+File: [example_common_property.tscn](spire_tween_gdscript/examples/readme/example_common_property.tscn)
+
+![example_common_property.gif](readme_images/example_common_property.gif)
 
 ```gdscript
-var node: Node2D # or any other type that inherits it
-var destination: Vector2
-var duration: float
+func godot_impl():
+	self.create_tween().tween_property(circle, ^"global_position", destination, duration)
+	self.create_tween().tween_property(circle, ^"modulate:r", 1.0, duration)
 
-# Godot
-node.create_tween().tween_property(node, ^"global_position", destination, duration)
-
-# Spire
-# Signature: func(node: Node2D, to: Vector2, duration: float) -> SpirePropertyVector2 
-DoNode2D.global_position(node, destination, duration)
-# For this specific property that's so commonly used, Spire also provides a shorthand:
-DoNode2D.move(node, destination, duration)
-```
-
-Example: Tweening the component `x` of the property `global_position` of a Node2D.
-
-```gdscript
-extends Node2D
-
-var destination_x: float = 500.0
-var duration: float = 4.0
-
-func _ready():
-    # Godot
-    node.create_tween().tween_property(node, ^"global_position:x", destination_x, duration)
-    
-    # Spire
-    # Signature: func(node: Node2D, to: float, duration: float) -> SpirePropertyFloat
-    DoNode2D.global_position_x(node, destination_x, duration)
-    # For this specific property that's so commonly used, Spire also provides a shorthand:
-    DoNode2D.move_x(node, destination_x, duration)
+func spire_impl():
+	# Signature: func(node: Node2D, to: Vector2, duration: float) -> SpirePropertyVector2 
+	DoNode2D.global_position(circle, destination, duration)
+	# Signature: func(node: CanvasItem, to: float, duration: float) -> SpirePropertyFloat
+	DoCanvasItem.modulate_r(circle, 1.0, duration)
 ```
 
 ### Custom/uncommon properties
 
-Example: Tweening a custom property of type `int`.
+Example: Tweening the distance of a ball from the center of the screen, using a custom property with getter/setter.
+
+File: [example_custom_property.tscn](spire_tween_gdscript/examples/readme/example_custom_property.tscn)
+
+![example_custom_property.gif](readme_images/example_custom_property.gif)
 
 ```gdscript
-extends Node
+extends Sprite2D
 
-var _property_backing_field: int = 0
-var property: int:
-    get: return _property_backing_field
-    set(value: int): _property_backing_field = value
+@onready var repelled_particle: Sprite2D = $"RepelledParticle"
 
-var to: int = 30
-var duration: float = 4.0
+var distance_to_repeller: float:
+	get: return self.global_position.distance_to(repelled_particle.global_position)
+	set(new_distance): 
+		var old_distance := distance_to_repeller
+		var distance_diff := new_distance - old_distance
+		var direction := self.global_position.direction_to(repelled_particle.global_position)
+		repelled_particle.global_position += direction * distance_diff
 
 func _ready():
-    # Godot
-    self.create_tween().tween_property(self, ^"property", to, duration)
-    # Spire
-    # Signature: func(obj: Object, property_path: NodePath, to: int, duration: float) -> SpirePropertyInt
-    Spire.do_property_int(self, ^"property", to, duration)
+	# Signature: func(obj: Object, property_path: NodePath, to: float, duration: float) -> SpirePropertyFloat
+	Spire.do_property_float(self, ^"distance_to_repeller", 400, 3.0)\
+		.set_ease(Spire.EASE_IN_OUT_SINE)\
+		.set_loops(-1, Spire.LOOP_MODE_YOYO)
+	
+	DoNode2D.rotation(self, PI * 2, 4.0).from(0).set_loops(-1)
+	
+	get_tree().physics_frame.connect(spawn_trail)
+
+func spawn_trail():
+	var trail: Sprite2D = repelled_particle.duplicate()
+	add_child(trail)
+	trail.top_level = true
+	trail.global_position = repelled_particle.global_position
+	
+	DoCanvasItem.color_a(trail, 0.0, 4.0)\
+		.finished.connect(trail.queue_free)
 ```
 
 ## Tweening Methods
 
-Example: Tweening a method that sets an `Vector2i` value.
+Example: Drawing a rope by instantiating dots along a line.
 
-```gdscript
-extends Node
+File: [example_method.tscn](spire_tween_gdscript/examples/readme/example_method.tscn)
 
-var from: Vector2i = Vector2i.ZERO
-var to: Vector2i = Vector2i(100, 200)
-var duration: float = 4.0
+![example_method.gif](readme_images/example_method.gif)
 
-func _ready():
-    # Godot
-    self.create_tween().tween_method(print_value, from, to, duration)
-    # Spire
-    # Signature: func(callable: Callable, from: Vector2i, to: Vector2i, duration: float) -> SpireMethodVector2i
-    Spire.do_call_vec2i(print_value, from, to, duration)
+```gdscript 
+# Note: Physics mode is used to make the dots spawn in fixed intervals
+func godot_impl():
+	self.create_tween()\
+		.set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)\
+		.tween_method(create_dot, from, to, duration)
 
-func print_value(value: Vector2i) -> void:
-    print("Value set to: " + str(value))
+func spire_impl():
+	# Signature: func(callable: Callable, from: Vector2i, to: Vector2i, duration: float) -> SpireMethodVector2i
+	Spire.do_call_vector2i(create_dot, from, to, duration)\
+		.set_process_mode(Spire.PROCESS_MODE_PHYSICS)
+
+func create_dot(at: Vector2i) -> void:
+	var dot: Sprite2D = DOT_PREFAB.instantiate()
+	add_child(dot)
+	dot.global_position = at
 ```
 
 ## Tweening in Series/Parallel
@@ -293,23 +297,30 @@ func print_value(value: Vector2i) -> void:
 
 Example: Moving a sprite along the sides of a rectangle, as well as making it flash red every time it reaches a corner.
 
-![example.gif](example.gif)
+File: [example_sequence](spire_tween_gdscript/examples/readme/example_sequence.tscn)
+
+![example_sequence.gif](readme_images/example_sequence.gif)
 
 ```gdscript
 extends Sprite2D
 
-const vertices := [
-	Vector2(100, 100),
-	Vector2(500, 100),
-	Vector2(500, 400),
-	Vector2(100, 400),
-]
+func godot_impl():
+	var tween := create_tween().set_loops(-1)
+	var start_pos := vertices[3]
+	
+	for vert: Vector2 in vertices:
+		var duration := vert.distance_to(start_pos) / speed
+		tween.chain().tween_property(self, ^"global_position", vert, duration)
+		start_pos = vert
+		
+		tween.parallel()\
+			.tween_property(self, ^"modulate", Color.RED, flash_duration)\
+			.finished.connect(
+				func(): create_tween().tween_property(self, ^"modulate", Color.WHITE, flash_duration)
+			)
 
-var speed := 200.0 # pixels per second
-var flash_duration := 0.5
-
-func _ready():
-	var seq := Spire.sequence().set_loops(-1) # Make the sequence loop infinitely.
+func spire_impl():
+	var seq := Spire.sequence().set_loops(-1)
 	
 	for vert: Vector2 in vertices:
 		# `append` creates a new "step" in the sequence, which means that the tween "appended" will run after all previous steps finish.
@@ -318,7 +329,7 @@ func _ready():
 		# `join` adds another tween to the current step of the sequence.
 		# In this case, it makes the tween bellow run(flash) at the same time as the tween above(movement).
 		seq.join(
-			DoCanvasItem.modulate(self, Color(1, 0, 0, 1), flash_duration)
+			DoCanvasItem.modulate(self, Color.RED, flash_duration)
 				.set_loops(2, Spire.LOOP_MODE_YOYO) # yoyo loop will make it go red then back to the original color.
 		)
 ```
