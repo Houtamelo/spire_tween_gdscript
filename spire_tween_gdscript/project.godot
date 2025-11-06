@@ -30,6 +30,10 @@ window/vsync/vsync_mode=0
 
 scene_naming=2
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/spire_tween/plugin.cfg")
+
 [gui]
 
 theme/custom="uid://dg7r7u4ioy8bc"

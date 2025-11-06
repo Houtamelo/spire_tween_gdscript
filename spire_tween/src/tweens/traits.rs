@@ -9,6 +9,7 @@ pub trait SpireTweener {
     fn force_complete(&mut self);
 }
 
+#[allow(unused)]
 #[doc(hidden)]
 pub trait InnerTypeName {
     fn inner_type_name(&self) -> &'static str;

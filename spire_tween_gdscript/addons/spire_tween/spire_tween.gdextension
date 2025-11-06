@@ -1,0 +1,29 @@
+[configuration]
+entry_symbol = "gdext_rust_init"
+compatibility_minimum = 4.4.1
+reloadable=true
+
+[libraries]
+linux.debug.x86_64 = "./lib/x86_64-unknown-linux-gnu/debug/libspire_tween.so"
+linux.release.x86_64 = "./lib/x86_64-unknown-linux-gnu/release/libspire_tween.so"
+
+windows.debug.x86_32 = "./lib/i686-pc-windows-msvc/debug/spire_tween.dll"
+windows.release.x86_32 = "./lib/i686-pc-windows-msvc/release/spire_tween.dll"
+
+windows.debug.x86_64 = "./lib/x86_64-pc-windows-msvc/debug/spire_tween.dll"
+windows.release.x86_64 = "./lib/x86_64-pc-windows-msvc/release/spire_tween.dll"
+
+android.debug.arm64 = "./lib/aarch64-linux-android/debug/libspire_tween.so"
+android.release.arm64 = "./lib/aarch64-linux-android/release/libspire_tween.so"
+
+android.debug.x86_64 = "./lib/x86_64-linux-android/debug/libspire_tween.so"
+android.release.x86_64 = "./lib/x86_64-linux-android/release/libspire_tween.so"
+
+android.debug.x86 = "./lib/i686-linux-android/debug/libspire_tween.so"
+android.release.x86 = "./lib/i686-linux-android/release/libspire_tween.so"
+
+web.debug.wasm32 = "./lib/wasm32-unknown-emscripten/debug/spire_tween.wasm"
+web.release.wasm32 = "./lib/wasm32-unknown-emscripten/release/spire_tween.wasm"
+
+web.debug.threads.wasm32 = "./lib/wasm32-unknown-emscripten/debug/spire_tween.threads.wasm"
+web.release.threads.wasm32 = "./lib/wasm32-unknown-emscripten/release/spire_tween.threads.wasm"

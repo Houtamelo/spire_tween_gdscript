@@ -1,11 +1,9 @@
 #![feature(trait_alias)]
-#![feature(let_chains)]
 #![feature(type_changing_struct_update)]
 #![feature(unboxed_closures)]
 #![feature(fn_traits)]
 #![feature(slice_swap_unchecked)]
 #![feature(macro_metavar_expr)]
-#![feature(concat_idents)]
 #![feature(macro_metavar_expr_concat)]
 #![feature(iter_intersperse)]
 #![feature(never_type)]
@@ -19,13 +17,11 @@
 #![allow(clippy::empty_docs)]
 #![allow(unsafe_op_in_unsafe_fn)]
 #![allow(clippy::mut_from_ref)]
-#![doc = include_str!("../README.md")]
+#![allow(clippy::infallible_try_from)]
 
 // TODO: Skeleton3D.do_bone_pose methods
 
 mod benchmarking;
-//mod connection;
-//mod cow_fn;
 mod enums;
 mod gdscript_bridge;
 mod global;
@@ -115,4 +111,13 @@ pub(crate) mod internal_prelude {
         tweens::*,
         util::*,
     };
+}
+
+mod api_entry {
+    use godot::prelude::*;
+
+    struct SpireGdExtension;
+
+    #[gdextension]
+    unsafe impl ExtensionLibrary for SpireGdExtension {}
 }

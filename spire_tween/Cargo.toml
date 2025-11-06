@@ -1,10 +1,10 @@
 [package]
 name = "spire_tween"
-version = "0.6.0"
+version = "1.0.0"
 authors = ["Houtamelo"]
 edition = "2024"
 resolver = "3"
-description = "A Slimy tweener library for Godot(4.4+), inspired on the design of DoTween(3rd party package for Unity)"
+description = "A Slimy tweener library for Godot(4.4+), inspired on the design of DoTween."
 license = "MIT"
 repository = "https://github.com/Houtamelo/spire_tween"
 categories = ["game-development", "api-bindings"]
@@ -14,7 +14,7 @@ keywords = ["godot", "tweening", "animation", "gdextension", "spire"]
 crate-type = ["lib", "cdylib"]
 
 [dependencies]
-godot = { git = "https://github.com/Houtamelo/dead_gds_have_rights", features = ["experimental-threads", "register-docs", "__trace", "api-custom"] }
+godot = { git = "https://github.com/Houtamelo/dead_gds_have_rights", features = ["experimental-wasm", "register-docs", "__trace", "api-custom"] }
 keyframe = "1.1.1"
 anyhow = "1.0"
 spire_enum = "0.7.1"
@@ -29,10 +29,10 @@ smallvec = "1.15.1"
 smolset = { git = "https://github.com/Houtamelo/smolset" }
 markdown = "1.0.0-alpha.23"
 litrs = "0.4"
-bitflags = "2.9.4"
 
 [features]
 default = ["indexmap"]
 double-precision = ["godot/double-precision"]
 dashmap = ["dep:dashmap"]
 indexmap = ["dep:indexmap"]
+nothreads = ["godot/experimental-wasm-nothreads"]

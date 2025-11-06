@@ -18,16 +18,50 @@ These are the priorities of SpireTween:
 # Table of Contents
 
 - [Installation](#installation)
+- [Platform Support](#platform-support)
 - [Configuration](#configuration)
 - [Cheat Sheets](#cheat-sheets-built-in-tween---spiretween)
 - [Examples](#examples)
 - [Benchmarks](#benchmarks)
+- [Features Requests](#feature-requests)
+- [License](#license)
 
 # Installation
 
-SpireTween is an addon like any other, just copy the addon folder into "res://addons/".
+SpireTween is an addon like any other, you just need extract the copy you acquired into "res://addons/".
 
-(That's it)
+You can acquire a copy of SpireTween through 3 means:
+
+- Purchase it at [Itch.io](http://www.itch.io/placeholder_link), it includes binaries for most mainstream platforms (see section [Platform Support](#platform-support)).
+- A demo version is available for free in the [releases](https://github.com/Houtamelo/spire_tween_gdscript/releases) page of this repository.
+  It's only "limitation" is that it doesn't include binaries for all platforms, you would need to compile from source if you don't want to purchase it.
+- Compile from source.
+
+When exporting, Godot will automatically include the necessary binaries for the chosen target platform.
+
+# Platform Support
+
+SpireTween is made with [Godot-Rust](https://github.com/godot-rust/gdext), a GdExtension that provides Rust bindings for Godot.
+So it *should* be compatible with all platforms supported by Godot-Rust.
+
+I simply don't have the hardware needed to test on all platforms, I'll be updating this table
+as users report their testing results.
+
+Binaries for all platforms which I successfully compiled to are included in the releases sold at Itch.io.
+
+| Platform           | Compiled | Tested | Notes                                                               |
+|--------------------|:--------:|:------:|---------------------------------------------------------------------|
+| linux.x86_64       |    ✅     |   ✅    |                                                                     |
+| windows.x86_32     |    ✅     |   ❌    |                                                                     |
+| windows.x86_64     |    ✅     |   ✅    |                                                                     |
+| android.x86_64     |    ✅     |   ❌    |                                                                     |
+| android.arm64      |    ✅     |   ❌    |                                                                     |
+| android.x86        |    ✅     |   ❌    |                                                                     |
+| web.wasm32         |    ❌     |   ❌    | There is a temporary issue, will be fixed soon(TM).                 |
+| web.wasm32.threads |    ❌     |   ❌    | There is a temporary issue, will be fixed soon(TM).                 |
+| macos/ios          |    ❌     |   ❌    | Compiling from source *should* be straightforward if you own a Mac. |
+
+If a platform you're targeting is not listed here, please open an issue.
 
 # Configuration
 
@@ -345,6 +379,8 @@ I decided to make these benchmarks to at least give you peace of my mind that yo
 by switching to SpireTween. Note that the amount of nodes being tweened in these benchmarks is ridiculously high, you're unlikely
 to ever notice any performance difference between the two libraries in a real project.
 
+**Note**: These benchmarks are simple and artificial, they are here just to give you a rough idea of the package's performance.
+
 The benchmarks are in the folder [benchmarks](spire_tween_gdscript/benchmarks), to run them on your machine, just open one
 of the scenes and run it.
 
@@ -439,6 +475,8 @@ Millisecond per frame (lower is better)
 
 ### 1k Nodes
 
+![disco_balls_1k.png](readme_images/bench_disco_balls_1k.png)
+
 Setup Time (lower is better)
 
 | tween | setup(ms) |
@@ -461,6 +499,8 @@ Milliseconds per frame (lower is better)
 | Spire | 0.17 | 1.39 | 0.19   | 0.19 | 00.0201 |
 
 ### 10k Nodes
+
+![disco_balls_10k.png](readme_images/bench_disco_balls_10k.png)
 
 Setup time (lower is better)
 
@@ -506,8 +546,12 @@ Milliseconds per frame (lower is better)
 | Godot | 23.91 | 33.28 | 25.26  | 25.57 | 00.9573 |
 | Spire | 15.28 | 20.83 | 16.65  | 16.57 | 00.3078 |
 
-![disco_balls_1k.png](readme_images/bench_disco_balls_1k.png)
-
-![disco_balls_10k.png](readme_images/bench_disco_balls_10k.png)
-
 ![disco_balls_50k.png](readme_images/bench_disco_balls_50k.png)
+
+# Feature Requests
+
+I'm always willing to improve SpireTween, please open an issue if you have any feature requests/suggestions.
+
+# License
+
+This project is licensed under the MIT License - see the file [LICENSE](LICENSE) for details.
