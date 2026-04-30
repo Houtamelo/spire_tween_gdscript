@@ -56,11 +56,10 @@ impl LerpCallableTests {
         assert_eq!(tween.get_final_value(), final_pos);
         assert_eq!(tween.get_duration(), 5.0);
         assert_eq!(*tween.get_callable(), callable);
-        let gd = tween.gd_handle.as_ref().unwrap().clone();
         let tracker = RcPtr::clone(&self.time_tracker);
 
         Box::pin(async move {
-            tracker.wait_finished(&gd, 5.0).await;
+            wait_finished(&tween, &tracker, 5.0).await;
             let frames = tracker.frames_since_start();
             let diff = (frames as i64 - *call_count as i64).unsigned_abs();
             assert!(diff <= 1, "Call count should match frames: {frames} vs {}", *call_count);
@@ -93,11 +92,10 @@ impl LerpCallableTests {
         assert_eq!(tween.get_final_value(), final_val);
         assert_eq!(tween.get_duration(), 5.0);
         assert_eq!(*tween.get_callable(), callable);
-        let gd = tween.gd_handle.as_ref().unwrap().clone();
         let tracker = RcPtr::clone(&self.time_tracker);
 
         Box::pin(async move {
-            tracker.wait_finished(&gd, 5.0).await;
+            wait_finished(&tween, &tracker, 5.0).await;
             let frames = tracker.frames_since_start();
             let diff = (frames as i64 - *call_count as i64).unsigned_abs();
             assert!(diff <= 1, "Call count should match frames");
@@ -126,7 +124,6 @@ impl LerpCallableTests {
         );
         eased.set_ease(EaseKind::Basic(Ease::InOutCubic));
         let eased_handle = eased.register();
-        let eased_gd = eased_handle.gd_handle.as_ref().unwrap().clone();
 
         let second_ball = ball.duplicate_node().cast::<Sprite2D>();
         let mut second_ball_c = second_ball.clone();
@@ -138,7 +135,6 @@ impl LerpCallableTests {
         let linear_handle = SpireTween::<LerpMethodData<Vector2>>::new(
             linear_callable, initial_pos, final_pos, 5.0,
         ).register();
-        let linear_gd = linear_handle.gd_handle.as_ref().unwrap().clone();
 
         let tracker = RcPtr::clone(&self.time_tracker);
         let mut base = self.base().clone();
@@ -160,7 +156,7 @@ impl LerpCallableTests {
             }
 
             if linear_handle.is_playing() {
-                tracker.wait_finished(&linear_gd, 5.0).await;
+                wait_finished(&linear_handle, &tracker, 5.0).await;
             }
 
             let frames = tracker.frames_since_start();
@@ -192,20 +188,19 @@ impl LerpCallableTests {
         );
         tween.set_loops(2, LoopMode::Yoyo);
         let handle = tween.register();
-        let gd = handle.gd_handle.as_ref().unwrap().clone();
         let tracker = RcPtr::clone(&self.time_tracker);
-        assert_finished_timing(&gd, &tracker, 4.0);
+        assert_finished_timing(&handle, &tracker, 4.0);
 
         Box::pin(async move {
-            tracker.wait_loop_finished(&gd, 2.0).await;
+            wait_loop_finished(&handle, &tracker, 2.0).await;
             let frames = tracker.frames_since_start();
             let diff = (frames as i64 - *call_count as i64).unsigned_abs();
             assert!(diff <= 1, "Call count should match frames");
             assert_eq!(ball.get_global_position(), final_pos);
 
-            tracker.wait_loop_finished(&gd, 4.0).await;
+            wait_loop_finished(&handle, &tracker, 4.0).await;
             if !handle.is_stopped() {
-                tracker.wait_finished(&gd, 4.0).await;
+                wait_finished(&handle, &tracker, 4.0).await;
             }
             let frames = tracker.frames_since_start();
             let diff = (frames as i64 - *call_count as i64).unsigned_abs();

@@ -37,7 +37,6 @@ impl ErrorHandlingTests {
         let final_scale = Vector2::ONE * 3.0;
 
         let tween = sprite.do_scale(final_scale, 3.0).register();
-        let tween_gd = tween.gd_handle.as_ref().unwrap().clone();
 
         let mut seq = SpireTween::<Sequence>::new();
         seq.append_ptr(tween.clone());
@@ -51,7 +50,7 @@ impl ErrorHandlingTests {
         let tracker = RcPtr::clone(&self.time_tracker);
 
         Box::pin(async move {
-            tracker.wait_finished(&tween_gd, 3.0).await;
+            wait_finished(&tween, &tracker, 3.0).await;
             assert_eq!(sprite.get_scale(), final_scale);
         })
     }
@@ -59,7 +58,9 @@ impl ErrorHandlingTests {
     fn test_free_while_playing(&mut self) -> PinnedTestTask {
         let mut sprite = self.sprite.clone();
 
-        let handle = sprite.do_color_g(0.0, 3.0).register();
+        // Uses `register_with_gd_handle` because this test verifies the Gd-handle
+        // path's `is_registered()` reflects unregistration when the bound node is freed.
+        let handle = sprite.do_color_g(0.0, 3.0).register_with_gd_handle();
         let gd = handle.gd_handle.as_ref().unwrap().clone();
 
         let tracker = RcPtr::clone(&self.time_tracker);

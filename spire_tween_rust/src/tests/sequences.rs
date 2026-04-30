@@ -71,14 +71,13 @@ impl SequencesTests {
         seq.join_interval(5.0);
 
         let seq = seq.register();
-        let seq_gd = seq.gd_handle.as_ref().unwrap().clone();
         let tracker = RcPtr::clone(&self.time_tracker);
-        assert_finished_timing(&seq_gd, &tracker, 6.0);
+        assert_finished_timing(&seq, &tracker, 6.0);
 
         Box::pin(async move {
-            tracker.wait_loop_finished(&seq_gd, 6.0).await;
+            wait_loop_finished(&seq, &tracker, 6.0).await;
             if !seq.is_stopped() {
-                tracker.wait_finished(&seq_gd, 6.0).await;
+                wait_finished(&seq, &tracker, 6.0).await;
             }
 
             let expected = vec![
@@ -101,8 +100,7 @@ impl SequencesTests {
         stopped_child.to_mut().stop();
 
         let good_child = shape.do_scale(Vector2::new(3.0, 3.0), 2.0).register();
-        let good_gd = good_child.gd_handle.as_ref().unwrap().clone();
-        seq.join_ptr(good_child);
+        seq.join_ptr(good_child.clone());
 
         seq.append_interval(1.0);
 
@@ -112,29 +110,25 @@ impl SequencesTests {
         seq.append_call(Callable::from_fn("last_block", |_| { Variant::nil() }));
 
         let seq = seq.register();
-        let seq_gd = seq.gd_handle.as_ref().unwrap().clone();
         let tracker = RcPtr::clone(&self.time_tracker);
-        assert_finished_timing(&seq_gd, &tracker, 3.0);
+        assert_finished_timing(&seq, &tracker, 3.0);
 
         // Snapshot scale at good_child finish (before next block modifies it)
         let shape_c = shape.clone();
-        let scale_at_good_done = snapshot_on_signal(
-            &Signal::from_object_signal(&good_gd, "finished"),
-            move || shape_c.get_scale(),
-        );
+        let scale_at_good_done = snapshot_on_finished(&good_child, move || shape_c.get_scale());
 
         Box::pin(async move {
             next_frame().await;
             assert!(stopped_child.is_stopped());
 
-            tracker.wait_finished(&good_gd, 2.0).await;
+            wait_finished(&good_child, &tracker, 2.0).await;
             assert_eq!(scale_at_good_done.to_mut().take().unwrap(), Vector2::new(3.0, 3.0));
 
             shape.queue_free();
 
-            tracker.wait_loop_finished(&seq_gd, 3.0).await;
+            wait_loop_finished(&seq, &tracker, 3.0).await;
             if !seq.is_stopped() {
-                tracker.wait_finished(&seq_gd, 3.0).await;
+                wait_finished(&seq, &tracker, 3.0).await;
             }
         })
     }
@@ -164,40 +158,34 @@ impl SequencesTests {
         seq.append_call(Callable::from_fn("done_msg", |_| { Variant::nil() }));
 
         let seq = seq.register();
-        let seq_gd = seq.gd_handle.as_ref().unwrap().clone();
         let tracker = RcPtr::clone(&self.time_tracker);
-        assert_finished_timing(&seq_gd, &tracker, 14.0);
-
-        let first_gd = first.gd_handle.as_ref().unwrap().clone();
-        let second_gd = second.gd_handle.as_ref().unwrap().clone();
-        let third_gd = third.gd_handle.as_ref().unwrap().clone();
-        let fourth_gd = fourth.gd_handle.as_ref().unwrap().clone();
+        assert_finished_timing(&seq, &tracker, 14.0);
 
         // Snapshot at each child finish
         let shape_c = shape.clone();
-        let s1 = snapshot_on_signal(&Signal::from_object_signal(&first_gd, "finished"), move || shape_c.get_scale());
+        let s1 = snapshot_on_finished(&first, move || shape_c.get_scale());
         let shape_c = shape.clone();
-        let s2 = snapshot_on_signal(&Signal::from_object_signal(&second_gd, "finished"), move || shape_c.get_scale());
+        let s2 = snapshot_on_finished(&second, move || shape_c.get_scale());
         let shape_c = shape.clone();
-        let s3 = snapshot_on_signal(&Signal::from_object_signal(&third_gd, "finished"), move || shape_c.get_scale());
+        let s3 = snapshot_on_finished(&third, move || shape_c.get_scale());
         let shape_c = shape.clone();
-        let s4 = snapshot_on_signal(&Signal::from_object_signal(&fourth_gd, "finished"), move || shape_c.get_scale());
+        let s4 = snapshot_on_finished(&fourth, move || shape_c.get_scale());
 
         Box::pin(async move {
-            tracker.wait_finished(&first_gd, 1.0).await;
+            wait_finished(&first, &tracker, 1.0).await;
             assert_eq!(s1.to_mut().take().unwrap(), grown_scale);
 
-            tracker.wait_finished(&second_gd, 4.0).await;
+            wait_finished(&second, &tracker, 4.0).await;
             assert_eq!(s2.to_mut().take().unwrap(), shrink_scale);
 
-            tracker.wait_finished(&third_gd, 11.0).await;
+            wait_finished(&third, &tracker, 11.0).await;
             assert_eq!(s3.to_mut().take().unwrap(), grown_scale);
 
-            tracker.wait_finished(&fourth_gd, 12.0).await;
+            wait_finished(&fourth, &tracker, 12.0).await;
             assert_eq!(s4.to_mut().take().unwrap(), shrink_scale);
 
             if !seq.is_stopped() {
-                tracker.wait_finished(&seq_gd, 14.0).await;
+                wait_finished(&seq, &tracker, 14.0).await;
             }
         })
     }
@@ -219,25 +207,21 @@ impl SequencesTests {
         assert!(seq.remove(&second));
 
         let seq = seq.register();
-        let seq_gd = seq.gd_handle.as_ref().unwrap().clone();
         let tracker = RcPtr::clone(&self.time_tracker);
-        assert_finished_timing(&seq_gd, &tracker, 3.0);
-
-        let first_gd = first.gd_handle.as_ref().unwrap().clone();
-        let third_gd = third.gd_handle.as_ref().unwrap().clone();
+        assert_finished_timing(&seq, &tracker, 3.0);
 
         let shape_c = shape.clone();
-        let s1 = snapshot_on_signal(&Signal::from_object_signal(&first_gd, "finished"), move || shape_c.get_scale());
+        let s1 = snapshot_on_finished(&first, move || shape_c.get_scale());
 
         Box::pin(async move {
-            tracker.wait_finished(&first_gd, 1.0).await;
+            wait_finished(&first, &tracker, 1.0).await;
             assert_eq!(s1.to_mut().take().unwrap(), grown_scale);
 
-            tracker.wait_finished(&third_gd, 3.0).await;
+            wait_finished(&third, &tracker, 3.0).await;
             assert_eq!(shape.get_scale(), shrink_scale);
 
             if !seq.is_stopped() {
-                tracker.wait_finished(&seq_gd, 3.0).await;
+                wait_finished(&seq, &tracker, 3.0).await;
             }
         })
     }
@@ -258,27 +242,23 @@ impl SequencesTests {
         let mut seq = seq.register();
 
         let tracker = RcPtr::clone(&self.time_tracker);
-        assert_finished_timing(seq.gd_handle.as_ref().unwrap(), &tracker, 4.5);
+        assert_finished_timing(&seq, &tracker, 4.5);
 
-        let first_gd = first.gd_handle.as_ref().unwrap().clone();
         let shape_c = shape.clone();
-        let scale_at_first_done = snapshot_on_signal(
-            &Signal::from_object_signal(&first_gd, "finished"),
-            move || shape_c.get_scale(),
-        );
+        let scale_at_first_done = snapshot_on_finished(&first, move || shape_c.get_scale());
 
         Box::pin(async move {
-            tracker.wait_finished(&first_gd, 1.0).await;
+            wait_finished(&first, &tracker, 1.0).await;
             assert_eq!(scale_at_first_done.to_mut().take().unwrap(), grown_scale);
 
             tracker.wait_seconds(1.5).await;
             assert!(seq.remove(&second));
 
-            tracker.wait_finished(third.gd_handle.as_ref().unwrap(), 4.5).await;
+            wait_finished(&third, &tracker, 4.5).await;
             assert_eq!(shape.get_scale(), shrink_scale);
 
             if !seq.is_stopped() {
-                tracker.wait_finished(seq.gd_handle.as_ref().unwrap(), 4.5).await;
+                wait_finished(&seq, &tracker, 4.5).await;
             }
         })
     }
@@ -301,25 +281,21 @@ impl SequencesTests {
         assert!(seq.remove_call(&callable));
 
         let seq = seq.register();
-        let seq_gd = seq.gd_handle.as_ref().unwrap().clone();
         let tracker = RcPtr::clone(&self.time_tracker);
-        assert_finished_timing(&seq_gd, &tracker, 3.0);
-
-        let first_gd = first.gd_handle.as_ref().unwrap().clone();
-        let third_gd = third.gd_handle.as_ref().unwrap().clone();
+        assert_finished_timing(&seq, &tracker, 3.0);
 
         let shape_c = shape.clone();
-        let s1 = snapshot_on_signal(&Signal::from_object_signal(&first_gd, "finished"), move || shape_c.get_scale());
+        let s1 = snapshot_on_finished(&first, move || shape_c.get_scale());
 
         Box::pin(async move {
-            tracker.wait_finished(&first_gd, 1.0).await;
+            wait_finished(&first, &tracker, 1.0).await;
             assert_eq!(s1.to_mut().take().unwrap(), grown_scale);
 
-            tracker.wait_finished(&third_gd, 3.0).await;
+            wait_finished(&third, &tracker, 3.0).await;
             assert_eq!(shape.get_scale(), shrink_scale);
 
             if !seq.is_stopped() {
-                tracker.wait_finished(&seq_gd, 3.0).await;
+                wait_finished(&seq, &tracker, 3.0).await;
             }
         })
     }
@@ -341,17 +317,12 @@ impl SequencesTests {
         assert!(matches!(first.get_ease(), EaseKind::Basic(Ease::InExpo)));
         assert!(matches!(second.get_ease(), EaseKind::Basic(Ease::InExpo)));
 
-        let first_gd = first.gd_handle.as_ref().unwrap().clone();
-        let seq_gd = seq.gd_handle.as_ref().unwrap().clone();
         let tracker = RcPtr::clone(&self.time_tracker);
-        assert_finished_timing(&seq_gd, &tracker, 5.0);
+        assert_finished_timing(&seq, &tracker, 5.0);
 
         // Snapshot scale at first finish (before second modifies it)
         let shape_c = shape.clone();
-        let scale_at_first_done = snapshot_on_signal(
-            &Signal::from_object_signal(&first_gd, "finished"),
-            move || shape_c.get_scale(),
-        );
+        let scale_at_first_done = snapshot_on_finished(&first, move || shape_c.get_scale());
 
         Box::pin(async move {
             tracker.wait_seconds(2.0).await;
@@ -360,7 +331,7 @@ impl SequencesTests {
             let expected_val = initial_scale.lerp(final_scale, weight as f32);
             assert!(shape.get_scale().distance_to(expected_val) <= 0.001);
 
-            tracker.wait_finished(&first_gd, 3.0).await;
+            wait_finished(&first, &tracker, 3.0).await;
             let progress = first.get_animation_position() / 3.0;
             assert_eq!(progress, 1.0);
             assert_eq!(scale_at_first_done.to_mut().take().unwrap(), final_scale);
@@ -372,7 +343,7 @@ impl SequencesTests {
             assert!(shape.get_scale().distance_to(expected_val) <= 0.001);
 
             if !seq.is_stopped() {
-                tracker.wait_finished(&seq_gd, 5.0).await;
+                wait_finished(&seq, &tracker, 5.0).await;
             }
             assert_eq!(shape.get_scale(), initial_scale);
         })

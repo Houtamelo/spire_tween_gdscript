@@ -1,6 +1,7 @@
 mod delays;
 mod ellipsis_test;
 mod error_handling;
+mod gd_handle_path;
 mod lerp_callable;
 mod lerp_modes;
 mod misc;

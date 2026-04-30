@@ -5,6 +5,7 @@ use super::util::*;
 use super::delays::DelaysTests;
 use super::ellipsis_test::EllipsisTests;
 use super::error_handling::ErrorHandlingTests;
+use super::gd_handle_path::GdHandlePathTests;
 use super::lerp_callable::LerpCallableTests;
 use super::lerp_modes::LerpModesTests;
 use super::misc::MiscTests;
@@ -26,6 +27,7 @@ enum TestClass {
     Sequences,
     Spiral,
     Ellipsis,
+    GdHandlePath,
 }
 
 const ALL_TESTS: &[TestClass] = &[
@@ -40,6 +42,7 @@ const ALL_TESTS: &[TestClass] = &[
     TestClass::Sequences,
     TestClass::Spiral,
     TestClass::Ellipsis,
+    TestClass::GdHandlePath,
 ];
 
 #[derive(GodotClass)]
@@ -68,6 +71,7 @@ impl INode for TestRunner {
                     TestClass::Sequences => run_tests_from_class::<SequencesTests>(&mut base).await,
                     TestClass::Spiral => run_tests_from_class::<SpiralTests>(&mut base).await,
                     TestClass::Ellipsis => run_tests_from_class::<EllipsisTests>(&mut base).await,
+                    TestClass::GdHandlePath => run_tests_from_class::<GdHandlePathTests>(&mut base).await,
                 }
             }
 

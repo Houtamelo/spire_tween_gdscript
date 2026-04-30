@@ -48,8 +48,23 @@ impl<T: ITweenable> SpireTween<T>
 where AnyTween: From<RcPtr<Self>>
 {
     /// Submits this tween to the global `TweenManager` and returns an `RcPtr` handle.
-    /// Automatically attaches a GD handle so `finished`/`loop_finished` signals work.
+    ///
+    /// Pure Rust path: no GDScript-facing `Gd` handle is attached. Connect to
+    /// `finished`/`loop_finished` events via `finished_connect`/`loop_finished_connect`
+    /// (closure-based). Use this when no GDScript code needs to listen for the events.
     pub fn register(self) -> RcPtr<Self> {
+        let tween = RcPtr::new(self);
+        TM.tween_register(tween.clone());
+        tween
+    }
+
+    /// Submits this tween to the global `TweenManager` and returns an `RcPtr` handle,
+    /// also attaching a GDScript-facing `Gd` handle.
+    ///
+    /// Use this when GDScript code (or any consumer of Godot signals) needs to listen
+    /// for `finished`/`loop_finished`. Pure Rust users should prefer `register` plus
+    /// `finished_connect`/`loop_finished_connect`.
+    pub fn register_with_gd_handle(self) -> RcPtr<Self> {
         let tween = RcPtr::new(self);
         if tween.to_mut().gd_handle.is_none() {
             T::attach_gd_handle(&tween);

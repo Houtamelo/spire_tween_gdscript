@@ -42,7 +42,6 @@ impl MiscTests {
         assert!(handle.is_stopped());
         assert_eq!(shape.get_scale(), final_value);
 
-        let gd = handle.gd_handle.as_ref().unwrap().clone();
         let tracker = RcPtr::clone(&self.time_tracker);
 
         Box::pin(async move {
@@ -51,7 +50,7 @@ impl MiscTests {
             shape.set_scale(Vector2::ONE);
             handle.play();
 
-            tracker.wait_finished(&gd, 7.0).await;
+            wait_finished(&handle, &tracker, 7.0).await;
             assert_eq!(shape.get_scale(), final_value);
         })
     }
@@ -70,7 +69,6 @@ impl MiscTests {
             val.to_variant()
         }));
         let handle = tween.register();
-        let gd = handle.gd_handle.as_ref().unwrap().clone();
         let tracker = RcPtr::clone(&self.time_tracker);
 
         Box::pin(async move {
@@ -86,7 +84,7 @@ impl MiscTests {
             *dyn_target.to_mut() = Vector2::ONE;
             let expected_duration = shape.get_scale().distance_to(*dyn_target) as f64 / speed;
 
-            tracker.wait_finished(&gd, wait_time + expected_duration).await;
+            wait_finished(&handle, &tracker, wait_time + expected_duration).await;
             assert_eq!(shape.get_scale(), *dyn_target);
         })
     }

@@ -47,11 +47,9 @@ impl ISprite2D for TrailSpawner {
         let handle = tween.register();
 
         let mut copy_for_free = copy;
-        handle.to_mut().gd_handle.as_ref().unwrap()
-            .signals()
-            .finished()
-            .connect(move || {
-                copy_for_free.queue_free();
-            });
+        handle.to_mut().finished_connect(
+            move || copy_for_free.queue_free(),
+            SpireFlags::ONE_SHOT,
+        );
     }
 }

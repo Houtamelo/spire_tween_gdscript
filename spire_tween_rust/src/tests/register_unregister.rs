@@ -30,18 +30,20 @@ impl ITestClass for RegisterUnregisterTests {
     fn time_tracker(&self) -> &RcPtr<TimeTracker> { &self.time_tracker }
 }
 
+// These tests exercise the Gd-handle path's `register()`/`unregister()`/`is_registered()`
+// methods, so they use `register_with_gd_handle()`.
 impl RegisterUnregisterTests {
     fn test_unregistered_does_not_affect_game(&mut self) -> PinnedTestTask {
         let shape = self.shape.clone();
         let initial_scale = shape.get_scale();
         let final_scale = Vector2::new(3.0, 3.0);
 
-        let handle = shape.do_scale(final_scale, 5.0).register();
+        let handle = shape.do_scale(final_scale, 5.0).register_with_gd_handle();
         let gd = handle.gd_handle.as_ref().unwrap().clone();
         gd.bind().unregister();
 
         let tracker = RcPtr::clone(&self.time_tracker);
-        assert_finished_timing(&gd, &tracker, 7.0);
+        assert_finished_timing(&handle, &tracker, 7.0);
 
         Box::pin(async move {
             tracker.wait_seconds(2.0).await;
@@ -54,9 +56,9 @@ impl RegisterUnregisterTests {
             gd.bind().register();
             assert!(gd.bind().is_registered());
 
-            tracker.wait_loop_finished(&gd, 7.0).await;
+            wait_loop_finished(&handle, &tracker, 7.0).await;
             if !handle.is_stopped() {
-                tracker.wait_finished(&gd, 7.0).await;
+                wait_finished(&handle, &tracker, 7.0).await;
             }
 
             assert_eq!(shape.get_scale(), final_scale);
@@ -69,7 +71,7 @@ impl RegisterUnregisterTests {
         let shape = self.shape.clone();
         let final_scale = Vector2::new(3.0, 3.0);
 
-        let mut handle = shape.do_scale(final_scale, 5.0).register();
+        let mut handle = shape.do_scale(final_scale, 5.0).register_with_gd_handle();
         let gd = handle.gd_handle.as_ref().unwrap().clone();
         gd.bind().unregister();
 

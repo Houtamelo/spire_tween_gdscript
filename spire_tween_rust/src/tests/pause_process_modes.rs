@@ -200,7 +200,6 @@ impl PauseProcessModesTests {
         let handle = shape.do_scale(final_value, 3.0)
             .with_pause_mode(PauseMode::Process)
             .register();
-        let gd = handle.gd_handle.as_ref().unwrap().clone();
         let tracker = RcPtr::clone(&self.time_tracker);
 
         let mut tree = self.base().get_tree();
@@ -209,7 +208,7 @@ impl PauseProcessModesTests {
         self.time_tracker.to_mut().timer += 3.0;
 
         Box::pin(async move {
-            tracker.wait_finished(&gd, 3.0).await;
+            wait_finished(&handle, &tracker, 3.0).await;
             assert_eq!(shape.get_scale(), final_value);
             tree.set_pause(false);
         })
@@ -223,7 +222,6 @@ impl PauseProcessModesTests {
         let handle = shape.do_scale(final_value, 3.0)
             .with_pause_mode(PauseMode::Stop)
             .register();
-        let gd = handle.gd_handle.as_ref().unwrap().clone();
         let tracker = RcPtr::clone(&self.time_tracker);
 
         let mut tree = self.base().get_tree();
@@ -237,11 +235,12 @@ impl PauseProcessModesTests {
             assert_eq!(shape.get_scale(), initial_value);
 
             tree.set_pause(false);
-            tracker.wait_finished(&gd, 3.0).await;
+            wait_finished(&handle, &tracker, 3.0).await;
             assert_eq!(shape.get_scale(), final_value);
         })
     }
 
+    // Uses `register_with_gd_handle` to also exercise the Gd-handle `is_registered()` path.
     fn test_pause_mode_bound(&mut self) -> PinnedTestTask {
         let mut sprite = self.sprite.clone();
         let initial_value = sprite.get_scale();
@@ -249,7 +248,7 @@ impl PauseProcessModesTests {
 
         let handle = sprite.do_scale(final_value, 3.0)
             .with_pause_mode(PauseMode::Bound)
-            .register();
+            .register_with_gd_handle();
         let gd = handle.gd_handle.as_ref().unwrap().clone();
         let tracker = RcPtr::clone(&self.time_tracker);
 
@@ -278,7 +277,7 @@ impl PauseProcessModesTests {
             assert!(sprite.can_process());
             assert!(gd.bind().is_registered());
 
-            tracker.wait_finished(&gd, 9.0).await;
+            wait_finished(&handle, &tracker, 9.0).await;
             assert_eq!(sprite.get_scale(), final_value);
         })
     }
@@ -290,7 +289,6 @@ impl PauseProcessModesTests {
         let handle = sprite.do_scale(final_value, 4.0)
             .with_process_mode(ProcessMode::Idle)
             .register();
-        let gd = handle.gd_handle.as_ref().unwrap().clone();
         let tracker = RcPtr::clone(&self.time_tracker);
 
         assert_eq!(handle.get_process_mode(), ProcessMode::Idle);
@@ -303,10 +301,10 @@ impl PauseProcessModesTests {
             move || h2.get_animation_position(),
         );
         let verifier = self.verifier.clone();
-        assert_finished_timing(&gd, &tracker, 4.0);
+        assert_finished_timing(&handle, &tracker, 4.0);
 
         Box::pin(async move {
-            tracker.wait_finished(&gd, 4.0).await;
+            wait_finished(&handle, &tracker, 4.0).await;
             verifier.to_mut().deactivate();
 
             let failures = &verifier.failures;
@@ -322,7 +320,6 @@ impl PauseProcessModesTests {
         let handle = sprite.do_scale(final_value, 4.0)
             .with_process_mode(ProcessMode::Physics)
             .register();
-        let gd = handle.gd_handle.as_ref().unwrap().clone();
         let tracker = RcPtr::clone(&self.time_tracker);
 
         assert_eq!(handle.get_process_mode(), ProcessMode::Physics);
@@ -335,10 +332,10 @@ impl PauseProcessModesTests {
             move || h2.get_animation_position(),
         );
         let verifier = self.verifier.clone();
-        assert_finished_timing(&gd, &tracker, 4.0);
+        assert_finished_timing(&handle, &tracker, 4.0);
 
         Box::pin(async move {
-            tracker.wait_finished(&gd, 4.0).await;
+            wait_finished(&handle, &tracker, 4.0).await;
             verifier.to_mut().deactivate();
 
             let failures = &verifier.failures;
@@ -347,6 +344,7 @@ impl PauseProcessModesTests {
         })
     }
 
+    // Uses `register_with_gd_handle` to also exercise the Gd-handle `is_registered()` path.
     fn test_pause_mode_bound_process_mode_physics(&mut self) -> PinnedTestTask {
         let mut sprite = self.sprite.clone();
         let initial_value = sprite.get_scale();
@@ -355,7 +353,7 @@ impl PauseProcessModesTests {
         let handle = sprite.do_scale(final_value, 3.0)
             .with_pause_mode(PauseMode::Bound)
             .with_process_mode(ProcessMode::Physics)
-            .register();
+            .register_with_gd_handle();
         let gd = handle.gd_handle.as_ref().unwrap().clone();
         let tracker = RcPtr::clone(&self.time_tracker);
 
@@ -372,7 +370,7 @@ impl PauseProcessModesTests {
             move || h2.get_animation_position(),
         );
         let verifier = self.verifier.clone();
-        assert_finished_timing(&gd, &tracker, 9.0);
+        assert_finished_timing(&handle, &tracker, 9.0);
 
         Box::pin(async move {
             tracker.wait_seconds(4.0).await;
@@ -390,7 +388,7 @@ impl PauseProcessModesTests {
             assert!(sprite.can_process());
             assert!(gd.bind().is_registered());
 
-            tracker.wait_finished(&gd, 9.0).await;
+            wait_finished(&handle, &tracker, 9.0).await;
             verifier.to_mut().deactivate();
 
             let failures = &verifier.failures;

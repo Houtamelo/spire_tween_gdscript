@@ -39,15 +39,14 @@ impl PlayPauseStopTests {
         let mut tween = ball.do_scale(final_scale, 2.0);
         tween.set_begin_value(Vector2::ZERO);
         let handle = tween.register();
-        let gd = handle.gd_handle.as_ref().unwrap().clone();
 
         let tracker = RcPtr::clone(&self.time_tracker);
-        assert_finished_timing(&gd, &tracker, 2.0);
+        assert_finished_timing(&handle, &tracker, 2.0);
 
         Box::pin(async move {
-            tracker.wait_loop_finished(&gd, 2.0).await;
+            wait_loop_finished(&handle, &tracker, 2.0).await;
             if !handle.is_stopped() {
-                tracker.wait_finished(&gd, 2.0).await;
+                wait_finished(&handle, &tracker, 2.0).await;
             }
 
             assert_eq!(ball.get_scale(), final_scale);
@@ -64,10 +63,9 @@ impl PlayPauseStopTests {
         tween.set_begin_value(Vector2::ZERO);
         let mut handle = tween.register();
         handle.pause();
-        let gd = handle.gd_handle.as_ref().unwrap().clone();
 
         let tracker = RcPtr::clone(&self.time_tracker);
-        assert_finished_timing(&gd, &tracker, 5.0);
+        assert_finished_timing(&handle, &tracker, 5.0);
 
         Box::pin(async move {
             tracker.wait_seconds(3.0).await;
@@ -79,23 +77,21 @@ impl PlayPauseStopTests {
 
             handle.play();
 
-            tracker.wait_loop_finished(&gd, 5.0).await;
+            wait_loop_finished(&handle, &tracker, 5.0).await;
             if !handle.is_stopped() {
-                tracker.wait_finished(&gd, 5.0).await;
+                wait_finished(&handle, &tracker, 5.0).await;
             }
 
             assert_eq!(ball.get_scale(), final_scale);
             assert!(handle.is_stopped());
 
-            // Verify that a stopped tween never emits signals again.
-            assert_upon_emission(
-                Signal::from_object_signal(&gd, "loop_finished"),
-                || panic!("Unexpected emission of `loop_finished` on stopped tween"),
-            );
-            assert_upon_emission(
-                Signal::from_object_signal(&gd, "finished"),
-                || panic!("Unexpected emission of `finished` on stopped tween"),
-            );
+            // Verify that a stopped tween never emits events again.
+            assert_upon_loop_finished(&handle, || {
+                panic!("Unexpected emission of `loop_finished` on stopped tween")
+            });
+            assert_upon_finished(&handle, || {
+                panic!("Unexpected emission of `finished` on stopped tween")
+            });
         })
     }
 
@@ -106,14 +102,13 @@ impl PlayPauseStopTests {
         let mut tween = ball.do_scale(final_scale, 2.0);
         tween.set_begin_value(Vector2::ZERO);
         let mut handle = tween.register();
-        let gd = handle.gd_handle.as_ref().unwrap().clone();
 
         let tracker = RcPtr::clone(&self.time_tracker);
 
         Box::pin(async move {
-            tracker.wait_loop_finished(&gd, 2.0).await;
+            wait_loop_finished(&handle, &tracker, 2.0).await;
             if !handle.is_stopped() {
-                tracker.wait_finished(&gd, 2.0).await;
+                wait_finished(&handle, &tracker, 2.0).await;
             }
 
             assert_eq!(ball.get_scale(), final_scale);
@@ -124,9 +119,9 @@ impl PlayPauseStopTests {
 
             handle.play();
 
-            tracker.wait_loop_finished(&gd, 7.0).await;
+            wait_loop_finished(&handle, &tracker, 7.0).await;
             if !handle.is_stopped() {
-                tracker.wait_finished(&gd, 7.0).await;
+                wait_finished(&handle, &tracker, 7.0).await;
             }
 
             assert_eq!(ball.get_scale(), final_scale);

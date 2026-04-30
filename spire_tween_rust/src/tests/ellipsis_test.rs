@@ -40,41 +40,36 @@ impl ITestClass for EllipsisTests {
 impl EllipsisTests {
     fn test_circle(&mut self) -> PinnedTestTask {
         let handle = self.ball.do_ellipsis(CENTER, 0.0, 2.0 * PI, Vector2::splat(256.0), Vector2::splat(256.0), 4.0).register();
-        let gd = handle.gd_handle.as_ref().unwrap().clone();
         let tracker = RcPtr::clone(&self.time_tracker);
-        Box::pin(async move { tracker.wait_finished(&gd, 4.0).await; })
+        Box::pin(async move { wait_finished(&handle, &tracker, 4.0).await; })
     }
 
     fn test_circle_inverted(&mut self) -> PinnedTestTask {
         let handle = self.ball.do_ellipsis(CENTER, 2.0 * PI, 0.0, Vector2::splat(256.0), Vector2::splat(256.0), 4.0).register();
-        let gd = handle.gd_handle.as_ref().unwrap().clone();
         let tracker = RcPtr::clone(&self.time_tracker);
-        Box::pin(async move { tracker.wait_finished(&gd, 4.0).await; })
+        Box::pin(async move { wait_finished(&handle, &tracker, 4.0).await; })
     }
 
     fn test_ellipsis(&mut self) -> PinnedTestTask {
         let r = Vector2::new(256.0, 192.0);
         let handle = self.ball.do_ellipsis(CENTER, 0.0, 2.0 * PI, r, r, 4.0).register();
-        let gd = handle.gd_handle.as_ref().unwrap().clone();
         let tracker = RcPtr::clone(&self.time_tracker);
-        Box::pin(async move { tracker.wait_finished(&gd, 4.0).await; })
+        Box::pin(async move { wait_finished(&handle, &tracker, 4.0).await; })
     }
 
     fn test_ellipsis_varying(&mut self) -> PinnedTestTask {
         let from_r = Vector2::new(256.0, 192.0);
         let to_r = Vector2::ZERO;
         let handle = self.ball.do_ellipsis(CENTER, 0.0, 8.0 * PI, from_r, to_r, 12.0).register();
-        let gd = handle.gd_handle.as_ref().unwrap().clone();
         let tracker = RcPtr::clone(&self.time_tracker);
-        Box::pin(async move { tracker.wait_finished(&gd, 12.0).await; })
+        Box::pin(async move { wait_finished(&handle, &tracker, 12.0).await; })
     }
 
     fn test_ellipsis_varying_inverted(&mut self) -> PinnedTestTask {
         let from_r = Vector2::ZERO;
         let to_r = Vector2::new(128.0, 256.0);
         let handle = self.ball.do_ellipsis(CENTER, 0.0, 8.0 * PI, from_r, to_r, 12.0).register();
-        let gd = handle.gd_handle.as_ref().unwrap().clone();
         let tracker = RcPtr::clone(&self.time_tracker);
-        Box::pin(async move { tracker.wait_finished(&gd, 12.0).await; })
+        Box::pin(async move { wait_finished(&handle, &tracker, 12.0).await; })
     }
 }

@@ -41,7 +41,6 @@ impl LerpModesTests {
         let handle = ball.do_global_position(translation, 2.0)
             .as_relative(Vector2::ZERO)
             .register();
-        let gd = handle.gd_handle.as_ref().unwrap().clone();
         let tracker = RcPtr::clone(&self.time_tracker);
 
         Box::pin(async move {
@@ -55,7 +54,7 @@ impl LerpModesTests {
             let warp_pos = Vector2::new(600.0, 900.0);
             ball.set_global_position(warp_pos);
 
-            tracker.wait_finished(&gd, 2.0).await;
+            wait_finished(&handle, &tracker, 2.0).await;
             let expected_pos = warp_pos + translation * (1.0 - progress as f32);
             assert!(ball.get_global_position().distance_to(expected_pos) <= 0.1);
         })
@@ -69,20 +68,18 @@ impl LerpModesTests {
         let first = ball.do_global_position(first_trans, 2.0)
             .as_relative(Vector2::ZERO)
             .register();
-        let first_gd = first.gd_handle.as_ref().unwrap().clone();
 
         let second_trans = Vector2::new(200.0, -100.0);
         let second = ball.do_global_position(second_trans, 3.0)
             .as_relative(Vector2::ZERO)
             .register();
-        let second_gd = second.gd_handle.as_ref().unwrap().clone();
 
         let tracker = RcPtr::clone(&self.time_tracker);
 
         Box::pin(async move {
             assert!(first.is_relative());
 
-            tracker.wait_finished(&first_gd, 2.0).await;
+            wait_finished(&first, &tracker, 2.0).await;
             assert!(first.is_relative());
             assert!(second.is_relative());
 
@@ -90,7 +87,7 @@ impl LerpModesTests {
             let expected_pos = initial_pos + first_trans + second_trans * second_progress as f32;
             assert!(ball.get_global_position().distance_to(expected_pos) <= 0.1);
 
-            tracker.wait_finished(&second_gd, 3.0).await;
+            wait_finished(&second, &tracker, 3.0).await;
             let expected_pos = initial_pos + first_trans + second_trans;
             assert!(ball.get_global_position().distance_to(expected_pos) <= 0.1);
         })
@@ -103,7 +100,6 @@ impl LerpModesTests {
         let speed = 200.0;
 
         let handle = ball.do_move(final_pos, speed).as_speed_based().register();
-        let gd = handle.gd_handle.as_ref().unwrap().clone();
         assert!(handle.is_speed_based());
 
         let distance = initial_pos.distance_to(final_pos) as f64;
@@ -112,7 +108,7 @@ impl LerpModesTests {
         let tracker = RcPtr::clone(&self.time_tracker);
 
         Box::pin(async move {
-            tracker.wait_finished(&gd, expected_time).await;
+            wait_finished(&handle, &tracker, expected_time).await;
             assert_eq!(ball.get_global_position(), final_pos);
         })
     }
@@ -123,30 +119,38 @@ impl LerpModesTests {
         let speed = 200.0;
 
         let speed_tween = ball.do_move(final_pos, speed).as_speed_based().register();
-        let speed_gd = speed_tween.gd_handle.as_ref().unwrap().clone();
 
         let trans = Vector2::new(600.0, 200.0);
         let relative_tween = ball.do_move(trans, 3.0)
             .as_relative(Vector2::ZERO)
             .register();
-        let relative_gd = relative_tween.gd_handle.as_ref().unwrap().clone();
         assert!(relative_tween.is_relative());
 
         let tracker = RcPtr::clone(&self.time_tracker);
 
-        Box::pin(async move {
-            tracker.wait_finished(&relative_gd, 3.0).await;
-            assert!(speed_tween.is_speed_based());
+        // Capture timer at speed_tween finish (synchronously, at emission time).
+        let tracker_for_check = tracker.clone();
+        let timer_at_speed_done = RcPtr::new(None::<f64>);
+        let timer_slot = timer_at_speed_done.clone();
+        speed_tween.to_mut().finished_connect(
+            move || *timer_slot.to_mut() = Some(tracker_for_check.timer),
+            SpireFlags::ONE_SHOT,
+        );
 
+        Box::pin(async move {
+            wait_finished(&relative_tween, &tracker, 3.0).await;
+            assert!(speed_tween.is_speed_based());
             assert!(speed_tween.is_playing());
 
             let distance = ball.get_global_position().distance_to(final_pos) as f64;
             let expected_time = distance / speed;
 
-            let signal = Signal::from_object_signal(&speed_gd, "finished");
-            signal.to_future::<()>().await;
-
-            assert_within_tolerance(tracker.timer - (expected_time + 3.0), TIME_TOLERANCE * 2.0);
+            // Wait for speed_tween to finish via its connection.
+            while timer_at_speed_done.is_none() {
+                next_frame().await;
+            }
+            let captured = timer_at_speed_done.to_mut().take().unwrap();
+            assert_within_tolerance(captured - (expected_time + 3.0), TIME_TOLERANCE * 2.0);
             assert_eq!(ball.get_global_position(), final_pos);
         })
     }

@@ -71,11 +71,10 @@ impl SpiralTests {
         log_growth: Vector2,
     ) -> PinnedTestTask {
         let handle = self.spawn_spiral(from_angle, to_angle, scale, shear, duration, mode, log_growth);
-        let gd = handle.gd_handle.as_ref().unwrap().clone();
         let tracker = RcPtr::clone(&self.time_tracker);
 
         Box::pin(async move {
-            tracker.wait_finished(&gd, duration).await;
+            wait_finished(&handle, &tracker, duration).await;
         })
     }
 
