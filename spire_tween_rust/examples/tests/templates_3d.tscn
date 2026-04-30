@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://btemplates3d01"]
+
+[node name="Templates3D" type="Templates3DTests"]
+
+[node name="Skeleton3D" type="Skeleton3D" parent="."]
+bones/0/name = "test_bone_a"
+bones/0/parent = -1
+bones/0/rest = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+bones/0/enabled = true
+bones/0/position = Vector3(0, 0, 0)
+bones/0/rotation = Quaternion(0, 0, 0, 1)
+bones/0/scale = Vector3(1, 1, 1)
+bones/1/name = "test_bone_b"
+bones/1/parent = -1
+bones/1/rest = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+bones/1/enabled = true
+bones/1/position = Vector3(0, 0, 0)
+bones/1/rotation = Quaternion(0, 0, 0, 1)
+bones/1/scale = Vector3(1, 1, 1)
+
+[node name="Leader" type="Node3D" parent="."]
+
+[node name="Follower" type="Node3D" parent="."]
