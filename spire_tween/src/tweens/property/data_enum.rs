@@ -3,9 +3,7 @@ use super::*;
 #[delegated_enum(impl_conversions)]
 #[derive(Clone)]
 pub enum PropertyTween {
-    //i32(RcPtr<SpireTween<LerpPropertyData<i32>>>),
     int(RcPtr<SpireTween<LerpPropertyData<i64>>>),
-    //f32(RcPtr<SpireTween<LerpPropertyData<f32>>>),
     float(RcPtr<SpireTween<LerpPropertyData<f64>>>),
     String(RcPtr<SpireTween<LerpPropertyData<GString>>>),
     Color(RcPtr<SpireTween<LerpPropertyData<Color>>>),
@@ -51,31 +49,12 @@ impl_from_enum! {
     }
 }
 
-/*
-impl Deref for PropertyTween {
-    type Target = SpireTween<dyn Any>;
-
-    fn deref(&self) -> &Self::Target {
-        delegate_property_tween! { self => |arg| &**arg }
-    }
-}
-
-impl DerefMut for PropertyTween {
-    fn deref_mut(&mut self) -> &mut Self::Target {
-        delegate_property_tween! { self => |arg| &mut **arg }
-    }
-}
-*/
-
 define_base_methods! { PropertyTween }
 
 #[delegate_impl]
 impl PropertyTween {
     pub fn get_duration(&mut self) -> f64;
-    pub fn set_duration(&mut self, new_duration: f64);
-
-    pub fn get_owner(&self) -> &ObjectOrNode;
-    pub fn set_owner(&mut self, owner: ObjectOrNode);
+    pub fn get_owner(&self) -> Option<&ObjectOrNode>;
 
     pub fn get_ease(&self) -> &EaseKind;
     pub fn set_ease(&mut self, ease: EaseKind);
@@ -91,62 +70,6 @@ impl PropertyTween {
 }
 
 impl PropertyTween {
-    pub fn set_property_path(&mut self, property_path: NodePath) {
-        let owner = self.get_owner().to_object();
-
-        let property_str = &property_path.to_string();
-
-        match self {
-            /*
-            PropertyTween::i32(tween) => {
-                tween.t.data = <i32 as PropertyType>::Data::from_path_and_owner(
-                    property_str,
-                    property_path,
-                    owner,
-                );
-            }
-            */
-            PropertyTween::int(tween) => {
-                tween.t.data = <i64 as PropertyType>::Data::from_path_and_owner(property_str, property_path, owner);
-            }
-            /*
-            PropertyTween::f32(tween) => {
-                tween.t.data = <f32 as PropertyType>::Data::from_path_and_owner(
-                    property_str,
-                    property_path,
-                    owner,
-                );
-            }
-            */
-            PropertyTween::float(tween) => {
-                tween.t.data = <f64 as PropertyType>::Data::from_path_and_owner(property_str, property_path, owner);
-            }
-            PropertyTween::String(tween) => {
-                tween.t.data = <GString as PropertyType>::Data::from_path_and_owner(property_str, property_path, owner);
-            }
-            PropertyTween::Color(tween) => {
-                tween.t.data = <Color as PropertyType>::Data::from_path_and_owner(property_str, property_path, owner);
-            }
-            PropertyTween::Vector2(tween) => {
-                tween.t.data = <Vector2 as PropertyType>::Data::from_path_and_owner(property_str, property_path, owner);
-            }
-            PropertyTween::Vector2i(tween) => {
-                tween.t.data =
-                    <Vector2i as PropertyType>::Data::from_path_and_owner(property_str, property_path, owner);
-            }
-            PropertyTween::Vector3(tween) => {
-                tween.t.data = <Vector3 as PropertyType>::Data::from_path_and_owner(property_str, property_path, owner);
-            }
-            PropertyTween::Vector3i(tween) => {
-                tween.t.data =
-                    <Vector3i as PropertyType>::Data::from_path_and_owner(property_str, property_path, owner);
-            }
-            PropertyTween::Variant(tween) => {
-                tween.t.data = <Variant as PropertyType>::Data::from_path_and_owner(property_str, property_path, owner);
-            }
-        }
-    }
-
     pub fn get_final_value(&mut self) -> Variant {
         delegate_property_tween! {
             self => |this| this.get_final_value().to_variant()
@@ -176,9 +99,7 @@ impl PropertyTween {
 #[delegated_enum(impl_conversions)]
 #[derive(Clone)]
 pub enum WeakPropertyTween {
-    //i32(WeakPtr<SpireTween<LerpPropertyData<i32>>>),
     int(WeakPtr<SpireTween<LerpPropertyData<i64>>>),
-    //f32(WeakPtr<SpireTween<LerpPropertyData<f32>>>),
     float(WeakPtr<SpireTween<LerpPropertyData<f64>>>),
     String(WeakPtr<SpireTween<LerpPropertyData<GString>>>),
     Color(WeakPtr<SpireTween<LerpPropertyData<Color>>>),
@@ -198,9 +119,7 @@ impl WeakPropertyTween {
 
 impl_from_enum_weak! {
     WeakAnyTween::Property {
-        //LerpPropertyData<i32> => WeakPropertyTween::i32,
         LerpPropertyData<i64> => WeakPropertyTween::int,
-        //LerpPropertyData<f32> => WeakPropertyTween::f32,
         LerpPropertyData<f64> => WeakPropertyTween::float,
         LerpPropertyData<GString> => WeakPropertyTween::String,
         LerpPropertyData<Color> => WeakPropertyTween::Color,

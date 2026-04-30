@@ -16,11 +16,8 @@ impl DoTextEdit {
         to: i64,
         duration: f64,
     ) -> Gd<SpirePropertyInt> {
-        let inner = UnsafeCell::new(node.do_minimap_width(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyInt { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_minimap_width(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member TextEdit.scroll_horizontal] over [param duration] seconds.
 
@@ -31,11 +28,8 @@ impl DoTextEdit {
         to: i64,
         duration: f64,
     ) -> Gd<SpirePropertyInt> {
-        let inner = UnsafeCell::new(node.do_scroll_horizontal(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyInt { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_scroll_horizontal(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member TextEdit.scroll_vertical] over [param duration] seconds.
 
@@ -46,11 +40,8 @@ impl DoTextEdit {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_scroll_vertical(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_scroll_vertical(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member TextEdit.text] over [param duration] seconds.
 
@@ -61,11 +52,8 @@ impl DoTextEdit {
         to: GString,
         duration: f64,
     ) -> Gd<SpirePropertyString> {
-        let inner = UnsafeCell::new(node.do_text(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyString { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_text(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member TextEdit.placeholder_text] over [param duration] seconds.
 
@@ -76,10 +64,7 @@ impl DoTextEdit {
         to: GString,
         duration: f64,
     ) -> Gd<SpirePropertyString> {
-        let inner = UnsafeCell::new(node.do_placeholder_text(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyString { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_placeholder_text(to, duration).register();
+        gd_from_native_tween(tween)
     }
 }

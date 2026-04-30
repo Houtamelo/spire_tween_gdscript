@@ -48,12 +48,9 @@ impl IPropertyData for PropertyDataCustom {
     type Target = Object;
 
     fn get_property_path(&self) -> NodePath { self.path.clone() }
-    fn get_owner(&self) -> &ObjectOrNode { &self.owner }
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        self.owner = owner;
-        true
-    }
+    fn get_owner(&self) -> Option<&ObjectOrNode> { Some(&self.owner) }
 }
+
 impl IGeneralPropertyData for PropertyDataCustom {
     fn from_path_and_owner(_path_str: &str, path: NodePath, owner: Gd<Object>) -> Self {
         Self {

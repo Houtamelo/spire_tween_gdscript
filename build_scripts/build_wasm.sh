@@ -1,3 +1,12 @@
+# If we are not in the repository root, go to the parent directory and check again
+if [ ! -f "Cargo.toml" ]; then
+    cd ..
+    if [ ! -f "Cargo.toml" ]; then
+        echo "Error: Could not find Cargo.toml, please run this script from the repository root."
+        exit 1
+    fi
+fi
+
 RUSTFLAGS="-C link-args=-pthread \
 -C target-feature=+atomics \
 -C link-args=-sSIDE_MODULE=2 \

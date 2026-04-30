@@ -72,21 +72,8 @@ impl IPropertyData for PathFollow3DFloatData {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => obj.try_cast::<PathFollow3D>().ok(),
-            ObjectOrNode::Node(obj) => obj.try_cast::<PathFollow3D>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for PathFollow3DFloatData {
@@ -99,28 +86,36 @@ impl TryFromPathAndObject for PathFollow3DFloatData {
                     "h_offset" => {
                         Some(Self {
                             property: <PathFollow3DFloatKind>::HOffset,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "v_offset" => {
                         Some(Self {
                             property: <PathFollow3DFloatKind>::VOffset,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "progress" => {
                         Some(Self {
                             property: <PathFollow3DFloatKind>::Progress,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "progress_ratio" => {
                         Some(Self {
                             property: <PathFollow3DFloatKind>::ProgressRatio,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -229,7 +224,7 @@ impl<
         let owner: Gd<PathFollow3D> = self.to_gd().upcast();
         let data = PathFollow3DFloatData {
             property: <PathFollow3DFloatKind>::HOffset,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -244,7 +239,7 @@ impl<
         let owner: Gd<PathFollow3D> = self.to_gd().upcast();
         let data = PathFollow3DFloatData {
             property: <PathFollow3DFloatKind>::VOffset,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -259,7 +254,7 @@ impl<
         let owner: Gd<PathFollow3D> = self.to_gd().upcast();
         let data = PathFollow3DFloatData {
             property: <PathFollow3DFloatKind>::Progress,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -274,7 +269,7 @@ impl<
         let owner: Gd<PathFollow3D> = self.to_gd().upcast();
         let data = PathFollow3DFloatData {
             property: <PathFollow3DFloatKind>::ProgressRatio,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<

@@ -16,11 +16,8 @@ impl DoAcceptDialog {
         to: GString,
         duration: f64,
     ) -> Gd<SpirePropertyString> {
-        let inner = UnsafeCell::new(node.do_dialog_text(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyString { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_dialog_text(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member AcceptDialog.ok_button_text] over [param duration] seconds.
 
@@ -31,10 +28,7 @@ impl DoAcceptDialog {
         to: GString,
         duration: f64,
     ) -> Gd<SpirePropertyString> {
-        let inner = UnsafeCell::new(node.do_ok_button_text(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyString { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_ok_button_text(to, duration).register();
+        gd_from_native_tween(tween)
     }
 }

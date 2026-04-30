@@ -47,14 +47,10 @@ impl<T: ?Sized> Equivalent<WeakPtr<T>> for *const () {
 
 impl<TStrong: ?Sized, TWeak: ?Sized> PartialEq<WeakPtr<TWeak>> for RcPtr<TStrong> {
     #[inline]
-    fn eq(&self, other: &WeakPtr<TWeak>) -> bool {
-        std::ptr::addr_eq(self.address(), other.address())
-    }
+    fn eq(&self, other: &WeakPtr<TWeak>) -> bool { std::ptr::addr_eq(self.address(), other.address()) }
 }
 
 impl<TStrong: ?Sized, TWeak: ?Sized> PartialEq<RcPtr<TStrong>> for WeakPtr<TWeak> {
     #[inline]
-    fn eq(&self, other: &RcPtr<TStrong>) -> bool {
-        std::ptr::addr_eq(self.address(), other.address())
-    }
+    fn eq(&self, other: &RcPtr<TStrong>) -> bool { std::ptr::addr_eq(self.address(), other.address()) }
 }

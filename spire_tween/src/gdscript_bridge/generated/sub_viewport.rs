@@ -12,22 +12,16 @@ impl DoSubViewport {
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/
     #[func(rename = size_x)]
     fn size_x(node: Gd<SubViewport>, to: i64, duration: f64) -> Gd<SpirePropertyInt> {
-        let inner = UnsafeCell::new(node.do_subview_do_size_x(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyInt { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_subview_do_size_x(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `y` component of the property [member SubViewport.size] over [param duration] seconds.
 
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/
     #[func(rename = size_y)]
     fn size_y(node: Gd<SubViewport>, to: i64, duration: f64) -> Gd<SpirePropertyInt> {
-        let inner = UnsafeCell::new(node.do_subview_do_size_y(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyInt { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_subview_do_size_y(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `x` component of the property [member SubViewport.size_2d_override] over [param duration] seconds.
 
@@ -38,13 +32,8 @@ impl DoSubViewport {
         to: i64,
         duration: f64,
     ) -> Gd<SpirePropertyInt> {
-        let inner = UnsafeCell::new(
-            node.do_subview_do_size_2d_override_x(to, duration).register(),
-        );
-        let handle = Gd::from_init_fn(|base| SpirePropertyInt { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_subview_do_size_2d_override_x(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `y` component of the property [member SubViewport.size_2d_override] over [param duration] seconds.
 
@@ -55,13 +44,8 @@ impl DoSubViewport {
         to: i64,
         duration: f64,
     ) -> Gd<SpirePropertyInt> {
-        let inner = UnsafeCell::new(
-            node.do_subview_do_size_2d_override_y(to, duration).register(),
-        );
-        let handle = Gd::from_init_fn(|base| SpirePropertyInt { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_subview_do_size_2d_override_y(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member SubViewport.size] over [param duration] seconds.
 
@@ -72,14 +56,8 @@ impl DoSubViewport {
         to: Vector2i,
         duration: f64,
     ) -> Gd<SpirePropertyVector2i> {
-        let inner = UnsafeCell::new(node.do_subview_do_size(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyVector2i {
-            base,
-            inner,
-        });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_subview_do_size(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member SubViewport.size_2d_override] over [param duration] seconds.
 
@@ -90,15 +68,7 @@ impl DoSubViewport {
         to: Vector2i,
         duration: f64,
     ) -> Gd<SpirePropertyVector2i> {
-        let inner = UnsafeCell::new(
-            node.do_subview_do_size_2d_override(to, duration).register(),
-        );
-        let handle = Gd::from_init_fn(|base| SpirePropertyVector2i {
-            base,
-            inner,
-        });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_subview_do_size_2d_override(to, duration).register();
+        gd_from_native_tween(tween)
     }
 }

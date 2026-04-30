@@ -200,21 +200,8 @@ impl IPropertyData for Node2DFloatData {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => obj.try_cast::<Node2D>().ok(),
-            ObjectOrNode::Node(obj) => obj.try_cast::<Node2D>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for Node2DFloatData {
@@ -227,98 +214,126 @@ impl TryFromPathAndObject for Node2DFloatData {
                     "position:x" => {
                         Some(Self {
                             property: <Node2DFloatKind>::PositionX,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "position:y" => {
                         Some(Self {
                             property: <Node2DFloatKind>::PositionY,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "global_position:x" => {
                         Some(Self {
                             property: <Node2DFloatKind>::GlobalPositionX,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "global_position:y" => {
                         Some(Self {
                             property: <Node2DFloatKind>::GlobalPositionY,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "scale:x" => {
                         Some(Self {
                             property: <Node2DFloatKind>::ScaleX,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "scale:y" => {
                         Some(Self {
                             property: <Node2DFloatKind>::ScaleY,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "global_scale:x" => {
                         Some(Self {
                             property: <Node2DFloatKind>::GlobalScaleX,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "global_scale:y" => {
                         Some(Self {
                             property: <Node2DFloatKind>::GlobalScaleY,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "rotation" => {
                         Some(Self {
                             property: <Node2DFloatKind>::Rotation,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "rotation_degrees" => {
                         Some(Self {
                             property: <Node2DFloatKind>::RotationDegrees,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "global_rotation" => {
                         Some(Self {
                             property: <Node2DFloatKind>::GlobalRotation,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "global_rotation_degrees" => {
                         Some(Self {
                             property: <Node2DFloatKind>::GlobalRotationDegrees,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "skew" => {
                         Some(Self {
                             property: <Node2DFloatKind>::Skew,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "global_skew" => {
                         Some(Self {
                             property: <Node2DFloatKind>::GlobalSkew,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -400,21 +415,8 @@ impl IPropertyData for Node2DVector2Data {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => obj.try_cast::<Node2D>().ok(),
-            ObjectOrNode::Node(obj) => obj.try_cast::<Node2D>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for Node2DVector2Data {
@@ -427,28 +429,36 @@ impl TryFromPathAndObject for Node2DVector2Data {
                     "position" => {
                         Some(Self {
                             property: <Node2DVector2Kind>::Position,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "global_position" => {
                         Some(Self {
                             property: <Node2DVector2Kind>::GlobalPosition,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "scale" => {
                         Some(Self {
                             property: <Node2DVector2Kind>::Scale,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "global_scale" => {
                         Some(Self {
                             property: <Node2DVector2Kind>::GlobalScale,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -967,7 +977,7 @@ for T {
         let owner: Gd<Node2D> = self.to_gd().upcast();
         let data = Node2DFloatData {
             property: <Node2DFloatKind>::PositionX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -982,7 +992,7 @@ for T {
         let owner: Gd<Node2D> = self.to_gd().upcast();
         let data = Node2DFloatData {
             property: <Node2DFloatKind>::PositionX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -997,7 +1007,7 @@ for T {
         let owner: Gd<Node2D> = self.to_gd().upcast();
         let data = Node2DFloatData {
             property: <Node2DFloatKind>::PositionY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1012,7 +1022,7 @@ for T {
         let owner: Gd<Node2D> = self.to_gd().upcast();
         let data = Node2DFloatData {
             property: <Node2DFloatKind>::PositionY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1027,7 +1037,7 @@ for T {
         let owner: Gd<Node2D> = self.to_gd().upcast();
         let data = Node2DFloatData {
             property: <Node2DFloatKind>::GlobalPositionX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1042,7 +1052,7 @@ for T {
         let owner: Gd<Node2D> = self.to_gd().upcast();
         let data = Node2DFloatData {
             property: <Node2DFloatKind>::GlobalPositionX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1057,7 +1067,7 @@ for T {
         let owner: Gd<Node2D> = self.to_gd().upcast();
         let data = Node2DFloatData {
             property: <Node2DFloatKind>::GlobalPositionY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1072,7 +1082,7 @@ for T {
         let owner: Gd<Node2D> = self.to_gd().upcast();
         let data = Node2DFloatData {
             property: <Node2DFloatKind>::GlobalPositionY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1087,7 +1097,7 @@ for T {
         let owner: Gd<Node2D> = self.to_gd().upcast();
         let data = Node2DFloatData {
             property: <Node2DFloatKind>::ScaleX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1102,7 +1112,7 @@ for T {
         let owner: Gd<Node2D> = self.to_gd().upcast();
         let data = Node2DFloatData {
             property: <Node2DFloatKind>::ScaleY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1117,7 +1127,7 @@ for T {
         let owner: Gd<Node2D> = self.to_gd().upcast();
         let data = Node2DFloatData {
             property: <Node2DFloatKind>::GlobalScaleX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1132,7 +1142,7 @@ for T {
         let owner: Gd<Node2D> = self.to_gd().upcast();
         let data = Node2DFloatData {
             property: <Node2DFloatKind>::GlobalScaleY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1147,7 +1157,7 @@ for T {
         let owner: Gd<Node2D> = self.to_gd().upcast();
         let data = Node2DFloatData {
             property: <Node2DFloatKind>::Rotation,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1162,7 +1172,7 @@ for T {
         let owner: Gd<Node2D> = self.to_gd().upcast();
         let data = Node2DFloatData {
             property: <Node2DFloatKind>::RotationDegrees,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1177,7 +1187,7 @@ for T {
         let owner: Gd<Node2D> = self.to_gd().upcast();
         let data = Node2DFloatData {
             property: <Node2DFloatKind>::GlobalRotation,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1192,7 +1202,7 @@ for T {
         let owner: Gd<Node2D> = self.to_gd().upcast();
         let data = Node2DFloatData {
             property: <Node2DFloatKind>::GlobalRotationDegrees,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1203,7 +1213,7 @@ for T {
         let owner: Gd<Node2D> = self.to_gd().upcast();
         let data = Node2DFloatData {
             property: <Node2DFloatKind>::Skew,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1218,7 +1228,7 @@ for T {
         let owner: Gd<Node2D> = self.to_gd().upcast();
         let data = Node2DFloatData {
             property: <Node2DFloatKind>::GlobalSkew,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1233,7 +1243,7 @@ for T {
         let owner: Gd<Node2D> = self.to_gd().upcast();
         let data = Node2DVector2Data {
             property: <Node2DVector2Kind>::Position,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1248,7 +1258,7 @@ for T {
         let owner: Gd<Node2D> = self.to_gd().upcast();
         let data = Node2DVector2Data {
             property: <Node2DVector2Kind>::Position,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1263,7 +1273,7 @@ for T {
         let owner: Gd<Node2D> = self.to_gd().upcast();
         let data = Node2DVector2Data {
             property: <Node2DVector2Kind>::GlobalPosition,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1278,7 +1288,7 @@ for T {
         let owner: Gd<Node2D> = self.to_gd().upcast();
         let data = Node2DVector2Data {
             property: <Node2DVector2Kind>::GlobalPosition,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1293,7 +1303,7 @@ for T {
         let owner: Gd<Node2D> = self.to_gd().upcast();
         let data = Node2DVector2Data {
             property: <Node2DVector2Kind>::Scale,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1308,7 +1318,7 @@ for T {
         let owner: Gd<Node2D> = self.to_gd().upcast();
         let data = Node2DVector2Data {
             property: <Node2DVector2Kind>::GlobalScale,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<

@@ -98,21 +98,8 @@ impl IPropertyData for Camera3DFloatData {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => obj.try_cast::<Camera3D>().ok(),
-            ObjectOrNode::Node(obj) => obj.try_cast::<Camera3D>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for Camera3DFloatData {
@@ -125,42 +112,54 @@ impl TryFromPathAndObject for Camera3DFloatData {
                     "fov" => {
                         Some(Self {
                             property: <Camera3DFloatKind>::Fov,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "size" => {
                         Some(Self {
                             property: <Camera3DFloatKind>::Size,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "frustum_offset:x" => {
                         Some(Self {
                             property: <Camera3DFloatKind>::FrustumOffsetX,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "frustum_offset:y" => {
                         Some(Self {
                             property: <Camera3DFloatKind>::FrustumOffsetY,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "h_offset" => {
                         Some(Self {
                             property: <Camera3DFloatKind>::HOffset,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "v_offset" => {
                         Some(Self {
                             property: <Camera3DFloatKind>::VOffset,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -209,21 +208,8 @@ impl IPropertyData for Camera3DVector2Data {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => obj.try_cast::<Camera3D>().ok(),
-            ObjectOrNode::Node(obj) => obj.try_cast::<Camera3D>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for Camera3DVector2Data {
@@ -236,7 +222,9 @@ impl TryFromPathAndObject for Camera3DVector2Data {
                     "frustum_offset" => {
                         Some(Self {
                             property: <Camera3DVector2Kind>::FrustumOffset,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -387,7 +375,7 @@ impl<
         let owner: Gd<Camera3D> = self.to_gd().upcast();
         let data = Camera3DFloatData {
             property: <Camera3DFloatKind>::Fov,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -398,7 +386,7 @@ impl<
         let owner: Gd<Camera3D> = self.to_gd().upcast();
         let data = Camera3DFloatData {
             property: <Camera3DFloatKind>::Size,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -413,7 +401,7 @@ impl<
         let owner: Gd<Camera3D> = self.to_gd().upcast();
         let data = Camera3DFloatData {
             property: <Camera3DFloatKind>::FrustumOffsetX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -428,7 +416,7 @@ impl<
         let owner: Gd<Camera3D> = self.to_gd().upcast();
         let data = Camera3DFloatData {
             property: <Camera3DFloatKind>::FrustumOffsetY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -443,7 +431,7 @@ impl<
         let owner: Gd<Camera3D> = self.to_gd().upcast();
         let data = Camera3DFloatData {
             property: <Camera3DFloatKind>::HOffset,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -458,7 +446,7 @@ impl<
         let owner: Gd<Camera3D> = self.to_gd().upcast();
         let data = Camera3DFloatData {
             property: <Camera3DFloatKind>::VOffset,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -473,7 +461,7 @@ impl<
         let owner: Gd<Camera3D> = self.to_gd().upcast();
         let data = Camera3DVector2Data {
             property: <Camera3DVector2Kind>::FrustumOffset,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<

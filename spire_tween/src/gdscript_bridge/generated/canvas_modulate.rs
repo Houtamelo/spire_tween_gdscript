@@ -16,11 +16,8 @@ impl DoCanvasModulate {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_canvas_color_r(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_canvas_color_r(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `g` component of the property [member CanvasModulate.color] over [param duration] seconds.
 
@@ -31,11 +28,8 @@ impl DoCanvasModulate {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_canvas_color_g(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_canvas_color_g(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `b` component of the property [member CanvasModulate.color] over [param duration] seconds.
 
@@ -46,11 +40,8 @@ impl DoCanvasModulate {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_canvas_color_b(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_canvas_color_b(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `a` component of the property [member CanvasModulate.color] over [param duration] seconds.
 
@@ -61,11 +52,8 @@ impl DoCanvasModulate {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_canvas_color_a(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_canvas_color_a(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member CanvasModulate.color] over [param duration] seconds.
 
@@ -76,10 +64,7 @@ impl DoCanvasModulate {
         to: Color,
         duration: f64,
     ) -> Gd<SpirePropertyColor> {
-        let inner = UnsafeCell::new(node.do_canvas_color(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyColor { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_canvas_color(to, duration).register();
+        gd_from_native_tween(tween)
     }
 }

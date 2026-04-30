@@ -123,11 +123,8 @@ fn tokenize_class_bridge(class: &ClassData) -> TokenStream {
                         to: #rust_ty,
                         duration: f64,
                     ) -> Gd<#tween_ty> {
-                        let inner = UnsafeCell::new(node.#trait_fn_name(to, duration).register());
-                        let handle = Gd::from_init_fn(|base| #tween_ty { base, inner });
-                        let handle_clone = handle.clone();
-                        handle.bind().to_mut().gd_handle = Some(handle_clone);
-                        handle
+                        let tween = node.#trait_fn_name(to, duration).register();
+                        gd_from_native_tween(tween)
                     }
 
                     #alias
@@ -143,6 +140,7 @@ fn tokenize_class_bridge(class: &ClassData) -> TokenStream {
     );
 
     let gd_bridge = &class.gdscript_bridge;
+    let template_funcs = template_bridge_methods(class_ident);
 
     quote! {
         use super::*;
@@ -155,6 +153,152 @@ fn tokenize_class_bridge(class: &ClassData) -> TokenStream {
         #[godot_api]
         impl #gd_bridge {
             #(#funcs)*
+            #template_funcs
         }
+    }
+}
+
+/// Returns extra `#[func]` methods for template bridge functions (follow, shake, spiral, etc.)
+/// that get appended to specific Do* bridge classes.
+fn template_bridge_methods(class_ident: &Ident) -> TokenStream {
+    let class_name = class_ident.to_string();
+    match class_name.as_str() {
+        "Node2D" => quote! {
+            #[func]
+            fn follow(node: Gd<Node2D>, follow_this: Gd<Node2D>, speed: f64) -> Gd<SpirePropertyVector2> {
+                let tween = node.do_follow(follow_this, speed).register();
+                gd_from_native_tween(tween)
+            }
+
+            #[func]
+            fn shake(
+                node: Gd<Node2D>,
+                radius_min: real,
+                radius_max: real,
+                vibratio: real,
+                frequency: f64,
+                duration: f64,
+            ) -> Gd<SpireMethodFloat> {
+                let inner = node.do_shake(radius_min, radius_max, vibratio, frequency, duration).register();
+                gd_from_native_tween(inner)
+            }
+
+            #[func]
+            fn ellipsis(
+                node: Gd<Node2D>,
+                center: Vector2,
+                from_angle: f32,
+                to_angle: f32,
+                from_radius: Vector2,
+                to_radius: Vector2,
+                duration: f64,
+            ) -> Gd<SpireMethodFloat> {
+                let tween = node.do_ellipsis(center, from_angle, to_angle, from_radius, to_radius, duration).register();
+                gd_from_native_tween(tween)
+            }
+
+            #[func]
+            fn circle(
+                node: Gd<Node2D>,
+                center: Vector2,
+                from_angle: f32,
+                to_angle: f32,
+                radius: f32,
+                duration: f64,
+            ) -> Gd<SpireMethodFloat> {
+                Self::ellipsis(node, center, from_angle, to_angle, Vector2::splat(radius), Vector2::splat(radius), duration)
+            }
+
+            #[func]
+            fn spiral(
+                node: Gd<Node2D>,
+                center: Vector2,
+                from_angle: f32,
+                to_angle: f32,
+                scale: Vector2,
+                duration: f64,
+                rotation: f32,
+                shear: f32,
+                mode: Spiral,
+                log_growth: Vector2,
+            ) -> Gd<SpireMethodFloat> {
+                let inner = node.do_spiral(center, from_angle, to_angle, scale, duration, rotation, shear, mode, log_growth).register();
+                gd_from_native_tween(inner)
+            }
+
+            #[func]
+            fn contour_shape(
+                node: Gd<Node2D>,
+                vertices: Array<Vector2>,
+                duration_or_speed: f64,
+                is_speed_based: bool,
+            ) -> Gd<SpireSequence> {
+                let tween = node.do_contour_shape(vertices, duration_or_speed, is_speed_based).register();
+                gd_from_native_tween(tween)
+            }
+        },
+        "Node3D" => quote! {
+            #[func]
+            fn follow(node: Gd<Node3D>, follow_this: Gd<Node3D>, speed: f64) -> Gd<SpirePropertyVector3> {
+                let tween = node.do_follow(follow_this, speed).register();
+                gd_from_native_tween(tween)
+            }
+
+            #[func]
+            fn ellipsis(
+                node: Gd<Node3D>,
+                center: Vector3,
+                from_angle: f32,
+                to_angle: f32,
+                from_radius: Vector3,
+                to_radius: Vector3,
+                axis: Vector3,
+                duration: f64,
+            ) -> Gd<SpireMethodFloat> {
+                let tween = node.do_ellipsis(center, from_angle, to_angle, from_radius, to_radius, axis, duration).register();
+                gd_from_native_tween(tween)
+            }
+
+            #[func]
+            fn circle(
+                node: Gd<Node3D>,
+                center: Vector3,
+                from_angle: f32,
+                to_angle: f32,
+                radius: f32,
+                axis: Vector3,
+                duration: f64,
+            ) -> Gd<SpireMethodFloat> {
+                Self::ellipsis(node, center, from_angle, to_angle, Vector3::splat(radius), Vector3::splat(radius), axis, duration)
+            }
+        },
+        "Control" => quote! {
+            #[func]
+            fn shake(
+                node: Gd<Control>,
+                radius_min: real,
+                radius_max: real,
+                vibratio: real,
+                frequency: f64,
+                duration: f64,
+            ) -> Gd<SpireMethodFloat> {
+                let inner = node.do_shake(radius_min, radius_max, vibratio, frequency, duration).register();
+                gd_from_native_tween(inner)
+            }
+        },
+        "Skeleton3D" => quote! {
+            #[func]
+            fn bone_position(node: Gd<Skeleton3D>, bone_idx: i32, to: Vector3, duration: f64) -> Gd<SpirePropertyVector3> {
+                let tween = node.do_bone_position(bone_idx, to, duration).register();
+                gd_from_native_tween(tween)
+            }
+
+            #[func]
+            fn bone_scale(node: Gd<Skeleton3D>, bone_idx: i32, to: Vector3, duration: f64) -> Gd<SpirePropertyVector3> {
+                let tween = node.do_bone_scale(bone_idx, to, duration).register();
+                gd_from_native_tween(tween)
+            }
+        },
+        _ => TokenStream::new(),
     }
 }

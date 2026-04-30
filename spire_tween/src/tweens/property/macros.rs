@@ -1,3 +1,4 @@
+#[allow(unused_imports)]
 use imports::*;
 
 use super::*;
@@ -8,7 +9,7 @@ mod imports {
 
     pub use cap::ImplementsGodotExports;
     pub use godot::{
-        meta::ClassName,
+        meta::ClassId,
         obj::{Bounds, UserClass, bounds::DeclUser, cap},
         private::ClassConfig,
     };
@@ -27,115 +28,21 @@ macro_rules! nested_try_from_path_and_object {
 pub(crate) use nested_try_from_path_and_object;
 
 macro_rules! gd_property_tween {
-    ($GdName:ident, $T:ty, $P:ident, $CStrName: literal, SpeedDocs = $SpeedDocs:literal) => {
-        //#[derive(GodotClass)]
-        //#[class(base = RefCounted, init)]
+    ($GdName:ident, $T:ty, $P:ident, $CStrName:literal,SpeedDocs = $SpeedDocs:literal) => {
+        /// A tween that interpolates the value of the property at [method get_property_path], by lerping between specific
+        /// start and end values defined by the user. The weight of the lerp is based on how much time has passed
+        /// relative to [method get_duration].
+        ///
+        /// [b]Note:[/b] You should not instantiate this class directly, instead use one of the `do_property_*` methods on [Spire].
+        ///
+        /// Spire also provides specialized constructors of this class for common properties, the constructors are present
+        /// on special "namespace" classes for each node type, examples: [DoNode2D], [DoControl],
+        /// [DoCanvasItem]. See those classes' methods for more details.
+        #[derive(GodotClass)]
+        #[class(base = RefCounted, no_init)]
         pub struct $GdName {
-            pub base: ::godot::obj::Base<::godot::classes::RefCounted>,
+            pub base:  ::godot::obj::Base<::godot::classes::RefCounted>,
             pub inner: UnsafeCell<RcPtr<SpireTween<LerpPropertyData<$T>>>>,
-        }
-
-        #[doc(hidden)]
-        #[allow(non_camel_case_types)]
-        pub struct $ {concat(__godot_, $GdName, _Funcs)} {}
-
-        ::godot::sys::plugin_add!(
-            :: godot :: private :: __GODOT_DOCS_REGISTRY ;
-            :: godot :: private :: DocsPlugin :: new :: < $GdName > (
-                :: godot :: private :: DocsItem :: Struct (
-                    :: godot :: docs :: StructDocs {
-                        base : "RefCounted" ,
-                        description :
-"A tween that interpolates the value of the property at [method get_property_path], by lerping between specific \
-start and end values defined by the user. The weight of the lerp is based on how much time has passed \
-relative to [method get_duration].\
-\n\
-[b]Note:[/b] You should not instantiate this class directly, instead use one of the `do_property_*` methods on [Spire].\
-\n\
-Spire also provides specialized constructors of this class for common properties, the constructors are present \
-on special \"namespace\" classes for each node type, examples: [DoNode2D], [DoControl], \
-[DoCanvasItem]. See those classes' methods for more details.",
-                        experimental : "" ,
-                        deprecated : "" ,
-                        members : "" ,
-                    }
-                )
-            )
-        );
-        ::godot::sys::plugin_add!(
-            :: godot :: private :: __GODOT_PLUGIN_REGISTRY ;
-            :: godot :: private :: ClassPlugin :: new :: < $GdName > (
-                :: godot :: private :: PluginItem :: Struct (
-                    :: godot :: private :: Struct :: new :: < $GdName > ()
-                )
-            )
-        );
-
-        ::godot::private::class_macros::inherit_from_RefCounted__ensure_class_exists!($GdName );
-
-        impl ::godot::obj::WithBaseField for $GdName {
-            fn to_gd(&self) -> ::godot::obj::Gd<$GdName> {
-                let base = <$GdName as ::godot::obj::WithBaseField>::base_field(self);
-                base.to_gd().cast()
-            }
-
-            fn base_field(&self) -> &::godot::obj::Base<<$GdName as ::godot::obj::GodotClass>::Base> {
-                &self.base
-            }
-        }
-
-        impl ::std::ops::Deref for $GdName {
-            type Target = ::godot::classes::RefCounted;
-            fn deref(&self) -> &Self::Target { &self.base }
-        }
-
-        impl ::std::ops::DerefMut for $GdName {
-            fn deref_mut(&mut self) -> &mut Self::Target { &mut self.base }
-        }
-
-        impl GodotClass for $GdName {
-            type Base = RefCounted;
-            fn class_name() -> ClassName {
-                static CLASS_NAME: OnceLock<ClassName> = OnceLock::new();
-                let name: &'static ClassName =
-                    CLASS_NAME.get_or_init(|| ClassName::alloc_next_ascii($CStrName));
-                *name
-            }
-        }
-
-        unsafe impl Bounds for $GdName {
-            type Memory = <<Self as GodotClass>::Base as Bounds>::Memory;
-            type DynMemory = <<Self as GodotClass>::Base as Bounds>::DynMemory;
-            type Declarer = DeclUser;
-            type Exportable = <<Self as GodotClass>::Base as Bounds>::Exportable;
-        }
-
-        impl ImplementsGodotExports for $GdName {
-            fn __register_exports() { }
-        }
-
-        impl UserClass for $GdName {
-            #[doc(hidden)]
-            fn __config() -> ClassConfig { ClassConfig { is_tool: false } }
-            #[doc(hidden)]
-            fn __before_ready(&mut self) {}
-        }
-
-        macro_rules! ${concat(__godot_, $GdName, _vis_macro)} {
-            ($$( #[$$meta:meta] )* struct $$($$tt:tt)+) => {
-                $$( #[$$meta] )* pub struct $$($$tt)+
-            };
-        }
-        macro_rules! ${concat(__godot_, $GdName, _has_base_field_macro)} {
-           ($$( $$tt:tt )*) => { $$( $$tt )* };
-        }
-
-        macro_rules! ${concat(__deny_manual_init_, $GdName)} {
-            () => {
-                compile_error!(
-                    "Class `$GdName` is marked with #[class(no_init)] but provides an init() method."
-                );
-            };
         }
 
         #[godot_api]
@@ -156,15 +63,11 @@ on special \"namespace\" classes for each node type, examples: [DoNode2D], [DoCo
 
             /// [b]Returns:[/b] The object that owns the property this tween is animating.
             #[func]
-            pub fn get_owner(&self) -> Gd<Object> {
-                self.to_ref().get_owner().to_object()
-            }
+            pub fn get_owner(&self) -> Option<Gd<Object>> { self.to_ref().get_owner().map(ObjectOrNode::to_object) }
 
             /// [b]Returns:[/b] The path of the property that this tween is animating, relative to [method get_owner].
             #[func]
-            pub fn get_property_path(&self) -> NodePath {
-                self.to_ref().get_property_path().clone()
-            }
+            pub fn get_property_path(&self) -> NodePath { self.to_ref().get_property_path().clone() }
 
             /// [b]Returns:[/b] The total duration of the tween, in seconds.
             ///
@@ -174,9 +77,7 @@ on special \"namespace\" classes for each node type, examples: [DoNode2D], [DoCo
             /// [b]Note:[/b] For speed-based tweens, the returned value will be calculated by:
             /// `distance / speed`.
             #[func]
-            pub fn get_duration(&self) -> f64 {
-                self.to_mut().get_duration()
-            }
+            pub fn get_duration(&self) -> f64 { self.to_mut().get_duration() }
 
             /// [b]Returns:[/b] The easing used by this tween. Since easing can be represented by multiple
             /// types, the returned value is a [Variant] that can be one of the following:
@@ -187,9 +88,7 @@ on special \"namespace\" classes for each node type, examples: [DoNode2D], [DoCo
             ///
             /// See each method's documentation for more details.
             #[func]
-            pub fn get_ease(&self) -> Variant {
-                self.to_ref().get_ease().to_variant()
-            }
+            pub fn get_ease(&self) -> Variant { self.to_ref().get_ease().to_variant() }
 
             /// Defines the easing type to use for the tween.
             ///
@@ -293,9 +192,7 @@ on special \"namespace\" classes for each node type, examples: [DoNode2D], [DoCo
             /// [b]Note:[/b] If this tween is in the "Relative" mode, then `final_value` is the relative offset,
             /// not the absolute final value.
             #[func]
-            pub fn get_final_value(&self) -> $T {
-                self.to_mut().get_final_value()
-            }
+            pub fn get_final_value(&self) -> $T { self.to_mut().get_final_value() }
 
             /// [b]Usage:[/b] Instead of a fixed final value, use a callable to evaluate the final value on each update.
             /// This method allows you to define "moving" goals.
@@ -414,44 +311,26 @@ on special \"namespace\" classes for each node type, examples: [DoNode2D], [DoCo
             /// [b]Returns:[/b] `true` if this tween is the mode "Absolute", meaning it's not relative nor speed-based
             /// (Absolute is the default mode for all tweens); false otherwise.
             #[func]
-            pub fn is_absolute(&self) -> bool {
-                self.to_ref().is_absolute()
-            }
+            pub fn is_absolute(&self) -> bool { self.to_ref().is_absolute() }
 
             /// [b]Returns:[/b] `true` if this tween is in the mode "Relative"; false otherwise.
             /// See [method as_relative] for more details.
             #[func]
-            pub fn is_relative(&self) -> bool {
-                self.to_ref().is_relative()
-            }
+            pub fn is_relative(&self) -> bool { self.to_ref().is_relative() }
 
             /// [b]Returns:[/b] `true` if this tween is in the mode "SpeedBased"; false otherwise.
             /// See [method as_speed_based] for more details.
             #[func]
-            pub fn is_speed_based(&self) -> bool {
-                self.to_ref().is_speed_based()
-            }
+            pub fn is_speed_based(&self) -> bool { self.to_ref().is_speed_based() }
         }
 
-        define_base_gd_methods! { $GdName => SpireTween<LerpPropertyData<$T>> }
+        define_base_gd_methods! { $GdName, SpireTween<LerpPropertyData<$T>>, LerpPropertyData<$T> }
     };
 }
-
-/*
-gd_property_tween! { SpirePropertyI32, i32, i32, c"SpirePropertyI32", SpeedDocs =
-"For [int], `speed` is measured in units per second, where `unit` is whichever unit the integer represents.\n\
-Assuming a speed of `5.0`, it would take `2.0` seconds to go from `0` to `10`.\n" }
-*/
 
 gd_property_tween! { SpirePropertyInt, i64, i64, c"SpirePropertyInt", SpeedDocs =
 "For [int], `speed` is measured in units per second, where `unit` is whichever unit the integer represents.\n\
 Assuming a speed of `5.0`, it would take `2.0` seconds to go from `0` to `10`.\n" }
-
-/*
-gd_property_tween! { SpirePropertyF32, f32, f32, c"SpirePropertyF32", SpeedDocs =
-"For [float], `speed` is measured in units per second, where `unit` is whichever unit the float represents.\n\
-Assuming a speed of `7.5`, it would take `4.0` seconds to go from `0.0` to `30.0`.\n" }
-*/
 
 gd_property_tween! { SpirePropertyFloat, f64, f64, c"SpirePropertyFloat", SpeedDocs =
 "For [float], `speed` is measured in units per second, where `unit` is whichever unit the float represents.\n\
@@ -506,13 +385,8 @@ macro_rules! define_instantiate_fn {
 
                 let data = <$T as PropertyType>::Data::from_path_and_owner(property_str, property_path, owner);
 
-                let inner = UnsafeCell::new(
-                    SpireTween::<LerpPropertyData<$T>>::new(data, Evaluator::Static(to), duration).register(),
-                );
-                let handle = Gd::from_init_fn(|base| Self { base, inner });
-                let handle_clone = handle.clone();
-                handle.bind().to_mut().gd_handle = Some(handle_clone);
-                handle
+                let tween = SpireTween::<LerpPropertyData<$T>>::new(data, Evaluator::Static(to), duration).register();
+                gd_from_native_tween(tween)
             }
         }
     };
@@ -546,20 +420,15 @@ impl SpireProperty {
     ) -> Gd<Self> {
         let lerper = CustomLerper::new(lerp_func, relative_func, step_func, distance_func);
 
-        let inner = UnsafeCell::new(
-            SpireTween::<LerpPropertyData<Variant>>::new_custom(
-                &property_path,
-                ObjectOrNode::from_unchecked_object(owner),
-                Evaluator::Static(to),
-                duration,
-                lerper,
-            )
-            .register(),
-        );
+        let tween = SpireTween::<LerpPropertyData<Variant>>::new_custom(
+            &property_path,
+            ObjectOrNode::from_unchecked_object(owner),
+            Evaluator::Static(to),
+            duration,
+            lerper,
+        )
+        .register();
 
-        let handle = Gd::from_init_fn(|base| Self { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        gd_from_native_tween(tween)
     }
 }

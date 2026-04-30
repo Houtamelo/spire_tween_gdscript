@@ -1,7 +1,6 @@
 extends Node
 class_name TestBase
 
-var start_time_usec: int = 0
 var timer: float = 0
 
 var start_frame: int = 0
@@ -24,7 +23,6 @@ func _process(delta: float) -> void:
 
 func run_test(callable: Callable) -> bool:
 	timer = 0
-	start_time_usec = Time.get_ticks_usec()
 	start_frame = Engine.get_process_frames()
 	print("---------------------------------")
 	print("Test Started: " + callable.get_method())

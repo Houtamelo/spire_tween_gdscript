@@ -71,21 +71,8 @@ impl IPropertyData for StaticBody2DFloatData {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => obj.try_cast::<StaticBody2D>().ok(),
-            ObjectOrNode::Node(obj) => obj.try_cast::<StaticBody2D>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for StaticBody2DFloatData {
@@ -98,21 +85,27 @@ impl TryFromPathAndObject for StaticBody2DFloatData {
                     "constant_angular_velocity" => {
                         Some(Self {
                             property: <StaticBody2DFloatKind>::ConstantAngularVelocity,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "constant_linear_velocity:x" => {
                         Some(Self {
                             property: <StaticBody2DFloatKind>::ConstantLinearVelocityX,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "constant_linear_velocity:y" => {
                         Some(Self {
                             property: <StaticBody2DFloatKind>::ConstantLinearVelocityY,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -163,21 +156,8 @@ impl IPropertyData for StaticBody2DVector2Data {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => obj.try_cast::<StaticBody2D>().ok(),
-            ObjectOrNode::Node(obj) => obj.try_cast::<StaticBody2D>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for StaticBody2DVector2Data {
@@ -190,7 +170,9 @@ impl TryFromPathAndObject for StaticBody2DVector2Data {
                     "constant_linear_velocity" => {
                         Some(Self {
                             property: <StaticBody2DVector2Kind>::ConstantLinearVelocity,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -299,7 +281,7 @@ impl<
         let owner: Gd<StaticBody2D> = self.to_gd().upcast();
         let data = StaticBody2DFloatData {
             property: <StaticBody2DFloatKind>::ConstantAngularVelocity,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -314,7 +296,7 @@ impl<
         let owner: Gd<StaticBody2D> = self.to_gd().upcast();
         let data = StaticBody2DFloatData {
             property: <StaticBody2DFloatKind>::ConstantLinearVelocityX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -329,7 +311,7 @@ impl<
         let owner: Gd<StaticBody2D> = self.to_gd().upcast();
         let data = StaticBody2DFloatData {
             property: <StaticBody2DFloatKind>::ConstantLinearVelocityY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -344,7 +326,7 @@ impl<
         let owner: Gd<StaticBody2D> = self.to_gd().upcast();
         let data = StaticBody2DVector2Data {
             property: <StaticBody2DVector2Kind>::ConstantLinearVelocity,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<

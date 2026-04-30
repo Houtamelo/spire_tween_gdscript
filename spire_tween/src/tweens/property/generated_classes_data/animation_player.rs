@@ -39,21 +39,8 @@ impl IPropertyData for AnimationPlayerFloatData {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => obj.try_cast::<AnimationPlayer>().ok(),
-            ObjectOrNode::Node(obj) => obj.try_cast::<AnimationPlayer>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for AnimationPlayerFloatData {
@@ -66,7 +53,9 @@ impl TryFromPathAndObject for AnimationPlayerFloatData {
                     "speed_scale" => {
                         Some(Self {
                             property: <AnimationPlayerFloatKind>::SpeedScale,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -112,7 +101,7 @@ impl<
         let owner: Gd<AnimationPlayer> = self.to_gd().upcast();
         let data = AnimationPlayerFloatData {
             property: <AnimationPlayerFloatKind>::SpeedScale,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<

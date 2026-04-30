@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=3 uid="uid://bqpl08x6d6tnr"]
+
+[ext_resource type="PackedScene" uid="uid://dch68fgy4y1q7" path="res://examples/world_bounds.tscn" id="1_hgsca"]
+[ext_resource type="Script" uid="uid://c01b5nhp8j0ye" path="res://examples/tests/ellipsis.gd" id="1_muipx"]
+[ext_resource type="Script" uid="uid://dqfpfqhfl0hqd" path="res://examples/tests/trail_spawner.gd" id="2_muipx"]
+
+[sub_resource type="Gradient" id="Gradient_380hf"]
+offsets = PackedFloat32Array(0, 0.309524, 0.313492)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_aurem"]
+gradient = SubResource("Gradient_380hf")
+width = 16
+height = 16
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="Ellipsis" type="Node2D"]
+script = ExtResource("1_muipx")
+
+[node name="WorldBounds" parent="." instance=ExtResource("1_hgsca")]
+
+[node name="Ball" type="Sprite2D" parent="."]
+modulate = Color(0.4857996, 0.90053093, 0.5894824, 1)
+texture = SubResource("GradientTexture2D_aurem")
+script = ExtResource("2_muipx")

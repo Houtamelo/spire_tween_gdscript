@@ -10,10 +10,7 @@ pub static mut DEFAULT_EASE: Ease = Ease::Linear;
 register_enum! {
     [GD = "Ease"]
     Ease {
-        /// The ease defined by the global settings. You can change the default
-        /// ease with [method SpireGlobalSettings.set_default_ease].
-        ///
-        /// The setting's default value is [constant EASE_LINEAR].
+        /// Uses the global default ease (initially `Linear`).
         [RS = "Default", GD = "EASE_DEFAULT"]
         #[default]
         Default = 0,
@@ -570,6 +567,8 @@ register_enum! {
 }
 
 impl Ease {
+    /// Evaluates this easing curve at position `x` (typically in `0.0..=1.0`)
+    /// and returns the eased value.
     pub fn sample(&self, x: f64) -> f64 {
         const A: f64 = 20.0;
         const B: f64 = 10.0;
@@ -590,10 +589,13 @@ impl Ease {
             Ease::InQuint => keyframe::functions::EaseInQuint.y(x),
             Ease::InCirc => {
                 let sq_target = 1. - x * x;
-                if sq_target < 0. { if x > 1. { 1. } else { 0. } } else { 1. - f64::sqrt(sq_target) }
+                #[rustfmt::skip]
+                if sq_target < 0. {
+                    if x > 1. { 1. } else { 0. }
+                } else {
+                    1. - f64::sqrt(sq_target)
+                }
             }
-            //Ease::InExpo => f64::powf(2., 10. * x - 10.) - 0.000976562,
-            // 2 (((C^(10 x-B))/(D))-J)
             Ease::InExpo => 2. * ((f64::powf(C, B * x - B) / D) - J),
             Ease::OutSine => keyframe::functions::EaseOut.y(x),
             Ease::OutQuad => keyframe::functions::EaseOutQuad.y(x),
@@ -603,10 +605,13 @@ impl Ease {
             Ease::OutCirc => {
                 let x_minus_1 = x - 1.;
                 let sq_target = 1. - x_minus_1 * x_minus_1;
-                if sq_target < 0. { if x < 0. { 0. } else { 2. } } else { f64::sqrt(sq_target) }
+                #[rustfmt::skip]
+                if sq_target < 0. {
+                    if x < 0. { 0. } else { 2. }
+                } else {
+                    f64::sqrt(sq_target)
+                }
             }
-            // Ease::OutExpo => 1. - f64::powf(2., -10. * x),
-            // 1+2 (J+((-C^(-B x))/(D)))
             Ease::OutExpo => 1. + 2. * (J - (f64::powf(C, -B * x) / D)),
             Ease::InOutSine => keyframe::functions::EaseInOut.y(x),
             Ease::InOutQuad => keyframe::functions::EaseInOutQuad.y(x),
@@ -617,11 +622,22 @@ impl Ease {
                 if x < 0.5 {
                     let sq_target = 1. - 4. * x * x;
 
-                    if sq_target < 0. { if x <= -0.5 { -0.5 } else { 0.5 } } else { (1. - f64::sqrt(sq_target)) / 2. }
+                    #[rustfmt::skip]
+                    if sq_target < 0. {
+                        if x <= -0.5 { -0.5 } else { 0.5 }
+                    } else {
+                        (1. - f64::sqrt(sq_target)) / 2.
+                    }
                 } else {
                     let w = 2. - 2. * x;
                     let sq_target = 1. - w * w;
-                    if sq_target < 0. { if x >= 1.5 { 1.5 } else { 0.5 } } else { (f64::sqrt(sq_target) + 1.) / 2. }
+
+                    #[rustfmt::skip]
+                    if sq_target < 0. {
+                        if x >= 1.5 { 1.5 } else { 0.5 }
+                    } else {
+                        (f64::sqrt(sq_target) + 1.) / 2.
+                    }
                 }
             }
             Ease::InOutExpo => {
@@ -643,6 +659,8 @@ impl Ease {
     }
 }
 
+/// Wraps `Ease` presets, Godot `Curve` resources, `Callable`s, or custom
+/// `dyn EasingFunction` implementations.
 #[derive(Clone)]
 pub enum EaseKind {
     Basic(Ease),
@@ -653,6 +671,8 @@ pub enum EaseKind {
 
 impl GodotConvert for EaseKind {
     type Via = Variant;
+
+    fn godot_shape() -> GodotShape { GodotShape::Variant }
 }
 
 impl FromGodot for EaseKind {
@@ -670,19 +690,21 @@ impl FromGodot for EaseKind {
 }
 
 impl ToGodot for EaseKind {
-    type ToVia<'v> = Self::Via;
+    type Pass = godot::meta::conv::ByValue;
 
-    fn to_godot(&self) -> Self::ToVia<'_> {
+    fn to_godot(&self) -> Variant {
         match self {
             EaseKind::Basic(basic) => basic.to_variant(),
             EaseKind::GodotCurve(curve) => curve.to_variant(),
             EaseKind::Callable(callable) => callable.to_variant(),
             EaseKind::Custom(f) => {
                 let f = Rc::clone(f);
-                Callable::from_local_fn("anonymous_easing_fn", move |args| {
-                    let arg = args.first().ok_or(())?;
-                    let x = arg.try_to_relaxed::<f64>().log_if_err().unwrap_or_default();
-                    Ok(f.y(x).to_variant())
+                Callable::from_fn("anonymous_easing_fn", move |args| {
+                    let x = args
+                        .first()
+                        .and_then(|arg| arg.try_to_relaxed::<f64>().log_if_err())
+                        .unwrap_or_default();
+                    f.y(x).to_variant()
                 })
                 .to_variant()
             }

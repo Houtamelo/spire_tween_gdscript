@@ -50,21 +50,8 @@ impl IPropertyData for LabelIntData {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => obj.try_cast::<Label>().ok(),
-            ObjectOrNode::Node(obj) => obj.try_cast::<Label>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for LabelIntData {
@@ -77,14 +64,18 @@ impl TryFromPathAndObject for LabelIntData {
                     "max_lines_visible" => {
                         Some(Self {
                             property: <LabelIntKind>::MaxLinesVisible,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "visible_characters" => {
                         Some(Self {
                             property: <LabelIntKind>::VisibleCharacters,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -133,21 +124,8 @@ impl IPropertyData for LabelFloatData {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => obj.try_cast::<Label>().ok(),
-            ObjectOrNode::Node(obj) => obj.try_cast::<Label>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for LabelFloatData {
@@ -160,7 +138,9 @@ impl TryFromPathAndObject for LabelFloatData {
                     "visible_ratio" => {
                         Some(Self {
                             property: <LabelFloatKind>::VisibleRatio,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -209,21 +189,8 @@ impl IPropertyData for LabelStringData {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => obj.try_cast::<Label>().ok(),
-            ObjectOrNode::Node(obj) => obj.try_cast::<Label>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for LabelStringData {
@@ -236,7 +203,9 @@ impl TryFromPathAndObject for LabelStringData {
                     "text" => {
                         Some(Self {
                             property: <LabelStringKind>::Text,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -343,7 +312,7 @@ for T {
         let owner: Gd<Label> = self.to_gd().upcast();
         let data = LabelIntData {
             property: <LabelIntKind>::MaxLinesVisible,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -358,7 +327,7 @@ for T {
         let owner: Gd<Label> = self.to_gd().upcast();
         let data = LabelIntData {
             property: <LabelIntKind>::VisibleCharacters,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -373,7 +342,7 @@ for T {
         let owner: Gd<Label> = self.to_gd().upcast();
         let data = LabelFloatData {
             property: <LabelFloatKind>::VisibleRatio,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -388,7 +357,7 @@ for T {
         let owner: Gd<Label> = self.to_gd().upcast();
         let data = LabelStringData {
             property: <LabelStringKind>::Text,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<

@@ -10,9 +10,11 @@ pub enum PropertyDataInt {
     Label3D(Label3DIntData),
     LineEdit(LineEditIntData),
     RichTextLabel(RichTextLabelIntData),
+    Sprite2D(Sprite2DIntData),
     SubViewport(SubViewportIntData),
     TextEdit(TextEditIntData),
     Window(WindowIntData),
+    ViaCallable(PropertyDataViaCallable<i64>),
     Custom(PropertyDataCustom),
 }
 impl IGeneralPropertyData for PropertyDataInt {
@@ -20,7 +22,8 @@ impl IGeneralPropertyData for PropertyDataInt {
         nested_try_from_path_and_object! {
             _path_str, owner, AnimatedSprite2DIntData, AnimatedSprite3DIntData,
             CanvasItemIntData, LabelIntData, Label3DIntData, LineEditIntData,
-            RichTextLabelIntData, SubViewportIntData, TextEditIntData, WindowIntData
+            RichTextLabelIntData, Sprite2DIntData, SubViewportIntData, TextEditIntData,
+            WindowIntData, PropertyDataViaCallable < i64 >
         }
         Self::Custom(PropertyDataCustom::from_path_and_owner(_path_str, path, owner))
     }
@@ -76,6 +79,7 @@ pub enum PropertyDataFloat {
     TextureProgressBar(TextureProgressBarFloatData),
     VideoStreamPlayer(VideoStreamPlayerFloatData),
     Viewport(ViewportFloatData),
+    ViaCallable(PropertyDataViaCallable<f64>),
     Custom(PropertyDataCustom),
 }
 impl IGeneralPropertyData for PropertyDataFloat {
@@ -98,7 +102,8 @@ impl IGeneralPropertyData for PropertyDataFloat {
             RichTextLabelFloatData, RigidBody2DFloatData, RigidBody3DFloatData,
             Skeleton3DFloatData, SpriteBase3DFloatData, StaticBody2DFloatData,
             StaticBody3DFloatData, TextEditFloatData, TextureProgressBarFloatData,
-            VideoStreamPlayerFloatData, ViewportFloatData
+            VideoStreamPlayerFloatData, ViewportFloatData, PropertyDataViaCallable < f64
+            >
         }
         Self::Custom(PropertyDataCustom::from_path_and_owner(_path_str, path, owner))
     }
@@ -120,6 +125,7 @@ pub enum PropertyDataVector2 {
     SpriteBase3D(SpriteBase3DVector2Data),
     StaticBody2D(StaticBody2DVector2Data),
     TextureProgressBar(TextureProgressBarVector2Data),
+    ViaCallable(PropertyDataViaCallable<Vector2>),
     Follow2D(PropertyVector2Node2DFollowData),
     Custom(PropertyDataCustom),
 }
@@ -131,7 +137,8 @@ impl IGeneralPropertyData for PropertyDataVector2 {
             ControlVector2Data, Label3DVector2Data, Node2DVector2Data,
             ParallaxBackgroundVector2Data, RigidBody2DVector2Data,
             SpriteBase3DVector2Data, StaticBody2DVector2Data,
-            TextureProgressBarVector2Data, PropertyVector2Node2DFollowData
+            TextureProgressBarVector2Data, PropertyDataViaCallable < Vector2 >,
+            PropertyVector2Node2DFollowData
         }
         Self::Custom(PropertyDataCustom::from_path_and_owner(_path_str, path, owner))
     }
@@ -142,12 +149,14 @@ impl IGeneralPropertyData for PropertyDataVector2 {
 pub enum PropertyDataVector2i {
     SubViewport(SubViewportVector2iData),
     Window(WindowVector2iData),
+    ViaCallable(PropertyDataViaCallable<Vector2i>),
     Custom(PropertyDataCustom),
 }
 impl IGeneralPropertyData for PropertyDataVector2i {
     fn from_path_and_owner(_path_str: &str, path: NodePath, owner: Gd<Object>) -> Self {
         nested_try_from_path_and_object! {
-            _path_str, owner, SubViewportVector2iData, WindowVector2iData
+            _path_str, owner, SubViewportVector2iData, WindowVector2iData,
+            PropertyDataViaCallable < Vector2i >
         }
         Self::Custom(PropertyDataCustom::from_path_and_owner(_path_str, path, owner))
     }
@@ -167,6 +176,8 @@ pub enum PropertyDataVector3 {
     ReflectionProbe(ReflectionProbeVector3Data),
     RigidBody3D(RigidBody3DVector3Data),
     StaticBody3D(StaticBody3DVector3Data),
+    ViaCallable(PropertyDataViaCallable<Vector3>),
+    Follow3D(PropertyVector3Node3DFollowData),
     Custom(PropertyDataCustom),
 }
 impl IGeneralPropertyData for PropertyDataVector3 {
@@ -177,7 +188,8 @@ impl IGeneralPropertyData for PropertyDataVector3 {
             GpuParticlesAttractorBox3DVector3Data,
             GpuParticlesAttractorVectorField3DVector3Data, Node3DVector3Data,
             PhysicalBone3DVector3Data, ReflectionProbeVector3Data,
-            RigidBody3DVector3Data, StaticBody3DVector3Data
+            RigidBody3DVector3Data, StaticBody3DVector3Data, PropertyDataViaCallable <
+            Vector3 >, PropertyVector3Node3DFollowData
         }
         Self::Custom(PropertyDataCustom::from_path_and_owner(_path_str, path, owner))
     }
@@ -186,12 +198,13 @@ impl IGeneralPropertyData for PropertyDataVector3 {
 #[allow(unused)]
 #[delegated_enum(impl_conversions)]
 pub enum PropertyDataVector3i {
+    ViaCallable(PropertyDataViaCallable<Vector3i>),
     Custom(PropertyDataCustom),
 }
 impl IGeneralPropertyData for PropertyDataVector3i {
     fn from_path_and_owner(_path_str: &str, path: NodePath, owner: Gd<Object>) -> Self {
         nested_try_from_path_and_object! {
-            _path_str, owner,
+            _path_str, owner, PropertyDataViaCallable < Vector3i >
         }
         Self::Custom(PropertyDataCustom::from_path_and_owner(_path_str, path, owner))
     }
@@ -209,6 +222,7 @@ pub enum PropertyDataColor {
     ReflectionProbe(ReflectionProbeColorData),
     SpriteBase3D(SpriteBase3DColorData),
     TextureProgressBar(TextureProgressBarColorData),
+    ViaCallable(PropertyDataViaCallable<Color>),
     Custom(PropertyDataCustom),
 }
 impl IGeneralPropertyData for PropertyDataColor {
@@ -216,7 +230,8 @@ impl IGeneralPropertyData for PropertyDataColor {
         nested_try_from_path_and_object! {
             _path_str, owner, CanvasItemColorData, CanvasModulateColorData,
             ColorRectColorData, DecalColorData, Label3DColorData, Light3DColorData,
-            ReflectionProbeColorData, SpriteBase3DColorData, TextureProgressBarColorData
+            ReflectionProbeColorData, SpriteBase3DColorData, TextureProgressBarColorData,
+            PropertyDataViaCallable < Color >
         }
         Self::Custom(PropertyDataCustom::from_path_and_owner(_path_str, path, owner))
     }
@@ -235,6 +250,7 @@ pub enum PropertyDataString {
     RichTextLabel(RichTextLabelStringData),
     StatusIndicator(StatusIndicatorStringData),
     TextEdit(TextEditStringData),
+    ViaCallable(PropertyDataViaCallable<GString>),
     Custom(PropertyDataCustom),
 }
 impl IGeneralPropertyData for PropertyDataString {
@@ -243,7 +259,8 @@ impl IGeneralPropertyData for PropertyDataString {
             _path_str, owner, AcceptDialogStringData, ButtonStringData,
             ConfirmationDialogStringData, LabelStringData, Label3DStringData,
             LineEditStringData, LinkButtonStringData, RichTextLabelStringData,
-            StatusIndicatorStringData, TextEditStringData
+            StatusIndicatorStringData, TextEditStringData, PropertyDataViaCallable <
+            GString >
         }
         Self::Custom(PropertyDataCustom::from_path_and_owner(_path_str, path, owner))
     }

@@ -4,7 +4,10 @@ pub trait BasicLerp<T> {
     fn spire_lerp(&mut self, from: &T, to: &T, t: f64) -> T;
 }
 
+/// Extends `BasicLerp` with relative-value arithmetic, fixed-speed stepping,
+/// and distance calculation (needed for relative tweens, speed-based tweens, etc).
 pub trait SpireLerp<T>: BasicLerp<T> {
+    /// `current_at_obj + (new_relative - previous_relative)`.
     fn add_relative(&mut self, current_at_obj: &T, previous_relative: &T, new_relative: &T) -> T;
     fn spire_step(&mut self, from: &T, to: &T, speed: f64, step: f64) -> (T, StepResult);
     fn spire_distance(&mut self, from: &T, to: &T) -> f64;
@@ -442,6 +445,7 @@ impl SpireLerp<Color> for () {
     }
 }
 
+/// Falls back to `godot::global::lerp` with type inference when no callable is provided.
 #[derive(Default)]
 pub struct CustomBasicLerper {
     pub lerp_fn: Option<Callable>,
@@ -457,6 +461,8 @@ impl CustomBasicLerper {
     }
 }
 
+/// All four interpolation operations via Godot `Callable`s.
+/// Falls back to built-in defaults when any callable is invalid.
 pub struct CustomLerper {
     pub base: CustomBasicLerper,
     pub relative_fn: Callable,
@@ -568,14 +574,17 @@ impl SpireLerp<Variant> for CustomLerper {
     ) -> Variant {
         macro_rules! default_relative_fn_for_ty {
             ($Ty:ty) => {{
-                let Some(current_at_obj_var) = current_at_obj.try_to_relaxed::<$Ty>().log_if_err()
-                else { return current_at_obj.clone() };
+                let Some(current_at_obj_var) = current_at_obj.try_to_relaxed::<$Ty>().log_if_err() else {
+                    return current_at_obj.clone()
+                };
 
-                let Some(previous_relative_var) = previous_relative.try_to_relaxed::<$Ty>().log_if_err()
-                else { return current_at_obj.clone() };
+                let Some(previous_relative_var) = previous_relative.try_to_relaxed::<$Ty>().log_if_err() else {
+                    return current_at_obj.clone()
+                };
 
-                let Some(new_relative_var) = new_relative.try_to_relaxed::<$Ty>().log_if_err()
-                else { return current_at_obj.clone() };
+                let Some(new_relative_var) = new_relative.try_to_relaxed::<$Ty>().log_if_err() else {
+                    return current_at_obj.clone()
+                };
 
                 <() as SpireLerp<$Ty>>::add_relative(
                     &mut (),
@@ -620,11 +629,13 @@ impl SpireLerp<Variant> for CustomLerper {
     fn spire_step(&mut self, from: &Variant, to: &Variant, speed: f64, weight: f64) -> (Variant, StepResult) {
         macro_rules! default_step_fn_for_ty {
             ($Ty:ty) => {{
-                let Some(from_var) = from.try_to_relaxed::<$Ty>().log_if_err()
-                else { return (from.clone(), StepResult::Finished { excess_time: 0. }) };
+                let Some(from_var) = from.try_to_relaxed::<$Ty>().log_if_err() else {
+                    return (from.clone(), StepResult::Finished { excess_time: 0. })
+                };
 
-                let Some(to_var) = to.try_to_relaxed::<$Ty>().log_if_err()
-                else { return (from.clone(), StepResult::Finished { excess_time: 0. }) };
+                let Some(to_var) = to.try_to_relaxed::<$Ty>().log_if_err() else {
+                    return (from.clone(), StepResult::Finished { excess_time: 0. })
+                };
 
                 let (value, step_result) =
                     <() as SpireLerp<$Ty>>::spire_step(&mut (), &from_var, &to_var, speed, weight);
@@ -661,13 +672,11 @@ impl SpireLerp<Variant> for CustomLerper {
             .step_fn
             .call(&[from.clone(), to.clone(), speed.to_variant(), weight.to_variant()]);
 
-        let Ok(dict) = result.try_to_relaxed::<Dictionary>()
-        else {
+        let Ok(dict) = result.try_to_relaxed::<VarDictionary>() else {
             return (from.clone(), StepResult::Finished { excess_time: 0. });
         };
 
-        let Some(value) = dict.get("value")
-        else {
+        let Some(value) = dict.get("value") else {
             godot_warn!(
                 "Expected lerp step callable `{:?}` 's returned Dictionary to contain a 'value' key of type `Variant`.",
                 self.step_fn
@@ -675,8 +684,7 @@ impl SpireLerp<Variant> for CustomLerper {
             return (from.clone(), StepResult::Finished { excess_time: 0. });
         };
 
-        let Some(is_finished) = dict.get("is_finished").and_then(|v| v.try_to_relaxed::<bool>().ok())
-        else {
+        let Some(is_finished) = dict.get("is_finished").and_then(|v| v.try_to_relaxed::<bool>().ok()) else {
             godot_warn!(
                 "Expected lerp step callable `{:?}` 's returned Dictionary to contain an 'is_finished' key of type \
                  `bool`.",
@@ -685,8 +693,7 @@ impl SpireLerp<Variant> for CustomLerper {
             return (value, StepResult::Unfinished { accumulated_time: 0. });
         };
 
-        let Some(time) = dict.get("fuel").and_then(|v| v.try_to_relaxed::<f64>().ok())
-        else {
+        let Some(time) = dict.get("fuel").and_then(|v| v.try_to_relaxed::<f64>().ok()) else {
             godot_warn!(
                 "Expected lerp step callable `{:?}` 's returned Dictionary to contain a 'fuel' key of type `f64`.",
                 self.step_fn
@@ -711,11 +718,9 @@ impl SpireLerp<Variant> for CustomLerper {
     fn spire_distance(&mut self, from: &Variant, to: &Variant) -> f64 {
         macro_rules! default_distance_fn_for_ty {
             ($Ty:ty) => {{
-                let Some(from_var) = from.try_to_relaxed::<$Ty>().log_if_err()
-                else { return 0. };
+                let Some(from_var) = from.try_to_relaxed::<$Ty>().log_if_err() else { return 0. };
 
-                let Some(to_var) = to.try_to_relaxed::<$Ty>().log_if_err()
-                else { return 0. };
+                let Some(to_var) = to.try_to_relaxed::<$Ty>().log_if_err() else { return 0. };
 
                 <() as SpireLerp<$Ty>>::spire_distance(&mut (), &from_var, &to_var)
             }};
@@ -782,7 +787,7 @@ impl BasicLerp<GString> for () {
             }
         }
 
-        result.into_iter().take(new_len).collect::<String>().into()
+        GString::from(result.into_iter().take(new_len).collect::<String>().as_str())
     }
 }
 
@@ -804,7 +809,7 @@ impl SpireLerp<GString> for () {
             }
         }
 
-        result.into()
+        GString::from(result.as_str())
     }
 
     fn spire_step(&mut self, from: &GString, to: &GString, speed: f64, step: f64) -> (GString, StepResult) {
@@ -859,7 +864,7 @@ impl SpireLerp<GString> for () {
             }
         };
 
-        (value.into(), step_result)
+        (GString::from(value.as_str()), step_result)
     }
 
     fn spire_distance(&mut self, from: &GString, to: &GString) -> f64 {

@@ -1,5 +1,9 @@
 use super::*;
 
+/// Organizes child tweens into sequential blocks. Items within a block run in parallel.
+///
+/// `append` creates a new block; `join` adds to the last block; `insert` places
+/// items at absolute time offsets independent of the block queue.
 #[derive(Default)]
 pub struct Sequence {
     pub queue: Vec<Vec<BlockItem>>,
@@ -9,16 +13,11 @@ pub struct Sequence {
 
 pub enum BlockItem {
     Tween(AnyTween),
-    Call {
-        call: Callable,
-        invoked: bool,
-    },
-    Interval {
-        interval_time: f64,
-        elapsed_time:  f64,
-    },
+    Call { call: Callable, invoked: bool },
+    Interval { interval_time: f64, elapsed_time: f64 },
 }
 
+/// Runs independently of the block queue at a specific time offset.
 pub enum InsertItem {
     Tween(AnyTween),
     Call { call: Callable, invoked: bool },
@@ -29,12 +28,7 @@ impl From<AnyTween> for InsertItem {
 }
 
 impl From<Callable> for InsertItem {
-    fn from(call: Callable) -> Self {
-        Self::Call {
-            call,
-            invoked: false,
-        }
-    }
+    fn from(call: Callable) -> Self { Self::Call { call, invoked: false } }
 }
 
 impl From<AnyTween> for BlockItem {
@@ -42,12 +36,7 @@ impl From<AnyTween> for BlockItem {
 }
 
 impl From<Callable> for BlockItem {
-    fn from(call: Callable) -> Self {
-        Self::Call {
-            call,
-            invoked: false,
-        }
-    }
+    fn from(call: Callable) -> Self { Self::Call { call, invoked: false } }
 }
 
 impl SpireTweener for SpireTween<Sequence> {
@@ -72,8 +61,7 @@ impl SpireTweener for SpireTween<Sequence> {
     fn stop(&mut self) { self.state = State::Stopped; }
 
     fn process(&mut self, delta_time: f64, is_tree_paused: bool) -> AdvanceTimeResult {
-        let Some(actual_step) = self.handle_time_step(delta_time)
-        else { return AdvanceTimeResult::Playing };
+        let Some(actual_step) = self.handle_time_step(delta_time) else { return AdvanceTimeResult::Playing };
 
         self.t.inserts.retain_mut(|(ins_time, item)| {
             let past_insertion = self.loop_time - *ins_time;
@@ -188,35 +176,31 @@ impl SpireTweener for SpireTween<Sequence> {
 
     fn force_complete(&mut self) {
         self.t.queue.iter_mut().for_each(|block| {
-            block.iter_mut().for_each(|item| {
-                match item {
-                    BlockItem::Tween(tween) => {
-                        tween.force_complete();
-                    }
-                    BlockItem::Interval {
-                        interval_time,
-                        elapsed_time,
-                    } => {
-                        *elapsed_time = *interval_time;
-                    }
-                    BlockItem::Call { call, invoked } => {
-                        if !*invoked && call.is_valid() {
-                            call.call(&[]);
-                            *invoked = true;
-                        }
+            block.iter_mut().for_each(|item| match item {
+                BlockItem::Tween(tween) => {
+                    tween.force_complete();
+                }
+                BlockItem::Interval {
+                    interval_time,
+                    elapsed_time,
+                } => {
+                    *elapsed_time = *interval_time;
+                }
+                BlockItem::Call { call, invoked } => {
+                    if !*invoked && call.is_valid() {
+                        call.call(&[]);
+                        *invoked = true;
                     }
                 }
             })
         });
 
-        self.t.inserts.iter_mut().for_each(|(_, item)| {
-            match item {
-                InsertItem::Tween(tween) => tween.force_complete(),
-                InsertItem::Call { call, invoked } => {
-                    if !*invoked && call.is_valid() {
-                        call.call(&[]);
-                        *invoked = true;
-                    }
+        self.t.inserts.iter_mut().for_each(|(_, item)| match item {
+            InsertItem::Tween(tween) => tween.force_complete(),
+            InsertItem::Call { call, invoked } => {
+                if !*invoked && call.is_valid() {
+                    call.call(&[]);
+                    *invoked = true;
                 }
             }
         });
@@ -231,8 +215,10 @@ impl Default for SpireTween<Sequence> {
 impl SpireTween<Sequence> {
     pub fn new() -> Self { Self::new_with_data(Sequence::default()) }
 
+    /// Overrides `Ease::Default` on child tweens added after this call.
     pub fn set_default_ease(&mut self, ease: Ease) { self.t.default_ease = Some(ease); }
 
+    /// Creates a new block at the end of the queue containing only this tween.
     pub fn append<T: ITweenable>(&mut self, tween: SpireTween<T>)
     where AnyTween: From<RcPtr<SpireTween<T>>> {
         let tween = AnyTween::from(RcPtr::new(tween));
@@ -267,6 +253,7 @@ impl SpireTween<Sequence> {
         self.t.queue.push(vec![item]);
     }
 
+    /// Adds a tween to the last block (parallel). Falls back to `append` if empty.
     pub fn join<T: ITweenable>(&mut self, tween: SpireTween<T>)
     where AnyTween: From<RcPtr<SpireTween<T>>> {
         let tween = AnyTween::from(RcPtr::new(tween));
@@ -314,6 +301,7 @@ impl SpireTween<Sequence> {
         }
     }
 
+    /// Inserts a tween at an absolute time offset, independent of the block queue.
     pub fn insert<T: ITweenable>(&mut self, time: f64, tween: SpireTween<T>)
     where AnyTween: From<RcPtr<SpireTween<T>>> {
         let tween = AnyTween::from(RcPtr::new(tween));
@@ -338,30 +326,24 @@ impl SpireTween<Sequence> {
         self.t.inserts.push((time, tween.into()));
     }
 
-    pub fn insert_call(&mut self, time: f64, call: Callable) {
-        self.t.inserts.push((time, call.into()));
-    }
+    pub fn insert_call(&mut self, time: f64, call: Callable) { self.t.inserts.push((time, call.into())); }
 
     pub fn iter_inner_tweens_non_recursive(&self) -> impl Iterator<Item = AnyTween> {
         self.t
             .queue
             .iter()
             .flat_map(|blocks| {
-                blocks.iter().filter_map(|item| {
-                    if let BlockItem::Tween(tween) = item {
-                        Some(tween.clone())
-                    } else {
-                        None
-                    }
-                })
+                blocks.iter().filter_map(
+                    |item| {
+                        if let BlockItem::Tween(tween) = item { Some(tween.clone()) } else { None }
+                    },
+                )
             })
-            .chain(self.t.inserts.iter().filter_map(|(_, item)| {
-                if let InsertItem::Tween(tween) = item {
-                    Some(tween.clone())
-                } else {
-                    None
-                }
-            }))
+            .chain(
+                self.t.inserts.iter().filter_map(|(_, item)| {
+                    if let InsertItem::Tween(tween) = item { Some(tween.clone()) } else { None }
+                }),
+            )
     }
 
     pub fn iter_inner_tweens_recursive(&self) -> SequenceIter { SequenceIter::new(self) }
@@ -438,8 +420,7 @@ impl SpireTween<Sequence> {
     }
 
     fn check_ease(&mut self, tween: &mut AnyTween) {
-        let Some(ease) = self.t.default_ease
-        else { return };
+        let Some(ease) = self.t.default_ease else { return };
 
         match tween {
             AnyTween::Property(tween) => {
@@ -466,38 +447,33 @@ impl SpireTween<Sequence> {
             .queue
             .iter_mut()
             .flat_map(|vec| vec.iter_mut())
-            .for_each(|item| {
-                match item {
-                    BlockItem::Tween(tween) => {
-                        tween.stop();
-                        tween.play();
-                    }
-                    BlockItem::Interval {
-                        interval_time: _,
-                        elapsed_time,
-                    } => {
-                        *elapsed_time = 0.;
-                    }
-                    BlockItem::Call { call: _, invoked } => {
-                        *invoked = false;
-                    }
-                }
-            });
-
-        self.t.inserts.iter_mut().for_each(|(_, item)| {
-            match item {
-                InsertItem::Tween(tween) => {
+            .for_each(|item| match item {
+                BlockItem::Tween(tween) => {
                     tween.stop();
                     tween.play();
                 }
-                InsertItem::Call { call: _, invoked } => {
+                BlockItem::Interval {
+                    interval_time: _,
+                    elapsed_time,
+                } => {
+                    *elapsed_time = 0.;
+                }
+                BlockItem::Call { call: _, invoked } => {
                     *invoked = false;
                 }
+            });
+
+        self.t.inserts.iter_mut().for_each(|(_, item)| match item {
+            InsertItem::Tween(tween) => {
+                tween.stop();
+                tween.play();
+            }
+            InsertItem::Call { call: _, invoked } => {
+                *invoked = false;
             }
         });
     }
 
-    /// Returns true if the given tween is already inside this sequence.
     fn is_already_inside(&self, tween: &AnyTween) -> bool {
         let addr = tween.address();
         let self_address = (&raw const *self) as *const ();

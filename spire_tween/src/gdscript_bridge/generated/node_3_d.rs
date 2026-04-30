@@ -12,11 +12,8 @@ impl DoNode3D {
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/
     #[func(rename = position_x)]
     fn position_x(node: Gd<Node3D>, to: f64, duration: f64) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_position_x(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_position_x(to, duration).register();
+        gd_from_native_tween(tween)
     }
     ///Alias for [method position_x].
     #[func(rename = move_local_x)]
@@ -28,11 +25,8 @@ impl DoNode3D {
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/
     #[func(rename = position_y)]
     fn position_y(node: Gd<Node3D>, to: f64, duration: f64) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_position_y(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_position_y(to, duration).register();
+        gd_from_native_tween(tween)
     }
     ///Alias for [method position_y].
     #[func(rename = move_local_y)]
@@ -44,11 +38,8 @@ impl DoNode3D {
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/
     #[func(rename = position_z)]
     fn position_z(node: Gd<Node3D>, to: f64, duration: f64) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_position_z(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_position_z(to, duration).register();
+        gd_from_native_tween(tween)
     }
     ///Alias for [method position_z].
     #[func(rename = move_local_z)]
@@ -64,11 +55,8 @@ impl DoNode3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_global_position_x(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_global_position_x(to, duration).register();
+        gd_from_native_tween(tween)
     }
     ///Alias for [method global_position_x].
     #[func(rename = move_x)]
@@ -84,11 +72,8 @@ impl DoNode3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_global_position_y(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_global_position_y(to, duration).register();
+        gd_from_native_tween(tween)
     }
     ///Alias for [method global_position_y].
     #[func(rename = move_y)]
@@ -104,11 +89,8 @@ impl DoNode3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_global_position_z(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_global_position_z(to, duration).register();
+        gd_from_native_tween(tween)
     }
     ///Alias for [method global_position_z].
     #[func(rename = move_z)]
@@ -120,66 +102,48 @@ impl DoNode3D {
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/
     #[func(rename = scale_x)]
     fn scale_x(node: Gd<Node3D>, to: f64, duration: f64) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_scale_x(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_scale_x(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `y` component of the property [member Node3D.scale] over [param duration] seconds.
 
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/
     #[func(rename = scale_y)]
     fn scale_y(node: Gd<Node3D>, to: f64, duration: f64) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_scale_y(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_scale_y(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `z` component of the property [member Node3D.scale] over [param duration] seconds.
 
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/
     #[func(rename = scale_z)]
     fn scale_z(node: Gd<Node3D>, to: f64, duration: f64) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_scale_z(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_scale_z(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `x` component of the property [member Node3D.rotation] over [param duration] seconds.
 
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/
     #[func(rename = rotation_x)]
     fn rotation_x(node: Gd<Node3D>, to: f64, duration: f64) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_rotation_x(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_rotation_x(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `y` component of the property [member Node3D.rotation] over [param duration] seconds.
 
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/
     #[func(rename = rotation_y)]
     fn rotation_y(node: Gd<Node3D>, to: f64, duration: f64) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_rotation_y(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_rotation_y(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `z` component of the property [member Node3D.rotation] over [param duration] seconds.
 
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/
     #[func(rename = rotation_z)]
     fn rotation_z(node: Gd<Node3D>, to: f64, duration: f64) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_rotation_z(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_rotation_z(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `x` component of the property [member Node3D.rotation_degrees] over [param duration] seconds.
 
@@ -190,11 +154,8 @@ impl DoNode3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_rotation_degrees_x(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_rotation_degrees_x(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `y` component of the property [member Node3D.rotation_degrees] over [param duration] seconds.
 
@@ -205,11 +166,8 @@ impl DoNode3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_rotation_degrees_y(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_rotation_degrees_y(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `z` component of the property [member Node3D.rotation_degrees] over [param duration] seconds.
 
@@ -220,11 +178,8 @@ impl DoNode3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_rotation_degrees_z(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_rotation_degrees_z(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `x` component of the property [member Node3D.global_rotation] over [param duration] seconds.
 
@@ -235,11 +190,8 @@ impl DoNode3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_global_rotation_x(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_global_rotation_x(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `y` component of the property [member Node3D.global_rotation] over [param duration] seconds.
 
@@ -250,11 +202,8 @@ impl DoNode3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_global_rotation_y(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_global_rotation_y(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `z` component of the property [member Node3D.global_rotation] over [param duration] seconds.
 
@@ -265,11 +214,8 @@ impl DoNode3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_global_rotation_z(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_global_rotation_z(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `x` component of the property [member Node3D.global_rotation_degrees] over [param duration] seconds.
 
@@ -280,13 +226,8 @@ impl DoNode3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(
-            node.do_global_rotation_degrees_x(to, duration).register(),
-        );
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_global_rotation_degrees_x(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `y` component of the property [member Node3D.global_rotation_degrees] over [param duration] seconds.
 
@@ -297,13 +238,8 @@ impl DoNode3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(
-            node.do_global_rotation_degrees_y(to, duration).register(),
-        );
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_global_rotation_degrees_y(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `z` component of the property [member Node3D.global_rotation_degrees] over [param duration] seconds.
 
@@ -314,13 +250,8 @@ impl DoNode3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(
-            node.do_global_rotation_degrees_z(to, duration).register(),
-        );
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_global_rotation_degrees_z(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member Node3D.position] over [param duration] seconds.
 
@@ -331,14 +262,8 @@ impl DoNode3D {
         to: Vector3,
         duration: f64,
     ) -> Gd<SpirePropertyVector3> {
-        let inner = UnsafeCell::new(node.do_position(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyVector3 {
-            base,
-            inner,
-        });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_position(to, duration).register();
+        gd_from_native_tween(tween)
     }
     ///Alias for [method position].
     #[func(rename = move_local)]
@@ -358,14 +283,8 @@ impl DoNode3D {
         to: Vector3,
         duration: f64,
     ) -> Gd<SpirePropertyVector3> {
-        let inner = UnsafeCell::new(node.do_global_position(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyVector3 {
-            base,
-            inner,
-        });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_global_position(to, duration).register();
+        gd_from_native_tween(tween)
     }
     ///Alias for [method global_position].
     #[func(rename = move)]
@@ -381,14 +300,8 @@ impl DoNode3D {
         to: Vector3,
         duration: f64,
     ) -> Gd<SpirePropertyVector3> {
-        let inner = UnsafeCell::new(node.do_scale(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyVector3 {
-            base,
-            inner,
-        });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_scale(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member Node3D.rotation] over [param duration] seconds.
 
@@ -399,14 +312,8 @@ impl DoNode3D {
         to: Vector3,
         duration: f64,
     ) -> Gd<SpirePropertyVector3> {
-        let inner = UnsafeCell::new(node.do_rotation(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyVector3 {
-            base,
-            inner,
-        });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_rotation(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member Node3D.rotation_degrees] over [param duration] seconds.
 
@@ -417,14 +324,8 @@ impl DoNode3D {
         to: Vector3,
         duration: f64,
     ) -> Gd<SpirePropertyVector3> {
-        let inner = UnsafeCell::new(node.do_rotation_degrees(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyVector3 {
-            base,
-            inner,
-        });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_rotation_degrees(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member Node3D.global_rotation] over [param duration] seconds.
 
@@ -435,14 +336,8 @@ impl DoNode3D {
         to: Vector3,
         duration: f64,
     ) -> Gd<SpirePropertyVector3> {
-        let inner = UnsafeCell::new(node.do_global_rotation(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyVector3 {
-            base,
-            inner,
-        });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_global_rotation(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member Node3D.global_rotation_degrees] over [param duration] seconds.
 
@@ -453,15 +348,61 @@ impl DoNode3D {
         to: Vector3,
         duration: f64,
     ) -> Gd<SpirePropertyVector3> {
-        let inner = UnsafeCell::new(
-            node.do_global_rotation_degrees(to, duration).register(),
-        );
-        let handle = Gd::from_init_fn(|base| SpirePropertyVector3 {
-            base,
-            inner,
-        });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_global_rotation_degrees(to, duration).register();
+        gd_from_native_tween(tween)
+    }
+    #[func]
+    fn follow(
+        node: Gd<Node3D>,
+        follow_this: Gd<Node3D>,
+        speed: f64,
+    ) -> Gd<SpirePropertyVector3> {
+        let tween = node.do_follow(follow_this, speed).register();
+        gd_from_native_tween(tween)
+    }
+    #[func]
+    fn ellipsis(
+        node: Gd<Node3D>,
+        center: Vector3,
+        from_angle: f32,
+        to_angle: f32,
+        from_radius: Vector3,
+        to_radius: Vector3,
+        axis: Vector3,
+        duration: f64,
+    ) -> Gd<SpireMethodFloat> {
+        let tween = node
+            .do_ellipsis(
+                center,
+                from_angle,
+                to_angle,
+                from_radius,
+                to_radius,
+                axis,
+                duration,
+            )
+            .register();
+        gd_from_native_tween(tween)
+    }
+    #[func]
+    fn circle(
+        node: Gd<Node3D>,
+        center: Vector3,
+        from_angle: f32,
+        to_angle: f32,
+        radius: f32,
+        axis: Vector3,
+        duration: f64,
+    ) -> Gd<SpireMethodFloat> {
+        Self::ellipsis(
+            node,
+            center,
+            from_angle,
+            to_angle,
+            Vector3::splat(radius),
+            Vector3::splat(radius),
+            axis,
+            duration,
+        )
     }
 }

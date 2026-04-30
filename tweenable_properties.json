@@ -252,6 +252,11 @@
 	]
 	},
 	{
+		"class": "Sprite2D", "group": "2D", "tweens": [
+		{ "name": "frame", "ty": "i32" }
+	]
+	},
+	{
 		"class": "AcceptDialog", "group": "Misc", "tweens": [
 		{
 			"name": "dialog_text",

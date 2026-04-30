@@ -1,5 +1,7 @@
 use super::*;
 
+/// `Rc<UnsafeCell<T>>` wrapper providing shared ownership with interior mutability.
+/// Relies on Godot's single-threaded access guarantee.
 #[repr(transparent)]
 pub struct RcPtr<T: ?Sized>(pub(super) Rc<UnsafeCell<T>>);
 
@@ -11,10 +13,10 @@ impl<T: Sized> RcPtr<T> {
 impl<T: ?Sized> RcPtr<T> {
     #[inline]
     pub fn downgrade(&self) -> WeakPtr<T> { WeakPtr(Rc::downgrade(&self.0)) }
-
     #[inline]
     pub fn strong_count(&self) -> usize { Rc::strong_count(&self.0) }
 
+    /// Callers must ensure no overlapping mutable references exist.
     #[allow(clippy::mut_from_ref)]
     #[allow(clippy::wrong_self_convention)]
     pub fn to_mut(&self) -> &mut T { unsafe { &mut *self.0.get() } }

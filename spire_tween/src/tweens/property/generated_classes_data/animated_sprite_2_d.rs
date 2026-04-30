@@ -39,21 +39,8 @@ impl IPropertyData for AnimatedSprite2DIntData {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => obj.try_cast::<AnimatedSprite2D>().ok(),
-            ObjectOrNode::Node(obj) => obj.try_cast::<AnimatedSprite2D>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for AnimatedSprite2DIntData {
@@ -66,7 +53,9 @@ impl TryFromPathAndObject for AnimatedSprite2DIntData {
                     "frame" => {
                         Some(Self {
                             property: <AnimatedSprite2DIntKind>::Frame,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -115,21 +104,8 @@ impl IPropertyData for AnimatedSprite2DFloatData {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => obj.try_cast::<AnimatedSprite2D>().ok(),
-            ObjectOrNode::Node(obj) => obj.try_cast::<AnimatedSprite2D>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for AnimatedSprite2DFloatData {
@@ -142,7 +118,9 @@ impl TryFromPathAndObject for AnimatedSprite2DFloatData {
                     "speed_scale" => {
                         Some(Self {
                             property: <AnimatedSprite2DFloatKind>::SpeedScale,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -205,7 +183,7 @@ impl<
         let owner: Gd<AnimatedSprite2D> = self.to_gd().upcast();
         let data = AnimatedSprite2DIntData {
             property: <AnimatedSprite2DIntKind>::Frame,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -220,7 +198,7 @@ impl<
         let owner: Gd<AnimatedSprite2D> = self.to_gd().upcast();
         let data = AnimatedSprite2DFloatData {
             property: <AnimatedSprite2DFloatKind>::SpeedScale,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<

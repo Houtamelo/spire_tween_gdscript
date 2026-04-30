@@ -12,11 +12,8 @@ impl DoNode2D {
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/
     #[func(rename = position_x)]
     fn position_x(node: Gd<Node2D>, to: f64, duration: f64) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_position_x(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_position_x(to, duration).register();
+        gd_from_native_tween(tween)
     }
     ///Alias for [method position_x].
     #[func(rename = move_local_x)]
@@ -28,11 +25,8 @@ impl DoNode2D {
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/
     #[func(rename = position_y)]
     fn position_y(node: Gd<Node2D>, to: f64, duration: f64) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_position_y(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_position_y(to, duration).register();
+        gd_from_native_tween(tween)
     }
     ///Alias for [method position_y].
     #[func(rename = move_local_y)]
@@ -48,11 +42,8 @@ impl DoNode2D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_global_position_x(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_global_position_x(to, duration).register();
+        gd_from_native_tween(tween)
     }
     ///Alias for [method global_position_x].
     #[func(rename = move_x)]
@@ -68,11 +59,8 @@ impl DoNode2D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_global_position_y(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_global_position_y(to, duration).register();
+        gd_from_native_tween(tween)
     }
     ///Alias for [method global_position_y].
     #[func(rename = move_y)]
@@ -84,22 +72,16 @@ impl DoNode2D {
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/
     #[func(rename = scale_x)]
     fn scale_x(node: Gd<Node2D>, to: f64, duration: f64) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_scale_x(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_scale_x(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `y` component of the property [member Node2D.scale] over [param duration] seconds.
 
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/
     #[func(rename = scale_y)]
     fn scale_y(node: Gd<Node2D>, to: f64, duration: f64) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_scale_y(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_scale_y(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `x` component of the property [member Node2D.global_scale] over [param duration] seconds.
 
@@ -110,11 +92,8 @@ impl DoNode2D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_global_scale_x(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_global_scale_x(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `y` component of the property [member Node2D.global_scale] over [param duration] seconds.
 
@@ -125,22 +104,16 @@ impl DoNode2D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_global_scale_y(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_global_scale_y(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member Node2D.rotation] over [param duration] seconds.
 
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/
     #[func(rename = rotation)]
     fn r#rotation(node: Gd<Node2D>, to: f64, duration: f64) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_rotation(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_rotation(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member Node2D.rotation_degrees] over [param duration] seconds.
 
@@ -151,11 +124,8 @@ impl DoNode2D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_rotation_degrees(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_rotation_degrees(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member Node2D.global_rotation] over [param duration] seconds.
 
@@ -166,11 +136,8 @@ impl DoNode2D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_global_rotation(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_global_rotation(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member Node2D.global_rotation_degrees] over [param duration] seconds.
 
@@ -181,24 +148,16 @@ impl DoNode2D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(
-            node.do_global_rotation_degrees(to, duration).register(),
-        );
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_global_rotation_degrees(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member Node2D.skew] over [param duration] seconds.
 
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/
     #[func(rename = skew)]
     fn r#skew(node: Gd<Node2D>, to: f64, duration: f64) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_skew(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_skew(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member Node2D.global_skew] over [param duration] seconds.
 
@@ -209,11 +168,8 @@ impl DoNode2D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_global_skew(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_global_skew(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member Node2D.position] over [param duration] seconds.
 
@@ -224,14 +180,8 @@ impl DoNode2D {
         to: Vector2,
         duration: f64,
     ) -> Gd<SpirePropertyVector2> {
-        let inner = UnsafeCell::new(node.do_position(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyVector2 {
-            base,
-            inner,
-        });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_position(to, duration).register();
+        gd_from_native_tween(tween)
     }
     ///Alias for [method position].
     #[func(rename = move_local)]
@@ -251,14 +201,8 @@ impl DoNode2D {
         to: Vector2,
         duration: f64,
     ) -> Gd<SpirePropertyVector2> {
-        let inner = UnsafeCell::new(node.do_global_position(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyVector2 {
-            base,
-            inner,
-        });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_global_position(to, duration).register();
+        gd_from_native_tween(tween)
     }
     ///Alias for [method global_position].
     #[func(rename = move)]
@@ -274,14 +218,8 @@ impl DoNode2D {
         to: Vector2,
         duration: f64,
     ) -> Gd<SpirePropertyVector2> {
-        let inner = UnsafeCell::new(node.do_scale(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyVector2 {
-            base,
-            inner,
-        });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_scale(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member Node2D.global_scale] over [param duration] seconds.
 
@@ -292,13 +230,104 @@ impl DoNode2D {
         to: Vector2,
         duration: f64,
     ) -> Gd<SpirePropertyVector2> {
-        let inner = UnsafeCell::new(node.do_global_scale(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyVector2 {
-            base,
-            inner,
-        });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_global_scale(to, duration).register();
+        gd_from_native_tween(tween)
+    }
+    #[func]
+    fn follow(
+        node: Gd<Node2D>,
+        follow_this: Gd<Node2D>,
+        speed: f64,
+    ) -> Gd<SpirePropertyVector2> {
+        let tween = node.do_follow(follow_this, speed).register();
+        gd_from_native_tween(tween)
+    }
+    #[func]
+    fn shake(
+        node: Gd<Node2D>,
+        radius_min: real,
+        radius_max: real,
+        vibratio: real,
+        frequency: f64,
+        duration: f64,
+    ) -> Gd<SpireMethodFloat> {
+        let inner = node
+            .do_shake(radius_min, radius_max, vibratio, frequency, duration)
+            .register();
+        gd_from_native_tween(inner)
+    }
+    #[func]
+    fn ellipsis(
+        node: Gd<Node2D>,
+        center: Vector2,
+        from_angle: f32,
+        to_angle: f32,
+        from_radius: Vector2,
+        to_radius: Vector2,
+        duration: f64,
+    ) -> Gd<SpireMethodFloat> {
+        let tween = node
+            .do_ellipsis(center, from_angle, to_angle, from_radius, to_radius, duration)
+            .register();
+        gd_from_native_tween(tween)
+    }
+    #[func]
+    fn circle(
+        node: Gd<Node2D>,
+        center: Vector2,
+        from_angle: f32,
+        to_angle: f32,
+        radius: f32,
+        duration: f64,
+    ) -> Gd<SpireMethodFloat> {
+        Self::ellipsis(
+            node,
+            center,
+            from_angle,
+            to_angle,
+            Vector2::splat(radius),
+            Vector2::splat(radius),
+            duration,
+        )
+    }
+    #[func]
+    fn spiral(
+        node: Gd<Node2D>,
+        center: Vector2,
+        from_angle: f32,
+        to_angle: f32,
+        scale: Vector2,
+        duration: f64,
+        rotation: f32,
+        shear: f32,
+        mode: Spiral,
+        log_growth: Vector2,
+    ) -> Gd<SpireMethodFloat> {
+        let inner = node
+            .do_spiral(
+                center,
+                from_angle,
+                to_angle,
+                scale,
+                duration,
+                rotation,
+                shear,
+                mode,
+                log_growth,
+            )
+            .register();
+        gd_from_native_tween(inner)
+    }
+    #[func]
+    fn contour_shape(
+        node: Gd<Node2D>,
+        vertices: Array<Vector2>,
+        duration_or_speed: f64,
+        is_speed_based: bool,
+    ) -> Gd<SpireSequence> {
+        let tween = node
+            .do_contour_shape(vertices, duration_or_speed, is_speed_based)
+            .register();
+        gd_from_native_tween(tween)
     }
 }

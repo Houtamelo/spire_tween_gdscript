@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://3vijxgu3nxcd"]
+
+[ext_resource type="Texture2D" uid="uid://tjjuwu05gjb7" path="res://examples/powerup/sprites/Power_Up_KG_1.png" id="2_nxths"]
+
+[node name="ExamplePowerup" type="Node2D"]
+
+[node name="Actor" type="Sprite2D" parent="."]
+position = Vector2(977, 532)
+texture = ExtResource("2_nxths")
+hframes = 10
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(980, 532)
+zoom = Vector2(2, 2)

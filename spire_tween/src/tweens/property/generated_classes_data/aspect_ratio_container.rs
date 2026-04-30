@@ -39,21 +39,8 @@ impl IPropertyData for AspectRatioContainerFloatData {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => obj.try_cast::<AspectRatioContainer>().ok(),
-            ObjectOrNode::Node(obj) => obj.try_cast::<AspectRatioContainer>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for AspectRatioContainerFloatData {
@@ -66,7 +53,9 @@ impl TryFromPathAndObject for AspectRatioContainerFloatData {
                     "ratio" => {
                         Some(Self {
                             property: <AspectRatioContainerFloatKind>::Ratio,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -113,7 +102,7 @@ impl<
         let owner: Gd<AspectRatioContainer> = self.to_gd().upcast();
         let data = AspectRatioContainerFloatData {
             property: <AspectRatioContainerFloatKind>::Ratio,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<

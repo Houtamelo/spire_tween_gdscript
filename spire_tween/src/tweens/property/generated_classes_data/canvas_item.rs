@@ -39,21 +39,8 @@ impl IPropertyData for CanvasItemIntData {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => obj.try_cast::<CanvasItem>().ok(),
-            ObjectOrNode::Node(obj) => obj.try_cast::<CanvasItem>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for CanvasItemIntData {
@@ -66,7 +53,9 @@ impl TryFromPathAndObject for CanvasItemIntData {
                     "z_index" => {
                         Some(Self {
                             property: <CanvasItemIntKind>::ZIndex,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -208,21 +197,8 @@ impl IPropertyData for CanvasItemFloatData {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => obj.try_cast::<CanvasItem>().ok(),
-            ObjectOrNode::Node(obj) => obj.try_cast::<CanvasItem>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for CanvasItemFloatData {
@@ -235,56 +211,72 @@ impl TryFromPathAndObject for CanvasItemFloatData {
                     "modulate:r" => {
                         Some(Self {
                             property: <CanvasItemFloatKind>::ModulateR,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "modulate:g" => {
                         Some(Self {
                             property: <CanvasItemFloatKind>::ModulateG,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "modulate:b" => {
                         Some(Self {
                             property: <CanvasItemFloatKind>::ModulateB,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "modulate:a" => {
                         Some(Self {
                             property: <CanvasItemFloatKind>::ModulateA,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "self_modulate:r" => {
                         Some(Self {
                             property: <CanvasItemFloatKind>::SelfModulateR,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "self_modulate:g" => {
                         Some(Self {
                             property: <CanvasItemFloatKind>::SelfModulateG,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "self_modulate:b" => {
                         Some(Self {
                             property: <CanvasItemFloatKind>::SelfModulateB,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "self_modulate:a" => {
                         Some(Self {
                             property: <CanvasItemFloatKind>::SelfModulateA,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -344,21 +336,8 @@ impl IPropertyData for CanvasItemColorData {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => obj.try_cast::<CanvasItem>().ok(),
-            ObjectOrNode::Node(obj) => obj.try_cast::<CanvasItem>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for CanvasItemColorData {
@@ -371,14 +350,18 @@ impl TryFromPathAndObject for CanvasItemColorData {
                     "modulate" => {
                         Some(Self {
                             property: <CanvasItemColorKind>::Modulate,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "self_modulate" => {
                         Some(Self {
                             property: <CanvasItemColorKind>::SelfModulate,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -844,7 +827,7 @@ impl<
         let owner: Gd<CanvasItem> = self.to_gd().upcast();
         let data = CanvasItemIntData {
             property: <CanvasItemIntKind>::ZIndex,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -859,7 +842,7 @@ impl<
         let owner: Gd<CanvasItem> = self.to_gd().upcast();
         let data = CanvasItemFloatData {
             property: <CanvasItemFloatKind>::ModulateR,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -874,7 +857,7 @@ impl<
         let owner: Gd<CanvasItem> = self.to_gd().upcast();
         let data = CanvasItemFloatData {
             property: <CanvasItemFloatKind>::ModulateR,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -889,7 +872,7 @@ impl<
         let owner: Gd<CanvasItem> = self.to_gd().upcast();
         let data = CanvasItemFloatData {
             property: <CanvasItemFloatKind>::ModulateG,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -904,7 +887,7 @@ impl<
         let owner: Gd<CanvasItem> = self.to_gd().upcast();
         let data = CanvasItemFloatData {
             property: <CanvasItemFloatKind>::ModulateG,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -919,7 +902,7 @@ impl<
         let owner: Gd<CanvasItem> = self.to_gd().upcast();
         let data = CanvasItemFloatData {
             property: <CanvasItemFloatKind>::ModulateB,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -934,7 +917,7 @@ impl<
         let owner: Gd<CanvasItem> = self.to_gd().upcast();
         let data = CanvasItemFloatData {
             property: <CanvasItemFloatKind>::ModulateB,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -949,7 +932,7 @@ impl<
         let owner: Gd<CanvasItem> = self.to_gd().upcast();
         let data = CanvasItemFloatData {
             property: <CanvasItemFloatKind>::ModulateA,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -964,7 +947,7 @@ impl<
         let owner: Gd<CanvasItem> = self.to_gd().upcast();
         let data = CanvasItemFloatData {
             property: <CanvasItemFloatKind>::ModulateA,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -979,7 +962,7 @@ impl<
         let owner: Gd<CanvasItem> = self.to_gd().upcast();
         let data = CanvasItemFloatData {
             property: <CanvasItemFloatKind>::SelfModulateR,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -994,7 +977,7 @@ impl<
         let owner: Gd<CanvasItem> = self.to_gd().upcast();
         let data = CanvasItemFloatData {
             property: <CanvasItemFloatKind>::SelfModulateR,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1009,7 +992,7 @@ impl<
         let owner: Gd<CanvasItem> = self.to_gd().upcast();
         let data = CanvasItemFloatData {
             property: <CanvasItemFloatKind>::SelfModulateG,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1024,7 +1007,7 @@ impl<
         let owner: Gd<CanvasItem> = self.to_gd().upcast();
         let data = CanvasItemFloatData {
             property: <CanvasItemFloatKind>::SelfModulateG,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1039,7 +1022,7 @@ impl<
         let owner: Gd<CanvasItem> = self.to_gd().upcast();
         let data = CanvasItemFloatData {
             property: <CanvasItemFloatKind>::SelfModulateB,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1054,7 +1037,7 @@ impl<
         let owner: Gd<CanvasItem> = self.to_gd().upcast();
         let data = CanvasItemFloatData {
             property: <CanvasItemFloatKind>::SelfModulateB,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1069,7 +1052,7 @@ impl<
         let owner: Gd<CanvasItem> = self.to_gd().upcast();
         let data = CanvasItemFloatData {
             property: <CanvasItemFloatKind>::SelfModulateA,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1084,7 +1067,7 @@ impl<
         let owner: Gd<CanvasItem> = self.to_gd().upcast();
         let data = CanvasItemFloatData {
             property: <CanvasItemFloatKind>::SelfModulateA,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1099,7 +1082,7 @@ impl<
         let owner: Gd<CanvasItem> = self.to_gd().upcast();
         let data = CanvasItemColorData {
             property: <CanvasItemColorKind>::Modulate,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1114,7 +1097,7 @@ impl<
         let owner: Gd<CanvasItem> = self.to_gd().upcast();
         let data = CanvasItemColorData {
             property: <CanvasItemColorKind>::Modulate,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1129,7 +1112,7 @@ impl<
         let owner: Gd<CanvasItem> = self.to_gd().upcast();
         let data = CanvasItemColorData {
             property: <CanvasItemColorKind>::SelfModulate,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1144,7 +1127,7 @@ impl<
         let owner: Gd<CanvasItem> = self.to_gd().upcast();
         let data = CanvasItemColorData {
             property: <CanvasItemColorKind>::SelfModulate,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<

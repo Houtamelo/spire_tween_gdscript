@@ -307,21 +307,8 @@ impl IPropertyData for Node3DFloatData {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => obj.try_cast::<Node3D>().ok(),
-            ObjectOrNode::Node(obj) => obj.try_cast::<Node3D>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for Node3DFloatData {
@@ -334,147 +321,189 @@ impl TryFromPathAndObject for Node3DFloatData {
                     "position:x" => {
                         Some(Self {
                             property: <Node3DFloatKind>::PositionX,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "position:y" => {
                         Some(Self {
                             property: <Node3DFloatKind>::PositionY,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "position:z" => {
                         Some(Self {
                             property: <Node3DFloatKind>::PositionZ,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "global_position:x" => {
                         Some(Self {
                             property: <Node3DFloatKind>::GlobalPositionX,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "global_position:y" => {
                         Some(Self {
                             property: <Node3DFloatKind>::GlobalPositionY,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "global_position:z" => {
                         Some(Self {
                             property: <Node3DFloatKind>::GlobalPositionZ,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "scale:x" => {
                         Some(Self {
                             property: <Node3DFloatKind>::ScaleX,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "scale:y" => {
                         Some(Self {
                             property: <Node3DFloatKind>::ScaleY,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "scale:z" => {
                         Some(Self {
                             property: <Node3DFloatKind>::ScaleZ,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "rotation:x" => {
                         Some(Self {
                             property: <Node3DFloatKind>::RotationX,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "rotation:y" => {
                         Some(Self {
                             property: <Node3DFloatKind>::RotationY,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "rotation:z" => {
                         Some(Self {
                             property: <Node3DFloatKind>::RotationZ,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "rotation_degrees:x" => {
                         Some(Self {
                             property: <Node3DFloatKind>::RotationDegreesX,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "rotation_degrees:y" => {
                         Some(Self {
                             property: <Node3DFloatKind>::RotationDegreesY,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "rotation_degrees:z" => {
                         Some(Self {
                             property: <Node3DFloatKind>::RotationDegreesZ,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "global_rotation:x" => {
                         Some(Self {
                             property: <Node3DFloatKind>::GlobalRotationX,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "global_rotation:y" => {
                         Some(Self {
                             property: <Node3DFloatKind>::GlobalRotationY,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "global_rotation:z" => {
                         Some(Self {
                             property: <Node3DFloatKind>::GlobalRotationZ,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "global_rotation_degrees:x" => {
                         Some(Self {
                             property: <Node3DFloatKind>::GlobalRotationDegreesX,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "global_rotation_degrees:y" => {
                         Some(Self {
                             property: <Node3DFloatKind>::GlobalRotationDegreesY,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "global_rotation_degrees:z" => {
                         Some(Self {
                             property: <Node3DFloatKind>::GlobalRotationDegreesZ,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -591,21 +620,8 @@ impl IPropertyData for Node3DVector3Data {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => obj.try_cast::<Node3D>().ok(),
-            ObjectOrNode::Node(obj) => obj.try_cast::<Node3D>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for Node3DVector3Data {
@@ -618,49 +634,63 @@ impl TryFromPathAndObject for Node3DVector3Data {
                     "position" => {
                         Some(Self {
                             property: <Node3DVector3Kind>::Position,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "global_position" => {
                         Some(Self {
                             property: <Node3DVector3Kind>::GlobalPosition,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "scale" => {
                         Some(Self {
                             property: <Node3DVector3Kind>::Scale,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "rotation" => {
                         Some(Self {
                             property: <Node3DVector3Kind>::Rotation,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "rotation_degrees" => {
                         Some(Self {
                             property: <Node3DVector3Kind>::RotationDegrees,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "global_rotation" => {
                         Some(Self {
                             property: <Node3DVector3Kind>::GlobalRotation,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "global_rotation_degrees" => {
                         Some(Self {
                             property: <Node3DVector3Kind>::GlobalRotationDegrees,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -1439,7 +1469,7 @@ for T {
         let owner: Gd<Node3D> = self.to_gd().upcast();
         let data = Node3DFloatData {
             property: <Node3DFloatKind>::PositionX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1454,7 +1484,7 @@ for T {
         let owner: Gd<Node3D> = self.to_gd().upcast();
         let data = Node3DFloatData {
             property: <Node3DFloatKind>::PositionX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1469,7 +1499,7 @@ for T {
         let owner: Gd<Node3D> = self.to_gd().upcast();
         let data = Node3DFloatData {
             property: <Node3DFloatKind>::PositionY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1484,7 +1514,7 @@ for T {
         let owner: Gd<Node3D> = self.to_gd().upcast();
         let data = Node3DFloatData {
             property: <Node3DFloatKind>::PositionY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1499,7 +1529,7 @@ for T {
         let owner: Gd<Node3D> = self.to_gd().upcast();
         let data = Node3DFloatData {
             property: <Node3DFloatKind>::PositionZ,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1514,7 +1544,7 @@ for T {
         let owner: Gd<Node3D> = self.to_gd().upcast();
         let data = Node3DFloatData {
             property: <Node3DFloatKind>::PositionZ,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1529,7 +1559,7 @@ for T {
         let owner: Gd<Node3D> = self.to_gd().upcast();
         let data = Node3DFloatData {
             property: <Node3DFloatKind>::GlobalPositionX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1544,7 +1574,7 @@ for T {
         let owner: Gd<Node3D> = self.to_gd().upcast();
         let data = Node3DFloatData {
             property: <Node3DFloatKind>::GlobalPositionX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1559,7 +1589,7 @@ for T {
         let owner: Gd<Node3D> = self.to_gd().upcast();
         let data = Node3DFloatData {
             property: <Node3DFloatKind>::GlobalPositionY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1574,7 +1604,7 @@ for T {
         let owner: Gd<Node3D> = self.to_gd().upcast();
         let data = Node3DFloatData {
             property: <Node3DFloatKind>::GlobalPositionY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1589,7 +1619,7 @@ for T {
         let owner: Gd<Node3D> = self.to_gd().upcast();
         let data = Node3DFloatData {
             property: <Node3DFloatKind>::GlobalPositionZ,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1604,7 +1634,7 @@ for T {
         let owner: Gd<Node3D> = self.to_gd().upcast();
         let data = Node3DFloatData {
             property: <Node3DFloatKind>::GlobalPositionZ,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1619,7 +1649,7 @@ for T {
         let owner: Gd<Node3D> = self.to_gd().upcast();
         let data = Node3DFloatData {
             property: <Node3DFloatKind>::ScaleX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1634,7 +1664,7 @@ for T {
         let owner: Gd<Node3D> = self.to_gd().upcast();
         let data = Node3DFloatData {
             property: <Node3DFloatKind>::ScaleY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1649,7 +1679,7 @@ for T {
         let owner: Gd<Node3D> = self.to_gd().upcast();
         let data = Node3DFloatData {
             property: <Node3DFloatKind>::ScaleZ,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1664,7 +1694,7 @@ for T {
         let owner: Gd<Node3D> = self.to_gd().upcast();
         let data = Node3DFloatData {
             property: <Node3DFloatKind>::RotationX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1679,7 +1709,7 @@ for T {
         let owner: Gd<Node3D> = self.to_gd().upcast();
         let data = Node3DFloatData {
             property: <Node3DFloatKind>::RotationY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1694,7 +1724,7 @@ for T {
         let owner: Gd<Node3D> = self.to_gd().upcast();
         let data = Node3DFloatData {
             property: <Node3DFloatKind>::RotationZ,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1709,7 +1739,7 @@ for T {
         let owner: Gd<Node3D> = self.to_gd().upcast();
         let data = Node3DFloatData {
             property: <Node3DFloatKind>::RotationDegreesX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1724,7 +1754,7 @@ for T {
         let owner: Gd<Node3D> = self.to_gd().upcast();
         let data = Node3DFloatData {
             property: <Node3DFloatKind>::RotationDegreesY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1739,7 +1769,7 @@ for T {
         let owner: Gd<Node3D> = self.to_gd().upcast();
         let data = Node3DFloatData {
             property: <Node3DFloatKind>::RotationDegreesZ,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1754,7 +1784,7 @@ for T {
         let owner: Gd<Node3D> = self.to_gd().upcast();
         let data = Node3DFloatData {
             property: <Node3DFloatKind>::GlobalRotationX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1769,7 +1799,7 @@ for T {
         let owner: Gd<Node3D> = self.to_gd().upcast();
         let data = Node3DFloatData {
             property: <Node3DFloatKind>::GlobalRotationY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1784,7 +1814,7 @@ for T {
         let owner: Gd<Node3D> = self.to_gd().upcast();
         let data = Node3DFloatData {
             property: <Node3DFloatKind>::GlobalRotationZ,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1799,7 +1829,7 @@ for T {
         let owner: Gd<Node3D> = self.to_gd().upcast();
         let data = Node3DFloatData {
             property: <Node3DFloatKind>::GlobalRotationDegreesX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1814,7 +1844,7 @@ for T {
         let owner: Gd<Node3D> = self.to_gd().upcast();
         let data = Node3DFloatData {
             property: <Node3DFloatKind>::GlobalRotationDegreesY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1829,7 +1859,7 @@ for T {
         let owner: Gd<Node3D> = self.to_gd().upcast();
         let data = Node3DFloatData {
             property: <Node3DFloatKind>::GlobalRotationDegreesZ,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1844,7 +1874,7 @@ for T {
         let owner: Gd<Node3D> = self.to_gd().upcast();
         let data = Node3DVector3Data {
             property: <Node3DVector3Kind>::Position,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1859,7 +1889,7 @@ for T {
         let owner: Gd<Node3D> = self.to_gd().upcast();
         let data = Node3DVector3Data {
             property: <Node3DVector3Kind>::Position,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1874,7 +1904,7 @@ for T {
         let owner: Gd<Node3D> = self.to_gd().upcast();
         let data = Node3DVector3Data {
             property: <Node3DVector3Kind>::GlobalPosition,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1889,7 +1919,7 @@ for T {
         let owner: Gd<Node3D> = self.to_gd().upcast();
         let data = Node3DVector3Data {
             property: <Node3DVector3Kind>::GlobalPosition,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1904,7 +1934,7 @@ for T {
         let owner: Gd<Node3D> = self.to_gd().upcast();
         let data = Node3DVector3Data {
             property: <Node3DVector3Kind>::Scale,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1919,7 +1949,7 @@ for T {
         let owner: Gd<Node3D> = self.to_gd().upcast();
         let data = Node3DVector3Data {
             property: <Node3DVector3Kind>::Rotation,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1934,7 +1964,7 @@ for T {
         let owner: Gd<Node3D> = self.to_gd().upcast();
         let data = Node3DVector3Data {
             property: <Node3DVector3Kind>::RotationDegrees,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1949,7 +1979,7 @@ for T {
         let owner: Gd<Node3D> = self.to_gd().upcast();
         let data = Node3DVector3Data {
             property: <Node3DVector3Kind>::GlobalRotation,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -1964,7 +1994,7 @@ for T {
         let owner: Gd<Node3D> = self.to_gd().upcast();
         let data = Node3DVector3Data {
             property: <Node3DVector3Kind>::GlobalRotationDegrees,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<

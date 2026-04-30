@@ -16,11 +16,8 @@ impl DoGpuParticlesAttractor3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_attenuation(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_attenuation(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member GpuParticlesAttractor3D.directionality] over [param duration] seconds.
 
@@ -31,11 +28,8 @@ impl DoGpuParticlesAttractor3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_directionality(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_directionality(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member GpuParticlesAttractor3D.strength] over [param duration] seconds.
 
@@ -46,10 +40,7 @@ impl DoGpuParticlesAttractor3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_strength(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_strength(to, duration).register();
+        gd_from_native_tween(tween)
     }
 }

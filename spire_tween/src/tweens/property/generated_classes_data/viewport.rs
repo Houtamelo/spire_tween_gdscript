@@ -39,21 +39,8 @@ impl IPropertyData for ViewportFloatData {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => obj.try_cast::<Viewport>().ok(),
-            ObjectOrNode::Node(obj) => obj.try_cast::<Viewport>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for ViewportFloatData {
@@ -66,7 +53,9 @@ impl TryFromPathAndObject for ViewportFloatData {
                     "scaling_3d_scale" => {
                         Some(Self {
                             property: <ViewportFloatKind>::Scaling3DScale,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -111,7 +100,7 @@ impl<
         let owner: Gd<Viewport> = self.to_gd().upcast();
         let data = ViewportFloatData {
             property: <ViewportFloatKind>::Scaling3DScale,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<

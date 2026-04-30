@@ -27,11 +27,8 @@ impl SpireDelayedCall {
     /// See [method Spire.do_delayed_call].
     #[func]
     pub fn build(func: Callable, delay: f64) -> Gd<Self> {
-        let inner = UnsafeCell::new(SpireTween::<Callable>::new(func, delay).register());
-        let handle = Gd::from_init_fn(|base| Self { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = SpireTween::<Callable>::new(func, delay).register();
+        gd_from_native_tween(tween)
     }
 
     /// Returns the callable that will be invoked after the delay time.
@@ -39,4 +36,4 @@ impl SpireDelayedCall {
     pub fn get_callable(&self) -> Callable { self.to_ref().t.clone() }
 }
 
-define_base_gd_methods! { SpireDelayedCall => SpireTween<Callable> }
+define_base_gd_methods! { SpireDelayedCall, SpireTween<Callable>, Callable }

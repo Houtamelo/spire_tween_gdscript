@@ -16,13 +16,8 @@ impl DoTextureProgressBar {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(
-            node.do_radial_initial_angle(to, duration).register(),
-        );
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_radial_initial_angle(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member TextureProgressBar.radial_fill_degrees] over [param duration] seconds.
 
@@ -33,13 +28,8 @@ impl DoTextureProgressBar {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(
-            node.do_radial_fill_degrees(to, duration).register(),
-        );
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_radial_fill_degrees(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `r` component of the property [member TextureProgressBar.tint_under] over [param duration] seconds.
 
@@ -50,11 +40,8 @@ impl DoTextureProgressBar {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_tint_under_r(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_tint_under_r(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `g` component of the property [member TextureProgressBar.tint_under] over [param duration] seconds.
 
@@ -65,11 +52,8 @@ impl DoTextureProgressBar {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_tint_under_g(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_tint_under_g(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `b` component of the property [member TextureProgressBar.tint_under] over [param duration] seconds.
 
@@ -80,11 +64,8 @@ impl DoTextureProgressBar {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_tint_under_b(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_tint_under_b(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `a` component of the property [member TextureProgressBar.tint_under] over [param duration] seconds.
 
@@ -95,11 +76,8 @@ impl DoTextureProgressBar {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_tint_under_a(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_tint_under_a(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `r` component of the property [member TextureProgressBar.tint_over] over [param duration] seconds.
 
@@ -110,11 +88,8 @@ impl DoTextureProgressBar {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_tint_over_r(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_tint_over_r(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `g` component of the property [member TextureProgressBar.tint_over] over [param duration] seconds.
 
@@ -125,11 +100,8 @@ impl DoTextureProgressBar {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_tint_over_g(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_tint_over_g(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `b` component of the property [member TextureProgressBar.tint_over] over [param duration] seconds.
 
@@ -140,11 +112,8 @@ impl DoTextureProgressBar {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_tint_over_b(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_tint_over_b(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `a` component of the property [member TextureProgressBar.tint_over] over [param duration] seconds.
 
@@ -155,11 +124,8 @@ impl DoTextureProgressBar {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_tint_over_a(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_tint_over_a(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `r` component of the property [member TextureProgressBar.tint_progress] over [param duration] seconds.
 
@@ -170,11 +136,8 @@ impl DoTextureProgressBar {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_tint_progress_r(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_tint_progress_r(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `g` component of the property [member TextureProgressBar.tint_progress] over [param duration] seconds.
 
@@ -185,11 +148,8 @@ impl DoTextureProgressBar {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_tint_progress_g(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_tint_progress_g(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `b` component of the property [member TextureProgressBar.tint_progress] over [param duration] seconds.
 
@@ -200,11 +160,8 @@ impl DoTextureProgressBar {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_tint_progress_b(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_tint_progress_b(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `a` component of the property [member TextureProgressBar.tint_progress] over [param duration] seconds.
 
@@ -215,11 +172,8 @@ impl DoTextureProgressBar {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_tint_progress_a(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_tint_progress_a(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `x` component of the property [member TextureProgressBar.radial_center_offset] over [param duration] seconds.
 
@@ -230,13 +184,8 @@ impl DoTextureProgressBar {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(
-            node.do_radial_center_offset_x(to, duration).register(),
-        );
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_radial_center_offset_x(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `y` component of the property [member TextureProgressBar.radial_center_offset] over [param duration] seconds.
 
@@ -247,13 +196,8 @@ impl DoTextureProgressBar {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(
-            node.do_radial_center_offset_y(to, duration).register(),
-        );
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_radial_center_offset_y(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member TextureProgressBar.radial_center_offset] over [param duration] seconds.
 
@@ -264,16 +208,8 @@ impl DoTextureProgressBar {
         to: Vector2,
         duration: f64,
     ) -> Gd<SpirePropertyVector2> {
-        let inner = UnsafeCell::new(
-            node.do_radial_center_offset(to, duration).register(),
-        );
-        let handle = Gd::from_init_fn(|base| SpirePropertyVector2 {
-            base,
-            inner,
-        });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_radial_center_offset(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member TextureProgressBar.tint_under] over [param duration] seconds.
 
@@ -284,11 +220,8 @@ impl DoTextureProgressBar {
         to: Color,
         duration: f64,
     ) -> Gd<SpirePropertyColor> {
-        let inner = UnsafeCell::new(node.do_tint_under(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyColor { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_tint_under(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member TextureProgressBar.tint_over] over [param duration] seconds.
 
@@ -299,11 +232,8 @@ impl DoTextureProgressBar {
         to: Color,
         duration: f64,
     ) -> Gd<SpirePropertyColor> {
-        let inner = UnsafeCell::new(node.do_tint_over(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyColor { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_tint_over(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member TextureProgressBar.tint_progress] over [param duration] seconds.
 
@@ -314,10 +244,7 @@ impl DoTextureProgressBar {
         to: Color,
         duration: f64,
     ) -> Gd<SpirePropertyColor> {
-        let inner = UnsafeCell::new(node.do_tint_progress(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyColor { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_tint_progress(to, duration).register();
+        gd_from_native_tween(tween)
     }
 }

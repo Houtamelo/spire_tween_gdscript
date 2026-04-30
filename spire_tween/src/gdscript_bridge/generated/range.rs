@@ -12,43 +12,31 @@ impl DoRange {
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/
     #[func(rename = value)]
     fn r#value(node: Gd<Range>, to: f64, duration: f64) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_value(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_value(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member Range.ratio] over [param duration] seconds.
 
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/
     #[func(rename = ratio)]
     fn r#ratio(node: Gd<Range>, to: f64, duration: f64) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_ratio(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_ratio(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member Range.min_value] over [param duration] seconds.
 
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/
     #[func(rename = min_value)]
     fn r#min_value(node: Gd<Range>, to: f64, duration: f64) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_min_value(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_min_value(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member Range.max_value] over [param duration] seconds.
 
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/
     #[func(rename = max_value)]
     fn r#max_value(node: Gd<Range>, to: f64, duration: f64) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_max_value(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_max_value(to, duration).register();
+        gd_from_native_tween(tween)
     }
 }

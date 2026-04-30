@@ -18,45 +18,6 @@ pub struct Spire {}
 
 #[godot_api]
 impl Spire {
-    /*
-    /// [b]Behavior:[/b] Returns `true` if these conditions are met; false otherwise:
-    /// 1. [param handle] != `null` (it is completely ok to pass a null handle to this function).
-    /// 2. The tween data referenced by the handle must still exist in native memory.
-    ///
-    /// [b]Usage:[/b] As long as the tween is valid, it can always be played/paused/stopped,
-    /// or edited in any other way.
-    ///
-    /// [b]Note:[/b] Tweens classes exposed to GDScript are merely handles to the actual tween data in
-    /// native memory. This means that even if the handle's instance
-    /// is valid (which can be checked by using [method Object.is_instance_valid]),
-    /// the data it points to may have been removed already. That being said, tween handles
-    /// inherit [RefCounted], so [method Object.is_instance_valid] will always return `true` since the
-    /// very reference being used to call that method is keeping the handle alive.
-    ///
-    /// [b]Note:[/b] This function and the handle's `is_valid` are the only ways of checking
-    /// if the actual tween data still exists in memory.
-    #[func]
-    pub fn is_valid(handle: Option<Gd<RefCounted>>) -> bool {
-        handle.is_some_and(|h| TM.is_valid(gd_handle_id!(h)))
-    }
-    */
-
-    /*
-    /// [b]Behavior:[/b] Immediately stops and kills the tween referenced by [param handle], if it exists.
-    ///
-    /// [b]Usage:[/b] This function is shorthand for:
-    /// ```gdscript
-    /// if handle != null: handle.kill()
-    /// ```
-    /// which means that it's completely ok to pass a `null` [param handle] to this function.
-    #[func]
-    pub fn kill(handle: Option<Gd<RefCounted>>) {
-        if let Some(h) = handle {
-            TM.tween_unregister(gd_handle_id!(h));
-        }
-    }
-    */
-
     /// [b]Behavior:[/b] Registers [param tween] with the TweenManager, which makes the tween tick each frame.
     ///
     /// [b]Note:[/b] Tweens automatically register themselves once created, this method is only useful
@@ -89,8 +50,7 @@ impl Spire {
     /// a tween from a sequence, use [method SpireSequence.remove] instead.
     #[func]
     pub fn unregister(tween: Option<Gd<RefCounted>>) {
-        let Some(handle) = tween
-        else { return }; // Passing null is fine, don't print errors for it.
+        let Some(handle) = tween else { return }; // Passing null is fine, don't print errors for it.
 
         if let Some(tween) = handle.log_bad_spire_arg(|| "tween") {
             TM.tween_unregister(&tween);
@@ -107,8 +67,7 @@ impl Spire {
     /// TweenManager.
     #[func]
     pub fn is_registered(tween: Option<Gd<RefCounted>>) -> bool {
-        let Some(handle) = tween
-        else { return false }; // Passing null is fine, don't print errors for it.
+        let Some(handle) = tween else { return false }; // Passing null is fine, don't print errors for it.
 
         handle
             .log_bad_spire_arg(|| "tween")

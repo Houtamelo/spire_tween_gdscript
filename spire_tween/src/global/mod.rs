@@ -1,5 +1,6 @@
 use super::*;
 
+#[cfg(feature = "standalone")]
 mod cfg;
 mod deferred_op;
 mod node_status;
@@ -73,7 +74,7 @@ unsafe impl Send for TweensMap {}
 unsafe impl Sync for TweensMap {}
 
 #[inline]
-fn eval_node_status(node: Gd<Node>) -> NodeStatus {
+fn eval_node_status(node: &Gd<Node>) -> NodeStatus {
     let node_id = node.instance_id_unchecked().to_i64();
 
     if !is_instance_id_valid(node_id) {
@@ -89,30 +90,27 @@ fn eval_node_status(node: Gd<Node>) -> NodeStatus {
 fn try_init_singleton() -> Result<()> {
     let main_loop = Engine::singleton().get_main_loop().ok_or_else(|| {
         anyhow!(
-            "[SpireTween] Error: `Engine::get_main_loop()` returned null, \
-        SpireTween needs to access the main loop to register its singleton."
+            "[SpireTween] Error: `Engine::get_main_loop()` returned null, SpireTween needs to access the main loop to \
+             register its singleton."
         )
     })?;
 
     let scene_tree = main_loop.try_cast::<SceneTree>().map_err(|_| {
         anyhow!(
-            "[SpireTween] Error: `Engine::get_main_loop()` did not return a `SceneTree` object, \
-        SpireTween only supports `SceneTree` as the main loop."
+            "[SpireTween] Error: `Engine::get_main_loop()` did not return a `SceneTree` object, SpireTween only \
+             supports `SceneTree` as the main loop."
         )
     })?;
 
     let mut root = scene_tree.get_root().ok_or_else(|| {
         anyhow!(
-            "Error: `SceneTree::get_root()` returned null, \
-        SpireTween needs to access the root to register its singleton."
+            "Error: `SceneTree::get_root()` returned null, SpireTween needs to access the root to register its \
+             singleton."
         )
     })?;
 
     // Check if the controller has been manually registered by the user.
-    if root
-        .try_get_node_as::<TweensController>("tweens_controller")
-        .is_none()
-    {
+    if root.try_get_node_as::<TweensController>("tweens_controller").is_none() {
         // Otherwise, create our own.
         let mut controller = TweensController::new_alloc();
         controller.set_name("tweens_controller");
@@ -127,7 +125,7 @@ fn try_init_singleton() -> Result<()> {
 #[class(init, base = Node, internal)]
 pub(crate) struct TweensController {
     base: Base<Node>,
-    #[init(val = OnReady::from_base_fn(|base| base.get_tree().expect("Expected SceneTree to be accessible in `_ready()`.")))]
+    #[init(val = OnReady::from_base_fn(|base| base.get_tree()))]
     scene_tree: OnReady<Gd<SceneTree>>,
     last_process_ticks_usec: u64,
     last_physics_process_ticks_usec: u64,
@@ -150,8 +148,7 @@ impl INode for TweensController {
         let is_tree_paused = self.scene_tree.is_paused();
 
         let curr_ticks_usec = Time::singleton().get_ticks_usec();
-        let unscaled_delta_time =
-            (curr_ticks_usec - self.last_process_ticks_usec) as f64 / 1_000_000.0;
+        let unscaled_delta_time = (curr_ticks_usec - self.last_process_ticks_usec) as f64 / 1_000_000.0;
         self.last_process_ticks_usec = curr_ticks_usec;
 
         #[allow(unused_unsafe)]
@@ -164,8 +161,7 @@ impl INode for TweensController {
         let is_tree_paused = self.scene_tree.is_paused();
 
         let curr_ticks_usec = Time::singleton().get_ticks_usec();
-        let unscaled_delta_time =
-            (curr_ticks_usec - self.last_physics_process_ticks_usec) as f64 / 1_000_000.0;
+        let unscaled_delta_time = (curr_ticks_usec - self.last_physics_process_ticks_usec) as f64 / 1_000_000.0;
         self.last_physics_process_ticks_usec = curr_ticks_usec;
 
         #[allow(unused_unsafe)]

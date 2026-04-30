@@ -16,11 +16,8 @@ impl DoLight3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_light_color_r(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_light_color_r(to, duration).register();
+        gd_from_native_tween(tween)
     }
     ///Alias for [method light_color_r].
     #[func(rename = color_r)]
@@ -36,11 +33,8 @@ impl DoLight3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_light_color_g(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_light_color_g(to, duration).register();
+        gd_from_native_tween(tween)
     }
     ///Alias for [method light_color_g].
     #[func(rename = color_g)]
@@ -56,11 +50,8 @@ impl DoLight3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_light_color_b(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_light_color_b(to, duration).register();
+        gd_from_native_tween(tween)
     }
     ///Alias for [method light_color_b].
     #[func(rename = color_b)]
@@ -76,11 +67,8 @@ impl DoLight3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_light_color_a(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_light_color_a(to, duration).register();
+        gd_from_native_tween(tween)
     }
     ///Alias for [method light_color_a].
     #[func(rename = color_a)]
@@ -96,11 +84,8 @@ impl DoLight3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_light_temperature(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_light_temperature(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member Light3D.light_color] over [param duration] seconds.
 
@@ -111,11 +96,8 @@ impl DoLight3D {
         to: Color,
         duration: f64,
     ) -> Gd<SpirePropertyColor> {
-        let inner = UnsafeCell::new(node.do_light_color(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyColor { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_light_color(to, duration).register();
+        gd_from_native_tween(tween)
     }
     ///Alias for [method light_color].
     #[func(rename = color)]

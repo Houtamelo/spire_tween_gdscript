@@ -7,10 +7,10 @@ register_enum! {
         [RS = "Bound", GD = "PAUSE_MODE_BOUND"]
         #[default]
         Bound = 0,
-        /// Process only when [SceneTree] is not paused.
+        /// Process only when `SceneTree` is not paused.
         [RS = "Stop", GD = "PAUSE_MODE_STOP"]
         Stop = 1,
-        /// Always process, even when [SceneTree] is paused.
+        /// Always process, even when `SceneTree` is paused.
         [RS = "Process", GD = "PAUSE_MODE_PROCESS"]
         Process = 2,
     }

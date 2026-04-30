@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://b87c0aae3givu"]
+
+[node name="DiscoBalls" type="Node2D"]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+show_behind_parent = true
+offset_left = -184.0
+offset_top = -130.0
+offset_right = 2069.0
+offset_bottom = 1231.0
+color = Color(0, 0, 0, 1)

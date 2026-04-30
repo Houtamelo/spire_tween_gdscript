@@ -1,127 +1,27 @@
-use std::sync::OnceLock;
-
-use cap::ImplementsGodotExports;
-use godot::{
-    meta::ClassName,
-    obj::{Bounds, UserClass, bounds::DeclUser, cap},
-    private::ClassConfig,
-};
-
 use super::*;
 
+#[allow(dead_code)]
 pub trait TyToMethodTween {
     type GdTween;
 }
 
 macro_rules! gd_method_tween {
-    ($GdName:ident, $T:ty, $P:ident, $CStrName: literal) => {
+    ($GdName:ident, $T:ty, $P:ident, $CStrName:literal) => {
         impl TyToMethodTween for $T {
             type GdTween = $GdName;
         }
 
-        //#[derive(GodotClass)]
-        //#[class(base = RefCounted, init)]
+        /// A tween that invokes a [Callable] on every update, passing an argument that is calculated by
+        /// lerping between [method get_start_value] and [method get_final_value] based on how much time has passed,
+        /// relative to [method get_duration].
+        ///
+        /// [b]Note:[/b] You should not instantiate this class directly,
+        /// instead use one of the `do_call_*` methods on [Spire].
+        #[derive(GodotClass)]
+        #[class(base = RefCounted, no_init)]
         pub struct $GdName {
-            pub base: ::godot::obj::Base<::godot::classes::RefCounted>,
+            pub base:  ::godot::obj::Base<::godot::classes::RefCounted>,
             pub inner: UnsafeCell<RcPtr<SpireTween<LerpMethodData<$T>>>>,
-        }
-
-        #[doc(hidden)]
-        #[allow(non_camel_case_types)]
-        pub struct $ {concat(__godot_, $GdName, _Funcs)} {}
-
-        ::godot::sys::plugin_add!(
-            :: godot :: private :: __GODOT_DOCS_REGISTRY ;
-            :: godot :: private :: DocsPlugin :: new :: < $GdName > (
-                :: godot :: private :: DocsItem :: Struct (
-                    :: godot :: docs :: StructDocs {
-                        base : "RefCounted" ,
-                        description :
-"A tween that invokes a [Callable] on every update, passing an argument that is calculated by \
-lerping between [method get_start_value] and [method get_final_value] based on how much time has passed, \
-relative to [method get_duration].\n\n\
-[b]Note:[/b] You should not instantiate this class directly, instead use one of the `do_call_*` methods on [Spire].",
-                        experimental : "" ,
-                        deprecated : "" ,
-                        members : "" ,
-                    }
-                )
-            )
-        );
-
-        ::godot::sys::plugin_add!(
-            :: godot :: private :: __GODOT_PLUGIN_REGISTRY ;
-            :: godot :: private :: ClassPlugin :: new :: < $GdName > (
-                :: godot :: private :: PluginItem :: Struct (
-                    :: godot :: private :: Struct :: new :: < $GdName > ()
-                )
-            )
-        );
-        ::godot::private::class_macros::inherit_from_RefCounted__ensure_class_exists!($GdName );
-
-        impl ::godot::obj::WithBaseField for $GdName {
-            fn to_gd(&self) -> ::godot::obj::Gd<$GdName> {
-                let base = <$GdName as ::godot::obj::WithBaseField>::base_field(self);
-                base.to_gd().cast()
-            }
-
-            fn base_field(&self) -> &::godot::obj::Base<<$GdName as ::godot::obj::GodotClass>::Base> {
-                &self.base
-            }
-        }
-
-        impl ::std::ops::Deref for $GdName {
-            type Target = ::godot::classes::RefCounted;
-            fn deref(&self) -> &Self::Target { &self.base }
-        }
-
-        impl ::std::ops::DerefMut for $GdName {
-            fn deref_mut(&mut self) -> &mut Self::Target { &mut self.base }
-        }
-
-        impl GodotClass for $GdName {
-            type Base = RefCounted;
-            fn class_name() -> ClassName {
-                static CLASS_NAME: OnceLock<ClassName> = OnceLock::new();
-                let name: &'static ClassName =
-                    CLASS_NAME.get_or_init(|| ClassName::alloc_next_ascii($CStrName));
-                *name
-            }
-        }
-
-        unsafe impl Bounds for $GdName {
-            type Memory = <<Self as GodotClass>::Base as Bounds>::Memory;
-            type DynMemory = <<Self as GodotClass>::Base as Bounds>::DynMemory;
-            type Declarer = DeclUser;
-            type Exportable = <<Self as GodotClass>::Base as Bounds>::Exportable;
-        }
-
-        impl ImplementsGodotExports for $GdName {
-            fn __register_exports() { }
-        }
-
-        impl UserClass for $GdName {
-            #[doc(hidden)]
-            fn __config() -> ClassConfig { ClassConfig { is_tool: false } }
-            #[doc(hidden)]
-            fn __before_ready(&mut self) {}
-        }
-
-        macro_rules! ${concat(__godot_, $GdName, _vis_macro)} {
-            ($$( #[$$meta:meta] )* struct $$($$tt:tt)+) => {
-                $$( #[$$meta] )* pub struct $$($$tt)+
-            };
-        }
-        macro_rules! ${concat(__godot_, $GdName, _has_base_field_macro)} {
-            ($$( $$tt:tt )*) => { $$( $$tt )* };
-        }
-
-        macro_rules! ${concat(__deny_manual_init_, $GdName)} {
-            () => {
-                compile_error!(
-                    "Class `$GdName` is marked with #[class(no_init)] but provides an init() method."
-                );
-            };
         }
 
         #[godot_api]
@@ -143,35 +43,27 @@ relative to [method get_duration].\n\n\
             /// Returns the [Callable] that will be invoked on every update with
             /// the interpolated value (between [method get_start_value] and [method get_final_value]).
             #[func]
-            pub fn get_callable(&self) -> Callable {
-                self.to_ref().get_callable().clone()
-            }
+            pub fn get_callable(&self) -> Callable { self.to_ref().get_callable().clone() }
 
             /// Returns the total duration of the tween, in seconds.
             ///
             /// [b]Note:[/b] This is not the remaining time, this is the `duration` parameter
             /// you passed when constructing the tween.
             #[func]
-            pub fn get_duration(&self) -> f64 {
-                self.to_ref().get_duration()
-            }
+            pub fn get_duration(&self) -> f64 { self.to_ref().get_duration() }
 
             /// Returns the starting value of the tween.
             /// This is the `from` parameter you passed when constructing the tween.
             /// It is the value the callable will be invoked with at the start of the tween (time `0.0`).
             #[func]
-            pub fn get_start_value(&self) -> $T {
-                self.to_ref().get_start_value()
-            }
+            pub fn get_start_value(&self) -> $T { self.to_ref().get_start_value() }
 
             /// Returns the final value of the tween.
             /// This is the `to` parameter you passed when constructing the tween.
             /// It is the value the last value the callable will be invoked with, which will happen after
             /// [method get_duration] seconds..
             #[func]
-            pub fn get_final_value(&self) -> $T {
-                self.to_ref().get_final_value()
-            }
+            pub fn get_final_value(&self) -> $T { self.to_ref().get_final_value() }
 
             /// [b]Returns:[/b] The easing used by this tween. Since easing can be represented by multiple
             /// types, the returned value is a [Variant] that can be one of the following:
@@ -182,9 +74,7 @@ relative to [method get_duration].\n\n\
             ///
             /// See each method's documentation for more details.
             #[func]
-            pub fn get_ease(&self) -> Variant {
-                self.to_ref().get_ease().to_variant()
-            }
+            pub fn get_ease(&self) -> Variant { self.to_ref().get_ease().to_variant() }
 
             /// Defines the easing type to use for the tween.
             ///
@@ -253,7 +143,7 @@ relative to [method get_duration].\n\n\
             }
         }
 
-        define_base_gd_methods! { $GdName => SpireTween<LerpMethodData<$T>> }
+        define_base_gd_methods! { $GdName, SpireTween<LerpMethodData<$T>>, LerpMethodData<$T> }
     };
 }
 
@@ -276,12 +166,8 @@ macro_rules! define_instantiate_fn {
             #[doc = $Docs]
             #[func]
             pub fn build(callable: Callable, from: $T, to: $T, duration: f64) -> Gd<Self> {
-                let inner =
-                    UnsafeCell::new(SpireTween::<LerpMethodData<$T>>::new(callable, from, to, duration).register());
-                let handle = Gd::from_init_fn(|base| Self { base, inner });
-                let handle_clone = handle.clone();
-                handle.bind().to_mut().gd_handle = Some(handle_clone);
-                handle
+                let tween = SpireTween::<LerpMethodData<$T>>::new(callable, from, to, duration).register();
+                gd_from_native_tween(tween)
             }
         }
     };
@@ -304,12 +190,7 @@ impl SpireMethod {
     /// See [method Spire.do_call_custom].
     #[func]
     pub fn build_custom(callable: Callable, from: Variant, to: Variant, duration: f64, lerper: Callable) -> Gd<Self> {
-        let inner = UnsafeCell::new(
-            SpireTween::<LerpMethodData<Variant>>::new_custom(callable, from, to, duration, lerper).register(),
-        );
-        let handle = Gd::from_init_fn(|base| Self { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = SpireTween::<LerpMethodData<Variant>>::new_custom(callable, from, to, duration, lerper).register();
+        gd_from_native_tween(tween)
     }
 }

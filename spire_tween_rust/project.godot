@@ -1,0 +1,51 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
+[application]
+
+config/name="SpireTween Rust Examples"
+config/use_hidden_project_data_directory=false
+config/features=PackedStringArray("4.6")
+run/flush_stdout_on_print=true
+boot_splash/show_image=false
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/window_width_override=1280
+window/size/window_height_override=720
+window/stretch/mode="viewport"
+window/vsync/vsync_mode=0
+
+[network]
+
+limits/debugger/max_chars_per_second=524288
+limits/debugger/max_queued_messages=8192
+limits/debugger/max_errors_per_second=1024
+limits/debugger/max_warnings_per_second=1024
+
+[node]
+
+name_num_separator=2
+name_casing=2
+
+[physics]
+
+3d/active_soft_world=false
+
+[rendering]
+
+quality/intended_usage/framebuffer_allocation=1
+quality/shadows/filter_mode=0

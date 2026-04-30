@@ -39,21 +39,8 @@ impl IPropertyData for LineEditIntData {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => obj.try_cast::<LineEdit>().ok(),
-            ObjectOrNode::Node(obj) => obj.try_cast::<LineEdit>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for LineEditIntData {
@@ -66,7 +53,9 @@ impl TryFromPathAndObject for LineEditIntData {
                     "max_length" => {
                         Some(Self {
                             property: <LineEditIntKind>::MaxLength,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -126,21 +115,8 @@ impl IPropertyData for LineEditStringData {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => obj.try_cast::<LineEdit>().ok(),
-            ObjectOrNode::Node(obj) => obj.try_cast::<LineEdit>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for LineEditStringData {
@@ -153,14 +129,18 @@ impl TryFromPathAndObject for LineEditStringData {
                     "text" => {
                         Some(Self {
                             property: <LineEditStringKind>::Text,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "placeholder_text" => {
                         Some(Self {
                             property: <LineEditStringKind>::PlaceholderText,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -247,7 +227,7 @@ impl<
         let owner: Gd<LineEdit> = self.to_gd().upcast();
         let data = LineEditIntData {
             property: <LineEditIntKind>::MaxLength,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -262,7 +242,7 @@ impl<
         let owner: Gd<LineEdit> = self.to_gd().upcast();
         let data = LineEditStringData {
             property: <LineEditStringKind>::Text,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -277,7 +257,7 @@ impl<
         let owner: Gd<LineEdit> = self.to_gd().upcast();
         let data = LineEditStringData {
             property: <LineEditStringKind>::PlaceholderText,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<

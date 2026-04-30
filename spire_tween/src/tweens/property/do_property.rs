@@ -1,5 +1,6 @@
 use super::*;
 
+/// Creates property tweens. `Marker` disambiguates the `Gd<T>` vs `WithBaseField` impls.
 pub trait DoProperty<T: PropertyType, Marker = ()>
 where LerpPropertyData<T>: ITweenable
 {

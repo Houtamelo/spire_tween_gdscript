@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://cnlxjxsssn15r"]
+
+[ext_resource type="Texture2D" uid="uid://dyfbvd5rmgklf" path="res://examples/white_ball.png" id="1_qlmbx"]
+
+[node name="Ball" type="Sprite2D"]
+modulate = Color(0.4857996, 0.90053093, 0.5894824, 1)
+texture = ExtResource("1_qlmbx")

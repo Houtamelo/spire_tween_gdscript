@@ -39,21 +39,8 @@ impl IPropertyData for AnimatedSprite3DIntData {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => obj.try_cast::<AnimatedSprite3D>().ok(),
-            ObjectOrNode::Node(obj) => obj.try_cast::<AnimatedSprite3D>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for AnimatedSprite3DIntData {
@@ -66,7 +53,9 @@ impl TryFromPathAndObject for AnimatedSprite3DIntData {
                     "frame" => {
                         Some(Self {
                             property: <AnimatedSprite3DIntKind>::Frame,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -128,21 +117,8 @@ impl IPropertyData for AnimatedSprite3DFloatData {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => obj.try_cast::<AnimatedSprite3D>().ok(),
-            ObjectOrNode::Node(obj) => obj.try_cast::<AnimatedSprite3D>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for AnimatedSprite3DFloatData {
@@ -155,14 +131,18 @@ impl TryFromPathAndObject for AnimatedSprite3DFloatData {
                     "frame_progress" => {
                         Some(Self {
                             property: <AnimatedSprite3DFloatKind>::FrameProgress,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "speed_scale" => {
                         Some(Self {
                             property: <AnimatedSprite3DFloatKind>::SpeedScale,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -246,7 +226,7 @@ impl<
         let owner: Gd<AnimatedSprite3D> = self.to_gd().upcast();
         let data = AnimatedSprite3DIntData {
             property: <AnimatedSprite3DIntKind>::Frame,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -261,7 +241,7 @@ impl<
         let owner: Gd<AnimatedSprite3D> = self.to_gd().upcast();
         let data = AnimatedSprite3DFloatData {
             property: <AnimatedSprite3DFloatKind>::FrameProgress,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -276,7 +256,7 @@ impl<
         let owner: Gd<AnimatedSprite3D> = self.to_gd().upcast();
         let data = AnimatedSprite3DFloatData {
             property: <AnimatedSprite3DFloatKind>::SpeedScale,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<

@@ -1,21 +1,56 @@
-# SpireTween
+# Showcase
 
-An addon that provides a fast and ergonomic tweening library for Godot 4.x, inspired on the design of the
+![example_powerup.gif](readme_images/example_powerup.gif)
+
+*This gif was recorded from the example scene [example_powerup.tscn](spire_tween_gdscript/examples/powerup/example_powerup.tscn)*
+
+*Credit for the character sprites goes to [JumpButton](https://jumpbutton.itch.io/girlknightasset).*
+
+---
+
+Here's the code used to move the energy spheres (1st phase of the gif):
+
+```gdscript
+var ball: Sprite2D = balls[i]
+
+# Rotate the ball around the character in a spiral pattern.
+DoNode2D.spiral(ball, center, from_angle, to_angle, scale, duration, rotation, shear, Spire.SPIRAL_FERMAT)
+
+# Fade-in the ball, achieved my lerping its "modulate" property from 0.0 to 0.8.
+DoCanvasItem.color_a(ball, 0.8, duration).from(0.0)
+
+# Steadily scale the ball towards 0.25, starting at 0.
+DoNode2D.scale(ball, Vector2(0.25, 0.25), duration).from(Vector2.ZERO)
+```
+
+And here's the code used to make the balls quickly expand and fade away (2nd phase of the gif):
+
+```gdscript
+var ball: Sprite2D = balls[i]
+
+DoCanvasItem.color(ball, Color(1, 1, 1, 0), 2.0).set_ease(Spire.EASE_OUT_EXPO)
+DoNode2D.scale(ball, Vector2.ONE * 3, 2.0).set_ease(Spire.EASE_OUT_EXPO)
+```
+
+---
+
+SpireTween is a batteries-included tweening library for Godot 4.x, inspired on the UX of the
 popular Unity library [DoTween](https://dotween.demigiant.com/).
 
 These are the priorities of SpireTween:
 
-- Ergonomics without compromising performance (see the section [Benchmarks](#benchmarks)).
+- Ergonomics without compromising performance (see section [Benchmarks](#benchmarks)).
 - Type safety, taking advantage of GDScript's type system to catch errors at compile time rather than runtime.
 - "No surprises": Spire's public API is thoroughly (and proudly!) documented,
   with method descriptions mentioning possible side effects and quirks. I also wrote plenty of integration tests to make sure the behavior
   matches what's written in the docs (see folder [tests](spire_tween_gdscript/examples/tests)).
-  Here's an example: The method `play` that all tweens have (screenshot taken from inside Godot's editor):
+
+  Here's an example: The method `play` that all tweens have (screenshot taken inside the Godot Editor):
   ![docs_method_play.png](readme_images/docs_method_play.png)
 - At minimum, feature parity with Godot's built-in tweening system (after all, why would you want a downgrade?).
   SpireTween also provides more features, such as: speed-based tweens, more loop modes, etc.
 
-# Table of Contents
+# Summary
 
 - [Installation](#installation)
 - [Platform Support](#platform-support)
@@ -23,7 +58,7 @@ These are the priorities of SpireTween:
 - [Cheat Sheets](#cheat-sheets-built-in-tween---spiretween)
 - [Examples](#examples)
 - [Benchmarks](#benchmarks)
-- [Features Requests](#feature-requests)
+- [Feature Requests](#feature-requests)
 - [License](#license)
 
 # Installation
@@ -33,21 +68,22 @@ SpireTween is an addon like any other, you just need extract the copy you acquir
 You can acquire a copy of SpireTween through 3 means:
 
 - Purchase it at [Itch.io](http://www.itch.io/placeholder_link), it includes binaries for most mainstream platforms (see section [Platform Support](#platform-support)).
-- A demo version is available for free in the [releases](https://github.com/Houtamelo/spire_tween_gdscript/releases) page of this repository.
-  It's only "limitation" is that it doesn't include binaries for all platforms, you would need to compile from source if you don't want to purchase it.
+- A demo version is available in the [releases](https://github.com/Houtamelo/spire_tween_gdscript/releases) page of this repository.
+  The only "limitation" of the demo is that it only includes binaries for Windows and Linux platforms. Binaries for additional platforms can
+  be acquired by purchasing the plugin or compiling it yourself.
 - Compile from source.
 
-When exporting, Godot will automatically include the necessary binaries for the chosen target platform.
+When exporting, Godot will automatically include the necessary binary for the chosen target platform.
 
 # Platform Support
 
 SpireTween is made with [Godot-Rust](https://github.com/godot-rust/gdext), a GdExtension that provides Rust bindings for Godot.
-So it *should* be compatible with all platforms supported by Godot-Rust.
+It *should* be compatible with all platforms supported by Godot-Rust.
 
 I simply don't have the hardware needed to test on all platforms, I'll be updating this table
 as users report their testing results.
 
-Binaries for all platforms which I successfully compiled to are included in the releases sold at Itch.io.
+Binaries for all platforms which I successfully compiled-to are included in the releases sold at Itch.io.
 
 | Platform           | Compiled | Tested | Notes                                                               |
 |--------------------|:--------:|:------:|---------------------------------------------------------------------|

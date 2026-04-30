@@ -29,12 +29,26 @@ fn tokenize_ty_data_enum(gd_ty: GdScriptType, classes: &[ClassData]) -> TokenStr
         }
 
         enum_variants_ident.push(class.ident.clone());
-        enum_variants_data_ty.push(class_property_data_ident(&class.name, &gd_ty));
+        let variant_ident = class_property_data_ident(&class.name, &gd_ty);
+        let variant_ty: Type = parse_quote! { #variant_ident };
+        enum_variants_data_ty.push(variant_ty);
     }
 
-    if gd_ty == GdScriptType::Vector2 {
-        enum_variants_ident.push(format_ident!("Follow2D"));
-        enum_variants_data_ty.push(format_ident!("PropertyVector2Node2DFollowData"));
+    {
+        enum_variants_ident.push(format_ident!("ViaCallable"));
+        enum_variants_data_ty.push(gd_ty.property_via_callable_ty());
+    }
+
+    match gd_ty {
+        GdScriptType::Vector2 => {
+            enum_variants_ident.push(format_ident!("Follow2D"));
+            enum_variants_data_ty.push(parse_quote! { PropertyVector2Node2DFollowData });
+        }
+        GdScriptType::Vector3 => {
+            enum_variants_ident.push(format_ident!("Follow3D"));
+            enum_variants_data_ty.push(parse_quote! { PropertyVector3Node3DFollowData });
+        }
+        _ => {}
     }
 
     quote! {

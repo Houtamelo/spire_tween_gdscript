@@ -37,19 +37,18 @@ impl TweensMap {
         let node_id = node.instance_id_unchecked().to_i64();
         if let Some(state) = unsafe { (*self.tracked_nodes.get()).get_mut(&node_id) } {
             let pre_len = state.bound_tweens.len();
-            state
-                .bound_tweens
-                .retain(|t| !std::ptr::eq(t.address(), address));
+            state.bound_tweens.retain(|t| !std::ptr::eq(t.address(), address));
             let post_len = state.bound_tweens.len();
             debug_assert_eq!(pre_len - 1, post_len);
         }
     }
 
     pub fn node_get_status_fresh(&self, node: Gd<Node>) -> NodeStatus {
+        let node_id = node.instance_id_unchecked().to_i64();
         let entry = unsafe { self.node_ensure_tracked(node) };
 
         if let NodeStatus::OutsideTreeMaybeDead = entry.status
-            && !is_instance_id_valid(node.instance_id_unchecked().to_i64())
+            && !is_instance_id_valid(node_id)
         {
             entry.status = NodeStatus::Dead;
         }
@@ -66,11 +65,7 @@ impl TweensMap {
 
         let bound_tweens = std::mem::take(&mut entry.get_mut().bound_tweens);
         unsafe {
-            (*self.deferred_ops.get()).extend(
-                bound_tweens
-                    .iter()
-                    .map(|weak| (weak.address(), DeferredOp::Remove)),
-            )
+            (*self.deferred_ops.get()).extend(bound_tweens.iter().map(|weak| (weak.address(), DeferredOp::Remove)))
         }
 
         #[allow(clippy::drop_non_drop)]
@@ -107,8 +102,8 @@ impl TweensMap {
     /// Unregisters a tween, it will no longer update on ticks.
     #[inline]
     pub fn tween_unregister<T: Address>(&self, tween: &T) {
-        #[cfg(debug_assertions)]
-        godot_print!("Unregistering tween: {}-{:?}", type_name::<T>(), tween.address());
+        //#[cfg(debug_assertions)]
+        //godot_print!("Unregistering tween: {}-{:?}", type_name::<T>(), tween.address());
         unsafe {
             (*self.deferred_ops.get()).insert(tween.address(), DeferredOp::Remove);
         }
@@ -118,8 +113,8 @@ impl TweensMap {
     #[inline]
     pub fn tween_register(&self, tween: impl Into<AnyTween>) {
         let tween = tween.into();
-        #[cfg(debug_assertions)]
-        godot_print!("Registering tween: {}-{:?}", tween.inner_type_name(), tween.address());
+        //#[cfg(debug_assertions)]
+        //godot_print!("Registering tween: {}-{:?}", tween.inner_type_name(), tween.address());
         self.check_binds(&tween);
         unsafe {
             (*self.deferred_ops.get()).insert(tween.address(), DeferredOp::Add(tween));
@@ -160,66 +155,63 @@ impl TweensMap {
     unsafe fn node_ensure_tracked(&self, node: Gd<Node>) -> &mut NodeState {
         let node_id = node.instance_id_unchecked().to_i64();
 
-        (*self.tracked_nodes.get())
-            .entry(node_id)
-            .or_insert_with(|| {
-                let status = eval_node_status(node);
+        (*self.tracked_nodes.get()).entry(node_id).or_insert_with(|| {
+            let status = eval_node_status(&node);
 
-                if let NodeStatus::InsideTree | NodeStatus::OutsideTreeMaybeDead = status {
-                    node.signals().tree_exiting().connect(move || {
-                        let tm = &*TM;
-                        let Entry::Occupied(mut entry) = (*tm.tracked_nodes.get()).entry(node_id)
-                        else {
-                            return
-                        };
+            if let NodeStatus::InsideTree | NodeStatus::OutsideTreeMaybeDead = status {
+                let node_for_exit = node.clone();
+                node.clone().signals().tree_exiting().connect(move || {
+                    let tm = &*TM;
+                    let Entry::Occupied(mut entry) = (*tm.tracked_nodes.get()).entry(node_id) else { return };
 
-                        if !node.is_queued_for_deletion() {
-                            entry.get_mut().status = NodeStatus::OutsideTreeMaybeDead;
-                            return;
-                        }
+                    if !node_for_exit.is_queued_for_deletion() {
+                        entry.get_mut().status = NodeStatus::OutsideTreeMaybeDead;
+                        return;
+                    }
 
-                        let entry_mut = entry.get_mut();
-                        entry_mut.status = NodeStatus::Dead;
-                        let bound_tweens = std::mem::take(&mut entry_mut.bound_tweens);
+                    let entry_mut = entry.get_mut();
+                    entry_mut.status = NodeStatus::Dead;
+                    let bound_tweens = std::mem::take(&mut entry_mut.bound_tweens);
 
-                        (*tm.deferred_ops.get()).extend(
-                            bound_tweens
-                                .iter()
-                                .map(|weak| (weak.address(), DeferredOp::Remove)),
-                        );
+                    (*tm.deferred_ops.get())
+                        .extend(bound_tweens.iter().map(|weak| (weak.address(), DeferredOp::Remove)));
 
-                        #[allow(clippy::drop_non_drop)]
-                        drop(entry); // Release lock before passing context back to Godot.
+                    #[allow(clippy::drop_non_drop)]
+                    drop(entry); // Release lock before passing context back to Godot.
 
-                        for mut tween in bound_tweens.iter().filter_map(WeakAnyTween::upgrade) {
-                            tween.stop();
-                        }
-                    });
+                    for mut tween in bound_tweens.iter().filter_map(WeakAnyTween::upgrade) {
+                        tween.stop();
+                    }
+                });
 
-                    node.signals().tree_entered().connect(move || {
-                        if let Some(state) = (*TM.tracked_nodes.get()).get_mut(&node_id) {
-                            state.status = NodeStatus::InsideTree;
-                        }
-                    });
-                };
+                node.signals().tree_entered().connect(move || {
+                    if let Some(state) = (*TM.tracked_nodes.get()).get_mut(&node_id) {
+                        state.status = NodeStatus::InsideTree;
+                    }
+                });
+            };
 
-                NodeState {
-                    bound_tweens: Default::default(),
-                    status,
-                }
-            })
+            NodeState {
+                bound_tweens: Default::default(),
+                status,
+            }
+        })
     }
 
     pub fn check_binds(&self, tween: &AnyTween) {
         match tween {
             AnyTween::Property(tween) => {
-                if let ObjectOrNode::Node(owner) = tween.get_owner() {
-                    unsafe { self.node_ensure_tracked(*owner) };
+                if let Some(ObjectOrNode::Node(owner)) = tween.get_owner() {
+                    if is_instance_id_valid(owner.instance_id_unchecked().to_i64()) {
+                        unsafe { self.node_ensure_tracked(owner.clone()) };
+                    }
                 }
             }
             AnyTween::Method(tween) => {
                 if let Some(ObjectOrNode::Node(owner)) = tween.get_owner() {
-                    unsafe { self.node_ensure_tracked(*owner) };
+                    if is_instance_id_valid(owner.instance_id_unchecked().to_i64()) {
+                        unsafe { self.node_ensure_tracked(owner.clone()) };
+                    }
                 }
             }
             AnyTween::DelayedCall(_) => {}
@@ -232,7 +224,9 @@ impl TweensMap {
 
         let weak = tween.downgrade();
         for obj in tween.get_bound_nodes() {
-            self.node_bind(*obj, weak.clone());
+            if is_instance_id_valid(obj.instance_id_unchecked().to_i64()) {
+                self.node_bind(obj.clone(), weak.clone());
+            }
         }
     }
 }
@@ -249,19 +243,13 @@ impl TweensMap {
         }
     }
 
-    pub(super) unsafe fn tick_process(
-        &self,
-        is_tree_paused: bool,
-        scaled_delta_time: f64,
-        unscaled_delta_time: f64,
-    ) {
+    pub(super) unsafe fn tick_process(&self, is_tree_paused: bool, scaled_delta_time: f64, unscaled_delta_time: f64) {
         self.handle_deferred_ops();
 
         let mut idx = 0;
         loop {
             let should_retain = {
-                let Some(tween) = (*self.root_tweens.get()).get_index(idx)
-                else { break };
+                let Some(tween) = (*self.root_tweens.get()).get_index(idx) else { break };
 
                 match tween.get_process_mode() {
                     // Reference count for this is tested in `tick_physics`.
@@ -269,18 +257,15 @@ impl TweensMap {
                     // User might not be referencing this anymore, release the reference if that's the case.
                     ProcessMode::Manual => tween.strong_count() > 1,
                     ProcessMode::Idle => {
-                        let delta_time = if tween.get_ignore_time_scale() {
-                            unscaled_delta_time
-                        } else {
-                            scaled_delta_time
-                        };
+                        let delta_time =
+                            if tween.get_ignore_time_scale() { unscaled_delta_time } else { scaled_delta_time };
 
                         tween_process(tween, delta_time, is_tree_paused)
                     }
                 }
             };
 
-            #[cfg(debug_assertions)]
+            #[cfg(feature = "verbose-stdout")]
             if !should_retain {
                 let tween = (*self.root_tweens.get()).get_index(idx).unwrap_unchecked();
                 godot_print!(
@@ -301,19 +286,13 @@ impl TweensMap {
         self.handle_deferred_ops();
     }
 
-    pub(super) unsafe fn tick_physics(
-        &self,
-        is_tree_paused: bool,
-        scaled_delta_time: f64,
-        unscaled_delta_time: f64,
-    ) {
+    pub(super) unsafe fn tick_physics(&self, is_tree_paused: bool, scaled_delta_time: f64, unscaled_delta_time: f64) {
         self.handle_deferred_ops();
 
         let mut idx = 0;
         loop {
             let should_retain = {
-                let Some(tween) = (*self.root_tweens.get()).get_index(idx)
-                else { break };
+                let Some(tween) = (*self.root_tweens.get()).get_index(idx) else { break };
 
                 match tween.get_process_mode() {
                     // Reference count for this is tested in `tick_process`.
@@ -321,18 +300,15 @@ impl TweensMap {
                     // User might not be referencing this anymore, release the reference if that's the case.
                     ProcessMode::Manual => tween.strong_count() > 1,
                     ProcessMode::Physics => {
-                        let delta_time = if tween.get_ignore_time_scale() {
-                            unscaled_delta_time
-                        } else {
-                            scaled_delta_time
-                        };
+                        let delta_time =
+                            if tween.get_ignore_time_scale() { unscaled_delta_time } else { scaled_delta_time };
 
                         tween_process(tween, delta_time, is_tree_paused)
                     }
                 }
             };
 
-            #[cfg(debug_assertions)]
+            #[cfg(feature = "verbose-stdout")]
             if !should_retain {
                 let tween = (*self.root_tweens.get()).get_index(idx).unwrap_unchecked();
                 godot_print!(

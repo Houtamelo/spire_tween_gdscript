@@ -12,11 +12,8 @@ impl DoArea2D {
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/
     #[func(rename = gravity)]
     fn r#gravity(node: Gd<Area2D>, to: f64, duration: f64) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_area_gravity(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_area_gravity(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member Area2D.gravity_point_unit_distance] over [param duration] seconds.
 
@@ -27,13 +24,8 @@ impl DoArea2D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(
-            node.do_gravity_point_unit_distance(to, duration).register(),
-        );
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_gravity_point_unit_distance(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `x` component of the property [member Area2D.gravity_direction] over [param duration] seconds.
 
@@ -44,13 +36,8 @@ impl DoArea2D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(
-            node.do_gravity_direction_x(to, duration).register(),
-        );
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_gravity_direction_x(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `y` component of the property [member Area2D.gravity_direction] over [param duration] seconds.
 
@@ -61,13 +48,8 @@ impl DoArea2D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(
-            node.do_gravity_direction_y(to, duration).register(),
-        );
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_gravity_direction_y(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `x` component of the property [member Area2D.gravity_point_center] over [param duration] seconds.
 
@@ -78,13 +60,8 @@ impl DoArea2D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(
-            node.do_gravity_point_center_x(to, duration).register(),
-        );
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_gravity_point_center_x(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `y` component of the property [member Area2D.gravity_point_center] over [param duration] seconds.
 
@@ -95,13 +72,8 @@ impl DoArea2D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(
-            node.do_gravity_point_center_y(to, duration).register(),
-        );
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_gravity_point_center_y(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member Area2D.linear_damp] over [param duration] seconds.
 
@@ -112,11 +84,8 @@ impl DoArea2D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_area_linear_damp(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_area_linear_damp(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member Area2D.gravity_direction] over [param duration] seconds.
 
@@ -127,14 +96,8 @@ impl DoArea2D {
         to: Vector2,
         duration: f64,
     ) -> Gd<SpirePropertyVector2> {
-        let inner = UnsafeCell::new(node.do_gravity_direction(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyVector2 {
-            base,
-            inner,
-        });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_gravity_direction(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member Area2D.gravity_point_center] over [param duration] seconds.
 
@@ -145,15 +108,7 @@ impl DoArea2D {
         to: Vector2,
         duration: f64,
     ) -> Gd<SpirePropertyVector2> {
-        let inner = UnsafeCell::new(
-            node.do_gravity_point_center(to, duration).register(),
-        );
-        let handle = Gd::from_init_fn(|base| SpirePropertyVector2 {
-            base,
-            inner,
-        });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_gravity_point_center(to, duration).register();
+        gd_from_native_tween(tween)
     }
 }

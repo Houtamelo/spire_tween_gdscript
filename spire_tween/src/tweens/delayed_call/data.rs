@@ -54,11 +54,7 @@ impl SpireTween<Callable> {
 }
 
 impl SpireTween<Callable> {
-    pub fn new(callable: Callable, delay: f64) -> Self {
-        Self::new_with_data(callable).with_delay(delay)
-    }
+    pub fn new(callable: Callable, delay: f64) -> Self { Self::new_with_data(callable).with_delay(delay) }
 
-    pub fn new_registered(callable: Callable, delay: f64) -> RcPtr<Self> {
-        Self::new(callable, delay).register()
-    }
+    pub fn new_registered(callable: Callable, delay: f64) -> RcPtr<Self> { Self::new(callable, delay).register() }
 }

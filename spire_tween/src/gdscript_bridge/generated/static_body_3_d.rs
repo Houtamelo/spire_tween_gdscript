@@ -16,13 +16,8 @@ impl DoStaticBody3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(
-            node.do_constant_angular_velocity_x(to, duration).register(),
-        );
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_constant_angular_velocity_x(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `y` component of the property [member StaticBody3D.constant_angular_velocity] over [param duration] seconds.
 
@@ -33,13 +28,8 @@ impl DoStaticBody3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(
-            node.do_constant_angular_velocity_y(to, duration).register(),
-        );
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_constant_angular_velocity_y(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `z` component of the property [member StaticBody3D.constant_angular_velocity] over [param duration] seconds.
 
@@ -50,13 +40,8 @@ impl DoStaticBody3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(
-            node.do_constant_angular_velocity_z(to, duration).register(),
-        );
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_constant_angular_velocity_z(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `x` component of the property [member StaticBody3D.constant_linear_velocity] over [param duration] seconds.
 
@@ -67,13 +52,8 @@ impl DoStaticBody3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(
-            node.do_constant_linear_velocity_x(to, duration).register(),
-        );
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_constant_linear_velocity_x(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `y` component of the property [member StaticBody3D.constant_linear_velocity] over [param duration] seconds.
 
@@ -84,13 +64,8 @@ impl DoStaticBody3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(
-            node.do_constant_linear_velocity_y(to, duration).register(),
-        );
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_constant_linear_velocity_y(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `z` component of the property [member StaticBody3D.constant_linear_velocity] over [param duration] seconds.
 
@@ -101,13 +76,8 @@ impl DoStaticBody3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(
-            node.do_constant_linear_velocity_z(to, duration).register(),
-        );
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_constant_linear_velocity_z(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member StaticBody3D.constant_angular_velocity] over [param duration] seconds.
 
@@ -118,16 +88,8 @@ impl DoStaticBody3D {
         to: Vector3,
         duration: f64,
     ) -> Gd<SpirePropertyVector3> {
-        let inner = UnsafeCell::new(
-            node.do_constant_angular_velocity(to, duration).register(),
-        );
-        let handle = Gd::from_init_fn(|base| SpirePropertyVector3 {
-            base,
-            inner,
-        });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_constant_angular_velocity(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member StaticBody3D.constant_linear_velocity] over [param duration] seconds.
 
@@ -138,15 +100,7 @@ impl DoStaticBody3D {
         to: Vector3,
         duration: f64,
     ) -> Gd<SpirePropertyVector3> {
-        let inner = UnsafeCell::new(
-            node.do_constant_linear_velocity(to, duration).register(),
-        );
-        let handle = Gd::from_init_fn(|base| SpirePropertyVector3 {
-            base,
-            inner,
-        });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_constant_linear_velocity(to, duration).register();
+        gd_from_native_tween(tween)
     }
 }

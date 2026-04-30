@@ -16,10 +16,7 @@ impl DoStatusIndicator {
         to: GString,
         duration: f64,
     ) -> Gd<SpirePropertyString> {
-        let inner = UnsafeCell::new(node.do_tooltip(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyString { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_tooltip(to, duration).register();
+        gd_from_native_tween(tween)
     }
 }

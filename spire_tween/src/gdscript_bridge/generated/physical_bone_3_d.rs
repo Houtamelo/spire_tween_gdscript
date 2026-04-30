@@ -16,11 +16,8 @@ impl DoPhysicalBone3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_angular_damp(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_angular_damp(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `x` component of the property [member PhysicalBone3D.angular_velocity] over [param duration] seconds.
 
@@ -31,11 +28,8 @@ impl DoPhysicalBone3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_angular_velocity_x(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_angular_velocity_x(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `y` component of the property [member PhysicalBone3D.angular_velocity] over [param duration] seconds.
 
@@ -46,11 +40,8 @@ impl DoPhysicalBone3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_angular_velocity_y(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_angular_velocity_y(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `z` component of the property [member PhysicalBone3D.angular_velocity] over [param duration] seconds.
 
@@ -61,11 +52,8 @@ impl DoPhysicalBone3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_angular_velocity_z(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_angular_velocity_z(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member PhysicalBone3D.bounce] over [param duration] seconds.
 
@@ -76,11 +64,8 @@ impl DoPhysicalBone3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_bounce(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_bounce(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member PhysicalBone3D.friction] over [param duration] seconds.
 
@@ -91,11 +76,8 @@ impl DoPhysicalBone3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_friction(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_friction(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member PhysicalBone3D.gravity_scale] over [param duration] seconds.
 
@@ -106,11 +88,8 @@ impl DoPhysicalBone3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_gravity_scale(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_gravity_scale(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `x` component of the property [member PhysicalBone3D.joint_rotation] over [param duration] seconds.
 
@@ -121,11 +100,8 @@ impl DoPhysicalBone3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_joint_rotation_x(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_joint_rotation_x(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `y` component of the property [member PhysicalBone3D.joint_rotation] over [param duration] seconds.
 
@@ -136,11 +112,8 @@ impl DoPhysicalBone3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_joint_rotation_y(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_joint_rotation_y(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `z` component of the property [member PhysicalBone3D.joint_rotation] over [param duration] seconds.
 
@@ -151,11 +124,8 @@ impl DoPhysicalBone3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_joint_rotation_z(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_joint_rotation_z(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member PhysicalBone3D.linear_damp] over [param duration] seconds.
 
@@ -166,11 +136,8 @@ impl DoPhysicalBone3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_linear_damp(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_linear_damp(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `x` component of the property [member PhysicalBone3D.linear_velocity] over [param duration] seconds.
 
@@ -181,11 +148,8 @@ impl DoPhysicalBone3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_linear_velocity_x(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_linear_velocity_x(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `y` component of the property [member PhysicalBone3D.linear_velocity] over [param duration] seconds.
 
@@ -196,11 +160,8 @@ impl DoPhysicalBone3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_linear_velocity_y(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_linear_velocity_y(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `z` component of the property [member PhysicalBone3D.linear_velocity] over [param duration] seconds.
 
@@ -211,11 +172,8 @@ impl DoPhysicalBone3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_linear_velocity_z(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_linear_velocity_z(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member PhysicalBone3D.mass] over [param duration] seconds.
 
@@ -226,11 +184,8 @@ impl DoPhysicalBone3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_mass(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_mass(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member PhysicalBone3D.angular_velocity] over [param duration] seconds.
 
@@ -241,14 +196,8 @@ impl DoPhysicalBone3D {
         to: Vector3,
         duration: f64,
     ) -> Gd<SpirePropertyVector3> {
-        let inner = UnsafeCell::new(node.do_angular_velocity(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyVector3 {
-            base,
-            inner,
-        });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_angular_velocity(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member PhysicalBone3D.joint_rotation] over [param duration] seconds.
 
@@ -259,14 +208,8 @@ impl DoPhysicalBone3D {
         to: Vector3,
         duration: f64,
     ) -> Gd<SpirePropertyVector3> {
-        let inner = UnsafeCell::new(node.do_joint_rotation(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyVector3 {
-            base,
-            inner,
-        });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_joint_rotation(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member PhysicalBone3D.linear_velocity] over [param duration] seconds.
 
@@ -277,13 +220,7 @@ impl DoPhysicalBone3D {
         to: Vector3,
         duration: f64,
     ) -> Gd<SpirePropertyVector3> {
-        let inner = UnsafeCell::new(node.do_linear_velocity(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyVector3 {
-            base,
-            inner,
-        });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_linear_velocity(to, duration).register();
+        gd_from_native_tween(tween)
     }
 }

@@ -105,7 +105,7 @@ fn tokenize_data_enum(class: &ClassData) -> TokenStream {
                     #property_path => {
                         Some(Self {
                             property: <#enum_ty>::#enum_discrim,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
                             owner,
                         })
                     }
@@ -155,22 +155,8 @@ fn tokenize_data_enum(class: &ClassData) -> TokenStream {
                 }
 
                 #[inline]
-                fn get_owner(&self) -> &ObjectOrNode {
-                    &self.owner_obj_or_node
-                }
-
-                #[inline]
-                fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-                    if let Some(casted) = match owner {
-                        ObjectOrNode::Object(obj) => obj.try_cast::<#class_ident>().ok(),
-                        ObjectOrNode::Node(obj) => obj.try_cast::<#class_ident>().ok(),
-                    } {
-                        self.owner = casted;
-                        self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-                        true
-                    } else {
-                        false
-                    }
+                fn get_owner(&self) -> Option<&ObjectOrNode> {
+                    Some(&self.owner_obj_or_node)
                 }
             }
 
@@ -284,7 +270,7 @@ fn tokenize_trait_direct_impl(class: &ClassData) -> TokenStream {
                         let owner: Gd<#class_ident> = self.to_gd().upcast();
                         let data = #data_ty {
                             property: <#enum_ty>::#enum_discrim,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
                             owner,
                         };
 
@@ -298,7 +284,7 @@ fn tokenize_trait_direct_impl(class: &ClassData) -> TokenStream {
                             let owner: Gd<#class_ident> = self.to_gd().upcast();
                             let data = #data_ty {
                                 property: <#enum_ty>::#enum_discrim,
-                                owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                                owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
                                 owner,
                             };
                             

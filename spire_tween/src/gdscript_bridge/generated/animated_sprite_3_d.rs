@@ -16,11 +16,8 @@ impl DoAnimatedSprite3D {
         to: i64,
         duration: f64,
     ) -> Gd<SpirePropertyInt> {
-        let inner = UnsafeCell::new(node.do_frame(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyInt { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_frame(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member AnimatedSprite3D.frame_progress] over [param duration] seconds.
 
@@ -31,11 +28,8 @@ impl DoAnimatedSprite3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_frame_progress(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_frame_progress(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member AnimatedSprite3D.speed_scale] over [param duration] seconds.
 
@@ -46,10 +40,7 @@ impl DoAnimatedSprite3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_speed_scale(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_speed_scale(to, duration).register();
+        gd_from_native_tween(tween)
     }
 }

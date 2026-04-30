@@ -2,16 +2,20 @@ use super::*;
 
 #[derive(Debug, Clone)]
 pub enum LerpMode<T> {
+    /// Fixed duration. `from` is lazily read from the object on first tick if not explicit.
     Absolute {
         duration: f64,
         from: FromValue<T>,
     },
+    /// Constant speed (units/second) instead of fixed duration.
     SpeedBased {
         speed: f64,
         from: FromValue<T>,
         start_distance: Option<f64>,
         step_sum: f64,
     },
+    /// Each tick adds the delta between current and previous animation positions
+    /// to the object's current value, rather than setting an absolute value.
     Relative {
         duration: f64,
         relative_to: T,
@@ -76,8 +80,10 @@ impl<T> LerpMode<T> {
 
 #[derive(Debug, Clone)]
 pub enum FromValue<T> {
+    /// Will be read from the object on first tick.
     PendingEvaluation,
     AlreadyEvaluated(T),
+    /// Explicitly set by the user via `.from()`.
     Explicit(T),
 }
 
@@ -85,11 +91,7 @@ impl<T> FromValue<T> {
     #[inline]
     pub fn set_evaluated(&mut self, value: T) -> &T {
         *self = FromValue::AlreadyEvaluated(value);
-        if let FromValue::AlreadyEvaluated(value_ref) = self {
-            value_ref
-        } else {
-            unreachable!()
-        }
+        if let FromValue::AlreadyEvaluated(value_ref) = self { value_ref } else { unreachable!() }
     }
 
     #[inline]

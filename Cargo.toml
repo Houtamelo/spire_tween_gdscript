@@ -1,13 +1,13 @@
 [workspace]
 default-members = ["spire_tween"]
-members = ["gdscript_bindgen", "spire_tween"]
+members = ["gdscript_bindgen", "spire_tween", "spire_tween_plugin", "spire_tween_rust"]
 resolver = "3"
 
 [profile.release]
 opt-level = 3
 debug-assertions = false
 overflow-checks = false
-lto = true
+lto = "thin"
 debug = "none"
 
 [profile.dev]

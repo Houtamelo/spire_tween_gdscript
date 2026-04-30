@@ -3,9 +3,7 @@ use super::*;
 #[delegated_enum(impl_conversions)]
 #[derive(Clone)]
 pub enum MethodTween {
-    //i32(RcPtr<SpireTween<LerpMethodData<i32>>>),
     int(RcPtr<SpireTween<LerpMethodData<i64>>>),
-    //f32(RcPtr<SpireTween<LerpMethodData<f32>>>),
     float(RcPtr<SpireTween<LerpMethodData<f64>>>),
     String(RcPtr<SpireTween<LerpMethodData<GString>>>),
     Color(RcPtr<SpireTween<LerpMethodData<Color>>>),
@@ -37,9 +35,7 @@ impl InnerTypeName for MethodTween {
 
 impl_from_enum! {
     AnyTween::Method {
-        //LerpMethodData<i32> => MethodTween::i32,
         LerpMethodData<i64> => MethodTween::int,
-        //LerpMethodData<f32> => MethodTween::f32,
         LerpMethodData<f64> => MethodTween::float,
         LerpMethodData<GString> => MethodTween::String,
         LerpMethodData<Color> => MethodTween::Color,
@@ -51,22 +47,6 @@ impl_from_enum! {
     }
 }
 
-/*
-impl Deref for MethodTween {
-    type Target = SpireTween<dyn Any>;
-
-    fn deref(&self) -> &Self::Target {
-        delegate_method_tween! { self => |arg| &**arg }
-    }
-}
-
-impl DerefMut for MethodTween {
-    fn deref_mut(&mut self) -> &mut Self::Target {
-        delegate_method_tween! { self => |arg| &mut **arg }
-    }
-}
-*/
-
 define_base_methods! { MethodTween }
 
 #[delegate_impl]
@@ -75,12 +55,10 @@ impl MethodTween {
     pub fn get_callable(&self) -> &Callable;
 
     #[inline]
-    pub fn get_owner(&self) -> &Option<ObjectOrNode>;
+    pub fn get_owner(&self) -> Option<&ObjectOrNode>;
 
     #[inline]
     pub fn get_duration(&self) -> f64;
-    #[inline]
-    pub fn set_duration(&mut self, duration: f64);
 
     #[inline]
     pub fn get_ease(&self) -> &EaseKind;
@@ -119,9 +97,7 @@ impl MethodTween {
 #[delegated_enum(impl_conversions)]
 #[derive(Clone)]
 pub enum WeakMethodTween {
-    //i32(WeakPtr<SpireTween<LerpMethodData<i32>>>),
     int(WeakPtr<SpireTween<LerpMethodData<i64>>>),
-    //f32(WeakPtr<SpireTween<LerpMethodData<f32>>>),
     float(WeakPtr<SpireTween<LerpMethodData<f64>>>),
     String(WeakPtr<SpireTween<LerpMethodData<GString>>>),
     Color(WeakPtr<SpireTween<LerpMethodData<Color>>>),
@@ -141,9 +117,7 @@ impl WeakMethodTween {
 
 impl_from_enum_weak! {
     WeakAnyTween::Method {
-        //LerpMethodData<i32> => WeakMethodTween::i32,
         LerpMethodData<i64> => WeakMethodTween::int,
-        //LerpMethodData<f32> => WeakMethodTween::f32,
         LerpMethodData<f64> => WeakMethodTween::float,
         LerpMethodData<GString> => WeakMethodTween::String,
         LerpMethodData<Color> => WeakMethodTween::Color,

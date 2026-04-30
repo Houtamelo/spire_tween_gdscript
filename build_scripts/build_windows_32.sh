@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
-cd ..
+
+# If we are not in the repository root, go to the parent directory and check again
+if [ ! -f "Cargo.toml" ]; then
+    cd ..
+    if [ ! -f "Cargo.toml" ]; then
+        echo "Error: Could not find Cargo.toml, please run this script from the repository root."
+        exit 1
+    fi
+fi
 
 export CC_i686_pc_windows_msvc="clang-cl"
 export CXX_i686_pc_windows_msvc="clang-cl"

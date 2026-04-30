@@ -44,6 +44,7 @@ mod rich_text_label;
 mod rigid_body_2_d;
 mod rigid_body_3_d;
 mod skeleton_3_d;
+mod sprite_2_d;
 mod sprite_base_3_d;
 mod static_body_2_d;
 mod static_body_3_d;
@@ -68,7 +69,7 @@ pub use self::{
     line_edit::*, link_button::*, node_2_d::*, node_3_d::*, parallax_background::*,
     path_follow_2_d::*, path_follow_3_d::*, physical_bone_3_d::*, range::*,
     reflection_probe::*, rich_text_label::*, rigid_body_2_d::*, rigid_body_3_d::*,
-    skeleton_3_d::*, sprite_base_3_d::*, static_body_2_d::*, static_body_3_d::*,
-    status_indicator::*, sub_viewport::*, text_edit::*, texture_progress_bar::*,
-    video_stream_player::*, viewport::*, window::*,
+    skeleton_3_d::*, sprite_2_d::*, sprite_base_3_d::*, static_body_2_d::*,
+    static_body_3_d::*, status_indicator::*, sub_viewport::*, text_edit::*,
+    texture_progress_bar::*, video_stream_player::*, viewport::*, window::*,
 };

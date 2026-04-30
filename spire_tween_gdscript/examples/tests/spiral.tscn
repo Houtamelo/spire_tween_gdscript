@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=3 uid="uid://bkgg3t4o34ema"]
+
+[ext_resource type="Script" uid="uid://df8sh5at2ic53" path="res://examples/tests/spiral.gd" id="1_4e76b"]
+[ext_resource type="PackedScene" uid="uid://dch68fgy4y1q7" path="res://examples/world_bounds.tscn" id="2_380hf"]
+[ext_resource type="Script" uid="uid://dqfpfqhfl0hqd" path="res://examples/tests/trail_spawner.gd" id="3_380hf"]
+
+[sub_resource type="Gradient" id="Gradient_380hf"]
+offsets = PackedFloat32Array(0, 0.309524, 0.313492)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_r6ldr"]
+gradient = SubResource("Gradient_380hf")
+width = 16
+height = 16
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="Spiral" type="Node2D"]
+script = ExtResource("1_4e76b")
+
+[node name="WorldBounds" parent="." instance=ExtResource("2_380hf")]
+
+[node name="Ball" type="Sprite2D" parent="."]
+modulate = Color(0.4857996, 0.90053093, 0.5894824, 1)
+texture = SubResource("GradientTexture2D_r6ldr")
+script = ExtResource("3_380hf")

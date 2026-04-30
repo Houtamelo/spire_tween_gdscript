@@ -41,19 +41,18 @@ impl TweensMap {
         let node_id = node.instance_id_unchecked().to_i64();
         if let Some(mut state) = self.tracked_nodes.get_mut(&node_id) {
             let pre_len = state.bound_tweens.len();
-            state
-                .bound_tweens
-                .retain(|t| !std::ptr::eq(t.address(), address));
+            state.bound_tweens.retain(|t| !std::ptr::eq(t.address(), address));
             let post_len = state.bound_tweens.len();
             debug_assert_eq!(pre_len - 1, post_len);
         }
     }
 
     pub fn node_get_status_fresh(&self, node: Gd<Node>) -> NodeStatus {
+        let node_id = node.instance_id_unchecked().to_i64();
         let mut entry = self.node_ensure_tracked(node);
 
         if let NodeStatus::OutsideTreeMaybeDead = entry.status
-            && !is_instance_id_valid(node.instance_id_unchecked().to_i64())
+            && !is_instance_id_valid(node_id)
         {
             entry.status = NodeStatus::Dead;
         }
@@ -62,10 +61,7 @@ impl TweensMap {
     }
 
     pub fn node_bound_tweens_kill(&self, node: Gd<Node>) {
-        let Entry::Occupied(mut entry) = self
-            .tracked_nodes
-            .entry(node.instance_id_unchecked().to_i64())
-        else {
+        let Entry::Occupied(mut entry) = self.tracked_nodes.entry(node.instance_id_unchecked().to_i64()) else {
             return
         };
 
@@ -83,10 +79,7 @@ impl TweensMap {
     }
 
     pub fn node_bound_tweens_force_complete(&self, node: Gd<Node>) {
-        let Entry::Occupied(mut entry) = self
-            .tracked_nodes
-            .entry(node.instance_id_unchecked().to_i64())
-        else {
+        let Entry::Occupied(mut entry) = self.tracked_nodes.entry(node.instance_id_unchecked().to_i64()) else {
             return;
         };
 
@@ -108,23 +101,21 @@ impl TweensMap {
     /// Unregisters a tween, it will no longer update on ticks.
     #[inline]
     pub fn tween_unregister<T: Address>(&self, tween: &T) {
-        #[cfg(debug_assertions)]
-        godot_print!("Unregistering tween: {}-{:?}", type_name::<T>(), tween.address());
+        //[cfg(debug_assertions)]
+        //godot_print!("Unregistering tween: {}-{:?}", type_name::<T>(), tween.address());
         //debug_assert!(self.tween_is_registered(tween));
-        self.deferred_ops
-            .insert(tween.address(), DeferredOp::Remove);
+        self.deferred_ops.insert(tween.address(), DeferredOp::Remove);
     }
 
     /// Makes a tween update on every tick.
     #[inline]
     pub fn tween_register(&self, tween: impl Into<AnyTween>) {
         let tween = tween.into();
-        #[cfg(debug_assertions)]
-        godot_print!("Registering tween: {}-{:?}", tween.inner_type_name(), tween.address());
+        //#[cfg(debug_assertions)]
+        //godot_print!("Registering tween: {}-{:?}", tween.inner_type_name(), tween.address());
         //debug_assert!(!self.tween_is_registered(&tween));
         self.check_binds(&tween);
-        self.deferred_ops
-            .insert(tween.address(), DeferredOp::Add(tween));
+        self.deferred_ops.insert(tween.address(), DeferredOp::Add(tween));
     }
 
     #[inline]
@@ -158,14 +149,14 @@ impl TweensMap {
         let node_id = node.instance_id_unchecked().to_i64();
 
         self.tracked_nodes.entry(node_id).or_insert_with(|| {
-            let status = eval_node_status(node);
+            let status = eval_node_status(&node);
 
             if let NodeStatus::InsideTree | NodeStatus::OutsideTreeMaybeDead = status {
-                node.signals().tree_exiting().connect(move || {
-                    let Entry::Occupied(mut entry) = TM.tracked_nodes.entry(node_id)
-                    else { return };
+                let node_for_exit = node.clone();
+                node.clone().signals().tree_exiting().connect(move || {
+                    let Entry::Occupied(mut entry) = TM.tracked_nodes.entry(node_id) else { return };
 
-                    if !node.is_queued_for_deletion() {
+                    if !node_for_exit.is_queued_for_deletion() {
                         entry.get_mut().status = NodeStatus::OutsideTreeMaybeDead;
                         return;
                     }
@@ -203,13 +194,17 @@ impl TweensMap {
     pub fn check_binds(&self, tween: &AnyTween) {
         match tween {
             AnyTween::Property(tween) => {
-                if let ObjectOrNode::Node(owner) = tween.get_owner() {
-                    self.node_ensure_tracked(*owner);
+                if let Some(ObjectOrNode::Node(owner)) = tween.get_owner() {
+                    if is_instance_id_valid(owner.instance_id_unchecked().to_i64()) {
+                        self.node_ensure_tracked(owner.clone());
+                    }
                 }
             }
             AnyTween::Method(tween) => {
                 if let Some(ObjectOrNode::Node(owner)) = tween.get_owner() {
-                    self.node_ensure_tracked(*owner);
+                    if is_instance_id_valid(owner.instance_id_unchecked().to_i64()) {
+                        self.node_ensure_tracked(owner.clone());
+                    }
                 }
             }
             AnyTween::DelayedCall(_) => {}
@@ -222,7 +217,9 @@ impl TweensMap {
 
         let weak = tween.downgrade();
         for obj in tween.get_bound_nodes() {
-            self.node_bind(*obj, weak.clone());
+            if is_instance_id_valid(obj.instance_id_unchecked().to_i64()) {
+                self.node_bind(obj.clone(), weak.clone());
+            }
         }
     }
 }
@@ -260,7 +257,7 @@ impl TweensMap {
                 ProcessMode::Idle => tween_process(tween, delta_time, is_tree_paused),
             };
 
-            #[cfg(debug_assertions)]
+            #[cfg(feature = "verbose-stdout")]
             if !should_retain {
                 godot_print!(
                     "Tween unregistered due to retain = false: {}-{:?}",

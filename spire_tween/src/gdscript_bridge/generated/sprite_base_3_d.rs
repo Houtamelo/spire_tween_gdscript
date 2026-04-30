@@ -16,11 +16,8 @@ impl DoSpriteBase3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_modulate_r(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_modulate_r(to, duration).register();
+        gd_from_native_tween(tween)
     }
     ///Alias for [method modulate_r].
     #[func(rename = color_r)]
@@ -40,11 +37,8 @@ impl DoSpriteBase3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_modulate_g(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_modulate_g(to, duration).register();
+        gd_from_native_tween(tween)
     }
     ///Alias for [method modulate_g].
     #[func(rename = color_g)]
@@ -64,11 +58,8 @@ impl DoSpriteBase3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_modulate_b(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_modulate_b(to, duration).register();
+        gd_from_native_tween(tween)
     }
     ///Alias for [method modulate_b].
     #[func(rename = color_b)]
@@ -88,11 +79,8 @@ impl DoSpriteBase3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_modulate_a(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_modulate_a(to, duration).register();
+        gd_from_native_tween(tween)
     }
     ///Alias for [method modulate_a].
     #[func(rename = color_a)]
@@ -112,11 +100,8 @@ impl DoSpriteBase3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_offset_x(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_offset_x(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `y` component of the property [member SpriteBase3D.offset] over [param duration] seconds.
 
@@ -127,11 +112,8 @@ impl DoSpriteBase3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_offset_y(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_offset_y(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member SpriteBase3D.pixel_size] over [param duration] seconds.
 
@@ -142,11 +124,8 @@ impl DoSpriteBase3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_pixel_size(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_pixel_size(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member SpriteBase3D.offset] over [param duration] seconds.
 
@@ -157,14 +136,8 @@ impl DoSpriteBase3D {
         to: Vector2,
         duration: f64,
     ) -> Gd<SpirePropertyVector2> {
-        let inner = UnsafeCell::new(node.do_offset(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyVector2 {
-            base,
-            inner,
-        });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_offset(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member SpriteBase3D.modulate] over [param duration] seconds.
 
@@ -175,11 +148,8 @@ impl DoSpriteBase3D {
         to: Color,
         duration: f64,
     ) -> Gd<SpirePropertyColor> {
-        let inner = UnsafeCell::new(node.do_modulate(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyColor { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_modulate(to, duration).register();
+        gd_from_native_tween(tween)
     }
     ///Alias for [method modulate].
     #[func(rename = color)]

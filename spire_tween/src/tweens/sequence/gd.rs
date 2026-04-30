@@ -105,11 +105,8 @@ impl SpireSequence {
     /// Documentation: see [method Spire.sequence].
     #[func]
     pub fn build() -> Gd<Self> {
-        let inner = UnsafeCell::new(SpireTween::<Sequence>::new().register());
-        let handle = Gd::from_init_fn(|base| Self { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = SpireTween::<Sequence>::new().register();
+        gd_from_native_tween(tween)
     }
 
     /// [b]Behavior:[/b] Appends a tween to the end of the sequence, creating a new block
@@ -171,7 +168,7 @@ impl SpireSequence {
     ///
     /// See [method append] for a visual example of how appending interacts with the sequence's block system.
     #[func(gd_self)]
-    pub fn append_many(this: Gd<Self>, tweens: VariantArray) -> Gd<Self> {
+    pub fn append_many(this: Gd<Self>, tweens: VarArray) -> Gd<Self> {
         let gd_ref = this.bind();
         let sequence = gd_ref.to_mut();
 
@@ -262,7 +259,7 @@ impl SpireSequence {
     ///
     /// See [method join] for a visual example of how joining interacts with the sequence's block system.
     #[func(gd_self)]
-    pub fn join_many(this: Gd<Self>, tweens: VariantArray) -> Gd<Self> {
+    pub fn join_many(this: Gd<Self>, tweens: VarArray) -> Gd<Self> {
         let gd_ref = this.bind();
         let sequence = gd_ref.to_mut();
 
@@ -362,4 +359,4 @@ impl SpireSequence {
     }
 }
 
-define_base_gd_methods! { SpireSequence => SpireTween<Sequence> }
+define_base_gd_methods! { SpireSequence, SpireTween<Sequence>, Sequence }

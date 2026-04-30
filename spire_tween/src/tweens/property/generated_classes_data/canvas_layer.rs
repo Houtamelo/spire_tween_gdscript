@@ -104,21 +104,8 @@ impl IPropertyData for CanvasLayerFloatData {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => obj.try_cast::<CanvasLayer>().ok(),
-            ObjectOrNode::Node(obj) => obj.try_cast::<CanvasLayer>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for CanvasLayerFloatData {
@@ -131,42 +118,54 @@ impl TryFromPathAndObject for CanvasLayerFloatData {
                     "rotation" => {
                         Some(Self {
                             property: <CanvasLayerFloatKind>::Rotation,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "follow_viewport_scale" => {
                         Some(Self {
                             property: <CanvasLayerFloatKind>::FollowViewportScale,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "offset:x" => {
                         Some(Self {
                             property: <CanvasLayerFloatKind>::OffsetX,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "offset:y" => {
                         Some(Self {
                             property: <CanvasLayerFloatKind>::OffsetY,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "scale:x" => {
                         Some(Self {
                             property: <CanvasLayerFloatKind>::ScaleX,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "scale:y" => {
                         Some(Self {
                             property: <CanvasLayerFloatKind>::ScaleY,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -226,21 +225,8 @@ impl IPropertyData for CanvasLayerVector2Data {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => obj.try_cast::<CanvasLayer>().ok(),
-            ObjectOrNode::Node(obj) => obj.try_cast::<CanvasLayer>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for CanvasLayerVector2Data {
@@ -253,14 +239,18 @@ impl TryFromPathAndObject for CanvasLayerVector2Data {
                     "offset" => {
                         Some(Self {
                             property: <CanvasLayerVector2Kind>::Offset,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "scale" => {
                         Some(Self {
                             property: <CanvasLayerVector2Kind>::Scale,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -453,7 +443,7 @@ impl<
         let owner: Gd<CanvasLayer> = self.to_gd().upcast();
         let data = CanvasLayerFloatData {
             property: <CanvasLayerFloatKind>::Rotation,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -468,7 +458,7 @@ impl<
         let owner: Gd<CanvasLayer> = self.to_gd().upcast();
         let data = CanvasLayerFloatData {
             property: <CanvasLayerFloatKind>::FollowViewportScale,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -483,7 +473,7 @@ impl<
         let owner: Gd<CanvasLayer> = self.to_gd().upcast();
         let data = CanvasLayerFloatData {
             property: <CanvasLayerFloatKind>::OffsetX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -498,7 +488,7 @@ impl<
         let owner: Gd<CanvasLayer> = self.to_gd().upcast();
         let data = CanvasLayerFloatData {
             property: <CanvasLayerFloatKind>::OffsetY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -513,7 +503,7 @@ impl<
         let owner: Gd<CanvasLayer> = self.to_gd().upcast();
         let data = CanvasLayerFloatData {
             property: <CanvasLayerFloatKind>::ScaleX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -528,7 +518,7 @@ impl<
         let owner: Gd<CanvasLayer> = self.to_gd().upcast();
         let data = CanvasLayerFloatData {
             property: <CanvasLayerFloatKind>::ScaleY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -543,7 +533,7 @@ impl<
         let owner: Gd<CanvasLayer> = self.to_gd().upcast();
         let data = CanvasLayerVector2Data {
             property: <CanvasLayerVector2Kind>::Offset,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -558,7 +548,7 @@ impl<
         let owner: Gd<CanvasLayer> = self.to_gd().upcast();
         let data = CanvasLayerVector2Data {
             property: <CanvasLayerVector2Kind>::Scale,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<

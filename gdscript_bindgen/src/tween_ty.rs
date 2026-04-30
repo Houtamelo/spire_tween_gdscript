@@ -90,6 +90,12 @@ impl GdScriptType {
     pub fn property_data_ident(self) -> Ident { format_ident!("PropertyData{}", self.spire_property_suffix()) }
 
     pub fn gdscript_tween_ty(self) -> Ident { format_ident!("SpireProperty{}", self.spire_property_suffix()) }
+
+    pub fn property_via_callable_ty(self) -> Type {
+        let ident = format_ident!("PropertyDataViaCallable");
+        let ty = self.rust_ty();
+        parse_quote! { #ident <#ty> }
+    }
 }
 
 impl From<TweenType> for GdScriptType {

@@ -16,11 +16,8 @@ impl DoLabel {
         to: i64,
         duration: f64,
     ) -> Gd<SpirePropertyInt> {
-        let inner = UnsafeCell::new(node.do_max_lines_visible(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyInt { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_max_lines_visible(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member Label.visible_characters] over [param duration] seconds.
 
@@ -31,11 +28,8 @@ impl DoLabel {
         to: i64,
         duration: f64,
     ) -> Gd<SpirePropertyInt> {
-        let inner = UnsafeCell::new(node.do_visible_characters(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyInt { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_visible_characters(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member Label.visible_ratio] over [param duration] seconds.
 
@@ -46,21 +40,15 @@ impl DoLabel {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_visible_ratio(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_visible_ratio(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member Label.text] over [param duration] seconds.
 
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/
     #[func(rename = text)]
     fn r#text(node: Gd<Label>, to: GString, duration: f64) -> Gd<SpirePropertyString> {
-        let inner = UnsafeCell::new(node.do_text(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyString { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_text(to, duration).register();
+        gd_from_native_tween(tween)
     }
 }

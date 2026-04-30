@@ -23,9 +23,7 @@ impl IPropertyData for PropertyDataColor {
     type Target = Object;
 
     fn get_property_path(&self) -> NodePath;
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool;
-
-    fn get_owner(&self) -> &ObjectOrNode {
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
         delegate_property_data_color! {
             self => |this| this.get_owner()
         }

@@ -11,7 +11,6 @@ config_version=5
 [application]
 
 config/name="SpireTweener Test Runner"
-run/main_scene="res://test_scene.tscn"
 config/use_hidden_project_data_directory=false
 config/features=PackedStringArray("4.5")
 run/flush_stdout_on_print=true
@@ -29,10 +28,6 @@ window/vsync/vsync_mode=0
 [editor]
 
 scene_naming=2
-
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/spire_tween/plugin.cfg")
 
 [gui]
 

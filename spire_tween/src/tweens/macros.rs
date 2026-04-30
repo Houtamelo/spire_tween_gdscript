@@ -20,46 +20,34 @@ macro_rules! define_tween_ptr_methods {
 
         impl PartialEq for $Strong {
             #[inline]
-            fn eq(&self, other: &Self) -> bool {
-                std::ptr::addr_eq(self.address(), other.address())
-            }
+            fn eq(&self, other: &Self) -> bool { std::ptr::addr_eq(self.address(), other.address()) }
         }
 
         impl PartialEq<$Weak> for $Strong {
             #[inline]
-            fn eq(&self, other: &$Weak) -> bool {
-                std::ptr::addr_eq(self.address(), other.address())
-            }
+            fn eq(&self, other: &$Weak) -> bool { std::ptr::addr_eq(self.address(), other.address()) }
         }
 
         impl Eq for $Strong {}
 
         impl<T> PartialEq<RcPtr<T>> for $Strong {
             #[inline]
-            fn eq(&self, other: &RcPtr<T>) -> bool {
-                std::ptr::addr_eq(self.address(), other.address())
-            }
+            fn eq(&self, other: &RcPtr<T>) -> bool { std::ptr::addr_eq(self.address(), other.address()) }
         }
 
         impl<T> PartialEq<$Strong> for RcPtr<T> {
             #[inline]
-            fn eq(&self, other: &$Strong) -> bool {
-                std::ptr::addr_eq(self.address(), other.address())
-            }
+            fn eq(&self, other: &$Strong) -> bool { std::ptr::addr_eq(self.address(), other.address()) }
         }
 
         impl<T> PartialEq<WeakPtr<T>> for $Strong {
             #[inline]
-            fn eq(&self, other: &WeakPtr<T>) -> bool {
-                std::ptr::addr_eq(self.address(), other.address())
-            }
+            fn eq(&self, other: &WeakPtr<T>) -> bool { std::ptr::addr_eq(self.address(), other.address()) }
         }
 
         impl<T> PartialEq<$Strong> for WeakPtr<T> {
             #[inline]
-            fn eq(&self, other: &$Strong) -> bool {
-                std::ptr::addr_eq(self.address(), other.address())
-            }
+            fn eq(&self, other: &$Strong) -> bool { std::ptr::addr_eq(self.address(), other.address()) }
         }
 
         #[delegate_impl]
@@ -70,9 +58,7 @@ macro_rules! define_tween_ptr_methods {
 
         impl Equivalent<*const ()> for $Strong {
             #[inline]
-            fn equivalent(&self, key: &*const ()) -> bool {
-                std::ptr::addr_eq(self.address(), *key)
-            }
+            fn equivalent(&self, key: &*const ()) -> bool { std::ptr::addr_eq(self.address(), *key) }
         }
 
         impl Equivalent<$Strong> for *const () {
@@ -88,16 +74,12 @@ macro_rules! define_tween_ptr_methods {
 
         impl PartialEq for $Weak {
             #[inline]
-            fn eq(&self, other: &Self) -> bool {
-                std::ptr::addr_eq(self.address(), other.address())
-            }
+            fn eq(&self, other: &Self) -> bool { std::ptr::addr_eq(self.address(), other.address()) }
         }
 
         impl PartialEq<$Strong> for $Weak {
             #[inline]
-            fn eq(&self, other: &$Strong) -> bool {
-                std::ptr::addr_eq(self.address(), other.address())
-            }
+            fn eq(&self, other: &$Strong) -> bool { std::ptr::addr_eq(self.address(), other.address()) }
         }
 
         impl Eq for $Weak {}
@@ -115,9 +97,7 @@ macro_rules! define_tween_ptr_methods {
 
         impl Equivalent<*const ()> for $Weak {
             #[inline]
-            fn equivalent(&self, key: &*const ()) -> bool {
-                std::ptr::addr_eq(self.address(), *key)
-            }
+            fn equivalent(&self, key: &*const ()) -> bool { std::ptr::addr_eq(self.address(), *key) }
         }
 
         impl Equivalent<$Weak> for *const () {
@@ -127,30 +107,22 @@ macro_rules! define_tween_ptr_methods {
 
         impl<T> PartialEq<RcPtr<T>> for $Weak {
             #[inline]
-            fn eq(&self, other: &RcPtr<T>) -> bool {
-                std::ptr::addr_eq(self.address(), other.address())
-            }
+            fn eq(&self, other: &RcPtr<T>) -> bool { std::ptr::addr_eq(self.address(), other.address()) }
         }
 
         impl<T> PartialEq<$Weak> for RcPtr<T> {
             #[inline]
-            fn eq(&self, other: &$Weak) -> bool {
-                std::ptr::addr_eq(self.address(), other.address())
-            }
+            fn eq(&self, other: &$Weak) -> bool { std::ptr::addr_eq(self.address(), other.address()) }
         }
 
         impl<T> PartialEq<WeakPtr<T>> for $Weak {
             #[inline]
-            fn eq(&self, other: &WeakPtr<T>) -> bool {
-                std::ptr::addr_eq(self.address(), other.address())
-            }
+            fn eq(&self, other: &WeakPtr<T>) -> bool { std::ptr::addr_eq(self.address(), other.address()) }
         }
 
         impl<T> PartialEq<$Weak> for WeakPtr<T> {
             #[inline]
-            fn eq(&self, other: &$Weak) -> bool {
-                std::ptr::addr_eq(self.address(), other.address())
-            }
+            fn eq(&self, other: &$Weak) -> bool { std::ptr::addr_eq(self.address(), other.address()) }
         }
     };
 }
@@ -336,10 +308,7 @@ macro_rules! define_base_methods {
 
             #[allow(unused)]
             #[inline]
-            pub(crate) fn handle_bound_nodes_validity(
-                &mut self,
-                is_tree_paused: bool,
-            ) -> ObjectValidityResult;
+            pub(crate) fn handle_bound_nodes_validity(&mut self, is_tree_paused: bool) -> ObjectValidityResult;
         }
     };
 }
@@ -347,22 +316,20 @@ macro_rules! define_base_methods {
 pub(crate) use define_base_methods;
 
 macro_rules! define_base_gd_methods {
-    ($Ty:ident => $InnerTy:ty) => {
+    ($Ty:ident, $TweenTy:ty, $InnerTy:ty) => {
         #[godot_api(secondary)]
         impl $Ty {
             #[inline]
-            pub(crate) fn to_ref(&self) -> &RcPtr<$InnerTy> { unsafe { & *self.inner.get() } }
+            pub(crate) fn to_ref(&self) -> &RcPtr<$TweenTy> { unsafe { &*self.inner.get() } }
 
             #[allow(clippy::wrong_self_convention)]
             #[allow(clippy::mut_from_ref)]
             #[inline]
-            pub(crate) fn to_mut(&self) -> &mut RcPtr<$InnerTy> { unsafe { &mut *self.inner.get() } }
+            pub(crate) fn to_mut(&self) -> &mut RcPtr<$TweenTy> { unsafe { &mut *self.inner.get() } }
 
             /// Returns the current state of the tween. See [enum Spire.State] for details on each state.
             #[func]
-            pub fn get_state(&self) -> State {
-                self.to_ref().get_state()
-            }
+            pub fn get_state(&self) -> State { self.to_ref().get_state() }
 
             /// Sets the current state of the tween.
             ///
@@ -371,9 +338,7 @@ macro_rules! define_base_gd_methods {
             /// - [constant Spire.STATE_PAUSED]: this is the same as calling [method pause].
             /// - [constant Spire.STATE_STOPPED]: this is the same as calling [method stop].
             #[func]
-            pub fn set_state(&self, state: State) {
-                self.to_mut().set_state(state);
-            }
+            pub fn set_state(&self, state: State) { self.to_mut().set_state(state); }
 
             /// Returns an array with all nodes this tween is currently bound to.
             /// See [method bind_node] for details on what binding to a node does.
@@ -391,9 +356,7 @@ macro_rules! define_base_gd_methods {
             /// [b]Note:[/b] Property/Method tweeners are forcibly bound to the node they are animating,
             /// this method won't unbind them from that node, there is no way of doing so.
             #[func]
-            pub fn clear_bound_nodes(&self) {
-                self.to_mut().clear_bound_nodes();
-            }
+            pub fn clear_bound_nodes(&self) { self.to_mut().clear_bound_nodes(); }
 
             /// Binds this tween to the given node.
             /// Unlike the built-in [Tween], Spire tweens can be bound to any number of nodes.
@@ -416,7 +379,7 @@ macro_rules! define_base_gd_methods {
                 let gd_ref = this.bind();
                 let tween = gd_ref.to_mut();
 
-                tween.bound_nodes_mut().insert(obj);
+                tween.bound_nodes_mut().insert(obj.clone());
                 TM.node_bind(obj, tween.downgrade());
                 drop(gd_ref);
                 this
@@ -444,9 +407,7 @@ macro_rules! define_base_gd_methods {
             /// [b]Note:[/b] This returns the initial delay set with [method set_delay], not the remaining delay.
             /// The remaining delay can be trivially calculated with: [method get_delay] - [method get_total_elapsed_time].
             #[func]
-            pub fn get_delay(&self) -> f64 {
-                self.to_ref().get_delay()
-            }
+            pub fn get_delay(&self) -> f64 { self.to_ref().get_delay() }
 
             /// Sets the delay (in seconds) before the tween starts playing.
             /// This effectively pauses the tween until the delay time has elapsed.
@@ -474,9 +435,7 @@ macro_rules! define_base_gd_methods {
             /// Returns the speed scale assigned to this tween.
             /// For more details on how speed scale works, see [method set_speed_scale].
             #[func]
-            pub fn get_speed_scale(&self) -> f64 {
-                self.to_ref().get_speed_scale()
-            }
+            pub fn get_speed_scale(&self) -> f64 { self.to_ref().get_speed_scale() }
 
             /// Speed scale is a multiplier applied to `delta_time` when processing the tween.
             ///
@@ -491,16 +450,12 @@ macro_rules! define_base_gd_methods {
 
             /// Returns whether this tween ignores the global timescale (see [method set_ignore_time_scale]).
             #[func]
-            pub fn get_ignore_time_scale(&self) -> bool {
-                self.to_ref().get_ignore_time_scale()
-            }
+            pub fn get_ignore_time_scale(&self) -> bool { self.to_ref().get_ignore_time_scale() }
 
             /// Returns the [enum Spire.PauseMode] assigned to this tween.
             /// For more details on how each mode works, see [method set_pause_mode].
             #[func]
-            pub fn get_pause_mode(&self) -> PauseMode {
-                self.to_ref().get_pause_mode()
-            }
+            pub fn get_pause_mode(&self) -> PauseMode { self.to_ref().get_pause_mode() }
 
             /// Determines the behavior of the tween when the [SceneTree] is paused.
             ///
@@ -523,9 +478,7 @@ macro_rules! define_base_gd_methods {
             /// Returns the [enum Spire.ProcessMode] assigned to this tween.
             /// For more details on how each mode works, see [method set_process_mode].
             #[func]
-            pub fn get_process_mode(&self) -> ProcessMode {
-                self.to_ref().get_process_mode()
-            }
+            pub fn get_process_mode(&self) -> ProcessMode { self.to_ref().get_process_mode() }
 
             /// Determines whether the tween should update in [method Node._process],
             /// [method Node._physics_process], or not at all.
@@ -561,9 +514,7 @@ macro_rules! define_base_gd_methods {
             /// (such as if pause mode is [constant Spire.PAUSE_MODE_BOUND] and any of the bound nodes can't process).
             /// If this behavior isn't desired, consider setting `pause_mode` to [constant Spire.PAUSE_MODE_PROCESS].
             #[func]
-            pub fn custom_step(&self, delta_time: f64) {
-                let _ = self.to_mut().process(delta_time, true);
-            }
+            pub fn custom_step(&self, delta_time: f64) { let _ = self.to_mut().process(delta_time, true); }
 
             /// [b]Returns:[/b] The current position of the tween's animation, in seconds. This is the time elapsed
             /// since the start of the current loop.
@@ -577,9 +528,7 @@ macro_rules! define_base_gd_methods {
             /// (see [method set_speed_scale]), and it does not increase if the tween is paused or isn't processing
             /// due to [enum Spire.PauseMode] or [enum Spire.ProcessMode] configurations.
             #[func]
-            pub fn get_animation_position(&self) -> f64 {
-                self.to_ref().get_animation_position()
-            }
+            pub fn get_animation_position(&self) -> f64 { self.to_ref().get_animation_position() }
 
             /// Works exactly like the built-in's [method Tween.get_total_elapsed_time].
             ///
@@ -589,9 +538,7 @@ macro_rules! define_base_gd_methods {
             /// The time is affected by [method set_speed_scale], and [method stop] will reset it to 0.
             /// "
             #[func]
-            pub fn get_total_elapsed_time(&self) -> f64 {
-                self.to_ref().get_total_elapsed_time()
-            }
+            pub fn get_total_elapsed_time(&self) -> f64 { self.to_ref().get_total_elapsed_time() }
 
             /// [b]Returns:[b/] The number of loops configured for this tween (see [method set_loops]).
             /// A return value of -1 indicates an infinitely looping Tween.
@@ -607,17 +554,13 @@ macro_rules! define_base_gd_methods {
             /// [b]Returns:[b/] the [enum Spire.LoopMode] assigned to this tween (see [method set_loops]).
             /// The default value is [constant Spire.LOOP_MODE_RESTART].
             #[func]
-            pub fn get_loop_mode(&self) -> LoopMode {
-                self.to_ref().get_loop_mode()
-            }
+            pub fn get_loop_mode(&self) -> LoopMode { self.to_ref().get_loop_mode() }
 
             /// Returns the number of completed loops since this tween began playing.
             ///
             /// This resets to 0 when the tween is stopped.
             #[func]
-            pub fn get_loops_finished(&self) -> i64 {
-                self.to_ref().get_loops_finished()
-            }
+            pub fn get_loops_finished(&self) -> i64 { self.to_ref().get_loops_finished() }
 
             /// Returns the number of remaining loops for this tween (see [method set_loops]).
             /// A return value of -1 indicates an infinitely looping Tween.
@@ -634,36 +577,6 @@ macro_rules! define_base_gd_methods {
                 }
             }
 
-            /*
-            /// [b]Returns:[/b] `true` if the tween data is still in memory (hasn't been freed yet); `false` otherwise.
-            ///
-            /// [b]Usage:[/b] As long as the tween is valid, it can always be played/paused/stopped,
-            /// or edited in any other way.
-            ///
-            /// [b]Note:[/b] This object is merely a handle to the actual "tween"
-            /// (which is just a glob of data in "Rust" memory). This means that even if this handle's instance
-            /// is valid (which can be checked by using [method Object.is_instance_valid]),
-            /// the data it points to may have been removed already. That being said, this handle
-            /// inherits [RefCounted], so [method Object.is_instance_valid]
-            /// will always return `true` since the very reference you're using to call that method is keeping
-            /// this handle alive.
-            ///
-            /// [b]Note:[/b] This method and [method Spire.is_valid] are the only ways of checking
-            /// if the actual tween data still exists in memory.
-            #[func(gd_self)]
-            pub fn is_valid(this: Gd<Self>) -> bool { TM.is_valid(gd_handle_id!(this)) }
-
-            /// [b]Behavior:[/b] Immediately removes the tween from memory, stopping it if necessary.
-            ///
-            /// [b]Note:[/b] Calling this on a tween that has already been killed does nothing, is harmless, and
-            /// will not cause any warnings to be emitted. The same is true in case this handle is null.
-            ///
-            /// [b]Inside sequences:[/b] If this tween is inside a [SpireSequence], the sequence will automatically
-            /// get rid of the tween on the next update.
-            #[func(gd_self)]
-            pub fn kill(this: Gd<Self>) { TM.remove(gd_handle_id!(this)); }
-             */
-
             /// [b]Returns:[/b] `true` if this tween is currently registered with the TweenManager; `false` otherwise.
             ///
             /// [b]Usage:[/b] Being registered means that the tween will automatically "tick" at the end of
@@ -673,9 +586,7 @@ macro_rules! define_base_gd_methods {
             /// since the Sequence is the one that "owns" the tween and is responsible for ticking it, not the
             /// TweenManager.
             #[func]
-            pub fn is_registered(&self) -> bool {
-                TM.tween_is_registered(self.to_ref())
-            }
+            pub fn is_registered(&self) -> bool { TM.tween_is_registered(self.to_ref()) }
 
             /// [b]Behavior:[/b] Registers this tween with the TweenManager, which makes the tween tick each frame.
             ///
@@ -690,9 +601,7 @@ macro_rules! define_base_gd_methods {
             /// Undefined behavior here will not cause crashes or memory corruption, but the tween will most likely
             /// not behave as expected.
             #[func]
-            pub fn register(&self) {
-                TM.tween_register(self.to_ref().clone());
-            }
+            pub fn register(&self) { TM.tween_register(self.to_ref().clone()); }
 
             /// [b]Behavior:[/b] Unregisters this tween from the TweenManager, which means the tween
             /// will no longer tick each frame. Since tweens are ref-counted, this does not necessarily
@@ -706,9 +615,7 @@ macro_rules! define_base_gd_methods {
             /// means that, if this tween is inside a sequence, it is already unregistered. If you want to remove
             /// a tween from a sequence, use [method SpireSequence.remove] instead.
             #[func]
-            pub fn unregister(&self) {
-                TM.tween_unregister(self.to_ref());
-            }
+            pub fn unregister(&self) { TM.tween_unregister(self.to_ref()); }
 
             /// [b]Behavior:[/b] Resumes a paused or starts a stopped tween.
             ///
@@ -727,9 +634,7 @@ macro_rules! define_base_gd_methods {
 
             /// [b]Returns:[/b] `true` if [method get_state] == [constant Spire.STATE_PLAYING]; `false` otherwise.
             #[func]
-            pub fn is_playing(&self) -> bool {
-                self.to_ref().is_playing()
-            }
+            pub fn is_playing(&self) -> bool { self.to_ref().is_playing() }
 
             /// [b]Behavior:[/b] Pauses a tween, which stops it from processing until resumed.
             ///
@@ -751,9 +656,7 @@ macro_rules! define_base_gd_methods {
             /// [b]Usage:[/b] A paused tween works like a node outside the SceneTree - it doesn't interact
             /// with the game in any way.
             #[func]
-            pub fn is_paused(&self) -> bool {
-                self.to_ref().is_paused()
-            }
+            pub fn is_paused(&self) -> bool { self.to_ref().is_paused() }
 
             /// [b]Behavior:[/b] Stops tweening and resets its internal timers and counters
             /// Notably, these are reset:
@@ -779,9 +682,7 @@ macro_rules! define_base_gd_methods {
             /// [b]Note:[/b] A tween automatically "stops" once it finishes playing, but you can forcibly stop
             /// it by calling [method stop].
             #[func]
-            pub fn is_stopped(&self) -> bool {
-                self.to_ref().is_stopped()
-            }
+            pub fn is_stopped(&self) -> bool { self.to_ref().is_stopped() }
 
             /// Forces a tween to finish immediately, applying its end values right away.
             ///
@@ -791,12 +692,8 @@ macro_rules! define_base_gd_methods {
             ///
             /// After this is called, the tween's state will reset to [constant Spire.STATE_STOPPED].
             #[func]
-            pub fn force_complete(&self) {
-                self.to_mut().force_complete();
-            }
-        }
+            pub fn force_complete(&self) { self.to_mut().force_complete(); }
 
-        impl $Ty {
             /// Works almost exactly like the built-in's [method Tween.set_ignore_time_scale].
             ///
             /// From the built-in's docs:
@@ -806,11 +703,11 @@ macro_rules! define_base_gd_methods {
             /// "
             ///
             /// [b]Note:[/b] In Spire, "Tweeners" are analogous to the children of a [SpireSequence].
+            #[func(gd_self)]
             pub fn set_ignore_time_scale(this: Gd<Self>, ignore: bool) -> Gd<Self> {
                 this.bind().to_mut().set_ignore_time_scale(ignore);
                 this
             }
-
 
             /// Works slight different from the built-in's [method Tween.set_loops].
             ///
@@ -819,92 +716,36 @@ macro_rules! define_base_gd_methods {
             /// - Tweens always run at least once, so `set_loops(0)` is the same as `set_loops(1)`.
             /// - Any negative number (usually -1) will make the tween run infinitely.
             ///
-            /// Parameter [param loop_mode]: The way the tween will behave when starting a new loop.
-            /// - [constant Spire.LOOP_MODE_RESTART] : The tween will jump back to the beginning and play forward again.
+            /// [b]Parameter [param loop_mode]:[/b] The way the tween will behave when starting a new loop.
+            /// - [constant Spire.LOOP_MODE_RESTART] : The tween will restart from the beginning.
             /// - [constant Spire.LOOP_MODE_YOYO] : The tween will reverse direction and play backward, then forward, then backward, and so on.
             /// - [constant Spire.LOOP_MODE_INCREMENTAL] : The tween will overshoot the end value, continuously incrementing
             ///   it based on the difference between the start and end values. E.g.: if animating from 0 to 10, the first loop will go from 0 to 10,
             ///   the second from 10 to 20, the third from 20 to 30, and so on.
             ///
             /// [b]Note:[/b] The built-in [Tween]'s loop system can loop infinitely in the same frame if the duration
-            /// of a tween is 0. This is **NOT** the case with Spire, where tweens will only begin the next loop
+            /// of a tween is 0. This is [b]NOT[/b] the case with Spire, where tweens will only begin the next loop
             /// on the next update.
             ///
             /// For more details on loop modes and how they behave internally, see [enum Spire.LoopMode].
+            #[func(gd_self)]
             pub fn set_loops(this: Gd<Self>, loops: i64, loop_mode: LoopMode) -> Gd<Self> {
                 this.bind().to_mut().set_loops(loops, loop_mode);
                 this
             }
         }
 
-        ::godot::sys::plugin_execute_pre_main!({
-            #[allow(unused)]
-            $ {concat(__registration_methods_, $Ty)}.lock().unwrap().push(|| {
-                extern_calls_with_default_param! { $Ty,
-                    fn set_ignore_time_scale(
-                        (): (),
-                        ignore: bool = true,
-                    ) -> Gd<$Ty>;
-                }
+        impl GdFromNativeTween for $Ty {
+            type Inner = $InnerTy;
 
-                extern_calls_with_default_param! { $Ty,
-                    fn set_loops(
-                        (loops,): (i64,),
-                        loop_mode: LoopMode = LoopMode::default(),
-                    ) -> Gd<$Ty>;
-                }
-            });
-        });
-
-        #[allow(unused)]
-        impl $ {concat(__godot_, $Ty, _Funcs)} {
-            #[doc(hidden)]
-            #[allow(non_upper_case_globals)]
-            pub const set_ignore_time_scale: &str = "set_ignore_time_scale";
-
-            #[doc(hidden)]
-            #[allow(non_upper_case_globals)]
-            pub const set_loops: &str = "set_loops";
+            fn gd_from_native_tween(tween: RcPtr<SpireTween<$InnerTy>>) -> Gd<Self> {
+                let inner = UnsafeCell::new(tween);
+                let gd = Gd::from_init_fn(|base| Self { base, inner });
+                let gd_clone = gd.clone();
+                gd.bind().to_mut().gd_handle = Some(gd_clone);
+                gd
+            }
         }
-        ::godot::sys::plugin_add!(
-            :: godot :: private :: __GODOT_DOCS_REGISTRY ;
-            :: godot :: private :: DocsPlugin :: new :: < $Ty > (
-                :: godot :: private :: DocsItem :: InherentImpl (
-                    :: godot :: private :: InherentImplDocs {
-                        methods : Box::leak(format!(
-                        "<method name=\"set_ignore_time_scale\">\n  <return type=\"Gd &lt; {class} &gt;\" />\n  \
-                        <param index=\"0\" name=\"ignore\" type=\"bool\" />\n  \
-                        <description>\n  Works almost exactly like the built-in&#39;s [method Tween.set_ignore_time_scale].\
-                        [br][br]From the built-in&#39;s docs:[br][br]\
-                        &quot;If [param ignore] is `true`, the tween will ignore [property Engine.time_scale] \
-                        and update with the real, elapsed time. This affects all Tweeners and their delays. \
-                        Default value is `false`.&quot;[br][br][b]Note:[/b] In Spire, &quot;Tweeners&quot; \
-                        are analogous to the children of a [SpireSequence].\n  </description>\n</method>\n\n\
-                        <method name=\"set_loops\">\n  <return type=\"Gd &lt; {class} &gt;\" />\n  \
-                        <param index=\"0\" name=\"loops\" type=\"i64\" /><param index=\"1\" name=\"loop_mode\" type=\"LoopMode\" />\n  \
-                        <description>\n  Works slight different from the built-in&#39;s [method Tween.set_loops].\
-                        [br][br]Parameter [param loops]: The number of times the tweening animation will be repeated.[br][br]• \
-                        Any positive number will make the tween run that many times, i.e. [code]set_loops(1)[/code] will make it run once \
-                        (which is the default behavior).[br]• Tweens always run at least once, so [code]set_loops(0)[/code] is the same as \
-                        [code]set_loops(1)[/code].[br]• Any negative number (usually -1) will make the tween run infinitely.\
-                        [br][br]Parameter [param loop_mode]: The way the tween will behave when starting a new loop.[br][br]• \
-                        [constant Spire.LOOP_MODE_RESTART] : The tween will jump back to the beginning and play forward again.[br]• \
-                        [constant Spire.LOOP_MODE_YOYO] : The tween will reverse direction and play backward, then forward, \
-                        then backward, and so on.[br]• [constant Spire.LOOP_MODE_INCREMENTAL] : The tween will overshoot the end value, \
-                        continuously incrementing it based on the difference between the start and end values. \
-                        E.g.: if animating from 0 to 10, the first loop will go from 0 to 10, the second from 10 to 20, \
-                        the third from 20 to 30, and so on.[br][br][b]Note:[/b] The built-in [Tween]&#39;s loop system can loop \
-                        infinitely in the same frame if the duration of a tween is 0. This is [b]NOT[/b] the case with Spire, \
-                        where tweens will only begin the next loop on the next update.[br][br]For more details on loop modes \
-                        and how they behave internally, see [enum Spire.LoopMode].\n  \
-                        </description>\n</method>\n", class = stringify!($Ty)
-                        ).into_boxed_str()) ,
-                        signals : "" ,
-                        constants : ""
-                    }
-                )
-            )
-        );
     };
 }
 

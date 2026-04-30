@@ -118,21 +118,8 @@ impl IPropertyData for ParallaxBackgroundFloatData {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => obj.try_cast::<ParallaxBackground>().ok(),
-            ObjectOrNode::Node(obj) => obj.try_cast::<ParallaxBackground>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for ParallaxBackgroundFloatData {
@@ -145,42 +132,54 @@ impl TryFromPathAndObject for ParallaxBackgroundFloatData {
                     "scroll_base_offset:x" => {
                         Some(Self {
                             property: <ParallaxBackgroundFloatKind>::ScrollBaseOffsetX,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "scroll_base_offset:y" => {
                         Some(Self {
                             property: <ParallaxBackgroundFloatKind>::ScrollBaseOffsetY,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "scroll_base_scale:x" => {
                         Some(Self {
                             property: <ParallaxBackgroundFloatKind>::ScrollBaseScaleX,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "scroll_base_scale:y" => {
                         Some(Self {
                             property: <ParallaxBackgroundFloatKind>::ScrollBaseScaleY,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "scroll_offset:x" => {
                         Some(Self {
                             property: <ParallaxBackgroundFloatKind>::ScrollOffsetX,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "scroll_offset:y" => {
                         Some(Self {
                             property: <ParallaxBackgroundFloatKind>::ScrollOffsetY,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -257,21 +256,8 @@ impl IPropertyData for ParallaxBackgroundVector2Data {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => obj.try_cast::<ParallaxBackground>().ok(),
-            ObjectOrNode::Node(obj) => obj.try_cast::<ParallaxBackground>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for ParallaxBackgroundVector2Data {
@@ -284,21 +270,27 @@ impl TryFromPathAndObject for ParallaxBackgroundVector2Data {
                     "scroll_base_offset" => {
                         Some(Self {
                             property: <ParallaxBackgroundVector2Kind>::ScrollBaseOffset,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "scroll_base_scale" => {
                         Some(Self {
                             property: <ParallaxBackgroundVector2Kind>::ScrollBaseScale,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "scroll_offset" => {
                         Some(Self {
                             property: <ParallaxBackgroundVector2Kind>::ScrollOffset,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -513,7 +505,7 @@ impl<
         let owner: Gd<ParallaxBackground> = self.to_gd().upcast();
         let data = ParallaxBackgroundFloatData {
             property: <ParallaxBackgroundFloatKind>::ScrollBaseOffsetX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -528,7 +520,7 @@ impl<
         let owner: Gd<ParallaxBackground> = self.to_gd().upcast();
         let data = ParallaxBackgroundFloatData {
             property: <ParallaxBackgroundFloatKind>::ScrollBaseOffsetY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -543,7 +535,7 @@ impl<
         let owner: Gd<ParallaxBackground> = self.to_gd().upcast();
         let data = ParallaxBackgroundFloatData {
             property: <ParallaxBackgroundFloatKind>::ScrollBaseScaleX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -558,7 +550,7 @@ impl<
         let owner: Gd<ParallaxBackground> = self.to_gd().upcast();
         let data = ParallaxBackgroundFloatData {
             property: <ParallaxBackgroundFloatKind>::ScrollBaseScaleY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -573,7 +565,7 @@ impl<
         let owner: Gd<ParallaxBackground> = self.to_gd().upcast();
         let data = ParallaxBackgroundFloatData {
             property: <ParallaxBackgroundFloatKind>::ScrollOffsetX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -588,7 +580,7 @@ impl<
         let owner: Gd<ParallaxBackground> = self.to_gd().upcast();
         let data = ParallaxBackgroundFloatData {
             property: <ParallaxBackgroundFloatKind>::ScrollOffsetY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -603,7 +595,7 @@ impl<
         let owner: Gd<ParallaxBackground> = self.to_gd().upcast();
         let data = ParallaxBackgroundVector2Data {
             property: <ParallaxBackgroundVector2Kind>::ScrollBaseOffset,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -618,7 +610,7 @@ impl<
         let owner: Gd<ParallaxBackground> = self.to_gd().upcast();
         let data = ParallaxBackgroundVector2Data {
             property: <ParallaxBackgroundVector2Kind>::ScrollBaseScale,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -633,7 +625,7 @@ impl<
         let owner: Gd<ParallaxBackground> = self.to_gd().upcast();
         let data = ParallaxBackgroundVector2Data {
             property: <ParallaxBackgroundVector2Kind>::ScrollOffset,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<

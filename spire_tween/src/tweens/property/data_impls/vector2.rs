@@ -22,6 +22,5 @@ impl TyToPropertyTween for Vector2 {
 impl IPropertyData for PropertyDataVector2 {
     type Target = Object;
     fn get_property_path(&self) -> NodePath;
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool;
-    fn get_owner(&self) -> &ObjectOrNode;
+    fn get_owner(&self) -> Option<&ObjectOrNode>;
 }

@@ -1,5 +1,6 @@
 use super::*;
 
+/// Creates method tweens that call a method each tick with an interpolated value.
 pub trait DoMethod<T, Marker = ()>
 where
     T: ILerpable,
@@ -60,6 +61,7 @@ where
     }
 }
 
+/// Like `DoMethod` but uses `Variant` for dynamically typed values.
 pub trait DoVarMethod {
     fn do_var_method(
         &self,

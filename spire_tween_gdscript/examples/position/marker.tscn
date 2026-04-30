@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://dcdtoat6f1jv5"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_saiw8"]
+albedo_color = Color(0.43610534, 0.7919124, 0.41158026, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ub4b0"]
+material = SubResource("StandardMaterial3D_saiw8")
+size = Vector3(0.25, 0.25, 0.25)
+
+[node name="Marker" type="MeshInstance3D"]
+transparency = 0.5
+mesh = SubResource("BoxMesh_ub4b0")

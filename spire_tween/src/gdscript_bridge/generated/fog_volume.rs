@@ -12,33 +12,24 @@ impl DoFogVolume {
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/
     #[func(rename = size_x)]
     fn size_x(node: Gd<FogVolume>, to: f64, duration: f64) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_size_x(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_size_x(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `y` component of the property [member FogVolume.size] over [param duration] seconds.
 
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/
     #[func(rename = size_y)]
     fn size_y(node: Gd<FogVolume>, to: f64, duration: f64) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_size_y(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_size_y(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `z` component of the property [member FogVolume.size] over [param duration] seconds.
 
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/
     #[func(rename = size_z)]
     fn size_z(node: Gd<FogVolume>, to: f64, duration: f64) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_size_z(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_size_z(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member FogVolume.size] over [param duration] seconds.
 
@@ -49,13 +40,7 @@ impl DoFogVolume {
         to: Vector3,
         duration: f64,
     ) -> Gd<SpirePropertyVector3> {
-        let inner = UnsafeCell::new(node.do_size(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyVector3 {
-            base,
-            inner,
-        });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_size(to, duration).register();
+        gd_from_native_tween(tween)
     }
 }

@@ -13,6 +13,7 @@ const TESTS: Array[PackedScene] = [
 	preload("res://examples/tests/sequences.tscn"),
 	preload("res://examples/tests/lerp_modes.tscn"),
 	preload("res://examples/tests/lerp_callable.tscn"),
+	preload("res://examples/tests/spiral.tscn"),
 ]
 
 

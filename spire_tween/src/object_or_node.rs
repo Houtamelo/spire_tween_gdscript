@@ -17,7 +17,11 @@ impl ObjectOrNode {
         match self {
             ObjectOrNode::Object(obj) => is_instance_id_valid(obj.instance_id_unchecked().to_i64()),
             ObjectOrNode::Node(node) => {
-                match TM.node_get_status_fresh(*node) {
+                // Validate ID before cloning — official gdext panics on clone of freed instances.
+                if !is_instance_id_valid(node.instance_id_unchecked().to_i64()) {
+                    return false;
+                }
+                match TM.node_get_status_fresh(node.clone()) {
                     NodeStatus::InsideTree | NodeStatus::OutsideTreeMaybeDead => true,
                     NodeStatus::Dead => false,
                 }
@@ -34,10 +38,17 @@ impl ObjectOrNode {
         }
     }
 
+    /// Panics if the underlying instance has been freed.
     pub fn to_object(&self) -> Gd<Object> {
         match self {
-            ObjectOrNode::Object(obj) => obj.clone(),
-            ObjectOrNode::Node(node) => node.upcast(),
+            ObjectOrNode::Object(obj) => {
+                debug_assert!(is_instance_id_valid(obj.instance_id_unchecked().to_i64()));
+                obj.clone()
+            }
+            ObjectOrNode::Node(node) => {
+                debug_assert!(is_instance_id_valid(node.instance_id_unchecked().to_i64()));
+                node.clone().upcast()
+            }
         }
     }
 

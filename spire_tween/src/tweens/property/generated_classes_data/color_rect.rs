@@ -80,21 +80,8 @@ impl IPropertyData for ColorRectFloatData {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => obj.try_cast::<ColorRect>().ok(),
-            ObjectOrNode::Node(obj) => obj.try_cast::<ColorRect>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for ColorRectFloatData {
@@ -107,28 +94,36 @@ impl TryFromPathAndObject for ColorRectFloatData {
                     "color:r" => {
                         Some(Self {
                             property: <ColorRectFloatKind>::ColorR,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "color:g" => {
                         Some(Self {
                             property: <ColorRectFloatKind>::ColorG,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "color:b" => {
                         Some(Self {
                             property: <ColorRectFloatKind>::ColorB,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "color:a" => {
                         Some(Self {
                             property: <ColorRectFloatKind>::ColorA,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -177,21 +172,8 @@ impl IPropertyData for ColorRectColorData {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => obj.try_cast::<ColorRect>().ok(),
-            ObjectOrNode::Node(obj) => obj.try_cast::<ColorRect>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for ColorRectColorData {
@@ -204,7 +186,9 @@ impl TryFromPathAndObject for ColorRectColorData {
                     "color" => {
                         Some(Self {
                             property: <ColorRectColorKind>::Color,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -333,7 +317,7 @@ impl<
         let owner: Gd<ColorRect> = self.to_gd().upcast();
         let data = ColorRectFloatData {
             property: <ColorRectFloatKind>::ColorR,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -348,7 +332,7 @@ impl<
         let owner: Gd<ColorRect> = self.to_gd().upcast();
         let data = ColorRectFloatData {
             property: <ColorRectFloatKind>::ColorG,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -363,7 +347,7 @@ impl<
         let owner: Gd<ColorRect> = self.to_gd().upcast();
         let data = ColorRectFloatData {
             property: <ColorRectFloatKind>::ColorB,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -378,7 +362,7 @@ impl<
         let owner: Gd<ColorRect> = self.to_gd().upcast();
         let data = ColorRectFloatData {
             property: <ColorRectFloatKind>::ColorA,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -393,7 +377,7 @@ impl<
         let owner: Gd<ColorRect> = self.to_gd().upcast();
         let data = ColorRectColorData {
             property: <ColorRectColorKind>::Color,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<

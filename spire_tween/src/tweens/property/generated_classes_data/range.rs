@@ -72,21 +72,8 @@ impl IPropertyData for RangeFloatData {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => obj.try_cast::<Range>().ok(),
-            ObjectOrNode::Node(obj) => obj.try_cast::<Range>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for RangeFloatData {
@@ -99,28 +86,36 @@ impl TryFromPathAndObject for RangeFloatData {
                     "value" => {
                         Some(Self {
                             property: <RangeFloatKind>::Value,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "ratio" => {
                         Some(Self {
                             property: <RangeFloatKind>::Ratio,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "min_value" => {
                         Some(Self {
                             property: <RangeFloatKind>::MinValue,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "max_value" => {
                         Some(Self {
                             property: <RangeFloatKind>::MaxValue,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -219,7 +214,7 @@ for T {
         let owner: Gd<Range> = self.to_gd().upcast();
         let data = RangeFloatData {
             property: <RangeFloatKind>::Value,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -234,7 +229,7 @@ for T {
         let owner: Gd<Range> = self.to_gd().upcast();
         let data = RangeFloatData {
             property: <RangeFloatKind>::Ratio,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -249,7 +244,7 @@ for T {
         let owner: Gd<Range> = self.to_gd().upcast();
         let data = RangeFloatData {
             property: <RangeFloatKind>::MinValue,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -264,7 +259,7 @@ for T {
         let owner: Gd<Range> = self.to_gd().upcast();
         let data = RangeFloatData {
             property: <RangeFloatKind>::MaxValue,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<

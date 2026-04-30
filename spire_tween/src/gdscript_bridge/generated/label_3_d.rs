@@ -12,11 +12,8 @@ impl DoLabel3D {
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/
     #[func(rename = font_size)]
     fn r#font_size(node: Gd<Label3D>, to: i64, duration: f64) -> Gd<SpirePropertyInt> {
-        let inner = UnsafeCell::new(node.do_font_size(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyInt { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_font_size(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member Label3D.outline_size] over [param duration] seconds.
 
@@ -27,11 +24,8 @@ impl DoLabel3D {
         to: i64,
         duration: f64,
     ) -> Gd<SpirePropertyInt> {
-        let inner = UnsafeCell::new(node.do_outline_size(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyInt { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_outline_size(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member Label3D.line_spacing] over [param duration] seconds.
 
@@ -42,22 +36,16 @@ impl DoLabel3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_line_spacing(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_line_spacing(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `r` component of the property [member Label3D.modulate] over [param duration] seconds.
 
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/
     #[func(rename = modulate_r)]
     fn modulate_r(node: Gd<Label3D>, to: f64, duration: f64) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_modulate_r(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_modulate_r(to, duration).register();
+        gd_from_native_tween(tween)
     }
     ///Alias for [method modulate_r].
     #[func(rename = color_r)]
@@ -69,11 +57,8 @@ impl DoLabel3D {
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/
     #[func(rename = modulate_g)]
     fn modulate_g(node: Gd<Label3D>, to: f64, duration: f64) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_modulate_g(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_modulate_g(to, duration).register();
+        gd_from_native_tween(tween)
     }
     ///Alias for [method modulate_g].
     #[func(rename = color_g)]
@@ -85,11 +70,8 @@ impl DoLabel3D {
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/
     #[func(rename = modulate_b)]
     fn modulate_b(node: Gd<Label3D>, to: f64, duration: f64) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_modulate_b(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_modulate_b(to, duration).register();
+        gd_from_native_tween(tween)
     }
     ///Alias for [method modulate_b].
     #[func(rename = color_b)]
@@ -101,11 +83,8 @@ impl DoLabel3D {
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/
     #[func(rename = modulate_a)]
     fn modulate_a(node: Gd<Label3D>, to: f64, duration: f64) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_modulate_a(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_modulate_a(to, duration).register();
+        gd_from_native_tween(tween)
     }
     ///Alias for [method modulate_a].
     #[func(rename = color_a)]
@@ -117,22 +96,16 @@ impl DoLabel3D {
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/
     #[func(rename = offset_x)]
     fn offset_x(node: Gd<Label3D>, to: f64, duration: f64) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_offset_x(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_offset_x(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `y` component of the property [member Label3D.offset] over [param duration] seconds.
 
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/
     #[func(rename = offset_y)]
     fn offset_y(node: Gd<Label3D>, to: f64, duration: f64) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_offset_y(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_offset_y(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the `r` component of the property [member Label3D.outline_modulate] over [param duration] seconds.
 
@@ -143,11 +116,8 @@ impl DoLabel3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_outline_modulate_r(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_outline_modulate_r(to, duration).register();
+        gd_from_native_tween(tween)
     }
     ///Alias for [method outline_modulate_r].
     #[func(rename = outline_color_r)]
@@ -167,11 +137,8 @@ impl DoLabel3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_outline_modulate_g(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_outline_modulate_g(to, duration).register();
+        gd_from_native_tween(tween)
     }
     ///Alias for [method outline_modulate_g].
     #[func(rename = outline_color_g)]
@@ -191,11 +158,8 @@ impl DoLabel3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_outline_modulate_b(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_outline_modulate_b(to, duration).register();
+        gd_from_native_tween(tween)
     }
     ///Alias for [method outline_modulate_b].
     #[func(rename = outline_color_b)]
@@ -215,11 +179,8 @@ impl DoLabel3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_outline_modulate_a(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_outline_modulate_a(to, duration).register();
+        gd_from_native_tween(tween)
     }
     ///Alias for [method outline_modulate_a].
     #[func(rename = outline_color_a)]
@@ -239,11 +200,8 @@ impl DoLabel3D {
         to: f64,
         duration: f64,
     ) -> Gd<SpirePropertyFloat> {
-        let inner = UnsafeCell::new(node.do_pixel_size(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyFloat { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_pixel_size(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member Label3D.offset] over [param duration] seconds.
 
@@ -254,14 +212,8 @@ impl DoLabel3D {
         to: Vector2,
         duration: f64,
     ) -> Gd<SpirePropertyVector2> {
-        let inner = UnsafeCell::new(node.do_offset(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyVector2 {
-            base,
-            inner,
-        });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_offset(to, duration).register();
+        gd_from_native_tween(tween)
     }
     /**[b]Behavior: [/b]Tweens the property [member Label3D.modulate] over [param duration] seconds.
 
@@ -272,11 +224,8 @@ impl DoLabel3D {
         to: Color,
         duration: f64,
     ) -> Gd<SpirePropertyColor> {
-        let inner = UnsafeCell::new(node.do_modulate(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyColor { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_modulate(to, duration).register();
+        gd_from_native_tween(tween)
     }
     ///Alias for [method modulate].
     #[func(rename = color)]
@@ -292,11 +241,8 @@ impl DoLabel3D {
         to: Color,
         duration: f64,
     ) -> Gd<SpirePropertyColor> {
-        let inner = UnsafeCell::new(node.do_outline_modulate(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyColor { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_outline_modulate(to, duration).register();
+        gd_from_native_tween(tween)
     }
     ///Alias for [method outline_modulate].
     #[func(rename = outline_color)]
@@ -312,10 +258,7 @@ impl DoLabel3D {
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/
     #[func(rename = text)]
     fn r#text(node: Gd<Label3D>, to: GString, duration: f64) -> Gd<SpirePropertyString> {
-        let inner = UnsafeCell::new(node.do_label3d_do_text(to, duration).register());
-        let handle = Gd::from_init_fn(|base| SpirePropertyString { base, inner });
-        let handle_clone = handle.clone();
-        handle.bind().to_mut().gd_handle = Some(handle_clone);
-        handle
+        let tween = node.do_label3d_do_text(to, duration).register();
+        gd_from_native_tween(tween)
     }
 }

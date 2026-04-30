@@ -17,12 +17,10 @@ where LerpMethodData<T>: ITweenable
     pub fn get_callable(&self) -> &Callable { &self.t.callable }
 
     #[inline]
-    pub fn get_owner(&self) -> &Option<ObjectOrNode> { &self.t.owner }
+    pub fn get_owner(&self) -> Option<&ObjectOrNode> { self.t.owner.as_ref() }
 
     #[inline]
     pub fn get_duration(&self) -> f64 { self.t.duration }
-    #[inline]
-    pub fn set_duration(&mut self, duration: f64) { self.t.duration = duration; }
 
     #[inline]
     pub fn get_ease(&self) -> &EaseKind { &self.t.ease }
@@ -101,13 +99,8 @@ where LerpMethodData<T>: ITweenable
             return AdvanceTimeResult::Playing;
         }
 
-        let anim_pos = calc_animation_position(
-            self.t.duration,
-            self.loop_time,
-            self.loop_counter,
-            self.loop_mode,
-            &self.t.ease,
-        );
+        let anim_pos =
+            calc_animation_position(self.t.duration, self.loop_time, self.loop_counter, self.loop_mode, &self.t.ease);
 
         let target_value = self.t.lerper.spire_lerp(&self.t.from, &self.t.to, anim_pos);
 
@@ -136,9 +129,7 @@ where
 
         let target_value = {
             let eased_ratio = self.t.ease.sample(1.);
-            self.t
-                .lerper
-                .spire_lerp(&self.t.from, &self.t.to, eased_ratio)
+            self.t.lerper.spire_lerp(&self.t.from, &self.t.to, eased_ratio)
         };
 
         self.t.callable.call(&[target_value.to_variant()]);
@@ -174,10 +165,7 @@ where LerpMethodData<T>: ITweenable
 
     pub fn with_begin(self, start: T) -> Self {
         Self {
-            t: LerpMethodData {
-                from: start,
-                ..self.t
-            },
+            t: LerpMethodData { from: start, ..self.t },
             ..self
         }
     }
@@ -209,13 +197,7 @@ where
 }
 
 impl SpireTween<LerpMethodData<Variant>> {
-    pub fn new_custom(
-        callable: Callable,
-        from: Variant,
-        to: Variant,
-        duration: f64,
-        lerper: Callable,
-    ) -> Self {
+    pub fn new_custom(callable: Callable, from: Variant, to: Variant, duration: f64, lerper: Callable) -> Self {
         let owner = callable.object().map(ObjectOrNode::from_unchecked_object);
 
         Self::new_with_data(LerpMethodData {

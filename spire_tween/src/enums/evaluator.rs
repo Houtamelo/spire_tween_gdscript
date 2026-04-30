@@ -1,5 +1,8 @@
 use super::*;
 
+/// How a tween's target value is obtained each tick:
+/// `Static` for a fixed value, `Dynamic` for a closure re-evaluated each tick,
+/// or `Callable` for a Godot callable.
 pub enum Evaluator<T> {
     Static(T),
     Dynamic(Box<dyn FnMut() -> T>),
@@ -21,6 +24,8 @@ impl<T: Clone + FromGodot + Default> Evaluator<T> {
 
 impl<T: GodotConvert> GodotConvert for Evaluator<T> {
     type Via = Variant;
+
+    fn godot_shape() -> GodotShape { GodotShape::Variant }
 }
 
 impl<T: FromGodot> FromGodot for Evaluator<T> {

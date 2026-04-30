@@ -1,5 +1,3 @@
-use godot::meta::ClassName;
-
 use super::*;
 
 pub trait IProperty<T> {
@@ -11,9 +9,7 @@ pub trait IPropertyData {
     type Target: Inherits<Object>;
 
     fn get_property_path(&self) -> NodePath;
-    fn get_owner(&self) -> &ObjectOrNode;
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool;
-    fn owner_class(&self) -> ClassName { Self::Target::class_name() }
+    fn get_owner(&self) -> Option<&ObjectOrNode>;
 }
 
 pub trait IGeneralPropertyData: Sized {
@@ -24,11 +20,14 @@ pub trait PropertyType: Sized + ILerpable {
     type Data: IProperty<Self> + IPropertyData + IGeneralPropertyData;
 }
 
+#[allow(dead_code)]
 pub trait TyToPropertyTween {
     type GdTween;
 }
 
 pub(crate) trait TryFromPathAndObject {
-    fn try_from_path_and_object(path: &str, object: Gd<Object>) -> Option<Self>
-    where Self: Sized;
+    fn try_from_path_and_object(_path: &str, _object: Gd<Object>) -> Option<Self>
+    where Self: Sized {
+        None
+    }
 }

@@ -118,21 +118,8 @@ impl IPropertyData for StaticBody3DFloatData {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => obj.try_cast::<StaticBody3D>().ok(),
-            ObjectOrNode::Node(obj) => obj.try_cast::<StaticBody3D>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for StaticBody3DFloatData {
@@ -145,42 +132,54 @@ impl TryFromPathAndObject for StaticBody3DFloatData {
                     "constant_angular_velocity:x" => {
                         Some(Self {
                             property: <StaticBody3DFloatKind>::ConstantAngularVelocityX,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "constant_angular_velocity:y" => {
                         Some(Self {
                             property: <StaticBody3DFloatKind>::ConstantAngularVelocityY,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "constant_angular_velocity:z" => {
                         Some(Self {
                             property: <StaticBody3DFloatKind>::ConstantAngularVelocityZ,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "constant_linear_velocity:x" => {
                         Some(Self {
                             property: <StaticBody3DFloatKind>::ConstantLinearVelocityX,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "constant_linear_velocity:y" => {
                         Some(Self {
                             property: <StaticBody3DFloatKind>::ConstantLinearVelocityY,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "constant_linear_velocity:z" => {
                         Some(Self {
                             property: <StaticBody3DFloatKind>::ConstantLinearVelocityZ,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -244,21 +243,8 @@ impl IPropertyData for StaticBody3DVector3Data {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => obj.try_cast::<StaticBody3D>().ok(),
-            ObjectOrNode::Node(obj) => obj.try_cast::<StaticBody3D>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for StaticBody3DVector3Data {
@@ -271,14 +257,18 @@ impl TryFromPathAndObject for StaticBody3DVector3Data {
                     "constant_angular_velocity" => {
                         Some(Self {
                             property: <StaticBody3DVector3Kind>::ConstantAngularVelocity,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "constant_linear_velocity" => {
                         Some(Self {
                             property: <StaticBody3DVector3Kind>::ConstantLinearVelocity,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -471,7 +461,7 @@ impl<
         let owner: Gd<StaticBody3D> = self.to_gd().upcast();
         let data = StaticBody3DFloatData {
             property: <StaticBody3DFloatKind>::ConstantAngularVelocityX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -486,7 +476,7 @@ impl<
         let owner: Gd<StaticBody3D> = self.to_gd().upcast();
         let data = StaticBody3DFloatData {
             property: <StaticBody3DFloatKind>::ConstantAngularVelocityY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -501,7 +491,7 @@ impl<
         let owner: Gd<StaticBody3D> = self.to_gd().upcast();
         let data = StaticBody3DFloatData {
             property: <StaticBody3DFloatKind>::ConstantAngularVelocityZ,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -516,7 +506,7 @@ impl<
         let owner: Gd<StaticBody3D> = self.to_gd().upcast();
         let data = StaticBody3DFloatData {
             property: <StaticBody3DFloatKind>::ConstantLinearVelocityX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -531,7 +521,7 @@ impl<
         let owner: Gd<StaticBody3D> = self.to_gd().upcast();
         let data = StaticBody3DFloatData {
             property: <StaticBody3DFloatKind>::ConstantLinearVelocityY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -546,7 +536,7 @@ impl<
         let owner: Gd<StaticBody3D> = self.to_gd().upcast();
         let data = StaticBody3DFloatData {
             property: <StaticBody3DFloatKind>::ConstantLinearVelocityZ,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -561,7 +551,7 @@ impl<
         let owner: Gd<StaticBody3D> = self.to_gd().upcast();
         let data = StaticBody3DVector3Data {
             property: <StaticBody3DVector3Kind>::ConstantAngularVelocity,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -576,7 +566,7 @@ impl<
         let owner: Gd<StaticBody3D> = self.to_gd().upcast();
         let data = StaticBody3DVector3Data {
             property: <StaticBody3DVector3Kind>::ConstantLinearVelocity,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<

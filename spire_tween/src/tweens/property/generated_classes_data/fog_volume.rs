@@ -67,21 +67,8 @@ impl IPropertyData for FogVolumeFloatData {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => obj.try_cast::<FogVolume>().ok(),
-            ObjectOrNode::Node(obj) => obj.try_cast::<FogVolume>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for FogVolumeFloatData {
@@ -94,21 +81,27 @@ impl TryFromPathAndObject for FogVolumeFloatData {
                     "size:x" => {
                         Some(Self {
                             property: <FogVolumeFloatKind>::SizeX,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "size:y" => {
                         Some(Self {
                             property: <FogVolumeFloatKind>::SizeY,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "size:z" => {
                         Some(Self {
                             property: <FogVolumeFloatKind>::SizeZ,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -157,21 +150,8 @@ impl IPropertyData for FogVolumeVector3Data {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => obj.try_cast::<FogVolume>().ok(),
-            ObjectOrNode::Node(obj) => obj.try_cast::<FogVolume>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for FogVolumeVector3Data {
@@ -184,7 +164,9 @@ impl TryFromPathAndObject for FogVolumeVector3Data {
                     "size" => {
                         Some(Self {
                             property: <FogVolumeVector3Kind>::Size,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -292,7 +274,7 @@ impl<
         let owner: Gd<FogVolume> = self.to_gd().upcast();
         let data = FogVolumeFloatData {
             property: <FogVolumeFloatKind>::SizeX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -307,7 +289,7 @@ impl<
         let owner: Gd<FogVolume> = self.to_gd().upcast();
         let data = FogVolumeFloatData {
             property: <FogVolumeFloatKind>::SizeY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -322,7 +304,7 @@ impl<
         let owner: Gd<FogVolume> = self.to_gd().upcast();
         let data = FogVolumeFloatData {
             property: <FogVolumeFloatKind>::SizeZ,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -337,7 +319,7 @@ impl<
         let owner: Gd<FogVolume> = self.to_gd().upcast();
         let data = FogVolumeVector3Data {
             property: <FogVolumeVector3Kind>::Size,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<

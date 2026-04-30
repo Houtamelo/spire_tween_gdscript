@@ -1,13 +1,12 @@
-#![feature(trait_alias)]
+//! Tweening library for Godot 4 via gdext, inspired by DoTween.
+//!
+//! Import `spire_tween::prelude::*` and use the extension traits on `Gd<T>` or
+//! `WithBaseField` types.
 #![feature(type_changing_struct_update)]
 #![feature(unboxed_closures)]
-#![feature(fn_traits)]
-#![feature(slice_swap_unchecked)]
-#![feature(macro_metavar_expr)]
-#![feature(macro_metavar_expr_concat)]
-#![feature(iter_intersperse)]
-#![feature(never_type)]
 #![feature(arbitrary_self_types)]
+#![feature(stmt_expr_attributes)]
+#![cfg_attr(test, feature(test))]
 #![allow(non_camel_case_types)]
 #![allow(clippy::too_many_arguments)]
 #![allow(clippy::manual_try_fold)]
@@ -19,18 +18,18 @@
 #![allow(clippy::mut_from_ref)]
 #![allow(clippy::infallible_try_from)]
 
-// TODO: Skeleton3D.do_bone_pose methods
-
 mod benchmarking;
 mod enums;
+#[cfg(feature = "standalone")]
 mod gdscript_bridge;
 mod global;
 mod object_or_node;
 mod rc_ptr;
+mod smol_set;
 mod tweens;
 mod util;
 
-use ::godot::meta::Signature;
+use ::godot::private::Signature;
 use enums::ProcessMode;
 use internal_prelude::*;
 
@@ -41,14 +40,19 @@ pub mod prelude {
     pub use crate::tweens::{BasicLerp, CustomLerper, LerpMode, SpireLerp};
     pub use crate::{
         //connection::Connection,
-        enums::{EaseKind, Evaluator, LoopMode, PauseMode, ProcessMode, State},
+        enums::{Ease, EaseKind, Evaluator, LoopMode, PauseMode, ProcessMode, Spiral, State},
         rc_ptr::*,
         tweens::{
+            AnyTween,
             CompleteBoundTweens,
             DoDelayedCall,
             DoDelayedCallable,
+            DoEllipsis2D,
+            DoFollow2D,
+            DoFollow3D,
             DoMethod,
             DoProperty,
+            DoSpiral,
             DoVarMethod,
             KillBoundTweens,
             LerpMethodData,
@@ -76,30 +80,28 @@ pub(crate) mod internal_prelude {
     };
 
     pub(crate) use anyhow::{anyhow, bail};
-    pub(crate) use class_macros::{
-        meta::{PropertyHintInfo, PropertyInfo},
-        sys::GDExtensionClassMethodArgumentMetadata,
-    };
+    pub(crate) use godot::sys::GDExtensionClassMethodArgumentMetadata;
     #[cfg(feature = "dashmap")]
     pub(crate) use dashmap::Equivalent;
     pub(crate) use derived_deref::{Deref, DerefMut};
     pub(crate) use godot::{
+        builtin::Side,
         classes::{
             tween::{TweenPauseMode, TweenProcessMode},
             *,
         },
-        global::{PropertyHint, PropertyUsageFlags},
-        meta::{AsArg, ClassName, GodotType, InParamTuple, ParamTuple, error::FromGodotError},
+        meta::{AsArg, ClassId, GodotType, conv::ByValue, shape::GodotShape},
         obj::WithBaseField,
         prelude::*,
+        register::info::{PropertyHint, PropertyHintInfo, PropertyInfo, PropertyUsageFlags},
     };
     #[cfg(feature = "indexmap")]
     pub(crate) use indexmap::Equivalent;
     pub(crate) use replace_with::replace_with_or_abort;
     pub(crate) use smallvec::SmallVec;
-    pub(crate) use smolset::{SmolSet, SmolSetIter};
     pub(crate) use spire_enum::prelude::*;
 
+    pub(crate) use crate::smol_set::SmolSet;
     pub(crate) use crate::{
         // connection::*,
         // cow_fn::*,
@@ -113,6 +115,7 @@ pub(crate) mod internal_prelude {
     };
 }
 
+#[cfg(feature = "standalone")]
 mod api_entry {
     use godot::prelude::*;
 

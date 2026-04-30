@@ -1,0 +1,13 @@
+[package]
+name = "spire_tween_rust"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+godot = { version = "0.5", features = ["experimental-wasm", "register-docs"] }
+spire_tween = { path = "../spire_tween" }
+futures-timer = "3.0.3"

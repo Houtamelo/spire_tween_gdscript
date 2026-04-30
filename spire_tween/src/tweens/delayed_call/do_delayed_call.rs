@@ -1,5 +1,6 @@
 use super::*;
 
+/// Executes a Rust closure after a delay. Auto-binds to the calling node.
 pub trait DoDelayedCall<Marker = ()> {
     fn do_delayed_call(&self, call: impl FnMut() + 'static, delay: f64) -> SpireTween<Callable>;
 }
@@ -11,9 +12,9 @@ impl<T: Inherits<Object>> DoDelayedCall<()> for Gd<T> {
         delay: f64,
     ) -> SpireTween<Callable> {
         SpireTween::<Callable>::new(
-            Callable::from_local_fn("anonymous_closure", move |_| {
+            Callable::from_fn("anonymous_closure", move |_| {
                 call();
-                Ok(Variant::nil())
+                Variant::nil()
             }),
             delay,
         )
@@ -28,9 +29,9 @@ impl<T: WithBaseField + Inherits<Object>> DoDelayedCall<BaseMarker> for T {
         delay: f64,
     ) -> SpireTween<Callable> {
         SpireTween::<Callable>::new(
-            Callable::from_local_fn("anonymous_closure", move |_| {
+            Callable::from_fn("anonymous_closure", move |_| {
                 call();
-                Ok(Variant::nil())
+                Variant::nil()
             }),
             delay,
         )
@@ -38,6 +39,7 @@ impl<T: WithBaseField + Inherits<Object>> DoDelayedCall<BaseMarker> for T {
     }
 }
 
+/// Like `DoDelayedCall` but accepts an existing Godot `Callable`.
 pub trait DoDelayedCallable<Marker = ()> {
     fn do_delayed_callable(&self, callable: Callable, delay: f64) -> SpireTween<Callable>;
 }
@@ -73,7 +75,7 @@ mod must_compile {
         fn ready(&mut self) {
             self.do_delayed_call(|| (), 0.0).register();
 
-            self.do_delayed_callable(Callable::from_local_fn("", |_| Ok(Variant::nil())), 1.0)
+            self.do_delayed_callable(Callable::from_fn("", |_| Variant::nil()), 1.0)
                 .register();
         }
     }
@@ -82,7 +84,7 @@ mod must_compile {
         fn self_gd(this: Gd<Self>) {
             this.do_delayed_call(|| (), 2.0).register();
 
-            this.do_delayed_callable(Callable::from_local_fn("", |_| Ok(Variant::nil())), 1.0)
+            this.do_delayed_callable(Callable::from_fn("", |_| Variant::nil()), 1.0)
                 .register();
         }
     }
@@ -90,21 +92,21 @@ mod must_compile {
     fn using_node(node: Gd<Node>) {
         node.do_delayed_call(|| godot_print!(""), 1.0).register();
 
-        node.do_delayed_callable(Callable::from_local_fn("", |_| Ok(Variant::nil())), 1.0)
+        node.do_delayed_callable(Callable::from_fn("", |_| Variant::nil()), 1.0)
             .register();
     }
 
     fn using_node_ref(node: &Gd<Node2D>) {
         node.do_delayed_call(|| godot_print!(""), 1.0).register();
 
-        node.do_delayed_callable(Callable::from_local_fn("", |_| Ok(Variant::nil())), 1.0)
+        node.do_delayed_callable(Callable::from_fn("", |_| Variant::nil()), 1.0)
             .register();
     }
 
     fn using_node_mut(node: &mut Gd<CanvasItem>) {
         node.do_delayed_call(|| godot_print!(""), 1.0).register();
 
-        node.do_delayed_callable(Callable::from_local_fn("", |_| Ok(Variant::nil())), 1.0)
+        node.do_delayed_callable(Callable::from_fn("", |_| Variant::nil()), 1.0)
             .register();
     }
 }

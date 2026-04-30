@@ -39,21 +39,8 @@ impl IPropertyData for Skeleton3DFloatData {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => obj.try_cast::<Skeleton3D>().ok(),
-            ObjectOrNode::Node(obj) => obj.try_cast::<Skeleton3D>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for Skeleton3DFloatData {
@@ -66,7 +53,9 @@ impl TryFromPathAndObject for Skeleton3DFloatData {
                     "motion_scale" => {
                         Some(Self {
                             property: <Skeleton3DFloatKind>::MotionScale,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -112,7 +101,7 @@ impl<
         let owner: Gd<Skeleton3D> = self.to_gd().upcast();
         let data = Skeleton3DFloatData {
             property: <Skeleton3DFloatKind>::MotionScale,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<

@@ -80,21 +80,8 @@ impl IPropertyData for SubViewportIntData {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => obj.try_cast::<SubViewport>().ok(),
-            ObjectOrNode::Node(obj) => obj.try_cast::<SubViewport>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for SubViewportIntData {
@@ -107,28 +94,36 @@ impl TryFromPathAndObject for SubViewportIntData {
                     "size:x" => {
                         Some(Self {
                             property: <SubViewportIntKind>::SizeX,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "size:y" => {
                         Some(Self {
                             property: <SubViewportIntKind>::SizeY,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "size_2d_override:x" => {
                         Some(Self {
                             property: <SubViewportIntKind>::Size2DOverrideX,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "size_2d_override:y" => {
                         Some(Self {
                             property: <SubViewportIntKind>::Size2DOverrideY,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -190,21 +185,8 @@ impl IPropertyData for SubViewportVector2iData {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => obj.try_cast::<SubViewport>().ok(),
-            ObjectOrNode::Node(obj) => obj.try_cast::<SubViewport>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for SubViewportVector2iData {
@@ -217,14 +199,18 @@ impl TryFromPathAndObject for SubViewportVector2iData {
                     "size" => {
                         Some(Self {
                             property: <SubViewportVector2iKind>::Size,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "size_2d_override" => {
                         Some(Self {
                             property: <SubViewportVector2iKind>::Size2DOverride,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -375,7 +361,7 @@ impl<
         let owner: Gd<SubViewport> = self.to_gd().upcast();
         let data = SubViewportIntData {
             property: <SubViewportIntKind>::SizeX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -390,7 +376,7 @@ impl<
         let owner: Gd<SubViewport> = self.to_gd().upcast();
         let data = SubViewportIntData {
             property: <SubViewportIntKind>::SizeY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -405,7 +391,7 @@ impl<
         let owner: Gd<SubViewport> = self.to_gd().upcast();
         let data = SubViewportIntData {
             property: <SubViewportIntKind>::Size2DOverrideX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -420,7 +406,7 @@ impl<
         let owner: Gd<SubViewport> = self.to_gd().upcast();
         let data = SubViewportIntData {
             property: <SubViewportIntKind>::Size2DOverrideY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -435,7 +421,7 @@ impl<
         let owner: Gd<SubViewport> = self.to_gd().upcast();
         let data = SubViewportVector2iData {
             property: <SubViewportVector2iKind>::Size,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -450,7 +436,7 @@ impl<
         let owner: Gd<SubViewport> = self.to_gd().upcast();
         let data = SubViewportVector2iData {
             property: <SubViewportVector2iKind>::Size2DOverride,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<

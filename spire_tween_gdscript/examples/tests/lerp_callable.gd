@@ -5,7 +5,6 @@ extends "res://examples/tests/test_base.gd"
 
 var call_count := 0
 
-
 func test_lerp_call() -> bool:
 	var initial_pos := Vector2.ZERO
 	var final_pos := Vector2(1920, 1080)
@@ -18,6 +17,21 @@ func test_lerp_call() -> bool:
 	await wait_finished(tween, 5)
 	assert_le(abs(_frames_since_start() - call_count), 1)
 	assert_eq(ball.global_position, final_pos)
+	return true
+
+
+func test_lerp_call_float() -> bool:
+	var initial_pos := 0.0
+	var final_pos := 1920.0
+	var tween := Spire.do_call_float(custom_call_float, initial_pos, final_pos, 5)
+	assert_eq(tween.get_start_value(), initial_pos)
+	assert_eq(tween.get_final_value(), final_pos)
+	assert_eq(tween.get_duration(), 5)
+	assert_eq(tween.get_callable(), custom_call_float)
+	
+	await wait_finished(tween, 5)
+	assert_le(abs(_frames_since_start() - call_count), 1)
+	assert_eq(ball.global_position.x, final_pos)
 	return true
 
 
@@ -68,4 +82,8 @@ func test_lerp_call_with_loop():
 
 func custom_call(val: Vector2):
 	ball.global_position = val
+	call_count += 1
+
+func custom_call_float(val: float):
+	ball.global_position.x = val
 	call_count += 1

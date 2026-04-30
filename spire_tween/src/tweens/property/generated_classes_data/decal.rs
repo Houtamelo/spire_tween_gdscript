@@ -141,21 +141,8 @@ impl IPropertyData for DecalFloatData {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => obj.try_cast::<Decal>().ok(),
-            ObjectOrNode::Node(obj) => obj.try_cast::<Decal>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for DecalFloatData {
@@ -168,63 +155,81 @@ impl TryFromPathAndObject for DecalFloatData {
                     "albedo_mix" => {
                         Some(Self {
                             property: <DecalFloatKind>::AlbedoMix,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "emission_energy" => {
                         Some(Self {
                             property: <DecalFloatKind>::EmissionEnergy,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "modulate:r" => {
                         Some(Self {
                             property: <DecalFloatKind>::ModulateR,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "modulate:g" => {
                         Some(Self {
                             property: <DecalFloatKind>::ModulateG,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "modulate:b" => {
                         Some(Self {
                             property: <DecalFloatKind>::ModulateB,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "modulate:a" => {
                         Some(Self {
                             property: <DecalFloatKind>::ModulateA,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "size:x" => {
                         Some(Self {
                             property: <DecalFloatKind>::SizeX,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "size:y" => {
                         Some(Self {
                             property: <DecalFloatKind>::SizeY,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "size:z" => {
                         Some(Self {
                             property: <DecalFloatKind>::SizeZ,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -273,21 +278,8 @@ impl IPropertyData for DecalVector3Data {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => obj.try_cast::<Decal>().ok(),
-            ObjectOrNode::Node(obj) => obj.try_cast::<Decal>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for DecalVector3Data {
@@ -300,7 +292,9 @@ impl TryFromPathAndObject for DecalVector3Data {
                     "size" => {
                         Some(Self {
                             property: <DecalVector3Kind>::Size,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -349,21 +343,8 @@ impl IPropertyData for DecalColorData {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => obj.try_cast::<Decal>().ok(),
-            ObjectOrNode::Node(obj) => obj.try_cast::<Decal>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for DecalColorData {
@@ -376,7 +357,9 @@ impl TryFromPathAndObject for DecalColorData {
                     "modulate" => {
                         Some(Self {
                             property: <DecalColorKind>::Modulate,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -735,7 +718,7 @@ for T {
         let owner: Gd<Decal> = self.to_gd().upcast();
         let data = DecalFloatData {
             property: <DecalFloatKind>::AlbedoMix,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -750,7 +733,7 @@ for T {
         let owner: Gd<Decal> = self.to_gd().upcast();
         let data = DecalFloatData {
             property: <DecalFloatKind>::EmissionEnergy,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -765,7 +748,7 @@ for T {
         let owner: Gd<Decal> = self.to_gd().upcast();
         let data = DecalFloatData {
             property: <DecalFloatKind>::ModulateR,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -780,7 +763,7 @@ for T {
         let owner: Gd<Decal> = self.to_gd().upcast();
         let data = DecalFloatData {
             property: <DecalFloatKind>::ModulateR,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -795,7 +778,7 @@ for T {
         let owner: Gd<Decal> = self.to_gd().upcast();
         let data = DecalFloatData {
             property: <DecalFloatKind>::ModulateG,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -810,7 +793,7 @@ for T {
         let owner: Gd<Decal> = self.to_gd().upcast();
         let data = DecalFloatData {
             property: <DecalFloatKind>::ModulateG,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -825,7 +808,7 @@ for T {
         let owner: Gd<Decal> = self.to_gd().upcast();
         let data = DecalFloatData {
             property: <DecalFloatKind>::ModulateB,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -840,7 +823,7 @@ for T {
         let owner: Gd<Decal> = self.to_gd().upcast();
         let data = DecalFloatData {
             property: <DecalFloatKind>::ModulateB,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -855,7 +838,7 @@ for T {
         let owner: Gd<Decal> = self.to_gd().upcast();
         let data = DecalFloatData {
             property: <DecalFloatKind>::ModulateA,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -870,7 +853,7 @@ for T {
         let owner: Gd<Decal> = self.to_gd().upcast();
         let data = DecalFloatData {
             property: <DecalFloatKind>::ModulateA,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -885,7 +868,7 @@ for T {
         let owner: Gd<Decal> = self.to_gd().upcast();
         let data = DecalFloatData {
             property: <DecalFloatKind>::SizeX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -900,7 +883,7 @@ for T {
         let owner: Gd<Decal> = self.to_gd().upcast();
         let data = DecalFloatData {
             property: <DecalFloatKind>::SizeY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -915,7 +898,7 @@ for T {
         let owner: Gd<Decal> = self.to_gd().upcast();
         let data = DecalFloatData {
             property: <DecalFloatKind>::SizeZ,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -930,7 +913,7 @@ for T {
         let owner: Gd<Decal> = self.to_gd().upcast();
         let data = DecalVector3Data {
             property: <DecalVector3Kind>::Size,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -945,7 +928,7 @@ for T {
         let owner: Gd<Decal> = self.to_gd().upcast();
         let data = DecalColorData {
             property: <DecalColorKind>::Modulate,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -960,7 +943,7 @@ for T {
         let owner: Gd<Decal> = self.to_gd().upcast();
         let data = DecalColorData {
             property: <DecalColorKind>::Modulate,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<

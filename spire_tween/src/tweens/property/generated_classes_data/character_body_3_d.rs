@@ -67,21 +67,8 @@ impl IPropertyData for CharacterBody3DFloatData {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => obj.try_cast::<CharacterBody3D>().ok(),
-            ObjectOrNode::Node(obj) => obj.try_cast::<CharacterBody3D>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for CharacterBody3DFloatData {
@@ -94,21 +81,27 @@ impl TryFromPathAndObject for CharacterBody3DFloatData {
                     "velocity:x" => {
                         Some(Self {
                             property: <CharacterBody3DFloatKind>::VelocityX,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "velocity:y" => {
                         Some(Self {
                             property: <CharacterBody3DFloatKind>::VelocityY,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "velocity:z" => {
                         Some(Self {
                             property: <CharacterBody3DFloatKind>::VelocityZ,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -157,21 +150,8 @@ impl IPropertyData for CharacterBody3DVector3Data {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => obj.try_cast::<CharacterBody3D>().ok(),
-            ObjectOrNode::Node(obj) => obj.try_cast::<CharacterBody3D>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for CharacterBody3DVector3Data {
@@ -184,7 +164,9 @@ impl TryFromPathAndObject for CharacterBody3DVector3Data {
                     "velocity" => {
                         Some(Self {
                             property: <CharacterBody3DVector3Kind>::Velocity,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -293,7 +275,7 @@ impl<
         let owner: Gd<CharacterBody3D> = self.to_gd().upcast();
         let data = CharacterBody3DFloatData {
             property: <CharacterBody3DFloatKind>::VelocityX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -308,7 +290,7 @@ impl<
         let owner: Gd<CharacterBody3D> = self.to_gd().upcast();
         let data = CharacterBody3DFloatData {
             property: <CharacterBody3DFloatKind>::VelocityY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -323,7 +305,7 @@ impl<
         let owner: Gd<CharacterBody3D> = self.to_gd().upcast();
         let data = CharacterBody3DFloatData {
             property: <CharacterBody3DFloatKind>::VelocityZ,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -338,7 +320,7 @@ impl<
         let owner: Gd<CharacterBody3D> = self.to_gd().upcast();
         let data = CharacterBody3DVector3Data {
             property: <CharacterBody3DVector3Kind>::Velocity,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<

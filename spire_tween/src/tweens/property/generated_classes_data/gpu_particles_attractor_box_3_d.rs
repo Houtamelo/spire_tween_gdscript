@@ -67,23 +67,8 @@ impl IPropertyData for GpuParticlesAttractorBox3DFloatData {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => {
-                obj.try_cast::<GpuParticlesAttractorBox3D>().ok()
-            }
-            ObjectOrNode::Node(obj) => obj.try_cast::<GpuParticlesAttractorBox3D>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for GpuParticlesAttractorBox3DFloatData {
@@ -96,21 +81,27 @@ impl TryFromPathAndObject for GpuParticlesAttractorBox3DFloatData {
                     "size:x" => {
                         Some(Self {
                             property: <GpuParticlesAttractorBox3DFloatKind>::SizeX,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "size:y" => {
                         Some(Self {
                             property: <GpuParticlesAttractorBox3DFloatKind>::SizeY,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
                     "size:z" => {
                         Some(Self {
                             property: <GpuParticlesAttractorBox3DFloatKind>::SizeZ,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -159,23 +150,8 @@ impl IPropertyData for GpuParticlesAttractorBox3DVector3Data {
         }
     }
     #[inline]
-    fn get_owner(&self) -> &ObjectOrNode {
-        &self.owner_obj_or_node
-    }
-    #[inline]
-    fn try_set_owner(&mut self, owner: ObjectOrNode) -> bool {
-        if let Some(casted) = match owner {
-            ObjectOrNode::Object(obj) => {
-                obj.try_cast::<GpuParticlesAttractorBox3D>().ok()
-            }
-            ObjectOrNode::Node(obj) => obj.try_cast::<GpuParticlesAttractorBox3D>().ok(),
-        } {
-            self.owner = casted;
-            self.owner_obj_or_node = ObjectOrNode::Node(casted.upcast());
-            true
-        } else {
-            false
-        }
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
     }
 }
 impl TryFromPathAndObject for GpuParticlesAttractorBox3DVector3Data {
@@ -188,7 +164,9 @@ impl TryFromPathAndObject for GpuParticlesAttractorBox3DVector3Data {
                     "size" => {
                         Some(Self {
                             property: <GpuParticlesAttractorBox3DVector3Kind>::Size,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
                             owner,
                         })
                     }
@@ -298,7 +276,7 @@ impl<
         let owner: Gd<GpuParticlesAttractorBox3D> = self.to_gd().upcast();
         let data = GpuParticlesAttractorBox3DFloatData {
             property: <GpuParticlesAttractorBox3DFloatKind>::SizeX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -313,7 +291,7 @@ impl<
         let owner: Gd<GpuParticlesAttractorBox3D> = self.to_gd().upcast();
         let data = GpuParticlesAttractorBox3DFloatData {
             property: <GpuParticlesAttractorBox3DFloatKind>::SizeY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -328,7 +306,7 @@ impl<
         let owner: Gd<GpuParticlesAttractorBox3D> = self.to_gd().upcast();
         let data = GpuParticlesAttractorBox3DFloatData {
             property: <GpuParticlesAttractorBox3DFloatKind>::SizeZ,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<
@@ -343,7 +321,7 @@ impl<
         let owner: Gd<GpuParticlesAttractorBox3D> = self.to_gd().upcast();
         let data = GpuParticlesAttractorBox3DVector3Data {
             property: <GpuParticlesAttractorBox3DVector3Kind>::Size,
-            owner_obj_or_node: ObjectOrNode::Node(owner.upcast()),
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
         SpireTween::<

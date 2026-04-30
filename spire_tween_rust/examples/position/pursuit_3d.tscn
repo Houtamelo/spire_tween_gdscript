@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://b4xc025gg3kfr"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tse63"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_tse63"]
+material = SubResource("StandardMaterial3D_tse63")
+radius = 0.25
+height = 0.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7wago"]
+albedo_color = Color(0, 0.15537643, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_8iinr"]
+material = SubResource("StandardMaterial3D_7wago")
+
+[node name="Pursuit3d" type="Node3D"]
+_chaser_speed = 2.0
+_target_speed = 2.0
+_bounds_max = Vector3(8, 8, 8)
+
+[node name="Chaser" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.443185, 0, 2.0183291)
+mesh = SubResource("SphereMesh_tse63")
+
+[node name="Target" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.572551, 0, 0)
+mesh = SubResource("SphereMesh_8iinr")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.40920085, -0.58158064, 0.70307803, -0.023991415, 0.76341915, 0.64545774, -0.9121288, -0.28098968, 0.29843888, 10.64, 9.7, 9.54)
