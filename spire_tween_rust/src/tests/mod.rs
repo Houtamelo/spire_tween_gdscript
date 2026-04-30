@@ -10,6 +10,7 @@ mod play_pause_stop;
 mod register_unregister;
 mod sequences;
 mod spiral_test;
+mod templates_test;
 mod test_runner;
 mod trail_spawner;
 mod util;

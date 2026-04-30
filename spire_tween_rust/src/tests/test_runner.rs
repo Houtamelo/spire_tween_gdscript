@@ -14,6 +14,7 @@ use super::play_pause_stop::PlayPauseStopTests;
 use super::register_unregister::RegisterUnregisterTests;
 use super::sequences::SequencesTests;
 use super::spiral_test::SpiralTests;
+use super::templates_test::TemplatesTests;
 
 enum TestClass {
     PlayPauseStop,
@@ -28,6 +29,7 @@ enum TestClass {
     Spiral,
     Ellipsis,
     GdHandlePath,
+    Templates,
 }
 
 const ALL_TESTS: &[TestClass] = &[
@@ -43,6 +45,7 @@ const ALL_TESTS: &[TestClass] = &[
     TestClass::Spiral,
     TestClass::Ellipsis,
     TestClass::GdHandlePath,
+    TestClass::Templates,
 ];
 
 #[derive(GodotClass)]
@@ -72,6 +75,7 @@ impl INode for TestRunner {
                     TestClass::Spiral => run_tests_from_class::<SpiralTests>(&mut base).await,
                     TestClass::Ellipsis => run_tests_from_class::<EllipsisTests>(&mut base).await,
                     TestClass::GdHandlePath => run_tests_from_class::<GdHandlePathTests>(&mut base).await,
+                    TestClass::Templates => run_tests_from_class::<TemplatesTests>(&mut base).await,
                 }
             }
 
