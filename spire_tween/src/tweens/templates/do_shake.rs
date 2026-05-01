@@ -110,10 +110,11 @@ fn do_shake<T: GodotClass<Declarer = DeclEngine>>(
     let mut prev_angle = rng.random_range(0.0..=(2.0 * PI));
     let mut prev_radius = rng.random_range(radius_range);
     let mut prev_update = 0.0;
-    let mut prev_offset = Vector2 {
-        x: prev_radius * prev_angle.cos(),
-        y: prev_radius * prev_angle.sin(),
-    };
+    // Must be ZERO: the per-tick formula `next_pos = curr_pos - prev_offset
+    // + next_offset` cancels prev_offset against the offset already written
+    // to the node. Seeding with a non-applied offset propagates a permanent
+    // `-INITIAL` bias for the entire shake.
+    let mut prev_offset = Vector2::ZERO;
 
     let callable = Callable::from_fn("do_shake", move |args| {
         let Some(time) = args
