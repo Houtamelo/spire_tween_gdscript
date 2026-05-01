@@ -33,8 +33,6 @@ impl ITestClass for TemplatesTests {
     fn test_list() -> Vec<fn(&mut Self) -> PinnedTestTask> {
         vec![
             Self::test_do_shake,
-            // The next two are EXPECTED TO FAIL until the corresponding
-            // do_shake.rs bugs (documented on test_do_shake) are fixed.
             Self::test_do_shake_stays_within_radius,
             Self::test_do_shake_returns_to_origin,
             Self::test_do_contour_shape,
@@ -49,16 +47,9 @@ impl ITestClass for TemplatesTests {
 
 impl TemplatesTests {
     /// Verifies that `do_shake` actually shakes the node — i.e. the position
-    /// deviates from the origin during the tween.
-    ///
-    /// NOTE: Two pre-existing bugs in `do_shake.rs` are NOT asserted by this test:
-    /// 1. The first shake step uses an uninitialized `prev_offset` (set to a random
-    ///    value but never applied to the node), so `next_pos = origin - prev_offset
-    ///    + next_offset` can deviate up to `2 * radius_max` from origin on the very
-    ///    first update. Subsequent updates correctly stay within `radius_max`.
-    /// 2. The restore-to-origin branch (`if time.approx_eq(&duration)`) doesn't fire
-    ///    reliably -- the final tween tick's `time` may not equal `duration` within
-    ///    `approx_eq` tolerance, leaving the node at the last shake offset.
+    /// deviates from the origin during the tween. The companion tests
+    /// `test_do_shake_stays_within_radius` and `test_do_shake_returns_to_origin`
+    /// cover the bound and restore guarantees separately.
     fn test_do_shake(&mut self) -> PinnedTestTask {
         let mut sprite = self.sprite.clone();
         let origin = sprite.get_position();
@@ -105,17 +96,14 @@ impl TemplatesTests {
         })
     }
 
-    /// Asserts the do_shake "first-step uses uninitialized prev_offset" bug.
+    /// Asserts the shake never moves the node beyond `radius_max` of origin.
     ///
-    /// The shake's `prev_offset` is seeded with a random vector at construction
-    /// time but never written to the node. On the first update tick the formula
-    /// `next_pos = origin - prev_offset + next_offset` therefore moves the node
-    /// to `origin + (next_offset - prev_offset)`, whose magnitude can reach
-    /// `2 * radius_max` instead of being bounded by `radius_max`.
-    ///
-    /// EXPECTED TO FAIL until `do_shake.rs` initialises `prev_offset` to ZERO
-    /// (or otherwise prevents the unapplied offset from contaminating the first
-    /// update).
+    /// Regression guard: a prior bug seeded `prev_offset` with a random vector
+    /// that was never written to the node, propagating a permanent
+    /// `-INITIAL` bias through every tick (since the per-tick formula
+    /// `next_pos = curr_pos - prev_offset + next_offset` relies on
+    /// `prev_offset` matching what's actually on the node). Fixed by seeding
+    /// `prev_offset = Vector2::ZERO`.
     fn test_do_shake_stays_within_radius(&mut self) -> PinnedTestTask {
         let mut sprite = self.sprite.clone();
         sprite.set_position(Vector2::ZERO);
@@ -159,16 +147,12 @@ impl TemplatesTests {
         })
     }
 
-    /// Asserts the do_shake "restore-to-origin doesn't fire reliably" bug.
+    /// Asserts the node ends at its origin position after the shake completes.
     ///
-    /// The restore branch (`if time.approx_eq(&duration)`) compares the
-    /// callable's `time` argument against `duration`; the final tick's `time`
-    /// may not land exactly on `duration` within `approx_eq` tolerance, so the
-    /// branch never executes and the node stays at the last shake offset.
-    ///
-    /// EXPECTED TO FAIL until `do_shake.rs` restores the origin via a more
-    /// reliable signal (e.g. on tween `finished`, or a `time >= duration`
-    /// inequality).
+    /// Regression guard for the same `prev_offset` seeding bug: even when the
+    /// `time.approx_eq(&duration)` restore branch fires, the persistent
+    /// `-INITIAL` bias would have left the node off-origin. Fixed by the
+    /// `prev_offset = Vector2::ZERO` seed change.
     fn test_do_shake_returns_to_origin(&mut self) -> PinnedTestTask {
         let mut sprite = self.sprite.clone();
         sprite.set_position(Vector2::ZERO);
