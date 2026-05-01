@@ -1,7 +1,6 @@
 [workspace]
 default-members = ["spire_tween"]
 members = ["gdscript_bindgen", "spire_tween", "spire_tween_plugin", "spire_tween_rust"]
-exclude = ["callable_bind_mre"]
 resolver = "3"
 
 [profile.release]

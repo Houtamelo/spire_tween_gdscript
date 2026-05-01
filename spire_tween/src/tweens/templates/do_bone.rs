@@ -9,9 +9,12 @@ impl<T: Inherits<Skeleton3D> + Inherits<Object>> DoBone<()> for Gd<T> {
     fn do_bone_position(&self, bone_idx: i32, to: Vector3, duration: f64) -> SpireTween<LerpPropertyData<Vector3>> {
         let node = self.clone().upcast::<Skeleton3D>();
 
-        // Note: `Callable::bind()` does NOT propagate to built-in C++ methods like
-        // `set_bone_pose_position` — calling the bound callable silently no-ops on
-        // the underlying object. We use explicit `Callable::from_fn` closures instead.
+        // `Callable::bind()` appends bound args after call args (per godot's
+        // documented semantics), so it can't bind a *leading* parameter like
+        // `bone_idx` for `set_bone_pose_position(idx, value)` — the tween's
+        // `.call(value)` would dispatch as `set_bone_pose_position(value, idx)`,
+        // a type mismatch that godot silently rejects. Closures are the
+        // canonical workaround.
         let getter_node = node.clone();
         let getter = Callable::from_fn("get_bone_pose_position_bound", move |_| {
             getter_node.get_bone_pose_position(bone_idx).to_variant()

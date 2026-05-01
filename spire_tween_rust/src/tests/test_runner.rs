@@ -2,7 +2,6 @@ use godot::classes::PackedScene;
 use godot::prelude::*;
 
 use super::util::*;
-use super::callable_diagnostic_test::CallableDiagnosticTests;
 use super::delays::DelaysTests;
 use super::ellipsis_test::EllipsisTests;
 use super::error_handling::ErrorHandlingTests;
@@ -33,7 +32,6 @@ enum TestClass {
     GdHandlePath,
     Templates,
     Templates3D,
-    CallableDiagnostic,
 }
 
 const ALL_TESTS: &[TestClass] = &[
@@ -51,7 +49,6 @@ const ALL_TESTS: &[TestClass] = &[
     TestClass::GdHandlePath,
     TestClass::Templates,
     TestClass::Templates3D,
-    TestClass::CallableDiagnostic,
 ];
 
 #[derive(GodotClass)]
@@ -83,7 +80,6 @@ impl INode for TestRunner {
                     TestClass::GdHandlePath => run_tests_from_class::<GdHandlePathTests>(&mut base).await,
                     TestClass::Templates => run_tests_from_class::<TemplatesTests>(&mut base).await,
                     TestClass::Templates3D => run_tests_from_class::<Templates3DTests>(&mut base).await,
-                    TestClass::CallableDiagnostic => run_tests_from_class::<CallableDiagnosticTests>(&mut base).await,
                 }
             }
 
