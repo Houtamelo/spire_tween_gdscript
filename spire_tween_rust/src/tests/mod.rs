@@ -1,3 +1,4 @@
+mod callable_diagnostic_test;
 mod delays;
 mod ellipsis_test;
 mod error_handling;

@@ -1,0 +1,14 @@
+; Minimum reproducible project for the gdext Callable.bind() split-args bug.
+; See src/lib.rs for the hypothesis and how to run.
+
+config_version=5
+
+[application]
+
+config/name="Callable Bind MRE"
+run/main_scene="res://main.tscn"
+run/flush_stdout_on_print=true
+
+[debug]
+
+settings/stdout/print_fps=false
