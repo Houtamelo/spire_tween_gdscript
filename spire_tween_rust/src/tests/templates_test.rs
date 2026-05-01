@@ -33,6 +33,10 @@ impl ITestClass for TemplatesTests {
     fn test_list() -> Vec<fn(&mut Self) -> PinnedTestTask> {
         vec![
             Self::test_do_shake,
+            // The next two are EXPECTED TO FAIL until the corresponding
+            // do_shake.rs bugs (documented on test_do_shake) are fixed.
+            Self::test_do_shake_stays_within_radius,
+            Self::test_do_shake_returns_to_origin,
             Self::test_do_contour_shape,
             Self::test_do_follow,
             // ignore_time_scale must be last because it touches Engine.time_scale globally.
@@ -98,6 +102,96 @@ impl TemplatesTests {
             );
 
             let _ = &tracker;
+        })
+    }
+
+    /// Asserts the do_shake "first-step uses uninitialized prev_offset" bug.
+    ///
+    /// The shake's `prev_offset` is seeded with a random vector at construction
+    /// time but never written to the node. On the first update tick the formula
+    /// `next_pos = origin - prev_offset + next_offset` therefore moves the node
+    /// to `origin + (next_offset - prev_offset)`, whose magnitude can reach
+    /// `2 * radius_max` instead of being bounded by `radius_max`.
+    ///
+    /// EXPECTED TO FAIL until `do_shake.rs` initialises `prev_offset` to ZERO
+    /// (or otherwise prevents the unapplied offset from contaminating the first
+    /// update).
+    fn test_do_shake_stays_within_radius(&mut self) -> PinnedTestTask {
+        let mut sprite = self.sprite.clone();
+        sprite.set_position(Vector2::ZERO);
+        let origin = sprite.get_position();
+        let radius_min: f32 = 5.0;
+        let radius_max: f32 = 25.0;
+        let tolerance: f32 = 0.5;
+
+        // vibratio=0.5 makes next_angle land near `prev_angle + PI`, so
+        // prev_offset and next_offset point in roughly opposite directions and
+        // their difference has magnitude near `prev_radius + next_radius`,
+        // which is always > radius_max when both radii are above radius_avg.
+        let handle = sprite
+            .do_shake(radius_min, radius_max, 0.5, 60.0, 1.0)
+            .register();
+        let tracker = RcPtr::clone(&self.time_tracker);
+
+        Box::pin(async move {
+            let mut max_dev: f32 = 0.0;
+            let mut max_dev_frame: u32 = 0;
+            let mut frame: u32 = 0;
+            while !handle.is_stopped() {
+                let dev = sprite.get_position().distance_to(origin);
+                if dev > max_dev {
+                    max_dev = dev;
+                    max_dev_frame = frame;
+                }
+                frame += 1;
+                next_frame().await;
+            }
+
+            assert!(
+                max_dev <= radius_max + tolerance,
+                "do_shake must keep the node within radius_max ({radius_max}) of origin; \
+                 saw {max_dev} on frame {max_dev_frame} of {frame} \
+                 (overshoot of {} above tolerance)",
+                max_dev - (radius_max + tolerance)
+            );
+
+            let _ = &tracker;
+        })
+    }
+
+    /// Asserts the do_shake "restore-to-origin doesn't fire reliably" bug.
+    ///
+    /// The restore branch (`if time.approx_eq(&duration)`) compares the
+    /// callable's `time` argument against `duration`; the final tick's `time`
+    /// may not land exactly on `duration` within `approx_eq` tolerance, so the
+    /// branch never executes and the node stays at the last shake offset.
+    ///
+    /// EXPECTED TO FAIL until `do_shake.rs` restores the origin via a more
+    /// reliable signal (e.g. on tween `finished`, or a `time >= duration`
+    /// inequality).
+    fn test_do_shake_returns_to_origin(&mut self) -> PinnedTestTask {
+        let mut sprite = self.sprite.clone();
+        sprite.set_position(Vector2::ZERO);
+        let origin = sprite.get_position();
+
+        let handle = sprite
+            .do_shake(5.0, 25.0, 0.5, 30.0, 1.0)
+            .register();
+        let tracker = RcPtr::clone(&self.time_tracker);
+
+        Box::pin(async move {
+            wait_finished(&handle, &tracker, 1.0).await;
+            // Give the tween machinery one extra frame to flush any deferred
+            // final tick before reading the node's resting position.
+            next_frame().await;
+
+            let final_pos = sprite.get_position();
+            let dev = final_pos.distance_to(origin);
+            assert!(
+                dev < 0.01,
+                "do_shake must restore position to origin {origin} on completion; \
+                 got {final_pos} (deviation {dev})"
+            );
         })
     }
 
