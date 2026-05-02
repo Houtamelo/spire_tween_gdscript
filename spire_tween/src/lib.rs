@@ -60,17 +60,6 @@
 //!   so GDScript code (or any consumer of Godot signals) can connect to the
 //!   `finished` / `loop_finished` Godot signals on that handle.
 //!
-//! # Cargo features
-//!
-//! - `standalone` — registers GDScript-facing classes (`Spire`, `SpireSequence`,
-//!   `Do{Class}`, etc.). Used by the addon distribution; pure-Rust gdext
-//!   consumers don't need this.
-//! - `double-precision` — forwards to godot's `double-precision` feature for 64-bit
-//!   `Vector*`/`real`. Match this with your gdext build.
-//! - `nothreads` — forwards to godot's `experimental-wasm-nothreads` for wasm
-//!   builds without thread support.
-//! - `verbose-stdout` — extra diagnostic prints inside the manager loop.
-//!
 //! # Threading
 //!
 //! Spire is single-threaded — same constraint as Godot's main loop. The internal
