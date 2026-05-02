@@ -6,7 +6,8 @@ edition = "2024"
 resolver = "3"
 description = "A Slimy tweener library for Godot(4.4+), inspired on the design of DoTween."
 license = "MIT"
-repository = "https://github.com/Houtamelo/spire_tween"
+repository = "https://github.com/Houtamelo/spire_tween_gdscript"
+readme = "README.md"
 categories = ["game-development", "api-bindings"]
 keywords = ["godot", "tweening", "animation", "gdextension", "spire"]
 
