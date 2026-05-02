@@ -48,15 +48,6 @@ seq.register();
   `arbitrary_self_types`, `stmt_expr_attributes`. A `rust-toolchain.toml` in the
   project root pins `nightly`.
 
-## Cargo features
-
-| Feature | Purpose |
-|---|---|
-| `standalone` | Registers GDScript-facing classes (`Spire`, `Do{Class}`, `SpireSequence`, …). Used by the addon distribution; pure-Rust gdext consumers don't need this. |
-| `double-precision` | Forwards to godot's `double-precision`. Match this with your gdext build. |
-| `nothreads` | Forwards to godot's `experimental-wasm-nothreads` for wasm-without-threads builds. |
-| `verbose-stdout` | Extra diagnostic prints inside the manager loop. |
-
 ## The `prelude`
 
 `use spire_tween::prelude::*` brings in:
