@@ -361,25 +361,25 @@ impl TryFromPathAndObject for ReflectionProbeFloatData {
     }
 }
 #[derive(Debug, Clone)]
-pub struct ReflectionProbeVector3Data {
-    pub property: ReflectionProbeVector3Kind,
+pub struct ReflectionProbeVec3Data {
+    pub property: ReflectionProbeVec3Kind,
     pub owner: Gd<ReflectionProbe>,
     pub owner_obj_or_node: ObjectOrNode,
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum ReflectionProbeVector3Kind {
+pub enum ReflectionProbeVec3Kind {
     OriginOffset,
     Size,
 }
-impl IProperty<Vector3> for ReflectionProbeVector3Data {
+impl IProperty<Vector3> for ReflectionProbeVec3Data {
     #[inline]
     fn get_property_value(&self) -> Vector3 {
         match self.property {
-            <ReflectionProbeVector3Kind>::OriginOffset => {
+            <ReflectionProbeVec3Kind>::OriginOffset => {
                 let obj = &self.owner;
                 obj.get_origin_offset()
             }
-            <ReflectionProbeVector3Kind>::Size => {
+            <ReflectionProbeVec3Kind>::Size => {
                 let obj = &self.owner;
                 obj.get_size()
             }
@@ -388,12 +388,12 @@ impl IProperty<Vector3> for ReflectionProbeVector3Data {
     #[inline]
     fn set_property_value(&mut self, value: Vector3) {
         match self.property {
-            <ReflectionProbeVector3Kind>::OriginOffset => {
+            <ReflectionProbeVec3Kind>::OriginOffset => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_origin_offset(val);
             }
-            <ReflectionProbeVector3Kind>::Size => {
+            <ReflectionProbeVec3Kind>::Size => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_size(val);
@@ -401,13 +401,13 @@ impl IProperty<Vector3> for ReflectionProbeVector3Data {
         }
     }
 }
-impl IPropertyData for ReflectionProbeVector3Data {
+impl IPropertyData for ReflectionProbeVec3Data {
     type Target = ReflectionProbe;
     #[inline]
     fn get_property_path(&self) -> NodePath {
         match self.property {
-            <ReflectionProbeVector3Kind>::OriginOffset => NodePath::from("origin_offset"),
-            <ReflectionProbeVector3Kind>::Size => NodePath::from("size"),
+            <ReflectionProbeVec3Kind>::OriginOffset => NodePath::from("origin_offset"),
+            <ReflectionProbeVec3Kind>::Size => NodePath::from("size"),
         }
     }
     #[inline]
@@ -415,7 +415,7 @@ impl IPropertyData for ReflectionProbeVector3Data {
         Some(&self.owner_obj_or_node)
     }
 }
-impl TryFromPathAndObject for ReflectionProbeVector3Data {
+impl TryFromPathAndObject for ReflectionProbeVec3Data {
     fn try_from_path_and_object(path: &str, object: Gd<Object>) -> Option<Self> {
         object
             .try_cast::<ReflectionProbe>()
@@ -424,7 +424,7 @@ impl TryFromPathAndObject for ReflectionProbeVector3Data {
                 match path {
                     "origin_offset" => {
                         Some(Self {
-                            property: <ReflectionProbeVector3Kind>::OriginOffset,
+                            property: <ReflectionProbeVec3Kind>::OriginOffset,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -433,7 +433,7 @@ impl TryFromPathAndObject for ReflectionProbeVector3Data {
                     }
                     "size" => {
                         Some(Self {
-                            property: <ReflectionProbeVector3Kind>::Size,
+                            property: <ReflectionProbeVec3Kind>::Size,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -828,8 +828,8 @@ for Gd<Class> {
         end_val: Vector3,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
-        let data = ReflectionProbeVector3Data {
-            property: <ReflectionProbeVector3Kind>::OriginOffset,
+        let data = ReflectionProbeVec3Data {
+            property: <ReflectionProbeVec3Kind>::OriginOffset,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<ReflectionProbe>().upcast::<Node>(),
@@ -844,8 +844,8 @@ for Gd<Class> {
         end_val: Vector3,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
-        let data = ReflectionProbeVector3Data {
-            property: <ReflectionProbeVector3Kind>::Size,
+        let data = ReflectionProbeVec3Data {
+            property: <ReflectionProbeVec3Kind>::Size,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<ReflectionProbe>().upcast::<Node>(),
@@ -1091,8 +1091,8 @@ impl<
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
         let owner: Gd<ReflectionProbe> = self.to_gd().upcast();
-        let data = ReflectionProbeVector3Data {
-            property: <ReflectionProbeVector3Kind>::OriginOffset,
+        let data = ReflectionProbeVec3Data {
+            property: <ReflectionProbeVec3Kind>::OriginOffset,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
@@ -1106,8 +1106,8 @@ impl<
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
         let owner: Gd<ReflectionProbe> = self.to_gd().upcast();
-        let data = ReflectionProbeVector3Data {
-            property: <ReflectionProbeVector3Kind>::Size,
+        let data = ReflectionProbeVec3Data {
+            property: <ReflectionProbeVec3Kind>::Size,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };

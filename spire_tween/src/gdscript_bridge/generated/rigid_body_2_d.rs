@@ -185,7 +185,7 @@ impl DoRigidBody2D {
         node: Gd<RigidBody2D>,
         to: Vector2,
         duration: f64,
-    ) -> Gd<SpirePropertyVector2> {
+    ) -> Gd<SpirePropertyVec2> {
         let tween = node.do_center_of_mass(to, duration).register();
         gd_from_native_tween(tween)
     }
@@ -197,7 +197,7 @@ impl DoRigidBody2D {
         node: Gd<RigidBody2D>,
         to: Vector2,
         duration: f64,
-    ) -> Gd<SpirePropertyVector2> {
+    ) -> Gd<SpirePropertyVec2> {
         let tween = node.do_constant_force(to, duration).register();
         gd_from_native_tween(tween)
     }
@@ -209,7 +209,7 @@ impl DoRigidBody2D {
         node: Gd<RigidBody2D>,
         to: Vector2,
         duration: f64,
-    ) -> Gd<SpirePropertyVector2> {
+    ) -> Gd<SpirePropertyVec2> {
         let tween = node.do_linear_velocity(to, duration).register();
         gd_from_native_tween(tween)
     }
@@ -219,7 +219,7 @@ impl DoRigidBody2D {
         node: Gd<RigidBody2D>,
         to: Vector2,
         duration: f64,
-    ) -> Gd<SpirePropertyVector2> {
+    ) -> Gd<SpirePropertyVec2> {
         Self::r#linear_velocity(node, to, duration)
     }
 }

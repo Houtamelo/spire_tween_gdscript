@@ -42,11 +42,11 @@ fn tokenize_ty_data_enum(gd_ty: GdScriptType, classes: &[ClassData]) -> TokenStr
     match gd_ty {
         GdScriptType::Vector2 => {
             enum_variants_ident.push(format_ident!("Follow2D"));
-            enum_variants_data_ty.push(parse_quote! { PropertyVector2Node2DFollowData });
+            enum_variants_data_ty.push(parse_quote! { PropertyVec2Node2DFollowData });
         }
         GdScriptType::Vector3 => {
             enum_variants_ident.push(format_ident!("Follow3D"));
-            enum_variants_data_ty.push(parse_quote! { PropertyVector3Node3DFollowData });
+            enum_variants_data_ty.push(parse_quote! { PropertyVec3Node3DFollowData });
         }
         _ => {}
     }

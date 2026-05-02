@@ -171,7 +171,7 @@ func test_pause_mode_bound_process_mode_physics() -> bool:
 
 func ensure_only_processing_at(
 	node: Node2D,
-	tween: SpirePropertyVector2, 
+	tween: SpirePropertyVec2,
 	process: Process,
 	expected_end_time: float
 ):

@@ -115,20 +115,20 @@ impl TryFromPathAndObject for StaticBody2DFloatData {
     }
 }
 #[derive(Debug, Clone)]
-pub struct StaticBody2DVector2Data {
-    pub property: StaticBody2DVector2Kind,
+pub struct StaticBody2DVec2Data {
+    pub property: StaticBody2DVec2Kind,
     pub owner: Gd<StaticBody2D>,
     pub owner_obj_or_node: ObjectOrNode,
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum StaticBody2DVector2Kind {
+pub enum StaticBody2DVec2Kind {
     ConstantLinearVelocity,
 }
-impl IProperty<Vector2> for StaticBody2DVector2Data {
+impl IProperty<Vector2> for StaticBody2DVec2Data {
     #[inline]
     fn get_property_value(&self) -> Vector2 {
         match self.property {
-            <StaticBody2DVector2Kind>::ConstantLinearVelocity => {
+            <StaticBody2DVec2Kind>::ConstantLinearVelocity => {
                 let obj = &self.owner;
                 obj.get_constant_linear_velocity()
             }
@@ -137,7 +137,7 @@ impl IProperty<Vector2> for StaticBody2DVector2Data {
     #[inline]
     fn set_property_value(&mut self, value: Vector2) {
         match self.property {
-            <StaticBody2DVector2Kind>::ConstantLinearVelocity => {
+            <StaticBody2DVec2Kind>::ConstantLinearVelocity => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_constant_linear_velocity(val);
@@ -145,12 +145,12 @@ impl IProperty<Vector2> for StaticBody2DVector2Data {
         }
     }
 }
-impl IPropertyData for StaticBody2DVector2Data {
+impl IPropertyData for StaticBody2DVec2Data {
     type Target = StaticBody2D;
     #[inline]
     fn get_property_path(&self) -> NodePath {
         match self.property {
-            <StaticBody2DVector2Kind>::ConstantLinearVelocity => {
+            <StaticBody2DVec2Kind>::ConstantLinearVelocity => {
                 NodePath::from("constant_linear_velocity")
             }
         }
@@ -160,7 +160,7 @@ impl IPropertyData for StaticBody2DVector2Data {
         Some(&self.owner_obj_or_node)
     }
 }
-impl TryFromPathAndObject for StaticBody2DVector2Data {
+impl TryFromPathAndObject for StaticBody2DVec2Data {
     fn try_from_path_and_object(path: &str, object: Gd<Object>) -> Option<Self> {
         object
             .try_cast::<StaticBody2D>()
@@ -169,7 +169,7 @@ impl TryFromPathAndObject for StaticBody2DVector2Data {
                 match path {
                     "constant_linear_velocity" => {
                         Some(Self {
-                            property: <StaticBody2DVector2Kind>::ConstantLinearVelocity,
+                            property: <StaticBody2DVec2Kind>::ConstantLinearVelocity,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -258,8 +258,8 @@ for Gd<Class> {
         end_val: Vector2,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
-        let data = StaticBody2DVector2Data {
-            property: <StaticBody2DVector2Kind>::ConstantLinearVelocity,
+        let data = StaticBody2DVec2Data {
+            property: <StaticBody2DVec2Kind>::ConstantLinearVelocity,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<StaticBody2D>().upcast::<Node>(),
@@ -324,8 +324,8 @@ impl<
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
         let owner: Gd<StaticBody2D> = self.to_gd().upcast();
-        let data = StaticBody2DVector2Data {
-            property: <StaticBody2DVector2Kind>::ConstantLinearVelocity,
+        let data = StaticBody2DVec2Data {
+            property: <StaticBody2DVec2Kind>::ConstantLinearVelocity,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };

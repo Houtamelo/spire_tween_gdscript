@@ -135,7 +135,7 @@ impl DoSpriteBase3D {
         node: Gd<SpriteBase3D>,
         to: Vector2,
         duration: f64,
-    ) -> Gd<SpirePropertyVector2> {
+    ) -> Gd<SpirePropertyVec2> {
         let tween = node.do_offset(to, duration).register();
         gd_from_native_tween(tween)
     }

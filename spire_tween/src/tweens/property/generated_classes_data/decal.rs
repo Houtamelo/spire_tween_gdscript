@@ -239,20 +239,20 @@ impl TryFromPathAndObject for DecalFloatData {
     }
 }
 #[derive(Debug, Clone)]
-pub struct DecalVector3Data {
-    pub property: DecalVector3Kind,
+pub struct DecalVec3Data {
+    pub property: DecalVec3Kind,
     pub owner: Gd<Decal>,
     pub owner_obj_or_node: ObjectOrNode,
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum DecalVector3Kind {
+pub enum DecalVec3Kind {
     Size,
 }
-impl IProperty<Vector3> for DecalVector3Data {
+impl IProperty<Vector3> for DecalVec3Data {
     #[inline]
     fn get_property_value(&self) -> Vector3 {
         match self.property {
-            <DecalVector3Kind>::Size => {
+            <DecalVec3Kind>::Size => {
                 let obj = &self.owner;
                 obj.get_size()
             }
@@ -261,7 +261,7 @@ impl IProperty<Vector3> for DecalVector3Data {
     #[inline]
     fn set_property_value(&mut self, value: Vector3) {
         match self.property {
-            <DecalVector3Kind>::Size => {
+            <DecalVec3Kind>::Size => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_size(val);
@@ -269,12 +269,12 @@ impl IProperty<Vector3> for DecalVector3Data {
         }
     }
 }
-impl IPropertyData for DecalVector3Data {
+impl IPropertyData for DecalVec3Data {
     type Target = Decal;
     #[inline]
     fn get_property_path(&self) -> NodePath {
         match self.property {
-            <DecalVector3Kind>::Size => NodePath::from("size"),
+            <DecalVec3Kind>::Size => NodePath::from("size"),
         }
     }
     #[inline]
@@ -282,7 +282,7 @@ impl IPropertyData for DecalVector3Data {
         Some(&self.owner_obj_or_node)
     }
 }
-impl TryFromPathAndObject for DecalVector3Data {
+impl TryFromPathAndObject for DecalVec3Data {
     fn try_from_path_and_object(path: &str, object: Gd<Object>) -> Option<Self> {
         object
             .try_cast::<Decal>()
@@ -291,7 +291,7 @@ impl TryFromPathAndObject for DecalVector3Data {
                 match path {
                     "size" => {
                         Some(Self {
-                            property: <DecalVector3Kind>::Size,
+                            property: <DecalVec3Kind>::Size,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -664,8 +664,8 @@ impl<Class: Inherits<Decal> + Inherits<Object>> SpireDoDecal<()> for Gd<Class> {
         end_val: Vector3,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
-        let data = DecalVector3Data {
-            property: <DecalVector3Kind>::Size,
+        let data = DecalVec3Data {
+            property: <DecalVec3Kind>::Size,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<Decal>().upcast::<Node>(),
@@ -911,8 +911,8 @@ for T {
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
         let owner: Gd<Decal> = self.to_gd().upcast();
-        let data = DecalVector3Data {
-            property: <DecalVector3Kind>::Size,
+        let data = DecalVec3Data {
+            property: <DecalVec3Kind>::Size,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };

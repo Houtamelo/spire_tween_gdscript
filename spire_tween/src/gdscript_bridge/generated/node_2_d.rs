@@ -179,7 +179,7 @@ impl DoNode2D {
         node: Gd<Node2D>,
         to: Vector2,
         duration: f64,
-    ) -> Gd<SpirePropertyVector2> {
+    ) -> Gd<SpirePropertyVec2> {
         let tween = node.do_position(to, duration).register();
         gd_from_native_tween(tween)
     }
@@ -189,7 +189,7 @@ impl DoNode2D {
         node: Gd<Node2D>,
         to: Vector2,
         duration: f64,
-    ) -> Gd<SpirePropertyVector2> {
+    ) -> Gd<SpirePropertyVec2> {
         Self::r#position(node, to, duration)
     }
     /**[b]Behavior: [/b]Tweens the property [member Node2D.global_position] over [param duration] seconds.
@@ -200,24 +200,20 @@ impl DoNode2D {
         node: Gd<Node2D>,
         to: Vector2,
         duration: f64,
-    ) -> Gd<SpirePropertyVector2> {
+    ) -> Gd<SpirePropertyVec2> {
         let tween = node.do_global_position(to, duration).register();
         gd_from_native_tween(tween)
     }
     ///Alias for [method global_position].
     #[func(rename = move)]
-    fn r#move(node: Gd<Node2D>, to: Vector2, duration: f64) -> Gd<SpirePropertyVector2> {
+    fn r#move(node: Gd<Node2D>, to: Vector2, duration: f64) -> Gd<SpirePropertyVec2> {
         Self::r#global_position(node, to, duration)
     }
     /**[b]Behavior: [/b]Tweens the property [member Node2D.scale] over [param duration] seconds.
 
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/
     #[func(rename = scale)]
-    fn r#scale(
-        node: Gd<Node2D>,
-        to: Vector2,
-        duration: f64,
-    ) -> Gd<SpirePropertyVector2> {
+    fn r#scale(node: Gd<Node2D>, to: Vector2, duration: f64) -> Gd<SpirePropertyVec2> {
         let tween = node.do_scale(to, duration).register();
         gd_from_native_tween(tween)
     }
@@ -229,7 +225,7 @@ impl DoNode2D {
         node: Gd<Node2D>,
         to: Vector2,
         duration: f64,
-    ) -> Gd<SpirePropertyVector2> {
+    ) -> Gd<SpirePropertyVec2> {
         let tween = node.do_global_scale(to, duration).register();
         gd_from_native_tween(tween)
     }
@@ -238,7 +234,7 @@ impl DoNode2D {
         node: Gd<Node2D>,
         follow_this: Gd<Node2D>,
         speed: f64,
-    ) -> Gd<SpirePropertyVector2> {
+    ) -> Gd<SpirePropertyVec2> {
         let tween = node.do_follow(follow_this, speed).register();
         gd_from_native_tween(tween)
     }
@@ -301,6 +297,7 @@ impl DoNode2D {
         rotation: f32,
         shear: f32,
         mode: Spiral,
+        #[opt(default = Vector2::splat(0.1))]
         log_growth: Vector2,
     ) -> Gd<SpireMethodFloat> {
         let inner = node
@@ -323,6 +320,7 @@ impl DoNode2D {
         node: Gd<Node2D>,
         vertices: Array<Vector2>,
         duration_or_speed: f64,
+        #[opt(default = false)]
         is_speed_based: bool,
     ) -> Gd<SpireSequence> {
         let tween = node

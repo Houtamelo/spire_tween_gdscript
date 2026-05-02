@@ -409,20 +409,20 @@ impl TryFromPathAndObject for TextureProgressBarFloatData {
     }
 }
 #[derive(Debug, Clone)]
-pub struct TextureProgressBarVector2Data {
-    pub property: TextureProgressBarVector2Kind,
+pub struct TextureProgressBarVec2Data {
+    pub property: TextureProgressBarVec2Kind,
     pub owner: Gd<TextureProgressBar>,
     pub owner_obj_or_node: ObjectOrNode,
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum TextureProgressBarVector2Kind {
+pub enum TextureProgressBarVec2Kind {
     RadialCenterOffset,
 }
-impl IProperty<Vector2> for TextureProgressBarVector2Data {
+impl IProperty<Vector2> for TextureProgressBarVec2Data {
     #[inline]
     fn get_property_value(&self) -> Vector2 {
         match self.property {
-            <TextureProgressBarVector2Kind>::RadialCenterOffset => {
+            <TextureProgressBarVec2Kind>::RadialCenterOffset => {
                 let obj = &self.owner;
                 obj.clone().get_radial_center_offset()
             }
@@ -431,7 +431,7 @@ impl IProperty<Vector2> for TextureProgressBarVector2Data {
     #[inline]
     fn set_property_value(&mut self, value: Vector2) {
         match self.property {
-            <TextureProgressBarVector2Kind>::RadialCenterOffset => {
+            <TextureProgressBarVec2Kind>::RadialCenterOffset => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_radial_center_offset(val);
@@ -439,12 +439,12 @@ impl IProperty<Vector2> for TextureProgressBarVector2Data {
         }
     }
 }
-impl IPropertyData for TextureProgressBarVector2Data {
+impl IPropertyData for TextureProgressBarVec2Data {
     type Target = TextureProgressBar;
     #[inline]
     fn get_property_path(&self) -> NodePath {
         match self.property {
-            <TextureProgressBarVector2Kind>::RadialCenterOffset => {
+            <TextureProgressBarVec2Kind>::RadialCenterOffset => {
                 NodePath::from("radial_center_offset")
             }
         }
@@ -454,7 +454,7 @@ impl IPropertyData for TextureProgressBarVector2Data {
         Some(&self.owner_obj_or_node)
     }
 }
-impl TryFromPathAndObject for TextureProgressBarVector2Data {
+impl TryFromPathAndObject for TextureProgressBarVec2Data {
     fn try_from_path_and_object(path: &str, object: Gd<Object>) -> Option<Self> {
         object
             .try_cast::<TextureProgressBar>()
@@ -463,7 +463,7 @@ impl TryFromPathAndObject for TextureProgressBarVector2Data {
                 match path {
                     "radial_center_offset" => {
                         Some(Self {
-                            property: <TextureProgressBarVector2Kind>::RadialCenterOffset,
+                            property: <TextureProgressBarVec2Kind>::RadialCenterOffset,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -948,8 +948,8 @@ impl<
         end_val: Vector2,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
-        let data = TextureProgressBarVector2Data {
-            property: <TextureProgressBarVector2Kind>::RadialCenterOffset,
+        let data = TextureProgressBarVec2Data {
+            property: <TextureProgressBarVec2Kind>::RadialCenterOffset,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<TextureProgressBar>().upcast::<Node>(),
@@ -1257,8 +1257,8 @@ impl<
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
         let owner: Gd<TextureProgressBar> = self.to_gd().upcast();
-        let data = TextureProgressBarVector2Data {
-            property: <TextureProgressBarVector2Kind>::RadialCenterOffset,
+        let data = TextureProgressBarVec2Data {
+            property: <TextureProgressBarVec2Kind>::RadialCenterOffset,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };

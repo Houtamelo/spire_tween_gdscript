@@ -153,10 +153,10 @@ gd_method_tween! { SpireMethodInt, i64, i64, c"SpireMethodInt" }
 gd_method_tween! { SpireMethodFloat, f64, f64, c"SpireMethodFloat" }
 gd_method_tween! { SpireMethodString, GString, GString, c"SpireMethodString" }
 gd_method_tween! { SpireMethodColor, Color, Color, c"SpireMethodColor" }
-gd_method_tween! { SpireMethodVector2, Vector2, Vector2, c"SpireMethodVector2" }
-gd_method_tween! { SpireMethodVector2i, Vector2i, Vector2i, c"SpireMethodVector2i" }
-gd_method_tween! { SpireMethodVector3, Vector3, Vector3, c"SpireMethodVector3" }
-gd_method_tween! { SpireMethodVector3i, Vector3i, Vector3i, c"SpireMethodVector3i" }
+gd_method_tween! { SpireMethodVec2, Vector2, Vector2, c"SpireMethodVec2" }
+gd_method_tween! { SpireMethodVec2i, Vector2i, Vector2i, c"SpireMethodVec2i" }
+gd_method_tween! { SpireMethodVec3, Vector3, Vector3, c"SpireMethodVec3" }
+gd_method_tween! { SpireMethodVec3i, Vector3i, Vector3i, c"SpireMethodVec3i" }
 gd_method_tween! { SpireMethod, Variant, Variant, c"SpireMethod" }
 
 macro_rules! define_instantiate_fn {
@@ -180,10 +180,10 @@ define_instantiate_fn! { SpireMethodInt, i64, Docs = "See [method Spire.do_call_
 define_instantiate_fn! { SpireMethodFloat, f64, Docs = "See [method Spire.do_call_float]." }
 define_instantiate_fn! { SpireMethodString, GString, Docs = "See [method Spire.do_call_string]." }
 define_instantiate_fn! { SpireMethodColor, Color, Docs = "See [method Spire.do_call_color]." }
-define_instantiate_fn! { SpireMethodVector2, Vector2, Docs = "See [method Spire.do_call_vector2]." }
-define_instantiate_fn! { SpireMethodVector2i, Vector2i, Docs = "See [method Spire.do_call_vector2i]." }
-define_instantiate_fn! { SpireMethodVector3, Vector3, Docs = "See [method Spire.do_call_vector3]." }
-define_instantiate_fn! { SpireMethodVector3i, Vector3i, Docs = "See [method Spire.do_call_vector3i]." }
+define_instantiate_fn! { SpireMethodVec2, Vector2, Docs = "See [method Spire.do_call_vec2]." }
+define_instantiate_fn! { SpireMethodVec2i, Vector2i, Docs = "See [method Spire.do_call_vec2i]." }
+define_instantiate_fn! { SpireMethodVec3, Vector3, Docs = "See [method Spire.do_call_vec3]." }
+define_instantiate_fn! { SpireMethodVec3i, Vector3i, Docs = "See [method Spire.do_call_vec3i]." }
 
 #[godot_api(secondary)]
 impl SpireMethod {

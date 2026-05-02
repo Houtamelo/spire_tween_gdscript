@@ -381,30 +381,30 @@ impl TryFromPathAndObject for PhysicalBone3DFloatData {
     }
 }
 #[derive(Debug, Clone)]
-pub struct PhysicalBone3DVector3Data {
-    pub property: PhysicalBone3DVector3Kind,
+pub struct PhysicalBone3DVec3Data {
+    pub property: PhysicalBone3DVec3Kind,
     pub owner: Gd<PhysicalBone3D>,
     pub owner_obj_or_node: ObjectOrNode,
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum PhysicalBone3DVector3Kind {
+pub enum PhysicalBone3DVec3Kind {
     AngularVelocity,
     JointRotation,
     LinearVelocity,
 }
-impl IProperty<Vector3> for PhysicalBone3DVector3Data {
+impl IProperty<Vector3> for PhysicalBone3DVec3Data {
     #[inline]
     fn get_property_value(&self) -> Vector3 {
         match self.property {
-            <PhysicalBone3DVector3Kind>::AngularVelocity => {
+            <PhysicalBone3DVec3Kind>::AngularVelocity => {
                 let obj = &self.owner;
                 obj.get_angular_velocity()
             }
-            <PhysicalBone3DVector3Kind>::JointRotation => {
+            <PhysicalBone3DVec3Kind>::JointRotation => {
                 let obj = &self.owner;
                 obj.get_joint_rotation()
             }
-            <PhysicalBone3DVector3Kind>::LinearVelocity => {
+            <PhysicalBone3DVec3Kind>::LinearVelocity => {
                 let obj = &self.owner;
                 obj.get_linear_velocity()
             }
@@ -413,17 +413,17 @@ impl IProperty<Vector3> for PhysicalBone3DVector3Data {
     #[inline]
     fn set_property_value(&mut self, value: Vector3) {
         match self.property {
-            <PhysicalBone3DVector3Kind>::AngularVelocity => {
+            <PhysicalBone3DVec3Kind>::AngularVelocity => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_angular_velocity(val);
             }
-            <PhysicalBone3DVector3Kind>::JointRotation => {
+            <PhysicalBone3DVec3Kind>::JointRotation => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_joint_rotation(val);
             }
-            <PhysicalBone3DVector3Kind>::LinearVelocity => {
+            <PhysicalBone3DVec3Kind>::LinearVelocity => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_linear_velocity(val);
@@ -431,20 +431,16 @@ impl IProperty<Vector3> for PhysicalBone3DVector3Data {
         }
     }
 }
-impl IPropertyData for PhysicalBone3DVector3Data {
+impl IPropertyData for PhysicalBone3DVec3Data {
     type Target = PhysicalBone3D;
     #[inline]
     fn get_property_path(&self) -> NodePath {
         match self.property {
-            <PhysicalBone3DVector3Kind>::AngularVelocity => {
+            <PhysicalBone3DVec3Kind>::AngularVelocity => {
                 NodePath::from("angular_velocity")
             }
-            <PhysicalBone3DVector3Kind>::JointRotation => {
-                NodePath::from("joint_rotation")
-            }
-            <PhysicalBone3DVector3Kind>::LinearVelocity => {
-                NodePath::from("linear_velocity")
-            }
+            <PhysicalBone3DVec3Kind>::JointRotation => NodePath::from("joint_rotation"),
+            <PhysicalBone3DVec3Kind>::LinearVelocity => NodePath::from("linear_velocity"),
         }
     }
     #[inline]
@@ -452,7 +448,7 @@ impl IPropertyData for PhysicalBone3DVector3Data {
         Some(&self.owner_obj_or_node)
     }
 }
-impl TryFromPathAndObject for PhysicalBone3DVector3Data {
+impl TryFromPathAndObject for PhysicalBone3DVec3Data {
     fn try_from_path_and_object(path: &str, object: Gd<Object>) -> Option<Self> {
         object
             .try_cast::<PhysicalBone3D>()
@@ -461,7 +457,7 @@ impl TryFromPathAndObject for PhysicalBone3DVector3Data {
                 match path {
                     "angular_velocity" => {
                         Some(Self {
-                            property: <PhysicalBone3DVector3Kind>::AngularVelocity,
+                            property: <PhysicalBone3DVec3Kind>::AngularVelocity,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -470,7 +466,7 @@ impl TryFromPathAndObject for PhysicalBone3DVector3Data {
                     }
                     "joint_rotation" => {
                         Some(Self {
-                            property: <PhysicalBone3DVector3Kind>::JointRotation,
+                            property: <PhysicalBone3DVec3Kind>::JointRotation,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -479,7 +475,7 @@ impl TryFromPathAndObject for PhysicalBone3DVector3Data {
                     }
                     "linear_velocity" => {
                         Some(Self {
-                            property: <PhysicalBone3DVector3Kind>::LinearVelocity,
+                            property: <PhysicalBone3DVec3Kind>::LinearVelocity,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -822,8 +818,8 @@ for Gd<Class> {
         end_val: Vector3,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
-        let data = PhysicalBone3DVector3Data {
-            property: <PhysicalBone3DVector3Kind>::AngularVelocity,
+        let data = PhysicalBone3DVec3Data {
+            property: <PhysicalBone3DVec3Kind>::AngularVelocity,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<PhysicalBone3D>().upcast::<Node>(),
@@ -838,8 +834,8 @@ for Gd<Class> {
         end_val: Vector3,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
-        let data = PhysicalBone3DVector3Data {
-            property: <PhysicalBone3DVector3Kind>::JointRotation,
+        let data = PhysicalBone3DVec3Data {
+            property: <PhysicalBone3DVec3Kind>::JointRotation,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<PhysicalBone3D>().upcast::<Node>(),
@@ -854,8 +850,8 @@ for Gd<Class> {
         end_val: Vector3,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
-        let data = PhysicalBone3DVector3Data {
-            property: <PhysicalBone3DVector3Kind>::LinearVelocity,
+        let data = PhysicalBone3DVec3Data {
+            property: <PhysicalBone3DVec3Kind>::LinearVelocity,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<PhysicalBone3D>().upcast::<Node>(),
@@ -1096,8 +1092,8 @@ impl<
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
         let owner: Gd<PhysicalBone3D> = self.to_gd().upcast();
-        let data = PhysicalBone3DVector3Data {
-            property: <PhysicalBone3DVector3Kind>::AngularVelocity,
+        let data = PhysicalBone3DVec3Data {
+            property: <PhysicalBone3DVec3Kind>::AngularVelocity,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
@@ -1111,8 +1107,8 @@ impl<
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
         let owner: Gd<PhysicalBone3D> = self.to_gd().upcast();
-        let data = PhysicalBone3DVector3Data {
-            property: <PhysicalBone3DVector3Kind>::JointRotation,
+        let data = PhysicalBone3DVec3Data {
+            property: <PhysicalBone3DVec3Kind>::JointRotation,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
@@ -1126,8 +1122,8 @@ impl<
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
         let owner: Gd<PhysicalBone3D> = self.to_gd().upcast();
-        let data = PhysicalBone3DVector3Data {
-            property: <PhysicalBone3DVector3Kind>::LinearVelocity,
+        let data = PhysicalBone3DVec3Data {
+            property: <PhysicalBone3DVec3Kind>::LinearVelocity,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };

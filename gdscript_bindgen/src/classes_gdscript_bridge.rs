@@ -165,7 +165,7 @@ fn template_bridge_methods(class_ident: &Ident) -> TokenStream {
     match class_name.as_str() {
         "Node2D" => quote! {
             #[func]
-            fn follow(node: Gd<Node2D>, follow_this: Gd<Node2D>, speed: f64) -> Gd<SpirePropertyVector2> {
+            fn follow(node: Gd<Node2D>, follow_this: Gd<Node2D>, speed: f64) -> Gd<SpirePropertyVec2> {
                 let tween = node.do_follow(follow_this, speed).register();
                 gd_from_native_tween(tween)
             }
@@ -220,6 +220,7 @@ fn template_bridge_methods(class_ident: &Ident) -> TokenStream {
                 rotation: f32,
                 shear: f32,
                 mode: Spiral,
+                #[opt(default = Vector2::splat(0.1))]
                 log_growth: Vector2,
             ) -> Gd<SpireMethodFloat> {
                 let inner = node.do_spiral(center, from_angle, to_angle, scale, duration, rotation, shear, mode, log_growth).register();
@@ -231,6 +232,7 @@ fn template_bridge_methods(class_ident: &Ident) -> TokenStream {
                 node: Gd<Node2D>,
                 vertices: Array<Vector2>,
                 duration_or_speed: f64,
+                #[opt(default = false)]
                 is_speed_based: bool,
             ) -> Gd<SpireSequence> {
                 let tween = node.do_contour_shape(vertices, duration_or_speed, is_speed_based).register();
@@ -239,7 +241,7 @@ fn template_bridge_methods(class_ident: &Ident) -> TokenStream {
         },
         "Node3D" => quote! {
             #[func]
-            fn follow(node: Gd<Node3D>, follow_this: Gd<Node3D>, speed: f64) -> Gd<SpirePropertyVector3> {
+            fn follow(node: Gd<Node3D>, follow_this: Gd<Node3D>, speed: f64) -> Gd<SpirePropertyVec3> {
                 let tween = node.do_follow(follow_this, speed).register();
                 gd_from_native_tween(tween)
             }
@@ -288,13 +290,13 @@ fn template_bridge_methods(class_ident: &Ident) -> TokenStream {
         },
         "Skeleton3D" => quote! {
             #[func]
-            fn bone_position(node: Gd<Skeleton3D>, bone_idx: i32, to: Vector3, duration: f64) -> Gd<SpirePropertyVector3> {
+            fn bone_position(node: Gd<Skeleton3D>, bone_idx: i32, to: Vector3, duration: f64) -> Gd<SpirePropertyVec3> {
                 let tween = node.do_bone_position(bone_idx, to, duration).register();
                 gd_from_native_tween(tween)
             }
 
             #[func]
-            fn bone_scale(node: Gd<Skeleton3D>, bone_idx: i32, to: Vector3, duration: f64) -> Gd<SpirePropertyVector3> {
+            fn bone_scale(node: Gd<Skeleton3D>, bone_idx: i32, to: Vector3, duration: f64) -> Gd<SpirePropertyVec3> {
                 let tween = node.do_bone_scale(bone_idx, to, duration).register();
                 gd_from_native_tween(tween)
             }

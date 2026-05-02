@@ -433,13 +433,13 @@ impl TryFromPathAndObject for ControlFloatData {
     }
 }
 #[derive(Debug, Clone)]
-pub struct ControlVector2Data {
-    pub property: ControlVector2Kind,
+pub struct ControlVec2Data {
+    pub property: ControlVec2Kind,
     pub owner: Gd<Control>,
     pub owner_obj_or_node: ObjectOrNode,
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum ControlVector2Kind {
+pub enum ControlVec2Kind {
     CustomMinimumSize,
     Position,
     GlobalPosition,
@@ -447,31 +447,31 @@ pub enum ControlVector2Kind {
     Scale,
     Size,
 }
-impl IProperty<Vector2> for ControlVector2Data {
+impl IProperty<Vector2> for ControlVec2Data {
     #[inline]
     fn get_property_value(&self) -> Vector2 {
         match self.property {
-            <ControlVector2Kind>::CustomMinimumSize => {
+            <ControlVec2Kind>::CustomMinimumSize => {
                 let obj = &self.owner;
                 obj.get_custom_minimum_size()
             }
-            <ControlVector2Kind>::Position => {
+            <ControlVec2Kind>::Position => {
                 let obj = &self.owner;
                 obj.get_position()
             }
-            <ControlVector2Kind>::GlobalPosition => {
+            <ControlVec2Kind>::GlobalPosition => {
                 let obj = &self.owner;
                 obj.get_global_position()
             }
-            <ControlVector2Kind>::PivotOffset => {
+            <ControlVec2Kind>::PivotOffset => {
                 let obj = &self.owner;
                 obj.get_pivot_offset()
             }
-            <ControlVector2Kind>::Scale => {
+            <ControlVec2Kind>::Scale => {
                 let obj = &self.owner;
                 obj.get_scale()
             }
-            <ControlVector2Kind>::Size => {
+            <ControlVec2Kind>::Size => {
                 let obj = &self.owner;
                 obj.get_size()
             }
@@ -480,32 +480,32 @@ impl IProperty<Vector2> for ControlVector2Data {
     #[inline]
     fn set_property_value(&mut self, value: Vector2) {
         match self.property {
-            <ControlVector2Kind>::CustomMinimumSize => {
+            <ControlVec2Kind>::CustomMinimumSize => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_custom_minimum_size(val);
             }
-            <ControlVector2Kind>::Position => {
+            <ControlVec2Kind>::Position => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_position(val);
             }
-            <ControlVector2Kind>::GlobalPosition => {
+            <ControlVec2Kind>::GlobalPosition => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_global_position(val);
             }
-            <ControlVector2Kind>::PivotOffset => {
+            <ControlVec2Kind>::PivotOffset => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_pivot_offset(val);
             }
-            <ControlVector2Kind>::Scale => {
+            <ControlVec2Kind>::Scale => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_scale(val);
             }
-            <ControlVector2Kind>::Size => {
+            <ControlVec2Kind>::Size => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_size(val);
@@ -513,19 +513,17 @@ impl IProperty<Vector2> for ControlVector2Data {
         }
     }
 }
-impl IPropertyData for ControlVector2Data {
+impl IPropertyData for ControlVec2Data {
     type Target = Control;
     #[inline]
     fn get_property_path(&self) -> NodePath {
         match self.property {
-            <ControlVector2Kind>::CustomMinimumSize => {
-                NodePath::from("custom_minimum_size")
-            }
-            <ControlVector2Kind>::Position => NodePath::from("position"),
-            <ControlVector2Kind>::GlobalPosition => NodePath::from("global_position"),
-            <ControlVector2Kind>::PivotOffset => NodePath::from("pivot_offset"),
-            <ControlVector2Kind>::Scale => NodePath::from("scale"),
-            <ControlVector2Kind>::Size => NodePath::from("size"),
+            <ControlVec2Kind>::CustomMinimumSize => NodePath::from("custom_minimum_size"),
+            <ControlVec2Kind>::Position => NodePath::from("position"),
+            <ControlVec2Kind>::GlobalPosition => NodePath::from("global_position"),
+            <ControlVec2Kind>::PivotOffset => NodePath::from("pivot_offset"),
+            <ControlVec2Kind>::Scale => NodePath::from("scale"),
+            <ControlVec2Kind>::Size => NodePath::from("size"),
         }
     }
     #[inline]
@@ -533,7 +531,7 @@ impl IPropertyData for ControlVector2Data {
         Some(&self.owner_obj_or_node)
     }
 }
-impl TryFromPathAndObject for ControlVector2Data {
+impl TryFromPathAndObject for ControlVec2Data {
     fn try_from_path_and_object(path: &str, object: Gd<Object>) -> Option<Self> {
         object
             .try_cast::<Control>()
@@ -542,7 +540,7 @@ impl TryFromPathAndObject for ControlVector2Data {
                 match path {
                     "custom_minimum_size" => {
                         Some(Self {
-                            property: <ControlVector2Kind>::CustomMinimumSize,
+                            property: <ControlVec2Kind>::CustomMinimumSize,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -551,7 +549,7 @@ impl TryFromPathAndObject for ControlVector2Data {
                     }
                     "position" => {
                         Some(Self {
-                            property: <ControlVector2Kind>::Position,
+                            property: <ControlVec2Kind>::Position,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -560,7 +558,7 @@ impl TryFromPathAndObject for ControlVector2Data {
                     }
                     "global_position" => {
                         Some(Self {
-                            property: <ControlVector2Kind>::GlobalPosition,
+                            property: <ControlVec2Kind>::GlobalPosition,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -569,7 +567,7 @@ impl TryFromPathAndObject for ControlVector2Data {
                     }
                     "pivot_offset" => {
                         Some(Self {
-                            property: <ControlVector2Kind>::PivotOffset,
+                            property: <ControlVec2Kind>::PivotOffset,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -578,7 +576,7 @@ impl TryFromPathAndObject for ControlVector2Data {
                     }
                     "scale" => {
                         Some(Self {
-                            property: <ControlVector2Kind>::Scale,
+                            property: <ControlVec2Kind>::Scale,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -587,7 +585,7 @@ impl TryFromPathAndObject for ControlVector2Data {
                     }
                     "size" => {
                         Some(Self {
-                            property: <ControlVector2Kind>::Size,
+                            property: <ControlVec2Kind>::Size,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -1109,8 +1107,8 @@ impl<Class: Inherits<Control> + Inherits<Object>> SpireDoControl<()> for Gd<Clas
         end_val: Vector2,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
-        let data = ControlVector2Data {
-            property: <ControlVector2Kind>::CustomMinimumSize,
+        let data = ControlVec2Data {
+            property: <ControlVec2Kind>::CustomMinimumSize,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<Control>().upcast::<Node>(),
@@ -1125,8 +1123,8 @@ impl<Class: Inherits<Control> + Inherits<Object>> SpireDoControl<()> for Gd<Clas
         end_val: Vector2,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
-        let data = ControlVector2Data {
-            property: <ControlVector2Kind>::Position,
+        let data = ControlVec2Data {
+            property: <ControlVec2Kind>::Position,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<Control>().upcast::<Node>(),
@@ -1141,8 +1139,8 @@ impl<Class: Inherits<Control> + Inherits<Object>> SpireDoControl<()> for Gd<Clas
         end_val: Vector2,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
-        let data = ControlVector2Data {
-            property: <ControlVector2Kind>::Position,
+        let data = ControlVec2Data {
+            property: <ControlVec2Kind>::Position,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<Control>().upcast::<Node>(),
@@ -1157,8 +1155,8 @@ impl<Class: Inherits<Control> + Inherits<Object>> SpireDoControl<()> for Gd<Clas
         end_val: Vector2,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
-        let data = ControlVector2Data {
-            property: <ControlVector2Kind>::GlobalPosition,
+        let data = ControlVec2Data {
+            property: <ControlVec2Kind>::GlobalPosition,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<Control>().upcast::<Node>(),
@@ -1173,8 +1171,8 @@ impl<Class: Inherits<Control> + Inherits<Object>> SpireDoControl<()> for Gd<Clas
         end_val: Vector2,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
-        let data = ControlVector2Data {
-            property: <ControlVector2Kind>::GlobalPosition,
+        let data = ControlVec2Data {
+            property: <ControlVec2Kind>::GlobalPosition,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<Control>().upcast::<Node>(),
@@ -1189,8 +1187,8 @@ impl<Class: Inherits<Control> + Inherits<Object>> SpireDoControl<()> for Gd<Clas
         end_val: Vector2,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
-        let data = ControlVector2Data {
-            property: <ControlVector2Kind>::PivotOffset,
+        let data = ControlVec2Data {
+            property: <ControlVec2Kind>::PivotOffset,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<Control>().upcast::<Node>(),
@@ -1205,8 +1203,8 @@ impl<Class: Inherits<Control> + Inherits<Object>> SpireDoControl<()> for Gd<Clas
         end_val: Vector2,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
-        let data = ControlVector2Data {
-            property: <ControlVector2Kind>::Scale,
+        let data = ControlVec2Data {
+            property: <ControlVec2Kind>::Scale,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<Control>().upcast::<Node>(),
@@ -1221,8 +1219,8 @@ impl<Class: Inherits<Control> + Inherits<Object>> SpireDoControl<()> for Gd<Clas
         end_val: Vector2,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
-        let data = ControlVector2Data {
-            property: <ControlVector2Kind>::Size,
+        let data = ControlVec2Data {
+            property: <ControlVec2Kind>::Size,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<Control>().upcast::<Node>(),
@@ -1571,8 +1569,8 @@ for T {
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
         let owner: Gd<Control> = self.to_gd().upcast();
-        let data = ControlVector2Data {
-            property: <ControlVector2Kind>::CustomMinimumSize,
+        let data = ControlVec2Data {
+            property: <ControlVec2Kind>::CustomMinimumSize,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
@@ -1586,8 +1584,8 @@ for T {
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
         let owner: Gd<Control> = self.to_gd().upcast();
-        let data = ControlVector2Data {
-            property: <ControlVector2Kind>::Position,
+        let data = ControlVec2Data {
+            property: <ControlVec2Kind>::Position,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
@@ -1601,8 +1599,8 @@ for T {
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
         let owner: Gd<Control> = self.to_gd().upcast();
-        let data = ControlVector2Data {
-            property: <ControlVector2Kind>::Position,
+        let data = ControlVec2Data {
+            property: <ControlVec2Kind>::Position,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
@@ -1616,8 +1614,8 @@ for T {
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
         let owner: Gd<Control> = self.to_gd().upcast();
-        let data = ControlVector2Data {
-            property: <ControlVector2Kind>::GlobalPosition,
+        let data = ControlVec2Data {
+            property: <ControlVec2Kind>::GlobalPosition,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
@@ -1631,8 +1629,8 @@ for T {
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
         let owner: Gd<Control> = self.to_gd().upcast();
-        let data = ControlVector2Data {
-            property: <ControlVector2Kind>::GlobalPosition,
+        let data = ControlVec2Data {
+            property: <ControlVec2Kind>::GlobalPosition,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
@@ -1646,8 +1644,8 @@ for T {
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
         let owner: Gd<Control> = self.to_gd().upcast();
-        let data = ControlVector2Data {
-            property: <ControlVector2Kind>::PivotOffset,
+        let data = ControlVec2Data {
+            property: <ControlVec2Kind>::PivotOffset,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
@@ -1661,8 +1659,8 @@ for T {
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
         let owner: Gd<Control> = self.to_gd().upcast();
-        let data = ControlVector2Data {
-            property: <ControlVector2Kind>::Scale,
+        let data = ControlVec2Data {
+            property: <ControlVec2Kind>::Scale,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
@@ -1676,8 +1674,8 @@ for T {
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
         let owner: Gd<Control> = self.to_gd().upcast();
-        let data = ControlVector2Data {
-            property: <ControlVector2Kind>::Size,
+        let data = ControlVec2Data {
+            property: <ControlVec2Kind>::Size,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };

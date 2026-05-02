@@ -95,7 +95,7 @@ impl DoArea2D {
         node: Gd<Area2D>,
         to: Vector2,
         duration: f64,
-    ) -> Gd<SpirePropertyVector2> {
+    ) -> Gd<SpirePropertyVec2> {
         let tween = node.do_gravity_direction(to, duration).register();
         gd_from_native_tween(tween)
     }
@@ -107,7 +107,7 @@ impl DoArea2D {
         node: Gd<Area2D>,
         to: Vector2,
         duration: f64,
-    ) -> Gd<SpirePropertyVector2> {
+    ) -> Gd<SpirePropertyVec2> {
         let tween = node.do_gravity_point_center(to, duration).register();
         gd_from_native_tween(tween)
     }

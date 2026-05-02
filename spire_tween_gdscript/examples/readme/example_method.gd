@@ -22,8 +22,8 @@ func godot_impl():
 
 
 func spire_impl():
-	# Signature: func(callable: Callable, from: Vector2i, to: Vector2i, duration: float) -> SpireMethodVector2i
-	Spire.do_call_vector2i(create_dot, from, to, duration)\
+	# Signature: func(callable: Callable, from: Vector2i, to: Vector2i, duration: float) -> SpireMethodVec2i
+	Spire.do_call_vec2i(create_dot, from, to, duration)\
 		.set_process_mode(Spire.PROCESS_MODE_PHYSICS)
 
 

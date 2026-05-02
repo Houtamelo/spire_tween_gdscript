@@ -189,30 +189,30 @@ impl TryFromPathAndObject for ParallaxBackgroundFloatData {
     }
 }
 #[derive(Debug, Clone)]
-pub struct ParallaxBackgroundVector2Data {
-    pub property: ParallaxBackgroundVector2Kind,
+pub struct ParallaxBackgroundVec2Data {
+    pub property: ParallaxBackgroundVec2Kind,
     pub owner: Gd<ParallaxBackground>,
     pub owner_obj_or_node: ObjectOrNode,
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum ParallaxBackgroundVector2Kind {
+pub enum ParallaxBackgroundVec2Kind {
     ScrollBaseOffset,
     ScrollBaseScale,
     ScrollOffset,
 }
-impl IProperty<Vector2> for ParallaxBackgroundVector2Data {
+impl IProperty<Vector2> for ParallaxBackgroundVec2Data {
     #[inline]
     fn get_property_value(&self) -> Vector2 {
         match self.property {
-            <ParallaxBackgroundVector2Kind>::ScrollBaseOffset => {
+            <ParallaxBackgroundVec2Kind>::ScrollBaseOffset => {
                 let obj = &self.owner;
                 obj.get_scroll_base_offset()
             }
-            <ParallaxBackgroundVector2Kind>::ScrollBaseScale => {
+            <ParallaxBackgroundVec2Kind>::ScrollBaseScale => {
                 let obj = &self.owner;
                 obj.get_scroll_base_scale()
             }
-            <ParallaxBackgroundVector2Kind>::ScrollOffset => {
+            <ParallaxBackgroundVec2Kind>::ScrollOffset => {
                 let obj = &self.owner;
                 obj.get_scroll_offset()
             }
@@ -221,17 +221,17 @@ impl IProperty<Vector2> for ParallaxBackgroundVector2Data {
     #[inline]
     fn set_property_value(&mut self, value: Vector2) {
         match self.property {
-            <ParallaxBackgroundVector2Kind>::ScrollBaseOffset => {
+            <ParallaxBackgroundVec2Kind>::ScrollBaseOffset => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_scroll_base_offset(val);
             }
-            <ParallaxBackgroundVector2Kind>::ScrollBaseScale => {
+            <ParallaxBackgroundVec2Kind>::ScrollBaseScale => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_scroll_base_scale(val);
             }
-            <ParallaxBackgroundVector2Kind>::ScrollOffset => {
+            <ParallaxBackgroundVec2Kind>::ScrollOffset => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_scroll_offset(val);
@@ -239,20 +239,18 @@ impl IProperty<Vector2> for ParallaxBackgroundVector2Data {
         }
     }
 }
-impl IPropertyData for ParallaxBackgroundVector2Data {
+impl IPropertyData for ParallaxBackgroundVec2Data {
     type Target = ParallaxBackground;
     #[inline]
     fn get_property_path(&self) -> NodePath {
         match self.property {
-            <ParallaxBackgroundVector2Kind>::ScrollBaseOffset => {
+            <ParallaxBackgroundVec2Kind>::ScrollBaseOffset => {
                 NodePath::from("scroll_base_offset")
             }
-            <ParallaxBackgroundVector2Kind>::ScrollBaseScale => {
+            <ParallaxBackgroundVec2Kind>::ScrollBaseScale => {
                 NodePath::from("scroll_base_scale")
             }
-            <ParallaxBackgroundVector2Kind>::ScrollOffset => {
-                NodePath::from("scroll_offset")
-            }
+            <ParallaxBackgroundVec2Kind>::ScrollOffset => NodePath::from("scroll_offset"),
         }
     }
     #[inline]
@@ -260,7 +258,7 @@ impl IPropertyData for ParallaxBackgroundVector2Data {
         Some(&self.owner_obj_or_node)
     }
 }
-impl TryFromPathAndObject for ParallaxBackgroundVector2Data {
+impl TryFromPathAndObject for ParallaxBackgroundVec2Data {
     fn try_from_path_and_object(path: &str, object: Gd<Object>) -> Option<Self> {
         object
             .try_cast::<ParallaxBackground>()
@@ -269,7 +267,7 @@ impl TryFromPathAndObject for ParallaxBackgroundVector2Data {
                 match path {
                     "scroll_base_offset" => {
                         Some(Self {
-                            property: <ParallaxBackgroundVector2Kind>::ScrollBaseOffset,
+                            property: <ParallaxBackgroundVec2Kind>::ScrollBaseOffset,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -278,7 +276,7 @@ impl TryFromPathAndObject for ParallaxBackgroundVector2Data {
                     }
                     "scroll_base_scale" => {
                         Some(Self {
-                            property: <ParallaxBackgroundVector2Kind>::ScrollBaseScale,
+                            property: <ParallaxBackgroundVec2Kind>::ScrollBaseScale,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -287,7 +285,7 @@ impl TryFromPathAndObject for ParallaxBackgroundVector2Data {
                     }
                     "scroll_offset" => {
                         Some(Self {
-                            property: <ParallaxBackgroundVector2Kind>::ScrollOffset,
+                            property: <ParallaxBackgroundVec2Kind>::ScrollOffset,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -450,8 +448,8 @@ impl<
         end_val: Vector2,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
-        let data = ParallaxBackgroundVector2Data {
-            property: <ParallaxBackgroundVector2Kind>::ScrollBaseOffset,
+        let data = ParallaxBackgroundVec2Data {
+            property: <ParallaxBackgroundVec2Kind>::ScrollBaseOffset,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<ParallaxBackground>().upcast::<Node>(),
@@ -466,8 +464,8 @@ impl<
         end_val: Vector2,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
-        let data = ParallaxBackgroundVector2Data {
-            property: <ParallaxBackgroundVector2Kind>::ScrollBaseScale,
+        let data = ParallaxBackgroundVec2Data {
+            property: <ParallaxBackgroundVec2Kind>::ScrollBaseScale,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<ParallaxBackground>().upcast::<Node>(),
@@ -482,8 +480,8 @@ impl<
         end_val: Vector2,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
-        let data = ParallaxBackgroundVector2Data {
-            property: <ParallaxBackgroundVector2Kind>::ScrollOffset,
+        let data = ParallaxBackgroundVec2Data {
+            property: <ParallaxBackgroundVec2Kind>::ScrollOffset,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<ParallaxBackground>().upcast::<Node>(),
@@ -593,8 +591,8 @@ impl<
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
         let owner: Gd<ParallaxBackground> = self.to_gd().upcast();
-        let data = ParallaxBackgroundVector2Data {
-            property: <ParallaxBackgroundVector2Kind>::ScrollBaseOffset,
+        let data = ParallaxBackgroundVec2Data {
+            property: <ParallaxBackgroundVec2Kind>::ScrollBaseOffset,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
@@ -608,8 +606,8 @@ impl<
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
         let owner: Gd<ParallaxBackground> = self.to_gd().upcast();
-        let data = ParallaxBackgroundVector2Data {
-            property: <ParallaxBackgroundVector2Kind>::ScrollBaseScale,
+        let data = ParallaxBackgroundVec2Data {
+            property: <ParallaxBackgroundVec2Kind>::ScrollBaseScale,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
@@ -623,8 +621,8 @@ impl<
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
         let owner: Gd<ParallaxBackground> = self.to_gd().upcast();
-        let data = ParallaxBackgroundVector2Data {
-            property: <ParallaxBackgroundVector2Kind>::ScrollOffset,
+        let data = ParallaxBackgroundVec2Data {
+            property: <ParallaxBackgroundVec2Kind>::ScrollOffset,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };

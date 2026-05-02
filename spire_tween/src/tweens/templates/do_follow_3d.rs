@@ -1,12 +1,12 @@
 use super::*;
 
 #[derive(Debug, Clone)]
-pub struct PropertyVector3Node3DFollowData {
+pub struct PropertyVec3Node3DFollowData {
     pub owner: Gd<Node3D>,
     pub owner_obj_or_node: ObjectOrNode,
 }
 
-impl IProperty<Vector3> for PropertyVector3Node3DFollowData {
+impl IProperty<Vector3> for PropertyVec3Node3DFollowData {
     #[inline]
     fn get_property_value(&self) -> Vector3 { self.owner.get_global_position() }
 
@@ -14,7 +14,7 @@ impl IProperty<Vector3> for PropertyVector3Node3DFollowData {
     fn set_property_value(&mut self, value: Vector3) { self.owner.set_global_position(value); }
 }
 
-impl IPropertyData for PropertyVector3Node3DFollowData {
+impl IPropertyData for PropertyVec3Node3DFollowData {
     type Target = Node3D;
 
     #[inline]
@@ -24,7 +24,11 @@ impl IPropertyData for PropertyVector3Node3DFollowData {
     fn get_owner(&self) -> Option<&ObjectOrNode> { Some(&self.owner_obj_or_node) }
 }
 
-/// Speed-based tween that chases another `Node3D`'s `global_position`.
+/// 3D analogue of [`DoFollow2D`]: speed-based tween that chases another `Node3D`'s
+/// `global_position`.
+///
+/// See [`DoFollow2D`] for behavior — same semantics in 3D space (Euclidean speed
+/// across `(x, y, z)`).
 pub trait DoFollow3D<Marker = ()> {
     fn do_follow(&self, follow_this: Gd<Node3D>, speed: f64) -> SpireTween<LerpPropertyData<Vector3>>;
 }
@@ -33,7 +37,7 @@ impl<T: Inherits<Node3D> + Inherits<Object>> DoFollow3D<()> for Gd<T> {
     fn do_follow(&self, follow_this: Gd<Node3D>, speed: f64) -> SpireTween<LerpPropertyData<Vector3>> {
         let owner: Gd<Node3D> = self.clone().upcast();
 
-        let data = PropertyVector3Node3DFollowData {
+        let data = PropertyVec3Node3DFollowData {
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
@@ -57,4 +61,4 @@ impl<T: Inherits<Node3D> + Inherits<Object>> DoFollow3D<()> for Gd<T> {
     }
 }
 
-impl TryFromPathAndObject for PropertyVector3Node3DFollowData {}
+impl TryFromPathAndObject for PropertyVec3Node3DFollowData {}

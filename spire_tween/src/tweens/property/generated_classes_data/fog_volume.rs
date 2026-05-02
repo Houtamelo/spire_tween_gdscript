@@ -111,20 +111,20 @@ impl TryFromPathAndObject for FogVolumeFloatData {
     }
 }
 #[derive(Debug, Clone)]
-pub struct FogVolumeVector3Data {
-    pub property: FogVolumeVector3Kind,
+pub struct FogVolumeVec3Data {
+    pub property: FogVolumeVec3Kind,
     pub owner: Gd<FogVolume>,
     pub owner_obj_or_node: ObjectOrNode,
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum FogVolumeVector3Kind {
+pub enum FogVolumeVec3Kind {
     Size,
 }
-impl IProperty<Vector3> for FogVolumeVector3Data {
+impl IProperty<Vector3> for FogVolumeVec3Data {
     #[inline]
     fn get_property_value(&self) -> Vector3 {
         match self.property {
-            <FogVolumeVector3Kind>::Size => {
+            <FogVolumeVec3Kind>::Size => {
                 let obj = &self.owner;
                 obj.get_size()
             }
@@ -133,7 +133,7 @@ impl IProperty<Vector3> for FogVolumeVector3Data {
     #[inline]
     fn set_property_value(&mut self, value: Vector3) {
         match self.property {
-            <FogVolumeVector3Kind>::Size => {
+            <FogVolumeVec3Kind>::Size => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_size(val);
@@ -141,12 +141,12 @@ impl IProperty<Vector3> for FogVolumeVector3Data {
         }
     }
 }
-impl IPropertyData for FogVolumeVector3Data {
+impl IPropertyData for FogVolumeVec3Data {
     type Target = FogVolume;
     #[inline]
     fn get_property_path(&self) -> NodePath {
         match self.property {
-            <FogVolumeVector3Kind>::Size => NodePath::from("size"),
+            <FogVolumeVec3Kind>::Size => NodePath::from("size"),
         }
     }
     #[inline]
@@ -154,7 +154,7 @@ impl IPropertyData for FogVolumeVector3Data {
         Some(&self.owner_obj_or_node)
     }
 }
-impl TryFromPathAndObject for FogVolumeVector3Data {
+impl TryFromPathAndObject for FogVolumeVec3Data {
     fn try_from_path_and_object(path: &str, object: Gd<Object>) -> Option<Self> {
         object
             .try_cast::<FogVolume>()
@@ -163,7 +163,7 @@ impl TryFromPathAndObject for FogVolumeVector3Data {
                 match path {
                     "size" => {
                         Some(Self {
-                            property: <FogVolumeVector3Kind>::Size,
+                            property: <FogVolumeVec3Kind>::Size,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -251,8 +251,8 @@ impl<Class: Inherits<FogVolume> + Inherits<Object>> SpireDoFogVolume<()> for Gd<
         end_val: Vector3,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
-        let data = FogVolumeVector3Data {
-            property: <FogVolumeVector3Kind>::Size,
+        let data = FogVolumeVec3Data {
+            property: <FogVolumeVec3Kind>::Size,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<FogVolume>().upcast::<Node>(),
@@ -317,8 +317,8 @@ impl<
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
         let owner: Gd<FogVolume> = self.to_gd().upcast();
-        let data = FogVolumeVector3Data {
-            property: <FogVolumeVector3Kind>::Size,
+        let data = FogVolumeVec3Data {
+            property: <FogVolumeVec3Kind>::Size,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };

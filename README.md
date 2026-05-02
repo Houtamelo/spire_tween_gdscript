@@ -14,7 +14,8 @@ Here's the code used to move the energy spheres (1st phase of the gif):
 var ball: Sprite2D = balls[i]
 
 # Rotate the ball around the character in a spiral pattern.
-DoNode2D.spiral(ball, center, from_angle, to_angle, scale, duration, rotation, shear, Spire.SPIRAL_FERMAT)
+# `log_growth` is only read when mode is `SPIRAL_LOGARITHMIC`; pass `Vector2.ZERO` for the other modes.
+DoNode2D.spiral(ball, center, from_angle, to_angle, scale, duration, rotation, shear, Spire.SPIRAL_FERMAT, Vector2.ZERO)
 
 # Fade-in the ball, achieved my lerping its "modulate" property from 0.0 to 0.8.
 DoCanvasItem.color_a(ball, 0.8, duration).from(0.0)
@@ -71,9 +72,41 @@ You can acquire a copy of SpireTween through 3 means:
 - A demo version is available in the [releases](https://github.com/Houtamelo/spire_tween_gdscript/releases) page of this repository.
   The only "limitation" of the demo is that it only includes binaries for Windows and Linux platforms. Binaries for additional platforms can
   be acquired by purchasing the plugin or compiling it yourself.
-- Compile from source.
+- Compile from source (see [Building from source](#building-from-source)).
 
 When exporting, Godot will automatically include the necessary binary for the chosen target platform.
+
+**No autoload setup is required.** Once the addon is enabled in Project Settings → Plugins, the `Spire`, `Do{Class}`, `SpireSequence`, etc. classes register automatically and the internal tween manager initializes on first use.
+
+## Building from source
+
+SpireTween is written in Rust against [godot-rust](https://github.com/godot-rust/gdext) and currently requires the **nightly** toolchain. The pinned channel lives in `rust-toolchain.toml` (so `cargo` will pick it up automatically inside the repo).
+
+The crate uses these unstable features:
+
+```rust
+#![feature(type_changing_struct_update)]
+#![feature(unboxed_closures)]
+#![feature(arbitrary_self_types)]
+#![feature(stmt_expr_attributes)]
+```
+
+Build the addon binary for your host with the per-platform scripts in [`build_scripts/`](build_scripts):
+
+```bash
+# Linux x86_64
+./build_scripts/build_linux.sh
+# Windows (cross-compile from Linux or run on Windows)
+./build_scripts/build_windows_64.sh
+# Android (requires `cargo-ndk` and `ANDROID_NDK_HOME`)
+./build_scripts/build_android.sh
+# WebAssembly
+./build_scripts/build_wasm.sh
+```
+
+Each script writes the resulting binary directly into `spire_tween_gdscript/addons/spire_tween/lib/<target>/...`, where the `.gdextension` manifest expects it.
+
+If you just want to verify the crate compiles, `cargo build --release` from the repo root works (Cargo's workspace feature unification automatically enables the `standalone` feature pulled in by `spire_tween_plugin`).
 
 # Platform Support
 
@@ -88,7 +121,6 @@ Binaries for all platforms which I successfully compiled-to are included in the 
 | Platform           | Compiled | Tested | Notes                                                               |
 |--------------------|:--------:|:------:|---------------------------------------------------------------------|
 | linux.x86_64       |    ✅     |   ✅    |                                                                     |
-| windows.x86_32     |    ✅     |   ❌    |                                                                     |
 | windows.x86_64     |    ✅     |   ✅    |                                                                     |
 | android.x86_64     |    ✅     |   ❌    |                                                                     |
 | android.arm64      |    ✅     |   ❌    |                                                                     |
@@ -271,7 +303,7 @@ These static functions are available in the `Spire` class:
 do_property(owner: Object, property_path: NodePath, to: Variant, duration: float) -> SpireProperty
 do_property_int(owner: Object, property_path: NodePath, to: int, duration: float) -> SpirePropertyInt
 do_property_float(owner: Object, property_path: NodePath, to: float, duration: float) -> SpirePropertyFloat
-do_property_vector2(owner: Object, property_path: NodePath, to: Vector2, duration: float) -> SpirePropertyVector2
+do_property_vec2(owner: Object, property_path: NodePath, to: Vector2, duration: float) -> SpirePropertyVec2
 do_property_color(owner: Object, property_path: NodePath, to: Color, duration: float) -> SpirePropertyColor
 # ... and so on for Vector2i, Vector3, Vector3i, String and Variant.
 ```
@@ -288,7 +320,7 @@ func godot_impl():
 	self.create_tween().tween_property(circle, ^"modulate:r", 1.0, duration)
 
 func spire_impl():
-	# Signature: func(node: Node2D, to: Vector2, duration: float) -> SpirePropertyVector2 
+	# Signature: func(node: Node2D, to: Vector2, duration: float) -> SpirePropertyVec2 
 	DoNode2D.global_position(circle, destination, duration)
 	# Signature: func(node: CanvasItem, to: float, duration: float) -> SpirePropertyFloat
 	DoCanvasItem.modulate_r(circle, 1.0, duration)
@@ -351,8 +383,8 @@ func godot_impl():
 		.tween_method(create_dot, from, to, duration)
 
 func spire_impl():
-	# Signature: func(callable: Callable, from: Vector2i, to: Vector2i, duration: float) -> SpireMethodVector2i
-	Spire.do_call_vector2i(create_dot, from, to, duration)\
+	# Signature: func(callable: Callable, from: Vector2i, to: Vector2i, duration: float) -> SpireMethodVec2i
+	Spire.do_call_vec2i(create_dot, from, to, duration)\
 		.set_process_mode(Spire.PROCESS_MODE_PHYSICS)
 
 func create_dot(at: Vector2i) -> void:

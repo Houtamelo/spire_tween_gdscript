@@ -25,7 +25,7 @@ impl DoSkeleton3D {
         bone_idx: i32,
         to: Vector3,
         duration: f64,
-    ) -> Gd<SpirePropertyVector3> {
+    ) -> Gd<SpirePropertyVec3> {
         let tween = node.do_bone_position(bone_idx, to, duration).register();
         gd_from_native_tween(tween)
     }
@@ -35,7 +35,7 @@ impl DoSkeleton3D {
         bone_idx: i32,
         to: Vector3,
         duration: f64,
-    ) -> Gd<SpirePropertyVector3> {
+    ) -> Gd<SpirePropertyVec3> {
         let tween = node.do_bone_scale(bone_idx, to, duration).register();
         gd_from_native_tween(tween)
     }

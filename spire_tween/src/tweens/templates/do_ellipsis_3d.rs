@@ -1,6 +1,19 @@
 use super::*;
 
-/// Moves a `Node3D` along an ellipsoidal path around `axis`. Angles in radians.
+/// 3D analogue of [`DoEllipsis2D`]: moves a `Node3D` along an ellipse traced in the
+/// plane perpendicular to `axis`, around `center` (global coords).
+///
+/// Parameters:
+/// - `axis`: the rotation axis the ellipse is drawn around. The ellipse lies in
+///   the plane perpendicular to this axis. Auto-normalized; defaults to
+///   `Vector3::UP` if zero.
+/// - `from_radius` / `to_radius`: per-axis radii (`x`, `y` for the in-plane
+///   ellipse; `z` for displacement *along* the axis as the angle progresses — i.e.
+///   helical motion).
+/// - other params: same as [`DoEllipsis2D`] (angles in radians, lerped radii).
+///
+/// Implemented for any `Gd<T: Inherits<Node3D>>`. Returns an unregistered
+/// [`SpireTween<LerpMethodData<f64>>`] — call [`register`](SpireTween::register).
 pub trait DoEllipsis3D<Marker = ()> {
     fn do_ellipsis(
         &self,

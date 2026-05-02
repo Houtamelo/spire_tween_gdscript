@@ -115,11 +115,7 @@ impl DoCamera2D {
 
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/
     #[func(rename = zoom)]
-    fn r#zoom(
-        node: Gd<Camera2D>,
-        to: Vector2,
-        duration: f64,
-    ) -> Gd<SpirePropertyVector2> {
+    fn r#zoom(node: Gd<Camera2D>, to: Vector2, duration: f64) -> Gd<SpirePropertyVec2> {
         let tween = node.do_zoom(to, duration).register();
         gd_from_native_tween(tween)
     }
@@ -131,7 +127,7 @@ impl DoCamera2D {
         node: Gd<Camera2D>,
         to: Vector2,
         duration: f64,
-    ) -> Gd<SpirePropertyVector2> {
+    ) -> Gd<SpirePropertyVec2> {
         let tween = node.do_offset(to, duration).register();
         gd_from_native_tween(tween)
     }

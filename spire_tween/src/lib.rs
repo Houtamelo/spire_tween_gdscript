@@ -1,7 +1,93 @@
-//! Tweening library for Godot 4 via gdext, inspired by DoTween.
+//! Tweening library for Godot 4 via [`gdext`](https://github.com/godot-rust/gdext),
+//! inspired by Unity's [DOTween](https://dotween.demigiant.com/).
 //!
-//! Import `spire_tween::prelude::*` and use the extension traits on `Gd<T>` or
-//! `WithBaseField` types.
+//! # Quickstart
+//!
+//! ```ignore
+//! use spire_tween::prelude::*;
+//!
+//! // Tween a known property — returns a builder. Don't forget `.register()`.
+//! let handle = my_node
+//!     .do_position(Vector2::new(640.0, 360.0), 2.0)
+//!     .with_ease(EaseKind::Basic(Ease::OutCubic))
+//!     .as_relative(Vector2::ZERO)
+//!     .register();
+//!
+//! // Hook a callback for when it finishes (closure-based, Rust-only path).
+//! handle.to_mut().finished_connect(
+//!     || godot_print!("done!"),
+//!     SpireFlags::DEFERRED | SpireFlags::ONE_SHOT,
+//! );
+//!
+//! // Sequence multiple tweens.
+//! let mut seq = SpireTween::<Sequence>::new();
+//! seq.append(my_node.do_position(target_a, 1.0));
+//! seq.join(my_node.do_color(Color::RED, 1.0));   // parallel with the above
+//! seq.append(my_node.do_position(target_b, 1.0));
+//! seq.register();
+//! ```
+//!
+//! # The `prelude`
+//!
+//! `use spire_tween::prelude::*` brings in the core surface:
+//!
+//! - **Core types** — [`prelude::SpireTween`], [`prelude::AnyTween`],
+//!   [`prelude::Sequence`], [`prelude::SpireFlags`].
+//! - **Pointer types** — [`prelude::RcPtr`], [`prelude::WeakPtr`].
+//! - **Enums** — [`prelude::Ease`], [`prelude::EaseKind`], [`prelude::Evaluator`],
+//!   [`prelude::LoopMode`], [`prelude::PauseMode`], [`prelude::ProcessMode`],
+//!   [`prelude::Spiral`], [`prelude::State`].
+//! - **Tween-data types** — [`prelude::LerpPropertyData`], [`prelude::LerpMethodData`],
+//!   plus the generated per-class adapter enums (`PropertyDataFloat`,
+//!   `PropertyDataVec2`, …).
+//! - **Constructor traits** — [`prelude::DoProperty`], [`prelude::DoMethod`],
+//!   [`prelude::DoVarMethod`], [`prelude::DoDelayedCall`], [`prelude::DoDelayedCallable`].
+//! - **Template traits** — [`prelude::DoBone`], [`prelude::DoContourShape2D`],
+//!   [`prelude::DoEllipsis2D`], [`prelude::DoEllipsis3D`], [`prelude::DoFollow2D`],
+//!   [`prelude::DoFollow3D`], [`prelude::DoShakeNode2D`], [`prelude::DoShakeControl`],
+//!   [`prelude::DoSpiral`].
+//! - **Lifecycle helpers** — [`prelude::CompleteBoundTweens`], [`prelude::KillBoundTweens`].
+//! - **Custom-lerper plumbing** — [`prelude::BasicLerp`], [`prelude::SpireLerp`],
+//!   [`prelude::CustomLerper`], [`prelude::LerpMode`], [`prelude::ITweenable`],
+//!   [`prelude::SpireTweener`].
+//!
+//! # Two register paths
+//!
+//! Pick based on who needs to listen for `finished` / `loop_finished`:
+//! - [`SpireTween::register`] — pure-Rust path. Returns an [`prelude::RcPtr`] handle.
+//!   Subscribe to events via [`SpireTween::finished_connect`] etc. (closure-based).
+//! - [`SpireTween::register_with_gd_handle`] — also attaches a `Gd<Spire…>` wrapper
+//!   so GDScript code (or any consumer of Godot signals) can connect to the
+//!   `finished` / `loop_finished` Godot signals on that handle.
+//!
+//! # Cargo features
+//!
+//! - `default = ["indexmap"]` — backing storage for the per-frame deferred-op map.
+//! - `standalone` — registers GDScript-facing classes (`Spire`, `SpireSequence`,
+//!   `Do{Class}`, etc.). Enabled by the `spire_tween_plugin` cdylib that produces
+//!   the published addon. Pure-Rust gdext consumers don't need this.
+//! - `dashmap` — alternative concurrent map backend (mutually exclusive with
+//!   `indexmap`).
+//! - `indexmap` — single-threaded ordered map backend (the default).
+//! - `double-precision` — forwards to godot's `double-precision` feature for 64-bit
+//!   `Vector*`/`real`. Match this with your gdext build.
+//! - `nothreads` — forwards to godot's `experimental-wasm-nothreads` for wasm
+//!   builds without thread support.
+//! - `verbose-stdout` — extra diagnostic prints inside the manager loop.
+//!
+//! # Threading
+//!
+//! Spire is single-threaded — same constraint as Godot's main loop. The internal
+//! `RcPtr<T>` is a `Rc<UnsafeCell<T>>` wrapper that relies on Godot's main-thread
+//! invariant; do not register or access tweens from worker threads.
+//!
+//! # In-editor docs (GDScript audience)
+//!
+//! When the `standalone` feature is enabled, the GDScript-facing classes are
+//! registered with rich godot-flavored docs (extracted via the `register-docs`
+//! gdext feature). Those are what shows up in the Godot editor's class browser. The
+//! Rust API documented here mirrors the same concepts; the GDScript layer is built
+//! on top.
 #![feature(type_changing_struct_update)]
 #![feature(unboxed_closures)]
 #![feature(arbitrary_self_types)]

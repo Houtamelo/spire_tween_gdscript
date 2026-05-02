@@ -513,13 +513,13 @@ impl TryFromPathAndObject for Node3DFloatData {
     }
 }
 #[derive(Debug, Clone)]
-pub struct Node3DVector3Data {
-    pub property: Node3DVector3Kind,
+pub struct Node3DVec3Data {
+    pub property: Node3DVec3Kind,
     pub owner: Gd<Node3D>,
     pub owner_obj_or_node: ObjectOrNode,
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum Node3DVector3Kind {
+pub enum Node3DVec3Kind {
     Position,
     GlobalPosition,
     Scale,
@@ -528,35 +528,35 @@ pub enum Node3DVector3Kind {
     GlobalRotation,
     GlobalRotationDegrees,
 }
-impl IProperty<Vector3> for Node3DVector3Data {
+impl IProperty<Vector3> for Node3DVec3Data {
     #[inline]
     fn get_property_value(&self) -> Vector3 {
         match self.property {
-            <Node3DVector3Kind>::Position => {
+            <Node3DVec3Kind>::Position => {
                 let obj = &self.owner;
                 obj.get_position()
             }
-            <Node3DVector3Kind>::GlobalPosition => {
+            <Node3DVec3Kind>::GlobalPosition => {
                 let obj = &self.owner;
                 obj.get_global_position()
             }
-            <Node3DVector3Kind>::Scale => {
+            <Node3DVec3Kind>::Scale => {
                 let obj = &self.owner;
                 obj.get_scale()
             }
-            <Node3DVector3Kind>::Rotation => {
+            <Node3DVec3Kind>::Rotation => {
                 let obj = &self.owner;
                 obj.get_rotation()
             }
-            <Node3DVector3Kind>::RotationDegrees => {
+            <Node3DVec3Kind>::RotationDegrees => {
                 let obj = &self.owner;
                 obj.get_rotation_degrees()
             }
-            <Node3DVector3Kind>::GlobalRotation => {
+            <Node3DVec3Kind>::GlobalRotation => {
                 let obj = &self.owner;
                 obj.get_global_rotation()
             }
-            <Node3DVector3Kind>::GlobalRotationDegrees => {
+            <Node3DVec3Kind>::GlobalRotationDegrees => {
                 let obj = &self.owner;
                 obj.get_global_rotation_degrees()
             }
@@ -565,37 +565,37 @@ impl IProperty<Vector3> for Node3DVector3Data {
     #[inline]
     fn set_property_value(&mut self, value: Vector3) {
         match self.property {
-            <Node3DVector3Kind>::Position => {
+            <Node3DVec3Kind>::Position => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_position(val);
             }
-            <Node3DVector3Kind>::GlobalPosition => {
+            <Node3DVec3Kind>::GlobalPosition => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_global_position(val);
             }
-            <Node3DVector3Kind>::Scale => {
+            <Node3DVec3Kind>::Scale => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_scale(val);
             }
-            <Node3DVector3Kind>::Rotation => {
+            <Node3DVec3Kind>::Rotation => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_rotation(val);
             }
-            <Node3DVector3Kind>::RotationDegrees => {
+            <Node3DVec3Kind>::RotationDegrees => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_rotation_degrees(val);
             }
-            <Node3DVector3Kind>::GlobalRotation => {
+            <Node3DVec3Kind>::GlobalRotation => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_global_rotation(val);
             }
-            <Node3DVector3Kind>::GlobalRotationDegrees => {
+            <Node3DVec3Kind>::GlobalRotationDegrees => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_global_rotation_degrees(val);
@@ -603,18 +603,18 @@ impl IProperty<Vector3> for Node3DVector3Data {
         }
     }
 }
-impl IPropertyData for Node3DVector3Data {
+impl IPropertyData for Node3DVec3Data {
     type Target = Node3D;
     #[inline]
     fn get_property_path(&self) -> NodePath {
         match self.property {
-            <Node3DVector3Kind>::Position => NodePath::from("position"),
-            <Node3DVector3Kind>::GlobalPosition => NodePath::from("global_position"),
-            <Node3DVector3Kind>::Scale => NodePath::from("scale"),
-            <Node3DVector3Kind>::Rotation => NodePath::from("rotation"),
-            <Node3DVector3Kind>::RotationDegrees => NodePath::from("rotation_degrees"),
-            <Node3DVector3Kind>::GlobalRotation => NodePath::from("global_rotation"),
-            <Node3DVector3Kind>::GlobalRotationDegrees => {
+            <Node3DVec3Kind>::Position => NodePath::from("position"),
+            <Node3DVec3Kind>::GlobalPosition => NodePath::from("global_position"),
+            <Node3DVec3Kind>::Scale => NodePath::from("scale"),
+            <Node3DVec3Kind>::Rotation => NodePath::from("rotation"),
+            <Node3DVec3Kind>::RotationDegrees => NodePath::from("rotation_degrees"),
+            <Node3DVec3Kind>::GlobalRotation => NodePath::from("global_rotation"),
+            <Node3DVec3Kind>::GlobalRotationDegrees => {
                 NodePath::from("global_rotation_degrees")
             }
         }
@@ -624,7 +624,7 @@ impl IPropertyData for Node3DVector3Data {
         Some(&self.owner_obj_or_node)
     }
 }
-impl TryFromPathAndObject for Node3DVector3Data {
+impl TryFromPathAndObject for Node3DVec3Data {
     fn try_from_path_and_object(path: &str, object: Gd<Object>) -> Option<Self> {
         object
             .try_cast::<Node3D>()
@@ -633,7 +633,7 @@ impl TryFromPathAndObject for Node3DVector3Data {
                 match path {
                     "position" => {
                         Some(Self {
-                            property: <Node3DVector3Kind>::Position,
+                            property: <Node3DVec3Kind>::Position,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -642,7 +642,7 @@ impl TryFromPathAndObject for Node3DVector3Data {
                     }
                     "global_position" => {
                         Some(Self {
-                            property: <Node3DVector3Kind>::GlobalPosition,
+                            property: <Node3DVec3Kind>::GlobalPosition,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -651,7 +651,7 @@ impl TryFromPathAndObject for Node3DVector3Data {
                     }
                     "scale" => {
                         Some(Self {
-                            property: <Node3DVector3Kind>::Scale,
+                            property: <Node3DVec3Kind>::Scale,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -660,7 +660,7 @@ impl TryFromPathAndObject for Node3DVector3Data {
                     }
                     "rotation" => {
                         Some(Self {
-                            property: <Node3DVector3Kind>::Rotation,
+                            property: <Node3DVec3Kind>::Rotation,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -669,7 +669,7 @@ impl TryFromPathAndObject for Node3DVector3Data {
                     }
                     "rotation_degrees" => {
                         Some(Self {
-                            property: <Node3DVector3Kind>::RotationDegrees,
+                            property: <Node3DVec3Kind>::RotationDegrees,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -678,7 +678,7 @@ impl TryFromPathAndObject for Node3DVector3Data {
                     }
                     "global_rotation" => {
                         Some(Self {
-                            property: <Node3DVector3Kind>::GlobalRotation,
+                            property: <Node3DVec3Kind>::GlobalRotation,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -687,7 +687,7 @@ impl TryFromPathAndObject for Node3DVector3Data {
                     }
                     "global_rotation_degrees" => {
                         Some(Self {
-                            property: <Node3DVector3Kind>::GlobalRotationDegrees,
+                            property: <Node3DVec3Kind>::GlobalRotationDegrees,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -1319,8 +1319,8 @@ impl<Class: Inherits<Node3D> + Inherits<Object>> SpireDoNode3D<()> for Gd<Class>
         end_val: Vector3,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
-        let data = Node3DVector3Data {
-            property: <Node3DVector3Kind>::Position,
+        let data = Node3DVec3Data {
+            property: <Node3DVec3Kind>::Position,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<Node3D>().upcast::<Node>(),
@@ -1335,8 +1335,8 @@ impl<Class: Inherits<Node3D> + Inherits<Object>> SpireDoNode3D<()> for Gd<Class>
         end_val: Vector3,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
-        let data = Node3DVector3Data {
-            property: <Node3DVector3Kind>::Position,
+        let data = Node3DVec3Data {
+            property: <Node3DVec3Kind>::Position,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<Node3D>().upcast::<Node>(),
@@ -1351,8 +1351,8 @@ impl<Class: Inherits<Node3D> + Inherits<Object>> SpireDoNode3D<()> for Gd<Class>
         end_val: Vector3,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
-        let data = Node3DVector3Data {
-            property: <Node3DVector3Kind>::GlobalPosition,
+        let data = Node3DVec3Data {
+            property: <Node3DVec3Kind>::GlobalPosition,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<Node3D>().upcast::<Node>(),
@@ -1367,8 +1367,8 @@ impl<Class: Inherits<Node3D> + Inherits<Object>> SpireDoNode3D<()> for Gd<Class>
         end_val: Vector3,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
-        let data = Node3DVector3Data {
-            property: <Node3DVector3Kind>::GlobalPosition,
+        let data = Node3DVec3Data {
+            property: <Node3DVec3Kind>::GlobalPosition,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<Node3D>().upcast::<Node>(),
@@ -1383,8 +1383,8 @@ impl<Class: Inherits<Node3D> + Inherits<Object>> SpireDoNode3D<()> for Gd<Class>
         end_val: Vector3,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
-        let data = Node3DVector3Data {
-            property: <Node3DVector3Kind>::Scale,
+        let data = Node3DVec3Data {
+            property: <Node3DVec3Kind>::Scale,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<Node3D>().upcast::<Node>(),
@@ -1399,8 +1399,8 @@ impl<Class: Inherits<Node3D> + Inherits<Object>> SpireDoNode3D<()> for Gd<Class>
         end_val: Vector3,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
-        let data = Node3DVector3Data {
-            property: <Node3DVector3Kind>::Rotation,
+        let data = Node3DVec3Data {
+            property: <Node3DVec3Kind>::Rotation,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<Node3D>().upcast::<Node>(),
@@ -1415,8 +1415,8 @@ impl<Class: Inherits<Node3D> + Inherits<Object>> SpireDoNode3D<()> for Gd<Class>
         end_val: Vector3,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
-        let data = Node3DVector3Data {
-            property: <Node3DVector3Kind>::RotationDegrees,
+        let data = Node3DVec3Data {
+            property: <Node3DVec3Kind>::RotationDegrees,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<Node3D>().upcast::<Node>(),
@@ -1431,8 +1431,8 @@ impl<Class: Inherits<Node3D> + Inherits<Object>> SpireDoNode3D<()> for Gd<Class>
         end_val: Vector3,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
-        let data = Node3DVector3Data {
-            property: <Node3DVector3Kind>::GlobalRotation,
+        let data = Node3DVec3Data {
+            property: <Node3DVec3Kind>::GlobalRotation,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<Node3D>().upcast::<Node>(),
@@ -1447,8 +1447,8 @@ impl<Class: Inherits<Node3D> + Inherits<Object>> SpireDoNode3D<()> for Gd<Class>
         end_val: Vector3,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
-        let data = Node3DVector3Data {
-            property: <Node3DVector3Kind>::GlobalRotationDegrees,
+        let data = Node3DVec3Data {
+            property: <Node3DVec3Kind>::GlobalRotationDegrees,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<Node3D>().upcast::<Node>(),
@@ -1872,8 +1872,8 @@ for T {
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
         let owner: Gd<Node3D> = self.to_gd().upcast();
-        let data = Node3DVector3Data {
-            property: <Node3DVector3Kind>::Position,
+        let data = Node3DVec3Data {
+            property: <Node3DVec3Kind>::Position,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
@@ -1887,8 +1887,8 @@ for T {
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
         let owner: Gd<Node3D> = self.to_gd().upcast();
-        let data = Node3DVector3Data {
-            property: <Node3DVector3Kind>::Position,
+        let data = Node3DVec3Data {
+            property: <Node3DVec3Kind>::Position,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
@@ -1902,8 +1902,8 @@ for T {
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
         let owner: Gd<Node3D> = self.to_gd().upcast();
-        let data = Node3DVector3Data {
-            property: <Node3DVector3Kind>::GlobalPosition,
+        let data = Node3DVec3Data {
+            property: <Node3DVec3Kind>::GlobalPosition,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
@@ -1917,8 +1917,8 @@ for T {
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
         let owner: Gd<Node3D> = self.to_gd().upcast();
-        let data = Node3DVector3Data {
-            property: <Node3DVector3Kind>::GlobalPosition,
+        let data = Node3DVec3Data {
+            property: <Node3DVec3Kind>::GlobalPosition,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
@@ -1932,8 +1932,8 @@ for T {
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
         let owner: Gd<Node3D> = self.to_gd().upcast();
-        let data = Node3DVector3Data {
-            property: <Node3DVector3Kind>::Scale,
+        let data = Node3DVec3Data {
+            property: <Node3DVec3Kind>::Scale,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
@@ -1947,8 +1947,8 @@ for T {
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
         let owner: Gd<Node3D> = self.to_gd().upcast();
-        let data = Node3DVector3Data {
-            property: <Node3DVector3Kind>::Rotation,
+        let data = Node3DVec3Data {
+            property: <Node3DVec3Kind>::Rotation,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
@@ -1962,8 +1962,8 @@ for T {
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
         let owner: Gd<Node3D> = self.to_gd().upcast();
-        let data = Node3DVector3Data {
-            property: <Node3DVector3Kind>::RotationDegrees,
+        let data = Node3DVec3Data {
+            property: <Node3DVec3Kind>::RotationDegrees,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
@@ -1977,8 +1977,8 @@ for T {
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
         let owner: Gd<Node3D> = self.to_gd().upcast();
-        let data = Node3DVector3Data {
-            property: <Node3DVector3Kind>::GlobalRotation,
+        let data = Node3DVec3Data {
+            property: <Node3DVec3Kind>::GlobalRotation,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
@@ -1992,8 +1992,8 @@ for T {
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
         let owner: Gd<Node3D> = self.to_gd().upcast();
-        let data = Node3DVector3Data {
-            property: <Node3DVector3Kind>::GlobalRotationDegrees,
+        let data = Node3DVec3Data {
+            property: <Node3DVec3Kind>::GlobalRotationDegrees,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };

@@ -1,9 +1,9 @@
 use super::*;
 
 #[delegate_impl]
-impl IProperty<Vector2i> for PropertyDataVector2i {
+impl IProperty<Vector2i> for PropertyDataVec2i {
     fn get_property_value(&self) -> Vector2i {
-        delegate_property_data_vector_2_i! {
+        delegate_property_data_vec_2_i! {
             self.get_property_value()
         }
     }
@@ -11,15 +11,15 @@ impl IProperty<Vector2i> for PropertyDataVector2i {
 }
 
 impl PropertyType for Vector2i {
-    type Data = PropertyDataVector2i;
+    type Data = PropertyDataVec2i;
 }
 
 impl TyToPropertyTween for Vector2i {
-    type GdTween = SpirePropertyVector2i;
+    type GdTween = SpirePropertyVec2i;
 }
 
 #[delegate_impl]
-impl IPropertyData for PropertyDataVector2i {
+impl IPropertyData for PropertyDataVec2i {
     type Target = Object;
     fn get_property_path(&self) -> NodePath;
     fn get_owner(&self) -> Option<&ObjectOrNode>;

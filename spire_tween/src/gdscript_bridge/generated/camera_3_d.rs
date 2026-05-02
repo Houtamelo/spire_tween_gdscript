@@ -71,7 +71,7 @@ impl DoCamera3D {
         node: Gd<Camera3D>,
         to: Vector2,
         duration: f64,
-    ) -> Gd<SpirePropertyVector2> {
+    ) -> Gd<SpirePropertyVec2> {
         let tween = node.do_frustum_offset(to, duration).register();
         gd_from_native_tween(tween)
     }

@@ -1,6 +1,23 @@
 use super::*;
 
-/// Moves a `Node2D` along an elliptical path. Angles in radians, radii as `Vector2` (X/Y).
+/// Moves a `Node2D` along an elliptical path around `center` (global coords).
+///
+/// Parameters:
+/// - `center`: the ellipse's center, in global coordinates.
+/// - `from_angle` / `to_angle`: start and end angles, **in radians**. Use the
+///   difference to control direction and number of revolutions (e.g. `0.0 → 4*PI`
+///   completes two full clockwise turns).
+/// - `from_radius` / `to_radius`: the X/Y radii at the start and end of the
+///   animation — Spire lerps the radii as the angle progresses, so a non-equal
+///   `from`/`to` produces a spiraling-out (or in) ellipse.
+/// - `duration`: total seconds.
+///
+/// For a circle (uniform X/Y radius), use the `circle` shortcut on `DoNode2D` (the
+/// GDScript-facing namespace), which forwards here with `from_radius == to_radius`.
+///
+/// Implemented for any `Gd<T: Inherits<Node2D>>`. Returns an unregistered
+/// [`SpireTween<LerpMethodData<f64>>`] (the inner data lerps the angle) — call
+/// [`register`](SpireTween::register).
 pub trait DoEllipsis2D<Marker = ()> {
     fn do_ellipsis(
         &self,

@@ -133,25 +133,25 @@ impl TryFromPathAndObject for WindowIntData {
     }
 }
 #[derive(Debug, Clone)]
-pub struct WindowVector2iData {
-    pub property: WindowVector2iKind,
+pub struct WindowVec2iData {
+    pub property: WindowVec2iKind,
     pub owner: Gd<Window>,
     pub owner_obj_or_node: ObjectOrNode,
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum WindowVector2iKind {
+pub enum WindowVec2iKind {
     Position,
     Size,
 }
-impl IProperty<Vector2i> for WindowVector2iData {
+impl IProperty<Vector2i> for WindowVec2iData {
     #[inline]
     fn get_property_value(&self) -> Vector2i {
         match self.property {
-            <WindowVector2iKind>::Position => {
+            <WindowVec2iKind>::Position => {
                 let obj = &self.owner;
                 obj.get_position()
             }
-            <WindowVector2iKind>::Size => {
+            <WindowVec2iKind>::Size => {
                 let obj = &self.owner;
                 obj.get_size()
             }
@@ -160,12 +160,12 @@ impl IProperty<Vector2i> for WindowVector2iData {
     #[inline]
     fn set_property_value(&mut self, value: Vector2i) {
         match self.property {
-            <WindowVector2iKind>::Position => {
+            <WindowVec2iKind>::Position => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_position(val);
             }
-            <WindowVector2iKind>::Size => {
+            <WindowVec2iKind>::Size => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_size(val);
@@ -173,13 +173,13 @@ impl IProperty<Vector2i> for WindowVector2iData {
         }
     }
 }
-impl IPropertyData for WindowVector2iData {
+impl IPropertyData for WindowVec2iData {
     type Target = Window;
     #[inline]
     fn get_property_path(&self) -> NodePath {
         match self.property {
-            <WindowVector2iKind>::Position => NodePath::from("position"),
-            <WindowVector2iKind>::Size => NodePath::from("size"),
+            <WindowVec2iKind>::Position => NodePath::from("position"),
+            <WindowVec2iKind>::Size => NodePath::from("size"),
         }
     }
     #[inline]
@@ -187,7 +187,7 @@ impl IPropertyData for WindowVector2iData {
         Some(&self.owner_obj_or_node)
     }
 }
-impl TryFromPathAndObject for WindowVector2iData {
+impl TryFromPathAndObject for WindowVec2iData {
     fn try_from_path_and_object(path: &str, object: Gd<Object>) -> Option<Self> {
         object
             .try_cast::<Window>()
@@ -196,7 +196,7 @@ impl TryFromPathAndObject for WindowVector2iData {
                 match path {
                     "position" => {
                         Some(Self {
-                            property: <WindowVector2iKind>::Position,
+                            property: <WindowVec2iKind>::Position,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -205,7 +205,7 @@ impl TryFromPathAndObject for WindowVector2iData {
                     }
                     "size" => {
                         Some(Self {
-                            property: <WindowVector2iKind>::Size,
+                            property: <WindowVec2iKind>::Size,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -319,8 +319,8 @@ impl<Class: Inherits<Window> + Inherits<Object>> SpireDoWindow<()> for Gd<Class>
         end_val: Vector2i,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2i>> {
-        let data = WindowVector2iData {
-            property: <WindowVector2iKind>::Position,
+        let data = WindowVec2iData {
+            property: <WindowVec2iKind>::Position,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<Window>().upcast::<Node>(),
@@ -335,8 +335,8 @@ impl<Class: Inherits<Window> + Inherits<Object>> SpireDoWindow<()> for Gd<Class>
         end_val: Vector2i,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2i>> {
-        let data = WindowVector2iData {
-            property: <WindowVector2iKind>::Size,
+        let data = WindowVec2iData {
+            property: <WindowVec2iKind>::Size,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<Window>().upcast::<Node>(),
@@ -415,8 +415,8 @@ for T {
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2i>> {
         let owner: Gd<Window> = self.to_gd().upcast();
-        let data = WindowVector2iData {
-            property: <WindowVector2iKind>::Position,
+        let data = WindowVec2iData {
+            property: <WindowVec2iKind>::Position,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
@@ -430,8 +430,8 @@ for T {
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2i>> {
         let owner: Gd<Window> = self.to_gd().upcast();
-        let data = WindowVector2iData {
-            property: <WindowVector2iKind>::Size,
+        let data = WindowVec2iData {
+            property: <WindowVec2iKind>::Size,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };

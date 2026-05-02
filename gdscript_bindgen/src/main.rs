@@ -1,5 +1,4 @@
 #![feature(stmt_expr_attributes)]
-#![feature(iterator_try_collect)]
 
 mod classes_gdscript_bridge;
 mod classes_property_data;

@@ -183,7 +183,7 @@ impl DoReflectionProbe {
         node: Gd<ReflectionProbe>,
         to: Vector3,
         duration: f64,
-    ) -> Gd<SpirePropertyVector3> {
+    ) -> Gd<SpirePropertyVec3> {
         let tween = node.do_origin_offset(to, duration).register();
         gd_from_native_tween(tween)
     }
@@ -195,7 +195,7 @@ impl DoReflectionProbe {
         node: Gd<ReflectionProbe>,
         to: Vector3,
         duration: f64,
-    ) -> Gd<SpirePropertyVector3> {
+    ) -> Gd<SpirePropertyVec3> {
         let tween = node.do_size(to, duration).register();
         gd_from_native_tween(tween)
     }

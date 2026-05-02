@@ -275,7 +275,7 @@ impl DoRigidBody3D {
         node: Gd<RigidBody3D>,
         to: Vector3,
         duration: f64,
-    ) -> Gd<SpirePropertyVector3> {
+    ) -> Gd<SpirePropertyVec3> {
         let tween = node.do_angular_velocity(to, duration).register();
         gd_from_native_tween(tween)
     }
@@ -287,7 +287,7 @@ impl DoRigidBody3D {
         node: Gd<RigidBody3D>,
         to: Vector3,
         duration: f64,
-    ) -> Gd<SpirePropertyVector3> {
+    ) -> Gd<SpirePropertyVec3> {
         let tween = node.do_center_of_mass(to, duration).register();
         gd_from_native_tween(tween)
     }
@@ -299,7 +299,7 @@ impl DoRigidBody3D {
         node: Gd<RigidBody3D>,
         to: Vector3,
         duration: f64,
-    ) -> Gd<SpirePropertyVector3> {
+    ) -> Gd<SpirePropertyVec3> {
         let tween = node.do_constant_force(to, duration).register();
         gd_from_native_tween(tween)
     }
@@ -311,7 +311,7 @@ impl DoRigidBody3D {
         node: Gd<RigidBody3D>,
         to: Vector3,
         duration: f64,
-    ) -> Gd<SpirePropertyVector3> {
+    ) -> Gd<SpirePropertyVec3> {
         let tween = node.do_constant_torque(to, duration).register();
         gd_from_native_tween(tween)
     }
@@ -323,7 +323,7 @@ impl DoRigidBody3D {
         node: Gd<RigidBody3D>,
         to: Vector3,
         duration: f64,
-    ) -> Gd<SpirePropertyVector3> {
+    ) -> Gd<SpirePropertyVec3> {
         let tween = node.do_inertia(to, duration).register();
         gd_from_native_tween(tween)
     }
@@ -335,7 +335,7 @@ impl DoRigidBody3D {
         node: Gd<RigidBody3D>,
         to: Vector3,
         duration: f64,
-    ) -> Gd<SpirePropertyVector3> {
+    ) -> Gd<SpirePropertyVec3> {
         let tween = node.do_linear_velocity(to, duration).register();
         gd_from_native_tween(tween)
     }

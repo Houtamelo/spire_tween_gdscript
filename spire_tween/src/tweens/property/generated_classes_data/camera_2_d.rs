@@ -257,25 +257,25 @@ impl TryFromPathAndObject for Camera2DFloatData {
     }
 }
 #[derive(Debug, Clone)]
-pub struct Camera2DVector2Data {
-    pub property: Camera2DVector2Kind,
+pub struct Camera2DVec2Data {
+    pub property: Camera2DVec2Kind,
     pub owner: Gd<Camera2D>,
     pub owner_obj_or_node: ObjectOrNode,
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum Camera2DVector2Kind {
+pub enum Camera2DVec2Kind {
     Zoom,
     Offset,
 }
-impl IProperty<Vector2> for Camera2DVector2Data {
+impl IProperty<Vector2> for Camera2DVec2Data {
     #[inline]
     fn get_property_value(&self) -> Vector2 {
         match self.property {
-            <Camera2DVector2Kind>::Zoom => {
+            <Camera2DVec2Kind>::Zoom => {
                 let obj = &self.owner;
                 obj.get_zoom()
             }
-            <Camera2DVector2Kind>::Offset => {
+            <Camera2DVec2Kind>::Offset => {
                 let obj = &self.owner;
                 obj.get_offset()
             }
@@ -284,12 +284,12 @@ impl IProperty<Vector2> for Camera2DVector2Data {
     #[inline]
     fn set_property_value(&mut self, value: Vector2) {
         match self.property {
-            <Camera2DVector2Kind>::Zoom => {
+            <Camera2DVec2Kind>::Zoom => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_zoom(val);
             }
-            <Camera2DVector2Kind>::Offset => {
+            <Camera2DVec2Kind>::Offset => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_offset(val);
@@ -297,13 +297,13 @@ impl IProperty<Vector2> for Camera2DVector2Data {
         }
     }
 }
-impl IPropertyData for Camera2DVector2Data {
+impl IPropertyData for Camera2DVec2Data {
     type Target = Camera2D;
     #[inline]
     fn get_property_path(&self) -> NodePath {
         match self.property {
-            <Camera2DVector2Kind>::Zoom => NodePath::from("zoom"),
-            <Camera2DVector2Kind>::Offset => NodePath::from("offset"),
+            <Camera2DVec2Kind>::Zoom => NodePath::from("zoom"),
+            <Camera2DVec2Kind>::Offset => NodePath::from("offset"),
         }
     }
     #[inline]
@@ -311,7 +311,7 @@ impl IPropertyData for Camera2DVector2Data {
         Some(&self.owner_obj_or_node)
     }
 }
-impl TryFromPathAndObject for Camera2DVector2Data {
+impl TryFromPathAndObject for Camera2DVec2Data {
     fn try_from_path_and_object(path: &str, object: Gd<Object>) -> Option<Self> {
         object
             .try_cast::<Camera2D>()
@@ -320,7 +320,7 @@ impl TryFromPathAndObject for Camera2DVector2Data {
                 match path {
                     "zoom" => {
                         Some(Self {
-                            property: <Camera2DVector2Kind>::Zoom,
+                            property: <Camera2DVec2Kind>::Zoom,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -329,7 +329,7 @@ impl TryFromPathAndObject for Camera2DVector2Data {
                     }
                     "offset" => {
                         Some(Self {
-                            property: <Camera2DVector2Kind>::Offset,
+                            property: <Camera2DVec2Kind>::Offset,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -569,8 +569,8 @@ impl<Class: Inherits<Camera2D> + Inherits<Object>> SpireDoCamera2D<()> for Gd<Cl
         end_val: Vector2,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
-        let data = Camera2DVector2Data {
-            property: <Camera2DVector2Kind>::Zoom,
+        let data = Camera2DVec2Data {
+            property: <Camera2DVec2Kind>::Zoom,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<Camera2D>().upcast::<Node>(),
@@ -585,8 +585,8 @@ impl<Class: Inherits<Camera2D> + Inherits<Object>> SpireDoCamera2D<()> for Gd<Cl
         end_val: Vector2,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
-        let data = Camera2DVector2Data {
-            property: <Camera2DVector2Kind>::Offset,
+        let data = Camera2DVec2Data {
+            property: <Camera2DVec2Kind>::Offset,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<Camera2D>().upcast::<Node>(),
@@ -756,8 +756,8 @@ impl<
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
         let owner: Gd<Camera2D> = self.to_gd().upcast();
-        let data = Camera2DVector2Data {
-            property: <Camera2DVector2Kind>::Zoom,
+        let data = Camera2DVec2Data {
+            property: <Camera2DVec2Kind>::Zoom,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
@@ -771,8 +771,8 @@ impl<
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
         let owner: Gd<Camera2D> = self.to_gd().upcast();
-        let data = Camera2DVector2Data {
-            property: <Camera2DVector2Kind>::Offset,
+        let data = Camera2DVec2Data {
+            property: <Camera2DVec2Kind>::Offset,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };

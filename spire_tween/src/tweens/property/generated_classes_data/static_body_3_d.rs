@@ -189,25 +189,25 @@ impl TryFromPathAndObject for StaticBody3DFloatData {
     }
 }
 #[derive(Debug, Clone)]
-pub struct StaticBody3DVector3Data {
-    pub property: StaticBody3DVector3Kind,
+pub struct StaticBody3DVec3Data {
+    pub property: StaticBody3DVec3Kind,
     pub owner: Gd<StaticBody3D>,
     pub owner_obj_or_node: ObjectOrNode,
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum StaticBody3DVector3Kind {
+pub enum StaticBody3DVec3Kind {
     ConstantAngularVelocity,
     ConstantLinearVelocity,
 }
-impl IProperty<Vector3> for StaticBody3DVector3Data {
+impl IProperty<Vector3> for StaticBody3DVec3Data {
     #[inline]
     fn get_property_value(&self) -> Vector3 {
         match self.property {
-            <StaticBody3DVector3Kind>::ConstantAngularVelocity => {
+            <StaticBody3DVec3Kind>::ConstantAngularVelocity => {
                 let obj = &self.owner;
                 obj.get_constant_angular_velocity()
             }
-            <StaticBody3DVector3Kind>::ConstantLinearVelocity => {
+            <StaticBody3DVec3Kind>::ConstantLinearVelocity => {
                 let obj = &self.owner;
                 obj.get_constant_linear_velocity()
             }
@@ -216,12 +216,12 @@ impl IProperty<Vector3> for StaticBody3DVector3Data {
     #[inline]
     fn set_property_value(&mut self, value: Vector3) {
         match self.property {
-            <StaticBody3DVector3Kind>::ConstantAngularVelocity => {
+            <StaticBody3DVec3Kind>::ConstantAngularVelocity => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_constant_angular_velocity(val);
             }
-            <StaticBody3DVector3Kind>::ConstantLinearVelocity => {
+            <StaticBody3DVec3Kind>::ConstantLinearVelocity => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_constant_linear_velocity(val);
@@ -229,15 +229,15 @@ impl IProperty<Vector3> for StaticBody3DVector3Data {
         }
     }
 }
-impl IPropertyData for StaticBody3DVector3Data {
+impl IPropertyData for StaticBody3DVec3Data {
     type Target = StaticBody3D;
     #[inline]
     fn get_property_path(&self) -> NodePath {
         match self.property {
-            <StaticBody3DVector3Kind>::ConstantAngularVelocity => {
+            <StaticBody3DVec3Kind>::ConstantAngularVelocity => {
                 NodePath::from("constant_angular_velocity")
             }
-            <StaticBody3DVector3Kind>::ConstantLinearVelocity => {
+            <StaticBody3DVec3Kind>::ConstantLinearVelocity => {
                 NodePath::from("constant_linear_velocity")
             }
         }
@@ -247,7 +247,7 @@ impl IPropertyData for StaticBody3DVector3Data {
         Some(&self.owner_obj_or_node)
     }
 }
-impl TryFromPathAndObject for StaticBody3DVector3Data {
+impl TryFromPathAndObject for StaticBody3DVec3Data {
     fn try_from_path_and_object(path: &str, object: Gd<Object>) -> Option<Self> {
         object
             .try_cast::<StaticBody3D>()
@@ -256,7 +256,7 @@ impl TryFromPathAndObject for StaticBody3DVector3Data {
                 match path {
                     "constant_angular_velocity" => {
                         Some(Self {
-                            property: <StaticBody3DVector3Kind>::ConstantAngularVelocity,
+                            property: <StaticBody3DVec3Kind>::ConstantAngularVelocity,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -265,7 +265,7 @@ impl TryFromPathAndObject for StaticBody3DVector3Data {
                     }
                     "constant_linear_velocity" => {
                         Some(Self {
-                            property: <StaticBody3DVector3Kind>::ConstantLinearVelocity,
+                            property: <StaticBody3DVec3Kind>::ConstantLinearVelocity,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -422,8 +422,8 @@ for Gd<Class> {
         end_val: Vector3,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
-        let data = StaticBody3DVector3Data {
-            property: <StaticBody3DVector3Kind>::ConstantAngularVelocity,
+        let data = StaticBody3DVec3Data {
+            property: <StaticBody3DVec3Kind>::ConstantAngularVelocity,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<StaticBody3D>().upcast::<Node>(),
@@ -438,8 +438,8 @@ for Gd<Class> {
         end_val: Vector3,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
-        let data = StaticBody3DVector3Data {
-            property: <StaticBody3DVector3Kind>::ConstantLinearVelocity,
+        let data = StaticBody3DVec3Data {
+            property: <StaticBody3DVec3Kind>::ConstantLinearVelocity,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<StaticBody3D>().upcast::<Node>(),
@@ -549,8 +549,8 @@ impl<
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
         let owner: Gd<StaticBody3D> = self.to_gd().upcast();
-        let data = StaticBody3DVector3Data {
-            property: <StaticBody3DVector3Kind>::ConstantAngularVelocity,
+        let data = StaticBody3DVec3Data {
+            property: <StaticBody3DVec3Kind>::ConstantAngularVelocity,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
@@ -564,8 +564,8 @@ impl<
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
         let owner: Gd<StaticBody3D> = self.to_gd().upcast();
-        let data = StaticBody3DVector3Data {
-            property: <StaticBody3DVector3Kind>::ConstantLinearVelocity,
+        let data = StaticBody3DVec3Data {
+            property: <StaticBody3DVec3Kind>::ConstantLinearVelocity,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };

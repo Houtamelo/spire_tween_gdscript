@@ -36,7 +36,7 @@ func _ready():
 		var rotation: float = PI * i * angle_interval
 		var ball: Sprite2D = balls[i]
 		# Rotate the energy ball around the character in a spiral pattern
-		ball_seq.join(DoNode2D.spiral(ball, center, from, to, scale, duration, rotation, shear, Spire.SPIRAL_FERMAT))
+		ball_seq.join(DoNode2D.spiral(ball, center, from, to, scale, duration, rotation, shear, Spire.SPIRAL_FERMAT, Vector2.ZERO))
 		# Fade-in the energy ball
 		ball_seq.join(DoCanvasItem.color_a(ball, 0.8, duration).from(0.0))
 		# Steadily scale the ball towards 0.25, starting at 0.

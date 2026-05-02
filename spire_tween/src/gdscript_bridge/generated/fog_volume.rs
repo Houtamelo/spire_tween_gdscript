@@ -35,11 +35,7 @@ impl DoFogVolume {
 
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/
     #[func(rename = size)]
-    fn r#size(
-        node: Gd<FogVolume>,
-        to: Vector3,
-        duration: f64,
-    ) -> Gd<SpirePropertyVector3> {
+    fn r#size(node: Gd<FogVolume>, to: Vector3, duration: f64) -> Gd<SpirePropertyVec3> {
         let tween = node.do_size(to, duration).register();
         gd_from_native_tween(tween)
     }

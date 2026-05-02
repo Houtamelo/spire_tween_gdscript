@@ -231,7 +231,7 @@ impl DoControl {
         node: Gd<Control>,
         to: Vector2,
         duration: f64,
-    ) -> Gd<SpirePropertyVector2> {
+    ) -> Gd<SpirePropertyVec2> {
         let tween = node.do_custom_minimum_size(to, duration).register();
         gd_from_native_tween(tween)
     }
@@ -243,7 +243,7 @@ impl DoControl {
         node: Gd<Control>,
         to: Vector2,
         duration: f64,
-    ) -> Gd<SpirePropertyVector2> {
+    ) -> Gd<SpirePropertyVec2> {
         let tween = node.do_position(to, duration).register();
         gd_from_native_tween(tween)
     }
@@ -253,7 +253,7 @@ impl DoControl {
         node: Gd<Control>,
         to: Vector2,
         duration: f64,
-    ) -> Gd<SpirePropertyVector2> {
+    ) -> Gd<SpirePropertyVec2> {
         Self::r#position(node, to, duration)
     }
     /**[b]Behavior: [/b]Tweens the property [member Control.global_position] over [param duration] seconds.
@@ -264,17 +264,13 @@ impl DoControl {
         node: Gd<Control>,
         to: Vector2,
         duration: f64,
-    ) -> Gd<SpirePropertyVector2> {
+    ) -> Gd<SpirePropertyVec2> {
         let tween = node.do_global_position(to, duration).register();
         gd_from_native_tween(tween)
     }
     ///Alias for [method global_position].
     #[func(rename = move)]
-    fn r#move(
-        node: Gd<Control>,
-        to: Vector2,
-        duration: f64,
-    ) -> Gd<SpirePropertyVector2> {
+    fn r#move(node: Gd<Control>, to: Vector2, duration: f64) -> Gd<SpirePropertyVec2> {
         Self::r#global_position(node, to, duration)
     }
     /**[b]Behavior: [/b]Tweens the property [member Control.pivot_offset] over [param duration] seconds.
@@ -285,7 +281,7 @@ impl DoControl {
         node: Gd<Control>,
         to: Vector2,
         duration: f64,
-    ) -> Gd<SpirePropertyVector2> {
+    ) -> Gd<SpirePropertyVec2> {
         let tween = node.do_pivot_offset(to, duration).register();
         gd_from_native_tween(tween)
     }
@@ -293,11 +289,7 @@ impl DoControl {
 
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/
     #[func(rename = scale)]
-    fn r#scale(
-        node: Gd<Control>,
-        to: Vector2,
-        duration: f64,
-    ) -> Gd<SpirePropertyVector2> {
+    fn r#scale(node: Gd<Control>, to: Vector2, duration: f64) -> Gd<SpirePropertyVec2> {
         let tween = node.do_scale(to, duration).register();
         gd_from_native_tween(tween)
     }
@@ -305,11 +297,7 @@ impl DoControl {
 
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/
     #[func(rename = size)]
-    fn r#size(
-        node: Gd<Control>,
-        to: Vector2,
-        duration: f64,
-    ) -> Gd<SpirePropertyVector2> {
+    fn r#size(node: Gd<Control>, to: Vector2, duration: f64) -> Gd<SpirePropertyVec2> {
         let tween = node.do_size(to, duration).register();
         gd_from_native_tween(tween)
     }

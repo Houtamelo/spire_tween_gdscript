@@ -1,6 +1,28 @@
 use super::*;
 
-/// Executes a Rust closure after a delay. Auto-binds to the calling node.
+/// "Run this Rust closure after `delay` seconds." Implemented for `Gd<T>` and for
+/// any `T: WithBaseField` (Self).
+///
+/// Returns an unregistered [`SpireTween<Callable>`] — call
+/// [`register`](SpireTween::register) on it.
+///
+/// The tween is auto-bound to the calling object: if the object is freed before the
+/// delay elapses, the tween is silently dropped (no callback fires). This is the
+/// most common pattern when scheduling work from inside a node — you don't have to
+/// manually clean up if the node disappears.
+///
+/// Use [`DoDelayedCallable`] when you have an existing Godot [`Callable`] to
+/// invoke instead of a Rust closure.
+///
+/// # Example
+///
+/// ```ignore
+/// use spire_tween::prelude::*;
+///
+/// my_node
+///     .do_delayed_call(|| godot_print!("3 seconds later!"), 3.0)
+///     .register();
+/// ```
 pub trait DoDelayedCall<Marker = ()> {
     fn do_delayed_call(&self, call: impl FnMut() + 'static, delay: f64) -> SpireTween<Callable>;
 }
@@ -39,7 +61,14 @@ impl<T: WithBaseField + Inherits<Object>> DoDelayedCall<BaseMarker> for T {
     }
 }
 
-/// Like `DoDelayedCall` but accepts an existing Godot `Callable`.
+/// "Run this existing [`Callable`] after `delay` seconds." Like [`DoDelayedCall`]
+/// but takes a pre-built `Callable` instead of a Rust closure.
+///
+/// The tween is auto-bound to the calling object — note that this is the *calling*
+/// object, not the [`Callable`]'s underlying object (which may be different, or may
+/// not exist at all if the callable was constructed via `Callable::from_fn`). Use
+/// this when you want the tween's lifetime tied to a specific node regardless of
+/// where the callable came from.
 pub trait DoDelayedCallable<Marker = ()> {
     fn do_delayed_callable(&self, callable: Callable, delay: f64) -> SpireTween<Callable>;
 }

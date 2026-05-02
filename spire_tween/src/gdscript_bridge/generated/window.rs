@@ -47,7 +47,7 @@ impl DoWindow {
         node: Gd<Window>,
         to: Vector2i,
         duration: f64,
-    ) -> Gd<SpirePropertyVector2i> {
+    ) -> Gd<SpirePropertyVec2i> {
         let tween = node.do_position(to, duration).register();
         gd_from_native_tween(tween)
     }
@@ -55,11 +55,7 @@ impl DoWindow {
 
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/
     #[func(rename = size)]
-    fn r#size(
-        node: Gd<Window>,
-        to: Vector2i,
-        duration: f64,
-    ) -> Gd<SpirePropertyVector2i> {
+    fn r#size(node: Gd<Window>, to: Vector2i, duration: f64) -> Gd<SpirePropertyVec2i> {
         let tween = node.do_size(to, duration).register();
         gd_from_native_tween(tween)
     }

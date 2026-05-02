@@ -207,7 +207,7 @@ impl DoTextureProgressBar {
         node: Gd<TextureProgressBar>,
         to: Vector2,
         duration: f64,
-    ) -> Gd<SpirePropertyVector2> {
+    ) -> Gd<SpirePropertyVec2> {
         let tween = node.do_radial_center_offset(to, duration).register();
         gd_from_native_tween(tween)
     }

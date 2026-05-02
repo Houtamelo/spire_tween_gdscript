@@ -175,25 +175,25 @@ impl TryFromPathAndObject for CanvasLayerFloatData {
     }
 }
 #[derive(Debug, Clone)]
-pub struct CanvasLayerVector2Data {
-    pub property: CanvasLayerVector2Kind,
+pub struct CanvasLayerVec2Data {
+    pub property: CanvasLayerVec2Kind,
     pub owner: Gd<CanvasLayer>,
     pub owner_obj_or_node: ObjectOrNode,
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum CanvasLayerVector2Kind {
+pub enum CanvasLayerVec2Kind {
     Offset,
     Scale,
 }
-impl IProperty<Vector2> for CanvasLayerVector2Data {
+impl IProperty<Vector2> for CanvasLayerVec2Data {
     #[inline]
     fn get_property_value(&self) -> Vector2 {
         match self.property {
-            <CanvasLayerVector2Kind>::Offset => {
+            <CanvasLayerVec2Kind>::Offset => {
                 let obj = &self.owner;
                 obj.get_offset()
             }
-            <CanvasLayerVector2Kind>::Scale => {
+            <CanvasLayerVec2Kind>::Scale => {
                 let obj = &self.owner;
                 obj.get_scale()
             }
@@ -202,12 +202,12 @@ impl IProperty<Vector2> for CanvasLayerVector2Data {
     #[inline]
     fn set_property_value(&mut self, value: Vector2) {
         match self.property {
-            <CanvasLayerVector2Kind>::Offset => {
+            <CanvasLayerVec2Kind>::Offset => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_offset(val);
             }
-            <CanvasLayerVector2Kind>::Scale => {
+            <CanvasLayerVec2Kind>::Scale => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_scale(val);
@@ -215,13 +215,13 @@ impl IProperty<Vector2> for CanvasLayerVector2Data {
         }
     }
 }
-impl IPropertyData for CanvasLayerVector2Data {
+impl IPropertyData for CanvasLayerVec2Data {
     type Target = CanvasLayer;
     #[inline]
     fn get_property_path(&self) -> NodePath {
         match self.property {
-            <CanvasLayerVector2Kind>::Offset => NodePath::from("offset"),
-            <CanvasLayerVector2Kind>::Scale => NodePath::from("scale"),
+            <CanvasLayerVec2Kind>::Offset => NodePath::from("offset"),
+            <CanvasLayerVec2Kind>::Scale => NodePath::from("scale"),
         }
     }
     #[inline]
@@ -229,7 +229,7 @@ impl IPropertyData for CanvasLayerVector2Data {
         Some(&self.owner_obj_or_node)
     }
 }
-impl TryFromPathAndObject for CanvasLayerVector2Data {
+impl TryFromPathAndObject for CanvasLayerVec2Data {
     fn try_from_path_and_object(path: &str, object: Gd<Object>) -> Option<Self> {
         object
             .try_cast::<CanvasLayer>()
@@ -238,7 +238,7 @@ impl TryFromPathAndObject for CanvasLayerVector2Data {
                 match path {
                     "offset" => {
                         Some(Self {
-                            property: <CanvasLayerVector2Kind>::Offset,
+                            property: <CanvasLayerVec2Kind>::Offset,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -247,7 +247,7 @@ impl TryFromPathAndObject for CanvasLayerVector2Data {
                     }
                     "scale" => {
                         Some(Self {
-                            property: <CanvasLayerVector2Kind>::Scale,
+                            property: <CanvasLayerVec2Kind>::Scale,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -404,8 +404,8 @@ for Gd<Class> {
         end_val: Vector2,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
-        let data = CanvasLayerVector2Data {
-            property: <CanvasLayerVector2Kind>::Offset,
+        let data = CanvasLayerVec2Data {
+            property: <CanvasLayerVec2Kind>::Offset,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<CanvasLayer>().upcast::<Node>(),
@@ -420,8 +420,8 @@ for Gd<Class> {
         end_val: Vector2,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
-        let data = CanvasLayerVector2Data {
-            property: <CanvasLayerVector2Kind>::Scale,
+        let data = CanvasLayerVec2Data {
+            property: <CanvasLayerVec2Kind>::Scale,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<CanvasLayer>().upcast::<Node>(),
@@ -531,8 +531,8 @@ impl<
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
         let owner: Gd<CanvasLayer> = self.to_gd().upcast();
-        let data = CanvasLayerVector2Data {
-            property: <CanvasLayerVector2Kind>::Offset,
+        let data = CanvasLayerVec2Data {
+            property: <CanvasLayerVec2Kind>::Offset,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
@@ -546,8 +546,8 @@ impl<
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
         let owner: Gd<CanvasLayer> = self.to_gd().upcast();
-        let data = CanvasLayerVector2Data {
-            property: <CanvasLayerVector2Kind>::Scale,
+        let data = CanvasLayerVec2Data {
+            property: <CanvasLayerVec2Kind>::Scale,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };

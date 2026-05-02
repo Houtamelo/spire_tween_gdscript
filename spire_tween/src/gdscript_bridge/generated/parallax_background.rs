@@ -87,7 +87,7 @@ impl DoParallaxBackground {
         node: Gd<ParallaxBackground>,
         to: Vector2,
         duration: f64,
-    ) -> Gd<SpirePropertyVector2> {
+    ) -> Gd<SpirePropertyVec2> {
         let tween = node.do_scroll_base_offset(to, duration).register();
         gd_from_native_tween(tween)
     }
@@ -99,7 +99,7 @@ impl DoParallaxBackground {
         node: Gd<ParallaxBackground>,
         to: Vector2,
         duration: f64,
-    ) -> Gd<SpirePropertyVector2> {
+    ) -> Gd<SpirePropertyVec2> {
         let tween = node.do_scroll_base_scale(to, duration).register();
         gd_from_native_tween(tween)
     }
@@ -111,7 +111,7 @@ impl DoParallaxBackground {
         node: Gd<ParallaxBackground>,
         to: Vector2,
         duration: f64,
-    ) -> Gd<SpirePropertyVector2> {
+    ) -> Gd<SpirePropertyVec2> {
         let tween = node.do_scroll_offset(to, duration).register();
         gd_from_native_tween(tween)
     }

@@ -8,7 +8,7 @@ var call_count := 0
 func test_lerp_call() -> bool:
 	var initial_pos := Vector2.ZERO
 	var final_pos := Vector2(1920, 1080)
-	var tween := Spire.do_call_vector2(custom_call, initial_pos, final_pos, 5)
+	var tween := Spire.do_call_vec2(custom_call, initial_pos, final_pos, 5)
 	assert_eq(tween.get_start_value(), initial_pos)
 	assert_eq(tween.get_final_value(), final_pos)
 	assert_eq(tween.get_duration(), 5)
@@ -38,13 +38,13 @@ func test_lerp_call_float() -> bool:
 func test_lerp_call_with_ease() -> bool:
 	var initial_pos := Vector2.ZERO
 	var final_pos := Vector2(1920, 1080)
-	var eased_tween := Spire.do_call_vector2(custom_call, initial_pos, final_pos, 5)\
+	var eased_tween := Spire.do_call_vec2(custom_call, initial_pos, final_pos, 5)\
 		.set_ease(Spire.EASE_IN_OUT_CUBIC)
 	
 	var second_ball := ball.duplicate()
 	add_child(second_ball)
 	
-	var linear_tween := Spire.do_call_vector2(second_ball.set_global_position, initial_pos, final_pos, 5)
+	var linear_tween := Spire.do_call_vec2(second_ball.set_global_position, initial_pos, final_pos, 5)
 	
 	while eased_tween.is_playing():
 		await next_frame()
@@ -65,7 +65,7 @@ func test_lerp_call_with_ease() -> bool:
 func test_lerp_call_with_loop():
 	var initial_pos := Vector2.ZERO
 	var final_pos := Vector2(1920, 1080)
-	var tween := Spire.do_call_vector2(custom_call, initial_pos, final_pos, 2)\
+	var tween := Spire.do_call_vec2(custom_call, initial_pos, final_pos, 2)\
 		.set_loops(2, Spire.LOOP_MODE_YOYO)
 	
 	await wait_loop_finished(tween, 2)

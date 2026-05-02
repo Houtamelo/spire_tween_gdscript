@@ -1,10 +1,23 @@
 use super::*;
 
+/// Marker trait carried by every type that can serve as the inner data `T` of a
+/// [`SpireTween<T>`]. Pairs each inner data type with the GDScript-facing handle
+/// that wraps it (used when [`SpireTween::register_with_gd_handle`] is called and
+/// Godot signals need to be wired up).
+///
+/// Implemented for: [`Sequence`], [`Callable`] (delayed call), [`LerpMethodData<T>`]
+/// for the supported `T`s, and [`LerpPropertyData<T>`] for the supported `T`s. You
+/// only implement this if you're adding a brand-new tween category.
 pub trait ITweenable {
+    /// Type of the GDScript-facing wrapper (`Gd<SpireSequence>`, `Gd<SpirePropertyVec2>`, …).
+    /// Required to dispatch Godot `finished` / `loop_finished` signals.
     type GdHandle: Signaler;
 
-    /// Creates and attaches the GD handle to the tween inside the RcPtr.
-    /// This enables `finished` and `loop_finished` signals for Rust consumers.
+    /// Creates the `Gd` wrapper and attaches it to the tween inside the [`RcPtr`].
+    /// This enables `finished` and `loop_finished` Godot signals on the wrapper.
+    /// Pure-Rust consumers don't need this — connect callbacks via
+    /// [`SpireTween::finished_connect`] / [`SpireTween::loop_finished_connect`]
+    /// instead, after calling [`SpireTween::register`].
     fn attach_gd_handle(tween: &RcPtr<SpireTween<Self>>)
     where Self: Sized;
 }
@@ -35,17 +48,17 @@ impl_tweenables! {
     LerpMethodData<f64> => Gd<SpireMethodFloat>, SpireMethodFloat;
     LerpMethodData<GString> => Gd<SpireMethodString>, SpireMethodString;
     LerpMethodData<Color> => Gd<SpireMethodColor>, SpireMethodColor;
-    LerpMethodData<Vector2> => Gd<SpireMethodVector2>, SpireMethodVector2;
-    LerpMethodData<Vector2i> => Gd<SpireMethodVector2i>, SpireMethodVector2i;
-    LerpMethodData<Vector3> => Gd<SpireMethodVector3>, SpireMethodVector3;
-    LerpMethodData<Vector3i> => Gd<SpireMethodVector3i>, SpireMethodVector3i;
+    LerpMethodData<Vector2> => Gd<SpireMethodVec2>, SpireMethodVec2;
+    LerpMethodData<Vector2i> => Gd<SpireMethodVec2i>, SpireMethodVec2i;
+    LerpMethodData<Vector3> => Gd<SpireMethodVec3>, SpireMethodVec3;
+    LerpMethodData<Vector3i> => Gd<SpireMethodVec3i>, SpireMethodVec3i;
     LerpPropertyData<Variant> => Gd<SpireProperty>, SpireProperty;
     LerpPropertyData<i64> => Gd<SpirePropertyInt>, SpirePropertyInt;
     LerpPropertyData<f64> => Gd<SpirePropertyFloat>, SpirePropertyFloat;
     LerpPropertyData<GString> => Gd<SpirePropertyString>, SpirePropertyString;
     LerpPropertyData<Color> => Gd<SpirePropertyColor>, SpirePropertyColor;
-    LerpPropertyData<Vector2> => Gd<SpirePropertyVector2>, SpirePropertyVector2;
-    LerpPropertyData<Vector2i> => Gd<SpirePropertyVector2i>, SpirePropertyVector2i;
-    LerpPropertyData<Vector3> => Gd<SpirePropertyVector3>, SpirePropertyVector3;
-    LerpPropertyData<Vector3i> => Gd<SpirePropertyVector3i>, SpirePropertyVector3i;
+    LerpPropertyData<Vector2> => Gd<SpirePropertyVec2>, SpirePropertyVec2;
+    LerpPropertyData<Vector2i> => Gd<SpirePropertyVec2i>, SpirePropertyVec2i;
+    LerpPropertyData<Vector3> => Gd<SpirePropertyVec3>, SpirePropertyVec3;
+    LerpPropertyData<Vector3i> => Gd<SpirePropertyVec3i>, SpirePropertyVec3i;
 }

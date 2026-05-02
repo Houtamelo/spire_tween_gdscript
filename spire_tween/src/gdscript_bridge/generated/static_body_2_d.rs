@@ -51,7 +51,7 @@ impl DoStaticBody2D {
         node: Gd<StaticBody2D>,
         to: Vector2,
         duration: f64,
-    ) -> Gd<SpirePropertyVector2> {
+    ) -> Gd<SpirePropertyVec2> {
         let tween = node.do_constant_linear_velocity(to, duration).register();
         gd_from_native_tween(tween)
     }

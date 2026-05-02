@@ -52,10 +52,10 @@ impl GdScriptType {
         match self {
             GdScriptType::float => format_ident!("Float"),
             GdScriptType::int => format_ident!("Int"),
-            GdScriptType::Vector2 => format_ident!("Vector2"),
-            GdScriptType::Vector2i => format_ident!("Vector2i"),
-            GdScriptType::Vector3 => format_ident!("Vector3"),
-            GdScriptType::Vector3i => format_ident!("Vector3i"),
+            GdScriptType::Vector2 => format_ident!("Vec2"),
+            GdScriptType::Vector2i => format_ident!("Vec2i"),
+            GdScriptType::Vector3 => format_ident!("Vec3"),
+            GdScriptType::Vector3i => format_ident!("Vec3i"),
             GdScriptType::Color => format_ident!("Color"),
             GdScriptType::String => format_ident!("String"),
         }

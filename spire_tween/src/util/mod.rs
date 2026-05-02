@@ -1,8 +1,6 @@
 #![allow(non_snake_case)]
-//mod docs;
 use std::{fmt::Display, sync::LazyLock};
 
-//pub use docs::*;
 use godot::sys::UtilityFunctionBind;
 
 use super::*;

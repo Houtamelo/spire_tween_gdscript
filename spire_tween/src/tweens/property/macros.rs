@@ -347,25 +347,25 @@ The distance between two colors `l` and `r` is defined as:  \n\t\
 Assuming a speed of `1.0`, it would take `2.0` seconds to go from `Color(0, 0, 0, 0)`(clear) \
 to `Color(1, 1, 1, 1)`(white).\n" }
 
-gd_property_tween! { SpirePropertyVector2, Vector2, Vector2, c"SpirePropertyVector2", SpeedDocs =
+gd_property_tween! { SpirePropertyVec2, Vector2, Vector2, c"SpirePropertyVec2", SpeedDocs =
 "For [Vector2], `speed` is measured in 2D-Euclidean-distance per second.\n\
 The distance between two points `l` and `r` is defined as:  \n\t\
 `d = sqrt((l.x - r.x)^2 + (l.y - r.y)^2)`\n\
 Assuming a speed of `64.0`, it would take `1.4142` seconds to go from `Vector2(0, 0)` to `Vector2(64, 64)`.\n" }
 
-gd_property_tween! { SpirePropertyVector2i, Vector2i, Vector2i, c"SpirePropertyVector2i", SpeedDocs =
+gd_property_tween! { SpirePropertyVec2i, Vector2i, Vector2i, c"SpirePropertyVec2i", SpeedDocs =
 "For [Vector2i], `speed` is measured in 2D-Euclidean-distance per second.\n\
 The distance between two points `l` and `r` is defined as:  \n\t\
 `d = sqrt((l.x - r.x)^2 + (l.y - r.y)^2)`\n\
 Assuming a speed of `64.0`, it would take `1.4142` seconds to go from `Vector2i(0, 0)` to `Vector2i(64, 64)`.\n" }
 
-gd_property_tween! { SpirePropertyVector3, Vector3, Vector3, c"SpirePropertyVector3", SpeedDocs =
+gd_property_tween! { SpirePropertyVec3, Vector3, Vector3, c"SpirePropertyVec3", SpeedDocs =
 "For [Vector3], `speed` is measured in 3D-Euclidean-distance per second.\n\
 The distance `d` between two points `l` and `r` is defined as:  \n\t\
 `d = sqrt((l.x - r.x)^2 + (l.y - r.y)^2 + (l.z - r.z)^2)`\n\
 Assuming a speed of `64.0`, it would take `1.732` seconds to go from `Vector3(0, 0, 0)` to `Vector3(64, 64, 64)`.\n" }
 
-gd_property_tween! { SpirePropertyVector3i, Vector3i, Vector3i, c"SpirePropertyVector3i", SpeedDocs =
+gd_property_tween! { SpirePropertyVec3i, Vector3i, Vector3i, c"SpirePropertyVec3i", SpeedDocs =
 "For [Vector3i], `speed` is measured in 3D-Euclidean-distance per second.\n\
 The distance `d` between two points `l` and `r` is defined as:  \n\t\
 `d = sqrt((l.x - r.x)^2 + (l.y - r.y)^2 + (l.z - r.z)^2)`\n\
@@ -399,10 +399,10 @@ define_instantiate_fn! { SpirePropertyInt, i64, "i64", Docs = "See [method Spire
 define_instantiate_fn! { SpirePropertyFloat, f64, "f64", Docs = "See [method Spire.do_property_float]." }
 define_instantiate_fn! { SpirePropertyString, GString, "string", Docs = "See [method Spire.do_property_string]." }
 define_instantiate_fn! { SpirePropertyColor, Color, "color", Docs = "See [method Spire.do_property_color]." }
-define_instantiate_fn! { SpirePropertyVector2, Vector2, "vec2", Docs = "See [method Spire.do_property_vector2]." }
-define_instantiate_fn! { SpirePropertyVector2i, Vector2i, "vec2i", Docs = "See [method Spire.do_property_vector2i]." }
-define_instantiate_fn! { SpirePropertyVector3, Vector3, "vec3", Docs = "See [method Spire.do_property_vector3]." }
-define_instantiate_fn! { SpirePropertyVector3i, Vector3i, "vec3i", Docs = "See [method Spire.do_property_vector3i]." }
+define_instantiate_fn! { SpirePropertyVec2, Vector2, "vec2", Docs = "See [method Spire.do_property_vec2]." }
+define_instantiate_fn! { SpirePropertyVec2i, Vector2i, "vec2i", Docs = "See [method Spire.do_property_vec2i]." }
+define_instantiate_fn! { SpirePropertyVec3, Vector3, "vec3", Docs = "See [method Spire.do_property_vec3]." }
+define_instantiate_fn! { SpirePropertyVec3i, Vector3i, "vec3i", Docs = "See [method Spire.do_property_vec3i]." }
 
 #[godot_api(secondary)]
 impl SpireProperty {

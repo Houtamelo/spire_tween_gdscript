@@ -17,5 +17,5 @@ export RUSTFLAGS="-Lnative=/home/houtamelo/xwin/crt/lib/x86_64 -Lnative=/home/ho
 export CFLAGS_x86_64_pc_windows_msvc="$CL_FLAGS"
 export CXXFLAGS_x86_64_pc_windows_msvc="$CL_FLAGS"
 
-cargo build --target=x86_64-pc-windows-msvc --artifact-dir="spire_tween_gdscript/addons/spire_tween/lib/x86_64-pc-windows-msvc/debug"
-cargo build --target=x86_64-pc-windows-msvc --release --artifact-dir="spire_tween_gdscript/addons/spire_tween/lib/x86_64-pc-windows-msvc/release"
+cargo build -p spire_tween --features standalone --target=x86_64-pc-windows-msvc --artifact-dir="spire_tween_gdscript/addons/spire_tween/lib/x86_64-pc-windows-msvc/debug"
+cargo build -p spire_tween --features standalone --target=x86_64-pc-windows-msvc --release --artifact-dir="spire_tween_gdscript/addons/spire_tween/lib/x86_64-pc-windows-msvc/release"

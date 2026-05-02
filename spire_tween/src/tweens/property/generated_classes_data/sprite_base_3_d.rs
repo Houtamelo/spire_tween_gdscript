@@ -197,20 +197,20 @@ impl TryFromPathAndObject for SpriteBase3DFloatData {
     }
 }
 #[derive(Debug, Clone)]
-pub struct SpriteBase3DVector2Data {
-    pub property: SpriteBase3DVector2Kind,
+pub struct SpriteBase3DVec2Data {
+    pub property: SpriteBase3DVec2Kind,
     pub owner: Gd<SpriteBase3D>,
     pub owner_obj_or_node: ObjectOrNode,
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum SpriteBase3DVector2Kind {
+pub enum SpriteBase3DVec2Kind {
     Offset,
 }
-impl IProperty<Vector2> for SpriteBase3DVector2Data {
+impl IProperty<Vector2> for SpriteBase3DVec2Data {
     #[inline]
     fn get_property_value(&self) -> Vector2 {
         match self.property {
-            <SpriteBase3DVector2Kind>::Offset => {
+            <SpriteBase3DVec2Kind>::Offset => {
                 let obj = &self.owner;
                 obj.get_offset()
             }
@@ -219,7 +219,7 @@ impl IProperty<Vector2> for SpriteBase3DVector2Data {
     #[inline]
     fn set_property_value(&mut self, value: Vector2) {
         match self.property {
-            <SpriteBase3DVector2Kind>::Offset => {
+            <SpriteBase3DVec2Kind>::Offset => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_offset(val);
@@ -227,12 +227,12 @@ impl IProperty<Vector2> for SpriteBase3DVector2Data {
         }
     }
 }
-impl IPropertyData for SpriteBase3DVector2Data {
+impl IPropertyData for SpriteBase3DVec2Data {
     type Target = SpriteBase3D;
     #[inline]
     fn get_property_path(&self) -> NodePath {
         match self.property {
-            <SpriteBase3DVector2Kind>::Offset => NodePath::from("offset"),
+            <SpriteBase3DVec2Kind>::Offset => NodePath::from("offset"),
         }
     }
     #[inline]
@@ -240,7 +240,7 @@ impl IPropertyData for SpriteBase3DVector2Data {
         Some(&self.owner_obj_or_node)
     }
 }
-impl TryFromPathAndObject for SpriteBase3DVector2Data {
+impl TryFromPathAndObject for SpriteBase3DVec2Data {
     fn try_from_path_and_object(path: &str, object: Gd<Object>) -> Option<Self> {
         object
             .try_cast::<SpriteBase3D>()
@@ -249,7 +249,7 @@ impl TryFromPathAndObject for SpriteBase3DVector2Data {
                 match path {
                     "offset" => {
                         Some(Self {
-                            property: <SpriteBase3DVector2Kind>::Offset,
+                            property: <SpriteBase3DVec2Kind>::Offset,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -581,8 +581,8 @@ for Gd<Class> {
         end_val: Vector2,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
-        let data = SpriteBase3DVector2Data {
-            property: <SpriteBase3DVector2Kind>::Offset,
+        let data = SpriteBase3DVec2Data {
+            property: <SpriteBase3DVec2Kind>::Offset,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<SpriteBase3D>().upcast::<Node>(),
@@ -799,8 +799,8 @@ impl<
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
         let owner: Gd<SpriteBase3D> = self.to_gd().upcast();
-        let data = SpriteBase3DVector2Data {
-            property: <SpriteBase3DVector2Kind>::Offset,
+        let data = SpriteBase3DVec2Data {
+            property: <SpriteBase3DVec2Kind>::Offset,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };

@@ -5,8 +5,32 @@ mod fermat;
 mod hyperbolic;
 mod logarithmic;
 
-/// Moves a `Node2D` along a spiral path. Angles in radians, movement is local.
-/// Speed is arc-length-based (except hyperbolic, which uses angular speed).
+/// Moves a `Node2D` along a spiral path of one of four well-known families
+/// (Archimedean, Logarithmic, Fermat, Hyperbolic — selected by `mode`).
+///
+/// Parameters:
+/// - `center`: the spiral's center, in global coordinates. The node is positioned
+///   at `center + offset.rotated(rotation)` each tick.
+/// - `from_angle` / `to_angle`: start and end angles in **radians**. Direction and
+///   number of revolutions follow from the difference.
+/// - `scale`: per-axis scale factor applied to the spiral's `(x, y)` parametric
+///   form before rotation.
+/// - `duration`: total seconds.
+/// - `rotation`: extra rotation applied to the offset before adding it to `center`
+///   (in radians). Use this to orient the spiral.
+/// - `shear`: additional phase offset on the X axis only — adds a "lopsidedness"
+///   to the spiral.
+/// - `mode`: which spiral family to use (see [`Spiral`]).
+/// - `log_growth`: per-axis exponential growth rate. **Only consumed when
+///   `mode == Spiral::Logarithmic`** — pass `Vector2::ZERO` for the other modes.
+///
+/// **Speed:** arc-length parameterized for Archimedean / Logarithmic / Fermat —
+/// motion appears smooth and even. Hyperbolic is angle-parameterized instead
+/// (because hyperbolic spiral arc-length diverges near `t = 0`), so motion may
+/// feel uneven at the start.
+///
+/// Implemented for any `Gd<T: Inherits<Node2D>>`. Returns an unregistered
+/// [`SpireTween<LerpMethodData<f64>>`] — call [`register`](SpireTween::register).
 pub trait DoSpiral<Marker = ()> {
     fn do_spiral(
         &self,

@@ -54,7 +54,17 @@ impl SpireTween<Callable> {
 }
 
 impl SpireTween<Callable> {
+    /// Constructs a delayed-call tween: invokes `callable` once after `delay` seconds
+    /// have elapsed, then auto-stops. The callable receives no arguments — bind any
+    /// extra args via `Callable::from_fn` or `Callable::bind` first.
+    ///
+    /// You usually don't call this directly — use [`DoDelayedCall::do_delayed_call`]
+    /// (closure form) or [`DoDelayedCallable::do_delayed_callable`] (existing
+    /// `Callable` form), which auto-bind the tween to the calling node so it
+    /// auto-stops if the node is freed.
     pub fn new(callable: Callable, delay: f64) -> Self { Self::new_with_data(callable).with_delay(delay) }
 
+    /// Convenience: [`new`](Self::new) followed by [`register`](SpireTween::register).
+    /// Submits the tween to the global `TweenManager` and returns the [`RcPtr`] handle.
     pub fn new_registered(callable: Callable, delay: f64) -> RcPtr<Self> { Self::new(callable, delay).register() }
 }

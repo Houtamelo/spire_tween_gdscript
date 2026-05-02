@@ -207,11 +207,7 @@ impl DoLabel3D {
 
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/
     #[func(rename = offset)]
-    fn r#offset(
-        node: Gd<Label3D>,
-        to: Vector2,
-        duration: f64,
-    ) -> Gd<SpirePropertyVector2> {
+    fn r#offset(node: Gd<Label3D>, to: Vector2, duration: f64) -> Gd<SpirePropertyVec2> {
         let tween = node.do_offset(to, duration).register();
         gd_from_native_tween(tween)
     }

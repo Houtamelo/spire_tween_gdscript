@@ -1,9 +1,67 @@
 use super::*;
 
-/// Organizes child tweens into sequential blocks. Items within a block run in parallel.
+/// Chains and/or parallelizes multiple tweens, callables, and intervals.
 ///
-/// `append` creates a new block; `join` adds to the last block; `insert` places
-/// items at absolute time offsets independent of the block queue.
+/// Comparable to Godot's built-in `Tween` — other Spire tween types are closer to
+/// individual `Tweener`s. A `Sequence` is itself an [`ITweenable`], so sequences can
+/// nest inside other sequences.
+///
+/// # Blocks
+///
+/// A sequence is a queue of "blocks", where each block contains one or more items
+/// that run in parallel. Below is a sequence with three blocks; each tween is a letter:
+///
+/// ```text
+/// █░Block1░█->█░Block2░█->█░Block3░█
+/// █░░░A░░░░█->█░░░D░░░░█->█░░░F░░░░█
+/// █░░░B░░░░█->█░░░E░░░░█->█░░░G░░░░█
+/// █░░░C░░░░█->█░░░░░░░░█->█░░░H░░░░█
+/// ```
+///
+/// Playback order: `A,B,C` in parallel → `D,E` in parallel → `F,G,H` in parallel.
+///
+/// A block's duration equals the longest item in the block. Each letter below
+/// represents one second of duration:
+///
+/// ```text
+/// █░Block1░█->█░Block2░█->█░Block3░█
+/// █░AAA░░░░█->█░D░░░░░░█->█░FFF░░░░█
+/// █░BBBBBB░█->█░EEEE░░░█->█░GGG░░░░█
+/// █░CCC░░░░█->█░░░░░░░░█->█░HHH░░░░█
+/// ```
+///
+/// Block 1 = 6s (`B`), block 2 = 4s (`E`), block 3 = 3s. Total = 13s.
+///
+/// Build the queue with [`append`](SpireTween::<Sequence>::append) (new block) and
+/// [`join`](SpireTween::<Sequence>::join) (add to current block). The position of an
+/// item *within* a block is irrelevant beyond per-block insertion order.
+///
+/// # Inserts
+///
+/// [`insert`](SpireTween::<Sequence>::insert) and
+/// [`insert_call`](SpireTween::<Sequence>::insert_call) place items at absolute time
+/// offsets, independent of the block queue. Inserted items still affect total
+/// duration: the sequence won't complete until all inserted items have completed.
+///
+/// # Loops
+///
+/// Sequences loop, but only [`LoopMode::Restart`] has effect — other modes are
+/// silently ignored. Looping restarts all child tweens.
+///
+/// # Child tween rules
+///
+/// - Adding a tween to the sequence unregisters it from the global `TweenManager`;
+///   the sequence becomes responsible for ticking it.
+/// - Calling `stop()` on a child makes the sequence skip it for the current loop.
+/// - Calling `pause()` on a child has no effect — the sequence calls `play()` on the
+///   next update.
+/// - Adding the same tween to multiple sequences (or twice to the same sequence)
+///   results in undefined behavior — but won't crash.
+/// - A child that never completes will hang the sequence on that block forever.
+/// - A child with its own loops must finish all of them before the sequence advances.
+/// - A child's [`ProcessMode`] is ignored; only the sequence's matters.
+/// - A child's [`PauseMode`] is honored — a paused child stalls the block.
+/// - Effective `speed_scale` of a child = `sequence.speed_scale * child.speed_scale`.
 #[derive(Default)]
 pub struct Sequence {
     pub queue: Vec<Vec<BlockItem>>,
@@ -11,13 +69,16 @@ pub struct Sequence {
     pub default_ease: Option<Ease>,
 }
 
+/// One slot inside a [`Sequence`] block: a child tween, a one-shot callable, or an
+/// interval (delay).
 pub enum BlockItem {
     Tween(AnyTween),
     Call { call: Callable, invoked: bool },
     Interval { interval_time: f64, elapsed_time: f64 },
 }
 
-/// Runs independently of the block queue at a specific time offset.
+/// One slot inserted into a [`Sequence`] at an absolute time offset, running
+/// independently of the block queue.
 pub enum InsertItem {
     Tween(AnyTween),
     Call { call: Callable, invoked: bool },
@@ -213,18 +274,42 @@ impl Default for SpireTween<Sequence> {
 }
 
 impl SpireTween<Sequence> {
+    /// Constructs an empty sequence. Equivalent to `SpireTween::<Sequence>::new_with_data(Sequence::default())`.
     pub fn new() -> Self { Self::new_with_data(Sequence::default()) }
 
-    /// Overrides `Ease::Default` on child tweens added after this call.
+    /// When adding child tweens to this sequence, override their easing if (and only if)
+    /// the child's easing is currently [`Ease::Default`].
+    ///
+    /// This takes priority over the global default set via `SpireGlobalSettings::set_default_ease`.
+    /// Only affects tweens added *after* this call. Eligible child types: tweens whose `T` is
+    /// [`LerpPropertyData<U>`], [`LerpMethodData<U>`], or [`Sequence`].
     pub fn set_default_ease(&mut self, ease: Ease) { self.t.default_ease = Some(ease); }
 
-    /// Creates a new block at the end of the queue containing only this tween.
+    /// Appends a tween in a new block at the end of the queue.
+    ///
+    /// Given a sequence with two blocks:
+    /// ```text
+    /// █░Block1░█->█░Block2░█
+    /// █░░░A░░░░█->█░░░D░░░░█
+    /// █░░░B░░░░█->█░░░E░░░░█
+    /// █░░░C░░░░█->█░░░░░░░░█
+    /// ```
+    /// `append(F)` produces:
+    /// ```text
+    /// █░Block1░█->█░Block2░█->█░Block3░█
+    /// █░░░A░░░░█->█░░░D░░░░█->█░░░F░░░░█
+    /// █░░░B░░░░█->█░░░E░░░░█->█░░░░░░░░█
+    /// █░░░C░░░░█->█░░░░░░░░█->█░░░░░░░░█
+    /// ```
     pub fn append<T: ITweenable>(&mut self, tween: SpireTween<T>)
     where AnyTween: From<RcPtr<SpireTween<T>>> {
         let tween = AnyTween::from(RcPtr::new(tween));
         self.append_ptr(tween);
     }
 
+    /// Like [`append`](Self::append) but accepts an already-erased [`AnyTween`] (or
+    /// anything `Into<AnyTween>`, e.g. `RcPtr<SpireTween<T>>`). Use when you've kept
+    /// a handle to a previously-built tween.
     pub fn append_ptr(&mut self, tween: impl Into<AnyTween>) {
         let mut tween = tween.into();
 
@@ -243,8 +328,12 @@ impl SpireTween<Sequence> {
         self.t.queue.push(vec![tween.into()]);
     }
 
+    /// Appends a one-shot [`Callable`] in a new block. Equivalent to a zero-duration
+    /// tween that just invokes a function once.
     pub fn append_call(&mut self, call: Callable) { self.t.queue.push(vec![call.into()]); }
 
+    /// Appends an interval (delay) in a new block. Equivalent to a tween with
+    /// `delay = time` that completes immediately afterward.
     pub fn append_interval(&mut self, time: f64) {
         let item = BlockItem::Interval {
             interval_time: time,
@@ -253,13 +342,32 @@ impl SpireTween<Sequence> {
         self.t.queue.push(vec![item]);
     }
 
-    /// Adds a tween to the last block (parallel). Falls back to `append` if empty.
+    /// Adds a tween to the **last** block, running it in parallel with the block's
+    /// existing items. Equivalent to Godot's `Tween.parallel()`, but in one call.
+    ///
+    /// If the sequence is empty, behaves like [`append`](Self::append).
+    ///
+    /// Given:
+    /// ```text
+    /// █░Block1░█->█░Block2░█
+    /// █░░░A░░░░█->█░░░D░░░░█
+    /// █░░░B░░░░█->█░░░E░░░░█
+    /// █░░░C░░░░█->█░░░░░░░░█
+    /// ```
+    /// `join(F)` produces:
+    /// ```text
+    /// █░Block1░█->█░Block2░█
+    /// █░░░A░░░░█->█░░░D░░░░█
+    /// █░░░B░░░░█->█░░░E░░░░█
+    /// █░░░C░░░░█->█░░░F░░░░█
+    /// ```
     pub fn join<T: ITweenable>(&mut self, tween: SpireTween<T>)
     where AnyTween: From<RcPtr<SpireTween<T>>> {
         let tween = AnyTween::from(RcPtr::new(tween));
         self.join_ptr(tween);
     }
 
+    /// Like [`join`](Self::join) but accepts an already-erased [`AnyTween`].
     pub fn join_ptr(&mut self, tween: impl Into<AnyTween>) {
         let mut tween = tween.into();
 
@@ -282,6 +390,8 @@ impl SpireTween<Sequence> {
         }
     }
 
+    /// Adds a one-shot [`Callable`] to the last block (parallel). Falls back to
+    /// [`append_call`](Self::append_call) if the sequence is empty.
     pub fn join_call(&mut self, call: Callable) {
         if let Some(last_block) = self.t.queue.last_mut() {
             last_block.push(call.into());
@@ -290,6 +400,10 @@ impl SpireTween<Sequence> {
         }
     }
 
+    /// Adds an interval to the last block. Since block duration is determined by the
+    /// longest item, this only changes the block's length if `time` exceeds every
+    /// other item in the block. Falls back to [`append_interval`](Self::append_interval)
+    /// if the sequence is empty.
     pub fn join_interval(&mut self, time: f64) {
         if let Some(last_block) = self.t.queue.last_mut() {
             last_block.push(BlockItem::Interval {
@@ -301,13 +415,22 @@ impl SpireTween<Sequence> {
         }
     }
 
-    /// Inserts a tween at an absolute time offset, independent of the block queue.
+    /// Inserts a tween at an absolute time offset from the start of the sequence,
+    /// independent of the block queue.
+    ///
+    /// Inserted items still affect total duration — the sequence won't complete until
+    /// all inserted tweens have completed.
+    ///
+    /// **Note:** If the sequence has a non-zero delay, the delay is *added* to the time
+    /// offset. Example: a sequence with `delay = 2.0` and `insert(3.0, t)` will start
+    /// `t` at the 5.0s mark from when the sequence begins playing.
     pub fn insert<T: ITweenable>(&mut self, time: f64, tween: SpireTween<T>)
     where AnyTween: From<RcPtr<SpireTween<T>>> {
         let tween = AnyTween::from(RcPtr::new(tween));
         self.insert_ptr(time, tween);
     }
 
+    /// Like [`insert`](Self::insert) but accepts an already-erased [`AnyTween`].
     pub fn insert_ptr(&mut self, time: f64, tween: impl Into<AnyTween>) {
         let mut tween = tween.into();
 
@@ -326,8 +449,12 @@ impl SpireTween<Sequence> {
         self.t.inserts.push((time, tween.into()));
     }
 
+    /// Inserts a one-shot [`Callable`] at an absolute time offset, independent of the
+    /// block queue. The sequence's delay is added to the offset (see [`insert`](Self::insert)).
     pub fn insert_call(&mut self, time: f64, call: Callable) { self.t.inserts.push((time, call.into())); }
 
+    /// Iterator over child tweens in the immediate queue and inserts (does not descend
+    /// into nested sequences). Skips `BlockItem::Call` and `BlockItem::Interval`.
     pub fn iter_inner_tweens_non_recursive(&self) -> impl Iterator<Item = AnyTween> {
         self.t
             .queue
@@ -346,8 +473,14 @@ impl SpireTween<Sequence> {
             )
     }
 
+    /// Iterator that recursively descends into child sequences.
     pub fn iter_inner_tweens_recursive(&self) -> SequenceIter { SequenceIter::new(self) }
 
+    /// Searches the queue and inserts for `to_remove`, removes it if found.
+    /// Returns `true` if the tween was found and removed.
+    ///
+    /// Does **not** descend into nested sequences — call `remove` on the exact
+    /// [`Sequence`] that contains the target.
     pub fn remove(&mut self, to_remove: &impl Address) -> bool {
         let address = to_remove.address();
         let mut found = false;
@@ -384,6 +517,11 @@ impl SpireTween<Sequence> {
         found
     }
 
+    /// Searches the queue and inserts for a [`Callable`] equal to `to_remove`, removes
+    /// it if found. Returns `true` if removed.
+    ///
+    /// Does **not** descend into nested sequences. Note that [`Callable`] equality
+    /// uses reference counting, so you must pass the same handle that was inserted.
     pub fn remove_call(&mut self, to_remove: &Callable) -> bool {
         let mut found = false;
         self.t.queue.retain_mut(|block| {

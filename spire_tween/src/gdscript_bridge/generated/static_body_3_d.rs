@@ -87,7 +87,7 @@ impl DoStaticBody3D {
         node: Gd<StaticBody3D>,
         to: Vector3,
         duration: f64,
-    ) -> Gd<SpirePropertyVector3> {
+    ) -> Gd<SpirePropertyVec3> {
         let tween = node.do_constant_angular_velocity(to, duration).register();
         gd_from_native_tween(tween)
     }
@@ -99,7 +99,7 @@ impl DoStaticBody3D {
         node: Gd<StaticBody3D>,
         to: Vector3,
         duration: f64,
-    ) -> Gd<SpirePropertyVector3> {
+    ) -> Gd<SpirePropertyVec3> {
         let tween = node.do_constant_linear_velocity(to, duration).register();
         gd_from_native_tween(tween)
     }

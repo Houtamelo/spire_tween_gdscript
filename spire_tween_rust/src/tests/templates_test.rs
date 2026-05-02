@@ -36,6 +36,8 @@ impl ITestClass for TemplatesTests {
             Self::test_do_shake_stays_within_radius,
             Self::test_do_shake_returns_to_origin,
             Self::test_do_contour_shape,
+            Self::test_do_contour_shape_speed_based,
+            Self::test_do_contour_shape_empty,
             Self::test_do_follow,
             // ignore_time_scale must be last because it touches Engine.time_scale globally.
             Self::test_ignore_time_scale,
@@ -180,11 +182,15 @@ impl TemplatesTests {
     }
 
     /// Verifies that `do_contour_shape` walks the polyline and ends at the last vertex.
+    /// `is_speed_based: false` — every segment runs for `duration_or_speed` seconds.
+    /// Walks an equal-segment triangle and asserts the sprite passes through each
+    /// vertex at the expected timestamp.
     fn test_do_contour_shape(&mut self) -> PinnedTestTask {
-        let sprite = self.sprite.clone();
+        let mut sprite = self.sprite.clone();
+        sprite.set_position(Vector2::ZERO);
         let start = sprite.get_position();
 
-        // Polyline: start -> A -> B -> C
+        // Polyline: start -> A -> B -> C, each segment length 100.
         let a = start + Vector2::new(100.0, 0.0);
         let b = start + Vector2::new(100.0, 100.0);
         let c = start + Vector2::new(0.0, 100.0);
@@ -194,15 +200,98 @@ impl TemplatesTests {
         vertices.push(b);
         vertices.push(c);
 
-        // Per-segment duration of 1.0s, 3 segments => 3s total.
+        // 1.0s per segment, 3 segments -> 3.0s total.
         let seq = sprite.do_contour_shape(vertices, 1.0, false).register();
         let tracker = RcPtr::clone(&self.time_tracker);
         assert_finished_timing(&seq, &tracker, 3.0);
 
         Box::pin(async move {
+            // 1 frame of jitter at 60fps × 100 units/s ≈ 1.7 units; 5 is generous.
+            const POS_TOLERANCE: f32 = 5.0;
+
+            // After segment 1 (start->A) the sprite should be at A.
+            tracker.wait_seconds(1.0).await;
+            let pos = sprite.get_position();
+            assert!(
+                pos.distance_to(a) < POS_TOLERANCE,
+                "after 1.0s expected near A={a:?}, got {pos:?} (dist={:.2})",
+                pos.distance_to(a)
+            );
+
+            // After segment 2 (A->B): at B.
+            tracker.wait_seconds(1.0).await;
+            let pos = sprite.get_position();
+            assert!(
+                pos.distance_to(b) < POS_TOLERANCE,
+                "after 2.0s expected near B={b:?}, got {pos:?} (dist={:.2})",
+                pos.distance_to(b)
+            );
+
             wait_finished(&seq, &tracker, 3.0).await;
-            // Final position must equal the last vertex.
+            // Final position snaps exactly to the last vertex.
             assert_eq!(sprite.get_position(), c);
+        })
+    }
+
+    /// `is_speed_based: true` — `duration_or_speed` is the *total* path duration,
+    /// distributed proportionally to each segment's length. Uses an unequal-segment
+    /// polyline so the proportional distribution is observable.
+    fn test_do_contour_shape_speed_based(&mut self) -> PinnedTestTask {
+        let mut sprite = self.sprite.clone();
+        sprite.set_position(Vector2::ZERO);
+        let start = sprite.get_position();
+
+        // Unequal segments: start->A is 300 units, A->B is 100 units. Perimeter 400.
+        let a = start + Vector2::new(300.0, 0.0);
+        let b = start + Vector2::new(300.0, 100.0);
+
+        let mut vertices: Array<Vector2> = Array::new();
+        vertices.push(a);
+        vertices.push(b);
+
+        // Total path duration = 2.0s. Distributed proportionally:
+        //   - Segment 1 (300/400 of perimeter) -> 1.5s
+        //   - Segment 2 (100/400 of perimeter) -> 0.5s
+        let seq = sprite.do_contour_shape(vertices, 2.0, true).register();
+        let tracker = RcPtr::clone(&self.time_tracker);
+        assert_finished_timing(&seq, &tracker, 2.0);
+
+        Box::pin(async move {
+            // Higher tolerance: segment 1 runs at 200 units/s.
+            const POS_TOLERANCE: f32 = 8.0;
+
+            // At t=1.5s, segment 1 just finished -> sprite at A.
+            tracker.wait_seconds(1.5).await;
+            let pos = sprite.get_position();
+            assert!(
+                pos.distance_to(a) < POS_TOLERANCE,
+                "after 1.5s expected near A={a:?}, got {pos:?} (dist={:.2})",
+                pos.distance_to(a)
+            );
+
+            wait_finished(&seq, &tracker, 2.0).await;
+            assert_eq!(sprite.get_position(), b);
+        })
+    }
+
+    /// Empty-polyline guard: returns an empty sequence that finishes on its first
+    /// tick without moving the sprite. Also emits a `godot_error!` (intentional —
+    /// the caller passed nothing to animate).
+    fn test_do_contour_shape_empty(&mut self) -> PinnedTestTask {
+        let mut sprite = self.sprite.clone();
+        sprite.set_position(Vector2::ZERO);
+        let start = sprite.get_position();
+
+        let vertices: Array<Vector2> = Array::new();
+        let seq = sprite.do_contour_shape(vertices, 1.0, false).register();
+        let tracker = RcPtr::clone(&self.time_tracker);
+
+        Box::pin(async move {
+            // A few frames is plenty: the empty sequence completes on its first
+            // process tick.
+            tracker.wait_seconds(0.1).await;
+            assert_eq!(sprite.get_position(), start, "empty polyline must not move the sprite");
+            assert!(seq.is_stopped(), "empty contour-shape sequence should auto-finish on first tick");
         })
     }
 

@@ -195,7 +195,7 @@ impl DoPhysicalBone3D {
         node: Gd<PhysicalBone3D>,
         to: Vector3,
         duration: f64,
-    ) -> Gd<SpirePropertyVector3> {
+    ) -> Gd<SpirePropertyVec3> {
         let tween = node.do_angular_velocity(to, duration).register();
         gd_from_native_tween(tween)
     }
@@ -207,7 +207,7 @@ impl DoPhysicalBone3D {
         node: Gd<PhysicalBone3D>,
         to: Vector3,
         duration: f64,
-    ) -> Gd<SpirePropertyVector3> {
+    ) -> Gd<SpirePropertyVec3> {
         let tween = node.do_joint_rotation(to, duration).register();
         gd_from_native_tween(tween)
     }
@@ -219,7 +219,7 @@ impl DoPhysicalBone3D {
         node: Gd<PhysicalBone3D>,
         to: Vector3,
         duration: f64,
-    ) -> Gd<SpirePropertyVector3> {
+    ) -> Gd<SpirePropertyVec3> {
         let tween = node.do_linear_velocity(to, duration).register();
         gd_from_native_tween(tween)
     }

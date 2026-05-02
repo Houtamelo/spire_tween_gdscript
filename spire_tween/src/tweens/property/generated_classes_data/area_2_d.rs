@@ -199,25 +199,25 @@ impl TryFromPathAndObject for Area2DFloatData {
     }
 }
 #[derive(Debug, Clone)]
-pub struct Area2DVector2Data {
-    pub property: Area2DVector2Kind,
+pub struct Area2DVec2Data {
+    pub property: Area2DVec2Kind,
     pub owner: Gd<Area2D>,
     pub owner_obj_or_node: ObjectOrNode,
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum Area2DVector2Kind {
+pub enum Area2DVec2Kind {
     GravityDirection,
     GravityPointCenter,
 }
-impl IProperty<Vector2> for Area2DVector2Data {
+impl IProperty<Vector2> for Area2DVec2Data {
     #[inline]
     fn get_property_value(&self) -> Vector2 {
         match self.property {
-            <Area2DVector2Kind>::GravityDirection => {
+            <Area2DVec2Kind>::GravityDirection => {
                 let obj = &self.owner;
                 obj.get_gravity_direction()
             }
-            <Area2DVector2Kind>::GravityPointCenter => {
+            <Area2DVec2Kind>::GravityPointCenter => {
                 let obj = &self.owner;
                 obj.get_gravity_point_center()
             }
@@ -226,12 +226,12 @@ impl IProperty<Vector2> for Area2DVector2Data {
     #[inline]
     fn set_property_value(&mut self, value: Vector2) {
         match self.property {
-            <Area2DVector2Kind>::GravityDirection => {
+            <Area2DVec2Kind>::GravityDirection => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_gravity_direction(val);
             }
-            <Area2DVector2Kind>::GravityPointCenter => {
+            <Area2DVec2Kind>::GravityPointCenter => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_gravity_point_center(val);
@@ -239,13 +239,13 @@ impl IProperty<Vector2> for Area2DVector2Data {
         }
     }
 }
-impl IPropertyData for Area2DVector2Data {
+impl IPropertyData for Area2DVec2Data {
     type Target = Area2D;
     #[inline]
     fn get_property_path(&self) -> NodePath {
         match self.property {
-            <Area2DVector2Kind>::GravityDirection => NodePath::from("gravity_direction"),
-            <Area2DVector2Kind>::GravityPointCenter => {
+            <Area2DVec2Kind>::GravityDirection => NodePath::from("gravity_direction"),
+            <Area2DVec2Kind>::GravityPointCenter => {
                 NodePath::from("gravity_point_center")
             }
         }
@@ -255,7 +255,7 @@ impl IPropertyData for Area2DVector2Data {
         Some(&self.owner_obj_or_node)
     }
 }
-impl TryFromPathAndObject for Area2DVector2Data {
+impl TryFromPathAndObject for Area2DVec2Data {
     fn try_from_path_and_object(path: &str, object: Gd<Object>) -> Option<Self> {
         object
             .try_cast::<Area2D>()
@@ -264,7 +264,7 @@ impl TryFromPathAndObject for Area2DVector2Data {
                 match path {
                     "gravity_direction" => {
                         Some(Self {
-                            property: <Area2DVector2Kind>::GravityDirection,
+                            property: <Area2DVec2Kind>::GravityDirection,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -273,7 +273,7 @@ impl TryFromPathAndObject for Area2DVector2Data {
                     }
                     "gravity_point_center" => {
                         Some(Self {
-                            property: <Area2DVector2Kind>::GravityPointCenter,
+                            property: <Area2DVec2Kind>::GravityPointCenter,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -450,8 +450,8 @@ impl<Class: Inherits<Area2D> + Inherits<Object>> SpireDoArea2D<()> for Gd<Class>
         end_val: Vector2,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
-        let data = Area2DVector2Data {
-            property: <Area2DVector2Kind>::GravityDirection,
+        let data = Area2DVec2Data {
+            property: <Area2DVec2Kind>::GravityDirection,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<Area2D>().upcast::<Node>(),
@@ -466,8 +466,8 @@ impl<Class: Inherits<Area2D> + Inherits<Object>> SpireDoArea2D<()> for Gd<Class>
         end_val: Vector2,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
-        let data = Area2DVector2Data {
-            property: <Area2DVector2Kind>::GravityPointCenter,
+        let data = Area2DVec2Data {
+            property: <Area2DVec2Kind>::GravityPointCenter,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<Area2D>().upcast::<Node>(),
@@ -591,8 +591,8 @@ for T {
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
         let owner: Gd<Area2D> = self.to_gd().upcast();
-        let data = Area2DVector2Data {
-            property: <Area2DVector2Kind>::GravityDirection,
+        let data = Area2DVec2Data {
+            property: <Area2DVec2Kind>::GravityDirection,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
@@ -606,8 +606,8 @@ for T {
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
         let owner: Gd<Area2D> = self.to_gd().upcast();
-        let data = Area2DVector2Data {
-            property: <Area2DVector2Kind>::GravityPointCenter,
+        let data = Area2DVec2Data {
+            property: <Area2DVec2Kind>::GravityPointCenter,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };

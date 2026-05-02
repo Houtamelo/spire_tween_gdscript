@@ -51,7 +51,7 @@ impl DoCharacterBody3D {
         node: Gd<CharacterBody3D>,
         to: Vector3,
         duration: f64,
-    ) -> Gd<SpirePropertyVector3> {
+    ) -> Gd<SpirePropertyVec3> {
         let tween = node.do_velocity(to, duration).register();
         gd_from_native_tween(tween)
     }

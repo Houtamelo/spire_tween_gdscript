@@ -169,20 +169,20 @@ impl TryFromPathAndObject for Camera3DFloatData {
     }
 }
 #[derive(Debug, Clone)]
-pub struct Camera3DVector2Data {
-    pub property: Camera3DVector2Kind,
+pub struct Camera3DVec2Data {
+    pub property: Camera3DVec2Kind,
     pub owner: Gd<Camera3D>,
     pub owner_obj_or_node: ObjectOrNode,
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum Camera3DVector2Kind {
+pub enum Camera3DVec2Kind {
     FrustumOffset,
 }
-impl IProperty<Vector2> for Camera3DVector2Data {
+impl IProperty<Vector2> for Camera3DVec2Data {
     #[inline]
     fn get_property_value(&self) -> Vector2 {
         match self.property {
-            <Camera3DVector2Kind>::FrustumOffset => {
+            <Camera3DVec2Kind>::FrustumOffset => {
                 let obj = &self.owner;
                 obj.get_frustum_offset()
             }
@@ -191,7 +191,7 @@ impl IProperty<Vector2> for Camera3DVector2Data {
     #[inline]
     fn set_property_value(&mut self, value: Vector2) {
         match self.property {
-            <Camera3DVector2Kind>::FrustumOffset => {
+            <Camera3DVec2Kind>::FrustumOffset => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_frustum_offset(val);
@@ -199,12 +199,12 @@ impl IProperty<Vector2> for Camera3DVector2Data {
         }
     }
 }
-impl IPropertyData for Camera3DVector2Data {
+impl IPropertyData for Camera3DVec2Data {
     type Target = Camera3D;
     #[inline]
     fn get_property_path(&self) -> NodePath {
         match self.property {
-            <Camera3DVector2Kind>::FrustumOffset => NodePath::from("frustum_offset"),
+            <Camera3DVec2Kind>::FrustumOffset => NodePath::from("frustum_offset"),
         }
     }
     #[inline]
@@ -212,7 +212,7 @@ impl IPropertyData for Camera3DVector2Data {
         Some(&self.owner_obj_or_node)
     }
 }
-impl TryFromPathAndObject for Camera3DVector2Data {
+impl TryFromPathAndObject for Camera3DVec2Data {
     fn try_from_path_and_object(path: &str, object: Gd<Object>) -> Option<Self> {
         object
             .try_cast::<Camera3D>()
@@ -221,7 +221,7 @@ impl TryFromPathAndObject for Camera3DVector2Data {
                 match path {
                     "frustum_offset" => {
                         Some(Self {
-                            property: <Camera3DVector2Kind>::FrustumOffset,
+                            property: <Camera3DVec2Kind>::FrustumOffset,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -356,8 +356,8 @@ impl<Class: Inherits<Camera3D> + Inherits<Object>> SpireDoCamera3D<()> for Gd<Cl
         end_val: Vector2,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
-        let data = Camera3DVector2Data {
-            property: <Camera3DVector2Kind>::FrustumOffset,
+        let data = Camera3DVec2Data {
+            property: <Camera3DVec2Kind>::FrustumOffset,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<Camera3D>().upcast::<Node>(),
@@ -459,8 +459,8 @@ impl<
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
         let owner: Gd<Camera3D> = self.to_gd().upcast();
-        let data = Camera3DVector2Data {
-            property: <Camera3DVector2Kind>::FrustumOffset,
+        let data = Camera3DVec2Data {
+            property: <Camera3DVec2Kind>::FrustumOffset,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };

@@ -1,21 +1,123 @@
 use super::*;
 
+/// The minimum lerping operation: take `from`, `to`, and a weight, return the
+/// interpolated value.
+///
+/// Built-in numeric and vector types use the unit `()` as their lerper — see the
+/// many `impl BasicLerp<…> for ()` blocks in this module. Implement `BasicLerp` on a
+/// new type when you want to plug a custom data type into [`LerpMethodData`] (the
+/// minimum requirement for a method tween).
+///
+/// # Contract
+///
+/// `spire_lerp(from, to, weight)` should return:
+/// - `from` when `weight == 0.0`
+/// - `to` when `weight == 1.0`
+/// - the value halfway between when `weight == 0.5`
+/// - extrapolated values when `weight` falls outside `0.0 ~ 1.0` (this can happen
+///   under [`LoopMode::Incremental`] or with custom easing functions)
+///
+/// For numbers and vectors the canonical formula is `from + (to - from) * weight`.
+/// For non-arithmetic types (strings, custom enums, …) the formula is up to you, as
+/// long as the contract above holds.
 pub trait BasicLerp<T> {
     fn spire_lerp(&mut self, from: &T, to: &T, t: f64) -> T;
 }
 
-/// Extends `BasicLerp` with relative-value arithmetic, fixed-speed stepping,
-/// and distance calculation (needed for relative tweens, speed-based tweens, etc).
+/// Extends [`BasicLerp`] with the three additional operations Spire needs to power
+/// **relative** ([`LerpMode::Relative`]) and **speed-based** ([`LerpMode::SpeedBased`])
+/// property tweens.
+///
+/// You only need to implement `SpireLerp` (instead of just [`BasicLerp`]) when:
+/// - the type is going to be plugged into [`LerpPropertyData`] (the property tween),
+///   and
+/// - users may want to use that type in relative or speed-based mode.
+///
+/// For [`LerpMethodData`] (method tweens), only `BasicLerp` is required.
+///
+/// The four operations Spire calls per mode:
+///
+/// | Mode             | Calls                                     |
+/// |------------------|-------------------------------------------|
+/// | [`LerpMode::Absolute`]    | `spire_lerp` only                |
+/// | [`LerpMode::Relative`]    | `spire_lerp` + `add_relative`    |
+/// | [`LerpMode::SpeedBased`]  | `spire_step` + `spire_distance`  |
+///
+/// See each method's documentation for the contract.
 pub trait SpireLerp<T>: BasicLerp<T> {
-    /// `current_at_obj + (new_relative - previous_relative)`.
+    /// **Used in [`LerpMode::Relative`].**
+    ///
+    /// A relative tween needs to add an *increment* to the property's current value
+    /// each tick — without overwriting other forces affecting the property. The
+    /// challenge: how do you do that generically for any `T` (including types like
+    /// `GString` where you can't multiply by a `f64`)?
+    ///
+    /// Spire solves this by computing two interpolation samples per tick:
+    /// - `previous_relative = lerp(from, to, previous_weight)`
+    /// - `new_relative      = lerp(from, to, current_weight)`
+    ///
+    /// Then `next_value = current_at_obj + (new_relative - previous_relative)`. The
+    /// difference `(new - previous)` is the increment for this tick; adding it to
+    /// `current_at_obj` lets the tween blend with whatever else has moved the
+    /// property since last frame.
+    ///
+    /// For numeric / vector types the implementation is literally
+    /// `current_at_obj + new_relative - previous_relative`. For exotic types you
+    /// need an analogous "add the delta" operation.
+    ///
+    /// # Train/passenger analogy
+    ///
+    /// Imagine a train whose speed varies. A passenger inside walks toward the
+    /// front at a constant 2 m/s *relative to the train*. Each frame the
+    /// passenger's world position changes by both the train's movement *and* their
+    /// own. We don't want to model the train (other forces); we just want to add
+    /// our own 2 m/s × delta_time to the passenger's current world position.
+    /// `add_relative` is "add my own movement to wherever they are now".
     fn add_relative(&mut self, current_at_obj: &T, previous_relative: &T, new_relative: &T) -> T;
+
+    /// **Used in [`LerpMode::SpeedBased`].**
+    ///
+    /// Step `from` toward `to` by at most `speed * step` units of progress. Returns
+    /// the new value plus a [`StepResult`] indicating whether the target was reached.
+    ///
+    /// Naive implementation `current += speed * step` fails for integer types: when
+    /// `speed * step < 0.5`, the increment rounds to `0` and the value never
+    /// changes — or rounds to `1` and overshoots. Spire models `speed * step` as
+    /// "fuel" that callers can save up between ticks via [`StepResult::Unfinished::accumulated_time`]
+    /// and spend later when there's enough for a whole-unit move.
+    ///
+    /// **Contract:**
+    /// - Never overshoot — return `to` (or as close as your unit allows) and stop.
+    /// - When the result equals `to`, return [`StepResult::Finished`] with the unspent
+    ///   fuel as `excess_time`. Spire feeds that excess into the parent sequence so
+    ///   it doesn't drift.
+    /// - Otherwise return [`StepResult::Unfinished`] with the saved-up fuel as
+    ///   `accumulated_time` (so the next call can spend it).
+    /// - Spire trusts you on `is_finished`: it does not double-check by comparing
+    ///   `value == to`.
     fn spire_step(&mut self, from: &T, to: &T, speed: f64, step: f64) -> (T, StepResult);
+
+    /// **Used in [`LerpMode::SpeedBased`].**
+    ///
+    /// "How far apart are these two values?" — used both to compute speed-based
+    /// progress (for easing) and to know when the tween has reached its target.
+    ///
+    /// For numbers: `(to - from).abs()`. For vectors: Euclidean distance. For
+    /// `Color`: 4D distance treating `(r,g,b,a)` as a vector. For `GString`: the
+    /// number of characters that differ (Spire's built-in impl).
     fn spire_distance(&mut self, from: &T, to: &T) -> f64;
 }
 
+/// Outcome of one [`SpireLerp::spire_step`] call. Carries leftover "fuel" so the
+/// stepper can integer-quantize without losing time across ticks.
 #[derive(Debug, Clone, Copy)]
 pub enum StepResult {
+    /// The target wasn't reached on this tick. `accumulated_time` is the unspent
+    /// fuel that should be saved and added to the next tick's `step` argument.
     Unfinished { accumulated_time: f64 },
+    /// The target was reached on this tick. `excess_time` is the overshoot that
+    /// Spire forwards to the parent sequence (for clean handoff to the next block)
+    /// or to the next loop.
     Finished { excess_time: f64 },
 }
 
@@ -445,14 +547,23 @@ impl SpireLerp<Color> for () {
     }
 }
 
-/// Falls back to `godot::global::lerp` with type inference when no callable is provided.
+/// Implements [`BasicLerp<Variant>`] via a user-supplied [`Callable`], used by
+/// [`SpireTween::<LerpMethodData<Variant>>::new_custom`].
+///
+/// If the callable is missing or invalid, falls back to `godot::global::lerp` with
+/// runtime type inference (good for built-in numeric types; produces a
+/// `godot_error!` if it can't infer).
+///
+/// The callable signature is `func(from: Variant, to: Variant, weight: f64) -> Variant`.
 #[derive(Default)]
 pub struct CustomBasicLerper {
+    /// User-supplied lerp function. `None` falls back to inference + `godot::global::lerp`.
     pub lerp_fn: Option<Callable>,
     inferred_ty: InferredType,
 }
 
 impl CustomBasicLerper {
+    /// Wraps `lerp_fn` so it can be plugged into [`LerpMethodData`].
     pub fn new(lerp_fn: Callable) -> Self {
         Self {
             lerp_fn: Some(lerp_fn),
@@ -461,8 +572,26 @@ impl CustomBasicLerper {
     }
 }
 
-/// All four interpolation operations via Godot `Callable`s.
-/// Falls back to built-in defaults when any callable is invalid.
+/// Implements [`SpireLerp<Variant>`] via four user-supplied [`Callable`]s — used by
+/// [`SpireTween::<LerpPropertyData<Variant>>::new_custom`] for property tweens whose
+/// type isn't natively supported.
+///
+/// The four callables, with their signatures and modes that consume them:
+///
+/// | Field           | Signature                                                               | Used by                                                             |
+/// |-----------------|-------------------------------------------------------------------------|---------------------------------------------------------------------|
+/// | [`base`](Self::base)`.lerp_fn`        | `func(from, to, weight: f64) -> T`                                      | absolute, relative                                                  |
+/// | [`relative_fn`](Self::relative_fn) | `func(current, previous_lerp, next_lerp) -> T`                          | relative                                                            |
+/// | [`step_fn`](Self::step_fn)         | `func(from, to, speed: f64, fuel: f64) -> Dictionary{value, is_finished, fuel}` | speed-based                                                         |
+/// | [`distance_fn`](Self::distance_fn) | `func(from, to) -> f64`                                                 | speed-based                                                         |
+///
+/// See [`SpireLerp`]'s per-method docs for the contract each callable must satisfy.
+///
+/// **Fallbacks:** any invalid `Callable` (including `Callable::invalid()`) triggers
+/// type inference + the built-in `()` impl for the inferred type. Inference looks at
+/// the [`VariantType`] of values it sees; if it can't infer (e.g. a custom Godot
+/// resource), Spire emits a `godot_error!`. Pass valid callables for the modes you'll
+/// actually use; pass `Callable::invalid()` for the rest.
 pub struct CustomLerper {
     pub base: CustomBasicLerper,
     pub relative_fn: Callable,
@@ -471,6 +600,9 @@ pub struct CustomLerper {
 }
 
 impl CustomLerper {
+    /// Constructs a lerper from all four callables. Pass `Callable::invalid()` for
+    /// any operation you don't need — Spire will fall back to inference + the
+    /// built-in impl for the inferred type if inference succeeds.
     pub fn new(lerp_fn: Callable, relative_fn: Callable, step_fn: Callable, distance_fn: Callable) -> Self {
         Self {
             base: CustomBasicLerper {

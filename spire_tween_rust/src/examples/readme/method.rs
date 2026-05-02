@@ -36,7 +36,7 @@ impl INode2D for ExampleMethod {
         // Delay 2 seconds, then start the method tween.
         self.to_gd().do_delayed_call(
             move || {
-                // Spire.do_call_vector2i(create_dot, from, to, duration)
+                // Spire.do_call_vec2i(create_dot, from, to, duration)
                 //   → obj.do_method::<Vector2i, _>("create_dot", from, to, duration)
                 self_gd
                     .do_method("create_dot", from, to, duration)

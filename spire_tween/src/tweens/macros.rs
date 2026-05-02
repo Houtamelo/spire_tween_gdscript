@@ -729,7 +729,11 @@ macro_rules! define_base_gd_methods {
             ///
             /// For more details on loop modes and how they behave internally, see [enum Spire.LoopMode].
             #[func(gd_self)]
-            pub fn set_loops(this: Gd<Self>, loops: i64, loop_mode: LoopMode) -> Gd<Self> {
+            pub fn set_loops(
+                this: Gd<Self>,
+                loops: i64,
+                #[opt(default = LoopMode::Restart)] loop_mode: LoopMode,
+            ) -> Gd<Self> {
                 this.bind().to_mut().set_loops(loops, loop_mode);
                 this
             }

@@ -390,20 +390,20 @@ impl TryFromPathAndObject for Label3DFloatData {
     }
 }
 #[derive(Debug, Clone)]
-pub struct Label3DVector2Data {
-    pub property: Label3DVector2Kind,
+pub struct Label3DVec2Data {
+    pub property: Label3DVec2Kind,
     pub owner: Gd<Label3D>,
     pub owner_obj_or_node: ObjectOrNode,
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum Label3DVector2Kind {
+pub enum Label3DVec2Kind {
     Offset,
 }
-impl IProperty<Vector2> for Label3DVector2Data {
+impl IProperty<Vector2> for Label3DVec2Data {
     #[inline]
     fn get_property_value(&self) -> Vector2 {
         match self.property {
-            <Label3DVector2Kind>::Offset => {
+            <Label3DVec2Kind>::Offset => {
                 let obj = &self.owner;
                 obj.get_offset()
             }
@@ -412,7 +412,7 @@ impl IProperty<Vector2> for Label3DVector2Data {
     #[inline]
     fn set_property_value(&mut self, value: Vector2) {
         match self.property {
-            <Label3DVector2Kind>::Offset => {
+            <Label3DVec2Kind>::Offset => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_offset(val);
@@ -420,12 +420,12 @@ impl IProperty<Vector2> for Label3DVector2Data {
         }
     }
 }
-impl IPropertyData for Label3DVector2Data {
+impl IPropertyData for Label3DVec2Data {
     type Target = Label3D;
     #[inline]
     fn get_property_path(&self) -> NodePath {
         match self.property {
-            <Label3DVector2Kind>::Offset => NodePath::from("offset"),
+            <Label3DVec2Kind>::Offset => NodePath::from("offset"),
         }
     }
     #[inline]
@@ -433,7 +433,7 @@ impl IPropertyData for Label3DVector2Data {
         Some(&self.owner_obj_or_node)
     }
 }
-impl TryFromPathAndObject for Label3DVector2Data {
+impl TryFromPathAndObject for Label3DVec2Data {
     fn try_from_path_and_object(path: &str, object: Gd<Object>) -> Option<Self> {
         object
             .try_cast::<Label3D>()
@@ -442,7 +442,7 @@ impl TryFromPathAndObject for Label3DVector2Data {
                 match path {
                     "offset" => {
                         Some(Self {
-                            property: <Label3DVector2Kind>::Offset,
+                            property: <Label3DVec2Kind>::Offset,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -1104,8 +1104,8 @@ impl<Class: Inherits<Label3D> + Inherits<Object>> SpireDoLabel3D<()> for Gd<Clas
         end_val: Vector2,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
-        let data = Label3DVector2Data {
-            property: <Label3DVector2Kind>::Offset,
+        let data = Label3DVec2Data {
+            property: <Label3DVec2Kind>::Offset,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<Label3D>().upcast::<Node>(),
@@ -1534,8 +1534,8 @@ for T {
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
         let owner: Gd<Label3D> = self.to_gd().upcast();
-        let data = Label3DVector2Data {
-            property: <Label3DVector2Kind>::Offset,
+        let data = Label3DVec2Data {
+            property: <Label3DVec2Kind>::Offset,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };

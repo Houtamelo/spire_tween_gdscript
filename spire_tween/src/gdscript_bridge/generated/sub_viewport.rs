@@ -55,7 +55,7 @@ impl DoSubViewport {
         node: Gd<SubViewport>,
         to: Vector2i,
         duration: f64,
-    ) -> Gd<SpirePropertyVector2i> {
+    ) -> Gd<SpirePropertyVec2i> {
         let tween = node.do_subview_do_size(to, duration).register();
         gd_from_native_tween(tween)
     }
@@ -67,7 +67,7 @@ impl DoSubViewport {
         node: Gd<SubViewport>,
         to: Vector2i,
         duration: f64,
-    ) -> Gd<SpirePropertyVector2i> {
+    ) -> Gd<SpirePropertyVec2i> {
         let tween = node.do_subview_do_size_2d_override(to, duration).register();
         gd_from_native_tween(tween)
     }

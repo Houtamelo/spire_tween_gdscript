@@ -18,8 +18,12 @@ impl<T: ITweenable> SpireTween<T> {
         self
     }
 
+    /// Chainable equivalent of [`set_delay`](SpireTween::set_delay). Sets the
+    /// pre-play delay in seconds.
     pub fn with_delay(self, delay: f64) -> Self { Self { delay, ..self } }
 
+    /// Chainable equivalent of [`set_speed_scale`](SpireTween::set_speed_scale).
+    /// Multiplier applied to `delta_time` (`0.0` pauses, `2.0` runs twice as fast).
     pub fn with_speed_scale(self, speed_scale: f64) -> Self {
         Self {
             speed_scale,
@@ -27,8 +31,12 @@ impl<T: ITweenable> SpireTween<T> {
         }
     }
 
+    /// Chainable equivalent of [`set_pause_mode`](SpireTween::set_pause_mode).
+    /// Default is [`PauseMode::Bound`].
     pub fn with_pause_mode(self, pause_mode: PauseMode) -> Self { Self { pause_mode, ..self } }
 
+    /// Chainable equivalent of [`set_process_mode`](SpireTween::set_process_mode).
+    /// Default is [`ProcessMode::Idle`].
     pub fn with_process_mode(self, process_mode: ProcessMode) -> Self {
         Self {
             process_mode,

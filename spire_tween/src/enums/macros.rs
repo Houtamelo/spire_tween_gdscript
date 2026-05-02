@@ -22,11 +22,15 @@ macro_rules! register_enum {
             )*
         }
 
+        // SAFETY: Copy + #[repr(i32)] enum with no interior mutability. Each instance
+        // is truly independent — required for `#[opt(default = ...)]` to accept it.
+        unsafe impl ::godot::meta::GodotImmutable for $RustIdent {}
+
         #[cfg(feature = "standalone")]
         plugin_execute_pre_main! {{
-            bridge_registration_constants().lock().unwrap().push(|| {
+            bridge_registration_constants().lock().unwrap().1.push(|| {
                 ExportConstant::new(
-                    Spire::class_name(),
+                    <Spire as ::godot::obj::GodotClass>::class_id(),
                     ConstantKind::Enum {
                         name: $GdIdent.into(),
                         enumerators: vec![

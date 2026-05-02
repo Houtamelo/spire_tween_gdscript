@@ -37,10 +37,10 @@ define_manual_tween_builders! {
     do_call_float, f64, "float";
     //do_call_i32, i32, "i32(int)";
     do_call_int, i64, "int";
-    do_call_vector2, Vector2, "Vector2";
-    do_call_vector2i, Vector2i, "Vector2i";
-    do_call_vector3, Vector3, "Vector3";
-    do_call_vector3i, Vector3i, "Vector3i";
+    do_call_vec2, Vector2, "Vector2";
+    do_call_vec2i, Vector2i, "Vector2i";
+    do_call_vec3, Vector3, "Vector3";
+    do_call_vec3i, Vector3i, "Vector3i";
     do_call_color, Color, "Color";
     do_call_string, GString, "String";
 }

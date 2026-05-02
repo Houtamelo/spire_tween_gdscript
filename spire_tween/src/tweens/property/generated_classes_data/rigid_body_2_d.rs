@@ -321,30 +321,30 @@ impl TryFromPathAndObject for RigidBody2DFloatData {
     }
 }
 #[derive(Debug, Clone)]
-pub struct RigidBody2DVector2Data {
-    pub property: RigidBody2DVector2Kind,
+pub struct RigidBody2DVec2Data {
+    pub property: RigidBody2DVec2Kind,
     pub owner: Gd<RigidBody2D>,
     pub owner_obj_or_node: ObjectOrNode,
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum RigidBody2DVector2Kind {
+pub enum RigidBody2DVec2Kind {
     CenterOfMass,
     ConstantForce,
     LinearVelocity,
 }
-impl IProperty<Vector2> for RigidBody2DVector2Data {
+impl IProperty<Vector2> for RigidBody2DVec2Data {
     #[inline]
     fn get_property_value(&self) -> Vector2 {
         match self.property {
-            <RigidBody2DVector2Kind>::CenterOfMass => {
+            <RigidBody2DVec2Kind>::CenterOfMass => {
                 let obj = &self.owner;
                 obj.get_center_of_mass()
             }
-            <RigidBody2DVector2Kind>::ConstantForce => {
+            <RigidBody2DVec2Kind>::ConstantForce => {
                 let obj = &self.owner;
                 obj.get_constant_force()
             }
-            <RigidBody2DVector2Kind>::LinearVelocity => {
+            <RigidBody2DVec2Kind>::LinearVelocity => {
                 let obj = &self.owner;
                 obj.get_linear_velocity()
             }
@@ -353,17 +353,17 @@ impl IProperty<Vector2> for RigidBody2DVector2Data {
     #[inline]
     fn set_property_value(&mut self, value: Vector2) {
         match self.property {
-            <RigidBody2DVector2Kind>::CenterOfMass => {
+            <RigidBody2DVec2Kind>::CenterOfMass => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_center_of_mass(val);
             }
-            <RigidBody2DVector2Kind>::ConstantForce => {
+            <RigidBody2DVec2Kind>::ConstantForce => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_constant_force(val);
             }
-            <RigidBody2DVector2Kind>::LinearVelocity => {
+            <RigidBody2DVec2Kind>::LinearVelocity => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_linear_velocity(val);
@@ -371,14 +371,14 @@ impl IProperty<Vector2> for RigidBody2DVector2Data {
         }
     }
 }
-impl IPropertyData for RigidBody2DVector2Data {
+impl IPropertyData for RigidBody2DVec2Data {
     type Target = RigidBody2D;
     #[inline]
     fn get_property_path(&self) -> NodePath {
         match self.property {
-            <RigidBody2DVector2Kind>::CenterOfMass => NodePath::from("center_of_mass"),
-            <RigidBody2DVector2Kind>::ConstantForce => NodePath::from("constant_force"),
-            <RigidBody2DVector2Kind>::LinearVelocity => NodePath::from("linear_velocity"),
+            <RigidBody2DVec2Kind>::CenterOfMass => NodePath::from("center_of_mass"),
+            <RigidBody2DVec2Kind>::ConstantForce => NodePath::from("constant_force"),
+            <RigidBody2DVec2Kind>::LinearVelocity => NodePath::from("linear_velocity"),
         }
     }
     #[inline]
@@ -386,7 +386,7 @@ impl IPropertyData for RigidBody2DVector2Data {
         Some(&self.owner_obj_or_node)
     }
 }
-impl TryFromPathAndObject for RigidBody2DVector2Data {
+impl TryFromPathAndObject for RigidBody2DVec2Data {
     fn try_from_path_and_object(path: &str, object: Gd<Object>) -> Option<Self> {
         object
             .try_cast::<RigidBody2D>()
@@ -395,7 +395,7 @@ impl TryFromPathAndObject for RigidBody2DVector2Data {
                 match path {
                     "center_of_mass" => {
                         Some(Self {
-                            property: <RigidBody2DVector2Kind>::CenterOfMass,
+                            property: <RigidBody2DVec2Kind>::CenterOfMass,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -404,7 +404,7 @@ impl TryFromPathAndObject for RigidBody2DVector2Data {
                     }
                     "constant_force" => {
                         Some(Self {
-                            property: <RigidBody2DVector2Kind>::ConstantForce,
+                            property: <RigidBody2DVec2Kind>::ConstantForce,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -413,7 +413,7 @@ impl TryFromPathAndObject for RigidBody2DVector2Data {
                     }
                     "linear_velocity" => {
                         Some(Self {
-                            property: <RigidBody2DVector2Kind>::LinearVelocity,
+                            property: <RigidBody2DVec2Kind>::LinearVelocity,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -761,8 +761,8 @@ for Gd<Class> {
         end_val: Vector2,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
-        let data = RigidBody2DVector2Data {
-            property: <RigidBody2DVector2Kind>::CenterOfMass,
+        let data = RigidBody2DVec2Data {
+            property: <RigidBody2DVec2Kind>::CenterOfMass,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<RigidBody2D>().upcast::<Node>(),
@@ -777,8 +777,8 @@ for Gd<Class> {
         end_val: Vector2,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
-        let data = RigidBody2DVector2Data {
-            property: <RigidBody2DVector2Kind>::ConstantForce,
+        let data = RigidBody2DVec2Data {
+            property: <RigidBody2DVec2Kind>::ConstantForce,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<RigidBody2D>().upcast::<Node>(),
@@ -793,8 +793,8 @@ for Gd<Class> {
         end_val: Vector2,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
-        let data = RigidBody2DVector2Data {
-            property: <RigidBody2DVector2Kind>::LinearVelocity,
+        let data = RigidBody2DVec2Data {
+            property: <RigidBody2DVec2Kind>::LinearVelocity,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<RigidBody2D>().upcast::<Node>(),
@@ -809,8 +809,8 @@ for Gd<Class> {
         end_val: Vector2,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
-        let data = RigidBody2DVector2Data {
-            property: <RigidBody2DVector2Kind>::LinearVelocity,
+        let data = RigidBody2DVec2Data {
+            property: <RigidBody2DVec2Kind>::LinearVelocity,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<RigidBody2D>().upcast::<Node>(),
@@ -1051,8 +1051,8 @@ impl<
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
         let owner: Gd<RigidBody2D> = self.to_gd().upcast();
-        let data = RigidBody2DVector2Data {
-            property: <RigidBody2DVector2Kind>::CenterOfMass,
+        let data = RigidBody2DVec2Data {
+            property: <RigidBody2DVec2Kind>::CenterOfMass,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
@@ -1066,8 +1066,8 @@ impl<
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
         let owner: Gd<RigidBody2D> = self.to_gd().upcast();
-        let data = RigidBody2DVector2Data {
-            property: <RigidBody2DVector2Kind>::ConstantForce,
+        let data = RigidBody2DVec2Data {
+            property: <RigidBody2DVec2Kind>::ConstantForce,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
@@ -1081,8 +1081,8 @@ impl<
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
         let owner: Gd<RigidBody2D> = self.to_gd().upcast();
-        let data = RigidBody2DVector2Data {
-            property: <RigidBody2DVector2Kind>::LinearVelocity,
+        let data = RigidBody2DVec2Data {
+            property: <RigidBody2DVec2Kind>::LinearVelocity,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
@@ -1096,8 +1096,8 @@ impl<
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
         let owner: Gd<RigidBody2D> = self.to_gd().upcast();
-        let data = RigidBody2DVector2Data {
-            property: <RigidBody2DVector2Kind>::LinearVelocity,
+        let data = RigidBody2DVec2Data {
+            property: <RigidBody2DVec2Kind>::LinearVelocity,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };

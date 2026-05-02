@@ -1,7 +1,24 @@
 use super::*;
 
-/// Moves a `Node2D` along a polyline. `duration_or_speed` is distance/second if
-/// `is_speed_based`, otherwise total duration distributed across segments.
+/// Moves a `Node2D` along a polyline traced by `vertices` (in global coordinates),
+/// returning a [`Sequence`] whose blocks are one-segment `do_move` tweens chained
+/// end-to-end.
+///
+/// The `duration_or_speed` parameter is interpreted as **seconds in both modes**;
+/// the `is_speed_based` flag only changes how that duration is divided across
+/// segments:
+/// - `is_speed_based == false` — each segment runs for `duration_or_speed`
+///   seconds. Total = `N * duration_or_speed`. Segment speeds vary by length.
+/// - `is_speed_based == true` — `duration_or_speed` is the **total** path
+///   duration. Each segment's share is `total_duration * (segment_length / total_perimeter)`,
+///   so longer segments take proportionally longer. Sprite speed across the path
+///   is constant: `total_perimeter / duration_or_speed` units per second.
+///
+/// Implemented for any `Gd<T: Inherits<Node2D>>`. Returns an unregistered
+/// [`SpireTween<Sequence>`] — call [`register`](SpireTween::register).
+///
+/// Logs a `godot_error!` and returns an empty sequence when the polyline has zero
+/// total length.
 pub trait DoContourShape2D<Marker = ()> {
     fn do_contour_shape(
         &self,

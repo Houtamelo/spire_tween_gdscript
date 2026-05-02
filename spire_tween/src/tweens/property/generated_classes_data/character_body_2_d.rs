@@ -89,20 +89,20 @@ impl TryFromPathAndObject for CharacterBody2DFloatData {
     }
 }
 #[derive(Debug, Clone)]
-pub struct CharacterBody2DVector2Data {
-    pub property: CharacterBody2DVector2Kind,
+pub struct CharacterBody2DVec2Data {
+    pub property: CharacterBody2DVec2Kind,
     pub owner: Gd<CharacterBody2D>,
     pub owner_obj_or_node: ObjectOrNode,
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum CharacterBody2DVector2Kind {
+pub enum CharacterBody2DVec2Kind {
     Velocity,
 }
-impl IProperty<Vector2> for CharacterBody2DVector2Data {
+impl IProperty<Vector2> for CharacterBody2DVec2Data {
     #[inline]
     fn get_property_value(&self) -> Vector2 {
         match self.property {
-            <CharacterBody2DVector2Kind>::Velocity => {
+            <CharacterBody2DVec2Kind>::Velocity => {
                 let obj = &self.owner;
                 obj.get_velocity()
             }
@@ -111,7 +111,7 @@ impl IProperty<Vector2> for CharacterBody2DVector2Data {
     #[inline]
     fn set_property_value(&mut self, value: Vector2) {
         match self.property {
-            <CharacterBody2DVector2Kind>::Velocity => {
+            <CharacterBody2DVec2Kind>::Velocity => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_velocity(val);
@@ -119,12 +119,12 @@ impl IProperty<Vector2> for CharacterBody2DVector2Data {
         }
     }
 }
-impl IPropertyData for CharacterBody2DVector2Data {
+impl IPropertyData for CharacterBody2DVec2Data {
     type Target = CharacterBody2D;
     #[inline]
     fn get_property_path(&self) -> NodePath {
         match self.property {
-            <CharacterBody2DVector2Kind>::Velocity => NodePath::from("velocity"),
+            <CharacterBody2DVec2Kind>::Velocity => NodePath::from("velocity"),
         }
     }
     #[inline]
@@ -132,7 +132,7 @@ impl IPropertyData for CharacterBody2DVector2Data {
         Some(&self.owner_obj_or_node)
     }
 }
-impl TryFromPathAndObject for CharacterBody2DVector2Data {
+impl TryFromPathAndObject for CharacterBody2DVec2Data {
     fn try_from_path_and_object(path: &str, object: Gd<Object>) -> Option<Self> {
         object
             .try_cast::<CharacterBody2D>()
@@ -141,7 +141,7 @@ impl TryFromPathAndObject for CharacterBody2DVector2Data {
                 match path {
                     "velocity" => {
                         Some(Self {
-                            property: <CharacterBody2DVector2Kind>::Velocity,
+                            property: <CharacterBody2DVec2Kind>::Velocity,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -209,8 +209,8 @@ for Gd<Class> {
         end_val: Vector2,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
-        let data = CharacterBody2DVector2Data {
-            property: <CharacterBody2DVector2Kind>::Velocity,
+        let data = CharacterBody2DVec2Data {
+            property: <CharacterBody2DVec2Kind>::Velocity,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<CharacterBody2D>().upcast::<Node>(),
@@ -260,8 +260,8 @@ impl<
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
         let owner: Gd<CharacterBody2D> = self.to_gd().upcast();
-        let data = CharacterBody2DVector2Data {
-            property: <CharacterBody2DVector2Kind>::Velocity,
+        let data = CharacterBody2DVec2Data {
+            property: <CharacterBody2DVec2Kind>::Velocity,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };

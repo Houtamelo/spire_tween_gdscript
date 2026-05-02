@@ -24,7 +24,7 @@ Each test file:
 - `DoNode2D.ellipsis(...)` → `ball.do_ellipsis(...).register()`
 - `Spire.sequence()` → `SpireTween::<Sequence>::new().register()`
 - `Spire.do_delayed_call(fn, dur)` → `node.do_delayed_call(fn, dur).register()`
-- `Spire.do_call_vector2(fn, from, to, dur)` → use do_method API
+- `Spire.do_call_vec2(fn, from, to, dur)` → use do_method API
 - `.set_delay(d)` → `.with_delay(d)`
 - `.set_loops(n, mode)` → `.set_loops(n, mode)` (after register, via handle)
 - `.set_pause_mode(m)` → `.with_pause_mode(m)`
@@ -83,7 +83,7 @@ Each test file:
 ### 8. lerp_callable.rs
 - Scene: Sprite2D (`$Sprite2D`)
 - 4 tests: test_lerp_call, test_lerp_call_float, test_lerp_call_with_ease, test_lerp_call_with_loop
-- Uses `Spire.do_call_vector2` / `do_call_float` — need Rust equivalent
+- Uses `Spire.do_call_vec2` / `do_call_float` — need Rust equivalent
 
 ### 9. pause_process_modes.rs
 - Scene: `BouncyBall/CollisionShape2D` + `BouncyBall/CollisionShape2D/Sprite2D`

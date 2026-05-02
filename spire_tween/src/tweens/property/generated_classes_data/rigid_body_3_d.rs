@@ -539,13 +539,13 @@ impl TryFromPathAndObject for RigidBody3DFloatData {
     }
 }
 #[derive(Debug, Clone)]
-pub struct RigidBody3DVector3Data {
-    pub property: RigidBody3DVector3Kind,
+pub struct RigidBody3DVec3Data {
+    pub property: RigidBody3DVec3Kind,
     pub owner: Gd<RigidBody3D>,
     pub owner_obj_or_node: ObjectOrNode,
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum RigidBody3DVector3Kind {
+pub enum RigidBody3DVec3Kind {
     AngularVelocity,
     CenterOfMass,
     ConstantForce,
@@ -553,31 +553,31 @@ pub enum RigidBody3DVector3Kind {
     Inertia,
     LinearVelocity,
 }
-impl IProperty<Vector3> for RigidBody3DVector3Data {
+impl IProperty<Vector3> for RigidBody3DVec3Data {
     #[inline]
     fn get_property_value(&self) -> Vector3 {
         match self.property {
-            <RigidBody3DVector3Kind>::AngularVelocity => {
+            <RigidBody3DVec3Kind>::AngularVelocity => {
                 let obj = &self.owner;
                 obj.get_angular_velocity()
             }
-            <RigidBody3DVector3Kind>::CenterOfMass => {
+            <RigidBody3DVec3Kind>::CenterOfMass => {
                 let obj = &self.owner;
                 obj.get_center_of_mass()
             }
-            <RigidBody3DVector3Kind>::ConstantForce => {
+            <RigidBody3DVec3Kind>::ConstantForce => {
                 let obj = &self.owner;
                 obj.get_constant_force()
             }
-            <RigidBody3DVector3Kind>::ConstantTorque => {
+            <RigidBody3DVec3Kind>::ConstantTorque => {
                 let obj = &self.owner;
                 obj.get_constant_torque()
             }
-            <RigidBody3DVector3Kind>::Inertia => {
+            <RigidBody3DVec3Kind>::Inertia => {
                 let obj = &self.owner;
                 obj.get_inertia()
             }
-            <RigidBody3DVector3Kind>::LinearVelocity => {
+            <RigidBody3DVec3Kind>::LinearVelocity => {
                 let obj = &self.owner;
                 obj.get_linear_velocity()
             }
@@ -586,32 +586,32 @@ impl IProperty<Vector3> for RigidBody3DVector3Data {
     #[inline]
     fn set_property_value(&mut self, value: Vector3) {
         match self.property {
-            <RigidBody3DVector3Kind>::AngularVelocity => {
+            <RigidBody3DVec3Kind>::AngularVelocity => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_angular_velocity(val);
             }
-            <RigidBody3DVector3Kind>::CenterOfMass => {
+            <RigidBody3DVec3Kind>::CenterOfMass => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_center_of_mass(val);
             }
-            <RigidBody3DVector3Kind>::ConstantForce => {
+            <RigidBody3DVec3Kind>::ConstantForce => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_constant_force(val);
             }
-            <RigidBody3DVector3Kind>::ConstantTorque => {
+            <RigidBody3DVec3Kind>::ConstantTorque => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_constant_torque(val);
             }
-            <RigidBody3DVector3Kind>::Inertia => {
+            <RigidBody3DVec3Kind>::Inertia => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_inertia(val);
             }
-            <RigidBody3DVector3Kind>::LinearVelocity => {
+            <RigidBody3DVec3Kind>::LinearVelocity => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_linear_velocity(val);
@@ -619,19 +619,17 @@ impl IProperty<Vector3> for RigidBody3DVector3Data {
         }
     }
 }
-impl IPropertyData for RigidBody3DVector3Data {
+impl IPropertyData for RigidBody3DVec3Data {
     type Target = RigidBody3D;
     #[inline]
     fn get_property_path(&self) -> NodePath {
         match self.property {
-            <RigidBody3DVector3Kind>::AngularVelocity => {
-                NodePath::from("angular_velocity")
-            }
-            <RigidBody3DVector3Kind>::CenterOfMass => NodePath::from("center_of_mass"),
-            <RigidBody3DVector3Kind>::ConstantForce => NodePath::from("constant_force"),
-            <RigidBody3DVector3Kind>::ConstantTorque => NodePath::from("constant_torque"),
-            <RigidBody3DVector3Kind>::Inertia => NodePath::from("inertia"),
-            <RigidBody3DVector3Kind>::LinearVelocity => NodePath::from("linear_velocity"),
+            <RigidBody3DVec3Kind>::AngularVelocity => NodePath::from("angular_velocity"),
+            <RigidBody3DVec3Kind>::CenterOfMass => NodePath::from("center_of_mass"),
+            <RigidBody3DVec3Kind>::ConstantForce => NodePath::from("constant_force"),
+            <RigidBody3DVec3Kind>::ConstantTorque => NodePath::from("constant_torque"),
+            <RigidBody3DVec3Kind>::Inertia => NodePath::from("inertia"),
+            <RigidBody3DVec3Kind>::LinearVelocity => NodePath::from("linear_velocity"),
         }
     }
     #[inline]
@@ -639,7 +637,7 @@ impl IPropertyData for RigidBody3DVector3Data {
         Some(&self.owner_obj_or_node)
     }
 }
-impl TryFromPathAndObject for RigidBody3DVector3Data {
+impl TryFromPathAndObject for RigidBody3DVec3Data {
     fn try_from_path_and_object(path: &str, object: Gd<Object>) -> Option<Self> {
         object
             .try_cast::<RigidBody3D>()
@@ -648,7 +646,7 @@ impl TryFromPathAndObject for RigidBody3DVector3Data {
                 match path {
                     "angular_velocity" => {
                         Some(Self {
-                            property: <RigidBody3DVector3Kind>::AngularVelocity,
+                            property: <RigidBody3DVec3Kind>::AngularVelocity,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -657,7 +655,7 @@ impl TryFromPathAndObject for RigidBody3DVector3Data {
                     }
                     "center_of_mass" => {
                         Some(Self {
-                            property: <RigidBody3DVector3Kind>::CenterOfMass,
+                            property: <RigidBody3DVec3Kind>::CenterOfMass,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -666,7 +664,7 @@ impl TryFromPathAndObject for RigidBody3DVector3Data {
                     }
                     "constant_force" => {
                         Some(Self {
-                            property: <RigidBody3DVector3Kind>::ConstantForce,
+                            property: <RigidBody3DVec3Kind>::ConstantForce,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -675,7 +673,7 @@ impl TryFromPathAndObject for RigidBody3DVector3Data {
                     }
                     "constant_torque" => {
                         Some(Self {
-                            property: <RigidBody3DVector3Kind>::ConstantTorque,
+                            property: <RigidBody3DVec3Kind>::ConstantTorque,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -684,7 +682,7 @@ impl TryFromPathAndObject for RigidBody3DVector3Data {
                     }
                     "inertia" => {
                         Some(Self {
-                            property: <RigidBody3DVector3Kind>::Inertia,
+                            property: <RigidBody3DVec3Kind>::Inertia,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -693,7 +691,7 @@ impl TryFromPathAndObject for RigidBody3DVector3Data {
                     }
                     "linear_velocity" => {
                         Some(Self {
-                            property: <RigidBody3DVector3Kind>::LinearVelocity,
+                            property: <RigidBody3DVec3Kind>::LinearVelocity,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -1198,8 +1196,8 @@ for Gd<Class> {
         end_val: Vector3,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
-        let data = RigidBody3DVector3Data {
-            property: <RigidBody3DVector3Kind>::AngularVelocity,
+        let data = RigidBody3DVec3Data {
+            property: <RigidBody3DVec3Kind>::AngularVelocity,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<RigidBody3D>().upcast::<Node>(),
@@ -1214,8 +1212,8 @@ for Gd<Class> {
         end_val: Vector3,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
-        let data = RigidBody3DVector3Data {
-            property: <RigidBody3DVector3Kind>::CenterOfMass,
+        let data = RigidBody3DVec3Data {
+            property: <RigidBody3DVec3Kind>::CenterOfMass,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<RigidBody3D>().upcast::<Node>(),
@@ -1230,8 +1228,8 @@ for Gd<Class> {
         end_val: Vector3,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
-        let data = RigidBody3DVector3Data {
-            property: <RigidBody3DVector3Kind>::ConstantForce,
+        let data = RigidBody3DVec3Data {
+            property: <RigidBody3DVec3Kind>::ConstantForce,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<RigidBody3D>().upcast::<Node>(),
@@ -1246,8 +1244,8 @@ for Gd<Class> {
         end_val: Vector3,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
-        let data = RigidBody3DVector3Data {
-            property: <RigidBody3DVector3Kind>::ConstantTorque,
+        let data = RigidBody3DVec3Data {
+            property: <RigidBody3DVec3Kind>::ConstantTorque,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<RigidBody3D>().upcast::<Node>(),
@@ -1262,8 +1260,8 @@ for Gd<Class> {
         end_val: Vector3,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
-        let data = RigidBody3DVector3Data {
-            property: <RigidBody3DVector3Kind>::Inertia,
+        let data = RigidBody3DVec3Data {
+            property: <RigidBody3DVec3Kind>::Inertia,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<RigidBody3D>().upcast::<Node>(),
@@ -1278,8 +1276,8 @@ for Gd<Class> {
         end_val: Vector3,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
-        let data = RigidBody3DVector3Data {
-            property: <RigidBody3DVector3Kind>::LinearVelocity,
+        let data = RigidBody3DVec3Data {
+            property: <RigidBody3DVec3Kind>::LinearVelocity,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<RigidBody3D>().upcast::<Node>(),
@@ -1625,8 +1623,8 @@ impl<
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
         let owner: Gd<RigidBody3D> = self.to_gd().upcast();
-        let data = RigidBody3DVector3Data {
-            property: <RigidBody3DVector3Kind>::AngularVelocity,
+        let data = RigidBody3DVec3Data {
+            property: <RigidBody3DVec3Kind>::AngularVelocity,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
@@ -1640,8 +1638,8 @@ impl<
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
         let owner: Gd<RigidBody3D> = self.to_gd().upcast();
-        let data = RigidBody3DVector3Data {
-            property: <RigidBody3DVector3Kind>::CenterOfMass,
+        let data = RigidBody3DVec3Data {
+            property: <RigidBody3DVec3Kind>::CenterOfMass,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
@@ -1655,8 +1653,8 @@ impl<
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
         let owner: Gd<RigidBody3D> = self.to_gd().upcast();
-        let data = RigidBody3DVector3Data {
-            property: <RigidBody3DVector3Kind>::ConstantForce,
+        let data = RigidBody3DVec3Data {
+            property: <RigidBody3DVec3Kind>::ConstantForce,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
@@ -1670,8 +1668,8 @@ impl<
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
         let owner: Gd<RigidBody3D> = self.to_gd().upcast();
-        let data = RigidBody3DVector3Data {
-            property: <RigidBody3DVector3Kind>::ConstantTorque,
+        let data = RigidBody3DVec3Data {
+            property: <RigidBody3DVec3Kind>::ConstantTorque,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
@@ -1685,8 +1683,8 @@ impl<
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
         let owner: Gd<RigidBody3D> = self.to_gd().upcast();
-        let data = RigidBody3DVector3Data {
-            property: <RigidBody3DVector3Kind>::Inertia,
+        let data = RigidBody3DVec3Data {
+            property: <RigidBody3DVec3Kind>::Inertia,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
@@ -1700,8 +1698,8 @@ impl<
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
         let owner: Gd<RigidBody3D> = self.to_gd().upcast();
-        let data = RigidBody3DVector3Data {
-            property: <RigidBody3DVector3Kind>::LinearVelocity,
+        let data = RigidBody3DVec3Data {
+            property: <RigidBody3DVec3Kind>::LinearVelocity,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };

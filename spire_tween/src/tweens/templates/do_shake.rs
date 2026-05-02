@@ -6,8 +6,29 @@ use rand_xoshiro::{Xoshiro256PlusPlus, rand_core::SeedableRng};
 
 use super::*;
 
-/// Shakes a `Node2D`'s local position within a ring (`radius_min..radius_max`).
-/// `vibratio`: 0.0 = random, 1.0 = opposite-point bounce. Returns to origin when done.
+/// Shakes a `Node2D`'s **local** position within a ring of radii
+/// `[radius_min, radius_max]` and restores it to the origin when finished.
+///
+/// Parameters:
+/// - `radius_min` / `radius_max`: inner and outer ring radii. The shake offset
+///   sampled each step lies between these (Spire silently swaps if `min > max`).
+/// - `vibratio` (vibration ratio, clamped to `[0.0, 1.0]`):
+///   - `0.0` = fully random — successive offsets bear no positional relation.
+///   - `1.0` = opposite-point bounce — each offset is roughly opposite the
+///     previous one (a classic "screen shake" feel).
+///   - intermediate values blend the two.
+/// - `frequency`: Hz at which the offset is re-sampled. Higher = jitterier.
+/// - `duration`: total seconds.
+///
+/// On completion the local position is restored to its starting value (Spire
+/// tracks the offset internally so external forces can also move the node during
+/// the shake without bias).
+///
+/// Implemented for any `Gd<T: Inherits<Node2D>>`. Returns an unregistered
+/// [`SpireTween<LerpMethodData<f64>>`] (the inner data is the elapsed-time
+/// driver) — call [`register`](SpireTween::register).
+///
+/// For `Control` nodes use [`DoShakeControl`] (same signature, different node type).
 pub trait DoShakeNode2D<Marker = ()> {
     fn do_shake(
         &self,
@@ -42,7 +63,11 @@ impl<T: Inherits<Node2D> + Inherits<Object>> DoShakeNode2D<()> for Gd<T> {
     }
 }
 
-/// Same as `DoShakeNode2D` but for `Control` nodes.
+/// `Control`-node counterpart of [`DoShakeNode2D`]. Same parameters and semantics —
+/// shakes the node's local `position` within a `[radius_min, radius_max]` ring at
+/// the given frequency for `duration` seconds, then restores the original position.
+///
+/// Implemented for any `Gd<T: Inherits<Control>>`.
 pub trait DoShakeControl<Marker = ()> {
     fn do_shake(
         &self,

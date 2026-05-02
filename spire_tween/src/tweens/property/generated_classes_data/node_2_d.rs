@@ -343,35 +343,35 @@ impl TryFromPathAndObject for Node2DFloatData {
     }
 }
 #[derive(Debug, Clone)]
-pub struct Node2DVector2Data {
-    pub property: Node2DVector2Kind,
+pub struct Node2DVec2Data {
+    pub property: Node2DVec2Kind,
     pub owner: Gd<Node2D>,
     pub owner_obj_or_node: ObjectOrNode,
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum Node2DVector2Kind {
+pub enum Node2DVec2Kind {
     Position,
     GlobalPosition,
     Scale,
     GlobalScale,
 }
-impl IProperty<Vector2> for Node2DVector2Data {
+impl IProperty<Vector2> for Node2DVec2Data {
     #[inline]
     fn get_property_value(&self) -> Vector2 {
         match self.property {
-            <Node2DVector2Kind>::Position => {
+            <Node2DVec2Kind>::Position => {
                 let obj = &self.owner;
                 obj.get_position()
             }
-            <Node2DVector2Kind>::GlobalPosition => {
+            <Node2DVec2Kind>::GlobalPosition => {
                 let obj = &self.owner;
                 obj.get_global_position()
             }
-            <Node2DVector2Kind>::Scale => {
+            <Node2DVec2Kind>::Scale => {
                 let obj = &self.owner;
                 obj.get_scale()
             }
-            <Node2DVector2Kind>::GlobalScale => {
+            <Node2DVec2Kind>::GlobalScale => {
                 let obj = &self.owner;
                 obj.get_global_scale()
             }
@@ -380,22 +380,22 @@ impl IProperty<Vector2> for Node2DVector2Data {
     #[inline]
     fn set_property_value(&mut self, value: Vector2) {
         match self.property {
-            <Node2DVector2Kind>::Position => {
+            <Node2DVec2Kind>::Position => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_position(val);
             }
-            <Node2DVector2Kind>::GlobalPosition => {
+            <Node2DVec2Kind>::GlobalPosition => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_global_position(val);
             }
-            <Node2DVector2Kind>::Scale => {
+            <Node2DVec2Kind>::Scale => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_scale(val);
             }
-            <Node2DVector2Kind>::GlobalScale => {
+            <Node2DVec2Kind>::GlobalScale => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_global_scale(val);
@@ -403,15 +403,15 @@ impl IProperty<Vector2> for Node2DVector2Data {
         }
     }
 }
-impl IPropertyData for Node2DVector2Data {
+impl IPropertyData for Node2DVec2Data {
     type Target = Node2D;
     #[inline]
     fn get_property_path(&self) -> NodePath {
         match self.property {
-            <Node2DVector2Kind>::Position => NodePath::from("position"),
-            <Node2DVector2Kind>::GlobalPosition => NodePath::from("global_position"),
-            <Node2DVector2Kind>::Scale => NodePath::from("scale"),
-            <Node2DVector2Kind>::GlobalScale => NodePath::from("global_scale"),
+            <Node2DVec2Kind>::Position => NodePath::from("position"),
+            <Node2DVec2Kind>::GlobalPosition => NodePath::from("global_position"),
+            <Node2DVec2Kind>::Scale => NodePath::from("scale"),
+            <Node2DVec2Kind>::GlobalScale => NodePath::from("global_scale"),
         }
     }
     #[inline]
@@ -419,7 +419,7 @@ impl IPropertyData for Node2DVector2Data {
         Some(&self.owner_obj_or_node)
     }
 }
-impl TryFromPathAndObject for Node2DVector2Data {
+impl TryFromPathAndObject for Node2DVec2Data {
     fn try_from_path_and_object(path: &str, object: Gd<Object>) -> Option<Self> {
         object
             .try_cast::<Node2D>()
@@ -428,7 +428,7 @@ impl TryFromPathAndObject for Node2DVector2Data {
                 match path {
                     "position" => {
                         Some(Self {
-                            property: <Node2DVector2Kind>::Position,
+                            property: <Node2DVec2Kind>::Position,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -437,7 +437,7 @@ impl TryFromPathAndObject for Node2DVector2Data {
                     }
                     "global_position" => {
                         Some(Self {
-                            property: <Node2DVector2Kind>::GlobalPosition,
+                            property: <Node2DVec2Kind>::GlobalPosition,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -446,7 +446,7 @@ impl TryFromPathAndObject for Node2DVector2Data {
                     }
                     "scale" => {
                         Some(Self {
-                            property: <Node2DVector2Kind>::Scale,
+                            property: <Node2DVec2Kind>::Scale,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -455,7 +455,7 @@ impl TryFromPathAndObject for Node2DVector2Data {
                     }
                     "global_scale" => {
                         Some(Self {
-                            property: <Node2DVector2Kind>::GlobalScale,
+                            property: <Node2DVec2Kind>::GlobalScale,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -875,8 +875,8 @@ impl<Class: Inherits<Node2D> + Inherits<Object>> SpireDoNode2D<()> for Gd<Class>
         end_val: Vector2,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
-        let data = Node2DVector2Data {
-            property: <Node2DVector2Kind>::Position,
+        let data = Node2DVec2Data {
+            property: <Node2DVec2Kind>::Position,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<Node2D>().upcast::<Node>(),
@@ -891,8 +891,8 @@ impl<Class: Inherits<Node2D> + Inherits<Object>> SpireDoNode2D<()> for Gd<Class>
         end_val: Vector2,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
-        let data = Node2DVector2Data {
-            property: <Node2DVector2Kind>::Position,
+        let data = Node2DVec2Data {
+            property: <Node2DVec2Kind>::Position,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<Node2D>().upcast::<Node>(),
@@ -907,8 +907,8 @@ impl<Class: Inherits<Node2D> + Inherits<Object>> SpireDoNode2D<()> for Gd<Class>
         end_val: Vector2,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
-        let data = Node2DVector2Data {
-            property: <Node2DVector2Kind>::GlobalPosition,
+        let data = Node2DVec2Data {
+            property: <Node2DVec2Kind>::GlobalPosition,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<Node2D>().upcast::<Node>(),
@@ -923,8 +923,8 @@ impl<Class: Inherits<Node2D> + Inherits<Object>> SpireDoNode2D<()> for Gd<Class>
         end_val: Vector2,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
-        let data = Node2DVector2Data {
-            property: <Node2DVector2Kind>::GlobalPosition,
+        let data = Node2DVec2Data {
+            property: <Node2DVec2Kind>::GlobalPosition,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<Node2D>().upcast::<Node>(),
@@ -939,8 +939,8 @@ impl<Class: Inherits<Node2D> + Inherits<Object>> SpireDoNode2D<()> for Gd<Class>
         end_val: Vector2,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
-        let data = Node2DVector2Data {
-            property: <Node2DVector2Kind>::Scale,
+        let data = Node2DVec2Data {
+            property: <Node2DVec2Kind>::Scale,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<Node2D>().upcast::<Node>(),
@@ -955,8 +955,8 @@ impl<Class: Inherits<Node2D> + Inherits<Object>> SpireDoNode2D<()> for Gd<Class>
         end_val: Vector2,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
-        let data = Node2DVector2Data {
-            property: <Node2DVector2Kind>::GlobalScale,
+        let data = Node2DVec2Data {
+            property: <Node2DVec2Kind>::GlobalScale,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<Node2D>().upcast::<Node>(),
@@ -1241,8 +1241,8 @@ for T {
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
         let owner: Gd<Node2D> = self.to_gd().upcast();
-        let data = Node2DVector2Data {
-            property: <Node2DVector2Kind>::Position,
+        let data = Node2DVec2Data {
+            property: <Node2DVec2Kind>::Position,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
@@ -1256,8 +1256,8 @@ for T {
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
         let owner: Gd<Node2D> = self.to_gd().upcast();
-        let data = Node2DVector2Data {
-            property: <Node2DVector2Kind>::Position,
+        let data = Node2DVec2Data {
+            property: <Node2DVec2Kind>::Position,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
@@ -1271,8 +1271,8 @@ for T {
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
         let owner: Gd<Node2D> = self.to_gd().upcast();
-        let data = Node2DVector2Data {
-            property: <Node2DVector2Kind>::GlobalPosition,
+        let data = Node2DVec2Data {
+            property: <Node2DVec2Kind>::GlobalPosition,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
@@ -1286,8 +1286,8 @@ for T {
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
         let owner: Gd<Node2D> = self.to_gd().upcast();
-        let data = Node2DVector2Data {
-            property: <Node2DVector2Kind>::GlobalPosition,
+        let data = Node2DVec2Data {
+            property: <Node2DVec2Kind>::GlobalPosition,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
@@ -1301,8 +1301,8 @@ for T {
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
         let owner: Gd<Node2D> = self.to_gd().upcast();
-        let data = Node2DVector2Data {
-            property: <Node2DVector2Kind>::Scale,
+        let data = Node2DVec2Data {
+            property: <Node2DVec2Kind>::Scale,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };
@@ -1316,8 +1316,8 @@ for T {
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector2>> {
         let owner: Gd<Node2D> = self.to_gd().upcast();
-        let data = Node2DVector2Data {
-            property: <Node2DVector2Kind>::GlobalScale,
+        let data = Node2DVec2Data {
+            property: <Node2DVec2Kind>::GlobalScale,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };

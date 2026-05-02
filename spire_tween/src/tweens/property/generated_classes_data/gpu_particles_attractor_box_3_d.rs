@@ -111,20 +111,20 @@ impl TryFromPathAndObject for GpuParticlesAttractorBox3DFloatData {
     }
 }
 #[derive(Debug, Clone)]
-pub struct GpuParticlesAttractorBox3DVector3Data {
-    pub property: GpuParticlesAttractorBox3DVector3Kind,
+pub struct GpuParticlesAttractorBox3DVec3Data {
+    pub property: GpuParticlesAttractorBox3DVec3Kind,
     pub owner: Gd<GpuParticlesAttractorBox3D>,
     pub owner_obj_or_node: ObjectOrNode,
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum GpuParticlesAttractorBox3DVector3Kind {
+pub enum GpuParticlesAttractorBox3DVec3Kind {
     Size,
 }
-impl IProperty<Vector3> for GpuParticlesAttractorBox3DVector3Data {
+impl IProperty<Vector3> for GpuParticlesAttractorBox3DVec3Data {
     #[inline]
     fn get_property_value(&self) -> Vector3 {
         match self.property {
-            <GpuParticlesAttractorBox3DVector3Kind>::Size => {
+            <GpuParticlesAttractorBox3DVec3Kind>::Size => {
                 let obj = &self.owner;
                 obj.get_size()
             }
@@ -133,7 +133,7 @@ impl IProperty<Vector3> for GpuParticlesAttractorBox3DVector3Data {
     #[inline]
     fn set_property_value(&mut self, value: Vector3) {
         match self.property {
-            <GpuParticlesAttractorBox3DVector3Kind>::Size => {
+            <GpuParticlesAttractorBox3DVec3Kind>::Size => {
                 let obj = &mut self.owner;
                 let val = value;
                 obj.set_size(val);
@@ -141,12 +141,12 @@ impl IProperty<Vector3> for GpuParticlesAttractorBox3DVector3Data {
         }
     }
 }
-impl IPropertyData for GpuParticlesAttractorBox3DVector3Data {
+impl IPropertyData for GpuParticlesAttractorBox3DVec3Data {
     type Target = GpuParticlesAttractorBox3D;
     #[inline]
     fn get_property_path(&self) -> NodePath {
         match self.property {
-            <GpuParticlesAttractorBox3DVector3Kind>::Size => NodePath::from("size"),
+            <GpuParticlesAttractorBox3DVec3Kind>::Size => NodePath::from("size"),
         }
     }
     #[inline]
@@ -154,7 +154,7 @@ impl IPropertyData for GpuParticlesAttractorBox3DVector3Data {
         Some(&self.owner_obj_or_node)
     }
 }
-impl TryFromPathAndObject for GpuParticlesAttractorBox3DVector3Data {
+impl TryFromPathAndObject for GpuParticlesAttractorBox3DVec3Data {
     fn try_from_path_and_object(path: &str, object: Gd<Object>) -> Option<Self> {
         object
             .try_cast::<GpuParticlesAttractorBox3D>()
@@ -163,7 +163,7 @@ impl TryFromPathAndObject for GpuParticlesAttractorBox3DVector3Data {
                 match path {
                     "size" => {
                         Some(Self {
-                            property: <GpuParticlesAttractorBox3DVector3Kind>::Size,
+                            property: <GpuParticlesAttractorBox3DVec3Kind>::Size,
                             owner_obj_or_node: ObjectOrNode::Node(
                                 owner.clone().upcast(),
                             ),
@@ -253,8 +253,8 @@ impl<
         end_val: Vector3,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
-        let data = GpuParticlesAttractorBox3DVector3Data {
-            property: <GpuParticlesAttractorBox3DVector3Kind>::Size,
+        let data = GpuParticlesAttractorBox3DVec3Data {
+            property: <GpuParticlesAttractorBox3DVec3Kind>::Size,
             owner: self.clone().upcast(),
             owner_obj_or_node: ObjectOrNode::Node(
                 self.clone().upcast::<GpuParticlesAttractorBox3D>().upcast::<Node>(),
@@ -319,8 +319,8 @@ impl<
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>> {
         let owner: Gd<GpuParticlesAttractorBox3D> = self.to_gd().upcast();
-        let data = GpuParticlesAttractorBox3DVector3Data {
-            property: <GpuParticlesAttractorBox3DVector3Kind>::Size,
+        let data = GpuParticlesAttractorBox3DVec3Data {
+            property: <GpuParticlesAttractorBox3DVec3Kind>::Size,
             owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
             owner,
         };

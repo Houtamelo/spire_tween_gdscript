@@ -261,7 +261,7 @@ impl DoNode3D {
         node: Gd<Node3D>,
         to: Vector3,
         duration: f64,
-    ) -> Gd<SpirePropertyVector3> {
+    ) -> Gd<SpirePropertyVec3> {
         let tween = node.do_position(to, duration).register();
         gd_from_native_tween(tween)
     }
@@ -271,7 +271,7 @@ impl DoNode3D {
         node: Gd<Node3D>,
         to: Vector3,
         duration: f64,
-    ) -> Gd<SpirePropertyVector3> {
+    ) -> Gd<SpirePropertyVec3> {
         Self::r#position(node, to, duration)
     }
     /**[b]Behavior: [/b]Tweens the property [member Node3D.global_position] over [param duration] seconds.
@@ -282,24 +282,20 @@ impl DoNode3D {
         node: Gd<Node3D>,
         to: Vector3,
         duration: f64,
-    ) -> Gd<SpirePropertyVector3> {
+    ) -> Gd<SpirePropertyVec3> {
         let tween = node.do_global_position(to, duration).register();
         gd_from_native_tween(tween)
     }
     ///Alias for [method global_position].
     #[func(rename = move)]
-    fn r#move(node: Gd<Node3D>, to: Vector3, duration: f64) -> Gd<SpirePropertyVector3> {
+    fn r#move(node: Gd<Node3D>, to: Vector3, duration: f64) -> Gd<SpirePropertyVec3> {
         Self::r#global_position(node, to, duration)
     }
     /**[b]Behavior: [/b]Tweens the property [member Node3D.scale] over [param duration] seconds.
 
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/
     #[func(rename = scale)]
-    fn r#scale(
-        node: Gd<Node3D>,
-        to: Vector3,
-        duration: f64,
-    ) -> Gd<SpirePropertyVector3> {
+    fn r#scale(node: Gd<Node3D>, to: Vector3, duration: f64) -> Gd<SpirePropertyVec3> {
         let tween = node.do_scale(to, duration).register();
         gd_from_native_tween(tween)
     }
@@ -311,7 +307,7 @@ impl DoNode3D {
         node: Gd<Node3D>,
         to: Vector3,
         duration: f64,
-    ) -> Gd<SpirePropertyVector3> {
+    ) -> Gd<SpirePropertyVec3> {
         let tween = node.do_rotation(to, duration).register();
         gd_from_native_tween(tween)
     }
@@ -323,7 +319,7 @@ impl DoNode3D {
         node: Gd<Node3D>,
         to: Vector3,
         duration: f64,
-    ) -> Gd<SpirePropertyVector3> {
+    ) -> Gd<SpirePropertyVec3> {
         let tween = node.do_rotation_degrees(to, duration).register();
         gd_from_native_tween(tween)
     }
@@ -335,7 +331,7 @@ impl DoNode3D {
         node: Gd<Node3D>,
         to: Vector3,
         duration: f64,
-    ) -> Gd<SpirePropertyVector3> {
+    ) -> Gd<SpirePropertyVec3> {
         let tween = node.do_global_rotation(to, duration).register();
         gd_from_native_tween(tween)
     }
@@ -347,7 +343,7 @@ impl DoNode3D {
         node: Gd<Node3D>,
         to: Vector3,
         duration: f64,
-    ) -> Gd<SpirePropertyVector3> {
+    ) -> Gd<SpirePropertyVec3> {
         let tween = node.do_global_rotation_degrees(to, duration).register();
         gd_from_native_tween(tween)
     }
@@ -356,7 +352,7 @@ impl DoNode3D {
         node: Gd<Node3D>,
         follow_this: Gd<Node3D>,
         speed: f64,
-    ) -> Gd<SpirePropertyVector3> {
+    ) -> Gd<SpirePropertyVec3> {
         let tween = node.do_follow(follow_this, speed).register();
         gd_from_native_tween(tween)
     }

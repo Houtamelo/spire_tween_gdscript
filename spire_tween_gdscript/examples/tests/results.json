@@ -14,7 +14,7 @@
 		"test_invalid_tween": true
 	},
 	"res://examples/tests/lerp_callable.tscn": {
-		"hash": 2000454596,
+		"hash": 3098251792,
 		"test_lerp_call": true,
 		"test_lerp_call_float": true,
 		"test_lerp_call_with_ease": true,
@@ -34,7 +34,7 @@
 		"test_property_path": true
 	},
 	"res://examples/tests/pause_process_modes.tscn": {
-		"hash": 490521640,
+		"hash": 4189503251,
 		"test_pause_mode_bound": true,
 		"test_pause_mode_bound_process_mode_physics": true,
 		"test_pause_mode_process": true,
@@ -64,7 +64,7 @@
 		"test_stopped_child_does_not_halt_sequence": true
 	},
 	"res://examples/tests/spiral.tscn": {
-		"hash": 3715504814,
+		"hash": 2370701668,
 		"test_spiral_archimedean": true,
 		"test_spiral_archimedean_inverted": true,
 		"test_spiral_archimedean_sheared": true,

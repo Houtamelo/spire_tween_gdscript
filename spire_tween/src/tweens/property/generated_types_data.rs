@@ -111,34 +111,33 @@ impl IGeneralPropertyData for PropertyDataFloat {
 #[derive(Debug, Clone)]
 #[allow(unused)]
 #[delegated_enum(impl_conversions)]
-pub enum PropertyDataVector2 {
-    Area2D(Area2DVector2Data),
-    Camera2D(Camera2DVector2Data),
-    Camera3D(Camera3DVector2Data),
-    CanvasLayer(CanvasLayerVector2Data),
-    CharacterBody2D(CharacterBody2DVector2Data),
-    Control(ControlVector2Data),
-    Label3D(Label3DVector2Data),
-    Node2D(Node2DVector2Data),
-    ParallaxBackground(ParallaxBackgroundVector2Data),
-    RigidBody2D(RigidBody2DVector2Data),
-    SpriteBase3D(SpriteBase3DVector2Data),
-    StaticBody2D(StaticBody2DVector2Data),
-    TextureProgressBar(TextureProgressBarVector2Data),
+pub enum PropertyDataVec2 {
+    Area2D(Area2DVec2Data),
+    Camera2D(Camera2DVec2Data),
+    Camera3D(Camera3DVec2Data),
+    CanvasLayer(CanvasLayerVec2Data),
+    CharacterBody2D(CharacterBody2DVec2Data),
+    Control(ControlVec2Data),
+    Label3D(Label3DVec2Data),
+    Node2D(Node2DVec2Data),
+    ParallaxBackground(ParallaxBackgroundVec2Data),
+    RigidBody2D(RigidBody2DVec2Data),
+    SpriteBase3D(SpriteBase3DVec2Data),
+    StaticBody2D(StaticBody2DVec2Data),
+    TextureProgressBar(TextureProgressBarVec2Data),
     ViaCallable(PropertyDataViaCallable<Vector2>),
-    Follow2D(PropertyVector2Node2DFollowData),
+    Follow2D(PropertyVec2Node2DFollowData),
     Custom(PropertyDataCustom),
 }
-impl IGeneralPropertyData for PropertyDataVector2 {
+impl IGeneralPropertyData for PropertyDataVec2 {
     fn from_path_and_owner(_path_str: &str, path: NodePath, owner: Gd<Object>) -> Self {
         nested_try_from_path_and_object! {
-            _path_str, owner, Area2DVector2Data, Camera2DVector2Data,
-            Camera3DVector2Data, CanvasLayerVector2Data, CharacterBody2DVector2Data,
-            ControlVector2Data, Label3DVector2Data, Node2DVector2Data,
-            ParallaxBackgroundVector2Data, RigidBody2DVector2Data,
-            SpriteBase3DVector2Data, StaticBody2DVector2Data,
-            TextureProgressBarVector2Data, PropertyDataViaCallable < Vector2 >,
-            PropertyVector2Node2DFollowData
+            _path_str, owner, Area2DVec2Data, Camera2DVec2Data, Camera3DVec2Data,
+            CanvasLayerVec2Data, CharacterBody2DVec2Data, ControlVec2Data,
+            Label3DVec2Data, Node2DVec2Data, ParallaxBackgroundVec2Data,
+            RigidBody2DVec2Data, SpriteBase3DVec2Data, StaticBody2DVec2Data,
+            TextureProgressBarVec2Data, PropertyDataViaCallable < Vector2 >,
+            PropertyVec2Node2DFollowData
         }
         Self::Custom(PropertyDataCustom::from_path_and_owner(_path_str, path, owner))
     }
@@ -146,16 +145,16 @@ impl IGeneralPropertyData for PropertyDataVector2 {
 #[derive(Debug, Clone)]
 #[allow(unused)]
 #[delegated_enum(impl_conversions)]
-pub enum PropertyDataVector2i {
-    SubViewport(SubViewportVector2iData),
-    Window(WindowVector2iData),
+pub enum PropertyDataVec2i {
+    SubViewport(SubViewportVec2iData),
+    Window(WindowVec2iData),
     ViaCallable(PropertyDataViaCallable<Vector2i>),
     Custom(PropertyDataCustom),
 }
-impl IGeneralPropertyData for PropertyDataVector2i {
+impl IGeneralPropertyData for PropertyDataVec2i {
     fn from_path_and_owner(_path_str: &str, path: NodePath, owner: Gd<Object>) -> Self {
         nested_try_from_path_and_object! {
-            _path_str, owner, SubViewportVector2iData, WindowVector2iData,
+            _path_str, owner, SubViewportVec2iData, WindowVec2iData,
             PropertyDataViaCallable < Vector2i >
         }
         Self::Custom(PropertyDataCustom::from_path_and_owner(_path_str, path, owner))
@@ -164,32 +163,31 @@ impl IGeneralPropertyData for PropertyDataVector2i {
 #[derive(Debug, Clone)]
 #[allow(unused)]
 #[delegated_enum(impl_conversions)]
-pub enum PropertyDataVector3 {
-    Area3D(Area3DVector3Data),
-    CharacterBody3D(CharacterBody3DVector3Data),
-    Decal(DecalVector3Data),
-    FogVolume(FogVolumeVector3Data),
-    GpuParticlesAttractorBox3D(GpuParticlesAttractorBox3DVector3Data),
-    GpuParticlesAttractorVectorField3D(GpuParticlesAttractorVectorField3DVector3Data),
-    Node3D(Node3DVector3Data),
-    PhysicalBone3D(PhysicalBone3DVector3Data),
-    ReflectionProbe(ReflectionProbeVector3Data),
-    RigidBody3D(RigidBody3DVector3Data),
-    StaticBody3D(StaticBody3DVector3Data),
+pub enum PropertyDataVec3 {
+    Area3D(Area3DVec3Data),
+    CharacterBody3D(CharacterBody3DVec3Data),
+    Decal(DecalVec3Data),
+    FogVolume(FogVolumeVec3Data),
+    GpuParticlesAttractorBox3D(GpuParticlesAttractorBox3DVec3Data),
+    GpuParticlesAttractorVectorField3D(GpuParticlesAttractorVectorField3DVec3Data),
+    Node3D(Node3DVec3Data),
+    PhysicalBone3D(PhysicalBone3DVec3Data),
+    ReflectionProbe(ReflectionProbeVec3Data),
+    RigidBody3D(RigidBody3DVec3Data),
+    StaticBody3D(StaticBody3DVec3Data),
     ViaCallable(PropertyDataViaCallable<Vector3>),
-    Follow3D(PropertyVector3Node3DFollowData),
+    Follow3D(PropertyVec3Node3DFollowData),
     Custom(PropertyDataCustom),
 }
-impl IGeneralPropertyData for PropertyDataVector3 {
+impl IGeneralPropertyData for PropertyDataVec3 {
     fn from_path_and_owner(_path_str: &str, path: NodePath, owner: Gd<Object>) -> Self {
         nested_try_from_path_and_object! {
-            _path_str, owner, Area3DVector3Data, CharacterBody3DVector3Data,
-            DecalVector3Data, FogVolumeVector3Data,
-            GpuParticlesAttractorBox3DVector3Data,
-            GpuParticlesAttractorVectorField3DVector3Data, Node3DVector3Data,
-            PhysicalBone3DVector3Data, ReflectionProbeVector3Data,
-            RigidBody3DVector3Data, StaticBody3DVector3Data, PropertyDataViaCallable <
-            Vector3 >, PropertyVector3Node3DFollowData
+            _path_str, owner, Area3DVec3Data, CharacterBody3DVec3Data, DecalVec3Data,
+            FogVolumeVec3Data, GpuParticlesAttractorBox3DVec3Data,
+            GpuParticlesAttractorVectorField3DVec3Data, Node3DVec3Data,
+            PhysicalBone3DVec3Data, ReflectionProbeVec3Data, RigidBody3DVec3Data,
+            StaticBody3DVec3Data, PropertyDataViaCallable < Vector3 >,
+            PropertyVec3Node3DFollowData
         }
         Self::Custom(PropertyDataCustom::from_path_and_owner(_path_str, path, owner))
     }
@@ -197,11 +195,11 @@ impl IGeneralPropertyData for PropertyDataVector3 {
 #[derive(Debug, Clone)]
 #[allow(unused)]
 #[delegated_enum(impl_conversions)]
-pub enum PropertyDataVector3i {
+pub enum PropertyDataVec3i {
     ViaCallable(PropertyDataViaCallable<Vector3i>),
     Custom(PropertyDataCustom),
 }
-impl IGeneralPropertyData for PropertyDataVector3i {
+impl IGeneralPropertyData for PropertyDataVec3i {
     fn from_path_and_owner(_path_str: &str, path: NodePath, owner: Gd<Object>) -> Self {
         nested_try_from_path_and_object! {
             _path_str, owner, PropertyDataViaCallable < Vector3i >

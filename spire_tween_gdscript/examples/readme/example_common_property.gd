@@ -14,7 +14,7 @@ func godot_impl():
 	self.create_tween().tween_property(circle, ^"modulate:r", 1.0, duration)
 
 func spire_impl():
-	# Signature: func(node: Node2D, to: Vector2, duration: float) -> SpirePropertyVector2 
+	# Signature: func(node: Node2D, to: Vector2, duration: float) -> SpirePropertyVec2
 	DoNode2D.global_position(circle, destination, duration)
 	# Signature: func(node: CanvasItem, to: float, duration: float) -> SpirePropertyFloat
 	DoCanvasItem.modulate_r(circle, 1.0, duration)
