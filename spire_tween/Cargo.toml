@@ -21,8 +21,7 @@ anyhow = "1.0"
 spire_enum = "0.7.1"
 glam = "0.30.5"
 replace_with = "0.1.6"
-dashmap = { version = "7.0.0-rc2", features = ["raw-api", "inline-more"], optional = true }
-indexmap = { version = "2.12.0", optional = true }
+indexmap = "2.12.0"
 ahash = "0.8.12"
 fxhash = "0.2.1"
 derived-deref = "2.1.0"
@@ -42,10 +41,7 @@ bitflags = "2.11.0"
 #rayon = "1.11.0"
 
 [features]
-default = ["indexmap"]
 standalone = []
 double-precision = ["godot/double-precision"]
-dashmap = ["dep:dashmap"]
-indexmap = ["dep:indexmap"]
 nothreads = ["godot/experimental-wasm-nothreads"]
 verbose-stdout = []

@@ -62,13 +62,9 @@
 //!
 //! # Cargo features
 //!
-//! - `default = ["indexmap"]` — backing storage for the per-frame deferred-op map.
 //! - `standalone` — registers GDScript-facing classes (`Spire`, `SpireSequence`,
-//!   `Do{Class}`, etc.). Enabled by the `spire_tween_plugin` cdylib that produces
-//!   the published addon. Pure-Rust gdext consumers don't need this.
-//! - `dashmap` — alternative concurrent map backend (mutually exclusive with
-//!   `indexmap`).
-//! - `indexmap` — single-threaded ordered map backend (the default).
+//!   `Do{Class}`, etc.). Used by the addon distribution; pure-Rust gdext
+//!   consumers don't need this.
 //! - `double-precision` — forwards to godot's `double-precision` feature for 64-bit
 //!   `Vector*`/`real`. Match this with your gdext build.
 //! - `nothreads` — forwards to godot's `experimental-wasm-nothreads` for wasm
@@ -174,8 +170,6 @@ pub(crate) mod internal_prelude {
 
     pub(crate) use anyhow::{anyhow, bail};
     pub(crate) use godot::sys::GDExtensionClassMethodArgumentMetadata;
-    #[cfg(feature = "dashmap")]
-    pub(crate) use dashmap::Equivalent;
     pub(crate) use derived_deref::{Deref, DerefMut};
     pub(crate) use godot::{
         builtin::Side,
@@ -188,7 +182,6 @@ pub(crate) mod internal_prelude {
         prelude::*,
         register::info::{PropertyHint, PropertyHintInfo, PropertyInfo, PropertyUsageFlags},
     };
-    #[cfg(feature = "indexmap")]
     pub(crate) use indexmap::Equivalent;
     pub(crate) use replace_with::replace_with_or_abort;
     pub(crate) use smallvec::SmallVec;

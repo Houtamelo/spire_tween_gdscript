@@ -9,14 +9,8 @@ use anyhow::Result;
 use deferred_op::*;
 pub use node_status::*;
 
-#[cfg(feature = "indexmap")]
 mod index_map_impl;
-#[cfg(feature = "indexmap")]
 pub use index_map_impl::*;
-#[cfg(feature = "dashmap")]
-mod dash_map_impl;
-#[cfg(feature = "dashmap")]
-pub use dash_map_impl::*;
 
 // Note: We check for strong_count > 1 because we are literally holding one reference here.
 fn tween_process(tween: &AnyTween, delta_time: f64, is_tree_paused: bool) -> bool {

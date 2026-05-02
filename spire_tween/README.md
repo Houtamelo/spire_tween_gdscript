@@ -50,14 +50,12 @@ seq.register();
 
 ## Cargo features
 
-| Feature | Default | Purpose |
-|---|---|---|
-| `indexmap` | ✅ | Single-threaded ordered map backend for the global tween manager. |
-| `dashmap` |  | Alternative concurrent map backend (mutually exclusive with `indexmap`). |
-| `standalone` |  | Registers GDScript-facing classes (`Spire`, `Do{Class}`, `SpireSequence`, …). Used by the addon distribution; pure-Rust gdext consumers don't need this. |
-| `double-precision` |  | Forwards to godot's `double-precision`. Match this with your gdext build. |
-| `nothreads` |  | Forwards to godot's `experimental-wasm-nothreads` for wasm-without-threads builds. |
-| `verbose-stdout` |  | Extra diagnostic prints inside the manager loop. |
+| Feature | Purpose |
+|---|---|
+| `standalone` | Registers GDScript-facing classes (`Spire`, `Do{Class}`, `SpireSequence`, …). Used by the addon distribution; pure-Rust gdext consumers don't need this. |
+| `double-precision` | Forwards to godot's `double-precision`. Match this with your gdext build. |
+| `nothreads` | Forwards to godot's `experimental-wasm-nothreads` for wasm-without-threads builds. |
+| `verbose-stdout` | Extra diagnostic prints inside the manager loop. |
 
 ## The `prelude`
 
