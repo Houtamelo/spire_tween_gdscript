@@ -328,9 +328,17 @@ impl SpireTween<Sequence> {
         self.t.queue.push(vec![tween.into()]);
     }
 
-    /// Appends a one-shot [`Callable`] in a new block. Equivalent to a zero-duration
+    /// Appends a [`Callable`] in a new block. Equivalent to a zero-duration
     /// tween that just invokes a function once.
+    ///
+    /// We guarantee that the Callable is only ever invoked in the main thread.
     pub fn append_call(&mut self, call: Callable) { self.t.queue.push(vec![call.into()]); }
+
+    /// Same as [`append_call`], but accepts any Rust closure.
+    pub fn append_fn(&mut self, mut f: impl FnMut() + 'static) {
+        let callable = Callable::from_fn("anonymous_closure", move |_| f());
+        self.append_call(callable);
+    }
 
     /// Appends an interval (delay) in a new block. Equivalent to a tween with
     /// `delay = time` that completes immediately afterward.
@@ -390,7 +398,7 @@ impl SpireTween<Sequence> {
         }
     }
 
-    /// Adds a one-shot [`Callable`] to the last block (parallel). Falls back to
+    /// Adds a [`Callable`] to the last block (parallel). Falls back to
     /// [`append_call`](Self::append_call) if the sequence is empty.
     pub fn join_call(&mut self, call: Callable) {
         if let Some(last_block) = self.t.queue.last_mut() {
@@ -398,6 +406,12 @@ impl SpireTween<Sequence> {
         } else {
             self.append_call(call);
         }
+    }
+
+    /// Same as [`join_call`], but accepts any Rust closure.
+    pub fn join_fn(&mut self, mut f: impl FnMut() + 'static) {
+        let callable = Callable::from_fn("anonymous_closure", move |_| f());
+        self.join_call(callable);
     }
 
     /// Adds an interval to the last block. Since block duration is determined by the
@@ -449,9 +463,15 @@ impl SpireTween<Sequence> {
         self.t.inserts.push((time, tween.into()));
     }
 
-    /// Inserts a one-shot [`Callable`] at an absolute time offset, independent of the
+    /// Inserts a [`Callable`] at an absolute time offset, independent of the
     /// block queue. The sequence's delay is added to the offset (see [`insert`](Self::insert)).
     pub fn insert_call(&mut self, time: f64, call: Callable) { self.t.inserts.push((time, call.into())); }
+
+    /// Same as [`insert_call`], but accepts any Rust closure.
+    pub fn insert_closure(&mut self, time: f64, mut f: impl FnMut() + 'static) {
+        let callable = Callable::from_fn("anonymous_closure", move |_| f());
+        self.insert_call(time, callable);
+    }
 
     /// Iterator over child tweens in the immediate queue and inserts (does not descend
     /// into nested sequences). Skips `BlockItem::Call` and `BlockItem::Interval`.

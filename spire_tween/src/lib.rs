@@ -31,30 +31,30 @@
 //!
 //! `use spire_tween::prelude::*` brings in the core surface:
 //!
-//! - **Core types** — [`prelude::SpireTween`], [`prelude::AnyTween`],
-//!   [`prelude::Sequence`], [`prelude::SpireFlags`].
-//! - **Pointer types** — [`prelude::RcPtr`], [`prelude::WeakPtr`].
-//! - **Enums** — [`prelude::Ease`], [`prelude::EaseKind`], [`prelude::Evaluator`],
-//!   [`prelude::LoopMode`], [`prelude::PauseMode`], [`prelude::ProcessMode`],
-//!   [`prelude::Spiral`], [`prelude::State`].
-//! - **Tween-data types** — [`prelude::LerpPropertyData`], [`prelude::LerpMethodData`],
+//! - **Core types** — [`SpireTween`], [`AnyTween`],
+//!   [`Sequence`], [`SpireFlags`].
+//! - **Pointer types** — [`RcPtr`], [`WeakPtr`].
+//! - **Enums** — [`Ease`], [`EaseKind`], [`Evaluator`],
+//!   [`LoopMode`], [`PauseMode`], [`ProcessMode`],
+//!   [`Spiral`], [`State`].
+//! - **Tween-data types** — [`LerpPropertyData`], [`LerpMethodData`],
 //!   plus the generated per-class adapter enums (`PropertyDataFloat`,
 //!   `PropertyDataVec2`, …).
-//! - **Constructor traits** — [`prelude::DoProperty`], [`prelude::DoMethod`],
-//!   [`prelude::DoVarMethod`], [`prelude::DoDelayedCall`], [`prelude::DoDelayedCallable`].
-//! - **Template traits** — [`prelude::DoBone`], [`prelude::DoContourShape2D`],
-//!   [`prelude::DoEllipsis2D`], [`prelude::DoEllipsis3D`], [`prelude::DoFollow2D`],
-//!   [`prelude::DoFollow3D`], [`prelude::DoShakeNode2D`], [`prelude::DoShakeControl`],
-//!   [`prelude::DoSpiral`].
-//! - **Lifecycle helpers** — [`prelude::CompleteBoundTweens`], [`prelude::KillBoundTweens`].
-//! - **Custom-lerper plumbing** — [`prelude::BasicLerp`], [`prelude::SpireLerp`],
-//!   [`prelude::CustomLerper`], [`prelude::LerpMode`], [`prelude::ITweenable`],
-//!   [`prelude::SpireTweener`].
+//! - **Constructor traits** — [`DoProperty`], [`DoMethod`],
+//!   [`DoVarMethod`], [`DoDelayedCall`], [`DoDelayedCallable`].
+//! - **Template traits** — [`DoBone`], [`DoContourShape2D`],
+//!   [`DoEllipsis2D`], [`DoEllipsis3D`], [`DoFollow2D`],
+//!   [`DoFollow3D`], [`DoShakeNode2D`], [`DoShakeControl`],
+//!   [`DoSpiral`].
+//! - **Lifecycle helpers** — [`CompleteBoundTweens`], [`KillBoundTweens`].
+//! - **Custom-lerper plumbing** — [`BasicLerp`], [`SpireLerp`],
+//!   [`CustomLerper`], [`LerpMode`], [`ITweenable`],
+//!   [`SpireTweener`].
 //!
 //! # Two register paths
 //!
 //! Pick based on who needs to listen for `finished` / `loop_finished`:
-//! - [`SpireTween::register`] — pure-Rust path. Returns an [`prelude::RcPtr`] handle.
+//! - [`SpireTween::register`] — pure-Rust path. Returns an [`RcPtr`] handle.
 //!   Subscribe to events via [`SpireTween::finished_connect`] etc. (closure-based).
 //! - [`SpireTween::register_with_gd_handle`] — also attaches a `Gd<Spire…>` wrapper
 //!   so GDScript code (or any consumer of Godot signals) can connect to the
@@ -141,6 +141,8 @@ pub mod prelude {
             generated_classes_data::*,
         },
     };
+
+    pub fn new_sequence() -> SpireTween<Sequence> { SpireTween::<Sequence>::new() }
 }
 
 #[allow(unused_imports)]
@@ -158,7 +160,6 @@ pub(crate) mod internal_prelude {
     };
 
     pub(crate) use anyhow::{anyhow, bail};
-    pub(crate) use godot::sys::GDExtensionClassMethodArgumentMetadata;
     pub(crate) use derived_deref::{Deref, DerefMut};
     pub(crate) use godot::{
         builtin::Side,
@@ -170,6 +171,7 @@ pub(crate) mod internal_prelude {
         obj::WithBaseField,
         prelude::*,
         register::info::{PropertyHint, PropertyHintInfo, PropertyInfo, PropertyUsageFlags},
+        sys::GDExtensionClassMethodArgumentMetadata,
     };
     pub(crate) use indexmap::Equivalent;
     pub(crate) use replace_with::replace_with_or_abort;
