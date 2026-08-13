@@ -129,7 +129,7 @@ impl<T: ITweenable> SpireTween<T> {
     /// Direct mutable access to the bound-nodes set. Prefer [`bound_to`](Self::bound_to)
     /// or [`maybe_bound`](Self::maybe_bound) for chained construction.
     #[inline]
-    pub fn bound_nodes_mut(&mut self) -> &mut SmolSet<[Gd<Node>; 1]> { &mut self.bound_nodes }
+    pub(crate) fn bound_nodes_mut(&mut self) -> &mut SmolSet<[Gd<Node>; 1]> { &mut self.bound_nodes }
     /// Returns the set of nodes this tween is currently bound to. See [`bound_to`](Self::bound_to)
     /// for the semantics of binding.
     ///

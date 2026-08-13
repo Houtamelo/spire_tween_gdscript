@@ -356,8 +356,8 @@ impl SpireLerp<Vector2i> for () {
         let abs_step = f64::min(remaining_distance, max_step);
 
         let value = {
-            let from_float = from.cast_float();
-            let to_float = to.cast_float();
+            let from_float = from.to_vector2();
+            let to_float = to.to_vector2();
             let result_float = Vector2::move_toward(from_float, to_float, abs_step as f32);
             Vector2i {
                 x: result_float.x.floor() as i32,
@@ -459,8 +459,8 @@ impl SpireLerp<Vector3i> for () {
         let abs_step = f64::min(remaining_distance, max_step);
 
         let value = {
-            let from_float = from.cast_float();
-            let to_float = to.cast_float();
+            let from_float = from.to_vector3();
+            let to_float = to.to_vector3();
             let result_float = Vector3::move_toward(from_float, to_float, abs_step as f32);
             Vector3i {
                 x: result_float.x.floor() as i32,

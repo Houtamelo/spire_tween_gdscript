@@ -468,13 +468,14 @@ impl SpireTween<Sequence> {
     pub fn insert_call(&mut self, time: f64, call: Callable) { self.t.inserts.push((time, call.into())); }
 
     /// Same as [`insert_call`], but accepts any Rust closure.
-    pub fn insert_closure(&mut self, time: f64, mut f: impl FnMut() + 'static) {
+    pub fn insert_fn(&mut self, time: f64, mut f: impl FnMut() + 'static) {
         let callable = Callable::from_fn("anonymous_closure", move |_| f());
         self.insert_call(time, callable);
     }
 
     /// Iterator over child tweens in the immediate queue and inserts (does not descend
     /// into nested sequences). Skips `BlockItem::Call` and `BlockItem::Interval`.
+    #[doc(hidden)]
     pub fn iter_inner_tweens_non_recursive(&self) -> impl Iterator<Item = AnyTween> {
         self.t
             .queue
@@ -494,6 +495,7 @@ impl SpireTween<Sequence> {
     }
 
     /// Iterator that recursively descends into child sequences.
+    #[doc(hidden)]
     pub fn iter_inner_tweens_recursive(&self) -> SequenceIter { SequenceIter::new(self) }
 
     /// Searches the queue and inserts for `to_remove`, removes it if found.

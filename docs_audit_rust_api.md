@@ -12,12 +12,12 @@
 
 ## Doc-coverage tiers (used in tables below)
 
-| Tier | Meaning |
-|---|---|
-| ✅ **Good** | Item-level summary + usage notes + at least one note about edge cases or non-obvious behavior |
-| ◐ **Thin** | One- or two-line summary; no notes, no examples, no parameter descriptions |
-| ✗ **None** | No `///` at all |
-| ⊘ **Hidden** | Marked `#[doc(hidden)]` — out of scope |
+| Tier         | Meaning                                                                                       |
+|--------------|-----------------------------------------------------------------------------------------------|
+| ✅ **Good**  | Item-level summary + usage notes + at least one note about edge cases or non-obvious behavior |
+| ◐ **Thin**   | One- or two-line summary; no notes, no examples, no parameter descriptions                    |
+| ✗ **None**  | No `///` at all                                                                               |
+| ⊘ **Hidden** | Marked `#[doc(hidden)]` — out of scope                                                        |
 
 GDScript-side reference: doc strings on `#[func]`s in
 `gdscript_bridge/{mod,do_property,do_call,do_delayed_call,sequence}.rs`,
@@ -32,46 +32,47 @@ GDScript-side reference: doc strings on `#[func]`s in
 
 ### `SpireTween<T>` (`tweens/base/spire_tween.rs`)
 
-| Item | Rust doc | GDScript counterpart | Gap |
-|---|:-:|:-:|---|
-| struct `SpireTween` | ✅ 4-line summary | n/a (Rust-only generic; per-T wrappers are `SpireSequence`, `SpireProperty*`, `SpireMethod*`, `SpireDelayedCall`) | none |
-| field `bound_nodes`, `delay`, `speed_scale`, `ignore_time_scale`, `total_elapsed_time`, `pause_mode`, `process_mode`, `loop_time`, `loop_max`, `loop_mode`, `loop_counter`, `loop_finished_connections`, `finished_connections`, `gd_handle`, `t` | ✗ | n/a (fields not exposed in GDScript) | **port `set_*`/`get_*` doc strings to the field accessors** below |
-| `new_with_data` | ✗ | n/a | Add brief constructor doc |
-| `get_state`, `set_state`, `is_playing`, `is_paused`, `is_stopped` | ✗ except `set_state` (1-line) | `SpireSequence`/`SpireProperty*` GDScript: ✅ via `define_base_gd_methods!` | port |
-| `bound_nodes_mut`, `get_bound_nodes`, `clear_bound_nodes` | ✗ | ✅ `bind_node`, `unbind_node`, `clear_bound_nodes`, `get_bound_nodes` on the GDScript handles | port |
-| `get_delay`, `set_delay` | ✗ | ✅ | port |
-| `get_speed_scale`, `set_speed_scale` | ✗ | ✅ | port |
-| `get_ignore_time_scale`, `set_ignore_time_scale` | ✗ (but has a `// TODO:` comment about an integration test) | ✅ | port |
-| `get_pause_mode`, `set_pause_mode` | ✗ | ✅ | port |
-| `get_process_mode`, `set_process_mode` | ✗ | ✅ | port |
-| `get_animation_position`, `get_total_elapsed_time`, `get_loops_finished` | ✗ | ✅ | port |
-| `get_loops`, `set_loops` | ◐ "Negative values mean infinite looping. A value of 0 is clamped to 1." | ✅ on GDScript wrapper has the same "negative=infinite" note plus a description of LoopMode interaction | extend Rust doc to mention LoopMode interaction |
-| `get_loop_mode`, `set_loop_mode` | ✗ | ✅ | port |
-| `loop_finished_connect`, `loop_finished_connect_callable`, `loop_finished_disconnect_callable`, `loop_finished_clear_connections` | ✗ | partial: signal `loop_finished` documented on GDScript handles, but the Rust closure-based connect API has no equivalent there → **needs Rust-original prose** describing `SpireFlags::DEFERRED` / `ONE_SHOT` semantics, when the closure fires, and the difference vs. the Godot signal |
-| `finished_connect`, `finished_connect_callable`, `finished_disconnect_callable`, `finished_clear_connections` | ✗ | same as above | same — needs Rust-original prose |
+| Item                                                                                                                                                                                                                                              |                                 Rust doc                                 |                                                                                                                                   GDScript counterpart                                                                                                                                   | Gap                                                               |
+|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|-------------------------------------------------------------------|
+| struct `SpireTween`                                                                                                                                                                                                                               |                            ✅ 4-line summary                             |                                                                                    n/a (Rust-only generic; per-T wrappers are `SpireSequence`, `SpireProperty*`, `SpireMethod*`, `SpireDelayedCall`)                                                                                     | none                                                              |
+| field `bound_nodes`, `delay`, `speed_scale`, `ignore_time_scale`, `total_elapsed_time`, `pause_mode`, `process_mode`, `loop_time`, `loop_max`, `loop_mode`, `loop_counter`, `loop_finished_connections`, `finished_connections`, `gd_handle`, `t` |                                    ✗                                    |                                                                                                                           n/a (fields not exposed in GDScript)                                                                                                                           | **port `set_*`/`get_*` doc strings to the field accessors** below |
+| `new_with_data`                                                                                                                                                                                                                                   |                                    ✗                                    |                                                                                                                                           n/a                                                                                                                                            | Add brief constructor doc                                         |
+| `get_state`, `set_state`, `is_playing`, `is_paused`, `is_stopped`                                                                                                                                                                                 |                      ✗ except `set_state` (1-line)                      |                                                                                                       `SpireSequence`/`SpireProperty*` GDScript: ✅ via `define_base_gd_methods!`                                                                                                        | port                                                              |
+| `bound_nodes_mut`, `get_bound_nodes`, `clear_bound_nodes`                                                                                                                                                                                         |                                    ✗                                    |                                                                                              ✅ `bind_node`, `unbind_node`, `clear_bound_nodes`, `get_bound_nodes` on the GDScript handles                                                                                               | port                                                              |
+| `get_delay`, `set_delay`                                                                                                                                                                                                                          |                                    ✗                                    |                                                                                                                                            ✅                                                                                                                                            | port                                                              |
+| `get_speed_scale`, `set_speed_scale`                                                                                                                                                                                                              |                                    ✗                                    |                                                                                                                                            ✅                                                                                                                                            | port                                                              |
+| `get_ignore_time_scale`, `set_ignore_time_scale`                                                                                                                                                                                                  |       ✗ (but has a `// TODO:` comment about an integration test)        |                                                                                                                                            ✅                                                                                                                                            | port                                                              |
+| `get_pause_mode`, `set_pause_mode`                                                                                                                                                                                                                |                                    ✗                                    |                                                                                                                                            ✅                                                                                                                                            | port                                                              |
+| `get_process_mode`, `set_process_mode`                                                                                                                                                                                                            |                                    ✗                                    |                                                                                                                                            ✅                                                                                                                                            | port                                                              |
+| `get_animation_position`, `get_total_elapsed_time`, `get_loops_finished`                                                                                                                                                                          |                                    ✗                                    |                                                                                                                                            ✅                                                                                                                                            | port                                                              |
+| `get_loops`, `set_loops`                                                                                                                                                                                                                          | ◐ "Negative values mean infinite looping. A value of 0 is clamped to 1." |                                                                                         ✅ on GDScript wrapper has the same "negative=infinite" note plus a description of LoopMode interaction                                                                                          | extend Rust doc to mention LoopMode interaction                   |
+| `get_loop_mode`, `set_loop_mode`                                                                                                                                                                                                                  |                                    ✗                                    |                                                                                                                                            ✅                                                                                                                                            | port                                                              |
+| `loop_finished_connect`, `loop_finished_connect_callable`, `loop_finished_disconnect_callable`, `loop_finished_clear_connections`                                                                                                                 |                                    ✗                                    | partial: signal `loop_finished` documented on GDScript handles, but the Rust closure-based connect API has no equivalent there → **needs Rust-original prose** describing `SpireFlags::DEFERRED` / `ONE_SHOT` semantics, when the closure fires, and the difference vs. the Godot signal |
+| `finished_connect`, `finished_connect_callable`, `finished_disconnect_callable`, `finished_clear_connections`                                                                                                                                     |                                    ✗                                    |                                                                                                                                      same as above                                                                                                                                       | same — needs Rust-original prose                                  |
 
 ### `Connection` struct, `SpireFlags` bitflags
 
-| Item | Rust doc | Gap |
-|---|:-:|---|
-| `Connection` | ✗ | Add a one-line: "Pairs a Callable with the flags governing how it's invoked." |
-| `SpireFlags`, `DEFERRED`, `ONE_SHOT` | ✗ | Add semantics: when does deferred fire vs immediate? Does ONE_SHOT remove from the connection list automatically? (Yes — see `emit_loop_finished`/`emit_finished` retain logic.) |
+| Item                                 | Rust doc | Gap                                                                                                                                                                              |
+|--------------------------------------|:--------:|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `Connection`                         |    ✗    | Add a one-line: "Pairs a Callable with the flags governing how it's invoked."                                                                                                    |
+| `SpireFlags`, `DEFERRED`, `ONE_SHOT` |    ✗    | Add semantics: when does deferred fire vs immediate? Does ONE_SHOT remove from the connection list automatically? (Yes — see `emit_loop_finished`/`emit_finished` retain logic.) |
 
 ### Builder methods (`tweens/base/builder.rs`)
 
-| Item | Rust doc |
-|---|:-:|
-| `bound_to` | ✅ |
-| `maybe_bound` | ✅ |
-| `with_delay` | ✗ |
-| `with_speed_scale` | ✗ |
-| `with_pause_mode` | ✗ |
-| `with_process_mode` | ✗ |
-| `with_handle` | ✅ |
-| `register` | ✅ |
-| `register_with_gd_handle` | ✅ |
+| Item                      | Rust doc |
+|---------------------------|:--------:|
+| `bound_to`                |    ✅    |
+| `maybe_bound`             |    ✅    |
+| `with_delay`              |    ✗    |
+| `with_speed_scale`        |    ✗    |
+| `with_pause_mode`         |    ✗    |
+| `with_process_mode`       |    ✗    |
+| `with_handle`             |    ✅    |
+| `register`                |    ✅    |
+| `register_with_gd_handle` |    ✅    |
 
-The `with_*` setters are well-named but not all are documented. Add a one-liner per (or a single doc on the impl block: "Builder-style setters, equivalent to the `set_*` methods but consuming the tween for chaining."). For `with_pause_mode`/`with_process_mode`, mention the controlling enum in the doc so users can land on `PauseMode`/`ProcessMode` from rustdoc cross-link.
+The `with_*` setters are well-named but not all are documented. Add a one-liner per (or a single doc on the impl block: "Builder-style setters, equivalent to the `set_*` methods but consuming the
+tween for chaining."). For `with_pause_mode`/`with_process_mode`, mention the controlling enum in the doc so users can land on `PauseMode`/`ProcessMode` from rustdoc cross-link.
 
 ---
 
@@ -79,112 +80,119 @@ The `with_*` setters are well-named but not all are documented. Add a one-liner 
 
 ### `Sequence` (`tweens/sequence/data.rs`) — biggest disparity
 
-| Item | Rust doc | GDScript counterpart (`SpireSequence` in `tweens/sequence/gd.rs`) |
-|---|:-:|:-:|
-| `Sequence` struct | ◐ 4-line summary | ✅ **80+ lines** with ASCII-art block diagrams, loop semantics, child-tween rules, speed_scale interaction, etc. |
-| `BlockItem`, `InsertItem` | ✗ / ◐ ("Runs independently of the block queue at a specific time offset.") | n/a (internal types, but their behavior is described in the GDScript `SpireSequence` prose) |
-| `set_default_ease` | ◐ "Overrides `Ease::Default` on child tweens added after this call." | ✅ longer description on the `set_default_children_ease` GDScript wrapper, including priority-vs-global note |
-| `append`, `join`, `insert` | ◐ one-line each | ✅ each has a multi-paragraph description with ASCII diagrams |
-| `append_call`, `append_interval`, `append_ptr`, `join_call`, `join_interval`, `join_ptr`, `insert_call`, `insert_ptr` | ✗ | ✅ all have GDScript wrappers with full docs |
-| `iter_inner_tweens_non_recursive`, `iter_inner_tweens_recursive` | ✗ | n/a (Rust-only — useful for tooling; needs original prose) |
-| `remove`, `remove_call` | ✗ | ✅ |
-| `SequenceIter` | ✗ | n/a (Rust-only iterator; should at least have a one-line doc) |
+| Item                                                                                                                  |                                  Rust doc                                   |                        GDScript counterpart (`SpireSequence` in `tweens/sequence/gd.rs`)                         |
+|-----------------------------------------------------------------------------------------------------------------------|:---------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------:|
+| `Sequence` struct                                                                                                     |                              ◐ 4-line summary                               | ✅ **80+ lines** with ASCII-art block diagrams, loop semantics, child-tween rules, speed_scale interaction, etc. |
+| `BlockItem`, `InsertItem`                                                                                             | ✗ / ◐ ("Runs independently of the block queue at a specific time offset.") |           n/a (internal types, but their behavior is described in the GDScript `SpireSequence` prose)            |
+| `set_default_ease`                                                                                                    |    ◐ "Overrides `Ease::Default` on child tweens added after this call."     |   ✅ longer description on the `set_default_children_ease` GDScript wrapper, including priority-vs-global note   |
+| `append`, `join`, `insert`                                                                                            |                               ◐ one-line each                               |                          ✅ each has a multi-paragraph description with ASCII diagrams                           |
+| `append_call`, `append_interval`, `append_ptr`, `join_call`, `join_interval`, `join_ptr`, `insert_call`, `insert_ptr` |                                     ✗                                      |                                   ✅ all have GDScript wrappers with full docs                                   |
+| `iter_inner_tweens_non_recursive`, `iter_inner_tweens_recursive`                                                      |                                     ✗                                      |                            n/a (Rust-only — useful for tooling; needs original prose)                            |
+| `remove`, `remove_call`                                                                                               |                                     ✗                                      |                                                        ✅                                                        |
+| `SequenceIter`                                                                                                        |                                     ✗                                      |                          n/a (Rust-only iterator; should at least have a one-line doc)                           |
 
-**Action:** lift the `SpireSequence` GDScript doc into the Rust `Sequence` struct doc (with light edits — `[method append]` → `[Self::append]` for rustdoc cross-links). Then per-method, port the corresponding GDScript blurb.
+**Action:** lift the `SpireSequence` GDScript doc into the Rust `Sequence` struct doc (with light edits — `[method append]` → `[Self::append]` for rustdoc cross-links). Then per-method, port the
+corresponding GDScript blurb.
 
 ### `LerpPropertyData<T>` and `SpireTween<LerpPropertyData<T>>` (`tweens/property/data.rs`)
 
-| Item | Rust doc | GDScript counterpart (via `gd_property_tween!` macro in `tweens/property/macros.rs`) |
-|---|:-:|:-:|
-| `LerpPropertyData` struct | ✗ | ✅ each `SpireProperty{Type}` class has a multi-line doc explaining what it does + when to use it vs. `Do{Class}.{property}` shortcuts |
-| `get_property_path`, `get_owner` | ✗ | ✅ |
-| `get_ease`, `set_ease` | ✗ | ✅ `set_ease` has a **40-line treatise** on what easing is, custom easing options, and how it interacts with speed-based mode |
-| `get_final_value`, `set_final_value` | ✗ | ✅ |
-| `set_dynamic_target` | ✗ | ✅ as `set_dynamic_target` GDScript wrapper |
-| `set_begin_value` | ◐ runtime warnings via `godot_warn!` mention SpeedBased/Relative ignore the value, but no `///` doc | ✅ as `from(value)` GDScript wrapper — explicitly says "starting value is ignored in Relative and Speed-Based tweens" |
-| `set_relative`, `set_absolute`, `set_speed_based` | ✗ | ✅ as `as_relative`, `as_absolute`, `as_speed_based` GDScript wrappers |
-| `is_absolute`, `is_relative`, `is_speed_based` | ✗ | ✅ |
-| `get_duration` | ✗ | ✅ — including the speed-based formula "distance / speed" |
-| `with_ease`, `begin_from`, `end_at`, `as_absolute`, `as_speed_based`, `as_relative` (builders) | ✗ | n/a (Rust-only builder variants of the `set_*`s above) |
-| `new`, `new_registered`, `new_custom` | ✗ | n/a |
+| Item                                                                                           |                                              Rust doc                                               |                          GDScript counterpart (via `gd_property_tween!` macro in `tweens/property/macros.rs`)                          |
+|------------------------------------------------------------------------------------------------|:---------------------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------------------------------------:|
+| `LerpPropertyData` struct                                                                      |                                                 ✗                                                  | ✅ each `SpireProperty{Type}` class has a multi-line doc explaining what it does + when to use it vs. `Do{Class}.{property}` shortcuts |
+| `get_property_path`, `get_owner`                                                               |                                                 ✗                                                  |                                                                   ✅                                                                   |
+| `get_ease`, `set_ease`                                                                         |                                                 ✗                                                  |     ✅ `set_ease` has a **40-line treatise** on what easing is, custom easing options, and how it interacts with speed-based mode      |
+| `get_final_value`, `set_final_value`                                                           |                                                 ✗                                                  |                                                                   ✅                                                                   |
+| `set_dynamic_target`                                                                           |                                                 ✗                                                  |                                              ✅ as `set_dynamic_target` GDScript wrapper                                               |
+| `set_begin_value`                                                                              | ◐ runtime warnings via `godot_warn!` mention SpeedBased/Relative ignore the value, but no `///` doc |         ✅ as `from(value)` GDScript wrapper — explicitly says "starting value is ignored in Relative and Speed-Based tweens"          |
+| `set_relative`, `set_absolute`, `set_speed_based`                                              |                                                 ✗                                                  |                                 ✅ as `as_relative`, `as_absolute`, `as_speed_based` GDScript wrappers                                 |
+| `is_absolute`, `is_relative`, `is_speed_based`                                                 |                                                 ✗                                                  |                                                                   ✅                                                                   |
+| `get_duration`                                                                                 |                                                 ✗                                                  |                                       ✅ — including the speed-based formula "distance / speed"                                        |
+| `with_ease`, `begin_from`, `end_at`, `as_absolute`, `as_speed_based`, `as_relative` (builders) |                                                 ✗                                                  |                                         n/a (Rust-only builder variants of the `set_*`s above)                                         |
+| `new`, `new_registered`, `new_custom`                                                          |                                                 ✗                                                  |                                                                  n/a                                                                   |
 
 ### `LerpMethodData<T>` and `SpireTween<LerpMethodData<T>>` (`tweens/method/data.rs`)
 
-Same pattern as `LerpPropertyData`. Every method (`get_callable`, `get_owner`, `get_duration`, `get_ease`, `set_ease`, `get_start_value`, `set_start_value`, `get_final_value`, `set_final_value`) is undocumented in Rust; all have rich GDScript-side docs via `gd_method_tween!`.
+Same pattern as `LerpPropertyData`. Every method (`get_callable`, `get_owner`, `get_duration`, `get_ease`, `set_ease`, `get_start_value`, `set_start_value`, `get_final_value`, `set_final_value`) is
+undocumented in Rust; all have rich GDScript-side docs via `gd_method_tween!`.
 
 ### `SpireTween<Callable>` (`tweens/delayed_call/data.rs`)
 
-| Item | Rust doc | GDScript counterpart (`SpireDelayedCall`) |
-|---|:-:|:-:|
-| `SpireTween<Callable>` | ✗ | ✅ |
-| `new`, `new_registered` (constructors) | ✗ | n/a |
-| `seek_end` (private) | n/a | n/a |
+| Item                                   | Rust doc | GDScript counterpart (`SpireDelayedCall`) |
+|----------------------------------------|:--------:|:-----------------------------------------:|
+| `SpireTween<Callable>`                 |    ✗    |                    ✅                     |
+| `new`, `new_registered` (constructors) |    ✗    |                    n/a                    |
+| `seek_end` (private)                   |   n/a    |                    n/a                    |
 
 The GDScript-side `SpireDelayedCall` lives in `tweens/delayed_call/gd.rs` (not opened in this audit but follows the same pattern as `SpireSequence`).
 
 ### `AnyTween`, `WeakAnyTween` (`tweens/any_tween.rs`)
 
-| Item | Rust doc | Gap |
-|---|:-:|---|
-| enum `AnyTween` | ✗ | Add: "Type-erased handle. Used by `Sequence` to hold heterogeneous children and by the global `TweenManager` for storage. Convert from `RcPtr<SpireTween<T>>` via `From`." |
-| enum `WeakAnyTween` | ✗ | Add: "Non-owning counterpart to `AnyTween`. `upgrade()` returns `Option<AnyTween>`." |
-| `WeakAnyTween::upgrade` | ✗ | one-liner |
-| `tween_from_gd_handle` | ✗ | "Try-converts a Godot `Gd<RefCounted>` to an `AnyTween` if it is a known SpireTween wrapper class. Returns `Err(handle)` if it isn't." |
+| Item                    | Rust doc | Gap                                                                                                                                                                        |
+|-------------------------|:--------:|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| enum `AnyTween`         |    ✗    | Add: "Type-erased handle. Used by `Sequence` to hold heterogeneous children and by the global `TweenManager` for storage. Convert from `RcPtr<SpireTween<T>>` via `From`." |
+| enum `WeakAnyTween`     |    ✗    | Add: "Non-owning counterpart to `AnyTween`. `upgrade()` returns `Option<AnyTween>`."                                                                                       |
+| `WeakAnyTween::upgrade` |    ✗    | one-liner                                                                                                                                                                  |
+| `tween_from_gd_handle`  |    ✗    | "Try-converts a Godot `Gd<RefCounted>` to an `AnyTween` if it is a known SpireTween wrapper class. Returns `Err(handle)` if it isn't."                                     |
 
 ---
 
 ## 3. Trait surface — `Do*` extension traits
 
-The `Do*` traits are the public entrypoint for Rust users (`node.do_color(...)`, `node.do_spiral(...)`, etc.). They get richer GDScript-side wrappers through `gdscript_bindgen`, which currently emits doc strings for **per-property** generated methods (e.g. `DoNode2D.modulate_r`) but **not** for template methods (`shake`, `spiral`, `follow`, `ellipsis`, `circle`, `bone_position`, etc., emitted by `template_bridge_methods` in `classes_gdscript_bridge.rs`).
+The `Do*` traits are the public entrypoint for Rust users (`node.do_color(...)`, `node.do_spiral(...)`, etc.). They get richer GDScript-side wrappers through `gdscript_bindgen`, which currently emits
+doc strings for **per-property** generated methods (e.g. `DoNode2D.modulate_r`) but **not** for template methods (`shake`, `spiral`, `follow`, `ellipsis`, `circle`, `bone_position`, etc., emitted by
+`template_bridge_methods` in `classes_gdscript_bridge.rs`).
 
 ### Property/method/delayed-call entrypoint traits
 
-| Trait | File | Trait doc | Method doc | GDScript counterpart docs |
-|---|---|:-:|:-:|:-:|
-| `DoProperty<T>` | `tweens/property/do_property.rs` | ◐ "`Marker` disambiguates the `Gd<T>` vs `WithBaseField` impls" | ✗ | `Spire.do_property*` family — ✅ rich (~30 lines each with notes about set_indexed optimization) |
-| `DoMethod<T>` | `tweens/method/do_method.rs` | ◐ "Creates method tweens that call a method each tick with an interpolated value." | ✗ | `Spire.do_call*` family — ✅ |
-| `DoVarMethod` | `tweens/method/do_method.rs` | ◐ "Like `DoMethod` but uses `Variant` for dynamically typed values." | ✗ | ✅ as `Spire.do_call`/`do_call_custom` |
-| `DoDelayedCall` | `tweens/delayed_call/do_delayed_call.rs` | ◐ "Executes a Rust closure after a delay. Auto-binds to the calling node." | ✗ | `Spire.do_delayed_call` — ✅ |
-| `DoDelayedCallable` | `tweens/delayed_call/do_delayed_call.rs` | ◐ "Like `DoDelayedCall` but accepts an existing Godot `Callable`." | ✗ | merged into `Spire.do_delayed_call` on GDScript side |
+| Trait               | File                                     |                                     Trait doc                                      | Method doc |                                    GDScript counterpart docs                                     |
+|---------------------|------------------------------------------|:----------------------------------------------------------------------------------:|:----------:|:------------------------------------------------------------------------------------------------:|
+| `DoProperty<T>`     | `tweens/property/do_property.rs`         |          ◐ "`Marker` disambiguates the `Gd<T>` vs `WithBaseField` impls"           |     ✗     | `Spire.do_property*` family — ✅ rich (~30 lines each with notes about set_indexed optimization) |
+| `DoMethod<T>`       | `tweens/method/do_method.rs`             | ◐ "Creates method tweens that call a method each tick with an interpolated value." |     ✗     |                                   `Spire.do_call*` family — ✅                                   |
+| `DoVarMethod`       | `tweens/method/do_method.rs`             |        ◐ "Like `DoMethod` but uses `Variant` for dynamically typed values."        |     ✗     |                              ✅ as `Spire.do_call`/`do_call_custom`                              |
+| `DoDelayedCall`     | `tweens/delayed_call/do_delayed_call.rs` |     ◐ "Executes a Rust closure after a delay. Auto-binds to the calling node."     |     ✗     |                                   `Spire.do_delayed_call` — ✅                                   |
+| `DoDelayedCallable` | `tweens/delayed_call/do_delayed_call.rs` |         ◐ "Like `DoDelayedCall` but accepts an existing Godot `Callable`."         |     ✗     |                       merged into `Spire.do_delayed_call` on GDScript side                       |
 
-(There is **no `DoVarProperty`** despite the v0.6 README mentioning one — the closest equivalent is now `Spire.do_property_custom` on the GDScript side and constructing `LerpPropertyData<Variant>` via `SpireTween::<LerpPropertyData<Variant>>::new_custom` on the Rust side, neither of which is cross-referenced from the Rust-side doc.)
+(There is **no `DoVarProperty`** despite the v0.6 README mentioning one — the closest equivalent is now `Spire.do_property_custom` on the GDScript side and constructing `LerpPropertyData<Variant>` via
+`SpireTween::<LerpPropertyData<Variant>>::new_custom` on the Rust side, neither of which is cross-referenced from the Rust-side doc.)
 
 ### Template traits — sparse on both sides
 
-| Trait | Rust doc | GDScript wrapper doc | Gap |
-|---|:-:|:-:|---|
-| `DoBone` (`templates/do_bone.rs`) | ✗ trait, ✗ methods | ✗ in `template_bridge_methods` for Skeleton3D | **both sides need docs** |
-| `DoContourShape2D` | ◐ 2-line trait doc | ✗ wrapper | extend Rust trait doc (mention what happens with zero-length / single-vertex), document GDScript wrapper |
-| `DoEllipsis2D` | ◐ 1-line trait doc | ✗ wrapper | both |
-| `DoEllipsis3D` | ◐ 1-line trait doc | ✗ wrapper | both |
-| `DoFollow2D` | ◐ 1-line trait doc | ✗ wrapper | both — note `last_known_pos` fallback when `follow_this` is freed |
-| `DoFollow3D` | ◐ same | ✗ wrapper | both |
-| `DoShakeNode2D`, `DoShakeControl` | ◐ trait doc explains `vibratio` parameter (good!) | ✗ wrapper | document GDScript wrapper |
-| `DoSpiral` | ◐ 2-line trait doc; method has none | ✗ wrapper | both — most importantly call out that `log_growth` is only consumed by `Spiral::Logarithmic` (this is the same gotcha that broke the README in audit item A1) |
+| Trait                             |                     Rust doc                      |              GDScript wrapper doc              | Gap                                                                                                                                                           |
+|-----------------------------------|:-------------------------------------------------:|:----------------------------------------------:|---------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `DoBone` (`templates/do_bone.rs`) |               ✗ trait, ✗ methods                | ✗ in `template_bridge_methods` for Skeleton3D | **both sides need docs**                                                                                                                                      |
+| `DoContourShape2D`                |                ◐ 2-line trait doc                 |                   ✗ wrapper                   | extend Rust trait doc (mention what happens with zero-length / single-vertex), document GDScript wrapper                                                      |
+| `DoEllipsis2D`                    |                ◐ 1-line trait doc                 |                   ✗ wrapper                   | both                                                                                                                                                          |
+| `DoEllipsis3D`                    |                ◐ 1-line trait doc                 |                   ✗ wrapper                   | both                                                                                                                                                          |
+| `DoFollow2D`                      |                ◐ 1-line trait doc                 |                   ✗ wrapper                   | both — note `last_known_pos` fallback when `follow_this` is freed                                                                                             |
+| `DoFollow3D`                      |                      ◐ same                       |                   ✗ wrapper                   | both                                                                                                                                                          |
+| `DoShakeNode2D`, `DoShakeControl` | ◐ trait doc explains `vibratio` parameter (good!) |                   ✗ wrapper                   | document GDScript wrapper                                                                                                                                     |
+| `DoSpiral`                        |        ◐ 2-line trait doc; method has none        |                   ✗ wrapper                   | both — most importantly call out that `log_growth` is only consumed by `Spiral::Logarithmic` (this is the same gotcha that broke the README in audit item A1) |
 
-The bridge generator (`gdscript_bindgen/src/classes_gdscript_bridge.rs:163-304`) emits these template wrappers without `///` strings. Adding doc strings to the generator would auto-propagate to all bridge files.
+The bridge generator (`gdscript_bindgen/src/classes_gdscript_bridge.rs:163-304`) emits these template wrappers without `///` strings. Adding doc strings to the generator would auto-propagate to all
+bridge files.
 
 ### Custom property data (`PropertyDataViaCallable`, `IProperty`, `IPropertyData`, `IGeneralPropertyData`, `PropertyType`, `TyToPropertyTween`)
 
 These traits are part of the Rust public API (re-exported via `tweens::property::*`). They are how Rust users plug in custom property types (used internally by `do_bone`, `do_follow*`).
 
-| Item | Rust doc |
-|---|:-:|
-| `IProperty<T>` | ✗ |
-| `IPropertyData` | ✗ |
-| `IGeneralPropertyData` | ✗ |
-| `PropertyType` | ✗ |
-| `TyToPropertyTween` | ✗ |
-| `PropertyDataViaCallable<T>`, `PropertyDataViaCallable::new` | ✗ |
+| Item                                                         | Rust doc |
+|--------------------------------------------------------------|:--------:|
+| `IProperty<T>`                                               |    ✗    |
+| `IPropertyData`                                              |    ✗    |
+| `IGeneralPropertyData`                                       |    ✗    |
+| `PropertyType`                                               |    ✗    |
+| `TyToPropertyTween`                                          |    ✗    |
+| `PropertyDataViaCallable<T>`, `PropertyDataViaCallable::new` |    ✗    |
 
-This is the most user-facing **undocumented Rust extension surface**. Without docs, Rust users have to read `do_bone.rs` and `do_follow.rs` to figure out the contract. **Recommendation:** these traits need original prose (no GDScript counterpart to crib from), explaining how to plug a new type into the property-tween machinery.
+This is the most user-facing **undocumented Rust extension surface**. Without docs, Rust users have to read `do_bone.rs` and `do_follow.rs` to figure out the contract. **Recommendation:** these traits
+need original prose (no GDScript counterpart to crib from), explaining how to plug a new type into the property-tween machinery.
 
 ### `CompleteBoundTweens`, `KillBoundTweens` (`tweens/bound_tweens.rs`)
 
-| Trait | Rust doc | GDScript counterpart |
-|---|:-:|:-:|
-| `CompleteBoundTweens` | ✗ | ✅ as method on each GDScript handle |
-| `KillBoundTweens` | ✗ | ✅ |
+| Trait                 | Rust doc |         GDScript counterpart         |
+|-----------------------|:--------:|:------------------------------------:|
+| `CompleteBoundTweens` |    ✗    | ✅ as method on each GDScript handle |
+| `KillBoundTweens`     |    ✗    |                  ✅                  |
 
 Add: "Extension on `Gd<T: Inherits<Node>>` to force-complete / kill all tweens bound to this node via `bound_to` / `maybe_bound`."
 
@@ -192,20 +200,21 @@ Add: "Extension on `Gd<T: Inherits<Node>>` to force-complete / kill all tweens b
 
 ## 4. Lerping / interpolation contract
 
-| Item | File | Rust doc |
-|---|---|:-:|
-| `ILerpable` | `tweens/lerping/lerpable.rs` | ✗ trait, ✗ assoc types |
-| `BasicLerp<T>` | `tweens/lerping/spire_lerp.rs` | ✗ trait, ✗ method |
-| `SpireLerp<T>` | same | ✅ trait, ◐ 1-line method docs |
-| `StepResult` | same | ✗ |
-| `LerpMode<T>` | `tweens/lerping/lerp_mode.rs` | ◐ per-variant 1-line docs (Absolute/SpeedBased/Relative) |
-| `LerpMode::absolute/speed_based/relative/reset_state` | same | ✗ |
-| `FromValue<T>` | same | ◐ per-variant 1-line docs |
-| `FromValue::set_evaluated/reset_if_not_explicit/get_or_evaluate` | same | ✗ |
-| `CustomLerper` | (re-exported from lerping) | ✗ |
-| `MoveTowards` (`move_towards.rs`) | not opened | likely ✗ |
+| Item                                                             | File                           |                         Rust doc                         |
+|------------------------------------------------------------------|--------------------------------|:--------------------------------------------------------:|
+| `ILerpable`                                                      | `tweens/lerping/lerpable.rs`   |                 ✗ trait, ✗ assoc types                 |
+| `BasicLerp<T>`                                                   | `tweens/lerping/spire_lerp.rs` |                   ✗ trait, ✗ method                    |
+| `SpireLerp<T>`                                                   | same                           |              ✅ trait, ◐ 1-line method docs              |
+| `StepResult`                                                     | same                           |                            ✗                            |
+| `LerpMode<T>`                                                    | `tweens/lerping/lerp_mode.rs`  | ◐ per-variant 1-line docs (Absolute/SpeedBased/Relative) |
+| `LerpMode::absolute/speed_based/relative/reset_state`            | same                           |                            ✗                            |
+| `FromValue<T>`                                                   | same                           |                ◐ per-variant 1-line docs                 |
+| `FromValue::set_evaluated/reset_if_not_explicit/get_or_evaluate` | same                           |                            ✗                            |
+| `CustomLerper`                                                   | (re-exported from lerping)     |                            ✗                            |
+| `MoveTowards` (`move_towards.rs`)                                | not opened                     |                        likely ✗                         |
 
-The GDScript-side counterpart is `Spire.do_property_custom` / `Spire.do_call_custom`, which has **excellent** prose explaining the lerp/distance/step/add-relative contract (lines 78-244 of `gdscript_bridge/do_property.rs` — read it; it's essentially a tutorial). That GDScript doc should be ported to the Rust traits — `SpireLerp` is the trait that callable contract maps to.
+The GDScript-side counterpart is `Spire.do_property_custom` / `Spire.do_call_custom`, which has **excellent** prose explaining the lerp/distance/step/add-relative contract (lines 78-244 of
+`gdscript_bridge/do_property.rs` — read it; it's essentially a tutorial). That GDScript doc should be ported to the Rust traits — `SpireLerp` is the trait that callable contract maps to.
 
 `StepResult` in particular is part of the public custom-lerper API but completely undocumented. Add doc explaining the "fuel" model the GDScript prose describes.
 
@@ -219,17 +228,18 @@ The GDScript-side counterpart is `Spire.do_property_custom` / `Spire.do_call_cus
 
 ## 6. `RcPtr<T>` (`rc_ptr/strong.rs`) and `WeakPtr<T>`
 
-| Item | Rust doc |
-|---|:-:|
-| `RcPtr<T>` struct | ✅ 2-line summary citing the single-thread guarantee |
-| `RcPtr::new` | ✗ |
-| `RcPtr::downgrade` | ✗ |
-| `RcPtr::strong_count` | ✗ |
-| `RcPtr::to_mut` | ◐ "Callers must ensure no overlapping mutable references exist." — good for unsafe boundary |
-| `Address` trait | ✗ |
-| `WeakPtr` (not opened in this audit) | likely similar |
+| Item                                 |                                          Rust doc                                           |
+|--------------------------------------|:-------------------------------------------------------------------------------------------:|
+| `RcPtr<T>` struct                    |                    ✅ 2-line summary citing the single-thread guarantee                     |
+| `RcPtr::new`                         |                                             ✗                                              |
+| `RcPtr::downgrade`                   |                                             ✗                                              |
+| `RcPtr::strong_count`                |                                             ✗                                              |
+| `RcPtr::to_mut`                      | ◐ "Callers must ensure no overlapping mutable references exist." — good for unsafe boundary |
+| `Address` trait                      |                                             ✗                                              |
+| `WeakPtr` (not opened in this audit) |                                       likely similar                                        |
 
-Mostly fine — `RcPtr` is explicitly a `std::rc::Rc<UnsafeCell<T>>` wrapper and reads as such. Worth adding: when does a Rust user need `to_mut` vs. just `&*ptr`? (Answer: any time they want to call a `&mut self` method, since the type is `Rc`-backed and there's no `Rc::get_mut` path.)
+Mostly fine — `RcPtr` is explicitly a `std::rc::Rc<UnsafeCell<T>>` wrapper and reads as such. Worth adding: when does a Rust user need `to_mut` vs. just `&*ptr`? (Answer: any time they want to call a
+`&mut self` method, since the type is `Rc`-backed and there's no `Rc::get_mut` path.)
 
 ---
 
@@ -257,27 +267,34 @@ That's it — three lines. Compared to the README (~600 lines) this is severely 
 
 ✅ Both have docs. `SpireTweener::play/pause/stop/force_complete` each have a one-line semantic note. `AdvanceTimeResult::Completed::excess_time` and `ShouldDespawn` have explanatory docs. Solid.
 
-`GdFromNativeTween` trait + free fn `gd_from_native_tween`: ◐ trait has 1-line doc; the free fn is undocumented. The free fn is what most Rust callers will actually use to build a Gd handle from an RcPtr — could use a usage note.
+`GdFromNativeTween` trait + free fn `gd_from_native_tween`: ◐ trait has 1-line doc; the free fn is undocumented. The free fn is what most Rust callers will actually use to build a Gd handle from an
+RcPtr — could use a usage note.
 
 ---
 
 ## 9. Enums (`enums/*.rs`) — already balanced
 
-✅ All enums (`Ease`, `EaseKind`, `LoopMode`, `PauseMode`, `ProcessMode`, `Spiral`, `State`) use `register_enum!` which emits **shared** doc strings consumed by both rustdoc and the in-Godot enum docs. `Ease` in particular has ASCII-art curves on every variant. No work needed here — these are the gold standard for the rest of the audit to aim at.
+✅ All enums (`Ease`, `EaseKind`, `LoopMode`, `PauseMode`, `ProcessMode`, `Spiral`, `State`) use `register_enum!` which emits **shared** doc strings consumed by both rustdoc and the in-Godot enum docs.
+`Ease` in particular has ASCII-art curves on every variant. No work needed here — these are the gold standard for the rest of the audit to aim at.
 
 ---
 
 ## Summary of recommendations, ranked
 
-1. **Port the GDScript prose for the per-tween wrappers to the Rust core types.** This is mechanical: the GDScript `SpireSequence` → Rust `Sequence`; `gd_property_tween!` doc strings → Rust `LerpPropertyData<T>` methods; `gd_method_tween!` → Rust `LerpMethodData<T>` methods. Largest absolute volume of missing docs, smallest per-line effort.
+1. **Port the GDScript prose for the per-tween wrappers to the Rust core types.** This is mechanical: the GDScript `SpireSequence` → Rust `Sequence`; `gd_property_tween!` doc strings → Rust
+   `LerpPropertyData<T>` methods; `gd_method_tween!` → Rust `LerpMethodData<T>` methods. Largest absolute volume of missing docs, smallest per-line effort.
 
-2. **Document the custom-lerper / custom-property surface** (`SpireLerp`, `BasicLerp`, `StepResult`, `IProperty`, `IPropertyData`, `IGeneralPropertyData`, `PropertyDataViaCallable`). The GDScript `do_property_custom` / `do_call_custom` doc is *the* tutorial — it should live on the Rust traits where it's actually relevant, with the GDScript wrappers cross-linking back.
+2. **Document the custom-lerper / custom-property surface** (`SpireLerp`, `BasicLerp`, `StepResult`, `IProperty`, `IPropertyData`, `IGeneralPropertyData`, `PropertyDataViaCallable`). The GDScript
+   `do_property_custom` / `do_call_custom` doc is *the* tutorial — it should live on the Rust traits where it's actually relevant, with the GDScript wrappers cross-linking back.
 
-3. **Add Rust-only-prose for the closure-event API** (`finished_connect`, `loop_finished_connect`, `SpireFlags::DEFERRED`, `SpireFlags::ONE_SHOT`). No GDScript counterpart to crib — these are the Rust-native alternative to Godot signals and need original explanation.
+3. **Add Rust-only-prose for the closure-event API** (`finished_connect`, `loop_finished_connect`, `SpireFlags::DEFERRED`, `SpireFlags::ONE_SHOT`). No GDScript counterpart to crib — these are the
+   Rust-native alternative to Godot signals and need original explanation.
 
-4. **Document the templates on both sides** (`DoBone`, `DoEllipsis*`, `DoFollow*`, `DoShake*`, `DoSpiral`, `DoContourShape2D` and their GDScript wrappers in `template_bridge_methods`). Top-of-mind: the `log_growth` semantics on `do_spiral` (only meaningful for `Spiral::Logarithmic`) — this is the same gotcha that broke the README's showcase code.
+4. **Document the templates on both sides** (`DoBone`, `DoEllipsis*`, `DoFollow*`, `DoShake*`, `DoSpiral`, `DoContourShape2D` and their GDScript wrappers in `template_bridge_methods`). Top-of-mind:
+   the `log_growth` semantics on `do_spiral` (only meaningful for `Spiral::Logarithmic`) — this is the same gotcha that broke the README's showcase code.
 
-5. **Expand `lib.rs` crate-level docs** to the level a fresh rustdoc visitor needs: quickstart, prelude, feature flags, threading guarantee, link to the asset-plugin README for the bigger picture.
+5. **Expand `must_compile` crate-level docs** to the level a fresh rustdoc visitor needs: quickstart, prelude, feature flags, threading guarantee, link to the asset-plugin README for the bigger
+   picture.
 
 6. **Fill in the `with_*` builder docs and getter/setter docs on `SpireTween<T>`.** Each is a one-liner; doing them all is half a day.
 
@@ -287,5 +304,6 @@ That's it — three lines. Compared to the README (~600 lines) this is severely 
 
 - Doc comments inside `gdscript_bindgen/`'s own source (it's a build tool; its consumers don't need docs).
 - The `target/package/spire_tween-1.0.0/` cargo staging copy (auto-regenerated).
-- Generated files under `gdscript_bridge/generated/` and `tweens/property/generated_*` — they'll inherit any doc additions made in the generator (`classes_gdscript_bridge.rs`, `types_property_data.rs`, `tween_ty.rs`).
-- Items marked `#[doc(hidden)]`: `BaseMarker` (`lib.rs`), `InnerTypeName` (`tweens/traits.rs`), the `state` field on `SpireTween` (`tweens/base/spire_tween.rs`).
+- Generated files under `gdscript_bridge/generated/` and `tweens/property/generated_*` — they'll inherit any doc additions made in the generator (`classes_gdscript_bridge.rs`,
+  `types_property_data.rs`, `tween_ty.rs`).
+- Items marked `#[doc(hidden)]`: `BaseMarker` (`must_compile`), `InnerTypeName` (`tweens/traits.rs`), the `state` field on `SpireTween` (`tweens/base/spire_tween.rs`).

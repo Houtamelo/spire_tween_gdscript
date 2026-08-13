@@ -580,6 +580,28 @@ where
     where AnyTween: From<RcPtr<Self>> {
         Self::new(data, end, duration).register()
     }
+
+    pub fn new_typed(
+        property_path: impl AsArg<NodePath>,
+        owner: impl Into<ObjectOrNode>,
+        to: T,
+        duration: f64,
+    ) -> Self
+    where
+        <T as PropertyType>::Data: From<PropertyDataCustom>,
+    {
+        Self::new_with_data(LerpPropertyData {
+            data: PropertyDataCustom {
+                path:  property_path.into_arg().cow_into_owned(),
+                owner: owner.into(),
+            }
+            .into(),
+            lerp_mode: LerpMode::absolute(duration),
+            ease: Default::default(),
+            to: Evaluator::Static(to),
+            lerper: Default::default(),
+        })
+    }
 }
 
 // Variant Builder
@@ -604,11 +626,7 @@ impl SpireTween<LerpPropertyData<Variant>> {
             },
             lerp_mode: LerpMode::absolute(duration),
             ease: Default::default(),
-            to: match to {
-                Evaluator::Static(val) => Evaluator::Static(val.to_variant()),
-                Evaluator::Dynamic(mut f) => Evaluator::Dynamic(Box::new(move || f().to_variant())),
-                Evaluator::Callable(call) => Evaluator::Callable(call),
-            },
+            to,
             lerper,
         })
     }

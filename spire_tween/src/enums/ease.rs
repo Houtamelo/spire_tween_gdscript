@@ -657,6 +657,15 @@ impl Ease {
             }
         }
     }
+
+    /// Returns the default easing function used by tweens.
+    #[must_use]
+    pub fn get_global_default() -> Self { unsafe { DEFAULT_EASE } }
+
+    /// Sets the default easing function used by tweens.
+    ///
+    /// The default value for this setting is [constant Spire.EASE_LINEAR].
+    pub fn set_global_default(ease: Self) { unsafe { DEFAULT_EASE = ease } }
 }
 
 /// Wraps `Ease` presets, Godot `Curve` resources, `Callable`s, or custom
@@ -690,7 +699,7 @@ impl FromGodot for EaseKind {
 }
 
 impl ToGodot for EaseKind {
-    type Pass = godot::meta::conv::ByValue;
+    type Pass = ByValue;
 
     fn to_godot(&self) -> Variant {
         match self {

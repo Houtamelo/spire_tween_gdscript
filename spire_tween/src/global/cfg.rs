@@ -10,11 +10,11 @@ pub struct SpireGlobalSettings {}
 impl SpireGlobalSettings {
     /// Returns the default easing function used by tweens.
     #[func]
-    pub fn get_default_ease() -> Ease { unsafe { DEFAULT_EASE } }
+    pub fn get_default_ease() -> Ease { Ease::get_global_default() }
 
     /// Sets the default easing function used by tweens.
     ///
     /// The default value for this setting is [constant Spire.EASE_LINEAR].
     #[func]
-    pub fn set_default_ease(ease: Ease) { unsafe { DEFAULT_EASE = ease } }
+    pub fn set_default_ease(ease: Ease) { Ease::set_global_default(ease) }
 }

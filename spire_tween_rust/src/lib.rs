@@ -1,4 +1,3 @@
-#![feature(trait_alias)]
 #![feature(arbitrary_self_types)]
 
 use godot::prelude::*;

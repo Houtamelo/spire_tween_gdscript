@@ -111,9 +111,11 @@ pub mod prelude {
     pub use crate::tweens::{BasicLerp, CustomLerper, LerpMode, SpireLerp};
     pub use crate::{
         //connection::Connection,
-        enums::{Ease, EaseKind, Evaluator, LoopMode, PauseMode, ProcessMode, Spiral, State},
+        enums::{Ease, EaseKind, Evaluator, LoopMode, PauseMode, ProcessMode, Spiral, State as TweenState},
         rc_ptr::*,
         tweens::{
+            AnyMethodTween,
+            AnyPropertyTween,
             AnyTween,
             CompleteBoundTweens,
             DoBone,
@@ -134,15 +136,32 @@ pub mod prelude {
             KillBoundTweens,
             LerpMethodData,
             LerpPropertyData,
+            PropertyDataCustom,
             Sequence,
             SpireFlags,
             SpireTween,
             SpireTweener,
             generated_classes_data::*,
+            generated_types_data::*,
         },
     };
 
-    pub fn new_sequence() -> SpireTween<Sequence> { SpireTween::<Sequence>::new() }
+    pub type TweenSequence = SpireTween<Sequence>;
+    pub type TweenSequencePtr = RcPtr<SpireTween<Sequence>>;
+
+    pub type TweenProperty<T> = SpireTween<LerpPropertyData<T>>;
+    pub type TweenPropertyPtr<T> = RcPtr<SpireTween<LerpPropertyData<T>>>;
+
+    pub type TweenMethod<T> = SpireTween<LerpMethodData<T>>;
+    pub type TweenMethodPtr<T> = RcPtr<SpireTween<LerpMethodData<T>>>;
+
+    pub type TweenDelayedCall = SpireTween<godot::prelude::Callable>;
+    pub type TweenDelayedCallPtr = RcPtr<SpireTween<godot::prelude::Callable>>;
+}
+
+#[doc(hidden)]
+pub mod unversioned_api {
+    pub use crate::global::{NodeStatus, TM, TweensMap};
 }
 
 #[allow(unused_imports)]

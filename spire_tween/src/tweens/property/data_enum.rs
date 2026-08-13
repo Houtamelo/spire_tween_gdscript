@@ -2,7 +2,7 @@ use super::*;
 
 #[delegated_enum(impl_conversions)]
 #[derive(Clone)]
-pub enum PropertyTween {
+pub enum AnyPropertyTween {
     int(RcPtr<SpireTween<LerpPropertyData<i64>>>),
     float(RcPtr<SpireTween<LerpPropertyData<f64>>>),
     String(RcPtr<SpireTween<LerpPropertyData<GString>>>),
@@ -15,7 +15,7 @@ pub enum PropertyTween {
 }
 
 #[delegate_impl]
-impl SpireTweener for PropertyTween {
+impl SpireTweener for AnyPropertyTween {
     #[inline]
     fn play(&mut self);
     #[inline]
@@ -29,30 +29,28 @@ impl SpireTweener for PropertyTween {
 }
 
 #[delegate_impl]
-impl InnerTypeName for PropertyTween {
+impl InnerTypeName for AnyPropertyTween {
     fn inner_type_name(&self) -> &'static str;
 }
 
 impl_from_enum! {
     AnyTween::Property {
-        //LerpPropertyData<i32> => PropertyTween::i32,
-        LerpPropertyData<i64> => PropertyTween::int,
-        //LerpPropertyData<f32> => PropertyTween::f32,
-        LerpPropertyData<f64> => PropertyTween::float,
-        LerpPropertyData<GString> => PropertyTween::String,
-        LerpPropertyData<Color> => PropertyTween::Color,
-        LerpPropertyData<Vector2> => PropertyTween::Vector2,
-        LerpPropertyData<Vector2i> => PropertyTween::Vector2i,
-        LerpPropertyData<Vector3> => PropertyTween::Vector3,
-        LerpPropertyData<Vector3i> => PropertyTween::Vector3i,
-        LerpPropertyData<Variant> => PropertyTween::Variant,
+        LerpPropertyData<i64> => AnyPropertyTween::int,
+        LerpPropertyData<f64> => AnyPropertyTween::float,
+        LerpPropertyData<GString> => AnyPropertyTween::String,
+        LerpPropertyData<Color> => AnyPropertyTween::Color,
+        LerpPropertyData<Vector2> => AnyPropertyTween::Vector2,
+        LerpPropertyData<Vector2i> => AnyPropertyTween::Vector2i,
+        LerpPropertyData<Vector3> => AnyPropertyTween::Vector3,
+        LerpPropertyData<Vector3i> => AnyPropertyTween::Vector3i,
+        LerpPropertyData<Variant> => AnyPropertyTween::Variant,
     }
 }
 
-define_base_methods! { PropertyTween }
+define_base_methods! { AnyPropertyTween }
 
 #[delegate_impl]
-impl PropertyTween {
+impl AnyPropertyTween {
     pub fn get_duration(&mut self) -> f64;
     pub fn get_owner(&self) -> Option<&ObjectOrNode>;
 
@@ -69,22 +67,22 @@ impl PropertyTween {
     pub fn get_property_path(&self) -> NodePath;
 }
 
-impl PropertyTween {
+impl AnyPropertyTween {
     pub fn get_final_value(&mut self) -> Variant {
-        delegate_property_tween! {
+        delegate_any_property_tween! {
             self => |this| this.get_final_value().to_variant()
         }
     }
 
     pub fn set_final_value(&mut self, value: Variant) -> Result<(), ConvertError> {
-        delegate_property_tween!(self => |this| {
+        delegate_any_property_tween!(self => |this| {
             this.t.to = value.try_to_relaxed()?;
             Ok(())
         })
     }
 
     pub fn set_relative(&mut self, relative_to: Variant) {
-        delegate_property_tween!(self => |this| {
+        delegate_any_property_tween!(self => |this| {
             if let Some(relative_to) = relative_to.try_to_relaxed().log_if_err() {
                 this.t.lerp_mode = LerpMode::Relative {
                     duration: 0.0 ,
@@ -112,7 +110,7 @@ pub enum WeakPropertyTween {
 
 impl WeakPropertyTween {
     #[inline]
-    pub fn upgrade(&self) -> Option<PropertyTween> {
+    pub fn upgrade(&self) -> Option<AnyPropertyTween> {
         delegate_weak_property_tween! { self => |arg| arg.upgrade().map(Into::into) }
     }
 }
@@ -131,4 +129,4 @@ impl_from_enum_weak! {
     }
 }
 
-define_tween_ptr_methods! { Strong = PropertyTween; Weak = WeakPropertyTween; }
+define_tween_ptr_methods! { Strong = AnyPropertyTween; Weak = WeakPropertyTween; }

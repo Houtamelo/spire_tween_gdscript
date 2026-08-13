@@ -19,7 +19,7 @@ use gdscript_bridge::*;
 use godot::register::private::constant::*;
 #[cfg(feature = "standalone")]
 #[allow(unused_imports)]
-use godot::sys::{plugin_add, plugin_execute_pre_main};
+use godot::sys::{shard_add, shard_execute_pre_main};
 use macros::*;
 
 #[allow(unused_imports)]

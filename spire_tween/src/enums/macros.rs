@@ -27,7 +27,7 @@ macro_rules! register_enum {
         unsafe impl ::godot::meta::GodotImmutable for $RustIdent {}
 
         #[cfg(feature = "standalone")]
-        plugin_execute_pre_main! {{
+        shard_execute_pre_main! {{
             bridge_registration_constants().lock().unwrap().1.push(|| {
                 ExportConstant::new(
                     <Spire as ::godot::obj::GodotClass>::class_id(),
@@ -43,7 +43,7 @@ macro_rules! register_enum {
         }}
 
         #[cfg(feature = "standalone")]
-        plugin_add!(godot::private::__GODOT_DOCS_REGISTRY; {
+        shard_add!(godot::private::__GODOT_DOCS_REGISTRY; {
             let mut docs = String::new();
 
             $(
@@ -52,7 +52,7 @@ macro_rules! register_enum {
                 );
             )*
 
-            godot::private::DocsPlugin::new::<Spire>(
+            godot::private::DocsShard::new::<Spire>(
                 godot::private::DocsItem::InherentImpl(
                     godot::private::InherentImplDocs {
                         methods_xml : "" ,

@@ -3,8 +3,8 @@ use super::*;
 #[delegated_enum(impl_conversions)]
 #[derive(Clone)]
 pub enum AnyTween {
-    Property(PropertyTween),
-    Method(MethodTween),
+    Property(AnyPropertyTween),
+    Method(AnyMethodTween),
     DelayedCall(RcPtr<SpireTween<Callable>>),
     Sequence(RcPtr<SpireTween<Sequence>>),
 }
@@ -67,9 +67,7 @@ pub fn tween_from_gd_handle(handle: Gd<RefCounted>) -> Result<AnyTween, Gd<RefCo
     match_tys! { handle,
         SpireSequence => Sequence,
         SpireDelayedCall => DelayedCall,
-        //SpirePropertyI32 => Property,
         SpirePropertyInt => Property,
-        //SpirePropertyF32 => Property,
         SpirePropertyFloat => Property,
         SpirePropertyString => Property,
         SpirePropertyColor => Property,
@@ -78,9 +76,7 @@ pub fn tween_from_gd_handle(handle: Gd<RefCounted>) -> Result<AnyTween, Gd<RefCo
         SpirePropertyVec3 => Property,
         SpirePropertyVec3i => Property,
         SpireProperty => Property,
-        //SpireMethodI32 => Method,
         SpireMethodInt => Method,
-        //SpireMethodF32 => Method,
         SpireMethodFloat => Method,
         SpireMethodString => Method,
         SpireMethodColor => Method,

@@ -2,7 +2,7 @@ use super::*;
 
 #[delegated_enum(impl_conversions)]
 #[derive(Clone)]
-pub enum MethodTween {
+pub enum AnyMethodTween {
     int(RcPtr<SpireTween<LerpMethodData<i64>>>),
     float(RcPtr<SpireTween<LerpMethodData<f64>>>),
     String(RcPtr<SpireTween<LerpMethodData<GString>>>),
@@ -15,7 +15,7 @@ pub enum MethodTween {
 }
 
 #[delegate_impl]
-impl SpireTweener for MethodTween {
+impl SpireTweener for AnyMethodTween {
     #[inline]
     fn play(&mut self);
     #[inline]
@@ -29,28 +29,28 @@ impl SpireTweener for MethodTween {
 }
 
 #[delegate_impl]
-impl InnerTypeName for MethodTween {
+impl InnerTypeName for AnyMethodTween {
     fn inner_type_name(&self) -> &'static str;
 }
 
 impl_from_enum! {
     AnyTween::Method {
-        LerpMethodData<i64> => MethodTween::int,
-        LerpMethodData<f64> => MethodTween::float,
-        LerpMethodData<GString> => MethodTween::String,
-        LerpMethodData<Color> => MethodTween::Color,
-        LerpMethodData<Vector2> => MethodTween::Vector2,
-        LerpMethodData<Vector2i> => MethodTween::Vector2i,
-        LerpMethodData<Vector3> => MethodTween::Vector3,
-        LerpMethodData<Vector3i> => MethodTween::Vector3i,
-        LerpMethodData<Variant> => MethodTween::Variant,
+        LerpMethodData<i64> => AnyMethodTween::int,
+        LerpMethodData<f64> => AnyMethodTween::float,
+        LerpMethodData<GString> => AnyMethodTween::String,
+        LerpMethodData<Color> => AnyMethodTween::Color,
+        LerpMethodData<Vector2> => AnyMethodTween::Vector2,
+        LerpMethodData<Vector2i> => AnyMethodTween::Vector2i,
+        LerpMethodData<Vector3> => AnyMethodTween::Vector3,
+        LerpMethodData<Vector3i> => AnyMethodTween::Vector3i,
+        LerpMethodData<Variant> => AnyMethodTween::Variant,
     }
 }
 
-define_base_methods! { MethodTween }
+define_base_methods! { AnyMethodTween }
 
 #[delegate_impl]
-impl MethodTween {
+impl AnyMethodTween {
     #[inline]
     pub fn get_callable(&self) -> &Callable;
 
@@ -66,15 +66,15 @@ impl MethodTween {
     pub fn set_ease(&mut self, ease: EaseKind);
 }
 
-impl MethodTween {
+impl AnyMethodTween {
     #[inline]
     pub fn get_start_value(&self) -> Variant {
-        delegate_method_tween! { self.t.from.to_variant() }
+        delegate_any_method_tween! { self.t.from.to_variant() }
     }
 
     #[inline]
     pub fn set_start_value(&mut self, value: Variant) -> Result<(), ConvertError> {
-        delegate_method_tween!(self => |this| {
+        delegate_any_method_tween!(self => |this| {
             this.t.from = value.try_to_relaxed()?;
             Ok(())
         })
@@ -82,12 +82,12 @@ impl MethodTween {
 
     #[inline]
     pub fn get_final_value(&self) -> Variant {
-        delegate_method_tween! { self.t.to.to_variant() }
+        delegate_any_method_tween! { self.t.to.to_variant() }
     }
 
     #[inline]
     pub fn set_final_value(&mut self, value: Variant) -> Result<(), ConvertError> {
-        delegate_method_tween!(self => |this| {
+        delegate_any_method_tween!(self => |this| {
             this.t.to = value.try_to_relaxed()?;
             Ok(())
         })
@@ -110,7 +110,7 @@ pub enum WeakMethodTween {
 
 impl WeakMethodTween {
     #[inline]
-    pub fn upgrade(&self) -> Option<MethodTween> {
+    pub fn upgrade(&self) -> Option<AnyMethodTween> {
         delegate_weak_method_tween! { self => |arg| arg.upgrade().map(Into::into) }
     }
 }
@@ -129,4 +129,4 @@ impl_from_enum_weak! {
     }
 }
 
-define_tween_ptr_methods! { Strong = MethodTween; Weak = WeakMethodTween; }
+define_tween_ptr_methods! { Strong = AnyMethodTween; Weak = WeakMethodTween; }

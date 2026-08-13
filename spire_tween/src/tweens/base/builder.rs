@@ -24,12 +24,7 @@ impl<T: ITweenable> SpireTween<T> {
 
     /// Chainable equivalent of [`set_speed_scale`](SpireTween::set_speed_scale).
     /// Multiplier applied to `delta_time` (`0.0` pauses, `2.0` runs twice as fast).
-    pub fn with_speed_scale(self, speed_scale: f64) -> Self {
-        Self {
-            speed_scale,
-            ..self
-        }
-    }
+    pub fn with_speed_scale(self, speed_scale: f64) -> Self { Self { speed_scale, ..self } }
 
     /// Chainable equivalent of [`set_pause_mode`](SpireTween::set_pause_mode).
     /// Default is [`PauseMode::Bound`].
@@ -37,12 +32,7 @@ impl<T: ITweenable> SpireTween<T> {
 
     /// Chainable equivalent of [`set_process_mode`](SpireTween::set_process_mode).
     /// Default is [`ProcessMode::Idle`].
-    pub fn with_process_mode(self, process_mode: ProcessMode) -> Self {
-        Self {
-            process_mode,
-            ..self
-        }
-    }
+    pub fn with_process_mode(self, process_mode: ProcessMode) -> Self { Self { process_mode, ..self } }
 
     /// Attaches a GDScript-facing handle used to emit Godot signals.
     /// Rust-only users do not need this.

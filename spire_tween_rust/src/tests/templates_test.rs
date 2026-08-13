@@ -6,8 +6,10 @@
 //! require a separate test class and prefab. They're also straightforward
 //! mirrors of the 2D versions logic-wise.
 
-use godot::classes::{Engine, Sprite2D};
-use godot::prelude::*;
+use godot::{
+    classes::{Engine, Sprite2D},
+    prelude::*,
+};
 use spire_tween::prelude::*;
 
 use super::util::*;
@@ -53,7 +55,7 @@ impl TemplatesTests {
     /// `test_do_shake_stays_within_radius` and `test_do_shake_returns_to_origin`
     /// cover the bound and restore guarantees separately.
     fn test_do_shake(&mut self) -> PinnedTestTask {
-        let mut sprite = self.sprite.clone();
+        let sprite = self.sprite.clone();
         let origin = sprite.get_position();
         let radius_min = 5.0;
         let radius_max = 25.0;
@@ -81,10 +83,7 @@ impl TemplatesTests {
                 next_frame().await;
             }
 
-            assert!(
-                max_deviation > 0.0,
-                "do_shake must move the node at the tween"
-            );
+            assert!(max_deviation > 0.0, "do_shake must move the node at the tween");
 
             // At 30 Hz over 2 s the shake should produce ~60 update events. Allow plenty
             // of headroom for missed frames; a buggy shake that only fires once would
@@ -118,9 +117,7 @@ impl TemplatesTests {
         // prev_offset and next_offset point in roughly opposite directions and
         // their difference has magnitude near `prev_radius + next_radius`,
         // which is always > radius_max when both radii are above radius_avg.
-        let handle = sprite
-            .do_shake(radius_min, radius_max, 0.5, 60.0, 1.0)
-            .register();
+        let handle = sprite.do_shake(radius_min, radius_max, 0.5, 60.0, 1.0).register();
         let tracker = RcPtr::clone(&self.time_tracker);
 
         Box::pin(async move {
@@ -139,9 +136,8 @@ impl TemplatesTests {
 
             assert!(
                 max_dev <= radius_max + tolerance,
-                "do_shake must keep the node within radius_max ({radius_max}) of origin; \
-                 saw {max_dev} on frame {max_dev_frame} of {frame} \
-                 (overshoot of {} above tolerance)",
+                "do_shake must keep the node within radius_max ({radius_max}) of origin; saw {max_dev} on frame \
+                 {max_dev_frame} of {frame} (overshoot of {} above tolerance)",
                 max_dev - (radius_max + tolerance)
             );
 
@@ -160,9 +156,7 @@ impl TemplatesTests {
         sprite.set_position(Vector2::ZERO);
         let origin = sprite.get_position();
 
-        let handle = sprite
-            .do_shake(5.0, 25.0, 0.5, 30.0, 1.0)
-            .register();
+        let handle = sprite.do_shake(5.0, 25.0, 0.5, 30.0, 1.0).register();
         let tracker = RcPtr::clone(&self.time_tracker);
 
         Box::pin(async move {
@@ -175,8 +169,7 @@ impl TemplatesTests {
             let dev = final_pos.distance_to(origin);
             assert!(
                 dev < 0.01,
-                "do_shake must restore position to origin {origin} on completion; \
-                 got {final_pos} (deviation {dev})"
+                "do_shake must restore position to origin {origin} on completion; got {final_pos} (deviation {dev})"
             );
         })
     }
@@ -325,10 +318,7 @@ impl TemplatesTests {
             // Follower must have converged to the leader's final position.
             // Speed-based tween stops when distance reaches 0; allow only float epsilon.
             let dist = sprite.get_global_position().distance_to(leader_target);
-            assert!(
-                dist < 0.01,
-                "follower failed to converge: distance {dist} from leader at {leader_target}"
-            );
+            assert!(dist < 0.01, "follower failed to converge: distance {dist} from leader at {leader_target}");
         })
     }
 
@@ -362,17 +352,18 @@ impl TemplatesTests {
         let ignored_timer = RcPtr::new(None::<f64>);
         let slot = ignored_timer.clone();
         let tr = tracker.clone();
-        ignored_handle.to_mut().finished_connect(
-            move || *slot.to_mut() = Some(tr.timer),
-            SpireFlags::ONE_SHOT,
-        );
+        ignored_handle
+            .to_mut()
+            .finished_connect(move || *slot.to_mut() = Some(tr.timer), SpireFlags::ONE_SHOT);
 
         Box::pin(async move {
             // Wait for the ignored tween (~1s real, ~0.5s scaled).
             while !ignored_handle.is_stopped() {
                 next_frame().await;
             }
-            let ignored_at_finish = ignored_timer.to_mut().take()
+            let ignored_at_finish = ignored_timer
+                .to_mut()
+                .take()
                 .expect("ignored tween's finished closure must have fired");
             assert_eq!(sprite.get_position(), target_a);
 
@@ -388,15 +379,16 @@ impl TemplatesTests {
             let control_timer = RcPtr::new(None::<f64>);
             let slot = control_timer.clone();
             let tr = tracker.clone();
-            control_handle.to_mut().finished_connect(
-                move || *slot.to_mut() = Some(tr.timer),
-                SpireFlags::ONE_SHOT,
-            );
+            control_handle
+                .to_mut()
+                .finished_connect(move || *slot.to_mut() = Some(tr.timer), SpireFlags::ONE_SHOT);
 
             while !control_handle.is_stopped() {
                 next_frame().await;
             }
-            let control_at_finish = control_timer.to_mut().take()
+            let control_at_finish = control_timer
+                .to_mut()
+                .take()
                 .expect("control tween's finished closure must have fired");
             assert_eq!(sprite.get_position(), target_b);
 
@@ -420,8 +412,8 @@ impl TemplatesTests {
             let advance_diff = control_delta - ignored_at_finish;
             assert!(
                 advance_diff > 0.3,
-                "ignore_time_scale must affect timing: ignored advance ~{ignored_at_finish}, \
-                 control advance ~{control_delta}, diff {advance_diff}"
+                "ignore_time_scale must affect timing: ignored advance ~{ignored_at_finish}, control advance \
+                 ~{control_delta}, diff {advance_diff}"
             );
 
             // Cleanup: reset position.

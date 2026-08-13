@@ -1,5 +1,7 @@
-use godot::classes::{ISprite2D, Sprite2D};
-use godot::prelude::*;
+use godot::{
+    classes::{ISprite2D, Sprite2D},
+    prelude::*,
+};
 use spire_tween::prelude::*;
 
 /// Port of `examples/screen_saver/collision_fx.gd`.
@@ -35,17 +37,12 @@ impl ISprite2D for CollisionFx {
         let ease = EaseKind::Basic(Ease::InExpo);
         let self_gd: Gd<Sprite2D> = self.to_gd().upcast();
 
-        let mut seq = SpireTween::<Sequence>::new();
-        seq.bound_nodes_mut()
-            .insert(self_gd.clone().upcast());
+        let mut seq = SpireTween::<Sequence>::new().bound_to(self_gd.clone().upcast());
 
         // Scale up from (0,0) to (max_scale, max_scale).
         seq.append(
             self_gd
-                .do_scale(
-                    Vector2::new(max_scale as f32, max_scale as f32),
-                    duration,
-                )
+                .do_scale(Vector2::new(max_scale as f32, max_scale as f32), duration)
                 .begin_from(Vector2::ZERO)
                 .with_ease(ease.clone()),
         );

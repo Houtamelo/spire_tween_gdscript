@@ -48,9 +48,7 @@ impl TimeTracker {
         self.start_frame = Engine::singleton().get_process_frames();
     }
 
-    pub fn frames_since_start(&self) -> u64 {
-        Engine::singleton().get_process_frames() - self.start_frame
-    }
+    pub fn frames_since_start(&self) -> u64 { Engine::singleton().get_process_frames() - self.start_frame }
 
     pub fn debug_msg(&self, message: impl AsRef<str>) {
         let frame = format!("{:06.0}", self.frames_since_start());
@@ -98,7 +96,8 @@ pub fn wait_finished<T>(
     tracker: &RcPtr<TimeTracker>,
     expected_end_time: f64,
 ) -> impl Future<Output = ()>
-where T: ITweenable
+where
+    T: ITweenable,
 {
     let state = RcPtr::new(WaitState::new());
     let state_for_closure = state.clone();
@@ -106,7 +105,7 @@ where T: ITweenable
 
     tween.to_mut().finished_connect(
         move || {
-            let mut s = state_for_closure.to_mut();
+            let s = state_for_closure.to_mut();
             s.timer_at_fire = tracker_for_closure.timer;
             s.fired = true;
             if let Some(w) = s.waker.take() {
@@ -120,7 +119,7 @@ where T: ITweenable
 
     async move {
         let timer = std::future::poll_fn(move |cx| {
-            let mut s = state.to_mut();
+            let s = state.to_mut();
             if s.fired {
                 std::task::Poll::Ready(s.timer_at_fire)
             } else {
@@ -142,7 +141,8 @@ pub fn wait_loop_finished<T>(
     tracker: &RcPtr<TimeTracker>,
     expected_end_time: f64,
 ) -> impl Future<Output = ()>
-where T: ITweenable
+where
+    T: ITweenable,
 {
     let state = RcPtr::new(WaitState::new());
     let state_for_closure = state.clone();
@@ -150,7 +150,7 @@ where T: ITweenable
 
     tween.to_mut().loop_finished_connect(
         move || {
-            let mut s = state_for_closure.to_mut();
+            let s = state_for_closure.to_mut();
             s.timer_at_fire = tracker_for_closure.timer;
             s.fired = true;
             if let Some(w) = s.waker.take() {
@@ -164,7 +164,7 @@ where T: ITweenable
 
     async move {
         let timer = std::future::poll_fn(move |cx| {
-            let mut s = state.to_mut();
+            let s = state.to_mut();
             if s.fired {
                 std::task::Poll::Ready(s.timer_at_fire)
             } else {
@@ -181,12 +181,8 @@ where T: ITweenable
 
 /// Registers a synchronous timing assertion on the tween's `finished` event.
 /// Fires at emission time (no deferred wake), so timing is checked precisely.
-pub fn assert_finished_timing<T>(
-    tween: &RcPtr<SpireTween<T>>,
-    tracker: &RcPtr<TimeTracker>,
-    expected_end_time: f64,
-) where T: ITweenable
-{
+pub fn assert_finished_timing<T>(tween: &RcPtr<SpireTween<T>>, tracker: &RcPtr<TimeTracker>, expected_end_time: f64)
+where T: ITweenable {
     let tracker_c = tracker.clone();
     tween.to_mut().finished_connect(
         move || assert_within_tolerance(tracker_c.timer - expected_end_time, TIME_TOLERANCE),
@@ -226,20 +222,16 @@ where
 {
     let slot = RcPtr::new(None);
     let slot_clone = slot.clone();
-    tween.to_mut().finished_connect(
-        move || *slot_clone.to_mut() = Some(capture_fn()),
-        SpireFlags::ONE_SHOT,
-    );
+    tween
+        .to_mut()
+        .finished_connect(move || *slot_clone.to_mut() = Some(capture_fn()), SpireFlags::ONE_SHOT);
     slot
 }
 
 /// Generic Signal-based snapshot (kept for tree-signal scenarios such as
 /// `process_frame` or `SceneTreeTimer.timeout` where there is no tween-side
 /// equivalent).
-pub fn snapshot_on_signal<T: 'static>(
-    signal: &Signal,
-    capture_fn: impl Fn() -> T + 'static,
-) -> RcPtr<Option<T>> {
+pub fn snapshot_on_signal<T: 'static>(signal: &Signal, capture_fn: impl Fn() -> T + 'static) -> RcPtr<Option<T>> {
     let slot = RcPtr::new(None);
     let slot_clone = slot.clone();
     signal.connect_flags(

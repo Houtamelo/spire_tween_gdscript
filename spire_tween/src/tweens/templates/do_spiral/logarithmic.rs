@@ -27,7 +27,6 @@ pub fn speed_fn(scale: Vector2, shear: f32, growth: Vector2) -> impl Fn(f32) -> 
 #[cfg(test)]
 mod benches {
     extern crate test;
-    use std::f32::consts::PI;
 
     use godot::builtin::Vector2;
     use rand::Rng;

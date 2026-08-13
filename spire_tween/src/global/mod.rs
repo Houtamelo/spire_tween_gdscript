@@ -19,10 +19,10 @@ fn tween_process(tween: &AnyTween, delta_time: f64, is_tree_paused: bool) -> boo
 
     let result = match tween {
         Property(t) => {
-            delegate_property_tween! { t.to_mut().handle_bound_nodes_validity(is_tree_paused) }
+            delegate_any_property_tween! { t.to_mut().handle_bound_nodes_validity(is_tree_paused) }
         }
         Method(t) => {
-            delegate_method_tween! { t.to_mut().handle_bound_nodes_validity(is_tree_paused) }
+            delegate_any_method_tween! { t.to_mut().handle_bound_nodes_validity(is_tree_paused) }
         }
         DelayedCall(t) => t.to_mut().handle_bound_nodes_validity(is_tree_paused),
         Sequence(t) => t.to_mut().handle_bound_nodes_validity(is_tree_paused),
@@ -36,10 +36,10 @@ fn tween_process(tween: &AnyTween, delta_time: f64, is_tree_paused: bool) -> boo
                 State::Playing => {
                     let process_result = match tween {
                         Property(t) => {
-                            delegate_property_tween! { t.to_mut().process(delta_time, is_tree_paused) }
+                            delegate_any_property_tween! { t.to_mut().process(delta_time, is_tree_paused) }
                         }
                         Method(t) => {
-                            delegate_method_tween! { t.to_mut().process(delta_time, is_tree_paused) }
+                            delegate_any_method_tween! { t.to_mut().process(delta_time, is_tree_paused) }
                         }
                         DelayedCall(t) => t.to_mut().process(delta_time, is_tree_paused),
                         Sequence(t) => t.to_mut().process(delta_time, is_tree_paused),
