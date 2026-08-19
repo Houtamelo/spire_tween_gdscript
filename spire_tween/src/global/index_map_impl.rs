@@ -201,17 +201,17 @@ impl TweensMap {
     pub fn check_binds(&self, tween: &AnyTween) {
         match tween {
             AnyTween::Property(tween) => {
-                if let Some(ObjectOrNode::Node(owner)) = tween.get_owner() {
-                    if is_instance_id_valid(owner.instance_id_unchecked().to_i64()) {
-                        unsafe { self.node_ensure_tracked(owner.clone()) };
-                    }
+                if let Some(ObjectOrNode::Node(owner)) = tween.get_owner()
+                    && is_instance_id_valid(owner.instance_id_unchecked().to_i64())
+                {
+                    unsafe { self.node_ensure_tracked(owner.clone()) };
                 }
             }
             AnyTween::Method(tween) => {
-                if let Some(ObjectOrNode::Node(owner)) = tween.get_owner() {
-                    if is_instance_id_valid(owner.instance_id_unchecked().to_i64()) {
-                        unsafe { self.node_ensure_tracked(owner.clone()) };
-                    }
+                if let Some(ObjectOrNode::Node(owner)) = tween.get_owner()
+                    && is_instance_id_valid(owner.instance_id_unchecked().to_i64())
+                {
+                    unsafe { self.node_ensure_tracked(owner.clone()) };
                 }
             }
             AnyTween::DelayedCall(_) => {}

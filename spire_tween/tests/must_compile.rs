@@ -52,6 +52,8 @@ macro_rules! full_builder_api {
             .with_speed_scale(2.0)
             .with_pause_mode(PauseMode::Stop)
             .with_process_mode(ProcessMode::Manual)
+            .on_finish(|| {})
+            .on_loop_finished(|| {})
     };
 }
 

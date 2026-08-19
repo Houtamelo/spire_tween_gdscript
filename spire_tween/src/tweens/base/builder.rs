@@ -3,9 +3,9 @@ use super::*;
 impl<T: ITweenable> SpireTween<T> {
     /// Binds this tween to a node. If the node is freed, the tween stops.
     /// Pause behavior depends on [`PauseMode`]. Multiple nodes can be bound by chaining.
-    pub fn bound_to(mut self, node: Gd<Node>) -> Self {
+    pub fn bound_to<N: Inherits<Node>>(mut self, node: Gd<N>) -> Self {
         // Binding process is finished in TweensMap::register
-        self.bound_nodes.insert(node);
+        self.bound_nodes.insert(node.upcast());
         self
     }
 
@@ -36,8 +36,47 @@ impl<T: ITweenable> SpireTween<T> {
 
     /// Attaches a GDScript-facing handle used to emit Godot signals.
     /// Rust-only users do not need this.
-    pub fn with_handle(mut self, handle: T::GdHandle) -> Self {
-        self.gd_handle = Some(handle);
+    pub fn with_handle(self, handle: T::GdHandle) -> Self {
+        Self {
+            gd_handle: Some(handle),
+            ..self
+        }
+    }
+
+    /// Registers a Rust closure to run when this tween completes its last loop, or
+    /// when [`SpireTweener::force_complete`] is called.
+    ///
+    /// **Never fires** for infinite-loop tweens (`set_loops(-1, _)`). On the last
+    /// loop this fires *after* [`loop_finished_connect`](Self::loop_finished_connect)
+    /// callbacks for that loop.
+    ///
+    /// `f` is wrapped in a `Callable::from_fn` internally — to disconnect later you'd
+    /// need [`finished_clear_connections`](Self::finished_clear_connections). For
+    /// disconnect-by-callable use
+    /// [`finished_connect_callable`](Self::finished_connect_callable) and keep a
+    /// clone of the `Callable`.
+    ///
+    /// This is just a wrapper around [`finished_connect`](Self::finished_connect) with flags = DEFERRED
+    #[inline]
+    pub fn on_finish<F: FnMut() + 'static>(mut self, f: F) -> Self {
+        self.finished_connect(f, SpireFlags::DEFERRED);
+        self
+    }
+
+    /// Registers a Rust closure to run after each loop completes (and once more
+    /// after the final loop, just before [`finished_connect`](Self::finished_connect)
+    /// fires).
+    ///
+    /// `f` is wrapped in a `Callable::from_fn` internally — to disconnect later you'd
+    /// need [`loop_finished_clear_connections`](Self::loop_finished_clear_connections)
+    /// (you don't get back a comparable handle). If you want disconnect-by-callable,
+    /// use [`loop_finished_connect_callable`](Self::loop_finished_connect_callable)
+    /// and keep a clone of the `Callable`.
+    ///
+    /// This is just a wrapper around [`loop_finished_connect`](Self::loop_finished_connect) with flags = DEFERRED
+    #[inline]
+    pub fn on_loop_finished<F: FnMut() + 'static>(mut self, f: F) -> Self {
+        self.loop_finished_connect(f, SpireFlags::DEFERRED);
         self
     }
 }

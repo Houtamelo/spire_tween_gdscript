@@ -1,3 +1,4 @@
+#![allow(clippy::redundant_field_names)]
 use super::*;
 
 #[cfg(feature = "standalone")]

@@ -7,8 +7,8 @@ impl<T: ITweenable> RcPtr<SpireTween<T>> {
     /// This influences the tween in several ways:
     /// - It will automatically be deleted when any of the bound nodes is freed.
     /// - If [enum Spire.PauseMode] is set to [constant Spire.PAUSE_MODE_BOUND],
-    /// the tween will only process when all bound nodes are also processing
-    /// (this is checked by calling [method Node.can_process] on each).
+    ///   the tween will only process when all bound nodes are also processing
+    ///   (this is checked by calling [method Node.can_process] on each).
     ///
     /// [b]Note:[/b] Property/Method tweeners are automatically bound to the node they are animating,
     /// manually attempting to bind them won't do anything, and there is no harm in doing so.

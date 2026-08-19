@@ -37,7 +37,7 @@ impl ISprite2D for CollisionFx {
         let ease = EaseKind::Basic(Ease::InExpo);
         let self_gd: Gd<Sprite2D> = self.to_gd().upcast();
 
-        let mut seq = SpireTween::<Sequence>::new().bound_to(self_gd.clone().upcast());
+        let mut seq = SpireTween::<Sequence>::new().bound_to(self_gd.clone());
 
         // Scale up from (0,0) to (max_scale, max_scale).
         seq.append(

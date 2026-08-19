@@ -355,6 +355,7 @@ impl SpireLerp<Vector2i> for () {
         let remaining_distance = Self::spire_distance(self, from, to);
         let abs_step = f64::min(remaining_distance, max_step);
 
+        #[allow(deprecated)]
         let value = {
             let from_float = from.cast_float();
             let to_float = to.cast_float();
@@ -458,6 +459,7 @@ impl SpireLerp<Vector3i> for () {
         let remaining_distance = Self::spire_distance(self, from, to);
         let abs_step = f64::min(remaining_distance, max_step);
 
+        #[allow(deprecated)]
         let value = {
             let from_float = from.cast_float();
             let to_float = to.cast_float();
