@@ -109,7 +109,34 @@ pub mod prelude {
     pub struct BaseMarker;
 
     #[cfg(feature = "include_gdscript_bridge")]
-    pub use crate::gdscript_bridge as gdscript_classes;
+    pub use crate::gdscript_bridge;
+
+    #[cfg(feature = "include_gdscript_bridge")]
+    pub mod gdscript {
+        pub use crate::tweens::{
+            SpireDelayedCall,
+            SpireMethod,
+            SpireMethodColor,
+            SpireMethodFloat,
+            SpireMethodInt,
+            SpireMethodString,
+            SpireMethodVec2,
+            SpireMethodVec2i,
+            SpireMethodVec3,
+            SpireMethodVec3i,
+            SpireProperty,
+            SpirePropertyColor,
+            SpirePropertyFloat,
+            SpirePropertyInt,
+            SpirePropertyString,
+            SpirePropertyVec2,
+            SpirePropertyVec2i,
+            SpirePropertyVec3,
+            SpirePropertyVec3i,
+            SpireSequence,
+        };
+    }
+
     pub use crate::tweens::{BasicLerp, CustomLerper, LerpMode, SpireLerp};
     pub use crate::{
         //connection::Connection,
