@@ -92,7 +92,7 @@
 mod benchmarking;
 mod enums;
 #[cfg(feature = "include_gdscript_bridge")]
-mod gdscript_bridge;
+pub mod gdscript_bridge;
 mod global;
 mod object_or_node;
 mod rc_ptr;
@@ -108,6 +108,8 @@ pub mod prelude {
     #[doc(hidden)]
     pub struct BaseMarker;
 
+    #[cfg(feature = "include_gdscript_bridge")]
+    pub use crate::gdscript_bridge as gdscript_classes;
     pub use crate::tweens::{BasicLerp, CustomLerper, LerpMode, SpireLerp};
     pub use crate::{
         //connection::Connection,

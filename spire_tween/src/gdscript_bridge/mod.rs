@@ -7,7 +7,7 @@ mod generated;
 mod sequence;
 
 #[allow(unused_imports)]
-pub(crate) use generated::*;
+pub use self::{do_call::*, do_delayed_call::*, do_property::*, generated::*, sequence::*};
 
 #[derive(GodotClass)]
 #[class(base = Object, no_init)]
@@ -76,7 +76,6 @@ impl Spire {
     }
 }
 
-pub(crate) fn bridge_registration_constants()
--> &'static std::sync::Mutex<(Vec<fn()>, Vec<fn()>)> {
+pub(crate) fn bridge_registration_constants() -> &'static std::sync::Mutex<(Vec<fn()>, Vec<fn()>)> {
     Spire::__registration_storage()
 }
