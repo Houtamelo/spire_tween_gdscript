@@ -68,7 +68,7 @@
 //!
 //! # In-editor docs (GDScript audience)
 //!
-//! When the `standalone` feature is enabled, the GDScript-facing classes are
+//! When the `include_gdscript_bridge` feature is enabled, the GDScript-facing classes are
 //! registered with rich godot-flavored docs (extracted via the `register-docs`
 //! gdext feature). Those are what shows up in the Godot editor's class browser. The
 //! Rust API documented here mirrors the same concepts; the GDScript layer is built
@@ -91,7 +91,7 @@
 
 mod benchmarking;
 mod enums;
-#[cfg(feature = "standalone")]
+#[cfg(feature = "include_gdscript_bridge")]
 mod gdscript_bridge;
 mod global;
 mod object_or_node;
@@ -211,7 +211,7 @@ pub(crate) mod internal_prelude {
     };
 }
 
-#[cfg(feature = "standalone")]
+#[cfg(feature = "include_gdext_lib")]
 mod api_entry {
     use godot::prelude::*;
 

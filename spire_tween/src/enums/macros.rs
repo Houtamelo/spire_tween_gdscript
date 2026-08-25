@@ -26,7 +26,7 @@ macro_rules! register_enum {
         // is truly independent — required for `#[opt(default = ...)]` to accept it.
         unsafe impl ::godot::meta::GodotImmutable for $RustIdent {}
 
-        #[cfg(feature = "standalone")]
+        #[cfg(feature = "include_gdscript_bridge")]
         shard_execute_pre_main! {{
             bridge_registration_constants().lock().unwrap().1.push(|| {
                 ExportConstant::new(
@@ -42,7 +42,7 @@ macro_rules! register_enum {
             });
         }}
 
-        #[cfg(feature = "standalone")]
+        #[cfg(feature = "include_gdscript_bridge")]
         shard_add!(godot::private::__GODOT_DOCS_REGISTRY; {
             let mut docs = String::new();
 

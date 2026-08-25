@@ -1,8 +1,9 @@
-use godot::classes::PackedScene;
-use godot::prelude::*;
+use godot::{classes::PackedScene, prelude::*};
 
-use super::base_test_case::BaseTestCase;
-use super::tween_setups::{self, Tweeners};
+use super::{
+    base_test_case::BaseTestCase,
+    tween_setups::{self, Tweeners},
+};
 
 /// Sprites global-position benchmark: tweens only global_position on many
 /// small black sprites.
@@ -16,9 +17,7 @@ pub struct SpritesGlobalPosition {
 
 #[godot_api]
 impl INode for SpritesGlobalPosition {
-    fn init(base: Base<Node>) -> Self {
-        Self { base }
-    }
+    fn init(base: Base<Node>) -> Self { Self { base } }
 
     fn ready(&mut self) {
         let test_name = "tween-global-position_black-4x4-dots".to_string();
@@ -32,12 +31,7 @@ impl INode for SpritesGlobalPosition {
 /// - For builtin: `ensure_builtin_tweeners` populates new Tweens per node.
 /// - For spire: `use_sequence` defaults to `false`, so standalone tweens are
 ///   created directly (tweeners array is unused).
-fn sprites_global_position_setup(
-    root: &mut Gd<Node>,
-    is_builtin: bool,
-    duration: f64,
-    amount: i64,
-) {
+fn sprites_global_position_setup(root: &mut Gd<Node>, is_builtin: bool, duration: f64, amount: i64) {
     let prefab: Gd<PackedScene> = load("res://benchmarks/prefabs/square_4x4.tscn");
     let nodes = tween_setups::spawn_nodes(&prefab, root, amount as usize);
 
@@ -50,11 +44,7 @@ fn sprites_global_position_setup(
     // The GDScript passes an empty `[]`, which in the builtin path gets
     // populated by `ensure_builtin_tweeners`. For spire, use_sequence=false
     // so standalone tweens are created and the tweeners vec is not used.
-    let mut tweeners = if is_builtin {
-        Tweeners::Builtin(Vec::new())
-    } else {
-        Tweeners::Spire(Vec::new())
-    };
+    let mut tweeners = if is_builtin { Tweeners::Builtin(Vec::new()) } else { Tweeners::Spire(Vec::new()) };
 
     tween_setups::tween_global_positions(
         duration,

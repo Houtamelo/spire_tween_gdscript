@@ -1,7 +1,7 @@
 #![allow(clippy::redundant_field_names)]
 use super::*;
 
-#[cfg(feature = "standalone")]
+#[cfg(feature = "include_gdscript_bridge")]
 mod cfg;
 mod deferred_op;
 mod node_status;

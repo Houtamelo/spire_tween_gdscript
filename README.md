@@ -35,21 +35,19 @@ DoNode2D.scale(ball, Vector2.ONE * 3, 2.0).set_ease(Spire.EASE_OUT_EXPO)
 
 ---
 
-SpireTween is a batteries-included tweening library for Godot 4.x, inspired on the UX of the
-popular Unity library [DoTween](https://dotween.demigiant.com/).
+SpireTween is a batteries-included tweening library for Godot 4.x, inspired on the UX of the popular Unity library [DoTween](https://dotween.demigiant.com/).
 
 These are the priorities of SpireTween:
 
 - Ergonomics without compromising performance (see section [Benchmarks](#benchmarks)).
 - Type safety, taking advantage of GDScript's type system to catch errors at compile time rather than runtime.
-- "No surprises": Spire's public API is thoroughly (and proudly!) documented,
-  with method descriptions mentioning possible side effects and quirks. I also wrote plenty of integration tests to make sure the behavior
-  matches what's written in the docs (see folder [tests](spire_tween_gdscript/examples/tests)).
+- "No surprises": Spire's public API is thoroughly (and proudly!) documented, with method descriptions mentioning possible side effects and quirks. I also wrote plenty of integration tests to make
+  sure the behavior matches what's written in the docs (see folder [tests](spire_tween_gdscript/examples/tests)).
 
   Here's an example: The method `play` that all tweens have (screenshot taken inside the Godot Editor):
   ![docs_method_play.png](readme_images/docs_method_play.png)
-- At minimum, feature parity with Godot's built-in tweening system (after all, why would you want a downgrade?).
-  SpireTween also provides more features, such as: speed-based tweens, more loop modes, etc.
+- At minimum, feature parity with Godot's built-in tweening system (after all, why would you want a downgrade?). SpireTween also provides more features, such as: speed-based tweens, more loop modes,
+  etc.
 
 # Summary
 
@@ -69,18 +67,19 @@ SpireTween is an addon like any other, you just need extract the copy you acquir
 You can acquire a copy of SpireTween through 3 means:
 
 - Purchase it at [Itch.io](http://www.itch.io/placeholder_link), it includes binaries for most mainstream platforms (see section [Platform Support](#platform-support)).
-- A demo version is available in the [releases](https://github.com/Houtamelo/spire_tween_gdscript/releases) page of this repository.
-  The only "limitation" of the demo is that it only includes binaries for Windows and Linux platforms. Binaries for additional platforms can
-  be acquired by purchasing the plugin or compiling it yourself.
+- A demo version is available in the [releases](https://github.com/Houtamelo/spire_tween_gdscript/releases) page of this repository. The only "limitation" of the demo is that it only includes binaries
+  for Windows and Linux platforms. Binaries for additional platforms can be acquired by purchasing the plugin or compiling it yourself.
 - Compile from source (see [Building from source](#building-from-source)).
 
 When exporting, Godot will automatically include the necessary binary for the chosen target platform.
 
-**No autoload setup is required.** Once the addon is enabled in Project Settings → Plugins, the `Spire`, `Do{Class}`, `SpireSequence`, etc. classes register automatically and the internal tween manager initializes on first use.
+**No autoload setup is required.** Once the addon is enabled in Project Settings → Plugins, the `Spire`, `Do{Class}`, `SpireSequence`, etc. classes register automatically and the internal tween
+manager initializes on first use.
 
 ## Building from source
 
-SpireTween is written in Rust against [godot-rust](https://github.com/godot-rust/gdext) and currently requires the **nightly** toolchain. The pinned channel lives in `rust-toolchain.toml` (so `cargo` will pick it up automatically inside the repo).
+SpireTween is written in Rust against [godot-rust](https://github.com/godot-rust/gdext) and currently requires the **nightly** toolchain. The pinned channel lives in `rust-toolchain.toml` (so `cargo`
+will pick it up automatically inside the repo).
 
 The crate uses these unstable features:
 
@@ -106,35 +105,34 @@ Build the addon binary for your host with the per-platform scripts in [`build_sc
 
 Each script writes the resulting binary directly into `spire_tween_gdscript/addons/spire_tween/lib/<target>/...`, where the `.gdextension` manifest expects it.
 
-If you just want to verify the crate compiles, `cargo build --release` from the repo root works (Cargo's workspace feature unification automatically enables the `standalone` feature pulled in by `spire_tween_plugin`).
+If you just want to verify the crate compiles, `cargo build --release` from the repo root works (Cargo's workspace feature unification automatically enables the `include_gdext_lib` feature pulled in
+by `spire_tween_plugin`).
 
 # Platform Support
 
-SpireTween is made with [Godot-Rust](https://github.com/godot-rust/gdext), a GdExtension that provides Rust bindings for Godot.
-It *should* be compatible with all platforms supported by Godot-Rust.
+SpireTween is made with [Godot-Rust](https://github.com/godot-rust/gdext), a GdExtension that provides Rust bindings for Godot. It *should* be compatible with all platforms supported by Godot-Rust.
 
-I simply don't have the hardware needed to test on all platforms, I'll be updating this table
-as users report their testing results.
+I simply don't have the hardware needed to test on all platforms, I'll be updating this table as users report their testing results.
 
 Binaries for all platforms which I successfully compiled-to are included in the releases sold at Itch.io.
 
 | Platform           | Compiled | Tested | Notes                                                               |
 |--------------------|:--------:|:------:|---------------------------------------------------------------------|
-| linux.x86_64       |    ✅     |   ✅    |                                                                     |
-| windows.x86_64     |    ✅     |   ✅    |                                                                     |
-| android.x86_64     |    ✅     |   ❌    |                                                                     |
-| android.arm64      |    ✅     |   ❌    |                                                                     |
-| android.x86        |    ✅     |   ❌    |                                                                     |
-| web.wasm32         |    ❌     |   ❌    | There is a temporary issue, will be fixed soon(TM).                 |
-| web.wasm32.threads |    ❌     |   ❌    | There is a temporary issue, will be fixed soon(TM).                 |
-| macos/ios          |    ❌     |   ❌    | Compiling from source *should* be straightforward if you own a Mac. |
+| linux.x86_64       |    ✅    |   ✅   |                                                                     |
+| windows.x86_64     |    ✅    |   ✅   |                                                                     |
+| android.x86_64     |    ✅    |   ❌   |                                                                     |
+| android.arm64      |    ✅    |   ❌   |                                                                     |
+| android.x86        |    ✅    |   ❌   |                                                                     |
+| web.wasm32         |    ❌    |   ❌   | There is a temporary issue, will be fixed soon(TM).                 |
+| web.wasm32.threads |    ❌    |   ❌   | There is a temporary issue, will be fixed soon(TM).                 |
+| macos/ios          |    ❌    |   ❌   | Compiling from source *should* be straightforward if you own a Mac. |
 
 If a platform you're targeting is not listed here, please open an issue.
 
 # Configuration
 
-Currently, SpireTween supports a single global configuration option, which lets you define what is the default "Ease" type when creating tweens.
-You can set this option by calling `SpireGlobalSettings.set_default_ease`:
+Currently, SpireTween supports a single global configuration option, which lets you define what is the default "Ease" type when creating tweens. You can set this option by calling
+`SpireGlobalSettings.set_default_ease`:
 
 ```gdscript
 func _ready():
@@ -160,12 +158,11 @@ If not set, the default is `Spire.EASE_LINEAR`.
 | SubtweenTweener | SpireSequence[note1](#note-subtweeners)             | 
 
 <a name="note-subtweeners"></a>
-Note 1: A `SpireSequence` is itself a `SpireTween`, so you can append sequences into others,
-recursively.
+Note 1: A `SpireSequence` is itself a `SpireTween`, so you can append sequences into others, recursively.
 
 ---
 
-**Note:** In the tables below, the columns "Godot Class(es)" and "Spire Class(es)" indicate which classes support the feature.
+**Note:** In the tables below, the columns "Godot Class (es)" and "Spire Class (es)" indicate which classes support the feature.
 
 ## Cheat Sheet: Properties
 
@@ -173,40 +170,39 @@ Cheat sheet for reading/writing properties/configuration that are common to both
 
 | Property                                                                |                    Godot Class(es)                    |        Godot Read        |                     Godot Write                      |          Spire Class(es)           |        Spire Read        |                          Spire Write                          |
 |-------------------------------------------------------------------------|:-----------------------------------------------------:|:------------------------:|:----------------------------------------------------:|:----------------------------------:|:------------------------:|:-------------------------------------------------------------:|
-| Loops (total) ([note1](#note-loop-modes))                               |                         Tween                         |            ❌             |                    set_loops(int)                    |                All                 |       get_loops()        |                set_loops(int, Spire.LoopMode)                 |
-| Loops Left                                                              |                         Tween                         |     get_loops_left()     |                          ❌                           |                All                 |     get_loops_left()     |                               ❌                               |
-| Loops Completed                                                         |                           ❌                           |            ❌             |                          ❌                           |                All                 |   get_loops_finished()   |                               ❌                               |
-| Loop Mode                                                               |                           ❌                           |            ❌             |                          ❌                           |                All                 |     get_loop_mode()      |                 set_loop_mode(Spire.LoopMode)                 |
+| Loops (total) ([note1](#note-loop-modes))                               |                         Tween                         |            ❌            |                    set_loops(int)                    |                All                 |       get_loops()        |                set_loops(int, Spire.LoopMode)                 |
+| Loops Left                                                              |                         Tween                         |     get_loops_left()     |                          ❌                          |                All                 |     get_loops_left()     |                              ❌                               |
+| Loops Completed                                                         |                          ❌                           |            ❌            |                          ❌                          |                All                 |   get_loops_finished()   |                              ❌                               |
+| Loop Mode                                                               |                          ❌                           |            ❌            |                          ❌                          |                All                 |     get_loop_mode()      |                 set_loop_mode(Spire.LoopMode)                 |
 | Run                                                                     |                         Tween                         |       is_running()       |                        play()                        |                All                 |       is_playing()       |                            play()                             |
 | Pause                                                                   |                         Tween                         |      !is_running()       |                       pause()                        |                All                 |       is_paused()        |                            pause()                            |
-| Stop                                                                    |                         Tween                         |            ❌             |                        stop()                        |                All                 |       is_stopped()       |                            stop()                             |
+| Stop                                                                    |                         Tween                         |            ❌            |                        stop()                        |                All                 |       is_stopped()       |                            stop()                             |
 | Validity ([note2](#note-is-valid))<br/>(is it "ticked" on each update?) |                         Tween                         |        is_valid()        |                        kill()                        |                All                 |     is_registered()      |                  register()<br/>unregister()                  |
-| Delay                                                                   |           PropertyTweener<br/>MethodTweener           |            ❌             |                   set_delay(float)                   |                All                 |       get_delay()        |                       set_delay(float)                        |
-| Elapsed Time (total)                                                    |                         Tween                         | get_total_elapsed_time() |                          ❌                           |                All                 | get_total_elapsed_time() |                               ❌                               |
-| Animation position (current loop's elapsed time, after any delays)      |                         Tween                         |            ❌             |                          ❌                           |                All                 | get_animation_position() |                               ❌                               |
-| Ignore Time Scale ([note3](#note-ignore-time-scale))                    |                         Tween                         |            ❌             |             set_ignore_time_scale(bool)              |                All                 | get_ignore_time_scale()  |                  set_ignore_time_scale(bool)                  |
-| Speed Scale                                                             |                         Tween                         |            ❌             |                set_speed_scale(float)                |                All                 |    get_speed_scale()     |                    set_speed_scale(float)                     |
-| Pause Mode                                                              |                         Tween                         |            ❌             |            set_pause_mode(TweenPauseMode)            |                All                 |     get_pause_mode()     |                set_pause_mode(Spire.PauseMode)                |                                                               
-| Process Mode                                                            |                         Tween                         |            ❌             |          set_process_mode(TweenProcessMode)          |                All                 |    get_process_mode()    |              set_process_mode(Spire.ProcessMode)              |                                                               
-| Lifetime Bound ([note4](#note-bind-node)                                |                         Tween                         |            ❌             |                   bind_node(Node)                    |                All                 |    get_bound_nodes()     | bind_node(Node)<br/>unbind_node(Node)<br/>clear_bound_nodes() |
-| Easing (enum)                                                           |                    PropertyTweener                    |            ❌             |    set_ease(EaseType) + set_trans(TransitionType)    |   SpireProperty<br/>SpireMethod    |        get_ease()        |                     set_ease(Spire.Ease)                      |
-| Easing (func)                                                           |                    PropertyTweener                    |            ❌             |          set_custom_interpolator(Callable)           |   SpireProperty<br/>SpireMethod    |        get_ease()        |                    set_ease_func(Callable)                    |
-| Easing (curve)                                                          |                    PropertyTweener                    |            ❌             | set_custom_interpolator(curve_variable.sample_baked) |   SpireProperty<br/>SpireMethod    |        get_ease()        |                     set_ease_curve(Curve)                     |
-| Relative Mode                                                           |                    PropertyTweener                    |            ❌             |                    as_relative()                     |           SpireProperty            |      is_relative()       |                         as_relative()                         |
-| Speed-Based Mode                                                        |                           ❌                           |            ❌             |                          ❌                           |           SpireProperty            |     is_speed_based()     |                       as_speed_based()                        |
-| Start Value (property)                                                  |                    PropertyTweener                    |            ❌             |                    from(Variant)                     |           SpireProperty            |            ❌             |                         from({Type})                          |
-| Start Value (property) (as current)                                     |                    PropertyTweener                    |            ❌             |                    from_current()                    |           SpireProperty            |            ❌             |         Not necessary, this is the default behavior.          |
-| Start Value (method)                                                    |                     MethodTweener                     |            ❌             |             Set when creating the tween.             |            SpireMethod             |    get_start_value()     |                 Set when creating the tween.                  |
-| Final Value                                                             |           PropertyTweener<br/>MethodTweener           |            ❌             |             Set when creating the tween.             |   SpireProperty<br/>SpireMethod    |    get_final_value()     |                 Set when creating the tween.                  |
-| Tweened Property's path                                                 |                    PropertyTweener                    |            ❌             |             Set when creating the tween.             |           SpireProperty            |   get_property_path()    |                 Set when creating the tween.                  |
-| Object that owns the property/method being tweened                      |                    PropertyTweener                    |            ❌             |             Set when creating the tween.             |           SpireProperty            |       get_owner()        |                 Set when creating the tween.                  |
-| Duration                                                                | PropertyTweener<br/>MethodTweener<br/>IntervalTweener |            ❌             |             Set when creating the tween.             | SpireProperty<br/>SpireMethod<br/> |      get_duration()      |                 Set when creating the tween.                  |
-| Callable being tweened                                                  |                     MethodTweener                     |            ❌             |             Set when creating the tween.             |  SpireMethod<br/>SpireDelayedCall  |      get_callable()      |                 Set when creating the tween.                  |
+| Delay                                                                   |           PropertyTweener<br/>MethodTweener           |            ❌            |                   set_delay(float)                   |                All                 |       get_delay()        |                       set_delay(float)                        |
+| Elapsed Time (total)                                                    |                         Tween                         | get_total_elapsed_time() |                          ❌                          |                All                 | get_total_elapsed_time() |                              ❌                               |
+| Animation position (current loop's elapsed time, after any delays)      |                         Tween                         |            ❌            |                          ❌                          |                All                 | get_animation_position() |                              ❌                               |
+| Ignore Time Scale ([note3](#note-ignore-time-scale))                    |                         Tween                         |            ❌            |             set_ignore_time_scale(bool)              |                All                 | get_ignore_time_scale()  |                  set_ignore_time_scale(bool)                  |
+| Speed Scale                                                             |                         Tween                         |            ❌            |                set_speed_scale(float)                |                All                 |    get_speed_scale()     |                    set_speed_scale(float)                     |
+| Pause Mode                                                              |                         Tween                         |            ❌            |            set_pause_mode(TweenPauseMode)            |                All                 |     get_pause_mode()     |                set_pause_mode(Spire.PauseMode)                |                                                               
+| Process Mode                                                            |                         Tween                         |            ❌            |          set_process_mode(TweenProcessMode)          |                All                 |    get_process_mode()    |              set_process_mode(Spire.ProcessMode)              |                                                               
+| Lifetime Bound ([note4](#note-bind-node)                                |                         Tween                         |            ❌            |                   bind_node(Node)                    |                All                 |    get_bound_nodes()     | bind_node(Node)<br/>unbind_node(Node)<br/>clear_bound_nodes() |
+| Easing (enum)                                                           |                    PropertyTweener                    |            ❌            |    set_ease(EaseType) + set_trans(TransitionType)    |   SpireProperty<br/>SpireMethod    |        get_ease()        |                     set_ease(Spire.Ease)                      |
+| Easing (func)                                                           |                    PropertyTweener                    |            ❌            |          set_custom_interpolator(Callable)           |   SpireProperty<br/>SpireMethod    |        get_ease()        |                    set_ease_func(Callable)                    |
+| Easing (curve)                                                          |                    PropertyTweener                    |            ❌            | set_custom_interpolator(curve_variable.sample_baked) |   SpireProperty<br/>SpireMethod    |        get_ease()        |                     set_ease_curve(Curve)                     |
+| Relative Mode                                                           |                    PropertyTweener                    |            ❌            |                    as_relative()                     |           SpireProperty            |      is_relative()       |                         as_relative()                         |
+| Speed-Based Mode                                                        |                          ❌                           |            ❌            |                          ❌                          |           SpireProperty            |     is_speed_based()     |                       as_speed_based()                        |
+| Start Value (property)                                                  |                    PropertyTweener                    |            ❌            |                    from(Variant)                     |           SpireProperty            |            ❌            |                         from({Type})                          |
+| Start Value (property) (as current)                                     |                    PropertyTweener                    |            ❌            |                    from_current()                    |           SpireProperty            |            ❌            |         Not necessary, this is the default behavior.          |
+| Start Value (method)                                                    |                     MethodTweener                     |            ❌            |             Set when creating the tween.             |            SpireMethod             |    get_start_value()     |                 Set when creating the tween.                  |
+| Final Value                                                             |           PropertyTweener<br/>MethodTweener           |            ❌            |             Set when creating the tween.             |   SpireProperty<br/>SpireMethod    |    get_final_value()     |                 Set when creating the tween.                  |
+| Tweened Property's path                                                 |                    PropertyTweener                    |            ❌            |             Set when creating the tween.             |           SpireProperty            |   get_property_path()    |                 Set when creating the tween.                  |
+| Object that owns the property/method being tweened                      |                    PropertyTweener                    |            ❌            |             Set when creating the tween.             |           SpireProperty            |       get_owner()        |                 Set when creating the tween.                  |
+| Duration                                                                | PropertyTweener<br/>MethodTweener<br/>IntervalTweener |            ❌            |             Set when creating the tween.             | SpireProperty<br/>SpireMethod<br/> |      get_duration()      |                 Set when creating the tween.                  |
+| Callable being tweened                                                  |                     MethodTweener                     |            ❌            |             Set when creating the tween.             |  SpireMethod<br/>SpireDelayedCall  |      get_callable()      |                 Set when creating the tween.                  |
 
-Although both systems share many properties, Godot's built-in `Tween` does not expose getters for most of them, while SpireTween exposes getters to almost all.
-This isn't a big deal, the maintainers of Godot probably decided to not expose those getters since most use cases wouldn't need to read those properties after creating the tween.
-That's a reasonable design decision, though I have a different philosophy: I can't predict all possible use cases, so I prefer to expose more information rather than less, specially when
-doing so is trivial/harmless.
+Although both systems share many properties, Godot's built-in `Tween` does not expose getters for most of them, while SpireTween exposes getters to almost all. This isn't a big deal, the maintainers
+of Godot probably decided to not expose those getters since most use cases wouldn't need to read those properties after creating the tween. That's a reasonable design decision, though I have a
+different philosophy: I can't predict all possible use cases, so I prefer to expose more information rather than less, specially when doing so is trivial/harmless.
 
 <a name="note-loop-modes"></a>
 
@@ -214,18 +210,17 @@ doing so is trivial/harmless.
 
 <a name="note-is-valid"></a>
 
-**Note 2**: In Godot's builtin `Tween`, `kill()` is a permanent operation.
-In Spire, `unregister()` simply removes a tween from the internal update list, it can be re-registered again later with `register()`.
-Since Spire's tweens are reference-counted, there's no need to manually free them (which is what `kill()` is supposed to do).
+**Note 2**: In Godot's builtin `Tween`, `kill()` is a permanent operation. In Spire, `unregister()` simply removes a tween from the internal update list, it can be re-registered again later with
+`register()`. Since Spire's tweens are reference-counted, there's no need to manually free them (which is what `kill()` is supposed to do).
 
 <a name="note-ignore-time-scale"></a>
 
-**Note 3**: In Godot's builtin `Tween`, this is only available for the `Tween` class (equivalent to Spire's `SpireSequence`), and it affects all
-child "tweeners". In Spire, the behavior is the same for `SpireSequence`, but it is also available to individual tweeners.
+**Note 3**: In Godot's builtin `Tween`, this is only available for the `Tween` class (equivalent to Spire's `SpireSequence`), and it affects all child "tweeners". In Spire, the behavior is the same
+for `SpireSequence`, but it is also available to individual tweeners.
 
 <a name="note-bind-node"></a>
-**Note 4**: Godot only supports binding to a single node, while Spire supports binding to multiple nodes. Also, the semantics of binding are slightly different on each
-system, see their documentation for more details.
+**Note 4**: Godot only supports binding to a single node, while Spire supports binding to multiple nodes. Also, the semantics of binding are slightly different on each system, see their documentation
+for more details.
 
 ---
 
@@ -236,11 +231,11 @@ system, see their documentation for more details.
 | Manual Stepping                    |      Tween      |                                                custom_step(float)                                                 |       All       |                                        custom_step(float)                                        |
 | Instant completion                 |      Tween      |                                           custom_step(very_big_number)                                            |       All       |                                         force_complete()                                         |
 | Kill                               |      Tween      |                                                      kill()                                                       |       All       |                                           unregister()                                           |
-| Resuscitate ("Unkill")             |        ❌        |                                                         ❌                                                         |       All       |                                            register()                                            |
+| Resuscitate ("Unkill")             |       ❌        |                                                        ❌                                                         |       All       |                                            register()                                            |
 | Sequencing - Series                |      Tween      | Tweener builder methods (`Tween.tween_*()`) do this automatically.<br/>More complex cases require using `chain()` |  SpireSequence  | append(AnyTweenType)<br/>append_call(Callable)<br/>append_interval(float)<br/>append_many(Array) |
 | Sequencing - Parallel              |      Tween      |            Call `set_parallel(true)`, then use one of the builder methods (`Tween.tween_*()`) as usual            |  SpireSequence  |       join(AnyTweenType)<br/>join_call(Callable)<br/>join( interval)<br/>join_many(Array)        |
-| Sequencing - Insertion             |        ❌        |                                                         ❌                                                         |  SpireSequence  |                   insert(float, AnyTweenType)<br/>insert_call(float, Callable)                   |
-| Sequencing - Remove child tween    |        ❌        |                                                         ❌                                                         |  SpireSequence  |                          remove(AnyTweenType)<br/>remove_call(Callable)                          |
+| Sequencing - Insertion             |       ❌        |                                                        ❌                                                         |  SpireSequence  |                   insert(float, AnyTweenType)<br/>insert_call(float, Callable)                   |
+| Sequencing - Remove child tween    |       ❌        |                                                        ❌                                                         |  SpireSequence  |                          remove(AnyTweenType)<br/>remove_call(Callable)                          |
 | Sequencing - Default children ease |      Tween      |                                  set_ease(EaseType) + set_trans(TransitionType)                                   |  SpireSequence  |                              set_default_children_ease(Spire.Ease)                               |
 
 ## Cheat Sheet: Signals
@@ -256,15 +251,15 @@ system, see their documentation for more details.
 
 ---
 
-## Cheat Sheet: Creating a Tween(er)
+## Cheat Sheet: Creating a Tween (er)
 
 | Tween type                                     | Godot "how to"                                                                                  | Spire "how to"                                                                                                                                                                             |
 |------------------------------------------------|-------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Property by "inlined" name                     | ❌                                                                                               | Do{Class}.{property_name}(object: {Class}, to: {Type}, duration: float)                                                                                                                    |
-| Property by path (typed)                       | ❌                                                                                               | Spire.do_property_{type}(object: Object, property: NodePath, to: {Type}, duration: float)                                                                                                  |
+| Property by "inlined" name                     | ❌                                                                                              | Do{Class}.{property_name}(object: {Class}, to: {Type}, duration: float)                                                                                                                    |
+| Property by path (typed)                       | ❌                                                                                              | Spire.do_property_{type}(object: Object, property: NodePath, to: {Type}, duration: float)                                                                                                  |
 | Property by path (untyped)                     | create_tween().tween_property(object: Object, property: NodePath, to: Variant, duration: float) | Spire.do_property(object: Object, property: NodePath, to: Variant, duration: float)                                                                                                        |
 | Property by path (custom/non-primitive type)   | create_tween().tween_property(object: Object, property: NodePath, to: Variant, duration: float) | Spire.do_property_custom(object: Object, property: NodePath, to: Variant, duration: float, distance_func: Callable, lerp_func: Callable, add_relative_func: Callable, step_func: Callable) |
-| Method by callable (typed)                     | ❌                                                                                               | Spire.do_call_{type}(callable: Callable, from: {Type}, to: {Type}, duration: float)                                                                                                        |
+| Method by callable (typed)                     | ❌                                                                                              | Spire.do_call_{type}(callable: Callable, from: {Type}, to: {Type}, duration: float)                                                                                                        |
 | Method by callable (untyped)                   | create_tween().tween_method(method: Callable, from: Variant, to: Variant, duration: float)      | Spire.do_call(callable: Callable, from: Variant, to: Variant, duration: float)                                                                                                             |
 | Method by callable (custom/non-primitive type) | create_tween().tween_method(method: Callable, from: Variant, to: Variant, duration: float)      | Spire.do_call_custom(callable: Callable, from: Variant, to: Variant, duration: float, lerp_func: Callable)                                                                                 |
 | Delayed Callback                               | create_tween().tween_callback(callback: Callable).set_delay(delay: float)                       | Spire.do_delayed_call(callable: Callable, delay: float)                                                                                                                                    |
@@ -278,11 +273,9 @@ system, see their documentation for more details.
 ### Common properties of built-in classes
 
 Godot's built-in system provides a single method to create all property tweeners: [Tween.tween_property]
-(https://docs.godotengine.org/en/stable/classes/class_tween.html#class-tween-method-tween-property). Because of that,
-it cannot provide type safety and the checks must be performed at runtime.
+(https://docs.godotengine.org/en/stable/classes/class_tween.html#class-tween-method-tween-property). Because of that, it cannot provide type safety and the checks must be performed at runtime.
 
-Spire takes two approaches, the first is that it provides many static functions that will tween a specific property of a
-specific class, these are presented in the format:
+Spire takes two approaches, the first is that it provides many static functions that will tween a specific property of a specific class, these are presented in the format:
 
 ```
 Do{NodeClass}.{property_name}(node: {NodeClass}, to: {Type}, duration: float) -> SpireProperty{Type}
@@ -294,8 +287,8 @@ Examples: `DoNode2D.global_position`, `DoCanvasItem.modulate_a`, `DoControl.rota
 
 Since we know the class and property at compile time, the GDScript compiler will yell if you accidentally try to pass bad arguments.
 
-The second approach, which is meant for cases where you want to tween a custom property, is to provide an API similar to
-Godot's built-in, except that the API is split into multiple methods based on the type being tweened.
+The second approach, which is meant for cases where you want to tween a custom property, is to provide an API similar to Godot's built-in, except that the API is split into multiple methods based on
+the type being tweened.
 
 These static functions are available in the `Spire` class:
 
@@ -438,19 +431,16 @@ func spire_impl():
 
 # Benchmarks
 
-Note that the main priority of SpireTween is ergonomics, not performance. It currently outperforms Godot's built-in
-tweening system in terms of runtime speed (Godot's built-in wins in terms of setup speed though), I cannot guarantee that
-this will always be the case, SpireTween may become slower if more features/configurations are added (though I doubt the
-performance difference will ever be significant).
+Note that the main priority of SpireTween is ergonomics, not performance. It currently outperforms Godot's built-in tweening system in terms of runtime speed (Godot's built-in wins in terms of setup
+speed though), I cannot guarantee that this will always be the case, SpireTween may become slower if more features/configurations are added (though I doubt the performance difference will ever be
+significant).
 
-I decided to make these benchmarks to at least give you peace of my mind that you're not(currently) losing on performance
-by switching to SpireTween. Note that the amount of nodes being tweened in these benchmarks is ridiculously high, you're unlikely
-to ever notice any performance difference between the two libraries in a real project.
+I decided to make these benchmarks to at least give you peace of my mind that you're not (currently) losing on performance by switching to SpireTween. Note that the amount of nodes being tweened in
+these benchmarks is ridiculously high, you're unlikely to ever notice any performance difference between the two libraries in a real project.
 
 **Note**: These benchmarks are simple and artificial, they are here just to give you a rough idea of the package's performance.
 
-The benchmarks are in the folder [benchmarks](spire_tween_gdscript/benchmarks), to run them on your machine, just open one
-of the scenes and run it.
+The benchmarks are in the folder [benchmarks](spire_tween_gdscript/benchmarks), to run them on your machine, just open one of the scenes and run it.
 
 The following results were obtained on my machine, here's the system info provided by Godot:
 

@@ -12,12 +12,12 @@ mod process_mode;
 mod spiral;
 mod state;
 
-#[cfg(feature = "standalone")]
+#[cfg(feature = "include_gdscript_bridge")]
 #[allow(unused_imports)]
 use gdscript_bridge::*;
 #[allow(unused_imports)]
 use godot::register::private::constant::*;
-#[cfg(feature = "standalone")]
+#[cfg(feature = "include_gdscript_bridge")]
 #[allow(unused_imports)]
 use godot::sys::{shard_add, shard_execute_pre_main};
 use macros::*;

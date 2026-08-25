@@ -12,7 +12,7 @@ RUSTFLAGS="-C link-args=-pthread \
 -C link-args=-sSIDE_MODULE=2 \
 -Zlink-native-libraries=no \
 -Cllvm-args=-enable-emscripten-cxx-exceptions=0"\
-  cargo build -p spire_tween --features standalone -Zbuild-std --target wasm32-unknown-emscripten \
+  cargo build -p spire_tween --features include_gdext_lib, include_gdscript_bridge -Zbuild-std --target wasm32-unknown-emscripten \
   --artifact-dir="spire_tween_gdscript/addons/spire_tween/lib/wasm32-unknown-emscripten/debug"
 
 mv "spire_tween_gdscript/addons/spire_tween/lib/wasm32-unknown-emscripten/debug/spire_tween.wasm"\
@@ -24,7 +24,7 @@ RUSTFLAGS="-C link-args=-pthread \
 -C link-args=-sSIDE_MODULE=2 \
 -Zlink-native-libraries=no \
 -Cllvm-args=-enable-emscripten-cxx-exceptions=0"\
-  cargo build -p spire_tween --features standalone -Zbuild-std --target wasm32-unknown-emscripten \
+  cargo build -p spire_tween --features include_gdext_lib,include_gdscript_bridge -Zbuild-std --target wasm32-unknown-emscripten \
   --artifact-dir="spire_tween_gdscript/addons/spire_tween/lib/wasm32-unknown-emscripten/release"
 
 mv "spire_tween_gdscript/addons/spire_tween/lib/wasm32-unknown-emscripten/release/spire_tween.wasm"\
@@ -33,11 +33,11 @@ mv "spire_tween_gdscript/addons/spire_tween/lib/wasm32-unknown-emscripten/releas
 RUSTFLAGS="-C link-args=-sSIDE_MODULE=2 \
 -Zlink-native-libraries=no \
 -Cllvm-args=-enable-emscripten-cxx-exceptions=0"\
-  cargo build -p spire_tween --features standalone,nothreads -Zbuild-std --target wasm32-unknown-emscripten\
+  cargo build -p spire_tween --features include_gdext_lib,nothreads,include_gdscript_bridge -Zbuild-std --target wasm32-unknown-emscripten\
   --artifact-dir="spire_tween_gdscript/addons/spire_tween/lib/wasm32-unknown-emscripten/debug"
 
 RUSTFLAGS="-C link-args=-sSIDE_MODULE=2 \
 -Zlink-native-libraries=no \
 -Cllvm-args=-enable-emscripten-cxx-exceptions=0"\
-  cargo build -p spire_tween --features standalone,nothreads -Zbuild-std --target wasm32-unknown-emscripten\
+  cargo build -p spire_tween --features include_gdext_lib,nothreads -Zbuild-std --target wasm32-unknown-emscripten\
   --artifact-dir="spire_tween_gdscript/addons/spire_tween/lib/wasm32-unknown-emscripten/release"

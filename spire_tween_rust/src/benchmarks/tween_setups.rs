@@ -1,5 +1,7 @@
-use godot::classes::{PackedScene, RandomNumberGenerator, Tween};
-use godot::prelude::*;
+use godot::{
+    classes::{PackedScene, RandomNumberGenerator, Tween},
+    prelude::*,
+};
 use spire_tween::prelude::*;
 
 /// Instantiate `amount` nodes from a packed scene and add them as children of `root`.
@@ -17,12 +19,7 @@ pub fn spawn_nodes(prefab: &Gd<PackedScene>, root: &mut Gd<Node>, amount: usize)
 pub fn generate_random_positions(amount: usize) -> Vec<Vector2> {
     let mut rng = RandomNumberGenerator::new_gd();
     (0..amount)
-        .map(|_| {
-            Vector2::new(
-                rng.randf_range(0.0, 1920.0) as f32,
-                rng.randf_range(0.0, 1080.0) as f32,
-            )
-        })
+        .map(|_| Vector2::new(rng.randf_range(0.0, 1920.0) as f32, rng.randf_range(0.0, 1080.0) as f32))
         .collect()
 }
 
@@ -30,14 +27,7 @@ pub fn generate_random_positions(amount: usize) -> Vec<Vector2> {
 pub fn generate_random_colors(amount: usize) -> Vec<Color> {
     let mut rng = RandomNumberGenerator::new_gd();
     (0..amount)
-        .map(|_| {
-            Color::from_rgba(
-                rng.randf() as f32,
-                rng.randf() as f32,
-                rng.randf() as f32,
-                rng.randf() as f32,
-            )
-        })
+        .map(|_| Color::from_rgba(rng.randf() as f32, rng.randf() as f32, rng.randf() as f32, rng.randf() as f32))
         .collect()
 }
 
@@ -50,11 +40,7 @@ fn ensure_builtin_tweeners(nodes: &[Gd<Node2D>], tweeners: &mut Vec<Gd<Tween>>) 
         return;
     }
     for i in tweeners_len..nodes_len {
-        let tween = nodes[i]
-            .clone()
-            .upcast::<Node>()
-            .create_tween()
-            .set_parallel();
+        let tween = nodes[i].clone().upcast::<Node>().create_tween().set_parallel();
         tweeners.push(tween);
     }
 }
@@ -106,12 +92,7 @@ pub fn tween_global_positions(
         ensure_builtin_tweeners(nodes, tweener_vec);
         for i in 0..froms.len() {
             tweener_vec[i]
-                .tween_property(
-                    &nodes[i],
-                    "global_position",
-                    &tos[i].to_variant(),
-                    duration,
-                )
+                .tween_property(&nodes[i], "global_position", &tos[i].to_variant(), duration)
                 .from(&froms[i].to_variant());
         }
     } else if use_sequence {
@@ -121,9 +102,7 @@ pub fn tween_global_positions(
         };
         ensure_spire_tweeners(nodes, tweener_vec);
         for i in 0..froms.len() {
-            let tween = nodes[i]
-                .do_global_position(tos[i], duration)
-                .begin_from(froms[i]);
+            let tween = nodes[i].do_global_position(tos[i], duration).begin_from(froms[i]);
             tweener_vec[i].join(tween);
         }
     } else {
@@ -164,12 +143,7 @@ pub fn tween_modulates(
         ensure_builtin_tweeners(nodes, tweener_vec);
         for i in 0..froms.len() {
             tweener_vec[i]
-                .tween_property(
-                    &nodes[i],
-                    "modulate",
-                    &tos[i].to_variant(),
-                    duration,
-                )
+                .tween_property(&nodes[i], "modulate", &tos[i].to_variant(), duration)
                 .from(&froms[i].to_variant());
         }
     } else if use_sequence {
@@ -179,17 +153,12 @@ pub fn tween_modulates(
         };
         ensure_spire_tweeners(nodes, tweener_vec);
         for i in 0..froms.len() {
-            let tween = nodes[i]
-                .do_color(tos[i], duration)
-                .begin_from(froms[i]);
+            let tween = nodes[i].do_color(tos[i], duration).begin_from(froms[i]);
             tweener_vec[i].join(tween);
         }
     } else {
         for i in 0..froms.len() {
-            nodes[i]
-                .do_color(tos[i], duration)
-                .begin_from(froms[i])
-                .register();
+            nodes[i].do_color(tos[i], duration).begin_from(froms[i]).register();
         }
     }
 }
