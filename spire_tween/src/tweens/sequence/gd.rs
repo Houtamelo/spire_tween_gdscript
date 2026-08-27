@@ -193,6 +193,35 @@ impl SpireSequence {
         this
     }
 
+    /// [b]Behavior:[/b] Closes the current block in the queue.
+    /// If the current block is non-empty, it will be finalized, and an empty block is added to the queue.
+    /// This prevents modification to the current block and prepares a new block for future use.
+    ///
+    /// [b]Note:[/b] If the current block is empty or no block exists, calling this method
+    /// has no effect. It is safe to call this method multiple times consecutively.
+    ///
+    /// # Example
+    /// If a sequence looks like this:
+    /// ```ignore
+    /// █░Block1░█->█░Block2░█
+    /// █░░░A░░░░█->█░░░D░░░░█
+    /// █░░░B░░░░█->█░░░E░░░░█
+    /// █░░░C░░░░█->█░░░░░░░░█
+    /// ```
+    ///
+    /// Closing the current block (`2`) will result in:
+    /// ```ignore
+    /// █░Block1░█->█░Block2░█->█░Block3░█
+    /// █░░░A░░░░█->█░░░D░░░░█->█░░░░░░░░█
+    /// █░░░B░░░░█->█░░░E░░░░█->█░░░░░░░░█
+    /// █░░░C░░░░█->█░░░░░░░░█->█░░░░░░░░█
+    /// ```
+    #[func(gd_self)]
+    pub fn close_current_block(this: Gd<Self>) -> Gd<Self> {
+        this.bind().to_mut().close_current_block();
+        this
+    }
+
     /// [b]Behavior:[/b] Places a tween in the last block of the sequence (will not create a new block).
     /// Compared to the built-in [Tween], this is equivalent to parallelizing a tween (see [method Tween.parallel]),
     /// except that this only requires a single method call.

@@ -350,6 +350,27 @@ impl SpireTween<Sequence> {
         self.t.queue.push(vec![item]);
     }
 
+    /// Closes the current block in the queue, if the current block is non-empty.
+    ///
+    /// Calling this method will finalize the current block by pushing an empty
+    /// block onto the queue. This prevents modification to the current block
+    /// and prepares a new block for future use.
+    ///
+    /// # Behavior
+    /// - If the current block is non-empty, it will be finalized, and an empty
+    ///   block is added to the queue.
+    /// - If the current block is empty or no block exists, calling this method
+    ///   has no effect. It is safe to call this method multiple times consecutively.
+    pub fn close_current_block(&mut self) {
+        // Closing only mutates when an non-empty block already exists.
+        // This means that it is harmless to call `close_current_block` multiple times.
+        if let Some(last_block) = self.t.queue.last_mut()
+            && !last_block.is_empty()
+        {
+            self.t.queue.push(vec![]);
+        }
+    }
+
     /// Adds a tween to the **last** block, running it in parallel with the block's
     /// existing items. Equivalent to Godot's `Tween.parallel()`, but in one call.
     ///
