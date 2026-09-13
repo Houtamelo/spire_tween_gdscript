@@ -1,5 +1,7 @@
-use godot::classes::{CollisionShape2D, Sprite2D};
-use godot::prelude::*;
+use godot::{
+    classes::{CollisionShape2D, Sprite2D},
+    prelude::*,
+};
 use spire_tween::prelude::*;
 
 use super::util::*;
@@ -63,14 +65,20 @@ impl ProcessModeVerifier {
     }
 
     fn on_idle_start(&mut self) {
-        if !self.active { return; }
+        if !self.active {
+            return;
+        }
         let sprite = self.sprite.as_ref().unwrap();
         self.scale_at_idle_start = Some(sprite.get_scale());
     }
 
     fn on_idle_end(&mut self) {
-        if !self.active { return; }
-        if (self.tween_is_stopped.as_ref().unwrap())() { return; }
+        if !self.active {
+            return;
+        }
+        if (self.tween_is_stopped.as_ref().unwrap())() {
+            return;
+        }
 
         let sprite = self.sprite.as_ref().unwrap();
         let scale_now = sprite.get_scale();
@@ -94,14 +102,20 @@ impl ProcessModeVerifier {
     }
 
     fn on_physics_start(&mut self) {
-        if !self.active { return; }
+        if !self.active {
+            return;
+        }
         let sprite = self.sprite.as_ref().unwrap();
         self.scale_at_physics_start = Some(sprite.get_scale());
     }
 
     fn on_physics_end(&mut self) {
-        if !self.active { return; }
-        if (self.tween_is_stopped.as_ref().unwrap())() { return; }
+        if !self.active {
+            return;
+        }
+        if (self.tween_is_stopped.as_ref().unwrap())() {
+            return;
+        }
 
         let sprite = self.sprite.as_ref().unwrap();
         let scale_now = sprite.get_scale();
@@ -197,7 +211,8 @@ impl PauseProcessModesTests {
         let shape = self.shape.clone();
         let final_value = Vector2::ONE * 6.0;
 
-        let handle = shape.do_scale(final_value, 3.0)
+        let handle = shape
+            .do_scale(final_value, 3.0)
             .with_pause_mode(PauseMode::Process)
             .register();
         let tracker = RcPtr::clone(&self.time_tracker);
@@ -219,7 +234,8 @@ impl PauseProcessModesTests {
         let initial_value = shape.get_scale();
         let final_value = Vector2::ONE * 6.0;
 
-        let handle = shape.do_scale(final_value, 3.0)
+        let handle = shape
+            .do_scale(final_value, 3.0)
             .with_pause_mode(PauseMode::Stop)
             .register();
         let tracker = RcPtr::clone(&self.time_tracker);
@@ -230,7 +246,12 @@ impl PauseProcessModesTests {
         Box::pin(async move {
             // Tween with STOP mode should not process while paused.
             // Use create_timer with process_always=true to wait during pause.
-            let timer = tree.create_timer_ex(5.0).process_always(true).process_in_physics(false).ignore_time_scale(true).done();
+            let timer = tree
+                .create_timer_ex(5.0)
+                .process_always(true)
+                .process_in_physics(false)
+                .ignore_time_scale(true)
+                .done();
             Signal::from_object_signal(&timer, "timeout").to_future::<()>().await;
             assert_eq!(shape.get_scale(), initial_value);
 
@@ -246,10 +267,10 @@ impl PauseProcessModesTests {
         let initial_value = sprite.get_scale();
         let final_value = Vector2::ONE * 4.0;
 
-        let handle = sprite.do_scale(final_value, 3.0)
+        let (handle, gd) = sprite
+            .do_scale(final_value, 3.0)
             .with_pause_mode(PauseMode::Bound)
             .register_with_gd_handle();
-        let gd = handle.gd_handle.as_ref().unwrap().clone();
         let tracker = RcPtr::clone(&self.time_tracker);
 
         sprite.set_process_mode(godot::classes::node::ProcessMode::DISABLED);
@@ -286,7 +307,8 @@ impl PauseProcessModesTests {
         let sprite = self.sprite.clone();
         let final_value = Vector2::ONE * 3.0;
 
-        let handle = sprite.do_scale(final_value, 4.0)
+        let handle = sprite
+            .do_scale(final_value, 4.0)
             .with_process_mode(ProcessMode::Idle)
             .register();
         let tracker = RcPtr::clone(&self.time_tracker);
@@ -296,7 +318,8 @@ impl PauseProcessModesTests {
         let h1 = handle.clone();
         let h2 = handle.clone();
         self.verifier.to_mut().activate(
-            ProcessPhase::Idle, sprite.clone(),
+            ProcessPhase::Idle,
+            sprite.clone(),
             move || h1.is_stopped(),
             move || h2.get_animation_position(),
         );
@@ -317,7 +340,8 @@ impl PauseProcessModesTests {
         let sprite = self.sprite.clone();
         let final_value = Vector2::ONE * 3.0;
 
-        let handle = sprite.do_scale(final_value, 4.0)
+        let handle = sprite
+            .do_scale(final_value, 4.0)
             .with_process_mode(ProcessMode::Physics)
             .register();
         let tracker = RcPtr::clone(&self.time_tracker);
@@ -327,7 +351,8 @@ impl PauseProcessModesTests {
         let h1 = handle.clone();
         let h2 = handle.clone();
         self.verifier.to_mut().activate(
-            ProcessPhase::Physics, sprite.clone(),
+            ProcessPhase::Physics,
+            sprite.clone(),
             move || h1.is_stopped(),
             move || h2.get_animation_position(),
         );
@@ -350,11 +375,11 @@ impl PauseProcessModesTests {
         let initial_value = sprite.get_scale();
         let final_value = Vector2::ONE * 4.0;
 
-        let handle = sprite.do_scale(final_value, 3.0)
+        let (handle, gd) = sprite
+            .do_scale(final_value, 3.0)
             .with_pause_mode(PauseMode::Bound)
             .with_process_mode(ProcessMode::Physics)
             .register_with_gd_handle();
-        let gd = handle.gd_handle.as_ref().unwrap().clone();
         let tracker = RcPtr::clone(&self.time_tracker);
 
         sprite.set_process_mode(godot::classes::node::ProcessMode::DISABLED);
@@ -365,7 +390,8 @@ impl PauseProcessModesTests {
         let h1 = handle.clone();
         let h2 = handle.clone();
         self.verifier.to_mut().activate(
-            ProcessPhase::Physics, sprite.clone(),
+            ProcessPhase::Physics,
+            sprite.clone(),
             move || h1.is_stopped(),
             move || h2.get_animation_position(),
         );

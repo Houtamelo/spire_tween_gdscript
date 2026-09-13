@@ -11,14 +11,14 @@ use super::*;
 pub trait ITweenable {
     /// Type of the GDScript-facing wrapper (`Gd<SpireSequence>`, `Gd<SpirePropertyVec2>`, …).
     /// Required to dispatch Godot `finished` / `loop_finished` signals.
-    type GdHandle: Signaler;
+    type GdHandle: Signaler + Clone;
 
     /// Creates the `Gd` wrapper and attaches it to the tween inside the [`RcPtr`].
     /// This enables `finished` and `loop_finished` Godot signals on the wrapper.
     /// Pure-Rust consumers don't need this — connect callbacks via
     /// [`SpireTween::finished_connect`] / [`SpireTween::loop_finished_connect`]
     /// instead, after calling [`SpireTween::register`].
-    fn attach_gd_handle(tween: &RcPtr<SpireTween<Self>>)
+    fn attach_gd_handle(tween: &RcPtr<SpireTween<Self>>) -> Self::GdHandle
     where Self: Sized;
 }
 
@@ -28,12 +28,9 @@ macro_rules! impl_tweenables {
             impl ITweenable for $Ty {
                 type GdHandle = $Handle;
 
-                fn attach_gd_handle(tween: &RcPtr<SpireTween<Self>>) {
+                fn attach_gd_handle(tween: &RcPtr<SpireTween<Self>>) -> Gd<$Wrapper> {
                     let gd: Gd<$Wrapper> = gd_from_native_tween::<$Wrapper>(tween.clone());
-                    // gd_from_native_tween already sets gd_handle inside the tween.
-                    // We just need to keep the Gd alive — but it's RefCounted and
-                    // gd_handle holds a clone, so it stays alive as long as the tween does.
-                    drop(gd);
+                    gd
                 }
             }
         )*

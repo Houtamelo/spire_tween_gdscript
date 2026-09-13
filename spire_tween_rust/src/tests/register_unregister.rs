@@ -1,5 +1,4 @@
-use godot::classes::CollisionShape2D;
-use godot::prelude::*;
+use godot::{classes::CollisionShape2D, prelude::*};
 use spire_tween::prelude::*;
 
 use super::util::*;
@@ -38,8 +37,7 @@ impl RegisterUnregisterTests {
         let initial_scale = shape.get_scale();
         let final_scale = Vector2::new(3.0, 3.0);
 
-        let handle = shape.do_scale(final_scale, 5.0).register_with_gd_handle();
-        let gd = handle.gd_handle.as_ref().unwrap().clone();
+        let (handle, gd) = shape.do_scale(final_scale, 5.0).register_with_gd_handle();
         gd.bind().unregister();
 
         let tracker = RcPtr::clone(&self.time_tracker);
@@ -71,8 +69,7 @@ impl RegisterUnregisterTests {
         let shape = self.shape.clone();
         let final_scale = Vector2::new(3.0, 3.0);
 
-        let mut handle = shape.do_scale(final_scale, 5.0).register_with_gd_handle();
-        let gd = handle.gd_handle.as_ref().unwrap().clone();
+        let (mut handle, gd) = shape.do_scale(final_scale, 5.0).register_with_gd_handle();
         gd.bind().unregister();
 
         Box::pin(async move {

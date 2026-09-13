@@ -1,5 +1,4 @@
-use godot::classes::Sprite2D;
-use godot::prelude::*;
+use godot::{classes::Sprite2D, prelude::*};
 use spire_tween::prelude::*;
 
 use super::util::*;
@@ -60,8 +59,7 @@ impl ErrorHandlingTests {
 
         // Uses `register_with_gd_handle` because this test verifies the Gd-handle
         // path's `is_registered()` reflects unregistration when the bound node is freed.
-        let handle = sprite.do_color_g(0.0, 3.0).register_with_gd_handle();
-        let gd = handle.gd_handle.as_ref().unwrap().clone();
+        let (handle, gd) = sprite.do_color_g(0.0, 3.0).register_with_gd_handle();
 
         let tracker = RcPtr::clone(&self.time_tracker);
 

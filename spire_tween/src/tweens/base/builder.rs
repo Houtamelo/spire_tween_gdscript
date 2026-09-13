@@ -43,6 +43,12 @@ impl<T: ITweenable> SpireTween<T> {
         }
     }
 
+    /// See [Self::set_loops]
+    pub fn with_loops(mut self, loops: i64, mode: LoopMode) -> Self {
+        self.set_loops(loops, mode);
+        self
+    }
+
     /// Registers a Rust closure to run when this tween completes its last loop, or
     /// when [`SpireTweener::force_complete`] is called.
     ///
@@ -101,12 +107,11 @@ where AnyTween: From<RcPtr<Self>>
     /// Use this when GDScript code (or any consumer of Godot signals) needs to listen
     /// for `finished`/`loop_finished`. Pure Rust users should prefer `register` plus
     /// `finished_connect`/`loop_finished_connect`.
-    pub fn register_with_gd_handle(self) -> RcPtr<Self> {
+    pub fn register_with_gd_handle(self) -> (RcPtr<Self>, T::GdHandle) {
         let tween = RcPtr::new(self);
-        if tween.to_mut().gd_handle.is_none() {
-            T::attach_gd_handle(&tween);
-        }
+        let handle = tween.gd_handle.clone().unwrap_or_else(|| T::attach_gd_handle(&tween));
+
         TM.tween_register(tween.clone());
-        tween
+        (tween, handle)
     }
 }

@@ -4,8 +4,7 @@
 //! This file verifies the alternate path: Godot signal emission via the attached
 //! `Gd<Spire...>` handle, used by GDScript code or any Godot signal listener.
 
-use godot::classes::CollisionShape2D;
-use godot::prelude::*;
+use godot::{classes::CollisionShape2D, prelude::*};
 use spire_tween::prelude::*;
 
 use super::util::*;
@@ -44,17 +43,11 @@ impl GdHandlePathTests {
         let shape = self.shape.clone();
         let final_value = Vector2::ONE * 2.0;
 
-        let with_handle = shape.do_scale(final_value, 1.0).register_with_gd_handle();
-        assert!(
-            with_handle.gd_handle.is_some(),
-            "register_with_gd_handle() must attach a Gd handle"
-        );
+        let (with_handle, gd) = shape.do_scale(final_value, 1.0).register_with_gd_handle();
+        assert!(gd.is_instance_valid(), "register_with_gd_handle() must attach a Gd handle");
 
         let without_handle = shape.do_scale(Vector2::ONE, 1.0).register();
-        assert!(
-            without_handle.gd_handle.is_none(),
-            "register() must NOT attach a Gd handle"
-        );
+        assert!(without_handle.gd_handle.is_none(), "register() must NOT attach a Gd handle");
 
         // Stop both so they don't interfere with subsequent tests.
         with_handle.to_mut().stop();
@@ -69,8 +62,7 @@ impl GdHandlePathTests {
         let shape = self.shape.clone();
         let final_value = Vector2::ONE * 2.0;
 
-        let handle = shape.do_scale(final_value, 1.0).register_with_gd_handle();
-        let gd = handle.gd_handle.as_ref().unwrap().clone();
+        let (handle, gd) = shape.do_scale(final_value, 1.0).register_with_gd_handle();
         let tracker = RcPtr::clone(&self.time_tracker);
 
         // Capture the timer at Godot-signal emission time.
@@ -103,25 +95,22 @@ impl GdHandlePathTests {
 
         let mut tween = shape.do_scale(final_value, 1.0);
         tween.set_loops(2, LoopMode::Yoyo);
-        let handle = tween.register_with_gd_handle();
-        let gd = handle.gd_handle.as_ref().unwrap().clone();
+        let (handle, gd) = tween.register_with_gd_handle();
         let tracker = RcPtr::clone(&self.time_tracker);
 
         let loop_emissions = RcPtr::new(0u32);
         let slot = loop_emissions.clone();
-        Signal::from_object_signal(&gd, "loop_finished").connect(
-            &Callable::from_fn("godot_loop_finished_capture", move |_| {
+        Signal::from_object_signal(&gd, "loop_finished").connect(&Callable::from_fn(
+            "godot_loop_finished_capture",
+            move |_| {
                 *slot.to_mut() += 1;
                 Variant::nil()
-            }),
-        );
+            },
+        ));
 
         Box::pin(async move {
             wait_finished(&handle, &tracker, 2.0).await;
-            assert_eq!(
-                *loop_emissions, 2,
-                "Godot `loop_finished` signal must fire twice for a 2-loop tween"
-            );
+            assert_eq!(*loop_emissions, 2, "Godot `loop_finished` signal must fire twice for a 2-loop tween");
         })
     }
 
@@ -130,8 +119,7 @@ impl GdHandlePathTests {
         let shape = self.shape.clone();
         let final_value = Vector2::ONE * 2.0;
 
-        let handle = shape.do_scale(final_value, 2.0).register_with_gd_handle();
-        let gd = handle.gd_handle.as_ref().unwrap().clone();
+        let (handle, gd) = shape.do_scale(final_value, 2.0).register_with_gd_handle();
 
         assert!(gd.bind().is_registered(), "Newly registered tween must report is_registered() == true");
 
