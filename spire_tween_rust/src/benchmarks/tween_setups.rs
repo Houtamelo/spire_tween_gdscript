@@ -40,7 +40,12 @@ fn ensure_builtin_tweeners(nodes: &[Gd<Node2D>], tweeners: &mut Vec<Gd<Tween>>) 
         return;
     }
     for i in tweeners_len..nodes_len {
-        let tween = nodes[i].clone().upcast::<Node>().create_tween().set_parallel();
+        let tween = nodes[i].clone().upcast::<Node>().create_tween();
+        #[cfg(feature = "api-4-4")]
+        let mut tween = tween.expect("Node::create_tween returned null");
+        #[cfg(not(feature = "api-4-4"))]
+        let mut tween = tween;
+        tween.set_parallel();
         tweeners.push(tween);
     }
 }
@@ -91,9 +96,12 @@ pub fn tween_global_positions(
         };
         ensure_builtin_tweeners(nodes, tweener_vec);
         for i in 0..froms.len() {
-            tweener_vec[i]
-                .tween_property(&nodes[i], "global_position", &tos[i].to_variant(), duration)
-                .from(&froms[i].to_variant());
+            let tweener = tweener_vec[i].tween_property(&nodes[i], "global_position", &tos[i].to_variant(), duration);
+            #[cfg(feature = "api-4-4")]
+            let mut tweener = tweener.expect("Tween::tween_property returned null");
+            #[cfg(not(feature = "api-4-4"))]
+            let mut tweener = tweener;
+            tweener.from(&froms[i].to_variant());
         }
     } else if use_sequence {
         let tweener_vec = match tweeners {
@@ -142,9 +150,12 @@ pub fn tween_modulates(
         };
         ensure_builtin_tweeners(nodes, tweener_vec);
         for i in 0..froms.len() {
-            tweener_vec[i]
-                .tween_property(&nodes[i], "modulate", &tos[i].to_variant(), duration)
-                .from(&froms[i].to_variant());
+            let tweener = tweener_vec[i].tween_property(&nodes[i], "modulate", &tos[i].to_variant(), duration);
+            #[cfg(feature = "api-4-4")]
+            let mut tweener = tweener.expect("Tween::tween_property returned null");
+            #[cfg(not(feature = "api-4-4"))]
+            let mut tweener = tweener;
+            tweener.from(&froms[i].to_variant());
         }
     } else if use_sequence {
         let tweener_vec = match tweeners {

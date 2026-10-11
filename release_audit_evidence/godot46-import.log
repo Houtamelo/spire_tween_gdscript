@@ -1,0 +1,53 @@
+Godot Engine v4.6.stable.official.89cea1439 - https://godotengine.org
+
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Started Project initialization (5 steps)[39m[0m
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Scanning file structure...[39m[0m
+[  16% ] [90m[1mfirst_scan_filesystem[22m | Loading global class names...[39m[0m
+[  33% ] [90m[1mfirst_scan_filesystem[22m | Verifying GDExtensions...[39m[0m
+Initialize godot-rust (API v4.6.stable.official, runtime v4.6.stable.official, safeguards strict)
+[  50% ] [90m[1mfirst_scan_filesystem[22m | Creating autoload scripts...[39m[0m
+[  66% ] [90m[1mfirst_scan_filesystem[22m | Initializing plugins...[39m[0m
+[  83% ] [90m[1mfirst_scan_filesystem[22m | Starting file scan...[39m[0m
+[92m[ DONE ][39m [1mfirst_scan_filesystem[22m
+[0m
+[   0% ] [90m[1mupdate_scripts_classes[22m | Started Registering global classes... (8 steps)[39m[0m
+[   0% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  11% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  22% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  33% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  44% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  55% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  66% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  77% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[92m[ DONE ][39m [1mupdate_scripts_classes[22m
+[0m
+[   0% ] [90m[1mloading_editor_layout[22m | Started Loading editor (5 steps)[39m[0m
+[   0% ] [90m[1mloading_editor_layout[22m | Loading editor layout...[39m[0m
+[  16% ] [90m[1mloading_editor_layout[22m | Loading docks...[39m[0m
+[92m[ DONE ][39m [1mloading_editor_layout[22m
+[0m
+ERROR: Couldn't find the given section "preset.0" and key "include_filter", and no default was given.
+   at: get_value (core/io/config_file.cpp:59)
+ERROR: Couldn't find the given section "preset.0" and key "exclude_filter", and no default was given.
+   at: get_value (core/io/config_file.cpp:59)
+ERROR: Couldn't find the given section "preset.0" and key "include_filter", and no default was given.
+   at: get_value (core/io/config_file.cpp:59)
+ERROR: Couldn't find the given section "preset.0" and key "exclude_filter", and no default was given.
+   at: get_value (core/io/config_file.cpp:59)
+
+================================================================
+handle_crash: Program crashed with signal 11
+Engine version: Godot Engine v4.6.stable.official (89cea143987d564363e15d207438530651d943ac)
+Dumping the backtrace. Please include this when reporting the bug on: https://github.com/godotengine/godot/issues
+[1] /lib64/libc.so.6(+0x43510) [0x7fdbc2643510] (??:0)
+[2] /tmp/spire-release-audit-3lu0eh8z/godot-4.6/Godot_v4.6-stable_linux.x86_64() [0x19d2abf] (??:0)
+[3] /tmp/spire-release-audit-3lu0eh8z/godot-4.6/Godot_v4.6-stable_linux.x86_64() [0x19d4e42] (??:0)
+[4] /tmp/spire-release-audit-3lu0eh8z/godot-4.6/Godot_v4.6-stable_linux.x86_64() [0x19de025] (??:0)
+[5] /tmp/spire-release-audit-3lu0eh8z/godot-4.6/Godot_v4.6-stable_linux.x86_64() [0x4d543dd] (??:0)
+[6] /tmp/spire-release-audit-3lu0eh8z/godot-4.6/Godot_v4.6-stable_linux.x86_64() [0x4736764] (??:0)
+[7] /tmp/spire-release-audit-3lu0eh8z/godot-4.6/Godot_v4.6-stable_linux.x86_64() [0x43319f] (??:0)
+[8] /lib64/libc.so.6(+0x2b53e) [0x7fdbc262b53e] (??:0)
+[9] /lib64/libc.so.6(__libc_start_main+0x8d) [0x7fdbc262b66b] (??:0)
+[10] /tmp/spire-release-audit-3lu0eh8z/godot-4.6/Godot_v4.6-stable_linux.x86_64() [0x48ab6a] (??:0)
+-- END OF C++ BACKTRACE --
+================================================================

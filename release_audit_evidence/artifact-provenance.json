@@ -1,0 +1,18 @@
+{
+  "source_commit": "f518d78521c46b33772556e261a89b712a425c92",
+  "current_lock_sha256": "80e605ee82060998c9aef0c838bba4cdc7d88bea704e83a668a6a183d18acaa6",
+  "binaries": {
+    "existing_linux_debug": {
+      "bytes": 268009320,
+      "sha256": "5f1f34995d48bf84fd8bfca84d28c1439aeca5a2a474db7d052ba1ab09fdac95"
+    },
+    "existing_linux_release": {
+      "bytes": 21983064,
+      "sha256": "4a1454375b2bf9bd91fd14947fed912731ba13c15b0e15bceb3840d283672a73"
+    },
+    "fresh_linux_debug": {
+      "bytes": 231627072,
+      "sha256": "45017cc7bca592382e36bff620376c670ac625a6c319a33df79a3229ff823aec"
+    }
+  }
+}

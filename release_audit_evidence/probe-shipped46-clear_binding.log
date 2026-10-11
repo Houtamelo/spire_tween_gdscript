@@ -1,0 +1,7 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.6.stable.official, safeguards strict)
+Godot Engine v4.6.stable.official.89cea1439 - https://godotengine.org
+
+CLEARED_COUNT 0
+AFTER_FREE registered=false stopped=true
+WARNING: ObjectDB instances leaked at exit (run with --verbose for details).
+     at: cleanup (core/object/object.cpp:2641)

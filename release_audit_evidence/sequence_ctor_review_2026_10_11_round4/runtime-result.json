@@ -1,0 +1,118 @@
+{
+  "command": [
+    "/home/houtamelo/bin/godot",
+    "--headless",
+    "--fixed-fps",
+    "120",
+    "--path",
+    "/tmp/spire-sequence-review4-99q8pg9u/project",
+    "res://main.tscn"
+  ],
+  "exit_code": 5,
+  "checks": [
+    {
+      "name": "queue_ctor_waits_for_block",
+      "passed": true
+    },
+    {
+      "name": "queue_ctor_constructs_once",
+      "passed": true
+    },
+    {
+      "name": "replay_reuses_constructed_child",
+      "passed": true
+    },
+    {
+      "name": "future_ctor_keeps_empty_parent_playing",
+      "passed": true
+    },
+    {
+      "name": "future_ctor_runs_at_offset",
+      "passed": true
+    },
+    {
+      "name": "long_insert_outlives_queue",
+      "passed": true
+    },
+    {
+      "name": "insert_advances_by_delta",
+      "passed": true
+    },
+    {
+      "name": "first_insert_delta_clipped",
+      "passed": true
+    },
+    {
+      "name": "rust_ctor_unregisters_child",
+      "passed": true
+    },
+    {
+      "name": "rust_ctor_inherits_ease",
+      "passed": true
+    },
+    {
+      "name": "duplicate_child_rejected",
+      "passed": true
+    },
+    {
+      "name": "self_cycle_rejected",
+      "passed": true
+    },
+    {
+      "name": "callable_ctor_materializes_and_unregisters",
+      "passed": true
+    },
+    {
+      "name": "force_block_ctor",
+      "passed": true
+    },
+    {
+      "name": "force_insert_ctor",
+      "passed": true
+    },
+    {
+      "name": "failure_then_valid_ctor",
+      "passed": true
+    },
+    {
+      "name": "insert_completion_keeps_duration",
+      "passed": false
+    },
+    {
+      "name": "nested_insert_passes_correct_excess",
+      "passed": false
+    },
+    {
+      "name": "insert_loop_carries_correct_excess",
+      "passed": false
+    },
+    {
+      "name": "insert_callback_not_repeated_early",
+      "passed": false
+    },
+    {
+      "name": "inserted_callback_contributes_excess",
+      "passed": false
+    },
+    {
+      "name": "bulk_pruning_after_spill",
+      "passed": true
+    },
+    {
+      "name": "bulk_force_pruning_after_spill",
+      "passed": true
+    },
+    {
+      "name": "stopped_future_insert_skipped",
+      "passed": true
+    },
+    {
+      "name": "bound_complete_reaches_ctor_child",
+      "passed": true
+    },
+    {
+      "name": "freed_bound_target_cancels_ctor_child",
+      "passed": true
+    }
+  ]
+}

@@ -42,7 +42,7 @@ macro_rules! gd_property_tween {
         #[class(base = RefCounted, no_init)]
         pub struct $GdName {
             pub base:  ::godot::obj::Base<::godot::classes::RefCounted>,
-            pub inner: UnsafeCell<RcPtr<SpireTween<LerpPropertyData<$T>>>>,
+            pub inner: UnsafeCell<TweenPtr<LerpPropertyData<$T>>>,
         }
 
         #[godot_api]

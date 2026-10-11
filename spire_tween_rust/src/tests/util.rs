@@ -59,6 +59,8 @@ impl TimeTracker {
     pub fn wait_seconds(&self, seconds: f64) -> impl Future<Output = ()> {
         let mut tree = Engine::singleton().get_main_loop().unwrap().cast::<SceneTree>();
         let timer = tree.create_timer(seconds);
+        #[cfg(feature = "api-4-4")]
+        let timer = timer.expect("SceneTree::create_timer returned null");
         let signal = Signal::from_object_signal(&timer, "timeout");
 
         async move {
@@ -92,7 +94,7 @@ impl WaitState {
 /// closure invocation), so the timing assertion is independent of when the async
 /// task is later resumed by the gdext deferred-wake.
 pub fn wait_finished<T>(
-    tween: &RcPtr<SpireTween<T>>,
+    tween: &TweenPtr<T>,
     tracker: &RcPtr<TimeTracker>,
     expected_end_time: f64,
 ) -> impl Future<Output = ()>
@@ -137,7 +139,7 @@ where
 /// Awaits the tween's `loop_finished` event using the closure-based connection API.
 /// No Godot `Gd` handle is required.
 pub fn wait_loop_finished<T>(
-    tween: &RcPtr<SpireTween<T>>,
+    tween: &TweenPtr<T>,
     tracker: &RcPtr<TimeTracker>,
     expected_end_time: f64,
 ) -> impl Future<Output = ()>
@@ -181,7 +183,7 @@ where
 
 /// Registers a synchronous timing assertion on the tween's `finished` event.
 /// Fires at emission time (no deferred wake), so timing is checked precisely.
-pub fn assert_finished_timing<T>(tween: &RcPtr<SpireTween<T>>, tracker: &RcPtr<TimeTracker>, expected_end_time: f64)
+pub fn assert_finished_timing<T>(tween: &TweenPtr<T>, tracker: &RcPtr<TimeTracker>, expected_end_time: f64)
 where T: ITweenable {
     let tracker_c = tracker.clone();
     tween.to_mut().finished_connect(
@@ -193,7 +195,7 @@ where T: ITweenable {
 /// Registers a closure to run whenever the tween's `finished` event fires.
 /// Persistent (does NOT auto-disconnect after first call). Use to detect
 /// unwanted re-emissions on stopped tweens.
-pub fn assert_upon_finished<T, F>(tween: &RcPtr<SpireTween<T>>, assert_fn: F)
+pub fn assert_upon_finished<T, F>(tween: &TweenPtr<T>, assert_fn: F)
 where
     T: ITweenable,
     F: FnMut() + 'static,
@@ -203,7 +205,7 @@ where
 
 /// Registers a closure to run whenever the tween's `loop_finished` event fires.
 /// Persistent. Use to detect unwanted re-emissions.
-pub fn assert_upon_loop_finished<T, F>(tween: &RcPtr<SpireTween<T>>, assert_fn: F)
+pub fn assert_upon_loop_finished<T, F>(tween: &TweenPtr<T>, assert_fn: F)
 where
     T: ITweenable,
     F: FnMut() + 'static,
@@ -213,7 +215,7 @@ where
 
 /// Captures a value at the exact moment the tween's `finished` event fires.
 pub fn snapshot_on_finished<T, V>(
-    tween: &RcPtr<SpireTween<T>>,
+    tween: &TweenPtr<T>,
     capture_fn: impl Fn() -> V + 'static,
 ) -> RcPtr<Option<V>>
 where

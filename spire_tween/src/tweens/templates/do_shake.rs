@@ -127,89 +127,112 @@ fn do_shake<T: GodotClass<Declarer = DeclEngine>>(
         -vibration_amplitude..=vibration_amplitude
     };
 
-    let mut rng = Xoshiro256PlusPlus::try_from_os_rng().ok().unwrap_or_else(|| {
-        godot_error!("[do_shake] Failed to acquire OS randomness, falling back to fixed seed.");
-        Xoshiro256PlusPlus::seed_from_u64(1337)
-    });
+    let prev_offset = RcPtr::new(Vector2::ZERO);
+    let prev_update = RcPtr::new(0.0);
+    let delta_time_sum = RcPtr::new(0.0);
 
-    let mut prev_angle = rng.random_range(0.0..=(2.0 * PI));
-    let mut prev_radius = rng.random_range(radius_range);
-    let mut prev_update = 0.0;
-    // Must be ZERO: the per-tick formula `next_pos = curr_pos - prev_offset
-    // + next_offset` cancels prev_offset against the offset already written
-    // to the node. Seeding with a non-applied offset propagates a permanent
-    // `-INITIAL` bias for the entire shake.
-    let mut prev_offset = Vector2::ZERO;
+    let callable = Callable::from_fn("do_shake", {
+        let mut node = node.clone();
+        let mut rng = Xoshiro256PlusPlus::try_from_os_rng().ok().unwrap_or_else(|| {
+            godot_warn!("[do_shake] Failed to acquire OS randomness, falling back to fixed seed.");
+            Xoshiro256PlusPlus::seed_from_u64(1337)
+        });
+        let mut prev_angle = rng.random_range(0.0..=(2.0 * PI));
+        let mut prev_radius = rng.random_range(radius_range);
+        let mut prev_update = RcPtr::clone(&prev_update);
+        let mut delta_time_sum = RcPtr::clone(&delta_time_sum);
+        let mut prev_offset = RcPtr::clone(&prev_offset);
 
-    let callable = Callable::from_fn("do_shake", move |args| {
-        let Some(time) = args
-            .first()
-            .and_then(|v| v.try_to_relaxed::<f64>().ok())
-        else {
-            godot_error!("[do_shake] BUG: Expected `time(f64)` argument.");
-            return Variant::nil();
-        };
-
-        // When the tween ends, return to the original(relative) position.
-        if time.approx_eq(&duration) {
-            let curr_pos = get_pos(&node);
-            let final_pos = curr_pos - prev_offset;
-            set_pos(&mut node, final_pos); // LOCAL!
-            return Variant::nil();
-        }
-
-        if time - prev_update < update_interval {
-            return Variant::nil();
-        }
-
-        let next_angle = {
-            let prev_angle_opposite = prev_angle + PI;
-            let angle_offset = rng.random_range(angle_vibration_range.clone());
-            prev_angle_opposite + angle_offset
-        };
-
-        let next_radius = {
-            let prev_radius_opposite = radius_avg_x2 - prev_radius;
-            let next_radius_range = match (amplitude_factor <= 0.5, prev_radius_opposite < radius_avg) {
-                (true, true) => {
-                    let range_min = real::lerp(prev_radius_opposite, radius_min, angle_close_weight);
-                    let range_max = real::lerp(prev_radius_opposite, radius_avg, angle_close_weight);
-                    range_min..=range_max
-                }
-                (true, false) => {
-                    let range_min = real::lerp(prev_radius_opposite, radius_avg, angle_close_weight);
-                    let range_max = real::lerp(prev_radius_opposite, radius_max, angle_close_weight);
-                    range_min..=range_max
-                }
-                (false, true) => {
-                    let range_max = real::lerp(radius_avg, radius_max, angle_far_weight);
-                    radius_min..=range_max
-                }
-                (false, false) => {
-                    let range_min = real::lerp(radius_min, radius_avg, angle_far_weight);
-                    range_min..=radius_max
-                }
+        move |args| {
+            let Some(time) = args.first().and_then(|v| v.try_to_relaxed::<f64>().ok()) else {
+                godot_error!("[do_shake] BUG: Expected `time(f64)` argument.");
+                return Variant::nil();
             };
 
-            rng.random_range(next_radius_range)
-        };
+            *delta_time_sum += f64::abs(time - *prev_update);
+            *prev_update = time;
 
-        let next_offset = Vector2 {
-            x: next_radius * next_angle.cos(),
-            y: next_radius * next_angle.sin(),
-        };
+            if *delta_time_sum < update_interval {
+                return Variant::nil();
+            }
 
-        let curr_pos = get_pos(&node);
-        let next_pos = curr_pos - prev_offset + next_offset;
-        set_pos(&mut node, next_pos); // LOCAL!
+            let next_angle = {
+                let prev_angle_opposite = prev_angle + PI;
+                let angle_offset = rng.random_range(angle_vibration_range.clone());
+                prev_angle_opposite + angle_offset
+            };
 
-        prev_update = time;
-        prev_angle = next_angle;
-        prev_radius = next_radius;
-        prev_offset = next_offset;
+            let next_radius = {
+                let prev_radius_opposite = radius_avg_x2 - prev_radius;
+                let next_radius_range = match (amplitude_factor <= 0.5, prev_radius_opposite < radius_avg) {
+                    (true, true) => {
+                        let range_min = real::lerp(prev_radius_opposite, radius_min, angle_close_weight);
+                        let range_max = real::lerp(prev_radius_opposite, radius_avg, angle_close_weight);
+                        range_min..=range_max
+                    }
+                    (true, false) => {
+                        let range_min = real::lerp(prev_radius_opposite, radius_avg, angle_close_weight);
+                        let range_max = real::lerp(prev_radius_opposite, radius_max, angle_close_weight);
+                        range_min..=range_max
+                    }
+                    (false, true) => {
+                        let range_max = real::lerp(radius_avg, radius_max, angle_far_weight);
+                        radius_min..=range_max
+                    }
+                    (false, false) => {
+                        let range_min = real::lerp(radius_min, radius_avg, angle_far_weight);
+                        range_min..=radius_max
+                    }
+                };
 
-        Variant::nil()
+                rng.random_range(next_radius_range)
+            };
+
+            let next_offset = Vector2 {
+                x: next_radius * next_angle.cos(),
+                y: next_radius * next_angle.sin(),
+            };
+
+            let curr_pos = get_pos(&node);
+            let next_pos = curr_pos - *prev_offset + next_offset;
+
+            prev_angle = next_angle;
+            prev_radius = next_radius;
+            *prev_offset = next_offset;
+            *delta_time_sum %= update_interval;
+
+            set_pos(&mut node, next_pos); // LOCAL!
+            Variant::nil()
+        }
     });
 
-    SpireTween::<LerpMethodData<f64>>::new(callable, 0.0, duration, duration)
+    let mut tween = SpireTween::<LerpMethodData<f64>>::new(callable, 0.0, duration, duration);
+    tween.loop_finished_connect(
+        {
+            let mut prev_update = RcPtr::clone(&prev_update);
+            move || {
+                *prev_update = 0.0;
+            }
+        },
+        SpireFlags::empty(),
+    );
+
+    tween.finished_connect(
+        {
+            let mut prev_offset = prev_offset;
+            let mut prev_update = prev_update;
+            let mut delta_time_sum = delta_time_sum;
+            move || {
+                let curr_pos = get_pos(&node);
+                let final_pos = curr_pos - *prev_offset;
+                *prev_offset = Vector2::ZERO;
+                *prev_update = 0.0;
+                *delta_time_sum = 0.0;
+                set_pos(&mut node, final_pos); // LOCAL!
+            }
+        },
+        SpireFlags::empty(),
+    );
+
+    tween
 }

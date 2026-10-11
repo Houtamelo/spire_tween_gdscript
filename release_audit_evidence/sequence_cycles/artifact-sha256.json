@@ -1,0 +1,23 @@
+[
+  {
+    "path": "spire_tween_gdscript/addons/spire_tween/lib/x86_64-unknown-linux-gnu/debug/libspire_tween.so",
+    "resolved_path": "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_gdscript/addons/spire_tween/lib/x86_64-unknown-linux-gnu/debug/libspire_tween.so",
+    "symlink": false,
+    "size": 237751008,
+    "sha256": "3ed9f3bae79fcd645aa1122c47682fb708c1ded4529c058c239806ad350a97ba"
+  },
+  {
+    "path": "spire_tween_gdscript/addons/spire_tween/lib/x86_64-unknown-linux-gnu/release/libspire_tween.so",
+    "resolved_path": "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_gdscript/addons/spire_tween/lib/x86_64-unknown-linux-gnu/release/libspire_tween.so",
+    "symlink": false,
+    "size": 23394472,
+    "sha256": "d4b1a8e7f35c265fd2340acf061eacb099b048578cece4cdee6401ee288f1109"
+  },
+  {
+    "path": "spire_tween_rust/addons/spire_tween/lib/x86_64-unknown-linux-gnu/release/libspire_tween_rust.so",
+    "resolved_path": "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/target/release/libspire_tween_rust.so",
+    "symlink": true,
+    "size": 16819864,
+    "sha256": "ac49f45a8afbb0d7d797d7e3204208fb961b43da373a788a3554a3aa10ef4501"
+  }
+]

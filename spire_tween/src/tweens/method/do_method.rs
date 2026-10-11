@@ -40,7 +40,7 @@ impl<C, T> DoMethod<T, ()> for Gd<C>
 where
     C: Inherits<Object>,
     T: ILerpable<BasicLerper: Default>,
-    AnyTween: From<RcPtr<SpireTween<LerpMethodData<T>>>>,
+    AnyTween: From<TweenPtr<LerpMethodData<T>>>,
     LerpMethodData<T>: ITweenable,
 {
     fn do_method(
@@ -63,7 +63,7 @@ impl<C, T> DoMethod<T, BaseMarker> for C
 where
     C: WithBaseField + Inherits<Object>,
     T: ILerpable<BasicLerper: Default> + 'static,
-    AnyTween: From<RcPtr<SpireTween<LerpMethodData<T>>>>,
+    AnyTween: From<TweenPtr<LerpMethodData<T>>>,
     LerpMethodData<T>: ITweenable,
 {
     fn do_method(

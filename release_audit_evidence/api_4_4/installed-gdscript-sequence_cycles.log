@@ -1,0 +1,32 @@
+Initialize godot-rust (API v4.4.stable.official, runtime v4.4.1.stable.official, safeguards strict)
+Godot Engine v4.4.1.stable.official.49a5bc7b6 - https://godotengine.org
+
+CYCLE_START test_two_node_cycles
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:779)
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:779)
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:779)
+CYCLE_PASS test_two_node_cycles
+CYCLE_START test_deeper_mixed_cycles
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:779)
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:779)
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:779)
+CYCLE_PASS test_deeper_mixed_cycles
+CYCLE_START test_rejection_preserves_state_binding_and_signals
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:779)
+CYCLE_PASS test_rejection_preserves_state_binding_and_signals
+CYCLE_START test_repeated_incoming_graph_is_rejected
+WARNING: [SpireTween] Sequence insertion rejected: tween 0x25de5090 is referenced more than once (cycle or unsupported reuse).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:772)
+CYCLE_PASS test_repeated_incoming_graph_is_rejected
+CYCLE_START test_valid_nested_append_join_insert_and_replay
+CYCLE_PASS test_valid_nested_append_join_insert_and_replay
+CYCLE_START test_wide_and_deep_valid_hierarchies
+CYCLE_PASS test_wide_and_deep_valid_hierarchies
+CYCLE_RESULT total=6 failed=0

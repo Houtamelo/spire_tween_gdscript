@@ -16,8 +16,9 @@ impl Spire {
     /// requires arguments, then either they should have default values, or you can
     /// use [method Callable.bind] to bind fixed arguments to the Callable.
     ///
-    /// [b]Note:[/b] If [param call] belongs to an object (this is checked with
-    /// [method Callable.get_object] != `null`), the tween will automatically delete itself if that object is freed.
+    /// [b]Note:[/b] If [param call] becomes invalid, including when its target
+    /// object is freed, the tween stops and unregisters on its next processing
+    /// step or when forced to complete. Cancellation does not emit completion signals.
     #[func]
     pub fn do_delayed_call(callable: Callable, delay: f64) -> Gd<SpireDelayedCall> {
         SpireDelayedCall::build(callable, delay)

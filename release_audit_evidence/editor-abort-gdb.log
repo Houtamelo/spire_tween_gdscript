@@ -1,0 +1,73 @@
+
+This GDB supports auto-downloading debuginfo from the following URLs:
+  <https://debuginfod.opensuse.org/>
+Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
+Debuginfod has been disabled.
+To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib64/libthread_db.so.1".
+[Detaching after vfork from child process 19]
+[New Thread 0x7ffff786b6c0 (LWP 21)]
+[New Thread 0x7ffff70416c0 (LWP 22)]
+[New Thread 0x7ffff68406c0 (LWP 23)]
+[New Thread 0x7ffff603f6c0 (LWP 24)]
+[New Thread 0x7ffff583e6c0 (LWP 25)]
+[New Thread 0x7ffff503d6c0 (LWP 26)]
+[New Thread 0x7ffff483c6c0 (LWP 27)]
+[New Thread 0x7fffdffff6c0 (LWP 28)]
+[New Thread 0x7fffdf7fe6c0 (LWP 29)]
+[New Thread 0x7fffdeffd6c0 (LWP 30)]
+[New Thread 0x7fffde7fc6c0 (LWP 31)]
+[New Thread 0x7fffddffb6c0 (LWP 32)]
+[New Thread 0x7fffdd7fa6c0 (LWP 33)]
+[New Thread 0x7fffdcff96c0 (LWP 34)]
+[New Thread 0x7fffbffff6c0 (LWP 35)]
+[New Thread 0x7fffbf7fe6c0 (LWP 36)]
+[New Thread 0x7fffbeffd6c0 (LWP 37)]
+[New Thread 0x7fffbe7fc6c0 (LWP 38)]
+[New Thread 0x7fffbdffb6c0 (LWP 39)]
+[New Thread 0x7fffbd7fa6c0 (LWP 40)]
+[New Thread 0x7fffbcff96c0 (LWP 41)]
+[New Thread 0x7fff9ffff6c0 (LWP 42)]
+[New Thread 0x7fff9f7fe6c0 (LWP 43)]
+[New Thread 0x7fff9effd6c0 (LWP 44)]
+[New Thread 0x7fff9e7fc6c0 (LWP 45)]
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+[New Thread 0x7fff9dffb6c0 (LWP 46)]
+
+[New Thread 0x7fff9d7fa6c0 (LWP 47)]
+[New Thread 0x7fff87fff6c0 (LWP 48)]
+[New Thread 0x7fff877fe6c0 (LWP 49)]
+[Thread 0x7fff877fe6c0 (LWP 49) exited]
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Started Project initialization (5 steps)[39m[0m
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Scanning file structure...[39m[0m
+[  16% ] [90m[1mfirst_scan_filesystem[22m | Loading global class names...[39m[0m
+[  33% ] [90m[1mfirst_scan_filesystem[22m | Verifying GDExtensions...[39m[0m
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards strict)
+[New Thread 0x7fff877fe6c0 (LWP 50)]
+[  50% ] [90m[1mfirst_scan_filesystem[22m | Creating autoload scripts...[39m[0m
+[  66% ] [90m[1mfirst_scan_filesystem[22m | Initializing plugins...[39m[0m
+[  83% ] [90m[1mfirst_scan_filesystem[22m | Starting file scan...[39m[0m
+[92m[ DONE ][39m [1mfirst_scan_filesystem[22m
+[0m
+[New Thread 0x7fff861ff6c0 (LWP 51)]
+[Thread 0x7fff861ff6c0 (LWP 51) exited]
+[   0% ] [90m[1mloading_editor_layout[22m | Started Loading editor (5 steps)[39m[0m
+[   0% ] [90m[1mloading_editor_layout[22m | Loading editor layout...[39m[0m
+[  16% ] [90m[1mloading_editor_layout[22m | Loading docks...[39m[0m
+[92m[ DONE ][39m [1mloading_editor_layout[22m
+[0m
+[Thread 0x7fff877fe6c0 (LWP 50) exited]
+[Thread 0x7fff87fff6c0 (LWP 48) exited]
+
+Thread 1 "godot" received signal SIGSEGV, Segmentation fault.
+0x0000000001c7ae9f in ?? ()
+#0  0x0000000001c7ae9f in ?? ()
+#1  0x0000000001c7c6f4 in ?? ()
+#2  0x0000000001c84e75 in ?? ()
+#3  0x0000000004e6c64d in ?? ()
+#4  0x0000000004963714 in ?? ()
+#5  0x000000000042d046 in ?? ()
+#6  0x00007ffff7c2b53e in __libc_start_call_main () from /lib64/libc.so.6
+#7  0x00007ffff7c2b66b in __libc_start_main_impl () from /lib64/libc.so.6
+#8  0x000000000048a6da in ?? ()

@@ -21,7 +21,7 @@ macro_rules! gd_method_tween {
         #[class(base = RefCounted, no_init)]
         pub struct $GdName {
             pub base:  ::godot::obj::Base<::godot::classes::RefCounted>,
-            pub inner: UnsafeCell<RcPtr<SpireTween<LerpMethodData<$T>>>>,
+            pub inner: UnsafeCell<TweenPtr<LerpMethodData<$T>>>,
         }
 
         #[godot_api]

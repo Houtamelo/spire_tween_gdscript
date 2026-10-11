@@ -1,0 +1,7 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards strict)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+SHAKE exact before_final=(0, 0) state=Stopped
+SHAKE exact after_final=(0, 0) state=Stopped
+SHAKE near before_final=(0, 0) state=Playing
+SHAKE near after_final=(19.850286, 4.196206) state=Stopped

@@ -1,0 +1,13 @@
+test_android_rejects_an_invalid_ndk_directory (test_build_scripts.BuildScriptChecks.test_android_rejects_an_invalid_ndk_directory) ... ok
+test_android_requires_an_ndk_setting (test_build_scripts.BuildScriptChecks.test_android_requires_an_ndk_setting) ... ok
+test_cross_windows_rejects_an_invalid_sdk_directory (test_build_scripts.BuildScriptChecks.test_cross_windows_rejects_an_invalid_sdk_directory) ... ok
+test_cross_windows_requires_an_sdk_setting (test_build_scripts.BuildScriptChecks.test_cross_windows_requires_an_sdk_setting) ... ok
+test_delivered_project_licenses_match (test_build_scripts.BuildScriptChecks.test_delivered_project_licenses_match) ... ok
+test_failed_build_stops_and_preserves_existing_artifacts (test_build_scripts.BuildScriptChecks.test_failed_build_stops_and_preserves_existing_artifacts) ... ok
+test_scripts_are_executable_and_parse (test_build_scripts.BuildScriptChecks.test_scripts_are_executable_and_parse) ... ok
+test_web_reports_a_missing_emscripten_tool (test_build_scripts.BuildScriptChecks.test_web_reports_a_missing_emscripten_tool) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.408s
+
+OK

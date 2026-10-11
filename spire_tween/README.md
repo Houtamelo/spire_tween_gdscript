@@ -48,12 +48,16 @@ seq.register();
   `arbitrary_self_types`, `stmt_expr_attributes`. A `rust-toolchain.toml` in the
   project root pins `nightly`.
 
+Godot 4.4 can be tested by explicitly enabling `api-4-4`, which forwards to
+`godot/api-4-4`. Ordinary builds use godot-rust's default API selection.
+
 ## The `prelude`
 
 `use spire_tween::prelude::*` brings in:
 
 - **Core** — `SpireTween`, `AnyTween`, `Sequence`, `SpireFlags`.
-- **Pointer** — `RcPtr`, `WeakPtr`.
+- **Tween pointers** — `TweenPtr<T>`, `WeakTweenPtr<T>`; `T` is the inner tween data, such as `Sequence`.
+- **Shared-state pointers** — `RcPtr<T>`, `WeakPtr<T>`.
 - **Enums** — `Ease`, `EaseKind`, `Evaluator`, `LoopMode`, `PauseMode`, `ProcessMode`, `Spiral`, `State`.
 - **Tween-data** — `LerpPropertyData`, `LerpMethodData`, plus the generated per-class adapter enums.
 - **Constructor traits** — `DoProperty`, `DoMethod`, `DoVarMethod`, `DoDelayedCall`, `DoDelayedCallable`.
@@ -67,12 +71,12 @@ Per-item docs live on [docs.rs](https://docs.rs/spire_tween).
 
 Pick based on who needs to listen for `finished` / `loop_finished`:
 
-- `SpireTween::register` — pure-Rust path. Returns an `RcPtr` handle. Subscribe to events via `SpireTween::finished_connect` / `loop_finished_connect` (closure-based).
+- `SpireTween::register` — pure-Rust path. Returns a `TweenPtr` handle. Subscribe to events via `SpireTween::finished_connect` / `loop_finished_connect` (closure-based).
 - `SpireTween::register_with_gd_handle` — also attaches a `Gd<Spire…>` wrapper so GDScript code (or any consumer of Godot signals) can connect to the `finished` / `loop_finished` Godot signals on that handle.
 
 ## Threading
 
-Spire is single-threaded — same constraint as Godot's main loop. The internal `RcPtr<T>` is a `Rc<UnsafeCell<T>>` wrapper that relies on Godot's main-thread invariant; do not register or access tweens from worker threads.
+Spire is single-threaded — same constraint as Godot's main loop. The internal `TweenPtr<T>` owns a `Rc<UnsafeCell<SpireTween<T>>>` that relies on Godot's main-thread invariant; do not register or access tweens from worker threads.
 
 ## License
 

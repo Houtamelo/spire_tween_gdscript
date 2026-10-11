@@ -5,7 +5,7 @@ use super::*;
 /// A simple tween that invokes a function (only once) after a delay.
 pub struct SpireDelayedCall {
     pub base:  Base<RefCounted>,
-    pub inner: UnsafeCell<RcPtr<SpireTween<Callable>>>,
+    pub inner: UnsafeCell<TweenPtr<Callable>>,
 }
 
 #[godot_api]

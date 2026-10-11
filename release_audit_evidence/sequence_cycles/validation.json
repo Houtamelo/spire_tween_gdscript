@@ -1,0 +1,320 @@
+[
+  {
+    "kind": "gdscript",
+    "profile": "debug",
+    "suite": "sequence_cycles",
+    "exit_code": 0,
+    "passed": true,
+    "warnings": 8,
+    "log": "gdscript-debug-sequence_cycles.log",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-cycle-integration-dpzox23b/gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/sequence_cycles_runner.tscn"
+    ]
+  },
+  {
+    "kind": "gdscript",
+    "profile": "debug",
+    "suite": "node_binding",
+    "exit_code": 0,
+    "passed": true,
+    "warnings": 0,
+    "log": "gdscript-debug-node_binding.log",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-cycle-integration-dpzox23b/gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/node_binding_runner.tscn"
+    ]
+  },
+  {
+    "kind": "gdscript",
+    "profile": "debug",
+    "suite": "ownership",
+    "exit_code": 0,
+    "passed": true,
+    "warnings": 0,
+    "log": "gdscript-debug-ownership.log",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-cycle-integration-dpzox23b/gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/ownership_runner.tscn"
+    ]
+  },
+  {
+    "kind": "gdscript",
+    "profile": "release",
+    "suite": "sequence_cycles",
+    "exit_code": 0,
+    "passed": true,
+    "warnings": 8,
+    "log": "gdscript-release-sequence_cycles.log",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-cycle-integration-dpzox23b/gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/sequence_cycles_runner.tscn"
+    ]
+  },
+  {
+    "kind": "gdscript",
+    "profile": "release",
+    "suite": "node_binding",
+    "exit_code": 0,
+    "passed": true,
+    "warnings": 0,
+    "log": "gdscript-release-node_binding.log",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-cycle-integration-dpzox23b/gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/node_binding_runner.tscn"
+    ]
+  },
+  {
+    "kind": "gdscript",
+    "profile": "release",
+    "suite": "ownership",
+    "exit_code": 0,
+    "passed": true,
+    "warnings": 0,
+    "log": "gdscript-release-ownership.log",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-cycle-integration-dpzox23b/gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/ownership_runner.tscn"
+    ]
+  },
+  {
+    "kind": "native",
+    "profile": "debug",
+    "suite": "sequence_cycles",
+    "exit_code": 0,
+    "passed": true,
+    "warnings": 9,
+    "log": "native-debug-sequence_cycles.log",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-cycle-integration-dpzox23b/native",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/sequence_cycles_runner.tscn"
+    ]
+  },
+  {
+    "kind": "native",
+    "profile": "debug",
+    "suite": "node_binding",
+    "exit_code": 0,
+    "passed": true,
+    "warnings": 0,
+    "log": "native-debug-node_binding.log",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-cycle-integration-dpzox23b/native",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/node_binding_runner.tscn"
+    ]
+  },
+  {
+    "kind": "native",
+    "profile": "debug",
+    "suite": "ownership",
+    "exit_code": 0,
+    "passed": true,
+    "warnings": 0,
+    "log": "native-debug-ownership.log",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-cycle-integration-dpzox23b/native",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/ownership_runner.tscn"
+    ]
+  },
+  {
+    "kind": "native",
+    "profile": "release",
+    "suite": "sequence_cycles",
+    "exit_code": 0,
+    "passed": true,
+    "warnings": 9,
+    "log": "native-release-sequence_cycles.log",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-cycle-integration-dpzox23b/native",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/sequence_cycles_runner.tscn"
+    ]
+  },
+  {
+    "kind": "native",
+    "profile": "release",
+    "suite": "node_binding",
+    "exit_code": 0,
+    "passed": true,
+    "warnings": 0,
+    "log": "native-release-node_binding.log",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-cycle-integration-dpzox23b/native",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/node_binding_runner.tscn"
+    ]
+  },
+  {
+    "kind": "native",
+    "profile": "release",
+    "suite": "ownership",
+    "exit_code": 0,
+    "passed": true,
+    "warnings": 0,
+    "log": "native-release-ownership.log",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-cycle-integration-dpzox23b/native",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/ownership_runner.tscn"
+    ]
+  },
+  {
+    "kind": "gdscript",
+    "suite": "sequence_cycles",
+    "exit_code": 0,
+    "passed": true,
+    "warnings": 8,
+    "log": "installed-gdscript-sequence_cycles.log",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/sequence_cycles_runner.tscn"
+    ]
+  },
+  {
+    "kind": "gdscript",
+    "suite": "node_binding",
+    "exit_code": 0,
+    "passed": true,
+    "warnings": 0,
+    "log": "installed-gdscript-node_binding.log",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/node_binding_runner.tscn"
+    ]
+  },
+  {
+    "kind": "gdscript",
+    "suite": "ownership",
+    "exit_code": 0,
+    "passed": true,
+    "warnings": 0,
+    "log": "installed-gdscript-ownership.log",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/ownership_runner.tscn"
+    ]
+  },
+  {
+    "kind": "native",
+    "suite": "sequence_cycles",
+    "exit_code": 0,
+    "passed": true,
+    "warnings": 9,
+    "log": "installed-native-sequence_cycles.log",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_rust",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/sequence_cycles_runner.tscn"
+    ]
+  },
+  {
+    "kind": "native",
+    "suite": "node_binding",
+    "exit_code": 0,
+    "passed": true,
+    "warnings": 0,
+    "log": "installed-native-node_binding.log",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_rust",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/node_binding_runner.tscn"
+    ]
+  },
+  {
+    "kind": "native",
+    "suite": "ownership",
+    "exit_code": 0,
+    "passed": true,
+    "warnings": 0,
+    "log": "installed-native-ownership.log",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_rust",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/ownership_runner.tscn"
+    ]
+  }
+]

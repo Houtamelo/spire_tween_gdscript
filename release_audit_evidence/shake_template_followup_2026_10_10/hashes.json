@@ -1,0 +1,8 @@
+{
+  "spire_tween/src/tweens/templates/do_shake.rs": "cc981e048410da5fde36f977ac190633a708d1f8d37e59488708bc33688aa508",
+  "spire_tween/src/tweens/base/spire_tween.rs": "d66b1970ea2822ae4252252b9aff63b39cad8094db82c0a5d51d607577f5e5f1",
+  "target/debug/libspire_shake_template_followup.so": "d758760b0d9cdfcd9335711b8b1332fd833ea771a342e8b41275b579ab0a1091",
+  "target/release/libspire_shake_template_followup.so": "42609e5bc7c6cd3abe2fe968044ff086559535df721c3c1de0ab8dece4bfe657",
+  "target/debug/libspire_shake_template_modulo_candidate.so": "5597a149e3322774c715ac6a8e2230c05fbe0a2829ca5905a9944a34036d9beb",
+  "target/release/libspire_shake_template_modulo_candidate.so": "195556dfa0c524b28897cec0d13740aa5825cd619d39ace6945ed938ae5da134"
+}

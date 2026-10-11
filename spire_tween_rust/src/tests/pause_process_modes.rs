@@ -252,6 +252,8 @@ impl PauseProcessModesTests {
                 .process_in_physics(false)
                 .ignore_time_scale(true)
                 .done();
+            #[cfg(feature = "api-4-4")]
+            let timer = timer.expect("SceneTree::create_timer returned null");
             Signal::from_object_signal(&timer, "timeout").to_future::<()>().await;
             assert_eq!(shape.get_scale(), initial_value);
 
@@ -280,6 +282,8 @@ impl PauseProcessModesTests {
         Box::pin(async move {
             // Paused tree + disabled sprite: tween shouldn't process.
             let timer = tree.create_timer(4.0);
+            #[cfg(feature = "api-4-4")]
+            let timer = timer.expect("SceneTree::create_timer returned null");
             Signal::from_object_signal(&timer, "timeout").to_future::<()>().await;
             // Timer does not update while tree is paused, so we do it manually here.
             tracker.to_mut().timer += 4.0;
@@ -288,6 +292,8 @@ impl PauseProcessModesTests {
             // Unpause tree, but sprite still disabled.
             tree.set_pause(false);
             let timer = tree.create_timer(2.0);
+            #[cfg(feature = "api-4-4")]
+            let timer = timer.expect("SceneTree::create_timer returned null");
             Signal::from_object_signal(&timer, "timeout").to_future::<()>().await;
             assert_eq!(sprite.get_scale(), initial_value);
 

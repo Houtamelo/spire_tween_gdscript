@@ -31,6 +31,10 @@ impl SpireTweener for SpireTween<Callable> {
     }
 
     fn process(&mut self, delta_time: f64, _is_tree_paused: bool) -> AdvanceTimeResult {
+        if !self.check_callable_validity() {
+            return AdvanceTimeResult::ShouldDespawn;
+        }
+
         if let Some(step) = self.handle_time_step(delta_time) {
             self.t.call(&[]);
 
@@ -46,7 +50,23 @@ impl SpireTweener for SpireTween<Callable> {
 }
 
 impl SpireTween<Callable> {
+    fn check_callable_validity(&mut self) -> bool {
+        if self.t.is_valid() {
+            return true;
+        }
+
+        self.stop();
+        // TweenPtr's Rc<UnsafeCell<SpireTween>> points at this same allocation.
+        // Trait methods only have &mut self, so enqueue removal by its address.
+        TM.tween_unregister_address(std::ptr::from_ref(self).cast());
+        false
+    }
+
     fn seek_end(&mut self) {
+        if !self.check_callable_validity() {
+            return;
+        }
+
         self.loop_time = self.delay;
         self.t.call(&[]);
         self.handle_finished();
@@ -57,6 +77,9 @@ impl SpireTween<Callable> {
     /// Constructs a delayed-call tween: invokes `callable` once after `delay` seconds
     /// have elapsed, then auto-stops. The callable receives no arguments — bind any
     /// extra args via `Callable::from_fn` or `Callable::bind` first.
+    /// Invalid callables stop and unregister on the next processing step, or
+    /// immediately when forced to complete. Cancellation does not emit finish
+    /// or loop-finish events.
     ///
     /// You usually don't call this directly — use [`DoDelayedCall::do_delayed_call`]
     /// (closure form) or [`DoDelayedCallable::do_delayed_callable`] (existing
@@ -65,6 +88,8 @@ impl SpireTween<Callable> {
     pub fn new(callable: Callable, delay: f64) -> Self { Self::new_with_data(callable).with_delay(delay) }
 
     /// Convenience: [`new`](Self::new) followed by [`register`](SpireTween::register).
-    /// Submits the tween to the global `TweenManager` and returns the [`RcPtr`] handle.
-    pub fn new_registered(callable: Callable, delay: f64) -> RcPtr<Self> { Self::new(callable, delay).register() }
+    /// Submits the tween to the global `TweenManager` and returns the [`TweenPtr`] handle.
+    pub fn new_registered(callable: Callable, delay: f64) -> TweenPtr<Callable> {
+        Self::new(callable, delay).register()
+    }
 }

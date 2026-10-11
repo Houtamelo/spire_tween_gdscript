@@ -1,0 +1,100 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards strict)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+DELAY_VALIDITY_START test_freed_node_during_delay
+ERROR: Freed target must cancel before its long delay elapses
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/delayed_call_validity.gd:9)
+       [1] test_freed_node_during_delay (res://examples/tests/delayed_call_validity.gd:27)
+       [2] frames (res://examples/tests/delayed_call_validity.gd:5)
+DELAY_VALIDITY_FAIL test_freed_node_during_delay
+DELAY_VALIDITY_START test_freed_refcounted_during_delay
+ERROR: Freed RefCounted target must cancel
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/delayed_call_validity.gd:9)
+       [1] test_freed_refcounted_during_delay (res://examples/tests/delayed_call_validity.gd:39)
+       [2] frames (res://examples/tests/delayed_call_validity.gd:5)
+DELAY_VALIDITY_FAIL test_freed_refcounted_during_delay
+DELAY_VALIDITY_START test_initially_invalid_callables
+ERROR: Initially invalid callable must cancel
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/delayed_call_validity.gd:9)
+       [1] test_initially_invalid_callables (res://examples/tests/delayed_call_validity.gd:51)
+       [2] frames (res://examples/tests/delayed_call_validity.gd:5)
+ERROR: Initially invalid callable must cancel
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/delayed_call_validity.gd:9)
+       [1] test_initially_invalid_callables (res://examples/tests/delayed_call_validity.gd:51)
+       [2] frames (res://examples/tests/delayed_call_validity.gd:5)
+DELAY_VALIDITY_FAIL test_initially_invalid_callables
+DELAY_VALIDITY_START test_invalid_force_complete_playing_and_paused
+ERROR: Invalid forced completion must stop and unregister immediately
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/delayed_call_validity.gd:9)
+       [1] test_invalid_force_complete_playing_and_paused (res://examples/tests/delayed_call_validity.gd:68)
+       [2] _ready (res://examples/tests/delayed_call_validity_runner.gd:17)
+ERROR: Invalid forced completion must not emit completion signals
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/delayed_call_validity.gd:9)
+       [1] test_invalid_force_complete_playing_and_paused (res://examples/tests/delayed_call_validity.gd:69)
+       [2] _ready (res://examples/tests/delayed_call_validity_runner.gd:17)
+ERROR: Invalid forced completion must stop and unregister immediately
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/delayed_call_validity.gd:9)
+       [1] test_invalid_force_complete_playing_and_paused (res://examples/tests/delayed_call_validity.gd:68)
+       [2] _ready (res://examples/tests/delayed_call_validity_runner.gd:17)
+ERROR: Invalid forced completion must not emit completion signals
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/delayed_call_validity.gd:9)
+       [1] test_invalid_force_complete_playing_and_paused (res://examples/tests/delayed_call_validity.gd:69)
+       [2] _ready (res://examples/tests/delayed_call_validity_runner.gd:17)
+DELAY_VALIDITY_FAIL test_invalid_force_complete_playing_and_paused
+DELAY_VALIDITY_START test_valid_anonymous_call_respects_delay
+DELAY_VALIDITY_PASS test_valid_anonymous_call_respects_delay
+DELAY_VALIDITY_START test_valid_refcounted_method
+DELAY_VALIDITY_PASS test_valid_refcounted_method
+DELAY_VALIDITY_START test_valid_force_complete_and_replay
+DELAY_VALIDITY_PASS test_valid_force_complete_and_replay
+DELAY_VALIDITY_START test_callback_invalidates_its_looping_target
+ERROR: Next loop must cancel after the target dies
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/delayed_call_validity.gd:9)
+       [1] test_callback_invalidates_its_looping_target (res://examples/tests/delayed_call_validity.gd:121)
+       [2] frames (res://examples/tests/delayed_call_validity.gd:5)
+ERROR: Only the successful loop may emit its loop signal
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/delayed_call_validity.gd:9)
+       [1] test_callback_invalidates_its_looping_target (res://examples/tests/delayed_call_validity.gd:122)
+       [2] frames (res://examples/tests/delayed_call_validity.gd:5)
+DELAY_VALIDITY_FAIL test_callback_invalidates_its_looping_target
+DELAY_VALIDITY_START test_invalid_sequence_child_does_not_block_following_call
+ERROR: Invalid sequence child must stop
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/delayed_call_validity.gd:9)
+       [1] test_invalid_sequence_child_does_not_block_following_call (res://examples/tests/delayed_call_validity.gd:133)
+       [2] frames (res://examples/tests/delayed_call_validity.gd:5)
+ERROR: Sequence must proceed past the cancelled child
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/delayed_call_validity.gd:9)
+       [1] test_invalid_sequence_child_does_not_block_following_call (res://examples/tests/delayed_call_validity.gd:134)
+       [2] frames (res://examples/tests/delayed_call_validity.gd:5)
+ERROR: Cancelled child must be removed without completion
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/delayed_call_validity.gd:9)
+       [1] test_invalid_sequence_child_does_not_block_following_call (res://examples/tests/delayed_call_validity.gd:135)
+       [2] frames (res://examples/tests/delayed_call_validity.gd:5)
+DELAY_VALIDITY_FAIL test_invalid_sequence_child_does_not_block_following_call
+DELAY_VALIDITY_RESULT total=9 failed=6

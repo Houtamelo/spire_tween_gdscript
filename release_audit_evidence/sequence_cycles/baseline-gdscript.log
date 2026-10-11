@@ -1,0 +1,122 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards strict)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+CYCLE_START test_two_node_cycles
+ERROR: Two-node cycle must be rejected for operation 0
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_cycles.gd:8)
+       [1] test_two_node_cycles (res://examples/tests/sequence_cycles.gd:30)
+       [2] _ready (res://examples/tests/sequence_cycles_runner.gd:17)
+ERROR: Rejected insertion must preserve the root
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_cycles.gd:8)
+       [1] test_two_node_cycles (res://examples/tests/sequence_cycles.gd:31)
+       [2] _ready (res://examples/tests/sequence_cycles_runner.gd:17)
+ERROR: Two-node cycle must be rejected for operation 1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_cycles.gd:8)
+       [1] test_two_node_cycles (res://examples/tests/sequence_cycles.gd:30)
+       [2] _ready (res://examples/tests/sequence_cycles_runner.gd:17)
+ERROR: Rejected insertion must preserve the root
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_cycles.gd:8)
+       [1] test_two_node_cycles (res://examples/tests/sequence_cycles.gd:31)
+       [2] _ready (res://examples/tests/sequence_cycles_runner.gd:17)
+ERROR: Two-node cycle must be rejected for operation 2
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_cycles.gd:8)
+       [1] test_two_node_cycles (res://examples/tests/sequence_cycles.gd:30)
+       [2] _ready (res://examples/tests/sequence_cycles_runner.gd:17)
+ERROR: Rejected insertion must preserve the root
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_cycles.gd:8)
+       [1] test_two_node_cycles (res://examples/tests/sequence_cycles.gd:31)
+       [2] _ready (res://examples/tests/sequence_cycles_runner.gd:17)
+Tween unregistered due to retain = false: spire_tween::tweens::sequence::data::Sequence-0x259aee70
+Tween unregistered due to retain = false: spire_tween::tweens::sequence::data::Sequence-0x257ad5d0
+Tween unregistered due to retain = false: spire_tween::tweens::sequence::data::Sequence-0x25ad77f0
+CYCLE_FAIL test_two_node_cycles
+CYCLE_START test_deeper_mixed_cycles
+ERROR: Three-node cycle must be rejected for operation 0
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_cycles.gd:8)
+       [1] test_deeper_mixed_cycles (res://examples/tests/sequence_cycles.gd:48)
+       [2] _ready (res://examples/tests/sequence_cycles_runner.gd:17)
+ERROR: Ancestor registration must survive a rejected deep insertion
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_cycles.gd:8)
+       [1] test_deeper_mixed_cycles (res://examples/tests/sequence_cycles.gd:49)
+       [2] _ready (res://examples/tests/sequence_cycles_runner.gd:17)
+ERROR: Three-node cycle must be rejected for operation 1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_cycles.gd:8)
+       [1] test_deeper_mixed_cycles (res://examples/tests/sequence_cycles.gd:48)
+       [2] _ready (res://examples/tests/sequence_cycles_runner.gd:17)
+ERROR: Ancestor registration must survive a rejected deep insertion
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_cycles.gd:8)
+       [1] test_deeper_mixed_cycles (res://examples/tests/sequence_cycles.gd:49)
+       [2] _ready (res://examples/tests/sequence_cycles_runner.gd:17)
+ERROR: Three-node cycle must be rejected for operation 2
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_cycles.gd:8)
+       [1] test_deeper_mixed_cycles (res://examples/tests/sequence_cycles.gd:48)
+       [2] _ready (res://examples/tests/sequence_cycles_runner.gd:17)
+ERROR: Ancestor registration must survive a rejected deep insertion
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_cycles.gd:8)
+       [1] test_deeper_mixed_cycles (res://examples/tests/sequence_cycles.gd:49)
+       [2] _ready (res://examples/tests/sequence_cycles_runner.gd:17)
+Tween unregistered due to retain = false: spire_tween::tweens::sequence::data::Sequence-0x257bc700
+Tween unregistered due to retain = false: spire_tween::tweens::sequence::data::Sequence-0x25ad9ef0
+Tween unregistered due to retain = false: spire_tween::tweens::sequence::data::Sequence-0x25a96f20
+CYCLE_FAIL test_deeper_mixed_cycles
+CYCLE_START test_rejection_preserves_state_binding_and_signals
+ERROR: Cycle insertion must fail
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_cycles.gd:8)
+       [1] test_rejection_preserves_state_binding_and_signals (res://examples/tests/sequence_cycles.gd:68)
+       [2] _ready (res://examples/tests/sequence_cycles_runner.gd:17)
+ERROR: Rejected child must retain playback and registration
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_cycles.gd:8)
+       [1] test_rejection_preserves_state_binding_and_signals (res://examples/tests/sequence_cycles.gd:69)
+       [2] _ready (res://examples/tests/sequence_cycles_runner.gd:17)
+CYCLE_FAIL test_rejection_preserves_state_binding_and_signals
+CYCLE_START test_repeated_incoming_graph_is_rejected
+ERROR: An incoming graph with a repeated tween must be rejected
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_cycles.gd:8)
+       [1] test_repeated_incoming_graph_is_rejected (res://examples/tests/sequence_cycles.gd:89)
+       [2] _ready (res://examples/tests/sequence_cycles_runner.gd:17)
+ERROR: Rejected candidate must remain unchanged
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_cycles.gd:8)
+       [1] test_repeated_incoming_graph_is_rejected (res://examples/tests/sequence_cycles.gd:90)
+       [2] _ready (res://examples/tests/sequence_cycles_runner.gd:17)
+CYCLE_FAIL test_repeated_incoming_graph_is_rejected
+Tween unregistered due to retain = false: spire_tween::tweens::sequence::data::Sequence-0x25a5b380
+CYCLE_START test_valid_nested_append_join_insert_and_replay
+CYCLE_PASS test_valid_nested_append_join_insert_and_replay
+Tween unregistered due to retain = false: spire_tween::tweens::sequence::data::Sequence-0x25a96f20
+CYCLE_START test_wide_and_deep_valid_hierarchies
+CYCLE_PASS test_wide_and_deep_valid_hierarchies
+Tween unregistered due to retain = false: spire_tween::tweens::sequence::data::Sequence-0x25a96f20
+Tween unregistered due to retain = false: spire_tween::tweens::sequence::data::Sequence-0x259b8cd0
+CYCLE_RESULT total=6 failed=4

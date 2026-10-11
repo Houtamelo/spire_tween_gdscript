@@ -1,0 +1,170 @@
+[
+  {
+    "run": "candidate-debug-gdscript",
+    "exit_code": 0,
+    "passed": true,
+    "command": [
+      "godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-binding-i861qtbo/gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/node_binding_runner.tscn"
+    ]
+  },
+  {
+    "run": "ownership-debug-gdscript",
+    "exit_code": 0,
+    "passed": true,
+    "command": [
+      "godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-binding-i861qtbo/gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/ownership_runner.tscn"
+    ]
+  },
+  {
+    "run": "candidate-release-gdscript",
+    "exit_code": 0,
+    "passed": true,
+    "command": [
+      "godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-binding-i861qtbo/gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/node_binding_runner.tscn"
+    ]
+  },
+  {
+    "run": "ownership-release-gdscript",
+    "exit_code": 0,
+    "passed": true,
+    "command": [
+      "godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-binding-i861qtbo/gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/ownership_runner.tscn"
+    ]
+  },
+  {
+    "run": "candidate-debug-native",
+    "exit_code": 0,
+    "passed": true,
+    "command": [
+      "godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-binding-i861qtbo/native",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/node_binding_runner.tscn"
+    ]
+  },
+  {
+    "run": "ownership-debug-native",
+    "exit_code": 0,
+    "passed": true,
+    "command": [
+      "godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-binding-i861qtbo/native",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/ownership_runner.tscn"
+    ]
+  },
+  {
+    "run": "candidate-release-native",
+    "exit_code": 0,
+    "passed": true,
+    "command": [
+      "godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-binding-i861qtbo/native",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/node_binding_runner.tscn"
+    ]
+  },
+  {
+    "run": "ownership-release-native",
+    "exit_code": 0,
+    "passed": true,
+    "command": [
+      "godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-binding-i861qtbo/native",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/ownership_runner.tscn"
+    ]
+  },
+  {
+    "run": "installed-gdscript-binding",
+    "exit_code": 0,
+    "passed": true,
+    "command": [
+      "godot",
+      "--headless",
+      "--path",
+      "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/node_binding_runner.tscn"
+    ]
+  },
+  {
+    "run": "installed-gdscript-ownership",
+    "exit_code": 0,
+    "passed": true,
+    "command": [
+      "godot",
+      "--headless",
+      "--path",
+      "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/ownership_runner.tscn"
+    ]
+  },
+  {
+    "run": "installed-native-binding",
+    "exit_code": 0,
+    "passed": true,
+    "command": [
+      "godot",
+      "--headless",
+      "--path",
+      "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_rust",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/node_binding_runner.tscn"
+    ]
+  },
+  {
+    "run": "installed-native-ownership",
+    "exit_code": 0,
+    "passed": true,
+    "command": [
+      "godot",
+      "--headless",
+      "--path",
+      "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_rust",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/ownership_runner.tscn"
+    ]
+  }
+]

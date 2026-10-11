@@ -1,0 +1,30 @@
+[
+  {
+    "kind": "gdscript",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/delayed_call_validity_runner.tscn"
+    ],
+    "exit_code": 0,
+    "passed": true
+  },
+  {
+    "kind": "native",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_rust",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/delayed_call_validity_runner.tscn"
+    ],
+    "exit_code": 0,
+    "passed": true
+  }
+]

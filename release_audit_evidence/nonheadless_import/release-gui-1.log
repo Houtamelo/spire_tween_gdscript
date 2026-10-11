@@ -1,0 +1,18 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+_amdgpu_device_initialize: amdgpu_get_auth (1) failed (-1)
+MESA: error: amdgpu: amdgpu_device_initialize failed.
+glx: failed to create dri3 screen
+failed to load driver: radeonsi
+_amdgpu_device_initialize: amdgpu_get_auth (1) failed (-1)
+MESA: error: amdgpu: amdgpu_device_initialize failed.
+glx: failed to create dri3 screen
+failed to load driver: radeonsi
+_amdgpu_device_initialize: amdgpu_get_auth (1) failed (-1)
+MESA: error: amdgpu: amdgpu_device_initialize failed.
+glx: failed to create dri3 screen
+failed to load driver: radeonsi
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:372)
+OpenGL API 4.6 (Core Profile) Mesa 26.1.5 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 22.1.8, 256 bits)
+
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards balanced)

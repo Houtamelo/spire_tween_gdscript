@@ -1,0 +1,10 @@
+{
+  "debug": {
+    "path": "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_gdscript/addons/spire_tween/lib/x86_64-unknown-linux-gnu/debug/libspire_tween.so",
+    "sha256": "3abc9192f1ce35676480fb3c4d68e42606226f64de63f2ee1c9c0ef16b50a09b"
+  },
+  "release": {
+    "path": "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_gdscript/addons/spire_tween/lib/x86_64-unknown-linux-gnu/release/libspire_tween.so",
+    "sha256": "5a94c28af8bcb20d6315d0a53d889c8a7e4dbf23eb38663bea9d707100e22b0c"
+  }
+}

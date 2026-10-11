@@ -1,0 +1,118 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards strict)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+CHECK PASS queue_ctor_waits_for_block
+CHECK PASS queue_ctor_constructs_once
+CHECK PASS replay_reuses_constructed_child
+CHECK PASS future_ctor_keeps_empty_parent_playing
+CHECK PASS future_ctor_runs_at_offset
+CHECK PASS long_insert_outlives_queue
+OBS two_steps parent=0.2 child=0.2
+CHECK PASS insert_advances_by_delta
+CHECK PASS first_insert_delta_clipped
+CHECK PASS rust_ctor_unregisters_child
+CHECK PASS rust_ctor_inherits_ease
+ERROR: Cannot add the same tween to the sequence more than once.
+   at: spire_tween::tweens::sequence::data::<impl spire_tween::tweens::base::spire_tween::SpireTween<spire_tween::tweens::sequence::data::Sequence>>::is_already_inside (spire_tween/src/tweens/sequence/data.rs:907)
+CHECK PASS duplicate_child_rejected
+ERROR: Cannot append a sequence tween to itself.
+   at: spire_tween::tweens::sequence::data::<impl spire_tween::tweens::base::spire_tween::SpireTween<spire_tween::tweens::sequence::data::Sequence>>::is_already_inside (spire_tween/src/tweens/sequence/data.rs:899)
+CHECK PASS self_cycle_rejected
+CHECK PASS callable_ctor_materializes_and_unregisters
+CHECK PASS force_block_ctor
+CHECK PASS force_insert_ctor
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:473)
+CHECK PASS failure_then_valid_ctor
+OBS insert_completion result=Completed { excess_time: 0.09999999999999998 } loop_time=0.5
+CHECK PASS insert_completion_keeps_duration
+OBS nested_insert_successor tail_elapsed=0.09999999999999998
+CHECK PASS nested_insert_passes_correct_excess
+OBS insert_loop_first calls=1 loop_time=0.09999999999999998
+CHECK PASS insert_loop_carries_correct_excess
+OBS insert_loop_next calls=1 elapsed=0.61
+CHECK PASS insert_callback_not_repeated_early
+OBS inserted_callback_with_queue result=Completed { excess_time: 0.09999999999999998 } loop_time=0.5
+CHECK PASS inserted_callback_contributes_excess
+OBS inserted_callable_with_queue result=Completed { excess_time: 0.09999999999999998 } loop_time=0.5
+CHECK PASS inserted_callable_contributes_excess
+CHECK PASS insert_restart_finishes_at_second_offset
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:473)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:473)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:473)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:473)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:473)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:473)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:473)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:473)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:473)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:473)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:473)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:473)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:473)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:473)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:473)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:473)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:473)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:473)
+CHECK PASS bulk_pruning_after_spill
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:473)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:473)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:473)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:473)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:473)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:473)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:473)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:473)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:473)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:473)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:473)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:473)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:473)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:473)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:473)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:473)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:473)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:473)
+CHECK PASS bulk_force_pruning_after_spill
+OBS stopped_future_insert result=Completed { excess_time: 0.1 }
+CHECK PASS stopped_future_insert_skipped
+CHECK PASS bound_complete_reaches_ctor_child
+CHECK PASS freed_bound_target_cancels_ctor_child
+REVIEW_RESULT total=28 failed=0

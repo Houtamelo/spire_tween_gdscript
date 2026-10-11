@@ -1,0 +1,135 @@
+[
+  {
+    "kind": "gdscript",
+    "suite": "ownership",
+    "cases": 15,
+    "engine": "4.4.1",
+    "command": [
+      "/tmp/spire-api-4-4-dekm99bq/engine/Godot_v4.4.1-stable_linux.x86_64",
+      "--headless",
+      "--path",
+      "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/ownership_runner.tscn"
+    ],
+    "exit_code": 0,
+    "passed": true,
+    "warnings": 0,
+    "log": "installed-gdscript-ownership.log"
+  },
+  {
+    "kind": "gdscript",
+    "suite": "node_binding",
+    "cases": 13,
+    "engine": "4.4.1",
+    "command": [
+      "/tmp/spire-api-4-4-dekm99bq/engine/Godot_v4.4.1-stable_linux.x86_64",
+      "--headless",
+      "--path",
+      "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/node_binding_runner.tscn"
+    ],
+    "exit_code": 0,
+    "passed": true,
+    "warnings": 0,
+    "log": "installed-gdscript-node_binding.log"
+  },
+  {
+    "kind": "gdscript",
+    "suite": "sequence_cycles",
+    "cases": 6,
+    "engine": "4.4.1",
+    "command": [
+      "/tmp/spire-api-4-4-dekm99bq/engine/Godot_v4.4.1-stable_linux.x86_64",
+      "--headless",
+      "--path",
+      "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/sequence_cycles_runner.tscn"
+    ],
+    "exit_code": 0,
+    "passed": true,
+    "warnings": 8,
+    "log": "installed-gdscript-sequence_cycles.log"
+  },
+  {
+    "kind": "native",
+    "suite": "api_compatibility",
+    "cases": 5,
+    "engine": "4.4.1",
+    "command": [
+      "/tmp/spire-api-4-4-dekm99bq/engine/Godot_v4.4.1-stable_linux.x86_64",
+      "--headless",
+      "--path",
+      "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_rust",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/api_compatibility_runner.tscn"
+    ],
+    "exit_code": 0,
+    "passed": true,
+    "warnings": 0,
+    "log": "installed-native-api_compatibility.log"
+  },
+  {
+    "kind": "native",
+    "suite": "ownership",
+    "cases": 10,
+    "engine": "4.4.1",
+    "command": [
+      "/tmp/spire-api-4-4-dekm99bq/engine/Godot_v4.4.1-stable_linux.x86_64",
+      "--headless",
+      "--path",
+      "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_rust",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/ownership_runner.tscn"
+    ],
+    "exit_code": 0,
+    "passed": true,
+    "warnings": 0,
+    "log": "installed-native-ownership.log"
+  },
+  {
+    "kind": "native",
+    "suite": "node_binding",
+    "cases": 11,
+    "engine": "4.4.1",
+    "command": [
+      "/tmp/spire-api-4-4-dekm99bq/engine/Godot_v4.4.1-stable_linux.x86_64",
+      "--headless",
+      "--path",
+      "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_rust",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/node_binding_runner.tscn"
+    ],
+    "exit_code": 0,
+    "passed": true,
+    "warnings": 0,
+    "log": "installed-native-node_binding.log"
+  },
+  {
+    "kind": "native",
+    "suite": "sequence_cycles",
+    "cases": 10,
+    "engine": "4.4.1",
+    "command": [
+      "/tmp/spire-api-4-4-dekm99bq/engine/Godot_v4.4.1-stable_linux.x86_64",
+      "--headless",
+      "--path",
+      "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_rust",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/sequence_cycles_runner.tscn"
+    ],
+    "exit_code": 0,
+    "passed": true,
+    "warnings": 9,
+    "log": "installed-native-sequence_cycles.log"
+  }
+]

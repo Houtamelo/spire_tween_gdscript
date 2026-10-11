@@ -1,0 +1,354 @@
+spire_tween_rust v0.1.0 (/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_rust)
+├── futures-timer feature "default"
+│   └── futures-timer v3.0.4
+├── godot feature "default"
+│   ├── godot v0.5.5
+│   │   ├── godot-core feature "default"
+│   │   │   └── godot-core v0.5.5
+│   │   │       ├── glam feature "debug-glam-assert"
+│   │   │       │   └── glam v0.32.1
+│   │   │       ├── glam feature "default"
+│   │   │       │   ├── glam v0.32.1
+│   │   │       │   └── glam feature "std"
+│   │   │       │       └── glam v0.32.1
+│   │   │       ├── godot-cell feature "default"
+│   │   │       │   └── godot-cell v0.5.5
+│   │   │       └── godot-ffi feature "default"
+│   │   │           └── godot-ffi v0.5.5
+│   │   │               └── libc feature "default"
+│   │   │                   ├── libc v0.2.189
+│   │   │                   └── libc feature "std"
+│   │   │                       └── libc v0.2.189
+│   │   │               [build-dependencies]
+│   │   │               ├── godot-bindings feature "default"
+│   │   │               │   └── godot-bindings v0.5.5
+│   │   │               │       └── gdextension-api feature "default"
+│   │   │               │           └── gdextension-api v0.5.1
+│   │   │               └── godot-codegen feature "default"
+│   │   │                   └── godot-codegen v0.5.5
+│   │   │                       ├── godot-bindings feature "default" (*)
+│   │   │                       ├── heck feature "default"
+│   │   │                       │   └── heck v0.5.0
+│   │   │                       ├── nanoserde feature "default"
+│   │   │                       │   ├── nanoserde v0.2.1
+│   │   │                       │   │   └── nanoserde-derive feature "default"
+│   │   │                       │   │       └── nanoserde-derive v0.2.1 (proc-macro)
+│   │   │                       │   ├── nanoserde feature "binary"
+│   │   │                       │   │   ├── nanoserde v0.2.1 (*)
+│   │   │                       │   │   ├── nanoserde feature "nanoserde-derive"
+│   │   │                       │   │   │   └── nanoserde v0.2.1 (*)
+│   │   │                       │   │   └── nanoserde-derive feature "binary"
+│   │   │                       │   │       └── nanoserde-derive v0.2.1 (proc-macro)
+│   │   │                       │   ├── nanoserde feature "json"
+│   │   │                       │   │   ├── nanoserde v0.2.1 (*)
+│   │   │                       │   │   ├── nanoserde feature "nanoserde-derive" (*)
+│   │   │                       │   │   └── nanoserde-derive feature "json"
+│   │   │                       │   │       └── nanoserde-derive v0.2.1 (proc-macro)
+│   │   │                       │   ├── nanoserde feature "ron"
+│   │   │                       │   │   ├── nanoserde v0.2.1 (*)
+│   │   │                       │   │   ├── nanoserde feature "nanoserde-derive" (*)
+│   │   │                       │   │   └── nanoserde-derive feature "ron"
+│   │   │                       │   │       └── nanoserde-derive v0.2.1 (proc-macro)
+│   │   │                       │   ├── nanoserde feature "std"
+│   │   │                       │   │   └── nanoserde v0.2.1 (*)
+│   │   │                       │   └── nanoserde feature "toml"
+│   │   │                       │       └── nanoserde v0.2.1 (*)
+│   │   │                       ├── proc-macro2 feature "default"
+│   │   │                       │   ├── proc-macro2 v1.0.107
+│   │   │                       │   │   └── unicode-ident feature "default"
+│   │   │                       │   │       └── unicode-ident v1.0.24
+│   │   │                       │   └── proc-macro2 feature "proc-macro"
+│   │   │                       │       └── proc-macro2 v1.0.107 (*)
+│   │   │                       └── quote feature "default"
+│   │   │                           ├── quote v1.0.47
+│   │   │                           │   └── proc-macro2 v1.0.107 (*)
+│   │   │                           └── quote feature "proc-macro"
+│   │   │                               ├── quote v1.0.47 (*)
+│   │   │                               └── proc-macro2 feature "proc-macro" (*)
+│   │   │                       [build-dependencies]
+│   │   │                       └── godot-bindings feature "default" (*)
+│   │   │       [build-dependencies]
+│   │   │       ├── godot-bindings feature "default" (*)
+│   │   │       └── godot-codegen feature "default" (*)
+│   │   └── godot-macros feature "default"
+│   │       └── godot-macros v0.5.5 (proc-macro)
+│   │           ├── proc-macro2 feature "default" (*)
+│   │           ├── quote feature "default" (*)
+│   │           ├── litrs feature "default"
+│   │           │   └── litrs v1.0.0
+│   │           │       └── proc-macro2 feature "default" (*)
+│   │           ├── litrs feature "proc-macro2"
+│   │           │   └── litrs v1.0.0 (*)
+│   │           ├── markdown feature "default"
+│   │           │   └── markdown v1.0.0
+│   │           │       ├── unicode-id feature "default"
+│   │           │       │   └── unicode-id v0.3.6
+│   │           │       └── unicode-id feature "no_std"
+│   │           │           └── unicode-id v0.3.6
+│   │           └── venial feature "default"
+│   │               └── venial v0.6.1
+│   │                   ├── proc-macro2 feature "default" (*)
+│   │                   └── quote feature "default" (*)
+│   │           [build-dependencies]
+│   │           └── godot-bindings feature "default" (*)
+│   └── godot feature "__codegen-full"
+│       ├── godot v0.5.5 (*)
+│       ├── godot-core feature "codegen-full"
+│       │   ├── godot-core v0.5.5 (*)
+│       │   └── godot-codegen feature "codegen-full"
+│       │       └── godot-codegen v0.5.5 (*)
+│       └── godot-macros feature "codegen-full"
+│           └── godot-macros v0.5.5 (proc-macro) (*)
+├── godot feature "experimental-wasm"
+│   └── godot v0.5.5 (*)
+├── godot feature "register-docs"
+│   ├── godot v0.5.5 (*)
+│   ├── godot-core feature "register-docs"
+│   │   └── godot-core v0.5.5 (*)
+│   └── godot-macros feature "register-docs"
+│       └── godot-macros v0.5.5 (proc-macro) (*)
+└── spire_tween feature "default"
+    └── spire_tween v1.4.0 (/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween)
+        ├── godot feature "default" (*)
+        ├── godot feature "experimental-wasm" (*)
+        ├── godot feature "register-docs" (*)
+        ├── markdown feature "default" (*)
+        ├── anyhow feature "default"
+        │   ├── anyhow v1.0.104
+        │   └── anyhow feature "std"
+        │       └── anyhow v1.0.104
+        ├── bitflags feature "default"
+        │   └── bitflags v2.13.1
+        ├── derived-deref feature "default"
+        │   └── derived-deref v2.1.0 (proc-macro)
+        │       ├── proc-macro2 feature "default" (*)
+        │       ├── quote feature "default" (*)
+        │       ├── syn feature "default"
+        │       │   ├── syn v2.0.119
+        │       │   │   ├── proc-macro2 v1.0.107 (*)
+        │       │   │   ├── quote v1.0.47 (*)
+        │       │   │   └── unicode-ident feature "default" (*)
+        │       │   ├── syn feature "clone-impls"
+        │       │   │   └── syn v2.0.119 (*)
+        │       │   ├── syn feature "derive"
+        │       │   │   └── syn v2.0.119 (*)
+        │       │   ├── syn feature "parsing"
+        │       │   │   └── syn v2.0.119 (*)
+        │       │   ├── syn feature "printing"
+        │       │   │   └── syn v2.0.119 (*)
+        │       │   └── syn feature "proc-macro"
+        │       │       ├── syn v2.0.119 (*)
+        │       │       ├── proc-macro2 feature "proc-macro" (*)
+        │       │       └── quote feature "proc-macro" (*)
+        │       └── syn feature "full"
+        │           └── syn v2.0.119 (*)
+        ├── fxhash feature "default"
+        │   └── fxhash v0.2.1
+        │       └── byteorder feature "default"
+        │           ├── byteorder v1.5.0
+        │           └── byteorder feature "std"
+        │               └── byteorder v1.5.0
+        ├── glam feature "default"
+        │   ├── glam v0.30.10
+        │   └── glam feature "std"
+        │       └── glam v0.30.10
+        ├── indexmap feature "default"
+        │   ├── indexmap v2.14.0
+        │   │   ├── equivalent v1.0.2
+        │   │   └── hashbrown v0.17.1
+        │   └── indexmap feature "std"
+        │       └── indexmap v2.14.0 (*)
+        ├── keyframe feature "default"
+        │   ├── keyframe v1.1.1
+        │   │   ├── mint feature "default"
+        │   │   │   └── mint v0.5.9
+        │   │   └── num-traits feature "libm"
+        │   │       └── num-traits v0.2.19
+        │   │           └── libm feature "default"
+        │   │               ├── libm v0.2.16
+        │   │               └── libm feature "arch"
+        │   │                   └── libm v0.2.16
+        │   │           [build-dependencies]
+        │   │           └── autocfg feature "default"
+        │   │               └── autocfg v1.5.1
+        │   ├── keyframe feature "alloc"
+        │   │   └── keyframe v1.1.1 (*)
+        │   └── keyframe feature "mint_types"
+        │       ├── keyframe v1.1.1 (*)
+        │       └── keyframe feature "mint"
+        │           └── keyframe v1.1.1 (*)
+        ├── litrs feature "default"
+        │   ├── litrs v0.4.2
+        │   │   └── proc-macro2 feature "default"
+        │   │       ├── proc-macro2 v1.0.107
+        │   │       │   └── unicode-ident feature "default" (*)
+        │   │       └── proc-macro2 feature "proc-macro"
+        │   │           └── proc-macro2 v1.0.107 (*)
+        │   └── litrs feature "proc-macro2"
+        │       └── litrs v0.4.2 (*)
+        ├── rand feature "default"
+        │   ├── rand v0.9.5
+        │   │   ├── rand_chacha v0.9.0
+        │   │   │   ├── ppv-lite86 feature "simd"
+        │   │   │   │   └── ppv-lite86 v0.2.21
+        │   │   │   │       ├── zerocopy feature "default"
+        │   │   │   │       │   └── zerocopy v0.8.56
+        │   │   │   │       └── zerocopy feature "simd"
+        │   │   │   │           └── zerocopy v0.8.56
+        │   │   │   └── rand_core feature "default"
+        │   │   │       └── rand_core v0.9.5
+        │   │   │           └── getrandom feature "default"
+        │   │   │               └── getrandom v0.3.4
+        │   │   │                   ├── libc v0.2.189
+        │   │   │                   └── cfg-if feature "default"
+        │   │   │                       └── cfg-if v1.0.4
+        │   │   └── rand_core v0.9.5 (*)
+        │   ├── rand feature "os_rng"
+        │   │   ├── rand v0.9.5 (*)
+        │   │   └── rand_core feature "os_rng"
+        │   │       └── rand_core v0.9.5 (*)
+        │   ├── rand feature "small_rng"
+        │   │   └── rand v0.9.5 (*)
+        │   ├── rand feature "std"
+        │   │   ├── rand v0.9.5 (*)
+        │   │   ├── rand feature "alloc"
+        │   │   │   └── rand v0.9.5 (*)
+        │   │   ├── rand_chacha feature "std"
+        │   │   │   ├── rand_chacha v0.9.0 (*)
+        │   │   │   ├── ppv-lite86 feature "std"
+        │   │   │   │   └── ppv-lite86 v0.2.21 (*)
+        │   │   │   └── rand_core feature "std"
+        │   │   │       ├── rand_core v0.9.5 (*)
+        │   │   │       └── getrandom feature "std"
+        │   │   │           └── getrandom v0.3.4 (*)
+        │   │   └── rand_core feature "std" (*)
+        │   ├── rand feature "std_rng"
+        │   │   └── rand v0.9.5 (*)
+        │   └── rand feature "thread_rng"
+        │       ├── rand v0.9.5 (*)
+        │       ├── rand feature "os_rng" (*)
+        │       ├── rand feature "std" (*)
+        │       └── rand feature "std_rng" (*)
+        ├── rand_xoshiro feature "default"
+        │   └── rand_xoshiro v0.7.0
+        │       └── rand_core feature "default" (*)
+        ├── replace_with feature "default"
+        │   ├── replace_with v0.1.8
+        │   └── replace_with feature "std"
+        │       └── replace_with v0.1.8
+        ├── smallvec feature "default"
+        │   └── smallvec v1.15.2
+        ├── smolset feature "default"
+        │   └── smolset v1.3.1
+        │       └── smallvec feature "default" (*)
+        └── spire_enum feature "default"
+            └── spire_enum v1.1.1
+                └── spire_enum_macros feature "default"
+                    └── spire_enum_macros v1.1.0 (proc-macro)
+                        ├── proc-macro2 feature "default" (*)
+                        ├── quote feature "default" (*)
+                        ├── syn feature "default" (*)
+                        ├── convert_case feature "default"
+                        │   └── convert_case v0.8.0
+                        │       └── unicode-segmentation feature "default"
+                        │           └── unicode-segmentation v1.13.3
+                        ├── itertools feature "default"
+                        │   ├── itertools v0.14.0
+                        │   │   └── either v1.17.0
+                        │   └── itertools feature "use_std"
+                        │       ├── itertools v0.14.0 (*)
+                        │       ├── itertools feature "use_alloc"
+                        │       │   └── itertools v0.14.0 (*)
+                        │       └── either feature "use_std"
+                        │           ├── either v1.17.0
+                        │           └── either feature "std"
+                        │               └── either v1.17.0
+                        └── parsel feature "default"
+                            └── parsel v0.16.0
+                                ├── proc-macro2 feature "default" (*)
+                                ├── proc-macro2 feature "span-locations"
+                                │   └── proc-macro2 v1.0.107 (*)
+                                ├── quote feature "default" (*)
+                                ├── syn feature "default" (*)
+                                ├── syn feature "extra-traits"
+                                │   └── syn v2.0.119 (*)
+                                ├── ordered-float feature "default"
+                                │   ├── ordered-float v4.6.0
+                                │   │   └── num-traits v0.2.19
+                                │   │       [build-dependencies]
+                                │   │       └── autocfg feature "default" (*)
+                                │   └── ordered-float feature "std"
+                                │       ├── ordered-float v4.6.0 (*)
+                                │       └── num-traits feature "std"
+                                │           └── num-traits v0.2.19 (*)
+                                └── parsel_derive feature "default"
+                                    └── parsel_derive v0.16.0 (proc-macro)
+                                        ├── proc-macro2 feature "default" (*)
+                                        ├── proc-macro2 feature "span-locations" (*)
+                                        ├── quote feature "default" (*)
+                                        ├── syn feature "default" (*)
+                                        ├── syn feature "extra-traits" (*)
+                                        └── deluxe feature "default"
+                                            ├── deluxe v0.5.0
+                                            │   ├── deluxe-core v0.5.0
+                                            │   │   ├── proc-macro2 feature "default" (*)
+                                            │   │   ├── quote feature "default" (*)
+                                            │   │   ├── syn feature "clone-impls" (*)
+                                            │   │   ├── syn feature "derive" (*)
+                                            │   │   ├── syn feature "extra-traits" (*)
+                                            │   │   ├── syn feature "parsing" (*)
+                                            │   │   ├── syn feature "printing" (*)
+                                            │   │   ├── arrayvec feature "default"
+                                            │   │   │   ├── arrayvec v0.7.8
+                                            │   │   │   └── arrayvec feature "std"
+                                            │   │   │       └── arrayvec v0.7.8
+                                            │   │   └── strsim feature "default"
+                                            │   │       └── strsim v0.10.0
+                                            │   ├── syn v2.0.119 (*)
+                                            │   ├── proc-macro2 feature "default" (*)
+                                            │   ├── deluxe-macros feature "default"
+                                            │   │   └── deluxe-macros v0.5.0 (proc-macro)
+                                            │   │       ├── deluxe-core v0.5.0 (*)
+                                            │   │       ├── proc-macro2 feature "default" (*)
+                                            │   │       ├── quote feature "default" (*)
+                                            │   │       ├── syn feature "parsing" (*)
+                                            │   │       ├── syn feature "proc-macro" (*)
+                                            │   │       ├── heck feature "default"
+                                            │   │       │   └── heck v0.4.1
+                                            │   │       ├── if_chain feature "default"
+                                            │   │       │   └── if_chain v1.0.3
+                                            │   │       └── proc-macro-crate feature "default"
+                                            │   │           └── proc-macro-crate v1.3.1
+                                            │   │               ├── once_cell feature "default"
+                                            │   │               │   ├── once_cell v1.21.4
+                                            │   │               │   └── once_cell feature "std"
+                                            │   │               │       ├── once_cell v1.21.4
+                                            │   │               │       └── once_cell feature "alloc"
+                                            │   │               │           ├── once_cell v1.21.4
+                                            │   │               │           └── once_cell feature "race"
+                                            │   │               │               └── once_cell v1.21.4
+                                            │   │               └── toml_edit feature "default"
+                                            │   │                   └── toml_edit v0.19.15
+                                            │   │                       ├── indexmap feature "default" (*)
+                                            │   │                       ├── indexmap feature "std" (*)
+                                            │   │                       ├── toml_datetime feature "default"
+                                            │   │                       │   └── toml_datetime v0.6.11
+                                            │   │                       └── winnow feature "default"
+                                            │   │                           ├── winnow v0.5.40
+                                            │   │                           └── winnow feature "std"
+                                            │   │                               ├── winnow v0.5.40
+                                            │   │                               └── winnow feature "alloc"
+                                            │   │                                   └── winnow v0.5.40
+                                            │   └── once_cell feature "default" (*)
+                                            ├── deluxe feature "full"
+                                            │   ├── deluxe v0.5.0 (*)
+                                            │   ├── syn feature "full" (*)
+                                            │   └── deluxe-core feature "full"
+                                            │       ├── deluxe-core v0.5.0 (*)
+                                            │       └── syn feature "full" (*)
+                                            └── deluxe feature "proc-macro"
+                                                ├── deluxe v0.5.0 (*)
+                                                ├── syn feature "proc-macro" (*)
+                                                └── deluxe-core feature "proc-macro"
+                                                    ├── deluxe-core v0.5.0 (*)
+                                                    └── syn feature "proc-macro" (*)

@@ -1,26 +1,22 @@
 use smallvec::{Array, SmallVec};
 
-pub struct SmolSet<A: Array>
+pub struct SmallSet<A: Array>
 where A::Item: PartialEq
 {
     inner: SmallVec<A>,
 }
 
-impl<A: Array> Default for SmolSet<A>
+impl<A: Array> Default for SmallSet<A>
 where A::Item: PartialEq
 {
     fn default() -> Self { Self::new() }
 }
 
-impl<A: Array> SmolSet<A>
+impl<A: Array> SmallSet<A>
 where A::Item: PartialEq
 {
     #[inline]
-    pub fn new() -> Self {
-        Self {
-            inner: SmallVec::new(),
-        }
-    }
+    pub fn new() -> Self { Self { inner: SmallVec::new() } }
 
     #[inline]
     pub fn insert(&mut self, val: A::Item) -> bool {
@@ -61,7 +57,7 @@ where A::Item: PartialEq
     pub fn retain<F: FnMut(&mut A::Item) -> bool>(&mut self, f: F) { self.inner.retain(f); }
 }
 
-impl<'a, A: Array> IntoIterator for &'a SmolSet<A>
+impl<'a, A: Array> IntoIterator for &'a SmallSet<A>
 where A::Item: PartialEq
 {
     type Item = &'a A::Item;

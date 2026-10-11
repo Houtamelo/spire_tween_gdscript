@@ -1,0 +1,65 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards strict)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+CALL exact time=0.500000000000 approx_end=false
+STATE exact pos=(-12.960681, 15.232228) loop_time=0.500000000000 state=Playing loops=0
+CALL exact time=1.000000000000 approx_end=true
+STATE exact pos=(0, 0) loop_time=1.000000000000 state=Stopped loops=1
+OBSERVATION exact matches_traced_cause=true final_offset_length=0.000000
+CALL near time=0.500000000000 approx_end=false
+STATE near pos=(19.050112, 6.0904207) loop_time=0.500000000000 state=Playing loops=0
+CALL near time=0.999999999000 approx_end=true
+STATE near pos=(0, 0) loop_time=0.999999999000 state=Playing loops=0
+CALL near time=1.000000000000 approx_end=true
+STATE near pos=(-19.050112, -6.0904207) loop_time=1.000000000000 state=Stopped loops=1
+OBSERVATION near matches_traced_cause=true final_offset_length=20.000000
+CALL several_near time=0.500000000000 approx_end=false
+STATE several_near pos=(-16.708092, 10.99271) loop_time=0.500000000000 state=Playing loops=0
+CALL several_near time=0.999995000000 approx_end=true
+STATE several_near pos=(0, 0) loop_time=0.999995000000 state=Playing loops=0
+CALL several_near time=0.999996000000 approx_end=true
+STATE several_near pos=(16.708092, -10.99271) loop_time=0.999996000000 state=Playing loops=0
+CALL several_near time=1.000000000000 approx_end=true
+STATE several_near pos=(33.416183, -21.98542) loop_time=1.000000000000 state=Stopped loops=1
+OBSERVATION several_near matches_traced_cause=true final_offset_length=40.000000
+CALL force_mid time=0.500000000000 approx_end=false
+STATE force_mid pos=(-11.661512, 16.248358) loop_time=0.500000000000 state=Playing loops=0
+CALL force_mid time=1.000000000000 approx_end=true
+STATE force_mid pos=(0, 0) loop_time=0.500000000000 state=Stopped loops=0
+OBSERVATION force_mid matches_traced_cause=true final_offset_length=0.000000
+CALL force_after_near time=0.500000000000 approx_end=false
+STATE force_after_near pos=(-17.729393, 9.255735) loop_time=0.500000000000 state=Playing loops=0
+CALL force_after_near time=0.999999999000 approx_end=true
+STATE force_after_near pos=(0, 0) loop_time=0.999999999000 state=Playing loops=0
+CALL force_after_near time=1.000000000000 approx_end=true
+STATE force_after_near pos=(17.729393, -9.255735) loop_time=0.999999999000 state=Stopped loops=0
+OBSERVATION force_after_near matches_traced_cause=true final_offset_length=20.000000
+CALL restart_loop time=0.500000000000 approx_end=false
+STATE restart_loop pos=(3.14879, -19.750572) loop_time=0.500000000000 state=Playing loops=0
+CALL restart_loop time=1.000000000000 approx_end=true
+STATE restart_loop pos=(0, 0) loop_time=0.000000000000 state=Playing loops=1
+CALL restart_loop time=0.500000000000 approx_end=false
+STATE restart_loop pos=(0, 0) loop_time=0.500000000000 state=Playing loops=1
+CALL restart_loop time=1.000000000000 approx_end=true
+STATE restart_loop pos=(-3.14879, 19.750572) loop_time=1.000000000000 state=Stopped loops=2
+OBSERVATION restart_loop matches_traced_cause=true final_offset_length=20.000000
+CALL replay time=0.500000000000 approx_end=false
+STATE replay pos=(-15.851194, 12.195885) loop_time=0.500000000000 state=Playing loops=0
+CALL replay time=1.000000000000 approx_end=true
+STATE replay pos=(0, 0) loop_time=1.000000000000 state=Stopped loops=1
+CALL replay time=0.500000000000 approx_end=false
+STATE replay pos=(0, 0) loop_time=0.500000000000 state=Playing loops=0
+CALL replay time=1.000000000000 approx_end=true
+STATE replay pos=(15.851194, -12.195885) loop_time=1.000000000000 state=Stopped loops=1
+OBSERVATION replay matches_traced_cause=true final_offset_length=20.000000
+CALL external_move time=0.500000000000 approx_end=false
+STATE external_move pos=(-11.735655, -16.19489) loop_time=0.500000000000 state=Playing loops=0
+CALL external_move time=0.999999999000 approx_end=true
+CALL external_move time=1.000000000000 approx_end=true
+STATE external_move pos=(111.73566, 66.194885) loop_time=1.000000000000 state=Stopped loops=1
+OBSERVATION external_move matches_traced_cause=true final_offset_length=129.871552
+CALL control_near time=0.500000000000 approx_end=false
+CALL control_near time=0.999999999000 approx_end=true
+CALL control_near time=1.000000000000 approx_end=true
+OBSERVATION control_near matches_traced_cause=true final_offset_length=20.000000
+SHAKE_INVESTIGATION observations=9 mismatches=0

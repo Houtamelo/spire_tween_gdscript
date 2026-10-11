@@ -38,17 +38,17 @@ pub trait SpireTweener {
     fn force_complete(&mut self);
 }
 
-/// Glue between a native [`RcPtr<SpireTween<T>>`] and its `Gd<Spire…>` wrapper. An
+/// Glue between a native [`TweenPtr<T>`] and its `Gd<Spire…>` wrapper. An
 /// implementation detail — implementations are emitted by `define_base_gd_methods!`
 /// inside the macros that build the wrapper types. Pure-Rust users won't call this.
 pub trait GdFromNativeTween: GodotClass {
     type Inner: ITweenable;
-    fn gd_from_native_tween(tween: RcPtr<SpireTween<Self::Inner>>) -> Gd<Self>;
+    fn gd_from_native_tween(tween: TweenPtr<Self::Inner>) -> Gd<Self>;
 }
 
 /// Free-function entry point to [`GdFromNativeTween::gd_from_native_tween`]. Used
 /// internally by the bridge to wrap a native tween in its GDScript-facing handle.
-pub fn gd_from_native_tween<T: GdFromNativeTween>(tween: RcPtr<SpireTween<T::Inner>>) -> Gd<T> {
+pub fn gd_from_native_tween<T: GdFromNativeTween>(tween: TweenPtr<T::Inner>) -> Gd<T> {
     T::gd_from_native_tween(tween)
 }
 

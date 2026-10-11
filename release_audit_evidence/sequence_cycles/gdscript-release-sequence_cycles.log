@@ -1,0 +1,72 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards balanced)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+CYCLE_START test_two_node_cycles
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:779)
+     GDScript backtrace (most recent call first):
+         [0] add_tween (res://examples/tests/sequence_cycles.gd:12)
+         [1] test_two_node_cycles (res://examples/tests/sequence_cycles.gd:25)
+         [2] _ready (res://examples/tests/sequence_cycles_runner.gd:17)
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:779)
+     GDScript backtrace (most recent call first):
+         [0] add_tween (res://examples/tests/sequence_cycles.gd:13)
+         [1] test_two_node_cycles (res://examples/tests/sequence_cycles.gd:25)
+         [2] _ready (res://examples/tests/sequence_cycles_runner.gd:17)
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:779)
+     GDScript backtrace (most recent call first):
+         [0] add_tween (res://examples/tests/sequence_cycles.gd:14)
+         [1] test_two_node_cycles (res://examples/tests/sequence_cycles.gd:25)
+         [2] _ready (res://examples/tests/sequence_cycles_runner.gd:17)
+Tween unregistered due to retain = false: spire_tween::tweens::sequence::data::Sequence-0xb4696d0
+Tween unregistered due to retain = false: spire_tween::tweens::sequence::data::Sequence-0xb2cefd0
+Tween unregistered due to retain = false: spire_tween::tweens::sequence::data::Sequence-0xb1aeaf0
+CYCLE_PASS test_two_node_cycles
+CYCLE_START test_deeper_mixed_cycles
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:779)
+     GDScript backtrace (most recent call first):
+         [0] add_tween (res://examples/tests/sequence_cycles.gd:12)
+         [1] test_deeper_mixed_cycles (res://examples/tests/sequence_cycles.gd:45)
+         [2] _ready (res://examples/tests/sequence_cycles_runner.gd:17)
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:779)
+     GDScript backtrace (most recent call first):
+         [0] add_tween (res://examples/tests/sequence_cycles.gd:13)
+         [1] test_deeper_mixed_cycles (res://examples/tests/sequence_cycles.gd:45)
+         [2] _ready (res://examples/tests/sequence_cycles_runner.gd:17)
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:779)
+     GDScript backtrace (most recent call first):
+         [0] add_tween (res://examples/tests/sequence_cycles.gd:14)
+         [1] test_deeper_mixed_cycles (res://examples/tests/sequence_cycles.gd:45)
+         [2] _ready (res://examples/tests/sequence_cycles_runner.gd:17)
+Tween unregistered due to retain = false: spire_tween::tweens::sequence::data::Sequence-0xb1647c0
+Tween unregistered due to retain = false: spire_tween::tweens::sequence::data::Sequence-0xb146cc0
+Tween unregistered due to retain = false: spire_tween::tweens::sequence::data::Sequence-0xb4c81e0
+CYCLE_PASS test_deeper_mixed_cycles
+CYCLE_START test_rejection_preserves_state_binding_and_signals
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:779)
+     GDScript backtrace (most recent call first):
+         [0] test_rejection_preserves_state_binding_and_signals (res://examples/tests/sequence_cycles.gd:64)
+         [1] _ready (res://examples/tests/sequence_cycles_runner.gd:17)
+CYCLE_PASS test_rejection_preserves_state_binding_and_signals
+CYCLE_START test_repeated_incoming_graph_is_rejected
+WARNING: [SpireTween] Sequence insertion rejected: tween 0xb33f7c0 is referenced more than once (cycle or unsupported reuse).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:772)
+     GDScript backtrace (most recent call first):
+         [0] test_repeated_incoming_graph_is_rejected (res://examples/tests/sequence_cycles.gd:87)
+         [1] _ready (res://examples/tests/sequence_cycles_runner.gd:17)
+CYCLE_PASS test_repeated_incoming_graph_is_rejected
+Tween unregistered due to retain = false: spire_tween::tweens::sequence::data::Sequence-0xb1f2070
+CYCLE_START test_valid_nested_append_join_insert_and_replay
+CYCLE_PASS test_valid_nested_append_join_insert_and_replay
+Tween unregistered due to retain = false: spire_tween::tweens::sequence::data::Sequence-0xb1aeaf0
+CYCLE_START test_wide_and_deep_valid_hierarchies
+CYCLE_PASS test_wide_and_deep_valid_hierarchies
+Tween unregistered due to retain = false: spire_tween::tweens::sequence::data::Sequence-0xb1aeaf0
+Tween unregistered due to retain = false: spire_tween::tweens::sequence::data::Sequence-0xb4beff0
+CYCLE_RESULT total=6 failed=0

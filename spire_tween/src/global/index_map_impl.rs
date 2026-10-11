@@ -28,18 +28,18 @@ impl TweensMap {
     pub fn node_bind(&self, node: Gd<Node>, weak: impl Into<WeakAnyTween>) {
         let entry = unsafe { self.node_ensure_tracked(node) };
         let weak = weak.into();
-        debug_assert!(!entry.bound_tweens.contains(&weak));
+        // Registration and sequence insertion revisit existing bindings.
         entry.bound_tweens.insert(weak);
     }
 
-    pub fn node_unbind<T: ITweenable>(&self, node: Gd<Node>, tween: &RcPtr<SpireTween<T>>) {
-        let address = tween.address();
+    pub fn node_unbind<T: ITweenable>(&self, node: Gd<Node>, tween: &TweenPtr<T>) {
         let node_id = node.instance_id_unchecked().to_i64();
+        self.node_unbind_address(node_id, tween.address());
+    }
+
+    pub(crate) fn node_unbind_address(&self, node_id: i64, address: *const ()) {
         if let Some(state) = unsafe { (*self.tracked_nodes.get()).get_mut(&node_id) } {
-            let pre_len = state.bound_tweens.len();
             state.bound_tweens.retain(|t| !std::ptr::eq(t.address(), address));
-            let post_len = state.bound_tweens.len();
-            debug_assert_eq!(pre_len - 1, post_len);
         }
     }
 
@@ -104,8 +104,12 @@ impl TweensMap {
     pub fn tween_unregister<T: Address>(&self, tween: &T) {
         //#[cfg(debug_assertions)]
         //godot_print!("Unregistering tween: {}-{:?}", type_name::<T>(), tween.address());
+        self.tween_unregister_address(tween.address());
+    }
+
+    pub(crate) fn tween_unregister_address(&self, address: *const ()) {
         unsafe {
-            (*self.deferred_ops.get()).insert(tween.address(), DeferredOp::Remove);
+            (*self.deferred_ops.get()).insert(address, DeferredOp::Remove);
         }
     }
 
@@ -115,16 +119,21 @@ impl TweensMap {
         let tween = tween.into();
         //#[cfg(debug_assertions)]
         //godot_print!("Registering tween: {}-{:?}", tween.inner_type_name(), tween.address());
-        self.check_binds(&tween);
+        if !self.check_binds(&tween) {
+            return;
+        }
         unsafe {
             (*self.deferred_ops.get()).insert(tween.address(), DeferredOp::Add(tween));
         }
     }
 
     #[inline]
-    pub fn tween_notify_sequence_child(&self, tween: &AnyTween) {
-        self.check_binds(tween);
+    pub fn tween_notify_sequence_child(&self, tween: &AnyTween) -> bool {
+        if !self.check_binds(tween) {
+            return false;
+        }
         self.tween_unregister(tween);
+        true
     }
 
     #[inline]
@@ -198,7 +207,31 @@ impl TweensMap {
         })
     }
 
-    pub fn check_binds(&self, tween: &AnyTween) {
+    pub fn check_binds(&self, tween: &AnyTween) -> bool {
+        if let AnyTween::Sequence(sequence) = tween {
+            // Validate before applying any binding changes, without collecting a snapshot.
+            for inner in sequence.iter_inner_tweens_recursive() {
+                if let Err(error) = inner {
+                    error.warn("Sequence binding traversal");
+                    return false;
+                }
+            }
+
+            for inner in sequence.iter_inner_tweens_recursive() {
+                match inner {
+                    Ok(inner) => self.check_one_bind(&inner),
+                    Err(error) => {
+                        error.warn("Sequence binding traversal");
+                        return false;
+                    }
+                }
+            }
+        }
+        self.check_one_bind(tween);
+        true
+    }
+
+    fn check_one_bind(&self, tween: &AnyTween) {
         match tween {
             AnyTween::Property(tween) => {
                 if let Some(ObjectOrNode::Node(owner)) = tween.get_owner()
@@ -214,12 +247,7 @@ impl TweensMap {
                     unsafe { self.node_ensure_tracked(owner.clone()) };
                 }
             }
-            AnyTween::DelayedCall(_) => {}
-            AnyTween::Sequence(seq) => {
-                for inner_tween in seq.iter_inner_tweens_non_recursive() {
-                    self.check_binds(&inner_tween);
-                }
-            }
+            AnyTween::DelayedCall(_) | AnyTween::Sequence(_) => {}
         }
 
         let weak = tween.downgrade();
@@ -255,7 +283,7 @@ impl TweensMap {
                     // Reference count for this is tested in `tick_physics`.
                     ProcessMode::Physics => true,
                     // User might not be referencing this anymore, release the reference if that's the case.
-                    ProcessMode::Manual => tween.strong_count() > 1,
+                    ProcessMode::Manual => tween.has_external_owners(),
                     ProcessMode::Idle => {
                         let delta_time =
                             if tween.get_ignore_time_scale() { unscaled_delta_time } else { scaled_delta_time };
@@ -298,7 +326,7 @@ impl TweensMap {
                     // Reference count for this is tested in `tick_process`.
                     ProcessMode::Idle => true,
                     // User might not be referencing this anymore, release the reference if that's the case.
-                    ProcessMode::Manual => tween.strong_count() > 1,
+                    ProcessMode::Manual => tween.has_external_owners(),
                     ProcessMode::Physics => {
                         let delta_time =
                             if tween.get_ignore_time_scale() { unscaled_delta_time } else { scaled_delta_time };

@@ -205,11 +205,11 @@ fn compile() {
     }
 }
 
-fn unregister_rc_ptr<T: ITweenable>(mut tween: RcPtr<SpireTween<T>>) { tween.unregister(); }
+fn unregister_tween_ptr<T: ITweenable>(mut tween: TweenPtr<T>) { tween.unregister(); }
 
 fn unregister_delegated_method(mut tween: AnyMethodTween) { tween.unregister(); }
 fn unregister_delegated_property(mut tween: AnyPropertyTween) { tween.unregister(); }
 fn unregister_delegated_any(mut tween: AnyTween) { tween.unregister(); }
 
-fn unregister_delayed_call(mut tween: RcPtr<SpireTween<Callable>>) { tween.unregister(); }
-fn unregister_sequence(mut tween: RcPtr<SpireTween<Sequence>>) { tween.unregister(); }
+fn unregister_delayed_call(mut tween: TweenPtr<Callable>) { tween.unregister(); }
+fn unregister_sequence(mut tween: TweenPtr<Sequence>) { tween.unregister(); }

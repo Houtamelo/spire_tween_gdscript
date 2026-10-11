@@ -1,0 +1,56 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.6.stable.official, safeguards strict)
+Godot Engine v4.6.stable.official.89cea1439 - https://godotengine.org
+
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Started Project initialization (5 steps)[39m[0m
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Scanning file structure...[39m[0m
+[  16% ] [90m[1mfirst_scan_filesystem[22m | Loading global class names...[39m[0m
+[  33% ] [90m[1mfirst_scan_filesystem[22m | Verifying GDExtensions...[39m[0m
+[  50% ] [90m[1mfirst_scan_filesystem[22m | Creating autoload scripts...[39m[0m
+[  66% ] [90m[1mfirst_scan_filesystem[22m | Initializing plugins...[39m[0m
+[  83% ] [90m[1mfirst_scan_filesystem[22m | Starting file scan...[39m[0m
+[92m[ DONE ][39m [1mfirst_scan_filesystem[22m
+[0m
+[   0% ] [90m[1msavepack[22m | Started Packing (102 steps)[39m[0m
+[   1% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/spire_tween.gdextension[39m[0m
+[   6% ] [90m[1msavepack[22m | Storing File: res://probe_baseline.gdc[39m[0m
+[  11% ] [90m[1msavepack[22m | Storing File: res://.godot/exported/133200997/export-147abba9f53a57fd09c799014af51fd6-probe_baseline.scn[39m[0m
+[  16% ] [90m[1msavepack[22m | Storing File: res://probe_clear_binding.gdc[39m[0m
+[  22% ] [90m[1msavepack[22m | Storing File: res://.godot/exported/133200997/export-b730df3cf95cdcbe1bcfdd3ac2b2062a-probe_clear_binding.scn[39m[0m
+[  27% ] [90m[1msavepack[22m | Storing File: res://probe_cycle.gdc[39m[0m
+[  32% ] [90m[1msavepack[22m | Storing File: res://.godot/exported/133200997/export-92f3a0b2f87805f7040afe3dd81b1ed8-probe_cycle.scn[39m[0m
+[  36% ] [90m[1msavepack[22m | Storing File: res://probe_delayed_owner_free.gdc[39m[0m
+[  42% ] [90m[1msavepack[22m | Storing File: res://.godot/exported/133200997/export-8a916317c67c1337d0dba0ac037eb267-probe_delayed_owner_free.scn[39m[0m
+[  47% ] [90m[1msavepack[22m | Storing File: res://probe_duplicate_binding.gdc[39m[0m
+[  52% ] [90m[1msavepack[22m | Storing File: res://.godot/exported/133200997/export-245fa630f331d0c97fbe5e346775ecd4-probe_duplicate_binding.scn[39m[0m
+[  57% ] [90m[1msavepack[22m | Storing File: res://probe_leak.gdc[39m[0m
+[  63% ] [90m[1msavepack[22m | Storing File: res://.godot/exported/133200997/export-994f9b9fce996f7b01b3a67d549ffd75-probe_leak.scn[39m[0m
+[  67% ] [90m[1msavepack[22m | Storing File: res://probe_reregister.gdc[39m[0m
+[  72% ] [90m[1msavepack[22m | Storing File: res://.godot/exported/133200997/export-e37a2fddfba1123393d73f262eb3b7fe-probe_reregister.scn[39m[0m
+[  77% ] [90m[1msavepack[22m | Storing File: res://probe_sync_signal_restart.gdc[39m[0m
+[  83% ] [90m[1msavepack[22m | Storing File: res://.godot/exported/133200997/export-6306bf403c81b40088ad40b290770b1d-probe_sync_signal_restart.scn[39m[0m
+[  88% ] [90m[1msavepack[22m | Storing File: res://probe_unbind_absent.gdc[39m[0m
+[  93% ] [90m[1msavepack[22m | Storing File: res://.godot/exported/133200997/export-2f907a783e1d5872321c92c71bf68c26-probe_unbind_absent.scn[39m[0m
+[  93% ] [90m[1msavepack[22m | Storing File: res://probe_baseline.gd.remap[39m[0m
+[  93% ] [90m[1msavepack[22m | Storing File: res://probe_baseline.tscn.remap[39m[0m
+[  93% ] [90m[1msavepack[22m | Storing File: res://probe_clear_binding.gd.remap[39m[0m
+[  93% ] [90m[1msavepack[22m | Storing File: res://probe_clear_binding.tscn.remap[39m[0m
+[  93% ] [90m[1msavepack[22m | Storing File: res://probe_cycle.gd.remap[39m[0m
+[  93% ] [90m[1msavepack[22m | Storing File: res://probe_cycle.tscn.remap[39m[0m
+[  93% ] [90m[1msavepack[22m | Storing File: res://probe_delayed_owner_free.gd.remap[39m[0m
+[  93% ] [90m[1msavepack[22m | Storing File: res://probe_delayed_owner_free.tscn.remap[39m[0m
+[  93% ] [90m[1msavepack[22m | Storing File: res://probe_duplicate_binding.gd.remap[39m[0m
+[  93% ] [90m[1msavepack[22m | Storing File: res://probe_duplicate_binding.tscn.remap[39m[0m
+[  93% ] [90m[1msavepack[22m | Storing File: res://probe_leak.gd.remap[39m[0m
+[  93% ] [90m[1msavepack[22m | Storing File: res://probe_leak.tscn.remap[39m[0m
+[  93% ] [90m[1msavepack[22m | Storing File: res://probe_reregister.gd.remap[39m[0m
+[  93% ] [90m[1msavepack[22m | Storing File: res://probe_reregister.tscn.remap[39m[0m
+[  93% ] [90m[1msavepack[22m | Storing File: res://probe_sync_signal_restart.gd.remap[39m[0m
+[  93% ] [90m[1msavepack[22m | Storing File: res://probe_sync_signal_restart.tscn.remap[39m[0m
+[  93% ] [90m[1msavepack[22m | Storing File: res://probe_unbind_absent.gd.remap[39m[0m
+[  93% ] [90m[1msavepack[22m | Storing File: res://probe_unbind_absent.tscn.remap[39m[0m
+[  93% ] [90m[1msavepack[22m | Storing File: res://.godot/global_script_class_cache.cfg[39m[0m
+[  93% ] [90m[1msavepack[22m | Storing File: res://.godot/uid_cache.bin[39m[0m
+[  93% ] [90m[1msavepack[22m | Storing File: res://.godot/extension_list.cfg[39m[0m
+[  93% ] [90m[1msavepack[22m | Storing File: res://project.binary[39m[0m
+[92m[ DONE ][39m [1msavepack[22m
+[0m

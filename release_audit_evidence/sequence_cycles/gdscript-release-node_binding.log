@@ -1,0 +1,42 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards balanced)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+BINDING_START test_clear_removes_all_manager_bindings
+BINDING_PASS test_clear_removes_all_manager_bindings
+Tween unregistered due to retain = false: spire_tween::tweens::sequence::data::Sequence-0xfb33f10
+BINDING_START test_clear_preserves_other_tween_binding
+BINDING_PASS test_clear_preserves_other_tween_binding
+Tween unregistered due to retain = false: spire_tween::tweens::sequence::data::Sequence-0xfddd8d0
+BINDING_START test_duplicate_bind_and_unbind_are_idempotent
+BINDING_PASS test_duplicate_bind_and_unbind_are_idempotent
+Tween unregistered due to retain = false: spire_tween::tweens::sequence::data::Sequence-0xfddd8d0
+BINDING_START test_unbind_absent_node_preserves_other_tween
+BINDING_PASS test_unbind_absent_node_preserves_other_tween
+Tween unregistered due to retain = false: spire_tween::tweens::sequence::data::Sequence-0xfddd8d0
+BINDING_START test_unbind_one_of_two_nodes_preserves_remaining_binding
+BINDING_PASS test_unbind_one_of_two_nodes_preserves_remaining_binding
+BINDING_START test_explicit_binding_survives_unregister_and_register
+BINDING_PASS test_explicit_binding_survives_unregister_and_register
+BINDING_START test_completed_bound_tween_registers_and_replays
+BINDING_PASS test_completed_bound_tween_registers_and_replays
+BINDING_START test_bound_children_append_join_and_insert
+Tween unregistered due to retain = false: spire_tween::tweens::sequence::data::Sequence-0xfe2adf0
+Tween unregistered due to retain = false: spire_tween::tweens::sequence::data::Sequence-0xfce5a10
+BINDING_PASS test_bound_children_append_join_and_insert
+Tween unregistered due to retain = false: spire_tween::tweens::sequence::data::Sequence-0xfddd8d0
+BINDING_START test_nested_bound_child_cancels_on_node_free
+BINDING_PASS test_nested_bound_child_cancels_on_node_free
+Tween unregistered due to retain = false: spire_tween::tweens::sequence::data::Sequence-0xfce5a10
+BINDING_START test_clear_after_bound_node_freed
+BINDING_PASS test_clear_after_bound_node_freed
+Tween unregistered due to retain = false: spire_tween::tweens::sequence::data::Sequence-0xfce5a10
+BINDING_START test_clear_preserves_automatic_property_owner
+Tween unregistered due to retain = false: spire_tween::tweens::property::data::LerpPropertyData<godot_core::builtin::vectors::vector2::Vector2>-0xfe01aa0
+BINDING_PASS test_clear_preserves_automatic_property_owner
+BINDING_START test_clear_preserves_automatic_method_owner
+Tween unregistered due to retain = false: spire_tween::tweens::method::data::LerpMethodData<godot_core::builtin::vectors::vector2::Vector2>-0xfcf3e10
+BINDING_PASS test_clear_preserves_automatic_method_owner
+BINDING_START test_clear_bound_pause_mode_resumes_processing
+BINDING_PASS test_clear_bound_pause_mode_resumes_processing
+Tween unregistered due to retain = false: spire_tween::tweens::sequence::data::Sequence-0xfce5a10
+BINDING_RESULT total=13 failed=0

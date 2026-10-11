@@ -69,8 +69,10 @@ use super::*;
 /// - Calling `stop()` on a child tween will make the sequence skip it within the current loop.
 /// - Calling `pause()` on a child tween won't do anything, the sequence will automatically call `play()` on it on
 ///   the next update.
-/// - We recommend against adding the same tween to the sequence more than once, or the same tween to multiple
-///   sequences, this will lead to undefined behavior (though it won't cause crashes or memory corruption).
+/// - Adding the same immediate child twice is rejected. A sequence child that would create a cycle, or
+///   contains repeated tweens, is rejected with a warning before changing its playback, ease, registration,
+///   or bindings.
+/// - Reusing a tween across multiple sequences is unsupported.
 /// - A child tween that never completes will make the entire sequence get stuck in that tween's block.
 /// - If a child tween has loops enabled, the sequence will wait for it to complete all its loops
 ///   before moving to the next block.
@@ -83,7 +85,7 @@ use super::*;
 #[class(base = RefCounted, no_init)]
 pub struct SpireSequence {
     pub base:  Base<RefCounted>,
-    pub inner: UnsafeCell<RcPtr<SpireTween<Sequence>>>,
+    pub inner: UnsafeCell<TweenPtr<Sequence>>,
 }
 
 #[godot_api]

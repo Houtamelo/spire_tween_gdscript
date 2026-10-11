@@ -54,7 +54,7 @@ impl SpiralTests {
         duration: f64,
         mode: Spiral,
         log_growth: Vector2,
-    ) -> RcPtr<SpireTween<LerpMethodData<f64>>> {
+    ) -> TweenPtr<LerpMethodData<f64>> {
         self.ball.do_spiral(
             CENTER, from_angle, to_angle, scale, duration, 0.0, shear, mode, log_growth,
         ).register()

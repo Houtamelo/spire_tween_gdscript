@@ -1,0 +1,11 @@
+--- current/do_shake.rs
++++ isolated-proposal/do_shake.rs
+@@ -155,6 +155,8 @@
+             let curr_pos = get_pos(&node);
+             let final_pos = curr_pos - prev_offset;
+             set_pos(&mut node, final_pos); // LOCAL!
++            prev_offset = Vector2::ZERO;
++            prev_update = 0.0;
+             return Variant::nil();
+         }
+ 

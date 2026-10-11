@@ -21,7 +21,7 @@ pub struct DialoguePlayer {
 
     /// Handle to the current tween, used to cancel it when switching lines.
     #[init(val = None)]
-    tween: Option<RcPtr<SpireTween<LerpPropertyData<i64>>>>,
+    tween: Option<TweenPtr<LerpPropertyData<i64>>>,
 }
 
 const DIALOGUES: &[&str] = &[

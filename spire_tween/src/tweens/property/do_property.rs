@@ -48,7 +48,7 @@ where
     C: Inherits<Object>,
     T: PropertyType,
     <T as ILerpable>::Lerper: Default,
-    AnyTween: From<RcPtr<SpireTween<LerpPropertyData<T>>>>,
+    AnyTween: From<TweenPtr<LerpPropertyData<T>>>,
     LerpPropertyData<T>: ITweenable,
 {
     fn do_property(
@@ -70,7 +70,7 @@ where
     C: WithBaseField + Inherits<Object>,
     T: PropertyType,
     <T as ILerpable>::Lerper: Default,
-    AnyTween: From<RcPtr<SpireTween<LerpPropertyData<T>>>>,
+    AnyTween: From<TweenPtr<LerpPropertyData<T>>>,
     LerpPropertyData<T>: ITweenable,
 {
     fn do_property(

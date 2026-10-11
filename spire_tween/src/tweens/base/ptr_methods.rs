@@ -1,6 +1,6 @@
 use super::*;
 
-impl<T: ITweenable> RcPtr<SpireTween<T>> {
+impl<T: ITweenable> TweenPtr<T> {
     /// Binds this tween to the given node.
     /// Unlike the built-in [Tween], Spire tweens can be bound to any number of nodes.
     ///
@@ -10,10 +10,13 @@ impl<T: ITweenable> RcPtr<SpireTween<T>> {
     ///   the tween will only process when all bound nodes are also processing
     ///   (this is checked by calling [method Node.can_process] on each).
     ///
-    /// [b]Note:[/b] Property/Method tweeners are automatically bound to the node they are animating,
-    /// manually attempting to bind them won't do anything, and there is no harm in doing so.
+    /// Repeatedly binding the same node is harmless. Explicit bindings persist
+    /// across unregister/register and sequence insertion.
+    ///
+    /// [b]Note:[/b] Property/Method tweeners also track their animated node's
+    /// lifetime automatically; explicit binding does not change that behavior.
     pub fn bind_node(&mut self, obj: Gd<Node>)
-    where WeakAnyTween: From<WeakPtr<SpireTween<T>>> {
+    where WeakAnyTween: From<WeakTweenPtr<T>> {
         self.bound_nodes_mut().insert(obj.clone());
         TM.node_bind(obj, self.downgrade());
     }
@@ -31,7 +34,7 @@ impl<T: ITweenable> RcPtr<SpireTween<T>> {
 
     pub fn re_register(&mut self)
     where AnyTween: From<Self> {
-        let ptr = RcPtr::clone(self);
+        let ptr = TweenPtr::clone(self);
         TM.tween_register(ptr);
     }
 

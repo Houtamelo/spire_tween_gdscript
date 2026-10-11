@@ -1,0 +1,17 @@
+{
+  "started": 97,
+  "finished": 97,
+  "cache_unchanged": true,
+  "ellipsis_each_once": true,
+  "logged_errors": [
+    "SCRIPT ERROR: Cannot call method 'call' on a null value.",
+    "ERROR: Parameter `tween`: expected Spire type, got `RefCounted`.",
+    "ERROR: Parameter `tween`: expected Spire type, got `RefCounted`.",
+    "ERROR: Parameter `tween`: expected Spire type, got `RefCounted`.",
+    "ERROR: Parameter `tween`: expected Spire type, got `null`.",
+    "ERROR: Cannot append a sequence tween to itself.",
+    "ERROR: Cannot add the same tween to the sequence more than once.",
+    "ERROR: Cannot add the same tween to the sequence more than once."
+  ],
+  "exit_code": 0
+}

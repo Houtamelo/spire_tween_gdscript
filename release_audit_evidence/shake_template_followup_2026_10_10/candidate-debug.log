@@ -1,0 +1,32 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards strict)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+SHAKE_REVIEW_PASS name=Node2D.exact.Restart error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Node2D.near.Restart error=0.000004 state=Stopped
+SHAKE_REVIEW_PASS name=Node2D.two_loops.Restart error=0.000004 state=Stopped
+SHAKE_REVIEW_PASS name=Node2D.three_loops.Restart error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Node2D.force_playing.Restart error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Node2D.force_paused.Restart error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Node2D.external_movement.Restart error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Node2D.replay_restoration error=0.000008
+SHAKE_REVIEW_PASS name=Node2D.restart_sampling elapsed_new_leg=0.01 sample_interval=0.25 position_change=0.000000
+SHAKE_REVIEW_PASS name=Node2D.replay_sampling elapsed_new_leg=0.01 sample_interval=0.25 position_change=0.000000
+SHAKE_REVIEW_PASS name=Node2D.zero_delta_after_large_step elapsed_new_tick=0 sample_interval=0.25 position_change=0.000000
+SHAKE_REVIEW_PASS name=Node2D.godot_finished_restored.force=false godot_observer_error=0.000000 native_observer_error=0.000000 after_return_error=0.000000
+SHAKE_REVIEW_PASS name=Node2D.godot_finished_restored.force=true godot_observer_error=0.000000 native_observer_error=0.000000 after_return_error=0.000000
+SHAKE_REVIEW_PASS name=Node2D.ordinary_sampling_interval elapsed_after_sample=0.01 sample_interval=0.25 position_change=0.000000
+SHAKE_REVIEW_PASS name=Control.exact.Restart error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Control.near.Restart error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Control.two_loops.Restart error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Control.three_loops.Restart error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Control.force_playing.Restart error=0.000004 state=Stopped
+SHAKE_REVIEW_PASS name=Control.force_paused.Restart error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Control.external_movement.Restart error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Control.replay_restoration error=0.000000
+SHAKE_REVIEW_PASS name=Control.restart_sampling elapsed_new_leg=0.01 sample_interval=0.25 position_change=0.000000
+SHAKE_REVIEW_PASS name=Control.replay_sampling elapsed_new_leg=0.01 sample_interval=0.25 position_change=0.000000
+SHAKE_REVIEW_PASS name=Control.zero_delta_after_large_step elapsed_new_tick=0 sample_interval=0.25 position_change=0.000000
+SHAKE_REVIEW_PASS name=Control.godot_finished_restored.force=false godot_observer_error=0.000000 native_observer_error=0.000000 after_return_error=0.000000
+SHAKE_REVIEW_PASS name=Control.godot_finished_restored.force=true godot_observer_error=0.000000 native_observer_error=0.000000 after_return_error=0.000000
+SHAKE_REVIEW_PASS name=Control.ordinary_sampling_interval elapsed_after_sample=0.01 sample_interval=0.25 position_change=0.000000
+SHAKE_REVIEW_RESULT total=28 failed=0

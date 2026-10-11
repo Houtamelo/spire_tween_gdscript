@@ -5,8 +5,8 @@ use super::*;
 pub enum AnyTween {
     Property(AnyPropertyTween),
     Method(AnyMethodTween),
-    DelayedCall(RcPtr<SpireTween<Callable>>),
-    Sequence(RcPtr<SpireTween<Sequence>>),
+    DelayedCall(TweenPtr<Callable>),
+    Sequence(TweenPtr<Sequence>),
 }
 
 #[delegate_impl]
@@ -36,8 +36,8 @@ define_base_methods! { AnyTween }
 pub enum WeakAnyTween {
     Property(WeakPropertyTween),
     Method(WeakMethodTween),
-    DelayedCall(WeakPtr<SpireTween<Callable>>),
-    Sequence(WeakPtr<SpireTween<Sequence>>),
+    DelayedCall(WeakTweenPtr<Callable>),
+    Sequence(WeakTweenPtr<Sequence>),
 }
 
 impl WeakAnyTween {

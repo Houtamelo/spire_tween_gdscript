@@ -1,0 +1,387 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards strict)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Succesfully loaded cached results
+Scene: res://examples/tests/delays.tscn
+---------------------------------
+Test Started: test_delay_is_respected
+[000000f, 00.0000s] Waiting 4.9 seconds...
+[000360f, 06.0166s] Finished
+Test Finished: test_delay_is_respected
+---------------------------------
+Test Started: test_extra_loops_dont_have_delay
+[000000f, 00.0000s] Waiting 3.9 seconds...
+[000421f, 07.0166s] Loop completed
+[000601f, 10.0166s] Loop completed
+[000601f, 10.0166s] Finished
+Test Finished: test_extra_loops_dont_have_delay
+---------------------------------
+Test Started: test_sequence_respects_delay
+[000000f, 00.0000s] Waiting 2.9 seconds...
+[000301f, 05.0166s] Tween Grow: Finished
+[000421f, 07.0166s] Tween Shrink: Finished
+[000421f, 07.0166s] Tween Sequence: Loop completed
+SCRIPT ERROR: Assertion failed: Abs(0.03333333333336) is bigger than tolerance `0.017`
+          at: _assert_within_tolerance (res://examples/tests/test_base.gd:66)
+          GDScript backtrace (most recent call first):
+              [0] _assert_within_tolerance (res://examples/tests/test_base.gd:66)
+              [1] wait_finished (res://examples/tests/test_base.gd:52)
+[000542f, 09.0333s] Tween Grow: Finished
+SCRIPT ERROR: Assertion failed: Abs(0.03333333333346) is bigger than tolerance `0.017`
+          at: _assert_within_tolerance (res://examples/tests/test_base.gd:66)
+          GDScript backtrace (most recent call first):
+              [0] _assert_within_tolerance (res://examples/tests/test_base.gd:66)
+              [1] wait_finished (res://examples/tests/test_base.gd:52)
+[000662f, 11.0333s] Tween Shrink: Finished
+SCRIPT ERROR: Assertion failed: Abs(0.03333333333346) is bigger than tolerance `0.017`
+          at: _assert_within_tolerance (res://examples/tests/test_base.gd:66)
+          GDScript backtrace (most recent call first):
+              [0] _assert_within_tolerance (res://examples/tests/test_base.gd:66)
+              [1] wait_finished (res://examples/tests/test_base.gd:52)
+[000662f, 11.0333s] Tween Sequence: Finished
+Test Finished: test_sequence_respects_delay
+---------------------------------
+Test Started: test_delayed_call
+[000181f, 03.0166s] Finished
+Test Finished: test_delayed_call
+Scene: res://examples/tests/error_handling.tscn
+---------------------------------
+Test Started: test_invalid_enum
+SCRIPT ERROR: Cannot call method 'call' on a null value.
+          at: test_invalid_enum (res://examples/tests/error_handling.gd:15)
+          GDScript backtrace (most recent call first):
+              [0] test_invalid_enum (res://examples/tests/error_handling.gd:15)
+              [1] run_test (res://examples/tests/test_base.gd:29)
+              [2] run_test (res://examples/tests/test_runner.gd:113)
+              [3] run_all_tests (res://examples/tests/test_runner.gd:103)
+              [4] run_test (res://examples/tests/test_runner.gd:118)
+              [5] run_test (res://examples/tests/test_base.gd:31)
+              [6] test_delayed_call (res://examples/tests/delays.gd:89)
+              [7] wait_finished (res://examples/tests/test_base.gd:54)
+Test Finished: test_invalid_enum
+---------------------------------
+Test Started: test_invalid_tween
+ERROR: Parameter `tween`: expected Spire type, got `RefCounted`.
+   at: <core::result::Result<spire_tween::tweens::any_tween::AnyTween, godot_core::obj::gd::Gd<godot_core::gen::classes::ref_counted::re_export::RefCounted>> as spire_tween::util::LogBadArg>::log_bad_spire_arg (spire_tween/src/util/mod.rs:103)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_tween (res://examples/tests/error_handling.gd:35)
+       [1] run_test (res://examples/tests/test_base.gd:29)
+       [2] run_test (res://examples/tests/test_runner.gd:113)
+       [3] run_all_tests (res://examples/tests/test_runner.gd:103)
+       [4] run_test (res://examples/tests/test_runner.gd:118)
+       [5] run_test (res://examples/tests/test_base.gd:31)
+       [6] test_delayed_call (res://examples/tests/delays.gd:89)
+       [7] wait_finished (res://examples/tests/test_base.gd:54)
+ERROR: Parameter `tween`: expected Spire type, got `RefCounted`.
+   at: <core::result::Result<spire_tween::tweens::any_tween::AnyTween, godot_core::obj::gd::Gd<godot_core::gen::classes::ref_counted::re_export::RefCounted>> as spire_tween::util::LogBadArg>::log_bad_spire_arg (spire_tween/src/util/mod.rs:103)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_tween (res://examples/tests/error_handling.gd:36)
+       [1] run_test (res://examples/tests/test_base.gd:29)
+       [2] run_test (res://examples/tests/test_runner.gd:113)
+       [3] run_all_tests (res://examples/tests/test_runner.gd:103)
+       [4] run_test (res://examples/tests/test_runner.gd:118)
+       [5] run_test (res://examples/tests/test_base.gd:31)
+       [6] test_delayed_call (res://examples/tests/delays.gd:89)
+       [7] wait_finished (res://examples/tests/test_base.gd:54)
+ERROR: Parameter `tween`: expected Spire type, got `RefCounted`.
+   at: <core::result::Result<spire_tween::tweens::any_tween::AnyTween, godot_core::obj::gd::Gd<godot_core::gen::classes::ref_counted::re_export::RefCounted>> as spire_tween::util::LogBadArg>::log_bad_spire_arg (spire_tween/src/util/mod.rs:103)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_tween (res://examples/tests/error_handling.gd:37)
+       [1] run_test (res://examples/tests/test_base.gd:29)
+       [2] run_test (res://examples/tests/test_runner.gd:113)
+       [3] run_all_tests (res://examples/tests/test_runner.gd:103)
+       [4] run_test (res://examples/tests/test_runner.gd:118)
+       [5] run_test (res://examples/tests/test_base.gd:31)
+       [6] test_delayed_call (res://examples/tests/delays.gd:89)
+       [7] wait_finished (res://examples/tests/test_base.gd:54)
+ERROR: Parameter `tween`: expected Spire type, got `null`.
+   at: <core::option::Option<godot_core::obj::gd::Gd<godot_core::gen::classes::ref_counted::re_export::RefCounted>> as spire_tween::util::LogBadArg>::log_bad_spire_arg (spire_tween/src/util/mod.rs:72)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_tween (res://examples/tests/error_handling.gd:40)
+       [1] run_test (res://examples/tests/test_base.gd:29)
+       [2] run_test (res://examples/tests/test_runner.gd:113)
+       [3] run_all_tests (res://examples/tests/test_runner.gd:103)
+       [4] run_test (res://examples/tests/test_runner.gd:118)
+       [5] run_test (res://examples/tests/test_base.gd:31)
+       [6] test_delayed_call (res://examples/tests/delays.gd:89)
+       [7] wait_finished (res://examples/tests/test_base.gd:54)
+Test Finished: test_invalid_tween
+---------------------------------
+Test Started: test_free_while_playing
+[000000f, 00.0000s] Waiting 2.0 seconds...
+[000120f, 02.0000s] Freed!
+Test Finished: test_free_while_playing
+---------------------------------
+Test Started: test_invalid_sequence_adding
+ERROR: Cannot append a sequence tween to itself.
+   at: spire_tween::tweens::sequence::data::<impl spire_tween::tweens::base::spire_tween::SpireTween<spire_tween::tweens::sequence::data::Sequence>>::is_already_inside (spire_tween/src/tweens/sequence/data.rs:662)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_sequence_adding (res://examples/tests/error_handling.gd:61)
+       [1] run_test (res://examples/tests/test_base.gd:29)
+       [2] run_test (res://examples/tests/test_runner.gd:113)
+       [3] run_all_tests (res://examples/tests/test_runner.gd:103)
+       [4] run_test (res://examples/tests/test_runner.gd:118)
+       [5] run_test (res://examples/tests/test_base.gd:31)
+       [6] test_free_while_playing (res://examples/tests/error_handling.gd:55)
+       [7] next_frame (res://examples/tests/test_base.gd:34)
+ERROR: Cannot add the same tween to the sequence more than once.
+   at: spire_tween::tweens::sequence::data::<impl spire_tween::tweens::base::spire_tween::SpireTween<spire_tween::tweens::sequence::data::Sequence>>::is_already_inside (spire_tween/src/tweens/sequence/data.rs:670)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_sequence_adding (res://examples/tests/error_handling.gd:64)
+       [1] run_test (res://examples/tests/test_base.gd:29)
+       [2] run_test (res://examples/tests/test_runner.gd:113)
+       [3] run_all_tests (res://examples/tests/test_runner.gd:103)
+       [4] run_test (res://examples/tests/test_runner.gd:118)
+       [5] run_test (res://examples/tests/test_base.gd:31)
+       [6] test_free_while_playing (res://examples/tests/error_handling.gd:55)
+       [7] next_frame (res://examples/tests/test_base.gd:34)
+ERROR: Cannot add the same tween to the sequence more than once.
+   at: spire_tween::tweens::sequence::data::<impl spire_tween::tweens::base::spire_tween::SpireTween<spire_tween::tweens::sequence::data::Sequence>>::is_already_inside (spire_tween/src/tweens/sequence/data.rs:670)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_sequence_adding (res://examples/tests/error_handling.gd:66)
+       [1] run_test (res://examples/tests/test_base.gd:29)
+       [2] run_test (res://examples/tests/test_runner.gd:113)
+       [3] run_all_tests (res://examples/tests/test_runner.gd:103)
+       [4] run_test (res://examples/tests/test_runner.gd:118)
+       [5] run_test (res://examples/tests/test_base.gd:31)
+       [6] test_free_while_playing (res://examples/tests/error_handling.gd:55)
+       [7] next_frame (res://examples/tests/test_base.gd:34)
+[000180f, 03.0166s] Tween Child tween: Finished
+Test Finished: test_invalid_sequence_adding
+Scene: res://examples/tests/misc.tscn
+---------------------------------
+Test Started: test_force_complete
+[000000f, 00.0000s] Waiting 2.0 seconds...
+[000421f, 07.0166s] Finished
+Test Finished: test_force_complete
+---------------------------------
+Test Started: test_dyn_target
+[000000f, 00.0000s] Waiting 3.0 seconds...
+[000360f, 05.9999s] Finished
+Test Finished: test_dyn_target
+---------------------------------
+Test Started: test_property_path
+Test Finished: test_property_path
+Scene: res://examples/tests/pause_process_modes.tscn
+---------------------------------
+Test Started: test_pause_mode_process
+[000181f, 03.0000s] Finished
+Test Finished: test_pause_mode_process
+---------------------------------
+Test Started: test_pause_mode_stop
+[000481f, 03.0166s] Finished
+Test Finished: test_pause_mode_stop
+---------------------------------
+Test Started: test_pause_mode_bound
+[000000f, 00.0000s] Pausing tree for 4.0 seconds...
+[000240f, 04.0000s] Tree unpaused, waiting 2 seconds...
+[000361f, 06.0166s] Setting sprite process mode to INHERIT
+SCRIPT ERROR: Assertion failed: Abs(0.03333333333337) is bigger than tolerance `0.017`
+          at: _assert_within_tolerance (res://examples/tests/test_base.gd:66)
+          GDScript backtrace (most recent call first):
+              [0] _assert_within_tolerance (res://examples/tests/test_base.gd:66)
+              [1] wait_finished (res://examples/tests/test_base.gd:52)
+[000542f, 09.0333s] Finished
+Test Finished: test_pause_mode_bound
+---------------------------------
+Test Started: test_process_mode_idle
+Test Finished: test_process_mode_idle
+---------------------------------
+Test Started: test_process_mode_physics
+Test Finished: test_process_mode_physics
+---------------------------------
+Test Started: test_pause_mode_bound_process_mode_physics
+[000000f, 00.0000s] Tree paused
+[000000f, 00.0000s] Waiting 4.0 seconds...
+[000240f, 04.0000s] Tree unpaused
+[000240f, 04.0000s] Waiting 2.0 seconds...
+[000361f, 06.0166s] Setting sprite process mode to INHERIT
+Test Finished: test_pause_mode_bound_process_mode_physics
+Scene: res://examples/tests/play_pause_stop.tscn
+---------------------------------
+Test Started: test_play_works
+[000120f, 02.0166s] Loop completed
+[000120f, 02.0166s] Finished
+Test Finished: test_play_works
+---------------------------------
+Test Started: test_pause_play_works
+[000000f, 00.0000s] Waiting 3.0 seconds...
+[000301f, 05.0166s] Loop completed
+[000301f, 05.0166s] Finished
+Test Finished: test_pause_play_works
+---------------------------------
+Test Started: test_play_stop_play_works
+[000121f, 02.0166s] Loop completed
+[000121f, 02.0166s] Finished
+[000121f, 02.0166s] Waiting 3.0 seconds...
+SCRIPT ERROR: Assertion failed: Abs(0.03333333333331) is bigger than tolerance `0.017`
+          at: _assert_within_tolerance (res://examples/tests/test_base.gd:66)
+          GDScript backtrace (most recent call first):
+              [0] _assert_within_tolerance (res://examples/tests/test_base.gd:66)
+              [1] wait_loop_finished (res://examples/tests/test_base.gd:44)
+[000422f, 07.0333s] Loop completed
+SCRIPT ERROR: Assertion failed: Abs(0.03333333333331) is bigger than tolerance `0.017`
+          at: _assert_within_tolerance (res://examples/tests/test_base.gd:66)
+          GDScript backtrace (most recent call first):
+              [0] _assert_within_tolerance (res://examples/tests/test_base.gd:66)
+              [1] wait_finished (res://examples/tests/test_base.gd:52)
+[000422f, 07.0333s] Finished
+Test Finished: test_play_stop_play_works
+Scene: res://examples/tests/register_unregister.tscn
+---------------------------------
+Test Started: test_unregistered_does_not_affect_game
+[000000f, 00.0000s] Waiting 2.0 seconds...
+[000120f, 02.0000s] Re-Registering
+[000120f, 02.0000s] Is registered
+[000421f, 07.0166s] Loop completed
+[000421f, 07.0166s] Finished
+Test Finished: test_unregistered_does_not_affect_game
+---------------------------------
+Test Started: test_unregistered_can_be_manually_stepped
+Test Finished: test_unregistered_can_be_manually_stepped
+Scene: res://examples/tests/sequences.tscn
+---------------------------------
+Test Started: test_proper_ordering
+[000000f, 00.0166s] First call
+[000059f, 01.0000s] Second call
+[000059f, 01.0000s] Same block as second call
+[000180f, 03.0166s] Third call with delay
+[000360f, 06.0166s] Loop completed
+[000360f, 06.0166s] Finished
+Test Finished: test_proper_ordering
+---------------------------------
+Test Started: test_stopped_child_does_not_halt_sequence
+[000121f, 02.0166s] Tween Good child: Finished
+[000181f, 03.0166s] Last block
+[000181f, 03.0166s] Loop completed
+[000181f, 03.0166s] Finished
+Test Finished: test_stopped_child_does_not_halt_sequence
+---------------------------------
+Test Started: test_append_many
+[000060f, 01.0000s] Tween First: Finished
+[000241f, 04.0166s] Tween Second: Finished
+[000241f, 04.0166s] Waiting 5 seconds...
+[000541f, 09.0166s] 5 seconds waited!
+[000661f, 11.0166s] Tween Third: Finished
+[000721f, 12.0166s] Tween Fourth: Finished
+[000721f, 12.0166s] Waiting 2 seconds...
+[000841f, 14.0166s] 2 seconds waited!
+[000841f, 14.0166s] Tween Sequence: Finished
+Test Finished: test_append_many
+---------------------------------
+Test Started: test_remove
+[000060f, 01.0000s] Tween First: Finished
+[000181f, 03.0166s] Tween Third: Finished
+[000181f, 03.0166s] Tween Sequence: Finished
+Test Finished: test_remove
+---------------------------------
+Test Started: test_remove_midway
+[000060f, 01.0000s] Tween First: Finished
+[000060f, 01.0000s] Waiting 1.5 seconds...
+[000271f, 04.5166s] Tween Third: Finished
+[000271f, 04.5166s] Tween Sequence: Finished
+Test Finished: test_remove_midway
+---------------------------------
+Test Started: test_remove_call
+[000060f, 01.0000s] Tween First: Finished
+[000181f, 03.0166s] Tween Third: Finished
+[000181f, 03.0166s] Tween Sequence: Finished
+Test Finished: test_remove_call
+---------------------------------
+Test Started: test_default_children_ease
+[000000f, 00.0000s] Waiting 2.0 seconds...
+[000181f, 03.0166s] Finished
+[000181f, 03.0166s] Waiting 1.0 seconds...
+[000301f, 05.0166s] Finished
+Test Finished: test_default_children_ease
+Scene: res://examples/tests/lerp_modes.tscn
+---------------------------------
+Test Started: test_relative
+[000000f, 00.0000s] Waiting 1.0 seconds...
+[000121f, 02.0166s] Finished
+Test Finished: test_relative
+---------------------------------
+Test Started: test_two_relatives
+[000121f, 02.0166s] Finished
+[000181f, 03.0166s] Finished
+Test Finished: test_two_relatives
+---------------------------------
+Test Started: test_speed_based
+[000264f, 04.3999s] Finished
+Test Finished: test_speed_based
+---------------------------------
+Test Started: test_speed_based_plus_relative
+[000181f, 03.0166s] Tween Relative: Finished
+Test Finished: test_speed_based_plus_relative
+Scene: res://examples/tests/lerp_callable.tscn
+---------------------------------
+Test Started: test_lerp_call
+[000301f, 05.0166s] Finished
+Test Finished: test_lerp_call
+---------------------------------
+Test Started: test_lerp_call_float
+[000301f, 05.0166s] Finished
+Test Finished: test_lerp_call_float
+---------------------------------
+Test Started: test_lerp_call_with_ease
+Test Finished: test_lerp_call_with_ease
+---------------------------------
+Test Started: test_lerp_call_with_loop
+[000120f, 02.0166s] Loop completed
+[000240f, 04.0166s] Loop completed
+[000240f, 04.0166s] Finished
+Test Finished: test_lerp_call_with_loop
+Scene: res://examples/tests/spiral.tscn
+---------------------------------
+Test Started: test_spiral_logarithmic
+[000481f, 08.0166s] Finished
+Test Finished: test_spiral_logarithmic
+---------------------------------
+Test Started: test_spiral_logarithmic_sheared
+[000481f, 08.0166s] Finished
+Test Finished: test_spiral_logarithmic_sheared
+---------------------------------
+Test Started: test_spiral_logarithmic_inverted
+[000481f, 08.0166s] Finished
+Test Finished: test_spiral_logarithmic_inverted
+---------------------------------
+Test Started: test_spiral_archimedean
+[000481f, 08.0166s] Finished
+Test Finished: test_spiral_archimedean
+---------------------------------
+Test Started: test_spiral_archimedean_sheared
+[000481f, 08.0166s] Finished
+Test Finished: test_spiral_archimedean_sheared
+---------------------------------
+Test Started: test_spiral_archimedean_inverted
+[000481f, 08.0166s] Finished
+Test Finished: test_spiral_archimedean_inverted
+---------------------------------
+Test Started: test_spiral_hyperbolic
+[000481f, 08.0166s] Finished
+Test Finished: test_spiral_hyperbolic
+---------------------------------
+Test Started: test_spiral_hyperbolic_sheared
+[000481f, 08.0166s] Finished
+Test Finished: test_spiral_hyperbolic_sheared
+---------------------------------
+Test Started: test_spiral_hyperbolic_inverted
+[000481f, 08.0166s] Finished
+Test Finished: test_spiral_hyperbolic_inverted
+---------------------------------
+Test Started: test_spiral_fermat
+[000481f, 08.0166s] Finished
+Test Finished: test_spiral_fermat
+---------------------------------
+Test Started: test_spiral_fermat_sheared
+[000481f, 08.0166s] Finished
+Test Finished: test_spiral_fermat_sheared
+---------------------------------
+Test Started: test_spiral_fermat_inverted
+[000481f, 08.0166s] Finished
+Test Finished: test_spiral_fermat_inverted
+Test Runner finished!
+WARNING: 12224 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 2 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

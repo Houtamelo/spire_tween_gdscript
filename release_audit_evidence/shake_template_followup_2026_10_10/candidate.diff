@@ -1,0 +1,11 @@
+--- current/do_shake.rs
++++ isolated-candidate/do_shake.rs
+@@ -200,7 +200,7 @@
+             prev_radius = next_radius;
+             *prev_offset = next_offset;
+ 
+-            *delta_time_sum -= update_interval * (*delta_time_sum % update_interval);
++            *delta_time_sum %= update_interval;
+ 
+             set_pos(&mut node, next_pos); // LOCAL!
+             Variant::nil()

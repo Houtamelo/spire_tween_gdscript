@@ -13,12 +13,12 @@ pub trait ITweenable {
     /// Required to dispatch Godot `finished` / `loop_finished` signals.
     type GdHandle: Signaler + Clone;
 
-    /// Creates the `Gd` wrapper and attaches it to the tween inside the [`RcPtr`].
+    /// Creates the `Gd` wrapper and attaches it to the tween inside the [`TweenPtr`].
     /// This enables `finished` and `loop_finished` Godot signals on the wrapper.
     /// Pure-Rust consumers don't need this — connect callbacks via
     /// [`SpireTween::finished_connect`] / [`SpireTween::loop_finished_connect`]
     /// instead, after calling [`SpireTween::register`].
-    fn attach_gd_handle(tween: &RcPtr<SpireTween<Self>>) -> Self::GdHandle
+    fn attach_gd_handle(tween: &TweenPtr<Self>) -> Self::GdHandle
     where Self: Sized;
 }
 
@@ -28,7 +28,7 @@ macro_rules! impl_tweenables {
             impl ITweenable for $Ty {
                 type GdHandle = $Handle;
 
-                fn attach_gd_handle(tween: &RcPtr<SpireTween<Self>>) -> Gd<$Wrapper> {
+                fn attach_gd_handle(tween: &TweenPtr<Self>) -> Gd<$Wrapper> {
                     let gd: Gd<$Wrapper> = gd_from_native_tween::<$Wrapper>(tween.clone());
                     gd
                 }

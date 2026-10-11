@@ -1,0 +1,28 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards balanced)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+NATIVE_API_START timer
+NATIVE_API_PASS timer
+NATIVE_API_START builtin_position
+NATIVE_API_PASS builtin_position
+NATIVE_API_START builtin_color
+NATIVE_API_PASS builtin_color
+NATIVE_API_START started_position_tween_is_rejected
+EXPECTED_API_FAILURE_BEGIN
+ERROR: Can't append to a Tween that has started. Use stop() first.
+   at: tween_property (scene/animation/tween.cpp:102)
+ERROR: [panic /home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/meta/signature.rs:583]  in function `Tween::tween_property` at return type godot_core::obj::gd::Gd<godot_core::gen::classes::property_tweener::re_export::PropertyTweener>: `Gd` cannot be null: null
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+
+EXPECTED_API_FAILURE_END
+NATIVE_API_PASS started_position_tween_is_rejected
+NATIVE_API_START started_color_tween_is_rejected
+EXPECTED_API_FAILURE_BEGIN
+ERROR: Can't append to a Tween that has started. Use stop() first.
+   at: tween_property (scene/animation/tween.cpp:102)
+ERROR: [panic /home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/meta/signature.rs:583]  in function `Tween::tween_property` at return type godot_core::obj::gd::Gd<godot_core::gen::classes::property_tweener::re_export::PropertyTweener>: `Gd` cannot be null: null
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+
+EXPECTED_API_FAILURE_END
+NATIVE_API_PASS started_color_tween_is_rejected
+NATIVE_API_RESULT total=5 failed=0

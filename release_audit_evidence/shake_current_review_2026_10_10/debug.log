@@ -1,0 +1,64 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards strict)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+SHAKE_REVIEW_PASS name=Node2D.exact.Restart error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Node2D.near.Restart error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Node2D.two_loops.Restart error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Node2D.three_loops.Restart error=0.000004 state=Stopped
+SHAKE_REVIEW_PASS name=Node2D.force_playing.Restart error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Node2D.force_paused.Restart error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Node2D.external_movement.Restart error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Node2D.exact.Yoyo error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Node2D.near.Yoyo error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Node2D.two_loops.Yoyo error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Node2D.three_loops.Yoyo error=0.000004 state=Stopped
+SHAKE_REVIEW_PASS name=Node2D.force_playing.Yoyo error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Node2D.force_paused.Yoyo error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Node2D.external_movement.Yoyo error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Node2D.exact.Incremental error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Node2D.near.Incremental error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Node2D.two_loops.Incremental error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Node2D.three_loops.Incremental error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Node2D.force_playing.Incremental error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Node2D.force_paused.Incremental error=0.000004 state=Stopped
+SHAKE_REVIEW_PASS name=Node2D.external_movement.Incremental error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Node2D.replay_restoration error=0.000000
+SHAKE_REVIEW_FAIL name=Node2D.restart_sampling elapsed_new_leg=0.01 sample_interval=0.25 position_change=40.000000
+SHAKE_REVIEW_FAIL name=Node2D.replay_sampling elapsed_new_leg=0.01 sample_interval=0.25 position_change=20.000004
+SHAKE_REVIEW_PASS name=Node2D.yoyo_sampling_control elapsed_new_leg=0.01 sample_interval=0.25 position_change=0.000000
+SHAKE_REVIEW_PASS name=Node2D.incremental_sampling_control elapsed_new_leg=0.01 sample_interval=0.25 position_change=0.000000
+SHAKE_REVIEW_FAIL name=Node2D.zero_delta_after_large_step elapsed_new_tick=0 sample_interval=0.25 position_change=39.999996
+SHAKE_REVIEW_FAIL name=Node2D.godot_finished_restored.force=false godot_observer_error=19.999998 native_observer_error=0.000000 after_return_error=0.000000
+SHAKE_REVIEW_FAIL name=Node2D.godot_finished_restored.force=true godot_observer_error=19.999998 native_observer_error=0.000000 after_return_error=0.000000
+SHAKE_REVIEW_FAIL name=Node2D.clearing_user_connections_keeps_restoration error=20.000000
+SHAKE_REVIEW_PASS name=Control.exact.Restart error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Control.near.Restart error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Control.two_loops.Restart error=0.000004 state=Stopped
+SHAKE_REVIEW_PASS name=Control.three_loops.Restart error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Control.force_playing.Restart error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Control.force_paused.Restart error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Control.external_movement.Restart error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Control.exact.Yoyo error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Control.near.Yoyo error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Control.two_loops.Yoyo error=0.000004 state=Stopped
+SHAKE_REVIEW_PASS name=Control.three_loops.Yoyo error=0.000004 state=Stopped
+SHAKE_REVIEW_PASS name=Control.force_playing.Yoyo error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Control.force_paused.Yoyo error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Control.external_movement.Yoyo error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Control.exact.Incremental error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Control.near.Incremental error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Control.two_loops.Incremental error=0.000004 state=Stopped
+SHAKE_REVIEW_PASS name=Control.three_loops.Incremental error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Control.force_playing.Incremental error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Control.force_paused.Incremental error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Control.external_movement.Incremental error=0.000000 state=Stopped
+SHAKE_REVIEW_PASS name=Control.replay_restoration error=0.000000
+SHAKE_REVIEW_FAIL name=Control.restart_sampling elapsed_new_leg=0.01 sample_interval=0.25 position_change=40.000000
+SHAKE_REVIEW_FAIL name=Control.replay_sampling elapsed_new_leg=0.01 sample_interval=0.25 position_change=19.999998
+SHAKE_REVIEW_PASS name=Control.yoyo_sampling_control elapsed_new_leg=0.01 sample_interval=0.25 position_change=0.000000
+SHAKE_REVIEW_PASS name=Control.incremental_sampling_control elapsed_new_leg=0.01 sample_interval=0.25 position_change=0.000000
+SHAKE_REVIEW_FAIL name=Control.zero_delta_after_large_step elapsed_new_tick=0 sample_interval=0.25 position_change=40.000004
+SHAKE_REVIEW_FAIL name=Control.godot_finished_restored.force=false godot_observer_error=19.999996 native_observer_error=0.000000 after_return_error=0.000000
+SHAKE_REVIEW_FAIL name=Control.godot_finished_restored.force=true godot_observer_error=19.999996 native_observer_error=0.000000 after_return_error=0.000000
+SHAKE_REVIEW_FAIL name=Control.clearing_user_connections_keeps_restoration error=20.000002
+SHAKE_REVIEW_RESULT total=60 failed=12

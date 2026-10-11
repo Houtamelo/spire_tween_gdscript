@@ -222,7 +222,7 @@ where LerpMethodData<T>: ITweenable
 
 impl<T: ILerpable<BasicLerper: Default>> SpireTween<LerpMethodData<T>>
 where
-    AnyTween: From<RcPtr<Self>>,
+    AnyTween: From<TweenPtr<LerpMethodData<T>>>,
     LerpMethodData<T>: ITweenable,
 {
     /// Constructs a method tween. `owner` is auto-derived from the callable's
@@ -246,9 +246,9 @@ where
     }
 
     /// Convenience: [`new`](Self::new) followed by [`register`](SpireTween::register).
-    /// Submits the tween to the global `TweenManager` and returns the [`RcPtr`] handle.
-    pub fn new_registered(callable: Callable, from: T, to: T, duration: f64) -> RcPtr<Self>
-    where AnyTween: From<RcPtr<Self>> {
+    /// Submits the tween to the global `TweenManager` and returns the [`TweenPtr`] handle.
+    pub fn new_registered(callable: Callable, from: T, to: T, duration: f64) -> TweenPtr<LerpMethodData<T>>
+    where AnyTween: From<TweenPtr<LerpMethodData<T>>> {
         Self::new(callable, from, to, duration).register()
     }
 }

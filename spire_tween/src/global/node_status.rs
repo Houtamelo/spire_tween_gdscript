@@ -2,7 +2,7 @@ use super::*;
 
 #[derive(Default)]
 pub(super) struct NodeState {
-    pub bound_tweens: SmolSet<[WeakAnyTween; 1]>,
+    pub bound_tweens: SmallSet<[WeakAnyTween; 1]>,
     pub status: NodeStatus,
 }
 

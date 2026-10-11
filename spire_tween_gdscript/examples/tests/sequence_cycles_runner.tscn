@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://examples/tests/sequence_cycles_runner.gd" id="1"]
+
+[node name="SequenceCycleRunner" type="Node"]
+script = ExtResource("1")

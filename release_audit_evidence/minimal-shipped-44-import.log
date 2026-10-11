@@ -1,0 +1,153 @@
+Godot Engine v4.4.1.stable.official.49a5bc7b6 - https://godotengine.org
+
+first_scan_filesystem: begin: Project initialization steps: 5
+	first_scan_filesystem: step 0: Scanning file structure...
+	first_scan_filesystem: step 1: Loading global class names...
+	first_scan_filesystem: step 2: Verifying GDExtensions...
+	first_scan_filesystem: step 3: Creating autoload scripts...
+	first_scan_filesystem: step 4: Initializing plugins...
+	first_scan_filesystem: step 5: Starting file scan...
+first_scan_filesystem: end
+update_scripts_classes: begin: Registering global classes... steps: 8
+	update_scripts_classes: step 0: 
+	update_scripts_classes: step 1: 
+	update_scripts_classes: step 2: 
+	update_scripts_classes: step 3: 
+	update_scripts_classes: step 4: 
+	update_scripts_classes: step 5: 
+	update_scripts_classes: step 6: 
+	update_scripts_classes: step 7: 
+update_scripts_classes: end
+update_script_paths_documentation: begin: Updating scripts documentation steps: 8
+	update_script_paths_documentation: step 0: probe_baseline.gd
+	update_script_paths_documentation: step 1: probe_clear_binding.gd
+	update_script_paths_documentation: step 2: probe_cycle.gd
+	update_script_paths_documentation: step 3: probe_delayed_owner_free.gd
+	update_script_paths_documentation: step 4: probe_duplicate_binding.gd
+	update_script_paths_documentation: step 5: probe_reregister.gd
+	update_script_paths_documentation: step 6: probe_sync_signal_restart.gd
+	update_script_paths_documentation: step 7: probe_unbind_absent.gd
+update_script_paths_documentation: end
+loading_editor_layout: begin: Loading editor steps: 5
+	loading_editor_layout: step 0: Loading editor layout...
+loading_editor_layout: end
+
+thread '<unnamed>' (84) panicked at /home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-ffi-0.5.2/src/interface_init.rs:114:9:
+godot-rust compiled against newer Godot version: v4.6.stable.official
+but loaded by older Godot binary, with version:  v4.4.1.stable.official
+
+Compile godot-rust with feature `api-4-4` or update Godot engine.
+For more information, read https://godot-rust.github.io/book/toolchain/compatibility.html.
+
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+ERROR: GDExtension initialization function 'gdext_rust_init' returned an error.
+   at: initialize (core/extension/gdextension_library_loader.cpp:233)
+
+thread '<unnamed>' (84) panicked at /home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-ffi-0.5.2/src/interface_init.rs:114:9:
+godot-rust compiled against newer Godot version: v4.6.stable.official
+but loaded by older Godot binary, with version:  v4.4.1.stable.official
+
+Compile godot-rust with feature `api-4-4` or update Godot engine.
+For more information, read https://godot-rust.github.io/book/toolchain/compatibility.html.
+
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+ERROR: GDExtension initialization function 'gdext_rust_init' returned an error.
+   at: initialize (core/extension/gdextension_library_loader.cpp:233)
+SCRIPT ERROR: Parse Error: Identifier "DoNode2D" not declared in the current scope.
+          at: GDScript::reload (res://probe_baseline.gd:5)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "t" variable because the value doesn't have a set type.
+          at: GDScript::reload (res://probe_baseline.gd:5)
+ERROR: Failed to load script "res://probe_baseline.gd" with error "Parse error".
+   at: load (modules/gdscript/gdscript.cpp:3022)
+SCRIPT ERROR: Parse Error: Identifier "Spire" not declared in the current scope.
+          at: GDScript::reload (res://probe_clear_binding.gd:5)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "s" variable because the value doesn't have a set type.
+          at: GDScript::reload (res://probe_clear_binding.gd:5)
+ERROR: Failed to load script "res://probe_clear_binding.gd" with error "Parse error".
+   at: load (modules/gdscript/gdscript.cpp:3022)
+SCRIPT ERROR: Parse Error: Identifier "Spire" not declared in the current scope.
+          at: GDScript::reload (res://probe_cycle.gd:3)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "a" variable because the value doesn't have a set type.
+          at: GDScript::reload (res://probe_cycle.gd:3)
+SCRIPT ERROR: Parse Error: Identifier "Spire" not declared in the current scope.
+          at: GDScript::reload (res://probe_cycle.gd:4)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "b" variable because the value doesn't have a set type.
+          at: GDScript::reload (res://probe_cycle.gd:4)
+ERROR: Failed to load script "res://probe_cycle.gd" with error "Parse error".
+   at: load (modules/gdscript/gdscript.cpp:3022)
+SCRIPT ERROR: Parse Error: Identifier "Spire" not declared in the current scope.
+          at: GDScript::reload (res://probe_delayed_owner_free.gd:5)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "t" variable because the value doesn't have a set type.
+          at: GDScript::reload (res://probe_delayed_owner_free.gd:5)
+ERROR: Failed to load script "res://probe_delayed_owner_free.gd" with error "Parse error".
+   at: load (modules/gdscript/gdscript.cpp:3022)
+SCRIPT ERROR: Parse Error: Identifier "Spire" not declared in the current scope.
+          at: GDScript::reload (res://probe_duplicate_binding.gd:5)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "s" variable because the value doesn't have a set type.
+          at: GDScript::reload (res://probe_duplicate_binding.gd:5)
+ERROR: Failed to load script "res://probe_duplicate_binding.gd" with error "Parse error".
+   at: load (modules/gdscript/gdscript.cpp:3022)
+SCRIPT ERROR: Parse Error: Identifier "Spire" not declared in the current scope.
+          at: GDScript::reload (res://probe_reregister.gd:5)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "s" variable because the value doesn't have a set type.
+          at: GDScript::reload (res://probe_reregister.gd:5)
+ERROR: Failed to load script "res://probe_reregister.gd" with error "Parse error".
+   at: load (modules/gdscript/gdscript.cpp:3022)
+SCRIPT ERROR: Parse Error: Identifier "DoNode2D" not declared in the current scope.
+          at: GDScript::reload (res://probe_sync_signal_restart.gd:5)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "t" variable because the value doesn't have a set type.
+          at: GDScript::reload (res://probe_sync_signal_restart.gd:5)
+ERROR: Failed to load script "res://probe_sync_signal_restart.gd" with error "Parse error".
+   at: load (modules/gdscript/gdscript.cpp:3022)
+SCRIPT ERROR: Parse Error: Identifier "Spire" not declared in the current scope.
+          at: GDScript::reload (res://probe_unbind_absent.gd:5)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "a" variable because the value doesn't have a set type.
+          at: GDScript::reload (res://probe_unbind_absent.gd:5)
+SCRIPT ERROR: Parse Error: Identifier "Spire" not declared in the current scope.
+          at: GDScript::reload (res://probe_unbind_absent.gd:6)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "b" variable because the value doesn't have a set type.
+          at: GDScript::reload (res://probe_unbind_absent.gd:6)
+ERROR: Failed to load script "res://probe_unbind_absent.gd" with error "Parse error".
+   at: load (modules/gdscript/gdscript.cpp:3022)
+SCRIPT ERROR: Parse Error: Identifier "Spire" not declared in the current scope.
+          at: GDScript::reload (res://probe_unbind_absent.gd:5)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "a" variable because the value doesn't have a set type.
+          at: GDScript::reload (res://probe_unbind_absent.gd:5)
+SCRIPT ERROR: Parse Error: Identifier "Spire" not declared in the current scope.
+          at: GDScript::reload (res://probe_unbind_absent.gd:6)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "b" variable because the value doesn't have a set type.
+          at: GDScript::reload (res://probe_unbind_absent.gd:6)
+SCRIPT ERROR: Parse Error: Identifier "DoNode2D" not declared in the current scope.
+          at: GDScript::reload (res://probe_sync_signal_restart.gd:5)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "t" variable because the value doesn't have a set type.
+          at: GDScript::reload (res://probe_sync_signal_restart.gd:5)
+SCRIPT ERROR: Parse Error: Identifier "Spire" not declared in the current scope.
+          at: GDScript::reload (res://probe_reregister.gd:5)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "s" variable because the value doesn't have a set type.
+          at: GDScript::reload (res://probe_reregister.gd:5)
+SCRIPT ERROR: Parse Error: Identifier "Spire" not declared in the current scope.
+          at: GDScript::reload (res://probe_duplicate_binding.gd:5)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "s" variable because the value doesn't have a set type.
+          at: GDScript::reload (res://probe_duplicate_binding.gd:5)
+SCRIPT ERROR: Parse Error: Identifier "Spire" not declared in the current scope.
+          at: GDScript::reload (res://probe_delayed_owner_free.gd:5)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "t" variable because the value doesn't have a set type.
+          at: GDScript::reload (res://probe_delayed_owner_free.gd:5)
+SCRIPT ERROR: Parse Error: Identifier "Spire" not declared in the current scope.
+          at: GDScript::reload (res://probe_cycle.gd:3)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "a" variable because the value doesn't have a set type.
+          at: GDScript::reload (res://probe_cycle.gd:3)
+SCRIPT ERROR: Parse Error: Identifier "Spire" not declared in the current scope.
+          at: GDScript::reload (res://probe_cycle.gd:4)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "b" variable because the value doesn't have a set type.
+          at: GDScript::reload (res://probe_cycle.gd:4)
+SCRIPT ERROR: Parse Error: Identifier "Spire" not declared in the current scope.
+          at: GDScript::reload (res://probe_clear_binding.gd:5)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "s" variable because the value doesn't have a set type.
+          at: GDScript::reload (res://probe_clear_binding.gd:5)
+SCRIPT ERROR: Parse Error: Identifier "DoNode2D" not declared in the current scope.
+          at: GDScript::reload (res://probe_baseline.gd:5)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "t" variable because the value doesn't have a set type.
+          at: GDScript::reload (res://probe_baseline.gd:5)

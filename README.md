@@ -53,6 +53,7 @@ These are the priorities of SpireTween:
 
 - [Installation](#installation)
 - [Platform Support](#platform-support)
+- [Running integration tests](#running-integration-tests)
 - [Configuration](#configuration)
 - [Cheat Sheets](#cheat-sheets-built-in-tween---spiretween)
 - [Examples](#examples)
@@ -62,7 +63,7 @@ These are the priorities of SpireTween:
 
 # Installation
 
-SpireTween is an addon like any other, you just need extract the copy you acquired into "res://addons/".
+Extract the `spire_tween` directory into your project's `addons` directory. The resulting layout should include `res://addons/spire_tween/spire_tween.gdextension` and its `lib` directory. Open or reopen the project in Godot so it discovers the extension.
 
 You can acquire a copy of SpireTween through 3 means:
 
@@ -73,13 +74,20 @@ You can acquire a copy of SpireTween through 3 means:
 
 When exporting, Godot will automatically include the necessary binary for the chosen target platform.
 
-**No autoload setup is required.** Once the addon is enabled in Project Settings → Plugins, the `Spire`, `Do{Class}`, `SpireSequence`, etc. classes register automatically and the internal tween
-manager initializes on first use.
+The GDExtension registers `Spire`, `Do{Class}`, `SpireSequence`, and the other classes automatically. No Project Settings → Plugins switch or autoload setup is required; the tween manager initializes on first use.
+
+Attach this script to a Node and run the scene to check installation:
+
+```gdscript
+extends Node
+
+func _ready() -> void:
+    Spire.do_delayed_call(func(): print("SpireTween loaded"), 0.1)
+```
 
 ## Building from source
 
-SpireTween is written in Rust against [godot-rust](https://github.com/godot-rust/gdext) and currently requires the **nightly** toolchain. The pinned channel lives in `rust-toolchain.toml` (so `cargo`
-will pick it up automatically inside the repo).
+SpireTween is written in Rust against [godot-rust](https://github.com/godot-rust/gdext) and currently requires the **nightly** toolchain. `rust-toolchain.toml` selects that channel automatically inside the repository; it currently selects a floating nightly rather than a dated version.
 
 The crate uses these unstable features:
 
@@ -95,18 +103,41 @@ Build the addon binary for your host with the per-platform scripts in [`build_sc
 ```bash
 # Linux x86_64
 ./build_scripts/build_linux.sh
-# Windows (cross-compile from Linux or run on Windows)
+# Windows native build: use Bash in an MSVC developer environment
 ./build_scripts/build_windows_64.sh
-# Android (requires `cargo-ndk` and `ANDROID_NDK_HOME`)
-./build_scripts/build_android.sh
-# WebAssembly
+# Windows cross-compile from Linux: requires an xwin SDK and LLVM tools
+XWIN_DIR="/path/to/xwin" ./build_scripts/build_windows_64.sh
+# Android: requires cargo-ndk and a version-specific NDK installation
+ANDROID_NDK_HOME="/path/to/android-ndk/version" ./build_scripts/build_android.sh
+# WebAssembly: activate an Emscripten SDK so emcc is on PATH
 ./build_scripts/build_wasm.sh
 ```
 
 Each script writes the resulting binary directly into `spire_tween_gdscript/addons/spire_tween/lib/<target>/...`, where the `.gdextension` manifest expects it.
 
-If you just want to verify the crate compiles, `cargo build --release` from the repo root works (Cargo's workspace feature unification automatically enables the `include_gdext_lib` feature pulled in
-by `spire_tween_plugin`).
+To build the host addon library directly, enable both its extension entry point and GDScript bridge:
+
+```bash
+cargo build -p spire_tween --release --features include_gdext_lib,include_gdscript_bridge
+```
+
+The library is written to `target/release`; the platform scripts also place artifacts into the addon directory. A plain `cargo build --release` builds the default library member without enabling those addon features.
+
+## Running integration tests
+
+From the repository root, request every GDScript test without reading or writing cached results:
+
+```bash
+godot --headless --path spire_tween_gdscript res://examples/tests/test_runner.tscn -- --all-tests --no-cache
+```
+
+The editor's run-mode setting remains available for selective runs. Failure propagation in the older test harness is still being corrected: inspect the output for script/assertion errors even if the process exits successfully.
+
+To check the runner's command-line configuration and cache handling directly:
+
+```bash
+godot --headless --path spire_tween_gdscript --script res://examples/tests/runner_cli_checks.gd -- --all-tests --no-cache
+```
 
 # Platform Support
 
@@ -126,6 +157,8 @@ Binaries for all platforms which I successfully compiled-to are included in the 
 | web.wasm32         |    ❌    |   ❌   | There is a temporary issue, will be fixed soon(TM).                 |
 | web.wasm32.threads |    ❌    |   ❌   | There is a temporary issue, will be fixed soon(TM).                 |
 | macos/ios          |    ❌    |   ❌   | Compiling from source *should* be straightforward if you own a Mac. |
+
+The current Linux x86_64 debug and release libraries require **GLIBC 2.34 or newer**, measured with `readelf --version-info`. An older Linux userspace has not been tested.
 
 If a platform you're targeting is not listed here, please open an issue.
 
@@ -431,12 +464,9 @@ func spire_impl():
 
 # Benchmarks
 
-Note that the main priority of SpireTween is ergonomics, not performance. It currently outperforms Godot's built-in tweening system in terms of runtime speed (Godot's built-in wins in terms of setup
-speed though), I cannot guarantee that this will always be the case, SpireTween may become slower if more features/configurations are added (though I doubt the performance difference will ever be
-significant).
+The measurements below are historical results from Godot 4.5.1. They have not been rerun against the current release candidate. They show higher steady-state throughput for SpireTween in these scenarios, with setup costs varying by workload.
 
-I decided to make these benchmarks to at least give you peace of my mind that you're not (currently) losing on performance by switching to SpireTween. Note that the amount of nodes being tweened in
-these benchmarks is ridiculously high, you're unlikely to ever notice any performance difference between the two libraries in a real project.
+These benchmarks use unusually large numbers of nodes; measure your own workload when assessing performance.
 
 **Note**: These benchmarks are simple and artificial, they are here just to give you a rough idea of the package's performance.
 

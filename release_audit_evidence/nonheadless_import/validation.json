@@ -1,0 +1,401 @@
+[
+  {
+    "name": "empty-gui",
+    "profile": null,
+    "mode": "x11",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--editor",
+      "--import",
+      "--path",
+      "/tmp/spire-nonheadless-cm_vcs5y/empty-gui",
+      "--audio-driver",
+      "Dummy",
+      "--rendering-method",
+      "gl_compatibility",
+      "--display-driver",
+      "x11"
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "clean_exit": false,
+    "errors": [
+      "WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver."
+    ],
+    "imported": false,
+    "log": "empty-gui.log",
+    "no_crash": true
+  },
+  {
+    "name": "debug-headless-1",
+    "profile": "debug",
+    "mode": "headless",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--editor",
+      "--import",
+      "--path",
+      "/tmp/spire-nonheadless-cm_vcs5y/debug-headless-1",
+      "--audio-driver",
+      "Dummy",
+      "--rendering-method",
+      "gl_compatibility",
+      "--headless"
+    ],
+    "exit_code": -6,
+    "timed_out": false,
+    "clean_exit": false,
+    "errors": [],
+    "imported": true,
+    "log": "debug-headless-1.log",
+    "no_crash": false
+  },
+  {
+    "name": "debug-headless-2",
+    "profile": "debug",
+    "mode": "headless",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--editor",
+      "--import",
+      "--path",
+      "/tmp/spire-nonheadless-cm_vcs5y/debug-headless-2",
+      "--audio-driver",
+      "Dummy",
+      "--rendering-method",
+      "gl_compatibility",
+      "--headless"
+    ],
+    "exit_code": -6,
+    "timed_out": false,
+    "clean_exit": false,
+    "errors": [],
+    "imported": true,
+    "log": "debug-headless-2.log",
+    "no_crash": false
+  },
+  {
+    "name": "debug-headless-3",
+    "profile": "debug",
+    "mode": "headless",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--editor",
+      "--import",
+      "--path",
+      "/tmp/spire-nonheadless-cm_vcs5y/debug-headless-3",
+      "--audio-driver",
+      "Dummy",
+      "--rendering-method",
+      "gl_compatibility",
+      "--headless"
+    ],
+    "exit_code": -6,
+    "timed_out": false,
+    "clean_exit": false,
+    "errors": [],
+    "imported": true,
+    "log": "debug-headless-3.log",
+    "no_crash": false
+  },
+  {
+    "name": "debug-gui-1",
+    "profile": "debug",
+    "mode": "x11",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--editor",
+      "--import",
+      "--path",
+      "/tmp/spire-nonheadless-cm_vcs5y/debug-gui-1",
+      "--audio-driver",
+      "Dummy",
+      "--rendering-method",
+      "gl_compatibility",
+      "--display-driver",
+      "x11"
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "clean_exit": false,
+    "errors": [
+      "WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver."
+    ],
+    "imported": false,
+    "log": "debug-gui-1.log",
+    "no_crash": true
+  },
+  {
+    "name": "debug-gui-2",
+    "profile": "debug",
+    "mode": "x11",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--editor",
+      "--import",
+      "--path",
+      "/tmp/spire-nonheadless-cm_vcs5y/debug-gui-2",
+      "--audio-driver",
+      "Dummy",
+      "--rendering-method",
+      "gl_compatibility",
+      "--display-driver",
+      "x11"
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "clean_exit": false,
+    "errors": [
+      "WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver."
+    ],
+    "imported": false,
+    "log": "debug-gui-2.log",
+    "no_crash": true
+  },
+  {
+    "name": "debug-gui-3",
+    "profile": "debug",
+    "mode": "x11",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--editor",
+      "--import",
+      "--path",
+      "/tmp/spire-nonheadless-cm_vcs5y/debug-gui-3",
+      "--audio-driver",
+      "Dummy",
+      "--rendering-method",
+      "gl_compatibility",
+      "--display-driver",
+      "x11"
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "clean_exit": false,
+    "errors": [
+      "WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver."
+    ],
+    "imported": false,
+    "log": "debug-gui-3.log",
+    "no_crash": true
+  },
+  {
+    "name": "release-headless-1",
+    "profile": "release",
+    "mode": "headless",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--editor",
+      "--import",
+      "--path",
+      "/tmp/spire-nonheadless-cm_vcs5y/release-headless-1",
+      "--audio-driver",
+      "Dummy",
+      "--rendering-method",
+      "gl_compatibility",
+      "--headless"
+    ],
+    "exit_code": -6,
+    "timed_out": false,
+    "clean_exit": false,
+    "errors": [],
+    "imported": true,
+    "log": "release-headless-1.log",
+    "no_crash": false
+  },
+  {
+    "name": "release-headless-2",
+    "profile": "release",
+    "mode": "headless",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--editor",
+      "--import",
+      "--path",
+      "/tmp/spire-nonheadless-cm_vcs5y/release-headless-2",
+      "--audio-driver",
+      "Dummy",
+      "--rendering-method",
+      "gl_compatibility",
+      "--headless"
+    ],
+    "exit_code": -6,
+    "timed_out": false,
+    "clean_exit": false,
+    "errors": [],
+    "imported": true,
+    "log": "release-headless-2.log",
+    "no_crash": false
+  },
+  {
+    "name": "release-headless-3",
+    "profile": "release",
+    "mode": "headless",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--editor",
+      "--import",
+      "--path",
+      "/tmp/spire-nonheadless-cm_vcs5y/release-headless-3",
+      "--audio-driver",
+      "Dummy",
+      "--rendering-method",
+      "gl_compatibility",
+      "--headless"
+    ],
+    "exit_code": -6,
+    "timed_out": false,
+    "clean_exit": false,
+    "errors": [],
+    "imported": true,
+    "log": "release-headless-3.log",
+    "no_crash": false
+  },
+  {
+    "name": "release-gui-1",
+    "profile": "release",
+    "mode": "x11",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--editor",
+      "--import",
+      "--path",
+      "/tmp/spire-nonheadless-cm_vcs5y/release-gui-1",
+      "--audio-driver",
+      "Dummy",
+      "--rendering-method",
+      "gl_compatibility",
+      "--display-driver",
+      "x11"
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "clean_exit": false,
+    "errors": [
+      "WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver."
+    ],
+    "imported": false,
+    "log": "release-gui-1.log",
+    "no_crash": true
+  },
+  {
+    "name": "release-gui-2",
+    "profile": "release",
+    "mode": "x11",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--editor",
+      "--import",
+      "--path",
+      "/tmp/spire-nonheadless-cm_vcs5y/release-gui-2",
+      "--audio-driver",
+      "Dummy",
+      "--rendering-method",
+      "gl_compatibility",
+      "--display-driver",
+      "x11"
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "clean_exit": false,
+    "errors": [
+      "WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver."
+    ],
+    "imported": false,
+    "log": "release-gui-2.log",
+    "no_crash": true
+  },
+  {
+    "name": "release-gui-3",
+    "profile": "release",
+    "mode": "x11",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--editor",
+      "--import",
+      "--path",
+      "/tmp/spire-nonheadless-cm_vcs5y/release-gui-3",
+      "--audio-driver",
+      "Dummy",
+      "--rendering-method",
+      "gl_compatibility",
+      "--display-driver",
+      "x11"
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "clean_exit": false,
+    "errors": [
+      "WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver."
+    ],
+    "imported": false,
+    "log": "release-gui-3.log",
+    "no_crash": true
+  },
+  {
+    "name": "fresh-example-editor-first-open",
+    "mode": "x11-editor-window-close",
+    "fresh": true,
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--editor",
+      "--path",
+      "/tmp/spire-nonheadless-cm_vcs5y/fresh-example-editor",
+      "--display-driver",
+      "x11",
+      "--audio-driver",
+      "Dummy",
+      "--rendering-method",
+      "gl_compatibility",
+      "--single-window"
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "close_sent": false,
+    "windows": [
+      {
+        "id": "0x02600008",
+        "title": "SpireTweener Test Runner - Godot Engine"
+      }
+    ],
+    "errors": [
+      "WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver."
+    ],
+    "clean_exit": false,
+    "log": "fresh-example-editor-first-open.log",
+    "no_crash": true
+  },
+  {
+    "name": "fresh-example-editor-reopen",
+    "mode": "x11-editor-window-close",
+    "fresh": false,
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--editor",
+      "--path",
+      "/tmp/spire-nonheadless-cm_vcs5y/fresh-example-editor",
+      "--display-driver",
+      "x11",
+      "--audio-driver",
+      "Dummy",
+      "--rendering-method",
+      "gl_compatibility",
+      "--single-window"
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "close_sent": false,
+    "windows": [
+      {
+        "id": "0x02600008",
+        "title": "SpireTweener Test Runner - Godot Engine"
+      }
+    ],
+    "errors": [
+      "WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver."
+    ],
+    "clean_exit": false,
+    "log": "fresh-example-editor-reopen.log",
+    "no_crash": true
+  }
+]

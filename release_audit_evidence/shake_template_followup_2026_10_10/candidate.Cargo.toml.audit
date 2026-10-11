@@ -1,0 +1,16 @@
+[package]
+name="spire_shake_template_modulo_candidate"
+version="0.1.0"
+edition="2024"
+[workspace]
+[lib]
+crate-type=["cdylib"]
+[dependencies]
+godot={version="=0.5.5",features=["experimental-wasm","register-docs"]}
+spire_tween={path="../candidate_core"}
+[profile.dev]
+opt-level=3
+debug-assertions=true
+[profile.release]
+opt-level=3
+lto="thin"

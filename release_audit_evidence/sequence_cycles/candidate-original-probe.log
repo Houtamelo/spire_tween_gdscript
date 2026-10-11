@@ -1,0 +1,11 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards strict)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+FIRST_APPEND
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:773)
+     GDScript backtrace (most recent call first):
+         [0] _ready (res://probe_cycle.gd:7)
+SECOND_APPEND
+ROOT_REGISTERED
+Tween unregistered due to retain = false: spire_tween::tweens::sequence::data::Sequence-0x39a29bd0

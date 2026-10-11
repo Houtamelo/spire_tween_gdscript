@@ -43,7 +43,7 @@ impl ErrorHandlingTests {
         seq.append_interval(1.0);
         seq.join_ptr(tween.clone());
         let seq = seq.register();
-        // Self-append via RcPtr -- should be rejected gracefully
+        // Self-append via TweenPtr -- should be rejected gracefully
         seq.to_mut().append_ptr(seq.clone());
 
         let tracker = RcPtr::clone(&self.time_tracker);

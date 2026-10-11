@@ -13,7 +13,8 @@ pub use node_status::*;
 mod index_map_impl;
 pub use index_map_impl::*;
 
-// Note: We check for strong_count > 1 because we are literally holding one reference here.
+// Discount both the manager and, when present, the wrapper's internal native
+// pointer. A caller-held Godot wrapper still counts as external ownership.
 fn tween_process(tween: &AnyTween, delta_time: f64, is_tree_paused: bool) -> bool {
     use AnyTween::*;
     use ObjectValidityResult::*;
@@ -32,7 +33,7 @@ fn tween_process(tween: &AnyTween, delta_time: f64, is_tree_paused: bool) -> boo
     match result {
         CanProcess => {
             match tween.get_state() {
-                State::Stopped | State::Paused => tween.strong_count() > 1,
+                State::Stopped | State::Paused => tween.has_external_owners(),
 
                 State::Playing => {
                     let process_result = match tween {
@@ -50,16 +51,16 @@ fn tween_process(tween: &AnyTween, delta_time: f64, is_tree_paused: bool) -> boo
                         AdvanceTimeResult::Playing => true,
                         // If a tween is paused and there aren't any references to it, nothing will ever be able
                         // to unpause it, so we can safely stop referencing it.
-                        AdvanceTimeResult::Paused => tween.strong_count() > 1,
+                        AdvanceTimeResult::Paused => tween.has_external_owners(),
 
                         // Tween is done, check if we can stop referencing it.
-                        AdvanceTimeResult::Completed { .. } => tween.strong_count() > 1,
+                        AdvanceTimeResult::Completed { .. } => tween.is_playing() || tween.has_external_owners(),
                         AdvanceTimeResult::ShouldDespawn => false,
                     }
                 }
             }
         }
-        DontProcess => tween.strong_count() > 1,
+        DontProcess => tween.has_external_owners(),
         SomeObjectsDead => false,
     }
 }

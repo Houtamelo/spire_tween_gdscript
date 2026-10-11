@@ -1,0 +1,6 @@
+{
+  "reason": "User requested no further non-headless runs",
+  "runner_pids": [],
+  "godot_pids": [],
+  "close_requests": []
+}

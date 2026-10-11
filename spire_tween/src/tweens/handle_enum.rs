@@ -3,6 +3,10 @@ use super::*;
 pub trait Signaler {
     fn emit_finished(&self);
     fn emit_loop_finished(&self);
+    fn instance_id(&self) -> godot::obj::InstanceId;
+    fn reference_count(&self) -> usize;
+    fn try_from_instance_id(id: godot::obj::InstanceId) -> Option<Self>
+    where Self: Sized;
 }
 
 macro_rules! impl_invoke_signals {
@@ -15,6 +19,16 @@ macro_rules! impl_invoke_signals {
 
                 fn emit_loop_finished(&self) {
                     self.signals().loop_finished().emit();
+                }
+
+                fn instance_id(&self) -> godot::obj::InstanceId { Gd::instance_id(self) }
+
+                fn reference_count(&self) -> usize {
+                    self.upcast_ref::<RefCounted>().get_reference_count() as usize
+                }
+
+                fn try_from_instance_id(id: godot::obj::InstanceId) -> Option<Self> {
+                    Gd::try_from_instance_id(id).ok()
                 }
             }
         )*

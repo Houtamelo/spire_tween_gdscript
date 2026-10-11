@@ -1,0 +1,133 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards strict)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+BINDING_START test_clear_removes_all_manager_bindings
+ERROR: Cleared nodes must not cancel the tween
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/node_binding.gd:10)
+       [1] test_clear_removes_all_manager_bindings (res://examples/tests/node_binding.gd:39)
+       [2] flush_frames (res://examples/tests/node_binding.gd:16)
+BINDING_FAIL test_clear_removes_all_manager_bindings
+BINDING_START test_clear_preserves_other_tween_binding
+ERROR: Clear must affect only its own tween
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/node_binding.gd:10)
+       [1] test_clear_preserves_other_tween_binding (res://examples/tests/node_binding.gd:51)
+       [2] flush_frames (res://examples/tests/node_binding.gd:16)
+BINDING_FAIL test_clear_preserves_other_tween_binding
+BINDING_START test_duplicate_bind_and_unbind_are_idempotent
+ERROR: [panic spire_tween/src/global/index_map_impl.rs:31]
+  assertion failed: !entry.bound_tweens.contains(&weak)
+  in SpireSequence::bind_node()
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+   GDScript backtrace (most recent call first):
+       [0] test_duplicate_bind_and_unbind_are_idempotent (res://examples/tests/node_binding.gd:60)
+       [1] _ready (res://examples/tests/node_binding_runner.gd:18)
+(backtrace disabled, run application with `RUST_BACKTRACE=1` environment variable)
+SCRIPT ERROR: Cannot call method 'bind_node' on a null value.
+          at: test_duplicate_bind_and_unbind_are_idempotent (res://examples/tests/node_binding.gd:60)
+          GDScript backtrace (most recent call first):
+              [0] test_duplicate_bind_and_unbind_are_idempotent (res://examples/tests/node_binding.gd:60)
+              [1] _ready (res://examples/tests/node_binding_runner.gd:18)
+BINDING_FAIL test_duplicate_bind_and_unbind_are_idempotent
+BINDING_START test_unbind_absent_node_preserves_other_tween
+ERROR: [panic spire_tween/src/global/index_map_impl.rs:42]
+  assertion `left == right` failed
+    left: 0
+   right: 1
+  in SpireSequence::unbind_node()
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+   GDScript backtrace (most recent call first):
+       [0] test_unbind_absent_node_preserves_other_tween (res://examples/tests/node_binding.gd:76)
+       [1] _ready (res://examples/tests/node_binding_runner.gd:18)
+(backtrace disabled, run application with `RUST_BACKTRACE=1` environment variable)
+BINDING_PASS test_unbind_absent_node_preserves_other_tween
+BINDING_START test_unbind_one_of_two_nodes_preserves_remaining_binding
+BINDING_PASS test_unbind_one_of_two_nodes_preserves_remaining_binding
+BINDING_START test_explicit_binding_survives_unregister_and_register
+ERROR: [panic spire_tween/src/global/index_map_impl.rs:31]
+  assertion failed: !entry.bound_tweens.contains(&weak)
+  in SpireSequence::register()
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+   GDScript backtrace (most recent call first):
+       [0] test_explicit_binding_survives_unregister_and_register (res://examples/tests/node_binding.gd:106)
+       [1] flush_frames (res://examples/tests/node_binding.gd:16)
+(backtrace disabled, run application with `RUST_BACKTRACE=1` environment variable)
+ERROR: [panic spire_tween/src/global/index_map_impl.rs:31]
+  assertion failed: !entry.bound_tweens.contains(&weak)
+  in SpireSequence::register()
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+   GDScript backtrace (most recent call first):
+       [0] test_explicit_binding_survives_unregister_and_register (res://examples/tests/node_binding.gd:107)
+       [1] flush_frames (res://examples/tests/node_binding.gd:16)
+(backtrace disabled, run application with `RUST_BACKTRACE=1` environment variable)
+ERROR: Explicitly bound tween must re-register
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/node_binding.gd:10)
+       [1] test_explicit_binding_survives_unregister_and_register (res://examples/tests/node_binding.gd:108)
+       [2] flush_frames (res://examples/tests/node_binding.gd:16)
+BINDING_FAIL test_explicit_binding_survives_unregister_and_register
+BINDING_START test_completed_bound_tween_registers_and_replays
+ERROR: [panic spire_tween/src/global/index_map_impl.rs:31]
+  assertion failed: !entry.bound_tweens.contains(&weak)
+  in SpireSequence::register()
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+   GDScript backtrace (most recent call first):
+       [0] test_completed_bound_tween_registers_and_replays (res://examples/tests/node_binding.gd:122)
+       [1] flush_frames (res://examples/tests/node_binding.gd:16)
+(backtrace disabled, run application with `RUST_BACKTRACE=1` environment variable)
+BINDING_PASS test_completed_bound_tween_registers_and_replays
+BINDING_START test_bound_children_append_join_and_insert
+ERROR: [panic spire_tween/src/global/index_map_impl.rs:31]
+  assertion failed: !entry.bound_tweens.contains(&weak)
+  in SpireSequence::append()
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+   GDScript backtrace (most recent call first):
+       [0] test_bound_children_append_join_and_insert (res://examples/tests/node_binding.gd:142)
+       [1] _ready (res://examples/tests/node_binding_runner.gd:18)
+(backtrace disabled, run application with `RUST_BACKTRACE=1` environment variable)
+SCRIPT ERROR: Bug: Invalid call error code 1337.
+          at: test_bound_children_append_join_and_insert (res://examples/tests/node_binding.gd:142)
+          GDScript backtrace (most recent call first):
+              [0] test_bound_children_append_join_and_insert (res://examples/tests/node_binding.gd:142)
+              [1] _ready (res://examples/tests/node_binding_runner.gd:18)
+BINDING_FAIL test_bound_children_append_join_and_insert
+BINDING_START test_nested_bound_child_cancels_on_node_free
+ERROR: [panic spire_tween/src/global/index_map_impl.rs:31]
+  assertion failed: !entry.bound_tweens.contains(&weak)
+  in SpireSequence::append()
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+   GDScript backtrace (most recent call first):
+       [0] test_nested_bound_child_cancels_on_node_free (res://examples/tests/node_binding.gd:163)
+       [1] _ready (res://examples/tests/node_binding_runner.gd:18)
+(backtrace disabled, run application with `RUST_BACKTRACE=1` environment variable)
+ERROR: Parameter `tween`: expected Spire type, got `null`.
+   at: <core::option::Option<godot_core::obj::gd::Gd<godot_core::gen::classes::ref_counted::re_export::RefCounted>> as spire_tween::util::LogBadArg>::log_bad_spire_arg (spire_tween/src/util/mod.rs:72)
+   GDScript backtrace (most recent call first):
+       [0] test_nested_bound_child_cancels_on_node_free (res://examples/tests/node_binding.gd:164)
+       [1] _ready (res://examples/tests/node_binding_runner.gd:18)
+BINDING_PASS test_nested_bound_child_cancels_on_node_free
+BINDING_START test_clear_after_bound_node_freed
+BINDING_PASS test_clear_after_bound_node_freed
+BINDING_START test_clear_preserves_automatic_property_owner
+ERROR: Clearing explicit bindings must allow property playback
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/node_binding.gd:10)
+       [1] test_clear_preserves_automatic_property_owner (res://examples/tests/node_binding.gd:199)
+       [2] flush_frames (res://examples/tests/node_binding.gd:16)
+BINDING_FAIL test_clear_preserves_automatic_property_owner
+BINDING_START test_clear_preserves_automatic_method_owner
+ERROR: Clearing explicit bindings must allow method playback
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/node_binding.gd:10)
+       [1] test_clear_preserves_automatic_method_owner (res://examples/tests/node_binding.gd:214)
+       [2] flush_frames (res://examples/tests/node_binding.gd:16)
+BINDING_FAIL test_clear_preserves_automatic_method_owner
+BINDING_START test_clear_bound_pause_mode_resumes_processing
+BINDING_PASS test_clear_bound_pause_mode_resumes_processing
+BINDING_RESULT total=13 failed=7

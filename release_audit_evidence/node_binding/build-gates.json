@@ -1,0 +1,26 @@
+[
+  {
+    "job": "check-bridge",
+    "exit_code": 0
+  },
+  {
+    "job": "check-entry",
+    "exit_code": 0
+  },
+  {
+    "job": "build-debug",
+    "exit_code": 0
+  },
+  {
+    "job": "build-native-debug",
+    "exit_code": 0
+  },
+  {
+    "job": "build-release",
+    "exit_code": 0
+  },
+  {
+    "job": "build-native-release",
+    "exit_code": 0
+  }
+]

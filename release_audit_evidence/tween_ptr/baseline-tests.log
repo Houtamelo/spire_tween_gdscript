@@ -1,0 +1,99 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards strict)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+OWNERSHIP_START test_completed_sequences_are_collected
+OWNERSHIP_BULK live_wrappers=1000 object_count_delta=1001.0
+ERROR: Completed sequences retained 1000 wrappers
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/ownership.gd:10)
+       [1] test_completed_sequences_are_collected (res://examples/tests/ownership.gd:41)
+       [2] flush_frames (res://examples/tests/ownership.gd:15)
+OWNERSHIP_FAIL test_completed_sequences_are_collected
+OWNERSHIP_START test_unretained_handle_delivers_finished
+ERROR: Unretained completed handle must be collected
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/ownership.gd:10)
+       [1] test_unretained_handle_delivers_finished (res://examples/tests/ownership.gd:52)
+       [2] flush_frames (res://examples/tests/ownership.gd:15)
+OWNERSHIP_FAIL test_unretained_handle_delivers_finished
+OWNERSHIP_START test_unregister_then_release_godot_handle
+ERROR: Last Godot reference must release an unregistered tween
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/ownership.gd:10)
+       [1] test_unregister_then_release_godot_handle (res://examples/tests/ownership.gd:65)
+       [2] flush_frames (res://examples/tests/ownership.gd:15)
+OWNERSHIP_FAIL test_unregister_then_release_godot_handle
+OWNERSHIP_START test_retained_completed_handle_restarts
+ERROR: Dropping a retained completed handle must collect it
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/ownership.gd:10)
+       [1] test_retained_completed_handle_restarts (res://examples/tests/ownership.gd:81)
+       [2] flush_frames (res://examples/tests/ownership.gd:15)
+OWNERSHIP_FAIL test_retained_completed_handle_restarts
+OWNERSHIP_START test_sequence_children_preserve_signals_across_loops
+ERROR: First child must be collected with its sequence
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/ownership.gd:10)
+       [1] test_sequence_children_preserve_signals_across_loops (res://examples/tests/ownership.gd:100)
+       [2] flush_frames (res://examples/tests/ownership.gd:15)
+ERROR: Second child must be collected with its sequence
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/ownership.gd:10)
+       [1] test_sequence_children_preserve_signals_across_loops (res://examples/tests/ownership.gd:101)
+       [2] flush_frames (res://examples/tests/ownership.gd:15)
+ERROR: Unretained parent sequence must be collected
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/ownership.gd:10)
+       [1] test_sequence_children_preserve_signals_across_loops (res://examples/tests/ownership.gd:102)
+       [2] flush_frames (res://examples/tests/ownership.gd:15)
+OWNERSHIP_FAIL test_sequence_children_preserve_signals_across_loops
+OWNERSHIP_START test_bound_node_cancellation_collects_handle
+ERROR: Cancelled bound tween must be collected
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/ownership.gd:10)
+       [1] test_bound_node_cancellation_collects_handle (res://examples/tests/ownership.gd:116)
+       [2] flush_frames (res://examples/tests/ownership.gd:15)
+OWNERSHIP_FAIL test_bound_node_cancellation_collects_handle
+OWNERSHIP_START test_abandoned_paused_handle_is_collected
+ERROR: Abandoned paused tween must be collected
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/ownership.gd:10)
+       [1] test_abandoned_paused_handle_is_collected (res://examples/tests/ownership.gd:127)
+       [2] flush_frames (res://examples/tests/ownership.gd:15)
+OWNERSHIP_FAIL test_abandoned_paused_handle_is_collected
+OWNERSHIP_START test_abandoned_manual_handle_is_collected
+ERROR: Abandoned manually processed tween must be collected
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/ownership.gd:10)
+       [1] test_abandoned_manual_handle_is_collected (res://examples/tests/ownership.gd:136)
+       [2] flush_frames (res://examples/tests/ownership.gd:15)
+OWNERSHIP_FAIL test_abandoned_manual_handle_is_collected
+OWNERSHIP_START test_property_handle_is_collected_after_playback
+ERROR: Completed property handle must be collected
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/ownership.gd:10)
+       [1] test_property_handle_is_collected_after_playback (res://examples/tests/ownership.gd:150)
+       [2] flush_frames (res://examples/tests/ownership.gd:15)
+OWNERSHIP_FAIL test_property_handle_is_collected_after_playback
+OWNERSHIP_START test_delayed_call_handle_is_collected
+ERROR: Completed delayed call handle must be collected
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/ownership.gd:10)
+       [1] test_delayed_call_handle_is_collected (res://examples/tests/ownership.gd:160)
+       [2] flush_frames (res://examples/tests/ownership.gd:15)
+OWNERSHIP_FAIL test_delayed_call_handle_is_collected
+OWNERSHIP_RESULT total=10 failed=10
+WARNING: 1012 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)

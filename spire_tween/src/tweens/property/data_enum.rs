@@ -3,15 +3,15 @@ use super::*;
 #[delegated_enum(impl_conversions)]
 #[derive(Clone)]
 pub enum AnyPropertyTween {
-    int(RcPtr<SpireTween<LerpPropertyData<i64>>>),
-    float(RcPtr<SpireTween<LerpPropertyData<f64>>>),
-    String(RcPtr<SpireTween<LerpPropertyData<GString>>>),
-    Color(RcPtr<SpireTween<LerpPropertyData<Color>>>),
-    Vector2(RcPtr<SpireTween<LerpPropertyData<Vector2>>>),
-    Vector2i(RcPtr<SpireTween<LerpPropertyData<Vector2i>>>),
-    Vector3(RcPtr<SpireTween<LerpPropertyData<Vector3>>>),
-    Vector3i(RcPtr<SpireTween<LerpPropertyData<Vector3i>>>),
-    Variant(RcPtr<SpireTween<LerpPropertyData<Variant>>>),
+    int(TweenPtr<LerpPropertyData<i64>>),
+    float(TweenPtr<LerpPropertyData<f64>>),
+    String(TweenPtr<LerpPropertyData<GString>>),
+    Color(TweenPtr<LerpPropertyData<Color>>),
+    Vector2(TweenPtr<LerpPropertyData<Vector2>>),
+    Vector2i(TweenPtr<LerpPropertyData<Vector2i>>),
+    Vector3(TweenPtr<LerpPropertyData<Vector3>>),
+    Vector3i(TweenPtr<LerpPropertyData<Vector3i>>),
+    Variant(TweenPtr<LerpPropertyData<Variant>>),
 }
 
 #[delegate_impl]
@@ -97,15 +97,15 @@ impl AnyPropertyTween {
 #[delegated_enum(impl_conversions)]
 #[derive(Clone)]
 pub enum WeakPropertyTween {
-    int(WeakPtr<SpireTween<LerpPropertyData<i64>>>),
-    float(WeakPtr<SpireTween<LerpPropertyData<f64>>>),
-    String(WeakPtr<SpireTween<LerpPropertyData<GString>>>),
-    Color(WeakPtr<SpireTween<LerpPropertyData<Color>>>),
-    Vector2(WeakPtr<SpireTween<LerpPropertyData<Vector2>>>),
-    Vector2i(WeakPtr<SpireTween<LerpPropertyData<Vector2i>>>),
-    Vector3(WeakPtr<SpireTween<LerpPropertyData<Vector3>>>),
-    Vector3i(WeakPtr<SpireTween<LerpPropertyData<Vector3i>>>),
-    Variant(WeakPtr<SpireTween<LerpPropertyData<Variant>>>),
+    int(WeakTweenPtr<LerpPropertyData<i64>>),
+    float(WeakTweenPtr<LerpPropertyData<f64>>),
+    String(WeakTweenPtr<LerpPropertyData<GString>>),
+    Color(WeakTweenPtr<LerpPropertyData<Color>>),
+    Vector2(WeakTweenPtr<LerpPropertyData<Vector2>>),
+    Vector2i(WeakTweenPtr<LerpPropertyData<Vector2i>>),
+    Vector3(WeakTweenPtr<LerpPropertyData<Vector3>>),
+    Vector3i(WeakTweenPtr<LerpPropertyData<Vector3i>>),
+    Variant(WeakTweenPtr<LerpPropertyData<Variant>>),
 }
 
 impl WeakPropertyTween {

@@ -47,7 +47,7 @@ impl GdHandlePathTests {
         assert!(gd.is_instance_valid(), "register_with_gd_handle() must attach a Gd handle");
 
         let without_handle = shape.do_scale(Vector2::ONE, 1.0).register();
-        assert!(without_handle.gd_handle.is_none(), "register() must NOT attach a Gd handle");
+        assert!(without_handle.get_gd_handle().is_none(), "register() must NOT attach a Gd handle");
 
         // Stop both so they don't interfere with subsequent tests.
         with_handle.to_mut().stop();

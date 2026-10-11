@@ -1,0 +1,118 @@
+   Compiling godot-codegen v0.5.5
+   Compiling godot-macros v0.5.5
+   Compiling godot-ffi v0.5.5
+   Compiling godot-core v0.5.5
+   Compiling godot v0.5.5
+   Compiling spire_tween v1.4.0 (/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween)
+    Finished `test` profile [optimized + debuginfo] target(s) in 1m 11s
+     Running unittests src/lib.rs (target/debug/build/spire_tween/ac437edaee1fa937/out/spire_tween-ac437edaee1fa937)
+
+running 8 tests
+test tweens::templates::do_spiral::archimedean::benches::bench_arc_length_between_random ... ok
+test tweens::templates::do_spiral::archimedean::benches::bench_angle_from_length_random ... ok
+test tweens::templates::do_spiral::fermat::benches::bench_arc_length_between_random ... ok
+test tweens::templates::do_spiral::logarithmic::benches::bench_arc_length_between_random ... ok
+test tweens::templates::do_spiral::hyperbolic::benches::bench_arc_length_between_random ... ok
+test tweens::templates::do_spiral::fermat::benches::bench_angle_from_length_random ... ok
+test tweens::templates::do_spiral::logarithmic::benches::bench_angle_from_length_random ... ok
+test tweens::templates::do_spiral::hyperbolic::benches::bench_angle_from_length_random ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/must_compile.rs (target/debug/build/spire_tween/2901fddad27c2fa9/out/must_compile-2901fddad27c2fa9)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests spire_tween
+
+running 64 tests
+test spire_tween/src/enums/ease.rs - enums::ease::Ease::InCirc (line 155) ... ignored
+test spire_tween/src/enums/ease.rs - enums::ease::Ease::InCubic (line 86) ... ignored
+test spire_tween/src/enums/ease.rs - enums::ease::Ease::InExpo (line 178) ... ignored
+test spire_tween/src/enums/ease.rs - enums::ease::Ease::InOutCirc (line 491) ... ignored
+test spire_tween/src/enums/ease.rs - enums::ease::Ease::InOutCubic (line 414) ... ignored
+test spire_tween/src/enums/ease.rs - enums::ease::Ease::InOutExpo (line 517) ... ignored
+test spire_tween/src/enums/ease.rs - enums::ease::Ease::InOutQuad (line 388) ... ignored
+test spire_tween/src/enums/ease.rs - enums::ease::Ease::InOutQuart (line 440) ... ignored
+test spire_tween/src/enums/ease.rs - enums::ease::Ease::InOutQuint (line 466) ... ignored
+test spire_tween/src/enums/ease.rs - enums::ease::Ease::InOutSine (line 362) ... ignored
+test spire_tween/src/enums/ease.rs - enums::ease::Ease::InQuad (line 63) ... ignored
+test spire_tween/src/enums/ease.rs - enums::ease::Ease::InQuart (line 109) ... ignored
+test spire_tween/src/enums/ease.rs - enums::ease::Ease::InQuint (line 132) ... ignored
+test spire_tween/src/enums/ease.rs - enums::ease::Ease::InSine (line 40) ... ignored
+test spire_tween/src/enums/ease.rs - enums::ease::Ease::Linear (line 19) ... ignored
+test spire_tween/src/enums/ease.rs - enums::ease::Ease::OutCirc (line 316) ... ignored
+test spire_tween/src/enums/ease.rs - enums::ease::Ease::OutCubic (line 247) ... ignored
+test spire_tween/src/enums/ease.rs - enums::ease::Ease::OutExpo (line 339) ... ignored
+test spire_tween/src/enums/ease.rs - enums::ease::Ease::OutQuad (line 224) ... ignored
+test spire_tween/src/enums/ease.rs - enums::ease::Ease::OutQuart (line 270) ... ignored
+test spire_tween/src/enums/ease.rs - enums::ease::Ease::OutQuint (line 293) ... ignored
+test spire_tween/src/enums/ease.rs - enums::ease::Ease::OutSine (line 201) ... ignored
+test spire_tween/src/enums/ease.rs - enums::ease::Ease::Punch (line 545) ... ignored
+test spire_tween/src/lib.rs - (line 6) ... ignored
+test spire_tween/src/object_or_node.rs - object_or_node::delegate_object_or_node (line 11) ... ignored
+test spire_tween/src/object_or_node.rs - object_or_node::delegate_object_or_node (line 20) ... ignored
+test spire_tween/src/tweens/any_tween.rs - tweens::any_tween::delegate_any_tween (line 11) ... ignored
+test spire_tween/src/tweens/any_tween.rs - tweens::any_tween::delegate_any_tween (line 20) ... ignored
+test spire_tween/src/tweens/any_tween.rs - tweens::any_tween::delegate_weak_any_tween (line 42) ... ignored
+test spire_tween/src/tweens/any_tween.rs - tweens::any_tween::delegate_weak_any_tween (line 51) ... ignored
+test spire_tween/src/tweens/base/spire_tween.rs - tweens::base::spire_tween::SpireTween<T>::finished_connect (line 379) ... ignored
+test spire_tween/src/tweens/base/spire_tween.rs - tweens::base::spire_tween::SpireTween<T>::loop_finished_connect (line 314) ... ignored
+test spire_tween/src/tweens/delayed_call/do_delayed_call.rs - tweens::delayed_call::do_delayed_call::DoDelayedCall (line 19) ... ignored
+test spire_tween/src/tweens/lerping/lerpable.rs - tweens::lerping::lerpable::ILerpable (line 13) ... ignored
+test spire_tween/src/tweens/method/data_enum.rs - tweens::method::data_enum::delegate_any_method_tween (line 11) ... ignored
+test spire_tween/src/tweens/method/data_enum.rs - tweens::method::data_enum::delegate_any_method_tween (line 20) ... ignored
+test spire_tween/src/tweens/method/data_enum.rs - tweens::method::data_enum::delegate_weak_method_tween (line 105) ... ignored
+test spire_tween/src/tweens/method/data_enum.rs - tweens::method::data_enum::delegate_weak_method_tween (line 114) ... ignored
+test spire_tween/src/tweens/method/do_method.rs - tweens::method::do_method::DoMethod (line 17) ... ignored
+test spire_tween/src/tweens/property/data.rs - tweens::property::data::SpireTween<LerpPropertyData<T>>::set_dynamic_target (line 101) ... ignored
+test spire_tween/src/tweens/property/data.rs - tweens::property::data::SpireTween<LerpPropertyData<T>>::set_relative (line 155) ... ignored
+test spire_tween/src/tweens/property/data.rs - tweens::property::data::SpireTween<LerpPropertyData<T>>::set_speed_based (line 214) ... ignored
+test spire_tween/src/tweens/property/data_enum.rs - tweens::property::data_enum::delegate_any_property_tween (line 11) ... ignored
+test spire_tween/src/tweens/property/data_enum.rs - tweens::property::data_enum::delegate_any_property_tween (line 20) ... ignored
+test spire_tween/src/tweens/property/data_enum.rs - tweens::property::data_enum::delegate_weak_property_tween (line 105) ... ignored
+test spire_tween/src/tweens/property/data_enum.rs - tweens::property::data_enum::delegate_weak_property_tween (line 114) ... ignored
+test spire_tween/src/tweens/property/data_impls/via_callable.rs - tweens::property::data_impls::via_callable::PropertyDataViaCallable (line 17) ... ignored
+test spire_tween/src/tweens/property/do_property.rs - tweens::property::do_property::DoProperty (line 27) ... ignored
+test spire_tween/src/tweens/property/generated_types_data.rs - tweens::property::generated_types_data::delegate_property_data_color (line 220) ... ignored
+test spire_tween/src/tweens/property/generated_types_data.rs - tweens::property::generated_types_data::delegate_property_data_color (line 229) ... ignored
+test spire_tween/src/tweens/property/generated_types_data.rs - tweens::property::generated_types_data::delegate_property_data_float (line 41) ... ignored
+test spire_tween/src/tweens/property/generated_types_data.rs - tweens::property::generated_types_data::delegate_property_data_float (line 50) ... ignored
+test spire_tween/src/tweens/property/generated_types_data.rs - tweens::property::generated_types_data::delegate_property_data_int (line 12) ... ignored
+test spire_tween/src/tweens/property/generated_types_data.rs - tweens::property::generated_types_data::delegate_property_data_int (line 21) ... ignored
+test spire_tween/src/tweens/property/generated_types_data.rs - tweens::property::generated_types_data::delegate_property_data_string (line 247) ... ignored
+test spire_tween/src/tweens/property/generated_types_data.rs - tweens::property::generated_types_data::delegate_property_data_string (line 256) ... ignored
+test spire_tween/src/tweens/property/generated_types_data.rs - tweens::property::generated_types_data::delegate_property_data_vec_2 (line 121) ... ignored
+test spire_tween/src/tweens/property/generated_types_data.rs - tweens::property::generated_types_data::delegate_property_data_vec_2 (line 130) ... ignored
+test spire_tween/src/tweens/property/generated_types_data.rs - tweens::property::generated_types_data::delegate_property_data_vec_2_i (line 155) ... ignored
+test spire_tween/src/tweens/property/generated_types_data.rs - tweens::property::generated_types_data::delegate_property_data_vec_2_i (line 164) ... ignored
+test spire_tween/src/tweens/property/generated_types_data.rs - tweens::property::generated_types_data::delegate_property_data_vec_3 (line 173) ... ignored
+test spire_tween/src/tweens/property/generated_types_data.rs - tweens::property::generated_types_data::delegate_property_data_vec_3 (line 182) ... ignored
+test spire_tween/src/tweens/property/generated_types_data.rs - tweens::property::generated_types_data::delegate_property_data_vec_3_i (line 205) ... ignored
+test spire_tween/src/tweens/property/generated_types_data.rs - tweens::property::generated_types_data::delegate_property_data_vec_3_i (line 214) ... ignored
+
+test result: ok. 0 passed; 0 failed; 64 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 15 tests
+test spire_tween/src/enums/ease.rs - enums::ease::Ease::InOutCirc (line 486) ... ignored
+test spire_tween/src/enums/ease.rs - enums::ease::Ease::InOutCubic (line 409) ... ignored
+test spire_tween/src/enums/ease.rs - enums::ease::Ease::InOutExpo (line 512) ... ignored
+test spire_tween/src/enums/ease.rs - enums::ease::Ease::InOutQuad (line 383) ... ignored
+test spire_tween/src/enums/ease.rs - enums::ease::Ease::InOutQuart (line 435) ... ignored
+test spire_tween/src/enums/ease.rs - enums::ease::Ease::InOutQuint (line 461) ... ignored
+test spire_tween/src/tweens/sequence/gd.rs - tweens::sequence::gd::SpireSequence (line 18) ... ignored
+test spire_tween/src/tweens/sequence/gd.rs - tweens::sequence::gd::SpireSequence (line 35) ... ignored
+test spire_tween/src/tweens/sequence/gd.rs - tweens::sequence::gd::SpireSequence::append (line 119) ... ignored
+test spire_tween/src/tweens/sequence/gd.rs - tweens::sequence::gd::SpireSequence::append (line 127) ... ignored
+test spire_tween/src/tweens/sequence/gd.rs - tweens::sequence::gd::SpireSequence::close_current_block (line 207) ... ignored
+test spire_tween/src/tweens/sequence/gd.rs - tweens::sequence::gd::SpireSequence::close_current_block (line 215) ... ignored
+test spire_tween/src/tweens/sequence/gd.rs - tweens::sequence::gd::SpireSequence::join (line 235) ... ignored
+test spire_tween/src/tweens/sequence/gd.rs - tweens::sequence::gd::SpireSequence::join (line 243) ... ignored
+test spire_tween/src/tween_ptr/strong.rs - tween_ptr::strong::TweenPtr (line 11) - compile fail ... ok
+
+test result: ok. 1 passed; 0 failed; 14 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+all doctests ran in 0.10s; merged doctests compilation took 0.07s

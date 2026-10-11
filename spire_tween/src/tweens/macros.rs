@@ -17,6 +17,9 @@ macro_rules! define_tween_ptr_methods {
             #[inline]
             pub fn strong_count(&self) -> usize;
 
+            #[inline]
+            pub(crate) fn has_external_owners(&self) -> bool;
+
             /// Binds this tween to the given node.
             /// Unlike the built-in [Tween], Spire tweens can be bound to any number of nodes.
             ///
@@ -26,8 +29,11 @@ macro_rules! define_tween_ptr_methods {
             /// the tween will only process when all bound nodes are also processing
             /// (this is checked by calling [method Node.can_process] on each).
             ///
-            /// [b]Note:[/b] Property/Method tweeners are automatically bound to the node they are animating,
-            /// manually attempting to bind them won't do anything, and there is no harm in doing so.
+            /// Repeatedly binding the same node is harmless. Explicit bindings persist
+            /// across unregister/register and sequence insertion.
+            ///
+            /// [b]Note:[/b] Property/Method tweeners also track their animated node's
+            /// lifetime automatically; explicit binding does not change that behavior.
             #[inline]
             pub fn bind_node(&mut self, obj: Gd<Node>);
 
@@ -58,22 +64,22 @@ macro_rules! define_tween_ptr_methods {
 
         impl Eq for $Strong {}
 
-        impl<T> PartialEq<RcPtr<T>> for $Strong {
+        impl<T: ITweenable> PartialEq<TweenPtr<T>> for $Strong {
             #[inline]
-            fn eq(&self, other: &RcPtr<T>) -> bool { std::ptr::addr_eq(self.address(), other.address()) }
+            fn eq(&self, other: &TweenPtr<T>) -> bool { std::ptr::addr_eq(self.address(), other.address()) }
         }
 
-        impl<T> PartialEq<$Strong> for RcPtr<T> {
+        impl<T: ITweenable> PartialEq<$Strong> for TweenPtr<T> {
             #[inline]
             fn eq(&self, other: &$Strong) -> bool { std::ptr::addr_eq(self.address(), other.address()) }
         }
 
-        impl<T> PartialEq<WeakPtr<T>> for $Strong {
+        impl<T: ITweenable> PartialEq<WeakTweenPtr<T>> for $Strong {
             #[inline]
-            fn eq(&self, other: &WeakPtr<T>) -> bool { std::ptr::addr_eq(self.address(), other.address()) }
+            fn eq(&self, other: &WeakTweenPtr<T>) -> bool { std::ptr::addr_eq(self.address(), other.address()) }
         }
 
-        impl<T> PartialEq<$Strong> for WeakPtr<T> {
+        impl<T: ITweenable> PartialEq<$Strong> for WeakTweenPtr<T> {
             #[inline]
             fn eq(&self, other: &$Strong) -> bool { std::ptr::addr_eq(self.address(), other.address()) }
         }
@@ -133,22 +139,22 @@ macro_rules! define_tween_ptr_methods {
             fn equivalent(&self, key: &$Weak) -> bool { std::ptr::addr_eq(*self, key.address()) }
         }
 
-        impl<T> PartialEq<RcPtr<T>> for $Weak {
+        impl<T: ITweenable> PartialEq<TweenPtr<T>> for $Weak {
             #[inline]
-            fn eq(&self, other: &RcPtr<T>) -> bool { std::ptr::addr_eq(self.address(), other.address()) }
+            fn eq(&self, other: &TweenPtr<T>) -> bool { std::ptr::addr_eq(self.address(), other.address()) }
         }
 
-        impl<T> PartialEq<$Weak> for RcPtr<T> {
+        impl<T: ITweenable> PartialEq<$Weak> for TweenPtr<T> {
             #[inline]
             fn eq(&self, other: &$Weak) -> bool { std::ptr::addr_eq(self.address(), other.address()) }
         }
 
-        impl<T> PartialEq<WeakPtr<T>> for $Weak {
+        impl<T: ITweenable> PartialEq<WeakTweenPtr<T>> for $Weak {
             #[inline]
-            fn eq(&self, other: &WeakPtr<T>) -> bool { std::ptr::addr_eq(self.address(), other.address()) }
+            fn eq(&self, other: &WeakTweenPtr<T>) -> bool { std::ptr::addr_eq(self.address(), other.address()) }
         }
 
-        impl<T> PartialEq<$Weak> for WeakPtr<T> {
+        impl<T: ITweenable> PartialEq<$Weak> for WeakTweenPtr<T> {
             #[inline]
             fn eq(&self, other: &$Weak) -> bool { std::ptr::addr_eq(self.address(), other.address()) }
         }
@@ -163,7 +169,7 @@ macro_rules! impl_from_enum {
 		$(,)?
 	}) => {
         $(
-            impl FromEnum<AnyTween> for RcPtr<SpireTween<$tween_ty>> {
+            impl FromEnum<AnyTween> for TweenPtr<$tween_ty> {
                 fn from_enum(tween: AnyTween) -> Result<Self, AnyTween> {
                     if let $outer_path($enum_var(t)) = tween {
                         Ok(t)
@@ -173,7 +179,7 @@ macro_rules! impl_from_enum {
                 }
             }
 
-            impl FromEnumRef<AnyTween> for RcPtr<SpireTween<$tween_ty>> {
+            impl FromEnumRef<AnyTween> for TweenPtr<$tween_ty> {
                 fn from_enum_ref(tween: &AnyTween) -> Option<&Self> {
                     if let $outer_path($enum_var(t)) = tween {
                         Some(t)
@@ -183,7 +189,7 @@ macro_rules! impl_from_enum {
                 }
             }
 
-            impl FromEnumMut<AnyTween> for RcPtr<SpireTween<$tween_ty>> {
+            impl FromEnumMut<AnyTween> for TweenPtr<$tween_ty> {
                 fn from_enum_mut(tween: &mut AnyTween) -> Option<&mut Self> {
                     if let $outer_path($enum_var(t)) = tween {
                         Some(t)
@@ -193,8 +199,8 @@ macro_rules! impl_from_enum {
                 }
             }
 
-            impl From<RcPtr<SpireTween<$tween_ty>>> for AnyTween {
-                fn from(tween: RcPtr<SpireTween<$tween_ty>>) -> Self {
+            impl From<TweenPtr<$tween_ty>> for AnyTween {
+                fn from(tween: TweenPtr<$tween_ty>) -> Self {
                     $outer_path($enum_var(tween))
                 }
             }
@@ -210,7 +216,7 @@ macro_rules! impl_from_enum_weak {
 		$(,)?
 	}) => {
         $(
-            impl FromEnum<WeakAnyTween> for WeakPtr<SpireTween<$tween_ty>> {
+            impl FromEnum<WeakAnyTween> for WeakTweenPtr<$tween_ty> {
                 fn from_enum(tween: WeakAnyTween) -> Result<Self, WeakAnyTween> {
                     if let $outer_path($enum_var(t)) = tween {
                         Ok(t)
@@ -220,7 +226,7 @@ macro_rules! impl_from_enum_weak {
                 }
             }
 
-            impl FromEnumRef<WeakAnyTween> for WeakPtr<SpireTween<$tween_ty>> {
+            impl FromEnumRef<WeakAnyTween> for WeakTweenPtr<$tween_ty> {
                 fn from_enum_ref(tween: &WeakAnyTween) -> Option<&Self> {
                     if let $outer_path($enum_var(t)) = tween {
                         Some(t)
@@ -230,7 +236,7 @@ macro_rules! impl_from_enum_weak {
                 }
             }
 
-            impl FromEnumMut<WeakAnyTween> for WeakPtr<SpireTween<$tween_ty>> {
+            impl FromEnumMut<WeakAnyTween> for WeakTweenPtr<$tween_ty> {
                 fn from_enum_mut(tween: &mut WeakAnyTween) -> Option<&mut Self> {
                     if let $outer_path($enum_var(t)) = tween {
                         Some(t)
@@ -240,8 +246,8 @@ macro_rules! impl_from_enum_weak {
                 }
             }
 
-            impl From<WeakPtr<SpireTween<$tween_ty>>> for WeakAnyTween {
-                fn from(tween: WeakPtr<SpireTween<$tween_ty>>) -> Self {
+            impl From<WeakTweenPtr<$tween_ty>> for WeakAnyTween {
+                fn from(tween: WeakTweenPtr<$tween_ty>) -> Self {
                     $outer_path($enum_var(tween))
                 }
             }
@@ -269,10 +275,10 @@ macro_rules! define_base_methods {
 
             #[allow(unused)]
             #[inline]
-            pub(crate) fn bound_nodes_mut(&mut self) -> &mut SmolSet<[Gd<Node>; 1]>;
+            pub(crate) fn bound_nodes_mut(&mut self) -> &mut SmallSet<[Gd<Node>; 1]>;
 
             #[inline]
-            pub fn get_bound_nodes(&self) -> &SmolSet<[Gd<Node>; 1]>;
+            pub fn get_bound_nodes(&self) -> &SmallSet<[Gd<Node>; 1]>;
             #[inline]
             pub fn clear_bound_nodes(&mut self);
 
@@ -350,12 +356,12 @@ macro_rules! define_base_gd_methods {
         #[godot_api(secondary)]
         impl $Ty {
             #[inline]
-            pub(crate) fn to_ref(&self) -> &RcPtr<$TweenTy> { unsafe { &*self.inner.get() } }
+            pub(crate) fn to_ref(&self) -> &TweenPtr<$InnerTy> { unsafe { &*self.inner.get() } }
 
             #[allow(clippy::wrong_self_convention)]
             #[allow(clippy::mut_from_ref)]
             #[inline]
-            pub(crate) fn to_mut(&self) -> &mut RcPtr<$TweenTy> { unsafe { &mut *self.inner.get() } }
+            pub(crate) fn to_mut(&self) -> &mut TweenPtr<$InnerTy> { unsafe { &mut *self.inner.get() } }
 
             /// Returns the current state of the tween. See [enum Spire.State] for details on each state.
             #[func]
@@ -382,6 +388,7 @@ macro_rules! define_base_gd_methods {
 
             /// Unbinds this tween from all nodes it is currently bound to.
             /// See [method bind_node] for details on what binding to a node does.
+            /// Also removes the manager's reverse entries, including for freed nodes.
             ///
             /// [b]Note:[/b] Property/Method tweeners are forcibly bound to the node they are animating,
             /// this method won't unbind them from that node, there is no way of doing so.
@@ -397,8 +404,11 @@ macro_rules! define_base_gd_methods {
             /// the tween will only process when all bound nodes are also processing
             /// (this is checked by calling [method Node.can_process] on each).
             ///
-            /// [b]Note:[/b] Property/Method tweeners are automatically bound to the node they are animating,
-            /// manually attempting to bind them won't do anything, and there is no harm in doing so.
+            /// Repeatedly binding the same node is harmless. Explicit bindings persist
+            /// across unregister/register and sequence insertion.
+            ///
+            /// [b]Note:[/b] Property/Method tweeners also track their animated node's
+            /// lifetime automatically; explicit binding does not change that behavior.
             #[func(gd_self)]
             pub fn bind_node(this: Gd<Self>, obj: Option<Gd<Node>>) -> Gd<Self> {
                 let Some(obj) = obj else {
@@ -409,8 +419,7 @@ macro_rules! define_base_gd_methods {
                 let gd_ref = this.bind();
                 let tween = gd_ref.to_mut();
 
-                tween.bound_nodes_mut().insert(obj.clone());
-                TM.node_bind(obj, tween.downgrade());
+                tween.bind_node(obj);
                 drop(gd_ref);
                 this
             }
@@ -427,8 +436,7 @@ macro_rules! define_base_gd_methods {
                 };
 
                 let tween = self.to_mut();
-                tween.bound_nodes_mut().remove(&obj);
-                TM.node_unbind(obj, tween);
+                tween.unbind_node(obj);
             }
 
             /// Returns the total delay (in seconds) that must elapse before the tween starts playing.
@@ -772,11 +780,10 @@ macro_rules! define_base_gd_methods {
         impl GdFromNativeTween for $Ty {
             type Inner = $InnerTy;
 
-            fn gd_from_native_tween(tween: RcPtr<SpireTween<$InnerTy>>) -> Gd<Self> {
+            fn gd_from_native_tween(tween: TweenPtr<$InnerTy>) -> Gd<Self> {
                 let inner = UnsafeCell::new(tween);
                 let gd = Gd::from_init_fn(|base| Self { base, inner });
-                let gd_clone = gd.clone();
-                gd.bind().to_mut().gd_handle = Some(gd_clone);
+                gd.bind().to_ref().attach_gd_handle(gd.clone());
                 gd
             }
         }

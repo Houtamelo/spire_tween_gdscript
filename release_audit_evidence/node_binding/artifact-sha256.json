@@ -1,0 +1,20 @@
+{
+  "spire_tween_gdscript/addons/spire_tween/lib/x86_64-unknown-linux-gnu/debug/libspire_tween.so": {
+    "sha256": "2d1e2a1935da14c3f558999d41dfc0267f6e398ad24dcf8a48bf7b902a4ebd11",
+    "bytes": 233040816,
+    "symlink": false,
+    "resolved_path": "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_gdscript/addons/spire_tween/lib/x86_64-unknown-linux-gnu/debug/libspire_tween.so"
+  },
+  "spire_tween_gdscript/addons/spire_tween/lib/x86_64-unknown-linux-gnu/release/libspire_tween.so": {
+    "sha256": "3beae99c1ef9c76111e9ba4d0a5075755e80d75541ccaa93b5607b87d8ac7fc7",
+    "bytes": 23106936,
+    "symlink": false,
+    "resolved_path": "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_gdscript/addons/spire_tween/lib/x86_64-unknown-linux-gnu/release/libspire_tween.so"
+  },
+  "spire_tween_rust/addons/spire_tween/lib/x86_64-unknown-linux-gnu/release/libspire_tween_rust.so": {
+    "sha256": "83f4e4bf0e0eebea6af1088b0e0c0cc4729d110201e931a2f81e5fc7ec5eb0b0",
+    "bytes": 16481552,
+    "symlink": true,
+    "resolved_path": "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/target/release/libspire_tween_rust.so"
+  }
+}

@@ -555,7 +555,7 @@ impl<T> SpireTween<LerpPropertyData<T>>
 where
     T: PropertyType,
     <T as ILerpable>::Lerper: Default,
-    AnyTween: From<RcPtr<Self>>,
+    AnyTween: From<TweenPtr<LerpPropertyData<T>>>,
     LerpPropertyData<T>: ITweenable,
 {
     /// Constructs a property tween in [`LerpMode::Absolute`] mode with the supplied
@@ -575,9 +575,9 @@ where
     }
 
     /// Convenience: [`new`](Self::new) followed by [`register`](SpireTween::register).
-    /// Submits the tween to the global `TweenManager` and returns the [`RcPtr`] handle.
-    pub fn new_registered(data: T::Data, end: Evaluator<T>, duration: f64) -> RcPtr<Self>
-    where AnyTween: From<RcPtr<Self>> {
+    /// Submits the tween to the global `TweenManager` and returns the [`TweenPtr`] handle.
+    pub fn new_registered(data: T::Data, end: Evaluator<T>, duration: f64) -> TweenPtr<LerpPropertyData<T>>
+    where AnyTween: From<TweenPtr<LerpPropertyData<T>>> {
         Self::new(data, end, duration).register()
     }
 

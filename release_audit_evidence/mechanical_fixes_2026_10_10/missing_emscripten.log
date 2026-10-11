@@ -1,0 +1,1 @@
+Emscripten is required; activate its SDK so emcc is on PATH.

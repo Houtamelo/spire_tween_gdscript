@@ -1,0 +1,182 @@
+   Compiling godot-bindings v0.5.5
+   Compiling godot-codegen v0.5.5
+   Compiling godot-macros v0.5.5
+   Compiling godot-ffi v0.5.5
+   Compiling godot-core v0.5.5
+    Checking godot v0.5.5
+    Checking spire_tween v1.4.0 (/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween)
+    Checking spire_tween_rust v0.1.0 (/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_rust)
+error[E0308]: mismatched types
+   --> spire_tween_rust/src/tests/ownership.rs:244:32
+    |
+244 |     Signal::from_object_signal(&timer, "timeout").to_future::<()>().await;
+    |     -------------------------- ^^^^^^ expected `&Gd<_>`, found `&Option<Gd<SceneTreeTimer>>`
+    |     |
+    |     arguments to this function are incorrect
+    |
+    = note: expected reference `&Gd<_>`
+               found reference `&Option<Gd<SceneTreeTimer>>`
+note: associated function defined here
+   --> /home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/builtin/signal.rs:42:12
+    |
+ 42 |     pub fn from_object_signal<T, S>(object: &Gd<T>, signal_name: S) -> Self
+    |            ^^^^^^^^^^^^^^^^^^
+
+error[E0308]: mismatched types
+  --> spire_tween_rust/src/tests/util.rs:62:49
+   |
+62 |         let signal = Signal::from_object_signal(&timer, "timeout");
+   |                      -------------------------- ^^^^^^ expected `&Gd<_>`, found `&Option<Gd<SceneTreeTimer>>`
+   |                      |
+   |                      arguments to this function are incorrect
+   |
+   = note: expected reference `&Gd<_>`
+              found reference `&Option<Gd<SceneTreeTimer>>`
+note: associated function defined here
+  --> /home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/builtin/signal.rs:42:12
+   |
+42 |     pub fn from_object_signal<T, S>(object: &Gd<T>, signal_name: S) -> Self
+   |            ^^^^^^^^^^^^^^^^^^
+
+error[E0599]: no method named `set_parallel` found for enum `Option<T>` in the current scope
+   --> spire_tween_rust/src/benchmarks/tween_setups.rs:43:70
+    |
+ 43 |         let tween = nodes[i].clone().upcast::<Node>().create_tween().set_parallel();
+    |                                                                      ^^^^^^^^^^^^ method not found in `Option<godot::prelude::Gd<Tween>>`
+    |
+note: the method `set_parallel` exists on the type `godot::prelude::Gd<Tween>`
+   --> /home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/target/debug/build/godot-core/b6e572877a1c264b/out/classes/tween.rs:316:9
+    |
+316 |         pub fn set_parallel(&mut self,) -> Option < Gd < crate::classes::Tween > > {
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: consider using `Option::expect` to unwrap the `godot::prelude::Gd<Tween>` value, panicking if the value is an `Option::None`
+    |
+ 43 |         let tween = nodes[i].clone().upcast::<Node>().create_tween().expect("REASON").set_parallel();
+    |                                                                     +++++++++++++++++
+
+error[E0599]: no method named `from` found for enum `Option<T>` in the current scope
+   --> spire_tween_rust/src/benchmarks/tween_setups.rs:96:18
+    |
+ 94 | /             tweener_vec[i]
+ 95 | |                 .tween_property(&nodes[i], "global_position", &tos[i].to_variant(), duration)
+ 96 | |                 .from(&froms[i].to_variant());
+    | |                 -^^^^ this is an associated function, not a method
+    | |_________________|
+    |
+    |
+    = note: found the following associated functions; to be used as methods, functions must have a `self` parameter
+note: the candidate is defined in the trait `From`
+   --> /home/houtamelo/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/convert/mod.rs:595:5
+    |
+595 |     fn from(value: T) -> Self;
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+note: the method `from` exists on the type `godot::prelude::Gd<PropertyTweener>`
+   --> /home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/target/debug/build/godot-core/b6e572877a1c264b/out/classes/property_tweener.rs:123:9
+    |
+123 |         pub fn from(&mut self, value: &Variant,) -> Option < Gd < crate::classes::PropertyTweener > > {
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: use associated function syntax instead
+    |
+ 94 -             tweener_vec[i]
+ 95 -                 .tween_property(&nodes[i], "global_position", &tos[i].to_variant(), duration)
+ 96 -                 .from(&froms[i].to_variant());
+ 94 +             Option::<godot::prelude::Gd<PropertyTweener>>::from(&froms[i].to_variant());
+    |
+help: consider using `Option::expect` to unwrap the `godot::prelude::Gd<PropertyTweener>` value, panicking if the value is an `Option::None`
+    |
+ 95 |                 .tween_property(&nodes[i], "global_position", &tos[i].to_variant(), duration).expect("REASON")
+    |                                                                                              +++++++++++++++++
+
+error[E0599]: no method named `from` found for enum `Option<T>` in the current scope
+   --> spire_tween_rust/src/benchmarks/tween_setups.rs:147:18
+    |
+145 | /             tweener_vec[i]
+146 | |                 .tween_property(&nodes[i], "modulate", &tos[i].to_variant(), duration)
+147 | |                 .from(&froms[i].to_variant());
+    | |                 -^^^^ this is an associated function, not a method
+    | |_________________|
+    |
+    |
+    = note: found the following associated functions; to be used as methods, functions must have a `self` parameter
+note: the candidate is defined in the trait `From`
+   --> /home/houtamelo/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/convert/mod.rs:595:5
+    |
+595 |     fn from(value: T) -> Self;
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+note: the method `from` exists on the type `godot::prelude::Gd<PropertyTweener>`
+   --> /home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/target/debug/build/godot-core/b6e572877a1c264b/out/classes/property_tweener.rs:123:9
+    |
+123 |         pub fn from(&mut self, value: &Variant,) -> Option < Gd < crate::classes::PropertyTweener > > {
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: use associated function syntax instead
+    |
+145 -             tweener_vec[i]
+146 -                 .tween_property(&nodes[i], "modulate", &tos[i].to_variant(), duration)
+147 -                 .from(&froms[i].to_variant());
+145 +             Option::<godot::prelude::Gd<PropertyTweener>>::from(&froms[i].to_variant());
+    |
+help: consider using `Option::expect` to unwrap the `godot::prelude::Gd<PropertyTweener>` value, panicking if the value is an `Option::None`
+    |
+146 |                 .tween_property(&nodes[i], "modulate", &tos[i].to_variant(), duration).expect("REASON")
+    |                                                                                       +++++++++++++++++
+
+warning: use of deprecated method `godot::prelude::Node::duplicate`: Use `Gd::duplicate_node()` or `Gd::duplicate_node_ex()`.
+  --> spire_tween_rust/src/examples/readme/custom_property.rs:86:52
+   |
+86 |                 let trail: Gd<Sprite2D> = particle.duplicate().unwrap().cast();
+   |                                                    ^^^^^^^^^
+   |
+   = note: `#[warn(deprecated)]` on by default
+
+error[E0308]: mismatched types
+   --> spire_tween_rust/src/tests/pause_process_modes.rs:255:40
+    |
+255 |             Signal::from_object_signal(&timer, "timeout").to_future::<()>().await;
+    |             -------------------------- ^^^^^^ expected `&Gd<_>`, found `&Option<Gd<SceneTreeTimer>>`
+    |             |
+    |             arguments to this function are incorrect
+    |
+    = note: expected reference `&Gd<_>`
+               found reference `&Option<Gd<SceneTreeTimer>>`
+note: associated function defined here
+   --> /home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/builtin/signal.rs:42:12
+    |
+ 42 |     pub fn from_object_signal<T, S>(object: &Gd<T>, signal_name: S) -> Self
+    |            ^^^^^^^^^^^^^^^^^^
+
+error[E0308]: mismatched types
+   --> spire_tween_rust/src/tests/pause_process_modes.rs:283:40
+    |
+283 |             Signal::from_object_signal(&timer, "timeout").to_future::<()>().await;
+    |             -------------------------- ^^^^^^ expected `&Gd<_>`, found `&Option<Gd<SceneTreeTimer>>`
+    |             |
+    |             arguments to this function are incorrect
+    |
+    = note: expected reference `&Gd<_>`
+               found reference `&Option<Gd<SceneTreeTimer>>`
+note: associated function defined here
+   --> /home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/builtin/signal.rs:42:12
+    |
+ 42 |     pub fn from_object_signal<T, S>(object: &Gd<T>, signal_name: S) -> Self
+    |            ^^^^^^^^^^^^^^^^^^
+
+error[E0308]: mismatched types
+   --> spire_tween_rust/src/tests/pause_process_modes.rs:291:40
+    |
+291 |             Signal::from_object_signal(&timer, "timeout").to_future::<()>().await;
+    |             -------------------------- ^^^^^^ expected `&Gd<_>`, found `&Option<Gd<SceneTreeTimer>>`
+    |             |
+    |             arguments to this function are incorrect
+    |
+    = note: expected reference `&Gd<_>`
+               found reference `&Option<Gd<SceneTreeTimer>>`
+note: associated function defined here
+   --> /home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/builtin/signal.rs:42:12
+    |
+ 42 |     pub fn from_object_signal<T, S>(object: &Gd<T>, signal_name: S) -> Self
+    |            ^^^^^^^^^^^^^^^^^^
+
+Some errors have detailed explanations: E0308, E0599.
+For more information about an error, try `rustc --explain E0308`.
+warning: `spire_tween_rust` (lib) generated 1 warning
+error: could not compile `spire_tween_rust` (lib) due to 8 previous errors; 1 warning emitted

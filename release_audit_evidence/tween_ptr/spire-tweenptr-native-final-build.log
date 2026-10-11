@@ -1,0 +1,49 @@
+   Compiling spire_tween v1.4.0 (/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween)
+   Compiling spire_tween_rust v0.1.0 (/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_rust)
+warning: use of deprecated method `godot::prelude::Node::duplicate`: Use `Gd::duplicate_node()` or `Gd::duplicate_node_ex()`.
+  --> spire_tween_rust/src/examples/readme/custom_property.rs:86:52
+   |
+86 |                 let trail: Gd<Sprite2D> = particle.duplicate().unwrap().cast();
+   |                                                    ^^^^^^^^^
+   |
+   = note: `#[warn(deprecated)]` on by default
+
+warning: struct `TestConfig` is never constructed
+ --> spire_tween_rust/src/benchmarks/test_config.rs:8:12
+  |
+8 | pub struct TestConfig {
+  |            ^^^^^^^^^^
+  |
+  = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: associated function `from_env` is never used
+  --> spire_tween_rust/src/benchmarks/test_config.rs:15:12
+   |
+14 | impl TestConfig {
+   | --------------- associated function in this implementation
+15 |     pub fn from_env() -> Self {
+   |            ^^^^^^^^
+
+warning: variant `None` is never constructed
+  --> spire_tween_rust/src/benchmarks/tween_setups.rs:64:5
+   |
+61 | pub enum Tweeners {
+   |          -------- variant in this enum
+...
+64 |     None,
+   |     ^^^^
+
+warning: function `snapshot_on_signal` is never used
+   --> spire_tween_rust/src/tests/util.rs:234:8
+    |
+234 | pub fn snapshot_on_signal<T: 'static>(signal: &Signal, capture_fn: impl Fn() -> T + 'static) -> RcPtr<Option<T>> {
+    |        ^^^^^^^^^^^^^^^^^^
+
+warning: function `assert_upon_emission` is never used
+   --> spire_tween_rust/src/tests/util.rs:248:8
+    |
+248 | pub fn assert_upon_emission(signal: Signal, assert_fn: impl Fn() + 'static) {
+    |        ^^^^^^^^^^^^^^^^^^^^
+
+warning: `spire_tween_rust` (lib) generated 6 warnings
+    Finished `dev` profile [optimized + debuginfo] target(s) in 24.06s

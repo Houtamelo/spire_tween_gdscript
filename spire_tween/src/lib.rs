@@ -33,7 +33,8 @@
 //!
 //! - **Core types** — [`SpireTween`], [`AnyTween`],
 //!   [`Sequence`], [`SpireFlags`].
-//! - **Pointer types** — [`RcPtr`], [`WeakPtr`].
+//! - **Tween pointer types** — [`TweenPtr`], [`WeakTweenPtr`].
+//! - **Shared-state pointers** — [`RcPtr`], [`WeakPtr`].
 //! - **Enums** — [`Ease`], [`EaseKind`], [`Evaluator`],
 //!   [`LoopMode`], [`PauseMode`], [`ProcessMode`],
 //!   [`Spiral`], [`State`].
@@ -54,7 +55,7 @@
 //! # Two register paths
 //!
 //! Pick based on who needs to listen for `finished` / `loop_finished`:
-//! - [`SpireTween::register`] — pure-Rust path. Returns an [`RcPtr`] handle.
+//! - [`SpireTween::register`] — pure-Rust path. Returns a [`TweenPtr`] handle.
 //!   Subscribe to events via [`SpireTween::finished_connect`] etc. (closure-based).
 //! - [`SpireTween::register_with_gd_handle`] — also attaches a `Gd<Spire…>` wrapper
 //!   so GDScript code (or any consumer of Godot signals) can connect to the
@@ -63,7 +64,7 @@
 //! # Threading
 //!
 //! Spire is single-threaded — same constraint as Godot's main loop. The internal
-//! `RcPtr<T>` is a `Rc<UnsafeCell<T>>` wrapper that relies on Godot's main-thread
+//! `TweenPtr<T>` owns a `Rc<UnsafeCell<SpireTween<T>>>` and relies on Godot's main-thread
 //! invariant; do not register or access tweens from worker threads.
 //!
 //! # In-editor docs (GDScript audience)
@@ -97,6 +98,7 @@ mod global;
 mod object_or_node;
 mod rc_ptr;
 mod smol_set;
+mod tween_ptr;
 mod tweens;
 mod util;
 
@@ -142,6 +144,7 @@ pub mod prelude {
         //connection::Connection,
         enums::{Ease, EaseKind, Evaluator, LoopMode, PauseMode, ProcessMode, Spiral, State as TweenState},
         rc_ptr::*,
+        tween_ptr::{TweenPtr, WeakTweenPtr},
         tweens::{
             AnyMethodTween,
             AnyPropertyTween,
@@ -176,16 +179,16 @@ pub mod prelude {
     };
 
     pub type TweenSequence = SpireTween<Sequence>;
-    pub type TweenSequencePtr = RcPtr<SpireTween<Sequence>>;
+    pub type TweenSequencePtr = TweenPtr<Sequence>;
 
     pub type TweenProperty<T> = SpireTween<LerpPropertyData<T>>;
-    pub type TweenPropertyPtr<T> = RcPtr<SpireTween<LerpPropertyData<T>>>;
+    pub type TweenPropertyPtr<T> = TweenPtr<LerpPropertyData<T>>;
 
     pub type TweenMethod<T> = SpireTween<LerpMethodData<T>>;
-    pub type TweenMethodPtr<T> = RcPtr<SpireTween<LerpMethodData<T>>>;
+    pub type TweenMethodPtr<T> = TweenPtr<LerpMethodData<T>>;
 
     pub type TweenDelayedCall = SpireTween<godot::prelude::Callable>;
-    pub type TweenDelayedCallPtr = RcPtr<SpireTween<godot::prelude::Callable>>;
+    pub type TweenDelayedCallPtr = TweenPtr<godot::prelude::Callable>;
 }
 
 #[doc(hidden)]
@@ -226,7 +229,7 @@ pub(crate) mod internal_prelude {
     pub(crate) use smallvec::SmallVec;
     pub(crate) use spire_enum::prelude::*;
 
-    pub(crate) use crate::smol_set::SmolSet;
+    pub(crate) use crate::smol_set::SmallSet;
     pub(crate) use crate::{
         // connection::*,
         // cow_fn::*,
@@ -235,6 +238,7 @@ pub(crate) mod internal_prelude {
         object_or_node::*,
         prelude::*,
         rc_ptr::*,
+        tween_ptr::GdHandleSlot,
         tweens::*,
         util::*,
     };

@@ -1,0 +1,56 @@
+[
+  {
+    "check": "build_linux.sh.syntax_and_executable",
+    "passed": true
+  },
+  {
+    "check": "build_windows_64.sh.syntax_and_executable",
+    "passed": true
+  },
+  {
+    "check": "build_android.sh.syntax_and_executable",
+    "passed": true
+  },
+  {
+    "check": "build_wasm.sh.syntax_and_executable",
+    "passed": true
+  },
+  {
+    "check": "missing_ndk",
+    "passed": true,
+    "exit_code": 1
+  },
+  {
+    "check": "invalid_ndk",
+    "passed": true,
+    "exit_code": 1
+  },
+  {
+    "check": "missing_xwin",
+    "passed": true,
+    "exit_code": 1
+  },
+  {
+    "check": "invalid_xwin",
+    "passed": true,
+    "exit_code": 1
+  },
+  {
+    "check": "missing_emscripten",
+    "passed": true,
+    "exit_code": 1
+  },
+  {
+    "check": "failed_linux_build",
+    "passed": true,
+    "exit_code": 101
+  },
+  {
+    "check": "spire_tween_gdscript.license_exact_copy",
+    "passed": true
+  },
+  {
+    "check": "spire_tween_rust.license_exact_copy",
+    "passed": true
+  }
+]

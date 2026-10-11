@@ -1,0 +1,15 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards strict)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+UNBIND_DONE
+ERROR: [panic spire_tween/src/global/index_map_impl.rs:42]
+  assertion `left == right` failed
+    left: 0
+   right: 1
+  in SpireSequence::unbind_node()
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://probe_unbind_absent.gd:8)
+(backtrace disabled, run application with `RUST_BACKTRACE=1` environment variable)
+WARNING: 2 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)

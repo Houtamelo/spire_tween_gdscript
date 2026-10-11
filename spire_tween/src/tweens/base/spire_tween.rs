@@ -9,7 +9,7 @@ use super::*;
 /// construct, then `.register()` to submit to the global `TweenManager`.
 #[must_use = "This is just a data type, use `.register()` to submit to the global `TweenManager`."]
 pub struct SpireTween<T: ITweenable> {
-    pub bound_nodes: SmolSet<[Gd<Node>; 1]>,
+    pub bound_nodes: SmallSet<[Gd<Node>; 1]>,
     pub delay: f64,
     pub speed_scale: f64,
     pub ignore_time_scale: bool,
@@ -25,8 +25,14 @@ pub struct SpireTween<T: ITweenable> {
     #[doc(hidden)]
     // Hidden because manually setting the state of a tween is not recommended.
     pub state: State,
-    pub gd_handle: Option<T::GdHandle>,
+    pub(crate) gd_handle: GdHandleSlot<T::GdHandle>,
     pub t: T,
+}
+
+impl<T: ITweenable> SpireTween<T> {
+    /// Returns a strong reference to the attached Godot signal handle, if alive.
+    /// This also resolves a weak back-reference on an unregistered tween.
+    pub fn get_gd_handle(&self) -> Option<T::GdHandle> { self.gd_handle.get() }
 }
 
 /// One callback registered against a tween's `finished` or `loop_finished` event.
@@ -89,7 +95,7 @@ impl<T: ITweenable> SpireTween<T> {
             loop_mode: Default::default(),
             loop_finished_connections: Default::default(),
             finished_connections: Default::default(),
-            gd_handle: None,
+            gd_handle: Default::default(),
             t,
         }
     }
@@ -129,21 +135,32 @@ impl<T: ITweenable> SpireTween<T> {
     /// Direct mutable access to the bound-nodes set. Prefer [`bound_to`](Self::bound_to)
     /// or [`maybe_bound`](Self::maybe_bound) for chained construction.
     #[inline]
-    pub(crate) fn bound_nodes_mut(&mut self) -> &mut SmolSet<[Gd<Node>; 1]> { &mut self.bound_nodes }
+    pub(crate) fn bound_nodes_mut(&mut self) -> &mut SmallSet<[Gd<Node>; 1]> { &mut self.bound_nodes }
     /// Returns the set of nodes this tween is currently bound to. See [`bound_to`](Self::bound_to)
     /// for the semantics of binding.
     ///
     /// **Note:** Property/Method tweens are forcibly bound to the node they animate;
     /// that node is *not* included in this set.
     #[inline]
-    pub fn get_bound_nodes(&self) -> &SmolSet<[Gd<Node>; 1]> { &self.bound_nodes }
+    pub fn get_bound_nodes(&self) -> &SmallSet<[Gd<Node>; 1]> { &self.bound_nodes }
     /// Unbinds this tween from all nodes it is currently bound to.
     /// See [`bound_to`](Self::bound_to) for the semantics of binding.
+    /// Also removes the manager's reverse entries, including for freed nodes.
     ///
     /// **Note:** Property/Method tweens are forcibly bound to the node they animate;
     /// this method won't unbind them from that node, and there is no way to do so.
     #[inline]
-    pub fn clear_bound_nodes(&mut self) { self.bound_nodes.clear(); }
+    pub fn clear_bound_nodes(&mut self) {
+        // UnsafeCell is transparent, so this is also the TweenPtr address when
+        // registered. Use IDs rather than cloning Gd: a bound node may be freed.
+        let address = std::ptr::from_ref(self).cast();
+        if let Some(tm) = LazyLock::get(&TM) {
+            for node in &self.bound_nodes {
+                tm.node_unbind_address(node.instance_id_unchecked().to_i64(), address);
+            }
+        }
+        self.bound_nodes.clear();
+    }
 
     /// Returns the total delay (in seconds) before the tween starts playing.
     /// See [`set_delay`](Self::set_delay) for full semantics.
@@ -526,7 +543,7 @@ impl<T: ITweenable> SpireTween<T> {
     }
 
     fn emit_loop_finished(&mut self) {
-        self.gd_handle.as_ref().map(Signaler::emit_loop_finished);
+        self.gd_handle.get().as_ref().map(Signaler::emit_loop_finished);
 
         self.loop_finished_connections.retain_mut(|conn| {
             if conn.flags.contains(SpireFlags::DEFERRED) {
@@ -547,8 +564,6 @@ impl<T: ITweenable> SpireTween<T> {
     }
 
     fn emit_finished(&mut self) {
-        self.gd_handle.as_ref().map(Signaler::emit_finished);
-
         self.finished_connections.retain_mut(|conn| {
             if conn.flags.contains(SpireFlags::DEFERRED) {
                 conn.callable.call_deferred(&[]);
@@ -558,6 +573,8 @@ impl<T: ITweenable> SpireTween<T> {
 
             !conn.flags.contains(SpireFlags::ONE_SHOT)
         });
+
+        self.gd_handle.get().as_ref().map(Signaler::emit_finished);
     }
 }
 

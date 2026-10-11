@@ -1,0 +1,14 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards strict)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+RUNNER_CLI_PASS command_line_run_mode
+RUNNER_CLI_PASS command_line_cache_mode
+RUNNER_CLI_PASS missing_cache_is_allowed
+RUNNER_CLI_PASS cache_read_or_bypass
+RUNNER_CLI_PASS cache_write_or_bypass
+RUNNER_CLI_PASS invalid_cache_is_ignored
+RUNNER_CLI_PASS ellipsis_scene_is_in_catalog
+RUNNER_CLI_PASS all_five_ellipsis_tests_are_discovered
+RUNNER_CLI_PASS hashing_frees_temporary_nodes
+RUNNER_CLI_PASS ellipsis_initializes_test_base
+RUNNER_CLI_RESULT total=10 failed=0

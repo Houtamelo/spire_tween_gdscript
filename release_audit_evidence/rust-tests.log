@@ -1,0 +1,162 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards strict)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+=== SpireTween Rust Test Runner ===
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::play_pause_stop::PlayPauseStopTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000120f, 2.0167s] Loop completed
+Test Finished: fn(&'_ mut spire_tween_rust::tests::play_pause_stop::PlayPauseStopTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::play_pause_stop::PlayPauseStopTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+ERROR: [panic spire_tween_rust/src/tests/util.rs:285]
+  Abs(0.03333333333332078) is bigger than tolerance `0.017`
+  in <Callable>::spire_tween_rust::tests::util::assert_finished_timing<spire_tween::tweens::property::data::LerpPropertyData<godot_core::builtin::vectors::vector2::Vector2>>::{{closure}}()
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+(backtrace disabled, run application with `RUST_BACKTRACE=1` environment variable)
+ERROR: [panic spire_tween_rust/src/tests/util.rs:285]
+  Abs(0.03333333333332078) is bigger than tolerance `0.017`
+  in async task #2
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+(backtrace disabled, run application with `RUST_BACKTRACE=1` environment variable)
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::play_pause_stop::PlayPauseStopTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000120f, 2.0167s] Loop completed
+ERROR: [panic spire_tween_rust/src/tests/util.rs:285]
+  Abs(0.033333333333313675) is bigger than tolerance `0.017`
+  in async task #3
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+(backtrace disabled, run application with `RUST_BACKTRACE=1` environment variable)
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::delays::DelaysTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000360f, 6.0167s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::delays::DelaysTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::delays::DelaysTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000420f, 7.0167s] Loop completed
+[000600f, 10.0167s] Loop completed
+Test Finished: fn(&'_ mut spire_tween_rust::tests::delays::DelaysTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::delays::DelaysTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000300f, 5.0167s] Finished
+[000420f, 7.0167s] Finished
+ERROR: [panic spire_tween_rust/src/tests/util.rs:285]
+  Abs(0.03333333333336164) is bigger than tolerance `0.017`
+  in async task #6
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+(backtrace disabled, run application with `RUST_BACKTRACE=1` environment variable)
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::delays::DelaysTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+ERROR: [panic spire_tween_rust/src/tests/util.rs:285]
+  Abs(-1.9499999999999709) is bigger than tolerance `0.017`
+  in <Callable>::spire_tween_rust::tests::util::assert_finished_timing<spire_tween::tweens::sequence::data::Sequence>::{{closure}}()
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+(backtrace disabled, run application with `RUST_BACKTRACE=1` environment variable)
+[000180f, 3.0167s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::delays::DelaysTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::misc::MiscTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+ERROR: [panic spire_tween_rust/src/tests/util.rs:285]
+  Abs(0.033333333333313675) is bigger than tolerance `0.017`
+  in async task #8
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+(backtrace disabled, run application with `RUST_BACKTRACE=1` environment variable)
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::misc::MiscTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000361f, 6.0333s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::misc::MiscTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::misc::MiscTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+Test Finished: fn(&'_ mut spire_tween_rust::tests::misc::MiscTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::register_unregister::RegisterUnregisterTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+ERROR: [panic spire_tween_rust/src/tests/util.rs:285]
+  Abs(0.033333333333313675) is bigger than tolerance `0.017`
+  in <Callable>::spire_tween_rust::tests::util::assert_finished_timing<spire_tween::tweens::property::data::LerpPropertyData<godot_core::builtin::vectors::vector2::Vector2>>::{{closure}}()
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+(backtrace disabled, run application with `RUST_BACKTRACE=1` environment variable)
+ERROR: [panic spire_tween_rust/src/tests/util.rs:285]
+  Abs(0.033333333333313675) is bigger than tolerance `0.017`
+  in async task #11
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+(backtrace disabled, run application with `RUST_BACKTRACE=1` environment variable)
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::register_unregister::RegisterUnregisterTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+Test Finished: fn(&'_ mut spire_tween_rust::tests::register_unregister::RegisterUnregisterTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+ERROR: Cannot add the same tween to the sequence more than once.
+   at: spire_tween::tweens::sequence::data::<impl spire_tween::tweens::base::spire_tween::SpireTween<spire_tween::tweens::sequence::data::Sequence>>::is_already_inside (spire_tween/src/tweens/sequence/data.rs:670)
+ERROR: Cannot add the same tween to the sequence more than once.
+   at: spire_tween::tweens::sequence::data::<impl spire_tween::tweens::base::spire_tween::SpireTween<spire_tween::tweens::sequence::data::Sequence>>::is_already_inside (spire_tween/src/tweens/sequence/data.rs:670)
+ERROR: Cannot append a sequence tween to itself.
+   at: spire_tween::tweens::sequence::data::<impl spire_tween::tweens::base::spire_tween::SpireTween<spire_tween::tweens::sequence::data::Sequence>>::is_already_inside (spire_tween/src/tweens/sequence/data.rs:662)
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::error_handling::ErrorHandlingTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000180f, 3.0167s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::error_handling::ErrorHandlingTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::error_handling::ErrorHandlingTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+Test Finished: fn(&'_ mut spire_tween_rust::tests::error_handling::ErrorHandlingTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::lerp_modes::LerpModesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000120f, 2.0167s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::lerp_modes::LerpModesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::lerp_modes::LerpModesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000120f, 2.0167s] Finished
+[000180f, 3.0167s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::lerp_modes::LerpModesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::lerp_modes::LerpModesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000263f, 4.4000s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::lerp_modes::LerpModesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::lerp_modes::LerpModesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000180f, 3.0167s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::lerp_modes::LerpModesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::lerp_callable::LerpCallableTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000300f, 5.0167s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::lerp_callable::LerpCallableTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::lerp_callable::LerpCallableTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000300f, 5.0167s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::lerp_callable::LerpCallableTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::lerp_callable::LerpCallableTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+Test Finished: fn(&'_ mut spire_tween_rust::tests::lerp_callable::LerpCallableTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::lerp_callable::LerpCallableTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000120f, 2.0167s] Loop completed
+[000240f, 4.0167s] Loop completed
+Test Finished: fn(&'_ mut spire_tween_rust::tests::lerp_callable::LerpCallableTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::pause_process_modes::PauseProcessModesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000180f, 3.0000s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::pause_process_modes::PauseProcessModesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::pause_process_modes::PauseProcessModesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000481f, 3.0167s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::pause_process_modes::PauseProcessModesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::pause_process_modes::PauseProcessModesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+ERROR: [panic spire_tween_rust/src/tests/util.rs:285]
+  Abs(0.03333333333337052) is bigger than tolerance `0.017`
+  in async task #25
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+(backtrace disabled, run application with `RUST_BACKTRACE=1` environment variable)
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::pause_process_modes::PauseProcessModesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000240f, 4.0167s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::pause_process_modes::PauseProcessModesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::pause_process_modes::PauseProcessModesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000241f, 4.0167s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::pause_process_modes::PauseProcessModesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::pause_process_modes::PauseProcessModesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000542f, 9.0167s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::pause_process_modes::PauseProcessModesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+ERROR: [panic spire_tween/src/global/index_map_impl.rs:31]
+  assertion failed: !entry.bound_tweens.contains(&weak)
+  in async task #0
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+(backtrace disabled, run application with `RUST_BACKTRACE=1` environment variable)

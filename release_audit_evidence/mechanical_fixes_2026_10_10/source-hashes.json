@@ -1,0 +1,13 @@
+{
+  "README.md": "5add73c8be1b220f9757a742057910ea4313a932dd4921425d754b4b74ab6de0",
+  "build_scripts/build_linux.sh": "5b2ed764525eccc3e61326149a6b36e408f113a7f8345c9c6f3615a3db90a62b",
+  "build_scripts/build_windows_64.sh": "20a529c6312a39ff3d38ae3b868810eca93d43ab9d79e0c6a3932e1edf43ca61",
+  "build_scripts/build_android.sh": "a4ea7e506f3a595b4c9f093146ad508e7cb96f9b0e4aa64361e9650ec3baf411",
+  "build_scripts/build_wasm.sh": "103c29c6520256a684d2f89dae8f01a5367af3a9aa695a8e2c233b8a4f4b860e",
+  "build_scripts/tests/test_build_scripts.py": "2fa3be20e7773681ff51c5040b6e7d3de2a88cd10681c76478f346a867e5a19b",
+  "spire_tween_gdscript/examples/tests/test_runner.gd": "931f7e1e6b150be8cd99eed019142918a21c27ba73544a6855ad7da927bea958",
+  "spire_tween_gdscript/examples/tests/ellipsis.gd": "fd4927ba569934be3dcea7291412431b4b21ac737a7b299c8a45004d5826a9c8",
+  "spire_tween_gdscript/examples/tests/delayed_call_validity.gd": "06c71c805ab9eeadc9db5cd7de52436ed0525c9220b82be7e697239bf040f159",
+  "spire_tween_gdscript/examples/tests/runner_cli_checks.gd": "22d1f2515acde5acae59aeccd41eaf18f70672666235df8099720da20d2eda86",
+  "spire_tween_gdscript/examples/tests/runner_cli_checks.gd.uid": "8be54aeee7f7ba4690042893f55b0d74cb3e4898e2c3bbccb82eb040c3d6f414"
+}

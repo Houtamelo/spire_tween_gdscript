@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/tmp/spire-api-4-4-dekm99bq/engine/Godot_v4.4.1-stable_linux.x86_64",
+    "--headless",
+    "--path",
+    "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_gdscript",
+    "--quit-after",
+    "30",
+    "--script",
+    "/tmp/spire-api-4-4-dekm99bq/probe_surface.gd"
+  ],
+  "exit_code": 0,
+  "passed": true
+}

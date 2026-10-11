@@ -3,15 +3,15 @@ use super::*;
 #[delegated_enum(impl_conversions)]
 #[derive(Clone)]
 pub enum AnyMethodTween {
-    int(RcPtr<SpireTween<LerpMethodData<i64>>>),
-    float(RcPtr<SpireTween<LerpMethodData<f64>>>),
-    String(RcPtr<SpireTween<LerpMethodData<GString>>>),
-    Color(RcPtr<SpireTween<LerpMethodData<Color>>>),
-    Vector2(RcPtr<SpireTween<LerpMethodData<Vector2>>>),
-    Vector2i(RcPtr<SpireTween<LerpMethodData<Vector2i>>>),
-    Vector3(RcPtr<SpireTween<LerpMethodData<Vector3>>>),
-    Vector3i(RcPtr<SpireTween<LerpMethodData<Vector3i>>>),
-    Variant(RcPtr<SpireTween<LerpMethodData<Variant>>>),
+    int(TweenPtr<LerpMethodData<i64>>),
+    float(TweenPtr<LerpMethodData<f64>>),
+    String(TweenPtr<LerpMethodData<GString>>),
+    Color(TweenPtr<LerpMethodData<Color>>),
+    Vector2(TweenPtr<LerpMethodData<Vector2>>),
+    Vector2i(TweenPtr<LerpMethodData<Vector2i>>),
+    Vector3(TweenPtr<LerpMethodData<Vector3>>),
+    Vector3i(TweenPtr<LerpMethodData<Vector3i>>),
+    Variant(TweenPtr<LerpMethodData<Variant>>),
 }
 
 #[delegate_impl]
@@ -97,15 +97,15 @@ impl AnyMethodTween {
 #[delegated_enum(impl_conversions)]
 #[derive(Clone)]
 pub enum WeakMethodTween {
-    int(WeakPtr<SpireTween<LerpMethodData<i64>>>),
-    float(WeakPtr<SpireTween<LerpMethodData<f64>>>),
-    String(WeakPtr<SpireTween<LerpMethodData<GString>>>),
-    Color(WeakPtr<SpireTween<LerpMethodData<Color>>>),
-    Vector2(WeakPtr<SpireTween<LerpMethodData<Vector2>>>),
-    Vector2i(WeakPtr<SpireTween<LerpMethodData<Vector2i>>>),
-    Vector3(WeakPtr<SpireTween<LerpMethodData<Vector3>>>),
-    Vector3i(WeakPtr<SpireTween<LerpMethodData<Vector3i>>>),
-    Variant(WeakPtr<SpireTween<LerpMethodData<Variant>>>),
+    int(WeakTweenPtr<LerpMethodData<i64>>),
+    float(WeakTweenPtr<LerpMethodData<f64>>),
+    String(WeakTweenPtr<LerpMethodData<GString>>),
+    Color(WeakTweenPtr<LerpMethodData<Color>>),
+    Vector2(WeakTweenPtr<LerpMethodData<Vector2>>),
+    Vector2i(WeakTweenPtr<LerpMethodData<Vector2i>>),
+    Vector3(WeakTweenPtr<LerpMethodData<Vector3>>),
+    Vector3i(WeakTweenPtr<LerpMethodData<Vector3i>>),
+    Variant(WeakTweenPtr<LerpMethodData<Variant>>),
 }
 
 impl WeakMethodTween {

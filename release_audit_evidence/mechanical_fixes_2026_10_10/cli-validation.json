@@ -1,0 +1,58 @@
+[
+  {
+    "profile": "debug",
+    "configuration": "default",
+    "passed": true,
+    "checks": 11,
+    "exit_code": 0
+  },
+  {
+    "profile": "debug",
+    "configuration": "all",
+    "passed": true,
+    "checks": 11,
+    "exit_code": 0
+  },
+  {
+    "profile": "debug",
+    "configuration": "no_cache",
+    "passed": true,
+    "checks": 11,
+    "exit_code": 0
+  },
+  {
+    "profile": "debug",
+    "configuration": "all_no_cache",
+    "passed": true,
+    "checks": 11,
+    "exit_code": 0
+  },
+  {
+    "profile": "release",
+    "configuration": "default",
+    "passed": true,
+    "checks": 11,
+    "exit_code": 0
+  },
+  {
+    "profile": "release",
+    "configuration": "all",
+    "passed": true,
+    "checks": 11,
+    "exit_code": 0
+  },
+  {
+    "profile": "release",
+    "configuration": "no_cache",
+    "passed": true,
+    "checks": 11,
+    "exit_code": 0
+  },
+  {
+    "profile": "release",
+    "configuration": "all_no_cache",
+    "passed": true,
+    "checks": 11,
+    "exit_code": 0
+  }
+]

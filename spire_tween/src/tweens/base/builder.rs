@@ -37,10 +37,8 @@ impl<T: ITweenable> SpireTween<T> {
     /// Attaches a GDScript-facing handle used to emit Godot signals.
     /// Rust-only users do not need this.
     pub fn with_handle(self, handle: T::GdHandle) -> Self {
-        Self {
-            gd_handle: Some(handle),
-            ..self
-        }
+        self.gd_handle.set_external(handle);
+        self
     }
 
     /// See [Self::set_loops]
@@ -88,28 +86,28 @@ impl<T: ITweenable> SpireTween<T> {
 }
 
 impl<T: ITweenable> SpireTween<T>
-where AnyTween: From<RcPtr<Self>>
+where AnyTween: From<TweenPtr<T>>
 {
-    /// Submits this tween to the global `TweenManager` and returns an `RcPtr` handle.
+    /// Submits this tween to the global `TweenManager` and returns a `TweenPtr` handle.
     ///
     /// Pure Rust path: no GDScript-facing `Gd` handle is attached. Connect to
     /// `finished`/`loop_finished` events via `finished_connect`/`loop_finished_connect`
     /// (closure-based). Use this when no GDScript code needs to listen for the events.
-    pub fn register(self) -> RcPtr<Self> {
-        let tween = RcPtr::new(self);
+    pub fn register(self) -> TweenPtr<T> {
+        let tween = TweenPtr::new(self);
         TM.tween_register(tween.clone());
         tween
     }
 
-    /// Submits this tween to the global `TweenManager` and returns an `RcPtr` handle,
+    /// Submits this tween to the global `TweenManager` and returns a `TweenPtr` handle,
     /// also attaching a GDScript-facing `Gd` handle.
     ///
     /// Use this when GDScript code (or any consumer of Godot signals) needs to listen
     /// for `finished`/`loop_finished`. Pure Rust users should prefer `register` plus
     /// `finished_connect`/`loop_finished_connect`.
-    pub fn register_with_gd_handle(self) -> (RcPtr<Self>, T::GdHandle) {
-        let tween = RcPtr::new(self);
-        let handle = tween.gd_handle.clone().unwrap_or_else(|| T::attach_gd_handle(&tween));
+    pub fn register_with_gd_handle(self) -> (TweenPtr<T>, T::GdHandle) {
+        let tween = TweenPtr::new(self);
+        let handle = tween.gd_handle.get().unwrap_or_else(|| T::attach_gd_handle(&tween));
 
         TM.tween_register(tween.clone());
         (tween, handle)

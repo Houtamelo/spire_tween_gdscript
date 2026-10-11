@@ -1,0 +1,8 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards strict)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+DELAY_LIFETIME bound=false target_valid=false callable_valid=false registered=true stopped=false
+DELAY_WRAPPER_RELEASED bound=false released=true
+DELAY_LIFETIME bound=true target_valid=false callable_valid=false registered=false stopped=true
+DELAY_WRAPPER_RELEASED bound=true released=true
+DELAY_LIFETIME_PROBE_RESULT failed=0

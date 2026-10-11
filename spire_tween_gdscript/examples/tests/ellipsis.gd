@@ -5,7 +5,9 @@ const CENTER := Vector2(1920, 1080) / 2.0
 
 
 func _ready():
-	await run_test(test_ellipsis_varying_inverted)
+	super._ready()
+	if get_parent() == get_tree().root:
+		await run_test(test_ellipsis_varying_inverted)
 
 
 func test_circle() -> bool:

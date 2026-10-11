@@ -1,0 +1,338 @@
+[
+  {
+    "profile": "debug",
+    "passed": true,
+    "case": "Node2D.exact.Restart",
+    "details": "error=0.000000 state=Stopped"
+  },
+  {
+    "profile": "debug",
+    "passed": true,
+    "case": "Node2D.near.Restart",
+    "details": "error=0.000000 state=Stopped"
+  },
+  {
+    "profile": "debug",
+    "passed": true,
+    "case": "Node2D.two_loops.Restart",
+    "details": "error=0.000000 state=Stopped"
+  },
+  {
+    "profile": "debug",
+    "passed": true,
+    "case": "Node2D.three_loops.Restart",
+    "details": "error=0.000004 state=Stopped"
+  },
+  {
+    "profile": "debug",
+    "passed": true,
+    "case": "Node2D.force_playing.Restart",
+    "details": "error=0.000000 state=Stopped"
+  },
+  {
+    "profile": "debug",
+    "passed": true,
+    "case": "Node2D.force_paused.Restart",
+    "details": "error=0.000000 state=Stopped"
+  },
+  {
+    "profile": "debug",
+    "passed": true,
+    "case": "Node2D.external_movement.Restart",
+    "details": "error=0.000000 state=Stopped"
+  },
+  {
+    "profile": "debug",
+    "passed": true,
+    "case": "Node2D.replay_restoration",
+    "details": "error=0.000000"
+  },
+  {
+    "profile": "debug",
+    "passed": true,
+    "case": "Node2D.restart_sampling",
+    "details": "elapsed_new_leg=0.01 sample_interval=0.25 position_change=0.000000"
+  },
+  {
+    "profile": "debug",
+    "passed": true,
+    "case": "Node2D.replay_sampling",
+    "details": "elapsed_new_leg=0.01 sample_interval=0.25 position_change=0.000000"
+  },
+  {
+    "profile": "debug",
+    "passed": true,
+    "case": "Node2D.zero_delta_after_large_step",
+    "details": "elapsed_new_tick=0 sample_interval=0.25 position_change=0.000000"
+  },
+  {
+    "profile": "debug",
+    "passed": true,
+    "case": "Node2D.godot_finished_restored.force=false",
+    "details": "godot_observer_error=0.000000 native_observer_error=0.000000 after_return_error=0.000000"
+  },
+  {
+    "profile": "debug",
+    "passed": true,
+    "case": "Node2D.godot_finished_restored.force=true",
+    "details": "godot_observer_error=0.000000 native_observer_error=0.000000 after_return_error=0.000000"
+  },
+  {
+    "profile": "debug",
+    "passed": true,
+    "case": "Node2D.ordinary_sampling_interval",
+    "details": "elapsed_after_sample=0.01 sample_interval=0.25 position_change=0.000000"
+  },
+  {
+    "profile": "debug",
+    "passed": true,
+    "case": "Control.exact.Restart",
+    "details": "error=0.000004 state=Stopped"
+  },
+  {
+    "profile": "debug",
+    "passed": true,
+    "case": "Control.near.Restart",
+    "details": "error=0.000000 state=Stopped"
+  },
+  {
+    "profile": "debug",
+    "passed": true,
+    "case": "Control.two_loops.Restart",
+    "details": "error=0.000000 state=Stopped"
+  },
+  {
+    "profile": "debug",
+    "passed": true,
+    "case": "Control.three_loops.Restart",
+    "details": "error=0.000000 state=Stopped"
+  },
+  {
+    "profile": "debug",
+    "passed": true,
+    "case": "Control.force_playing.Restart",
+    "details": "error=0.000000 state=Stopped"
+  },
+  {
+    "profile": "debug",
+    "passed": true,
+    "case": "Control.force_paused.Restart",
+    "details": "error=0.000000 state=Stopped"
+  },
+  {
+    "profile": "debug",
+    "passed": true,
+    "case": "Control.external_movement.Restart",
+    "details": "error=0.000000 state=Stopped"
+  },
+  {
+    "profile": "debug",
+    "passed": true,
+    "case": "Control.replay_restoration",
+    "details": "error=0.000015"
+  },
+  {
+    "profile": "debug",
+    "passed": true,
+    "case": "Control.restart_sampling",
+    "details": "elapsed_new_leg=0.01 sample_interval=0.25 position_change=0.000000"
+  },
+  {
+    "profile": "debug",
+    "passed": true,
+    "case": "Control.replay_sampling",
+    "details": "elapsed_new_leg=0.01 sample_interval=0.25 position_change=0.000000"
+  },
+  {
+    "profile": "debug",
+    "passed": true,
+    "case": "Control.zero_delta_after_large_step",
+    "details": "elapsed_new_tick=0 sample_interval=0.25 position_change=0.000000"
+  },
+  {
+    "profile": "debug",
+    "passed": true,
+    "case": "Control.godot_finished_restored.force=false",
+    "details": "godot_observer_error=0.000000 native_observer_error=0.000000 after_return_error=0.000000"
+  },
+  {
+    "profile": "debug",
+    "passed": true,
+    "case": "Control.godot_finished_restored.force=true",
+    "details": "godot_observer_error=0.000000 native_observer_error=0.000000 after_return_error=0.000000"
+  },
+  {
+    "profile": "debug",
+    "passed": true,
+    "case": "Control.ordinary_sampling_interval",
+    "details": "elapsed_after_sample=0.01 sample_interval=0.25 position_change=0.000000"
+  },
+  {
+    "profile": "release",
+    "passed": true,
+    "case": "Node2D.exact.Restart",
+    "details": "error=0.000000 state=Stopped"
+  },
+  {
+    "profile": "release",
+    "passed": true,
+    "case": "Node2D.near.Restart",
+    "details": "error=0.000000 state=Stopped"
+  },
+  {
+    "profile": "release",
+    "passed": true,
+    "case": "Node2D.two_loops.Restart",
+    "details": "error=0.000000 state=Stopped"
+  },
+  {
+    "profile": "release",
+    "passed": true,
+    "case": "Node2D.three_loops.Restart",
+    "details": "error=0.000000 state=Stopped"
+  },
+  {
+    "profile": "release",
+    "passed": true,
+    "case": "Node2D.force_playing.Restart",
+    "details": "error=0.000000 state=Stopped"
+  },
+  {
+    "profile": "release",
+    "passed": true,
+    "case": "Node2D.force_paused.Restart",
+    "details": "error=0.000000 state=Stopped"
+  },
+  {
+    "profile": "release",
+    "passed": true,
+    "case": "Node2D.external_movement.Restart",
+    "details": "error=0.000000 state=Stopped"
+  },
+  {
+    "profile": "release",
+    "passed": true,
+    "case": "Node2D.replay_restoration",
+    "details": "error=0.000000"
+  },
+  {
+    "profile": "release",
+    "passed": true,
+    "case": "Node2D.restart_sampling",
+    "details": "elapsed_new_leg=0.01 sample_interval=0.25 position_change=0.000000"
+  },
+  {
+    "profile": "release",
+    "passed": true,
+    "case": "Node2D.replay_sampling",
+    "details": "elapsed_new_leg=0.01 sample_interval=0.25 position_change=0.000000"
+  },
+  {
+    "profile": "release",
+    "passed": true,
+    "case": "Node2D.zero_delta_after_large_step",
+    "details": "elapsed_new_tick=0 sample_interval=0.25 position_change=0.000000"
+  },
+  {
+    "profile": "release",
+    "passed": true,
+    "case": "Node2D.godot_finished_restored.force=false",
+    "details": "godot_observer_error=0.000000 native_observer_error=0.000000 after_return_error=0.000000"
+  },
+  {
+    "profile": "release",
+    "passed": true,
+    "case": "Node2D.godot_finished_restored.force=true",
+    "details": "godot_observer_error=0.000000 native_observer_error=0.000000 after_return_error=0.000000"
+  },
+  {
+    "profile": "release",
+    "passed": true,
+    "case": "Node2D.ordinary_sampling_interval",
+    "details": "elapsed_after_sample=0.01 sample_interval=0.25 position_change=0.000000"
+  },
+  {
+    "profile": "release",
+    "passed": true,
+    "case": "Control.exact.Restart",
+    "details": "error=0.000000 state=Stopped"
+  },
+  {
+    "profile": "release",
+    "passed": true,
+    "case": "Control.near.Restart",
+    "details": "error=0.000008 state=Stopped"
+  },
+  {
+    "profile": "release",
+    "passed": true,
+    "case": "Control.two_loops.Restart",
+    "details": "error=0.000000 state=Stopped"
+  },
+  {
+    "profile": "release",
+    "passed": true,
+    "case": "Control.three_loops.Restart",
+    "details": "error=0.000000 state=Stopped"
+  },
+  {
+    "profile": "release",
+    "passed": true,
+    "case": "Control.force_playing.Restart",
+    "details": "error=0.000000 state=Stopped"
+  },
+  {
+    "profile": "release",
+    "passed": true,
+    "case": "Control.force_paused.Restart",
+    "details": "error=0.000000 state=Stopped"
+  },
+  {
+    "profile": "release",
+    "passed": true,
+    "case": "Control.external_movement.Restart",
+    "details": "error=0.000000 state=Stopped"
+  },
+  {
+    "profile": "release",
+    "passed": true,
+    "case": "Control.replay_restoration",
+    "details": "error=0.000000"
+  },
+  {
+    "profile": "release",
+    "passed": true,
+    "case": "Control.restart_sampling",
+    "details": "elapsed_new_leg=0.01 sample_interval=0.25 position_change=0.000000"
+  },
+  {
+    "profile": "release",
+    "passed": true,
+    "case": "Control.replay_sampling",
+    "details": "elapsed_new_leg=0.01 sample_interval=0.25 position_change=0.000000"
+  },
+  {
+    "profile": "release",
+    "passed": true,
+    "case": "Control.zero_delta_after_large_step",
+    "details": "elapsed_new_tick=0 sample_interval=0.25 position_change=0.000000"
+  },
+  {
+    "profile": "release",
+    "passed": true,
+    "case": "Control.godot_finished_restored.force=false",
+    "details": "godot_observer_error=0.000000 native_observer_error=0.000000 after_return_error=0.000000"
+  },
+  {
+    "profile": "release",
+    "passed": true,
+    "case": "Control.godot_finished_restored.force=true",
+    "details": "godot_observer_error=0.000000 native_observer_error=0.000000 after_return_error=0.000000"
+  },
+  {
+    "profile": "release",
+    "passed": true,
+    "case": "Control.ordinary_sampling_interval",
+    "details": "elapsed_after_sample=0.01 sample_interval=0.25 position_change=0.000000"
+  }
+]

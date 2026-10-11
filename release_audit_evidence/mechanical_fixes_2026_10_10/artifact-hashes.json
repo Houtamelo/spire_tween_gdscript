@@ -1,0 +1,20 @@
+{
+  "spire_tween_gdscript/addons/spire_tween/lib/x86_64-unknown-linux-gnu/debug/libspire_tween.so": {
+    "sha256": "f18f883f5ebd586de40ddf3ab8fe5c46336f9fffc6395aaef96df8fa9322672d",
+    "size": 238047336,
+    "minimum_glibc": "2.34"
+  },
+  "spire_tween_gdscript/addons/spire_tween/lib/x86_64-unknown-linux-gnu/release/libspire_tween.so": {
+    "sha256": "a1023ef073afad34ae64b41abb72419630378c0cb1889465058b02dcfb2b5104",
+    "size": 23411968,
+    "minimum_glibc": "2.34"
+  },
+  "spire_tween_gdscript/addons/spire_tween/lib/x86_64-pc-windows-msvc/debug/spire_tween.dll": {
+    "sha256": "7f3bb1e1e08862d3ea5c26bc0e214afb1b1b22b2c36bffc3cab90e36a8b34acc",
+    "size": 16408064
+  },
+  "spire_tween_gdscript/addons/spire_tween/lib/x86_64-pc-windows-msvc/release/spire_tween.dll": {
+    "sha256": "f982ced93875327410c5b072b0faba79dc1e94589881ec21fdd8de7b2ee3e011",
+    "size": 16036352
+  }
+}

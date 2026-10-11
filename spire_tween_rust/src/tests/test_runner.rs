@@ -64,6 +64,26 @@ impl INode for TestRunner {
 
         let mut base = self.base().clone();
         godot::task::spawn(async move {
+            if super::delayed_call_validity::run_delayed_call_validity_tests(&mut base).await != 0 {
+                base.get_tree().quit_ex().exit_code(1).done();
+                return;
+            }
+            if super::api_compatibility::run_api_compatibility_tests(&mut base).await != 0 {
+                base.get_tree().quit_ex().exit_code(1).done();
+                return;
+            }
+            if super::ownership::run_ownership_tests(&mut base).await != 0 {
+                base.get_tree().quit_ex().exit_code(1).done();
+                return;
+            }
+            if super::node_binding::run_node_binding_tests(&mut base).await != 0 {
+                base.get_tree().quit_ex().exit_code(1).done();
+                return;
+            }
+            if super::sequence_cycles::run_sequence_cycle_tests(&mut base).await != 0 {
+                base.get_tree().quit_ex().exit_code(1).done();
+                return;
+            }
             for test_class in ALL_TESTS {
                 match test_class {
                     TestClass::PlayPauseStop => run_tests_from_class::<PlayPauseStopTests>(&mut base).await,

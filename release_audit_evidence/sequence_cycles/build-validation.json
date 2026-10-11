@@ -1,0 +1,54 @@
+[
+  {
+    "kind": "native",
+    "profile": "debug",
+    "exit_code": 0,
+    "command": [
+      "cargo",
+      "build",
+      "--offline",
+      "-p",
+      "spire_tween_rust"
+    ]
+  },
+  {
+    "kind": "native",
+    "profile": "release",
+    "exit_code": 0,
+    "command": [
+      "cargo",
+      "build",
+      "--offline",
+      "--release",
+      "-p",
+      "spire_tween_rust"
+    ]
+  },
+  {
+    "kind": "gdscript",
+    "profile": "release",
+    "exit_code": 0,
+    "command": [
+      "cargo",
+      "build",
+      "--offline",
+      "--release",
+      "-p",
+      "spire_tween",
+      "--all-features"
+    ]
+  },
+  {
+    "kind": "gdscript",
+    "profile": "debug",
+    "exit_code": 0,
+    "command": [
+      "cargo",
+      "build",
+      "--offline",
+      "-p",
+      "spire_tween",
+      "--all-features"
+    ]
+  }
+]

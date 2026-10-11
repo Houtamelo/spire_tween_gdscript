@@ -22,7 +22,7 @@ pub struct TextReplacer {
 
     /// Handle to the current tween, used to cancel it when switching lines.
     #[init(val = None)]
-    tween: Option<RcPtr<SpireTween<LerpPropertyData<GString>>>>,
+    tween: Option<TweenPtr<LerpPropertyData<GString>>>,
 }
 
 const DIALOGUES: &[&str] = &[
