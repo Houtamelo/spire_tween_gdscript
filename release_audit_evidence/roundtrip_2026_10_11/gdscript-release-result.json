@@ -1,0 +1,16 @@
+{
+  "cmd": [
+    "godot",
+    "--headless",
+    "--fixed-fps",
+    "120",
+    "--path",
+    "/tmp/spire-roundtrip-20261011-ge7mv8x_/gdscript-release",
+    "res://examples/tests/test_runner.tscn",
+    "--",
+    "--all-tests",
+    "--no-cache"
+  ],
+  "exit_code": 0,
+  "note": "fixed FPS accelerates regular tests; unscaled/manual clocks evaluated separately"
+}

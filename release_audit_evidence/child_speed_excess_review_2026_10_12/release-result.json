@@ -1,0 +1,19 @@
+{
+  "profile": "release",
+  "command": [
+    "/home/houtamelo/bin/godot",
+    "--headless",
+    "--path",
+    "/tmp/spire-excess-review-20261012-_w4oq85u/release",
+    "--script",
+    "res://excess.gd"
+  ],
+  "exit_code": 0,
+  "sha256": "a25b2232f93e84ee426d2f2bfe0c9713e834b1dd6ea81bbd0eb248910d1d50ae",
+  "script_errors": 0,
+  "native_panics": 0,
+  "result": {
+    "cases": 121,
+    "failures": []
+  }
+}

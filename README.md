@@ -133,6 +133,22 @@ godot --headless --path spire_tween_gdscript res://examples/tests/test_runner.ts
 
 The editor's run-mode setting remains available for selective runs. Failure propagation in the older test harness is still being corrected: inspect the output for script/assertion errors even if the process exits successfully.
 
+The sequence speed suite is included in the regular test catalog. To run its 121
+parameter cases independently, use the focused runner, which exits nonzero on a
+failed check or timeout:
+
+```sh
+godot --headless --path spire_tween_gdscript --script res://examples/tests/sequence_speed_runner.gd
+```
+
+The ellipse/circle regression suite is also in the regular catalog. Its focused
+runner checks deterministic geometry and receiver cancellation, and exits nonzero
+on a failed check or timeout:
+
+```sh
+godot --headless --path spire_tween_gdscript --script res://examples/tests/ellipsis_regressions_runner.gd
+```
+
 To check the runner's command-line configuration and cache handling directly:
 
 ```bash
@@ -268,6 +284,7 @@ for more details.
 | Sequencing - Series                |      Tween      | Tweener builder methods (`Tween.tween_*()`) do this automatically.<br/>More complex cases require using `chain()` |  SpireSequence  | append(AnyTweenType)<br/>append_call(Callable)<br/>append_interval(float)<br/>append_many(Array) |
 | Sequencing - Parallel              |      Tween      |            Call `set_parallel(true)`, then use one of the builder methods (`Tween.tween_*()`) as usual            |  SpireSequence  |       join(AnyTweenType)<br/>join_call(Callable)<br/>join( interval)<br/>join_many(Array)        |
 | Sequencing - Insertion             |       ❌        |                                                        ❌                                                         |  SpireSequence  |                   insert(float, AnyTweenType)<br/>insert_call(float, Callable)                   |
+| Sequencing - Lazy child creation   |       ❌        |                                                        ❌                                                         |  SpireSequence  |              append_ctor(Callable)<br/>join_ctor(Callable)<br/>insert_ctor(float, Callable)      |
 | Sequencing - Remove child tween    |       ❌        |                                                        ❌                                                         |  SpireSequence  |                          remove(AnyTweenType)<br/>remove_call(Callable)                          |
 | Sequencing - Default children ease |      Tween      |                                  set_ease(EaseType) + set_trans(TransitionType)                                   |  SpireSequence  |                              set_default_children_ease(Spire.Ease)                               |
 
@@ -300,6 +317,43 @@ for more details.
 # Examples
 
 *For "live" example scenes that you can play, see folder [examples](spire_tween_gdscript/examples).*
+
+## Manual stepping
+
+Every Spire tween exposes `custom_step(delta_time) -> bool`. It returns whether the
+tween "wants to live": `false` when completed, already stopped, or cancelled by
+owner/callable/binding validation; `true` while playing, paused, or temporarily
+blocked by live bindings or pause mode. A stopped tween returns `false` even if
+its live bindings are disabled or outside the SceneTree.
+
+```gdscript
+extends Node
+
+var tween: SpireSequence
+
+func _ready() -> void:
+    tween = Spire.sequence().append_interval(1.0).set_process_mode(Spire.PROCESS_MODE_MANUAL)
+
+func _process(delta: float) -> void:
+    if tween != null and not tween.custom_step(delta):
+        tween.unregister()
+        tween = null
+```
+
+Manual mode disables automatic updates. Explicit stepping does not resume paused
+tweens or restart stopped ones: call `play()` first. The supplied delta chooses the
+clock, and the tween applies its speed scale; `ignore_time_scale` selects the clock
+for automatic manager updates. For `PAUSE_MODE_STOP`, the manual step treats the
+SceneTree as unpaused, while `PAUSE_MODE_BOUND` still respects bound nodes'
+processing state. Freed bindings are checked even when paused/stopped and cancel
+without emitting completion events.
+
+A `false` return does not destroy the reference-counted wrapper. You may retain a
+valid completed/stopped tween for replay, or unregister and release it as above.
+Sequences retain their valid completed children for replay; the manager applies
+its own reference-retention rules. Call only on the main thread, and do not step
+a tween from a callback while it is already processing. Native Rust callers use
+the richer [TweenStepResult contract](spire_tween/README.md#manual-stepping).
 
 ## Tweening Properties
 
@@ -460,6 +514,45 @@ func spire_impl():
 			DoCanvasItem.modulate(self, Color.RED, flash_duration)
 				.set_loops(2, Spire.LOOP_MODE_YOYO) # yoyo loop will make it go red then back to the original color.
 		)
+```
+
+## Creating sequence children when they start
+
+Use a constructor when its child needs to read state at playback time. Pass a Callable that takes no arguments and returns a Spire tween:
+
+```gdscript
+extends Node2D
+
+func _ready() -> void:
+    var seq := Spire.sequence().append_interval(0.5)
+    seq.append_ctor(func():
+        return DoNode2D.position(self, position + Vector2(100, 0), 0.3))
+    seq.join_ctor(func():
+        return DoNode2D.scale(self, Vector2.ONE * 2, 0.3))
+    seq.insert_ctor(0.25, func():
+        return DoCanvasItem.modulate(self, Color.RED, 0.2))
+```
+
+The inserted color tween is constructed at 0.25 seconds. The position and scale tweens are constructed together when the block after the interval starts; the position destination reads the node's position at that moment.
+
+| Method | Construction time |
+|---|---|
+| `append_ctor(factory: Callable) -> SpireSequence` | When its new block starts |
+| `join_ctor(factory: Callable) -> SpireSequence` | When the last block starts, alongside its other items; creates a block if empty |
+| `insert_ctor(time_offset: float, factory: Callable) -> SpireSequence` | On first reaching the offset, plus the sequence's delay |
+
+Each factory is invoked at most once. Loops and replay reuse its child. `force_complete()` invokes pending factories immediately and completes their children. A future inserted constructor keeps its parent playing, and the parent waits for the resulting child's duration.
+
+The result may be any Spire tween, including another sequence. Adoption validates duplicate/cyclic children, preserves node bindings, removes the child's global registration, and applies the parent's current default ease to eligible children. Invalid Callables, null/non-tween results, and rejected children produce diagnostics and skip the slot. Factories run synchronously on the main thread: configure and return the child without modifying the receiving sequence from inside the factory; defer such modifications.
+
+`append_call`, `join_call`, and Callables in `append_many`/`join_many` remain callbacks whose return values are discarded. `remove_call` does not remove pending constructors; after construction, keep the returned child handle if you need to call `remove(child)`.
+
+Factories retain their captures until invocation. Use a `WeakRef` when accessing the receiving sequence would otherwise create a strong ownership cycle.
+
+Run the focused constructor integration suite with a freshly built addon:
+
+```bash
+godot --headless --path spire_tween_gdscript --script res://examples/tests/sequence_ctors_runner.gd
 ```
 
 # Benchmarks

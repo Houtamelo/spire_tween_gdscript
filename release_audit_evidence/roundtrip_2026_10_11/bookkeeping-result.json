@@ -1,0 +1,15 @@
+{
+  "cmd": [
+    "godot",
+    "--headless",
+    "--max-fps",
+    "120",
+    "--path",
+    "/tmp/spire-roundtrip-20261011-ge7mv8x_/probe",
+    "--script",
+    "res://bookkeeping.gd"
+  ],
+  "exit": 0,
+  "instrumented_library_sha256": "6255d8d79cf3d4537ee26b294138cf39cd19a5ce82e1844c1ff954924ca059a5",
+  "instrumentation": "Additional observation-only Godot class reads private manager counts; no production source or lifecycle mutation."
+}

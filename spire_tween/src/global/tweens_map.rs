@@ -1,3 +1,4 @@
+use godot::classes::notify::ObjectNotification;
 use indexmap::map::Entry;
 
 use super::*;
@@ -23,6 +24,10 @@ pub struct TweensMap {
     tracked_nodes: UnsafeCell<IndexMap<i64, NodeState>>,
     deferred_ops:  UnsafeCell<IndexMap<*const (), DeferredOp>>,
 }
+
+unsafe impl Send for TweensMap {}
+
+unsafe impl Sync for TweensMap {}
 
 impl TweensMap {
     pub fn node_bind(&self, node: Gd<Node>, weak: impl Into<WeakAnyTween>) {
@@ -161,6 +166,9 @@ impl TweensMap {
 }
 
 impl TweensMap {
+    // TODO: IGNORE FOR NOW, WIP
+    fn notify_node_about_to_be_freed(&self, node: Gd<Node>) {}
+
     unsafe fn node_ensure_tracked(&self, node: Gd<Node>) -> &mut NodeState {
         let node_id = node.instance_id_unchecked().to_i64();
 
@@ -169,6 +177,7 @@ impl TweensMap {
 
             if let NodeStatus::InsideTree | NodeStatus::OutsideTreeMaybeDead = status {
                 let node_for_exit = node.clone();
+
                 node.clone().signals().tree_exiting().connect(move || {
                     let tm = &*TM;
                     let Entry::Occupied(mut entry) = (*tm.tracked_nodes.get()).entry(node_id) else { return };
@@ -288,7 +297,7 @@ impl TweensMap {
                         let delta_time =
                             if tween.get_ignore_time_scale() { unscaled_delta_time } else { scaled_delta_time };
 
-                        tween_process(tween, delta_time, is_tree_paused)
+                        handle_tween_step(tween, delta_time, is_tree_paused)
                     }
                 }
             };
@@ -331,7 +340,7 @@ impl TweensMap {
                         let delta_time =
                             if tween.get_ignore_time_scale() { unscaled_delta_time } else { scaled_delta_time };
 
-                        tween_process(tween, delta_time, is_tree_paused)
+                        handle_tween_step(tween, delta_time, is_tree_paused)
                     }
                 }
             };
@@ -356,4 +365,38 @@ impl TweensMap {
 
         self.handle_deferred_ops();
     }
+}
+
+fn handle_tween_step(tween: &AnyTween, delta_time: f64, is_tree_paused: bool) -> bool {
+    match tween.custom_step(delta_time, is_tree_paused) {
+        TweenStepResult::Stepped(result) => {
+            match result {
+                AdvanceTimeResult::Playing => true,
+                // If a tween is paused and there aren't any references to it, nothing will ever be able
+                // to unpause it, so we can safely stop referencing it.
+                AdvanceTimeResult::Paused => tween.has_external_owners(),
+
+                // Tween is done, check if we can stop referencing it.
+                AdvanceTimeResult::Completed { .. } => tween.is_playing() || tween.has_external_owners(),
+                AdvanceTimeResult::ShouldDespawn => false,
+            }
+        }
+        TweenStepResult::AlreadyPaused | TweenStepResult::AlreadyStopped | TweenStepResult::DidNotStepDueToBounds => {
+            tween.has_external_owners()
+        }
+        TweenStepResult::NoLongerValid => false,
+    }
+}
+
+// TODO: IGNORE FOR NOW, WIP
+#[derive(GodotClass)]
+#[class(base = RefCounted, no_init)]
+struct NodeLifetimeTracker {
+    tracking: Gd<Node>,
+}
+
+// TODO: IGNORE FOR NOW, WIP
+#[godot_api]
+impl IRefCounted for NodeLifetimeTracker {
+    fn on_notification(&mut self, what: ObjectNotification) { if what == ObjectNotification::PREDELETE {} }
 }

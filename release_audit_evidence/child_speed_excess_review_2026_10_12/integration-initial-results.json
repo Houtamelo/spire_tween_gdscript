@@ -1,0 +1,43 @@
+[
+  {
+    "check": "focused-debug",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-excess-suite-20261012-gg_zcstp/project",
+      "--fixed-fps",
+      "120",
+      "--script",
+      "res://examples/tests/sequence_speed_runner.gd"
+    ],
+    "exit_code": 0,
+    "script_errors": 0,
+    "native_panics": 0,
+    "markers": [
+      "EXCESS_RESULT total=9 cases=121 failed=0"
+    ]
+  },
+  {
+    "check": "catalog-cli",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-excess-suite-20261012-gg_zcstp/project",
+      "--fixed-fps",
+      "120",
+      "--script",
+      "res://examples/tests/runner_cli_checks.gd",
+      "--",
+      "--all-tests",
+      "--no-cache"
+    ],
+    "exit_code": 0,
+    "script_errors": 0,
+    "native_panics": 0,
+    "markers": [
+      "RUNNER_CLI_RESULT total=13 failed=0"
+    ]
+  }
+]

@@ -1,0 +1,14 @@
+{
+  "cmd": [
+    "godot",
+    "--headless",
+    "--fixed-fps",
+    "120",
+    "--path",
+    "/tmp/spire-roundtrip-20261011-ge7mv8x_/spire_tween_rust",
+    "res://test_runner.tscn"
+  ],
+  "exit_code": 0,
+  "library_sha256": "2664b7a929c6a6c7b8c9ee06d6cc5057262fb5d51b204f0e26d96d630bbeb1b6",
+  "note": "actual debug library at release path chosen by existing manifest; no production manifest edit; fixedFPS may affect realclock assertions"
+}

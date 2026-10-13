@@ -1,0 +1,12 @@
+ERROR: Can't open dynamic library, file not found: '/tmp/spire-roundtrip-20261011-ge7mv8x_/spire_tween_rust/addons/spire_tween/lib/x86_64-unknown-linux-gnu/release/libspire_tween_rust.so'.
+   at: open_dynamic_library (drivers/unix/os_unix.cpp:1063)
+ERROR: GDExtension dynamic library not found: 'res://addons/spire_tween/spire_tween.gdextension'.
+   at: open_library (core/extension/gdextension.cpp:810)
+ERROR: Error loading extension: 'res://addons/spire_tween/spire_tween.gdextension'.
+   at: load_extensions (core/extension/gdextension_manager.cpp:333)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Cannot get class 'TestRunner'.
+   at: _instantiate_internal (core/object/class_db.cpp:587)
+WARNING: Node TestRunner of type TestRunner cannot be created. A placeholder will be created instead.
+     at: instantiate (scene/resources/packed_scene.cpp:335)

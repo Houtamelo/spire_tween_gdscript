@@ -1,0 +1,14 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards balanced)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+AUDIT_PROBE valid_method {"playing":true,"value":0.25}
+AUDIT_PROBE freed_method_natural {"callable_valid":false,"playing":true,"registered":false,"stopped":false}
+AUDIT_PROBE invalid_method_force {"finished_count":1,"registered":true,"stopped":true}
+AUDIT_PROBE child_speed_excess {"delta":1.1,"expected":0.1,"speed":1.0,"successor_elapsed":0.1}
+AUDIT_PROBE child_speed_excess {"delta":0.6,"expected":0.1,"speed":2.0,"successor_elapsed":0.2}
+AUDIT_PROBE child_speed_excess {"delta":2.1,"expected":0.1,"speed":0.5,"successor_elapsed":0.05}
+AUDIT_PROBE immediate_free_property {"registered":false,"stopped":true}
+AUDIT_PROBE speed_input {"elapsed":"0.1","playing":true,"scale":"1.0","stopped":false}
+AUDIT_PROBE speed_input {"elapsed":"-0.1","playing":true,"scale":"-1.0","stopped":false}
+AUDIT_PROBE speed_input {"elapsed":"nan","playing":false,"scale":"nan","stopped":true}
+AUDIT_PROBE speed_input {"elapsed":"inf","playing":false,"scale":"inf","stopped":true}

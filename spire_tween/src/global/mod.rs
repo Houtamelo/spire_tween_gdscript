@@ -4,70 +4,14 @@ use super::*;
 #[cfg(feature = "include_gdscript_bridge")]
 mod cfg;
 mod deferred_op;
+mod node_lifetime_tracker;
 mod node_status;
+mod tweens_map;
 
 use anyhow::Result;
 use deferred_op::*;
-pub use node_status::*;
 
-mod index_map_impl;
-pub use index_map_impl::*;
-
-// Discount both the manager and, when present, the wrapper's internal native
-// pointer. A caller-held Godot wrapper still counts as external ownership.
-fn tween_process(tween: &AnyTween, delta_time: f64, is_tree_paused: bool) -> bool {
-    use AnyTween::*;
-    use ObjectValidityResult::*;
-
-    let result = match tween {
-        Property(t) => {
-            delegate_any_property_tween! { t.to_mut().handle_bound_nodes_validity(is_tree_paused) }
-        }
-        Method(t) => {
-            delegate_any_method_tween! { t.to_mut().handle_bound_nodes_validity(is_tree_paused) }
-        }
-        DelayedCall(t) => t.to_mut().handle_bound_nodes_validity(is_tree_paused),
-        Sequence(t) => t.to_mut().handle_bound_nodes_validity(is_tree_paused),
-    };
-
-    match result {
-        CanProcess => {
-            match tween.get_state() {
-                State::Stopped | State::Paused => tween.has_external_owners(),
-
-                State::Playing => {
-                    let process_result = match tween {
-                        Property(t) => {
-                            delegate_any_property_tween! { t.to_mut().process(delta_time, is_tree_paused) }
-                        }
-                        Method(t) => {
-                            delegate_any_method_tween! { t.to_mut().process(delta_time, is_tree_paused) }
-                        }
-                        DelayedCall(t) => t.to_mut().process(delta_time, is_tree_paused),
-                        Sequence(t) => t.to_mut().process(delta_time, is_tree_paused),
-                    };
-
-                    match process_result {
-                        AdvanceTimeResult::Playing => true,
-                        // If a tween is paused and there aren't any references to it, nothing will ever be able
-                        // to unpause it, so we can safely stop referencing it.
-                        AdvanceTimeResult::Paused => tween.has_external_owners(),
-
-                        // Tween is done, check if we can stop referencing it.
-                        AdvanceTimeResult::Completed { .. } => tween.is_playing() || tween.has_external_owners(),
-                        AdvanceTimeResult::ShouldDespawn => false,
-                    }
-                }
-            }
-        }
-        DontProcess => tween.has_external_owners(),
-        SomeObjectsDead => false,
-    }
-}
-
-unsafe impl Send for TweensMap {}
-
-unsafe impl Sync for TweensMap {}
+pub use self::{node_status::*, tweens_map::*};
 
 #[inline]
 fn eval_node_status(node: &Gd<Node>) -> NodeStatus {

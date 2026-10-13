@@ -1,0 +1,11 @@
+{
+  "cmd": [
+    "godot",
+    "--headless",
+    "--path",
+    "/tmp/spire-roundtrip-20261011-ge7mv8x_/installed-surface",
+    "--script",
+    "res://surface.gd"
+  ],
+  "exit": 0
+}

@@ -34,6 +34,7 @@
 //! - **Core types** — [`SpireTween`], [`AnyTween`],
 //!   [`Sequence`], [`SpireFlags`].
 //! - **Tween pointer types** — [`TweenPtr`], [`WeakTweenPtr`].
+//! - **Processing results** — [`TweenStepResult`], [`AdvanceTimeResult`].
 //! - **Shared-state pointers** — [`RcPtr`], [`WeakPtr`].
 //! - **Enums** — [`Ease`], [`EaseKind`], [`Evaluator`],
 //!   [`LoopMode`], [`PauseMode`], [`ProcessMode`],
@@ -60,6 +61,21 @@
 //! - [`SpireTween::register_with_gd_handle`] — also attaches a `Gd<Spire…>` wrapper
 //!   so GDScript code (or any consumer of Godot signals) can connect to the
 //!   `finished` / `loop_finished` Godot signals on that handle.
+//!
+//! # Manual stepping
+//!
+//! [`TweenPtr::custom_step`] is the canonical checked path used by the manager
+//! and sequences. It validates explicit bindings even when paused/stopped and
+//! returns [`TweenStepResult`]. Resume a paused tween with [`SpireTweener::play`]
+//! before stepping. Choose [`ProcessMode::Manual`] to disable automatic updates;
+//! the supplied delta selects the clock, and the tween applies its speed scale.
+//! A completed [`AdvanceTimeResult`] carries excess in the input delta's units.
+//!
+//! Native processors decide whether to retain their reference. Sequences keep
+//! valid completed children for replay. GDScript `custom_step(delta_time)` instead
+//! returns a "wants to live" Boolean: false for completed/stopped/cancelled,
+//! true for playing/paused/temporarily blocked. It treats the tree as unpaused
+//! for [`PauseMode::Stop`] while still respecting bound nodes' processing state.
 //!
 //! # Threading
 //!
@@ -146,6 +162,7 @@ pub mod prelude {
         rc_ptr::*,
         tween_ptr::{TweenPtr, WeakTweenPtr},
         tweens::{
+            AdvanceTimeResult,
             AnyMethodTween,
             AnyPropertyTween,
             AnyTween,
@@ -173,6 +190,7 @@ pub mod prelude {
             SpireFlags,
             SpireTween,
             SpireTweener,
+            TweenStepResult,
             generated_classes_data::*,
             generated_types_data::*,
         },

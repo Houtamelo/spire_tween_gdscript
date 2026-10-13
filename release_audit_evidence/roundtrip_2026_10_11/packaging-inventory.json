@@ -1,0 +1,238 @@
+{
+  "tracked_artwork": [
+    "spire_tween_gdscript/examples/powerup/sprites/Attack_KG_1.png",
+    "spire_tween_gdscript/examples/powerup/sprites/Attack_KG_2.png",
+    "spire_tween_gdscript/examples/powerup/sprites/Attack_KG_3.png",
+    "spire_tween_gdscript/examples/powerup/sprites/Attack_KG_4.png",
+    "spire_tween_gdscript/examples/powerup/sprites/Crouching_Idle_KG_1.png",
+    "spire_tween_gdscript/examples/powerup/sprites/Crouching_Idle_KG_2.png",
+    "spire_tween_gdscript/examples/powerup/sprites/Crouching_KG_1.png",
+    "spire_tween_gdscript/examples/powerup/sprites/Crouching_KG_2.png",
+    "spire_tween_gdscript/examples/powerup/sprites/Crouching_Walk_KG_1.png",
+    "spire_tween_gdscript/examples/powerup/sprites/Crouching_Walk_KG_2.png",
+    "spire_tween_gdscript/examples/powerup/sprites/Dashing_KG_1.png",
+    "spire_tween_gdscript/examples/powerup/sprites/Drinking_KG_1.png",
+    "spire_tween_gdscript/examples/powerup/sprites/Dying_KG_1.png",
+    "spire_tween_gdscript/examples/powerup/sprites/Dying_KG_2.png",
+    "spire_tween_gdscript/examples/powerup/sprites/Fall_KG_1.png",
+    "spire_tween_gdscript/examples/powerup/sprites/Fall_KG_2.gif",
+    "spire_tween_gdscript/examples/powerup/sprites/Grab_idle_KG_1.png",
+    "spire_tween_gdscript/examples/powerup/sprites/Hurt_KG_1.png",
+    "spire_tween_gdscript/examples/powerup/sprites/Hurt_KG_2.png",
+    "spire_tween_gdscript/examples/powerup/sprites/Idle_KG_1.png",
+    "spire_tween_gdscript/examples/powerup/sprites/Idle_KG_2.png",
+    "spire_tween_gdscript/examples/powerup/sprites/Jump_KG_1.png",
+    "spire_tween_gdscript/examples/powerup/sprites/Jump_KG_2.gif",
+    "spire_tween_gdscript/examples/powerup/sprites/Landing_KG_1.png",
+    "spire_tween_gdscript/examples/powerup/sprites/Landing_KG_2.png",
+    "spire_tween_gdscript/examples/powerup/sprites/Ledge_Grab_KG_1.png",
+    "spire_tween_gdscript/examples/powerup/sprites/Power_Up_KG_1.png",
+    "spire_tween_gdscript/examples/powerup/sprites/Pushing_KG_1.png",
+    "spire_tween_gdscript/examples/powerup/sprites/Rolling_KG_1.png",
+    "spire_tween_gdscript/examples/powerup/sprites/Shield_Bash_KG.png",
+    "spire_tween_gdscript/examples/powerup/sprites/Shield_Up_KG_1.png",
+    "spire_tween_gdscript/examples/powerup/sprites/Shield_idle_KG.png",
+    "spire_tween_gdscript/examples/powerup/sprites/Talking_KG.png",
+    "spire_tween_gdscript/examples/powerup/sprites/Walking_KG_1.png",
+    "spire_tween_gdscript/examples/powerup/sprites/Walking_KG_2.png",
+    "spire_tween_gdscript/examples/powerup/sprites/Wallside_KG_1.png",
+    "spire_tween_gdscript/examples/powerup/sprites/knight_win.png",
+    "spire_tween_gdscript/examples/powerup/sprites/ladders_KG_1.png",
+    "spire_tween_rust/examples/powerup/sprites/Attack_KG_1.png",
+    "spire_tween_rust/examples/powerup/sprites/Attack_KG_2.png",
+    "spire_tween_rust/examples/powerup/sprites/Attack_KG_3.png",
+    "spire_tween_rust/examples/powerup/sprites/Attack_KG_4.png",
+    "spire_tween_rust/examples/powerup/sprites/Crouching_Idle_KG_1.png",
+    "spire_tween_rust/examples/powerup/sprites/Crouching_Idle_KG_2.png",
+    "spire_tween_rust/examples/powerup/sprites/Crouching_KG_1.png",
+    "spire_tween_rust/examples/powerup/sprites/Crouching_KG_2.png",
+    "spire_tween_rust/examples/powerup/sprites/Crouching_Walk_KG_1.png",
+    "spire_tween_rust/examples/powerup/sprites/Crouching_Walk_KG_2.png",
+    "spire_tween_rust/examples/powerup/sprites/Dashing_KG_1.png",
+    "spire_tween_rust/examples/powerup/sprites/Drinking_KG_1.png",
+    "spire_tween_rust/examples/powerup/sprites/Dying_KG_1.png",
+    "spire_tween_rust/examples/powerup/sprites/Dying_KG_2.png",
+    "spire_tween_rust/examples/powerup/sprites/Fall_KG_1.png",
+    "spire_tween_rust/examples/powerup/sprites/Fall_KG_2.gif",
+    "spire_tween_rust/examples/powerup/sprites/Grab_idle_KG_1.png",
+    "spire_tween_rust/examples/powerup/sprites/Hurt_KG_1.png",
+    "spire_tween_rust/examples/powerup/sprites/Hurt_KG_2.png",
+    "spire_tween_rust/examples/powerup/sprites/Idle_KG_1.png",
+    "spire_tween_rust/examples/powerup/sprites/Idle_KG_2.png",
+    "spire_tween_rust/examples/powerup/sprites/Jump_KG_1.png",
+    "spire_tween_rust/examples/powerup/sprites/Jump_KG_2.gif",
+    "spire_tween_rust/examples/powerup/sprites/Landing_KG_1.png",
+    "spire_tween_rust/examples/powerup/sprites/Landing_KG_2.png",
+    "spire_tween_rust/examples/powerup/sprites/Ledge_Grab_KG_1.png",
+    "spire_tween_rust/examples/powerup/sprites/Power_Up_KG_1.png",
+    "spire_tween_rust/examples/powerup/sprites/Pushing_KG_1.png",
+    "spire_tween_rust/examples/powerup/sprites/Rolling_KG_1.png",
+    "spire_tween_rust/examples/powerup/sprites/Shield_Bash_KG.png",
+    "spire_tween_rust/examples/powerup/sprites/Shield_Up_KG_1.png",
+    "spire_tween_rust/examples/powerup/sprites/Shield_idle_KG.png",
+    "spire_tween_rust/examples/powerup/sprites/Talking_KG.png",
+    "spire_tween_rust/examples/powerup/sprites/Walking_KG_1.png",
+    "spire_tween_rust/examples/powerup/sprites/Walking_KG_2.png",
+    "spire_tween_rust/examples/powerup/sprites/Wallside_KG_1.png",
+    "spire_tween_rust/examples/powerup/sprites/knight_win.png",
+    "spire_tween_rust/examples/powerup/sprites/ladders_KG_1.png"
+  ],
+  "local_artifacts": [
+    {
+      "path": "spire_tween_gdscript/addons/spire_tween/lib/aarch64-linux-android/debug/libspire_tween.rlib",
+      "bytes": 288481810,
+      "mtime": 1791674028.6598196
+    },
+    {
+      "path": "spire_tween_gdscript/addons/spire_tween/lib/aarch64-linux-android/debug/libspire_tween.so",
+      "bytes": 249375312,
+      "mtime": 1791674029.117825
+    },
+    {
+      "path": "spire_tween_gdscript/addons/spire_tween/lib/aarch64-linux-android/release/libspire_tween.rlib",
+      "bytes": 117752406,
+      "mtime": 1777700123.9581583
+    },
+    {
+      "path": "spire_tween_gdscript/addons/spire_tween/lib/aarch64-linux-android/release/libspire_tween.so",
+      "bytes": 22599248,
+      "mtime": 1777700124.0831597
+    },
+    {
+      "path": "spire_tween_gdscript/addons/spire_tween/lib/i686-linux-android/debug/libspire_tween.rlib",
+      "bytes": 254734198,
+      "mtime": 1762373940.7063308
+    },
+    {
+      "path": "spire_tween_gdscript/addons/spire_tween/lib/i686-linux-android/debug/libspire_tween.so",
+      "bytes": 210801360,
+      "mtime": 1762373940.9923348
+    },
+    {
+      "path": "spire_tween_gdscript/addons/spire_tween/lib/i686-linux-android/release/libspire_tween.rlib",
+      "bytes": 81713414,
+      "mtime": 1762373959.9525778
+    },
+    {
+      "path": "spire_tween_gdscript/addons/spire_tween/lib/i686-linux-android/release/libspire_tween.so",
+      "bytes": 20009264,
+      "mtime": 1762373960.0415788
+    },
+    {
+      "path": "spire_tween_gdscript/addons/spire_tween/lib/wasm32-unknown-emscripten/debug/libspire_tween.rlib",
+      "bytes": 198271378,
+      "mtime": 1777700712.5700445
+    },
+    {
+      "path": "spire_tween_gdscript/addons/spire_tween/lib/wasm32-unknown-emscripten/debug/spire_tween.threads.wasm",
+      "bytes": 240765669,
+      "mtime": 1777700544.9391048
+    },
+    {
+      "path": "spire_tween_gdscript/addons/spire_tween/lib/wasm32-unknown-emscripten/debug/spire_tween.wasm",
+      "bytes": 249959384,
+      "mtime": 1777700827.572187
+    },
+    {
+      "path": "spire_tween_gdscript/addons/spire_tween/lib/wasm32-unknown-emscripten/release/libspire_tween.rlib",
+      "bytes": 198271378,
+      "mtime": 1777700712.5700445
+    },
+    {
+      "path": "spire_tween_gdscript/addons/spire_tween/lib/wasm32-unknown-emscripten/release/spire_tween.threads.wasm",
+      "bytes": 240765669,
+      "mtime": 1777700544.9391048
+    },
+    {
+      "path": "spire_tween_gdscript/addons/spire_tween/lib/wasm32-unknown-emscripten/release/spire_tween.wasm",
+      "bytes": 249959384,
+      "mtime": 1777700827.572187
+    },
+    {
+      "path": "spire_tween_gdscript/addons/spire_tween/lib/x86_64-linux-android/debug/libspire_tween.rlib",
+      "bytes": 281828156,
+      "mtime": 1777700196.0900066
+    },
+    {
+      "path": "spire_tween_gdscript/addons/spire_tween/lib/x86_64-linux-android/debug/libspire_tween.so",
+      "bytes": 269421328,
+      "mtime": 1777700196.3120093
+    },
+    {
+      "path": "spire_tween_gdscript/addons/spire_tween/lib/x86_64-linux-android/release/libspire_tween.rlib",
+      "bytes": 116327040,
+      "mtime": 1777700260.681766
+    },
+    {
+      "path": "spire_tween_gdscript/addons/spire_tween/lib/x86_64-linux-android/release/libspire_tween.so",
+      "bytes": 22144240,
+      "mtime": 1777700260.7857673
+    },
+    {
+      "path": "spire_tween_gdscript/addons/spire_tween/lib/x86_64-pc-windows-msvc/debug/libspire_tween.rlib",
+      "bytes": 350829262,
+      "mtime": 1791673822.5193915
+    },
+    {
+      "path": "spire_tween_gdscript/addons/spire_tween/lib/x86_64-pc-windows-msvc/debug/spire_tween.dll",
+      "bytes": 16408064,
+      "mtime": 1791673822.8283954
+    },
+    {
+      "path": "spire_tween_gdscript/addons/spire_tween/lib/x86_64-pc-windows-msvc/debug/spire_tween.dll.lib",
+      "bytes": 1404,
+      "mtime": 1791673822.7903948
+    },
+    {
+      "path": "spire_tween_gdscript/addons/spire_tween/lib/x86_64-pc-windows-msvc/debug/spire_tween.pdb",
+      "bytes": 176726016,
+      "mtime": 1791673823.1533992
+    },
+    {
+      "path": "spire_tween_gdscript/addons/spire_tween/lib/x86_64-pc-windows-msvc/release/libspire_tween.rlib",
+      "bytes": 143075928,
+      "mtime": 1791673886.762159
+    },
+    {
+      "path": "spire_tween_gdscript/addons/spire_tween/lib/x86_64-pc-windows-msvc/release/spire_tween.dll",
+      "bytes": 16036352,
+      "mtime": 1791673887.0621626
+    },
+    {
+      "path": "spire_tween_gdscript/addons/spire_tween/lib/x86_64-pc-windows-msvc/release/spire_tween.dll.lib",
+      "bytes": 1404,
+      "mtime": 1791673887.0310194
+    },
+    {
+      "path": "spire_tween_gdscript/addons/spire_tween/lib/x86_64-pc-windows-msvc/release/spire_tween.pdb",
+      "bytes": 7786496,
+      "mtime": 1791673887.092163
+    },
+    {
+      "path": "spire_tween_gdscript/addons/spire_tween/lib/x86_64-unknown-linux-gnu/debug/libspire_tween.rlib",
+      "bytes": 279184328,
+      "mtime": 1791673643.5202394
+    },
+    {
+      "path": "spire_tween_gdscript/addons/spire_tween/lib/x86_64-unknown-linux-gnu/debug/libspire_tween.so",
+      "bytes": 238047336,
+      "mtime": 1791673643.890244
+    },
+    {
+      "path": "spire_tween_gdscript/addons/spire_tween/lib/x86_64-unknown-linux-gnu/release/libspire_tween.rlib",
+      "bytes": 121273906,
+      "mtime": 1791673705.1679807
+    },
+    {
+      "path": "spire_tween_gdscript/addons/spire_tween/lib/x86_64-unknown-linux-gnu/release/libspire_tween.so",
+      "bytes": 23411968,
+      "mtime": 1791673705.3289826
+    }
+  ],
+  "declared_missing": [],
+  "tracked_release_files": [
+    ".cargo/config.toml"
+  ],
+  "artifact_bytes": 4685963102,
+  "runtime_binary_bytes": 2069704578
+}

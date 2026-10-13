@@ -1,0 +1,12 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards balanced)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: [SpireTween] Error: `Engine::get_main_loop()` returned null, SpireTween needs to access the main loop to register its singleton.
+   at: spire_tween::global::index_map_impl::TM::{{closure}} (spire_tween/src/global/index_map_impl.rs:10)
+   GDScript backtrace (most recent call first):
+       [0] @implicit_new (res://early.gd:3)
+AUDIT_EARLY {"controller":false,"early_hits":0,"later_hits":0,"registered":true}
+WARNING: 4 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 1 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

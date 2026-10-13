@@ -1,0 +1,12 @@
+{
+  "cmd": [
+    "godot",
+    "--headless",
+    "--max-fps",
+    "120",
+    "--path",
+    "/tmp/spire-roundtrip-20261011-ge7mv8x_/spire_tween_rust",
+    "res://test_runner.tscn"
+  ],
+  "exit_code": "timeout"
+}

@@ -1,0 +1,26 @@
+   Compiling unicode-segmentation v1.13.3
+   Compiling konst_macro_rules v0.2.19
+   Compiling memchr v2.8.3
+   Compiling itoa v1.0.18
+   Compiling quote v1.0.47
+   Compiling serde_core v1.0.229
+   Compiling zmij v1.0.23
+   Compiling konst v0.2.20
+   Compiling syn v2.0.119
+   Compiling syn v3.0.3
+   Compiling convert_case v0.8.0
+   Compiling const_format_proc_macros v0.2.34
+   Compiling const_format v0.2.36
+   Compiling serde_json v1.0.151
+   Compiling prettyplease v0.2.37
+   Compiling deluxe-core v0.5.0
+   Compiling serde_derive v1.0.229
+   Compiling deluxe-macros v0.5.0
+   Compiling serde v1.0.229
+   Compiling deluxe v0.5.0
+   Compiling parsel_derive v0.16.0
+   Compiling parsel v0.16.0
+   Compiling spire_enum_macros v0.7.2
+   Compiling spire_enum v0.7.2
+   Compiling gdscript_bindgen v0.1.0 (/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/gdscript_bindgen)
+    Finished `dev` profile [optimized + debuginfo] target(s) in 10.51s

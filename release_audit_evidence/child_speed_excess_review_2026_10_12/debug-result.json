@@ -1,0 +1,14 @@
+{
+  "profile": "debug",
+  "command": [
+    "/home/houtamelo/bin/godot",
+    "--headless",
+    "--path",
+    "/tmp/spire-excess-review-20261012-_w4oq85u",
+    "--script",
+    "res://excess.gd"
+  ],
+  "exit_code": 0,
+  "sha256": "fdde6163fe3dc094082b3836f2aa3a5c2b56e7773c6e53c70e1468850d29f8c7",
+  "log": "Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards strict)\nGodot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org\n\nEXCESS_RESULT {\"cases\":121,\"failures\":[]}\n"
+}

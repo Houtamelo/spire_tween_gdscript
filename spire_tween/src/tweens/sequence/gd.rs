@@ -57,6 +57,22 @@ use super::*;
 /// using the [method insert] and [method insert_call] methods. Inserted elements do not interact
 /// with the block system, they will run independently of it.
 ///
+/// # Lazy child construction
+/// Use [method append_ctor], [method join_ctor], or [method insert_ctor] with a
+/// zero-argument [Callable] returning a Spire tween. The child is created when its
+/// block or time offset is reached, rather than while building the sequence.
+/// Factories run at most once; loops and replay reuse the resulting child.
+/// [method force_complete] immediately invokes pending factories and completes
+/// their children. Invalid factory results are logged and skipped.
+///
+/// Factories run synchronously on the main thread. Configure and return the child
+/// without modifying the receiving sequence from inside the factory; defer such
+/// modifications until processing returns. Pending factories are not ordinary
+/// callbacks and are not removed by [method remove_call]. After construction, use
+/// [method remove] with the returned child handle to remove it.
+/// Factories retain their captures until invocation. A strong capture of the
+/// receiving sequence can create an ownership cycle; use [WeakRef] when needed.
+///
 /// # Loops
 /// Sequences can be looped, although they only support the mode [constant Spire.LOOP_MODE_RESTART]
 /// (the default mode), you can set other modes, but they will be ignored.
@@ -136,6 +152,36 @@ impl SpireSequence {
             this.bind().to_mut().append_ptr(to_append);
         }
 
+        this
+    }
+
+    /// [b]Behavior:[/b] Schedules [param factory] to construct a child tween in a new
+    /// block. It is invoked only when preceding blocks finish and this block starts.
+    ///
+    /// [param factory] must take no arguments and return any Spire tween, including
+    /// a [SpireSequence]. The result is validated before adoption, unregistered from
+    /// the global manager, and played by this sequence. Existing node bindings are
+    /// preserved. The sequence's current default children ease applies when the
+    /// child's ease is [constant Spire.EASE_DEFAULT].
+    ///
+    /// The factory runs at most once. Loops and replay reuse the child. Calling
+    /// [method force_complete] invokes pending factories immediately. Invalid
+    /// callables, null/non-tween results, duplicates, or cycles produce diagnostics
+    /// and skip that slot without blocking subsequent items.
+    ///
+    /// Unlike [method append_call], the returned tween is played and this block
+    /// waits for it. [method append_many] still treats Callables as ordinary callbacks.
+    /// See the class's lazy-construction notes for synchronous-callback restrictions.
+    ///
+    /// [b]Returns:[/b] This sequence, for chaining.
+    ///
+    /// ```gdscript
+    /// var seq := Spire.sequence().append_interval(1.0)
+    /// seq.append_ctor(func(): return DoNode2D.position(sprite, destination, 0.5))
+    /// ```
+    #[func(gd_self)]
+    pub fn append_ctor(this: Gd<Self>, factory: Callable) -> Gd<Self> {
+        this.bind().to_mut().append_ctor_callable(factory);
         this
     }
 
@@ -255,6 +301,22 @@ impl SpireSequence {
         this
     }
 
+    /// [b]Behavior:[/b] Schedules a one-time child constructor in the last block,
+    /// running in parallel with its existing items. If empty, creates the first block.
+    /// The factory runs when this block first starts, and the block waits for the child.
+    ///
+    /// [param factory] must take no arguments and return a Spire tween. Invocation,
+    /// adoption, replay, forced completion, failure handling, and callback restrictions
+    /// are the same as [method append_ctor]. [method join_many] still treats Callables
+    /// as ordinary callbacks.
+    ///
+    /// [b]Returns:[/b] This sequence, for chaining.
+    #[func(gd_self)]
+    pub fn join_ctor(this: Gd<Self>, factory: Callable) -> Gd<Self> {
+        this.bind().to_mut().join_ctor_callable(factory);
+        this
+    }
+
     /// [b]Behavior:[/b] Places an interval (a delay) in the last block of the sequence (will not create a new block).
     ///
     /// [b]Note:[/b] The length of a block is determined by the longest tween in that block, so this won't do anything
@@ -334,6 +396,26 @@ impl SpireSequence {
         this
     }
 
+    /// [b]Behavior:[/b] Constructs a child on first reaching [param time_offset]
+    /// seconds into a loop, independently of the block queue. The sequence's delay
+    /// is added to the offset. The factory is not invoked before this point.
+    ///
+    /// Pending factories and unfinished children keep the sequence playing, even
+    /// when its block queue is empty or finished. The child's first update receives
+    /// only the part of the step at or after the offset.
+    ///
+    /// [param factory] must take no arguments and return a Spire tween. It runs at
+    /// most once; loops/replay reuse that child at the same offset. Forced completion
+    /// invokes pending factories immediately. Adoption, failures, and synchronous
+    /// callback restrictions are the same as [method append_ctor].
+    ///
+    /// [b]Returns:[/b] This sequence, for chaining.
+    #[func(gd_self)]
+    pub fn insert_ctor(this: Gd<Self>, time_offset: f64, factory: Callable) -> Gd<Self> {
+        this.bind().to_mut().insert_ctor_callable(time_offset, factory);
+        this
+    }
+
     /// [b]Behavior:[/b] Inserts a callable to be invoked at a specific time offset from the start of the sequence.
     ///
     /// [b]Note:[/b] Inserted elements do not interact with the block system, they will run independently of it.
@@ -379,7 +461,8 @@ impl SpireSequence {
     /// [b]Note:[/b] This takes priority over the global easing configuration
     /// (see [method SpireGlobalSettings.set_default_ease]).
     ///
-    /// [b]Note:[/b] This only affects tweens added after calling this method.
+    /// [b]Note:[/b] This only affects tweens added after calling this method, including
+    /// lazy children constructed afterward even if their factory was scheduled earlier.
     ///
     /// [b]Note:[/b] The following tweens use easing functions:
     /// [SpireProperty], [SpireMethod], and [SpireSequence] - (as well as their derivatives).

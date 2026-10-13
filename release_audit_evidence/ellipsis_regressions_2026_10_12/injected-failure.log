@@ -1,0 +1,32 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards balanced)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ELLIPSE_START test_circle3_stays_planar_with_constant_radius
+ELLIPSE_PASS test_circle3_stays_planar_with_constant_radius
+ELLIPSE_START test_circle3_full_turns_return_to_start
+ELLIPSE_PASS test_circle3_full_turns_return_to_start
+ELLIPSE_START test_circle3_uses_global_center_under_transformed_parent
+ELLIPSE_PASS test_circle3_uses_global_center_under_transformed_parent
+ELLIPSE_START test_equal_angle_ellipse2_interpolates_radius
+ELLIPSE_PASS test_equal_angle_ellipse2_interpolates_radius
+ELLIPSE_START test_equal_angle_ellipse3_interpolates_radius
+ELLIPSE_PASS test_equal_angle_ellipse3_interpolates_radius
+ELLIPSE_START test_ellipse3_preserves_requested_helical_displacement
+ELLIPSE_PASS test_ellipse3_preserves_requested_helical_displacement
+ELLIPSE_START test_valid_templates_finish_once_normally_and_when_forced
+ERROR: Injected failure for runner validation
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/ellipsis_regressions.gd:14)
+       [1] test_valid_templates_finish_once_normally_and_when_forced (res://examples/tests/ellipsis_regressions.gd:178)
+       [2] run_tests (res://examples/tests/ellipsis_regressions_runner.gd:26)
+ELLIPSE_FAIL test_valid_templates_finish_once_normally_and_when_forced
+ELLIPSE_START test_immediate_receiver_deletion_cancels_registered_templates
+ELLIPSE_PASS test_immediate_receiver_deletion_cancels_registered_templates
+ELLIPSE_START test_deferred_receiver_deletion_cancels_registered_templates
+ELLIPSE_PASS test_deferred_receiver_deletion_cancels_registered_templates
+ELLIPSE_START test_immediate_receiver_deletion_cancels_sequence_children
+ELLIPSE_PASS test_immediate_receiver_deletion_cancels_sequence_children
+ELLIPSE_START test_deferred_receiver_deletion_cancels_sequence_children
+ELLIPSE_PASS test_deferred_receiver_deletion_cancels_sequence_children
+ELLIPSE_RESULT total=11 cases=119 failed=1

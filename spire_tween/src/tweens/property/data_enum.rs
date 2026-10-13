@@ -23,7 +23,7 @@ impl SpireTweener for AnyPropertyTween {
     #[inline]
     fn stop(&mut self);
     #[inline]
-    fn process(&mut self, delta_time: f64, is_tree_paused: bool) -> AdvanceTimeResult;
+    fn process_internal(&mut self, delta_time: f64, is_tree_paused: bool) -> AdvanceTimeResult;
     #[inline]
     fn force_complete(&mut self);
 }

@@ -62,3 +62,7 @@ pub(crate) fn calc_animation_position(
         LoopMode::Incremental => loop_count as f64 + ease.sample(raw_position),
     }
 }
+
+pub(crate) fn unscale_time(time: f64, speed_scale: f64) -> f64 {
+    if speed_scale.is_zero_approx() { 0. } else { time / speed_scale }
+}

@@ -261,6 +261,14 @@ fn template_bridge_methods(class_ident: &Ident) -> TokenStream {
                 gd_from_native_tween(tween)
             }
 
+            /// Moves [param node] around [param center] (global coordinates) at a
+            /// constant [param radius], in the plane perpendicular to [param axis].
+            /// Angles are in radians; their difference controls direction and turns.
+            /// The axis is normalized, with [constant Vector3.UP] used for a zero axis.
+            ///
+            /// Equivalent to [method ellipsis] with `(radius, radius, 0)` at both
+            /// radius endpoints: there is no displacement along the axis.
+            /// The returned [SpireMethodFloat] interpolates progress from 0 to 1.
             #[func]
             fn circle(
                 node: Gd<Node3D>,
@@ -271,7 +279,8 @@ fn template_bridge_methods(class_ident: &Ident) -> TokenStream {
                 axis: Vector3,
                 duration: f64,
             ) -> Gd<SpireMethodFloat> {
-                Self::ellipsis(node, center, from_angle, to_angle, Vector3::splat(radius), Vector3::splat(radius), axis, duration)
+                let radii = Vector3::new(radius, radius, 0.0);
+                Self::ellipsis(node, center, from_angle, to_angle, radii, radii, axis, duration)
             }
         },
         "Control" => quote! {

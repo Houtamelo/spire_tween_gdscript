@@ -1,0 +1,61 @@
+[
+  {
+    "check": "rustdoc",
+    "command": [
+      "cargo",
+      "doc",
+      "-p",
+      "spire_tween",
+      "--no-deps",
+      "--locked"
+    ],
+    "exit_code": 0,
+    "warning_count": 41,
+    "traits_diagnostic_seen": true,
+    "last_lines": [
+      "",
+      "warning: `spire_tween` (lib doc) generated 40 warnings",
+      "    Finished `dev` profile [optimized + debuginfo] target(s) in 2.30s",
+      "   Generated /home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/target/doc/spire_tween/index.html"
+    ]
+  },
+  {
+    "check": "build-debug",
+    "command": [
+      "cargo",
+      "build",
+      "-p",
+      "spire_tween",
+      "--locked",
+      "--features",
+      "include_gdext_lib,include_gdscript_bridge"
+    ],
+    "exit_code": 0,
+    "warning_count": 0,
+    "traits_diagnostic_seen": false,
+    "last_lines": [
+      "   Compiling spire_tween v1.4.0 (/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween)",
+      "    Finished `dev` profile [optimized + debuginfo] target(s) in 4.04s"
+    ]
+  },
+  {
+    "check": "build-release",
+    "command": [
+      "cargo",
+      "build",
+      "-p",
+      "spire_tween",
+      "--locked",
+      "--release",
+      "--features",
+      "include_gdext_lib,include_gdscript_bridge"
+    ],
+    "exit_code": 0,
+    "warning_count": 0,
+    "traits_diagnostic_seen": false,
+    "last_lines": [
+      "   Compiling spire_tween v1.4.0 (/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween)",
+      "    Finished `release` profile [optimized] target(s) in 3.89s"
+    ]
+  }
+]

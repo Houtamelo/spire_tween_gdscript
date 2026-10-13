@@ -1,0 +1,6 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards strict)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+AUDIT_EXTRA follow_caught_target {"loops":1,"position":"(1.0, 0.0)","stopped":true}
+AUDIT_EXTRA circle_end (2.0, 2.0, -0.0)
+AUDIT_EXTRA future_insert_source_parent_playing true

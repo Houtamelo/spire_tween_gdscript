@@ -1,0 +1,8 @@
+{
+  "revision": "cc35c1935582375e93187c76ccba42d41389c22d",
+  "scratch": "/tmp/spire-roundtrip-20261011-ge7mv8x_",
+  "godot": "4.7.2.stable.official.ed1daf0bf",
+  "rustc": "rustc 1.99.0-nightly (12c36e253 2026-08-10)\nbinary: rustc\ncommit-hash: 12c36e2539c54397c51d6ea4401defd8768a4f5b\ncommit-date: 2026-08-10\nhost: x86_64-unknown-linux-gnu\nrelease: 1.99.0-nightly\nLLVM version: 23.1.0\n",
+  "engine_modes": "headless runtime only; pre-existing caches copied; no editor imports",
+  "installed_binaries_modified": false
+}

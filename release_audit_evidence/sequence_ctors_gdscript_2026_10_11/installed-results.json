@@ -1,0 +1,42 @@
+[
+  {
+    "profile": "debug",
+    "installed_path": "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_gdscript/addons/spire_tween/lib/x86_64-unknown-linux-gnu/debug/libspire_tween.so",
+    "sha256": "633bab5aebf2218fdd8185a7a12b45bed69685b3f9b242322ca40b6eed749d40",
+    "cmd": [
+      "godot",
+      "--headless",
+      "--max-fps",
+      "120",
+      "--path",
+      "/tmp/spire-roundtrip-20261011-ge7mv8x_/constructor-tests",
+      "--script",
+      "res://examples/tests/sequence_ctors_runner.gd"
+    ],
+    "exit": 0,
+    "passed": true,
+    "cases": 18,
+    "fixture_symlink": "/tmp/spire-roundtrip-20261011-ge7mv8x_/constructor-tests/addons/spire_tween/lib/x86_64-unknown-linux-gnu/debug/libspire_tween.so",
+    "backup": "/tmp/spire-roundtrip-20261011-ge7mv8x_/before-ctor-installed-debug.so"
+  },
+  {
+    "profile": "release",
+    "installed_path": "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_gdscript/addons/spire_tween/lib/x86_64-unknown-linux-gnu/release/libspire_tween.so",
+    "sha256": "d13ff23b458f21fb3eb885807339cc04539a58f231b5f20d05815900b9b1e396",
+    "cmd": [
+      "godot",
+      "--headless",
+      "--max-fps",
+      "120",
+      "--path",
+      "/tmp/spire-roundtrip-20261011-ge7mv8x_/constructor-tests",
+      "--script",
+      "res://examples/tests/sequence_ctors_runner.gd"
+    ],
+    "exit": 0,
+    "passed": true,
+    "cases": 18,
+    "fixture_symlink": "/tmp/spire-roundtrip-20261011-ge7mv8x_/constructor-tests/addons/spire_tween/lib/x86_64-unknown-linux-gnu/debug/libspire_tween.so",
+    "backup": "/tmp/spire-roundtrip-20261011-ge7mv8x_/before-ctor-installed-release.so"
+  }
+]

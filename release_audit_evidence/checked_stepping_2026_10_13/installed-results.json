@@ -1,0 +1,20 @@
+[
+  {
+    "profile": "debug",
+    "exit_code": 0,
+    "results": [
+      "BINDING_RESULT total=23 failed=0"
+    ],
+    "script_errors": 0,
+    "panics": 0
+  },
+  {
+    "profile": "release",
+    "exit_code": 0,
+    "results": [
+      "BINDING_RESULT total=23 failed=0"
+    ],
+    "script_errors": 0,
+    "panics": 0
+  }
+]

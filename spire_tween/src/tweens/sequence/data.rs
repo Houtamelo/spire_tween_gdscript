@@ -45,6 +45,28 @@ use super::*;
 /// offsets, independent of the block queue. Inserted items still affect total
 /// duration: the sequence won't complete until all inserted items have completed.
 ///
+/// # Lazy child construction
+///
+/// [`append_ctor`](SpireTween::<Sequence>::append_ctor),
+/// [`join_ctor`](SpireTween::<Sequence>::join_ctor), and
+/// [`insert_ctor`](SpireTween::<Sequence>::insert_ctor) defer creating a child until
+/// its block or insertion offset is reached. Their `_callable` counterparts accept
+/// a zero-argument Godot [`Callable`] returning a Spire tween wrapper.
+///
+/// Each factory runs synchronously on the main thread at most once. Its accepted
+/// result replaces the factory, so loops and replay reuse the child rather than
+/// constructing it again. [`force_complete`](SpireTweener::force_complete) invokes
+/// pending factories immediately and completes their children. A failed or rejected
+/// factory is removed without preventing subsequent items from running.
+///
+/// Created children follow the ordinary insertion rules: validation precedes
+/// adoption, the global manager no longer ticks them, bindings are preserved, and
+/// the sequence's current default ease applies to eligible children. Factories must
+/// configure and return their child without modifying the receiving sequence during
+/// invocation; defer such changes until processing has returned.
+/// Factories retain their captures until invocation. Capturing a strong handle to
+/// their own parent can create an ownership cycle; use a weak observer when needed.
+///
 /// # Loops
 ///
 /// Sequences loop, but only [`LoopMode::Restart`] has effect — other modes are
@@ -81,29 +103,60 @@ pub struct Sequence {
     pub default_ease: Option<Ease>,
 }
 
+/// A one-time child-tween factory stored in a [`Sequence`] until first activation.
+///
+/// Prefer the sequence's `append_ctor`, `join_ctor`, and `insert_ctor` methods (or
+/// their `_callable` counterparts) over manually modifying its hidden storage.
+/// Successful construction replaces this slot with the resulting child; replay
+/// and looping never invoke the same factory again.
 pub enum TweenCtor {
+    /// Rust factory consumed once, returning an owned child handle as [`AnyTween`].
     RustFn(Box<dyn FnOnce() -> AnyTween>),
+    /// Zero-argument Godot factory returning a Spire tween's `Gd` wrapper.
+    /// Invalid callables, nil/non-tween results, and rejected children are skipped
+    /// with diagnostics. The callable is released after the construction attempt.
     Callable(Callable),
+    /// Consumed-factory sentinel used internally during construction.
     Empty,
 }
 
-/// One slot inside a [`Sequence`] block: a child tween, a one-shot callable, or an
-/// interval (delay).
+/// One slot inside a [`Sequence`] block: a child tween, lazy constructor, callback,
+/// or interval (delay).
 pub enum BlockItem {
     Tween(AnyTween),
+    /// Replaced by a child tween when this block is first processed or force-completed.
     Ctor(TweenCtor),
-    RustFn { f: Box<dyn FnMut()>, invoked: bool },
-    Callable { callable: Callable, invoked: bool },
-    Interval { interval_time: f64, elapsed_time: f64 },
+    /// Retained Rust callback invoked once per loop, unlike a consumed constructor.
+    RustFn {
+        f: Box<dyn FnMut()>,
+        invoked: bool,
+    },
+    Callable {
+        callable: Callable,
+        invoked:  bool,
+    },
+    Interval {
+        interval_time: f64,
+        elapsed_time:  f64,
+    },
 }
 
 /// One slot inserted into a [`Sequence`] at an absolute time offset, running
 /// independently of the block queue.
 pub enum InsertItem {
+    /// Constructed on first reaching the insertion offset, or immediately during
+    /// forced completion. Pending constructors keep the sequence from finishing early.
     Ctor(TweenCtor),
     Tween(AnyTween),
-    RustFn { f: Box<dyn FnMut()>, invoked: bool },
-    Callable { callable: Callable, invoked: bool },
+    /// Retained Rust callback invoked at its offset once per loop.
+    RustFn {
+        f: Box<dyn FnMut()>,
+        invoked: bool,
+    },
+    Callable {
+        callable: Callable,
+        invoked:  bool,
+    },
 }
 
 impl From<AnyTween> for InsertItem {
@@ -153,7 +206,7 @@ impl SpireTweener for SpireTween<Sequence> {
     #[inline]
     fn stop(&mut self) { self.state = State::Stopped; }
 
-    fn process(&mut self, delta_time: f64, is_tree_paused: bool) -> AdvanceTimeResult {
+    fn process_internal(&mut self, delta_time: f64, is_tree_paused: bool) -> AdvanceTimeResult {
         let Some(actual_step) = self.handle_time_step(delta_time) else { return AdvanceTimeResult::Playing };
 
         let mut shared_excess_inserts = actual_step;
@@ -175,7 +228,8 @@ impl SpireTweener for SpireTween<Sequence> {
         let shared_excess = f64::min(shared_excess_queue, shared_excess_inserts);
 
         if let Some(excess_time) = self.handle_loop_finished(shared_excess) {
-            AdvanceTimeResult::Completed { excess_time }
+            let unscaled_excess_time = unscale_time(excess_time, self.speed_scale);
+            AdvanceTimeResult::Completed { unscaled_excess_time }
         } else {
             // If we reached here, this loop finished, all inner tweens are done,
             // so restart them before going to the next loop.
@@ -437,22 +491,39 @@ fn process_tween(tween: &mut AnyTween, step: f64, shared_excess: &mut f64, is_tr
     match tween.get_state() {
         State::Playing => {}
         State::Paused => tween.play(),
-        State::Stopped => return true,
+        State::Stopped => {}
     }
 
-    match tween.process(step, is_tree_paused) {
-        | AdvanceTimeResult::Playing | AdvanceTimeResult::Paused => {
-            *shared_excess = f64::min(*shared_excess, 0.);
+    match tween.custom_step(step, is_tree_paused) {
+        TweenStepResult::Stepped(result) => {
+            match result {
+                | AdvanceTimeResult::Playing | AdvanceTimeResult::Paused => {
+                    *shared_excess = f64::min(*shared_excess, 0.);
+                    true
+                }
+                AdvanceTimeResult::Completed { unscaled_excess_time } => {
+                    *shared_excess = f64::min(*shared_excess, unscaled_excess_time);
+                    true
+                }
+                AdvanceTimeResult::ShouldDespawn => {
+                    // Don't mess with shared_excess, let the sequence keep going.
+                    false
+                }
+            }
+        }
+        TweenStepResult::AlreadyPaused => {
+            *shared_excess = f64::min(*shared_excess, 0.0);
             true
         }
-        AdvanceTimeResult::Completed { excess_time } => {
-            *shared_excess = f64::min(*shared_excess, excess_time);
+        TweenStepResult::AlreadyStopped => true,
+        TweenStepResult::DidNotStepDueToBounds => {
+            if !tween.is_stopped() {
+                *shared_excess = f64::min(*shared_excess, 0.0);
+            }
+
             true
         }
-        AdvanceTimeResult::ShouldDespawn => {
-            // Don't mess with shared_excess, let the sequence keep going.
-            false
-        }
+        TweenStepResult::NoLongerValid => false,
     }
 }
 
@@ -490,7 +561,8 @@ impl SpireTween<Sequence> {
     /// the child's easing is currently [`Ease::Default`].
     ///
     /// This takes priority over the global default set via `SpireGlobalSettings::set_default_ease`.
-    /// Only affects tweens added *after* this call. Eligible child types: tweens whose `T` is
+    /// Only affects tweens added *after* this call, including lazy children constructed
+    /// after it (even if the factory was scheduled earlier). Eligible child types: tweens whose `T` is
     /// [`LerpPropertyData<U>`], [`LerpMethodData<U>`], or [`Sequence`].
     pub fn set_default_ease(&mut self, ease: Ease) { self.t.default_ease = Some(ease); }
 
@@ -539,18 +611,40 @@ impl SpireTween<Sequence> {
         self.append_item(item);
     }
 
-    /// Same as [`append_call`], but accepts any Rust closure.
+    /// Same as [`append_call`](Self::append_call), but accepts a Rust closure.
+    /// The closure is retained and invoked once per loop, unlike a one-time child
+    /// constructor. It runs synchronously on the main thread; do not mutate this
+    /// sequence from inside it.
     pub fn append_fn(&mut self, f: impl FnMut() + 'static) {
         let f = Box::new(f);
         let item = BlockItem::RustFn { f, invoked: false };
         self.append_item(item);
     }
 
+    /// Schedules a one-time Rust child constructor in a new block.
+    ///
+    /// `f` runs when preceding blocks complete and this block is first processed.
+    /// Return an [`AnyTween`], e.g. `TweenPtr::new(builder).into()`; an already
+    /// registered handle is also accepted and unregistered on adoption. The child
+    /// receives the remaining step that activated the block and determines its
+    /// duration as if added with [`append_ptr`](Self::append_ptr).
+    ///
+    /// Loops and replay reuse the constructed child. Forced completion invokes
+    /// pending constructors immediately. Invalid hierarchy additions are rejected
+    /// and skipped. See [`Sequence`]'s lazy-construction rules for ownership, ease,
+    /// and synchronous-callback restrictions.
     pub fn append_ctor(&mut self, f: impl FnOnce() -> AnyTween + 'static) {
         let item = BlockItem::Ctor(TweenCtor::RustFn(Box::new(f)));
         self.append_item(item);
     }
 
+    /// Godot-Callable counterpart of [`append_ctor`](Self::append_ctor).
+    ///
+    /// `callable` must take no arguments and return a Spire tween wrapper, including
+    /// a [`SpireSequence`]. It is called at most once. Invalid callables, nil or
+    /// non-tween results, and invalid hierarchy additions log diagnostics and remove
+    /// the slot. These failures do not block following items. Ordinary
+    /// [`append_call`](Self::append_call) callbacks discard their return values.
     pub fn append_ctor_callable(&mut self, callable: Callable) {
         let item = BlockItem::Ctor(TweenCtor::Callable(callable));
         self.append_item(item);
@@ -634,7 +728,8 @@ impl SpireTween<Sequence> {
         self.join_item(item);
     }
 
-    /// Same as [`join_call`], but accepts any Rust closure.
+    /// Same as [`join_call`](Self::join_call), but accepts a Rust closure. Invoked
+    /// once per loop on the main thread; do not mutate this sequence from inside it.
     pub fn join_fn(&mut self, f: impl FnMut() + 'static) {
         let f = Box::new(f);
         let item = BlockItem::RustFn { f, invoked: false };
@@ -653,11 +748,21 @@ impl SpireTween<Sequence> {
         self.join_item(item);
     }
 
+    /// Godot-Callable counterpart of [`join_ctor`](Self::join_ctor).
+    /// Requires a zero-argument Callable returning a Spire tween wrapper; see
+    /// [`append_ctor_callable`](Self::append_ctor_callable) for failure behavior.
     pub fn join_ctor_callable(&mut self, callable: Callable) {
         let item = BlockItem::Ctor(TweenCtor::Callable(callable));
         self.join_item(item);
     }
 
+    /// Schedules a one-time Rust child constructor in the last block, alongside
+    /// that block's existing items. If the sequence is empty, creates the first block.
+    ///
+    /// The constructor runs when this block is first processed and receives the
+    /// same step as its parallel siblings. The block waits for the constructed
+    /// child. One-time invocation, replay, forced completion, adoption, and callback
+    /// restrictions are the same as [`append_ctor`](Self::append_ctor).
     pub fn join_ctor(&mut self, f: impl FnOnce() -> AnyTween + 'static) {
         let item = BlockItem::Ctor(TweenCtor::RustFn(Box::new(f)));
         self.join_item(item);
@@ -706,18 +811,31 @@ impl SpireTween<Sequence> {
         self.insert_item(time, item);
     }
 
-    /// Same as [`insert_call`], but accepts any Rust closure.
+    /// Same as [`insert_call`](Self::insert_call), but accepts a Rust closure.
+    /// Invoked once per loop on the main thread; do not mutate this sequence from
+    /// inside it.
     pub fn insert_fn(&mut self, time: f64, f: impl FnMut() + 'static) {
         let f = Box::new(f);
         let item = InsertItem::RustFn { f, invoked: false };
         self.insert_item(time, item);
     }
 
+    /// Godot-Callable counterpart of [`insert_ctor`](Self::insert_ctor).
+    /// Requires a zero-argument Callable returning a Spire tween wrapper; see
+    /// [`append_ctor_callable`](Self::append_ctor_callable) for failure behavior.
     pub fn insert_ctor_callable(&mut self, time: f64, callable: Callable) {
         let item = InsertItem::Ctor(TweenCtor::Callable(callable));
         self.insert_item(time, item);
     }
 
+    /// Schedules a one-time Rust child constructor at `time` seconds into a loop,
+    /// independently of the block queue. The sequence's delay is added to this offset.
+    ///
+    /// The constructor is not invoked before the offset, and its pending slot keeps
+    /// the parent playing. Its first update receives only the part of the step at
+    /// or after the offset. The parent also waits for the constructed child to finish.
+    /// Loops/replay reuse that child at the same offset; forced completion constructs
+    /// it immediately. Other rules match [`append_ctor`](Self::append_ctor).
     pub fn insert_ctor(&mut self, time: f64, f: impl FnOnce() -> AnyTween + 'static) {
         let item = InsertItem::Ctor(TweenCtor::RustFn(Box::new(f)));
         self.insert_item(time, item);
@@ -726,7 +844,7 @@ impl SpireTween<Sequence> {
     fn insert_item(&mut self, time: f64, item: InsertItem) { self.t.inserts.push((time, item)); }
 
     /// Iterator over child tweens in the immediate queue and inserts (does not descend
-    /// into nested sequences). Skips `BlockItem::Call` and `BlockItem::Interval`.
+    /// into nested sequences). Skips callbacks, intervals, and pending constructors.
     #[doc(hidden)]
     pub fn iter_inner_tweens_non_recursive(&self) -> impl Iterator<Item = AnyTween> {
         self.t

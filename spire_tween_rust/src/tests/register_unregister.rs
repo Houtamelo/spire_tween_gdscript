@@ -80,7 +80,7 @@ impl RegisterUnregisterTests {
                 let curr_time = godot::classes::Time::singleton().get_ticks_msec();
                 let delta = (curr_time - time) as f64 / 1000.0;
                 time = curr_time;
-                let _ = handle.process(delta, true);
+                let _ = handle.custom_step(delta, true);
             }
 
             assert!(handle.is_stopped());

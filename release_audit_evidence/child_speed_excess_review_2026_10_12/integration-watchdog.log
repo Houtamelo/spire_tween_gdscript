@@ -1,0 +1,22 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards strict)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+EXCESS_START test_excess_uses_parent_time_for_all_tween_types
+EXCESS_PASS test_excess_uses_parent_time_for_all_tween_types
+EXCESS_START test_join_excess_uses_latest_finisher_in_parent_time
+EXCESS_PASS test_join_excess_uses_latest_finisher_in_parent_time
+EXCESS_START test_inserted_child_excess_crosses_sequence_boundaries
+EXCESS_PASS test_inserted_child_excess_crosses_sequence_boundaries
+EXCESS_START test_nested_sequences_unscale_at_each_level
+EXCESS_PASS test_nested_sequences_unscale_at_each_level
+EXCESS_START test_scaled_excess_accounts_for_parent_and_child_delays
+EXCESS_PASS test_scaled_excess_accounts_for_parent_and_child_delays
+EXCESS_START test_only_final_loop_excess_is_unscaled
+EXCESS_PASS test_only_final_loop_excess_is_unscaled
+EXCESS_START test_near_zero_speed_suppresses_excess_with_strict_cutoff
+EXCESS_PASS test_near_zero_speed_suppresses_excess_with_strict_cutoff
+EXCESS_START test_zero_speed_blocks_successor
+ERROR: Sequence speed tests timed out
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] <anonymous lambda> (res://examples/tests/sequence_speed_runner.gd:12)

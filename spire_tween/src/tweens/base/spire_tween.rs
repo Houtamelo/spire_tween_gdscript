@@ -231,8 +231,8 @@ impl<T: ITweenable> SpireTween<T> {
     /// when stepped manually.
     ///
     /// Default is [`ProcessMode::Idle`]. [`ProcessMode::Manual`] disables automatic
-    /// processing entirely; advance the tween via the `process` method on the
-    /// [`SpireTweener`] trait, or via [`AnyTween::process`] if you've type-erased it.
+    /// processing entirely; advance the tween with [`TweenPtr::custom_step`], or
+    /// [`AnyTween::custom_step`] if you've type-erased it.
     ///
     /// **Inside sequences:** the [`ProcessMode`] of child tweens is ignored — only the
     /// root sequence's process mode matters.
@@ -423,43 +423,13 @@ impl<T: ITweenable> SpireTween<T> {
 }
 
 #[derive(Debug)]
-pub(crate) enum ObjectValidityResult {
+pub(crate) enum NodesValidityResult {
     CanProcess,
     DontProcess,
-    SomeObjectsDead,
+    SomeNodesDead,
 }
 
 impl<T: ITweenable> SpireTween<T> {
-    pub(crate) fn handle_bound_nodes_validity(&mut self, is_tree_paused: bool) -> ObjectValidityResult
-    where Self: SpireTweener {
-        use BoundInstancesState::*;
-        use PauseMode::*;
-
-        let bound_objects_status = eval_bound_objects_status(self.bound_nodes.iter());
-        match (self.pause_mode, bound_objects_status) {
-            (Bound, AllAliveOrInsideTree) => {
-                if self.bound_nodes.iter().any(|node| !node.can_process()) {
-                    return ObjectValidityResult::DontProcess;
-                }
-            }
-            (Bound, SomeOutsideTree) => {
-                return ObjectValidityResult::DontProcess;
-            }
-            (Process, AllAliveOrInsideTree | SomeOutsideTree) => {}
-            (_, SomeDead) => {
-                self.stop();
-                return ObjectValidityResult::SomeObjectsDead;
-            }
-            (Stop, _) => {
-                if is_tree_paused {
-                    return ObjectValidityResult::DontProcess;
-                }
-            }
-        }
-
-        ObjectValidityResult::CanProcess
-    }
-
     #[inline]
     pub(crate) fn reset_counters(&mut self) {
         self.total_elapsed_time = 0.;
@@ -467,40 +437,40 @@ impl<T: ITweenable> SpireTween<T> {
         self.loop_counter = 0;
     }
 
-    pub(crate) fn check_owner_validity_and_pause_mode(&self, owner: &ObjectOrNode) -> ObjectValidityResult {
+    pub(crate) fn check_owner_validity_and_pause_mode(&self, owner: &ObjectOrNode) -> NodesValidityResult {
         match owner {
             ObjectOrNode::Object(obj) => {
                 let id = obj.instance_id_unchecked().to_i64();
                 if !is_instance_id_valid(id) {
-                    return ObjectValidityResult::SomeObjectsDead;
+                    return NodesValidityResult::SomeNodesDead;
                 }
             }
             ObjectOrNode::Node(node) => {
                 if !is_instance_id_valid(node.instance_id_unchecked().to_i64()) {
-                    return ObjectValidityResult::SomeObjectsDead;
+                    return NodesValidityResult::SomeNodesDead;
                 }
                 match TM.node_get_status_fresh(node.clone()) {
                     NodeStatus::InsideTree => {
                         if let PauseMode::Bound = self.pause_mode
                             && !node.can_process()
                         {
-                            return ObjectValidityResult::DontProcess;
+                            return NodesValidityResult::DontProcess;
                         }
                     }
                     // When using get_status_fresh this is guaranteed to be OutsideTree + NOT dead.
                     NodeStatus::OutsideTreeMaybeDead => {
                         if let PauseMode::Bound = self.pause_mode {
-                            return ObjectValidityResult::DontProcess;
+                            return NodesValidityResult::DontProcess;
                         }
                     }
                     NodeStatus::Dead => {
-                        return ObjectValidityResult::SomeObjectsDead;
+                        return NodesValidityResult::SomeNodesDead;
                     }
                 }
             }
         }
 
-        ObjectValidityResult::CanProcess
+        NodesValidityResult::CanProcess
     }
 
     pub(crate) fn handle_time_step(&mut self, delta_time: f64) -> Option<f64> {
@@ -582,30 +552,147 @@ impl<T: ITweenable> InnerTypeName for SpireTween<T> {
     fn inner_type_name(&self) -> &'static str { type_name::<T>() }
 }
 
-enum BoundInstancesState {
-    AllAliveOrInsideTree,
-    SomeOutsideTree,
-    SomeDead,
+/// Outcome of the canonical [`TweenPtr::custom_step`] processing path.
+///
+/// Explicit bound-node lifetime checks run even for paused or stopped tweens.
+/// A dead binding takes priority over playback state; temporary processing
+/// restrictions preserve the paused/stopped result.
+///
+/// This reports what happened, not whether a particular owner should retain its
+/// pointer. The manager applies its external-owner policy; sequences keep valid
+/// completed children for loops and replay, and remove invalid children.
+#[must_use]
+pub enum TweenStepResult {
+    /// The tween was playing and its explicit bindings allowed processing.
+    /// Type-specific owner/callable checks and time advancement report their
+    /// outcome through [`AdvanceTimeResult`].
+    Stepped(AdvanceTimeResult),
+    /// The tween was paused. No time advanced, even if its live bindings could
+    /// not process. Call [`SpireTweener::play`] before stepping to resume it.
+    AlreadyPaused,
+    /// The tween was stopped, including after completion. No time advanced,
+    /// even if its live bindings could not process. A sequence may retain this
+    /// child for replay without blocking its following items.
+    AlreadyStopped,
+    /// A playing tween's live bindings or [`PauseMode::Stop`] prevented this
+    /// update. No time advanced and its playback state remains playing.
+    DidNotStepDueToBounds,
+    /// An explicit bound node was freed. The tween was stopped without emitting
+    /// completion events; its owning processor should remove it.
+    NoLongerValid,
 }
 
-#[inline]
-fn eval_bound_objects_status<'a>(bound_nodes: impl Iterator<Item = &'a Gd<Node>> + 'a) -> BoundInstancesState {
-    let mut any_outside = false;
-
-    for node in bound_nodes {
-        // Official gdext panics on clone of freed instances, check ID first.
-        if !is_instance_id_valid(node.instance_id_unchecked().to_i64()) {
-            return BoundInstancesState::SomeDead;
-        }
-
-        match TM.node_get_status_fresh(node.clone()) {
-            NodeStatus::InsideTree => {}
-            NodeStatus::OutsideTreeMaybeDead => {
-                any_outside = true;
+impl<T> TweenPtr<T>
+where T: ITweenable
+{
+    /// Advances a playing tween through the same checked path used by the
+    /// manager and sequences, returning a [`TweenStepResult`].
+    ///
+    /// Explicit bound-node lifetime checks run before playback-state checks,
+    /// including for paused/stopped tweens. A live paused or stopped tween is
+    /// not resumed automatically; call [`SpireTweener::play`] first. For a
+    /// playing tween, bindings and pause mode must permit processing before
+    /// [`SpireTweener::process_internal`] performs type-specific checks and
+    /// advances its animation.
+    ///
+    /// `delta_time` is the caller's chosen time step in seconds. The tween applies
+    /// its `speed_scale`; completed excess is reported in the input step's units.
+    /// `ignore_time_scale` does not choose a clock here: the manager normally
+    /// supplies either its scaled or real-time delta, and manual callers choose
+    /// their own. Child sequences pass their remaining animation time onward.
+    ///
+    /// `is_tree_paused` normally reflects [`SceneTree::is_paused`]. Passing
+    /// `false` overrides [`PauseMode::Stop`] for this step, but does not bypass
+    /// bound nodes' [`Node::can_process`] checks under [`PauseMode::Bound`].
+    /// [`ProcessMode`] does not prevent an explicit step; use
+    /// [`ProcessMode::Manual`] to disable automatic manager updates.
+    ///
+    /// This result does not apply the manager's reference-retention policy.
+    /// A manual processor decides when to unregister or release its handle;
+    /// sequences retain valid completed children for replay. Call only on the
+    /// main thread, without overlapping mutable access or re-entering a tween
+    /// while it is processing.
+    ///
+    /// ```no_run
+    /// use spire_tween::prelude::*;
+    ///
+    /// let mut sequence = SpireTween::<Sequence>::new();
+    /// sequence.append_interval(1.0);
+    /// let tween = TweenPtr::new(sequence);
+    /// let result = tween.custom_step(0.25, false);
+    /// assert!(matches!(result, TweenStepResult::Stepped(AdvanceTimeResult::Playing)));
+    /// ```
+    pub fn custom_step(&self, delta_time: f64, is_tree_paused: bool) -> TweenStepResult
+    where SpireTween<T>: SpireTweener {
+        match self.check_bound_nodes_validity(is_tree_paused) {
+            NodesValidityResult::CanProcess => match self.get_state() {
+                State::Paused => TweenStepResult::AlreadyPaused,
+                State::Stopped => TweenStepResult::AlreadyStopped,
+                State::Playing => {
+                    let process_result = self.to_mut().process_internal(delta_time, is_tree_paused);
+                    TweenStepResult::Stepped(process_result)
+                }
+            },
+            NodesValidityResult::DontProcess => match self.get_state() {
+                State::Paused => TweenStepResult::AlreadyPaused,
+                State::Stopped => TweenStepResult::AlreadyStopped,
+                State::Playing => TweenStepResult::DidNotStepDueToBounds,
+            },
+            NodesValidityResult::SomeNodesDead => {
+                self.to_mut().stop();
+                TweenStepResult::NoLongerValid
             }
-            NodeStatus::Dead => return BoundInstancesState::SomeDead,
         }
     }
 
-    if any_outside { BoundInstancesState::SomeOutsideTree } else { BoundInstancesState::AllAliveOrInsideTree }
+    fn check_bound_nodes_validity(&self, is_tree_paused: bool) -> NodesValidityResult {
+        enum BoundNodesState {
+            AllAliveOrInsideTree,
+            SomeOutsideTree,
+            SomeDead,
+        }
+
+        match (self.get_pause_mode(), eval_bound_nodes_status(self.get_bound_nodes())) {
+            (PauseMode::Bound, BoundNodesState::AllAliveOrInsideTree) => {
+                if self.get_bound_nodes().iter().any(|node| !node.can_process()) {
+                    return NodesValidityResult::DontProcess;
+                }
+            }
+            (PauseMode::Bound, BoundNodesState::SomeOutsideTree) => {
+                return NodesValidityResult::DontProcess;
+            }
+            (PauseMode::Process, BoundNodesState::AllAliveOrInsideTree | BoundNodesState::SomeOutsideTree) => {}
+            (_, BoundNodesState::SomeDead) => {
+                return NodesValidityResult::SomeNodesDead;
+            }
+            (PauseMode::Stop, _) => {
+                if is_tree_paused {
+                    return NodesValidityResult::DontProcess;
+                }
+            }
+        }
+
+        return NodesValidityResult::CanProcess;
+
+        fn eval_bound_nodes_status(bound_nodes: &SmallSet<[Gd<Node>; 1]>) -> BoundNodesState {
+            let mut any_outside = false;
+
+            for node in bound_nodes {
+                // Official gdext panics on clone of freed instances, check ID first.
+                if !is_instance_id_valid(node.instance_id_unchecked().to_i64()) {
+                    return BoundNodesState::SomeDead;
+                }
+
+                match TM.node_get_status_fresh(node.clone()) {
+                    NodeStatus::InsideTree => {}
+                    NodeStatus::OutsideTreeMaybeDead => {
+                        any_outside = true;
+                    }
+                    NodeStatus::Dead => return BoundNodesState::SomeDead,
+                }
+            }
+
+            if any_outside { BoundNodesState::SomeOutsideTree } else { BoundNodesState::AllAliveOrInsideTree }
+        }
+    }
 }

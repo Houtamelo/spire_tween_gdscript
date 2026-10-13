@@ -1,0 +1,95 @@
+{
+  "resolved_gaps": [
+    "caller-time excess contract documentation, including strict near-zero cutoff",
+    "121 regression parameter cases in nine regular integration test methods"
+  ],
+  "source_sha256": {
+    "spire_tween/src/tweens/traits.rs": "10e0091df01850ab80c1e7b85e06254bbea05415ac05c701069f335d2256837b",
+    "spire_tween_gdscript/examples/tests/sequence_speed.gd": "35384663bb9b7955217256f1e96ddb90aafc5bb5a62efeb09d89f359c3ae37b1",
+    "spire_tween_gdscript/examples/tests/sequence_speed.tscn": "eb04732bb5802bf83dd5151cfbaf87a6d5f1c5623dc0a2eea48a11443e88bf2e",
+    "spire_tween_gdscript/examples/tests/sequence_speed_runner.gd": "d2e81fa76a67c3c641b17673e01cacac9e7ae94708690bfc51bbb7be290fe6dc",
+    "spire_tween_gdscript/examples/tests/runner_cli_checks.gd": "21a776a45410e210ad78eac18f392e583ba6867af77392c044d2fb51867a0ea9",
+    "spire_tween_gdscript/examples/tests/test_runner.gd": "1a6ccdb08e332c8c38f67e8d5f4dec4b08a77ce55ee4bb0f2ad91ba07f2938c4",
+    "README.md": "597b4127df7411535bb92b29b3a5700f4aa2788781bf7d2b08cb6c22bbac589b"
+  },
+  "regular_suite": "res://examples/tests/sequence_speed.tscn",
+  "focused_runner": "res://examples/tests/sequence_speed_runner.gd",
+  "run": "godot --headless --path spire_tween_gdscript --script res://examples/tests/sequence_speed_runner.gd",
+  "installed_library_checks": {
+    "libraries": {
+      "debug": {
+        "path": "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_gdscript/addons/spire_tween/lib/x86_64-unknown-linux-gnu/debug/libspire_tween.so",
+        "sha256": "119cc5f605e198aa1196d285c00bc1f597c90785067fca7ca647dc9fdb8583b0",
+        "backup": "/tmp/spire-excess-suite-20261012-gg_zcstp/before-installed-debug.so"
+      },
+      "release": {
+        "path": "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_gdscript/addons/spire_tween/lib/x86_64-unknown-linux-gnu/release/libspire_tween.so",
+        "sha256": "a25b2232f93e84ee426d2f2bfe0c9713e834b1dd6ea81bbd0eb248910d1d50ae",
+        "backup": "/tmp/spire-excess-suite-20261012-gg_zcstp/before-installed-release.so"
+      }
+    },
+    "checks": [
+      {
+        "check": "installed-debug",
+        "command": [
+          "/home/houtamelo/bin/godot",
+          "--headless",
+          "--path",
+          "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_gdscript",
+          "--fixed-fps",
+          "120",
+          "--script",
+          "res://examples/tests/sequence_speed_runner.gd"
+        ],
+        "exit_code": 0,
+        "script_errors": 0,
+        "native_panics": 0,
+        "markers": [
+          "EXCESS_RESULT total=9 cases=121 failed=0"
+        ]
+      },
+      {
+        "check": "installed-release",
+        "command": [
+          "/home/houtamelo/bin/godot",
+          "--headless",
+          "--path",
+          "/tmp/spire-excess-suite-20261012-gg_zcstp/project",
+          "--fixed-fps",
+          "120",
+          "--script",
+          "res://examples/tests/sequence_speed_runner.gd"
+        ],
+        "exit_code": 0,
+        "script_errors": 0,
+        "native_panics": 0,
+        "markers": [
+          "EXCESS_RESULT total=9 cases=121 failed=0"
+        ]
+      },
+      {
+        "check": "installed-catalog-cli",
+        "command": [
+          "/home/houtamelo/bin/godot",
+          "--headless",
+          "--path",
+          "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_gdscript",
+          "--fixed-fps",
+          "120",
+          "--script",
+          "res://examples/tests/runner_cli_checks.gd",
+          "--",
+          "--all-tests",
+          "--no-cache"
+        ],
+        "exit_code": 0,
+        "script_errors": 0,
+        "native_panics": 0,
+        "markers": [
+          "RUNNER_CLI_RESULT total=13 failed=0"
+        ]
+      }
+    ]
+  },
+  "full_suite_pass_claim": false
+}

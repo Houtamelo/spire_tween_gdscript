@@ -1,0 +1,14 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards strict)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+---------------------------------
+Test Started: test_deliberate_mismatch
+SCRIPT ERROR: Assertion failed: 1 != 2
+          at: assert_eq (res://examples/tests/test_base.gd:68)
+          GDScript backtrace (most recent call first):
+              [0] assert_eq (res://examples/tests/test_base.gd:68)
+              [1] test_deliberate_mismatch (res://assert_probe_case.gd:3)
+              [2] run_test (res://examples/tests/test_base.gd:29)
+              [3] run (res://assert_probe_runner.gd:6)
+Test Finished: test_deliberate_mismatch
+AUDIT_ASSERT_HELPER returned_success=true

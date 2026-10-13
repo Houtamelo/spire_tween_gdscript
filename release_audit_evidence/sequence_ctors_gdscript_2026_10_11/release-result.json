@@ -1,0 +1,18 @@
+{
+  "cmd": [
+    "godot",
+    "--headless",
+    "--max-fps",
+    "120",
+    "--path",
+    "/tmp/spire-roundtrip-20261011-ge7mv8x_/constructor-tests",
+    "--script",
+    "res://examples/tests/sequence_ctors_runner.gd"
+  ],
+  "exit": 0,
+  "library_sha256": "d13ff23b458f21fb3eb885807339cc04539a58f231b5f20d05815900b9b1e396",
+  "passes": 18,
+  "fails": 0,
+  "script_errors": 0,
+  "panics": 0
+}

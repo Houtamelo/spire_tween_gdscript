@@ -263,9 +263,11 @@ That's it — three lines. Compared to the README (~600 lines) this is severely 
 
 ---
 
-## 8. Trait `SpireTweener` and `AdvanceTimeResult` (`tweens/traits.rs`)
+## 8. Checked stepping, `SpireTweener`, and processing results
 
-✅ Both have docs. `SpireTweener::play/pause/stop/force_complete` each have a one-line semantic note. `AdvanceTimeResult::Completed::excess_time` and `ShouldDespawn` have explanatory docs. Solid.
+**2026-10-13 update:** `TweenPtr::custom_step(delta_time, is_tree_paused)` is the documented canonical path shared by the manager and sequences. Its exported `TweenStepResult` distinguishes stepping, existing paused/stopped states, temporary binding restrictions, and dead bindings. Every result variant is documented, including the priority of dead bindings and the separation between step outcome and container retention.
+
+`SpireTweener::process_internal` is hidden implementation plumbing, not the manual entry point. The exported `AdvanceTimeResult` documents all variants and `Completed::unscaled_excess_time`, including the deliberate near-zero-speed policy. Rustdoc includes a compiled manual-step example. The GDScript wrapper documents its separate "wants to live" Boolean and manual pause/clock behavior; both READMEs cover these APIs.
 
 `GdFromNativeTween` trait + free fn `gd_from_native_tween`: ◐ trait has 1-line doc; the free fn is undocumented. The free fn is what most Rust callers will actually use to build a Gd handle from an
 RcPtr — could use a usage note.

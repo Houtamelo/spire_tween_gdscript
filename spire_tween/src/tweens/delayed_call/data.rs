@@ -30,7 +30,7 @@ impl SpireTweener for SpireTween<Callable> {
         }
     }
 
-    fn process(&mut self, delta_time: f64, _is_tree_paused: bool) -> AdvanceTimeResult {
+    fn process_internal(&mut self, delta_time: f64, _is_tree_paused: bool) -> AdvanceTimeResult {
         if !self.check_callable_validity() {
             return AdvanceTimeResult::ShouldDespawn;
         }
@@ -39,7 +39,8 @@ impl SpireTweener for SpireTween<Callable> {
             self.t.call(&[]);
 
             if let Some(excess_time) = self.handle_loop_finished(step) {
-                AdvanceTimeResult::Completed { excess_time }
+                let unscaled_excess_time = unscale_time(excess_time, self.speed_scale);
+                AdvanceTimeResult::Completed { unscaled_excess_time }
             } else {
                 AdvanceTimeResult::Playing
             }

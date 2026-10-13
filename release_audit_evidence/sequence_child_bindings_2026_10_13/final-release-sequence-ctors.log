@@ -1,0 +1,190 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards balanced)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+CTOR_START test_bridge_signatures_and_chaining
+CTOR_PASS test_bridge_signatures_and_chaining
+CTOR_START test_append_is_lazy_and_reads_activation_state
+CTOR_PASS test_append_is_lazy_and_reads_activation_state
+CTOR_START test_join_constructs_in_parallel_and_waits
+CTOR_PASS test_join_constructs_in_parallel_and_waits
+CTOR_START test_join_on_empty_sequence
+CTOR_PASS test_join_on_empty_sequence
+CTOR_START test_insert_waits_for_offset_plus_delay
+CTOR_PASS test_insert_waits_for_offset_plus_delay
+CTOR_START test_insert_uses_per_update_delta_and_outlives_queue
+CTOR_PASS test_insert_uses_per_update_delta_and_outlives_queue
+CTOR_START test_factories_run_once_across_loops_and_replay
+CTOR_PASS test_factories_run_once_across_loops_and_replay
+CTOR_START test_force_complete_constructs_all_pending_children
+CTOR_PASS test_force_complete_constructs_all_pending_children
+CTOR_START test_invalid_results_are_skipped_for_all_operations
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:538)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_results_are_skipped_for_all_operations (res://examples/tests/sequence_ctors.gd:180)
+       [1] run_tests (res://examples/tests/sequence_ctors_runner.gd:25)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: INT }), value: Some(17) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:538)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_results_are_skipped_for_all_operations (res://examples/tests/sequence_ctors.gd:180)
+       [1] run_tests (res://examples/tests/sequence_ctors_runner.gd:25)
+ERROR: Expected Tween, got: RefCounted
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:533)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_results_are_skipped_for_all_operations (res://examples/tests/sequence_ctors.gd:180)
+       [1] run_tests (res://examples/tests/sequence_ctors_runner.gd:25)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:538)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_results_are_skipped_for_all_operations (res://examples/tests/sequence_ctors.gd:180)
+       [1] run_tests (res://examples/tests/sequence_ctors_runner.gd:25)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: INT }), value: Some(17) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:538)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_results_are_skipped_for_all_operations (res://examples/tests/sequence_ctors.gd:180)
+       [1] run_tests (res://examples/tests/sequence_ctors_runner.gd:25)
+ERROR: Expected Tween, got: RefCounted
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:533)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_results_are_skipped_for_all_operations (res://examples/tests/sequence_ctors.gd:180)
+       [1] run_tests (res://examples/tests/sequence_ctors_runner.gd:25)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:538)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_results_are_skipped_for_all_operations (res://examples/tests/sequence_ctors.gd:180)
+       [1] run_tests (res://examples/tests/sequence_ctors_runner.gd:25)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: INT }), value: Some(17) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:538)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_results_are_skipped_for_all_operations (res://examples/tests/sequence_ctors.gd:180)
+       [1] run_tests (res://examples/tests/sequence_ctors_runner.gd:25)
+ERROR: Expected Tween, got: RefCounted
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:533)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_results_are_skipped_for_all_operations (res://examples/tests/sequence_ctors.gd:180)
+       [1] run_tests (res://examples/tests/sequence_ctors_runner.gd:25)
+CTOR_PASS test_invalid_results_are_skipped_for_all_operations
+CTOR_START test_invalid_callables_and_freed_factory_targets
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:538)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_callables_and_freed_factory_targets (res://examples/tests/sequence_ctors.gd:195)
+       [1] run_tests (res://examples/tests/sequence_ctors_runner.gd:25)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:538)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_callables_and_freed_factory_targets (res://examples/tests/sequence_ctors.gd:195)
+       [1] run_tests (res://examples/tests/sequence_ctors_runner.gd:25)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:538)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_callables_and_freed_factory_targets (res://examples/tests/sequence_ctors.gd:195)
+       [1] run_tests (res://examples/tests/sequence_ctors_runner.gd:25)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:538)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_callables_and_freed_factory_targets (res://examples/tests/sequence_ctors.gd:195)
+       [1] run_tests (res://examples/tests/sequence_ctors_runner.gd:25)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:538)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_callables_and_freed_factory_targets (res://examples/tests/sequence_ctors.gd:195)
+       [1] run_tests (res://examples/tests/sequence_ctors_runner.gd:25)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:538)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_callables_and_freed_factory_targets (res://examples/tests/sequence_ctors.gd:195)
+       [1] run_tests (res://examples/tests/sequence_ctors_runner.gd:25)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:538)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_callables_and_freed_factory_targets (res://examples/tests/sequence_ctors.gd:195)
+       [1] run_tests (res://examples/tests/sequence_ctors_runner.gd:25)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:538)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_callables_and_freed_factory_targets (res://examples/tests/sequence_ctors.gd:195)
+       [1] run_tests (res://examples/tests/sequence_ctors_runner.gd:25)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:538)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_callables_and_freed_factory_targets (res://examples/tests/sequence_ctors.gd:195)
+       [1] run_tests (res://examples/tests/sequence_ctors_runner.gd:25)
+CTOR_PASS test_invalid_callables_and_freed_factory_targets
+CTOR_START test_forced_invalid_results_do_not_block_valid_factories
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:538)
+   GDScript backtrace (most recent call first):
+       [0] test_forced_invalid_results_do_not_block_valid_factories (res://examples/tests/sequence_ctors.gd:205)
+       [1] run_tests (res://examples/tests/sequence_ctors_runner.gd:25)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:538)
+   GDScript backtrace (most recent call first):
+       [0] test_forced_invalid_results_do_not_block_valid_factories (res://examples/tests/sequence_ctors.gd:205)
+       [1] run_tests (res://examples/tests/sequence_ctors_runner.gd:25)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:538)
+   GDScript backtrace (most recent call first):
+       [0] test_forced_invalid_results_do_not_block_valid_factories (res://examples/tests/sequence_ctors.gd:205)
+       [1] run_tests (res://examples/tests/sequence_ctors_runner.gd:25)
+CTOR_PASS test_forced_invalid_results_do_not_block_valid_factories
+CTOR_START test_duplicate_results_are_rejected
+ERROR: Cannot add the same tween to the sequence more than once.
+   at: spire_tween::tweens::sequence::data::<impl spire_tween::tweens::base::spire_tween::SpireTween<spire_tween::tweens::sequence::data::Sequence>>::is_already_inside (spire_tween/src/tweens/sequence/data.rs:1019)
+   GDScript backtrace (most recent call first):
+       [0] test_duplicate_results_are_rejected (res://examples/tests/sequence_ctors.gd:214)
+       [1] run_tests (res://examples/tests/sequence_ctors_runner.gd:25)
+ERROR: Cannot add the same tween to the sequence more than once.
+   at: spire_tween::tweens::sequence::data::<impl spire_tween::tweens::base::spire_tween::SpireTween<spire_tween::tweens::sequence::data::Sequence>>::is_already_inside (spire_tween/src/tweens/sequence/data.rs:1019)
+   GDScript backtrace (most recent call first):
+       [0] test_duplicate_results_are_rejected (res://examples/tests/sequence_ctors.gd:214)
+       [1] run_tests (res://examples/tests/sequence_ctors_runner.gd:25)
+ERROR: Cannot add the same tween to the sequence more than once.
+   at: spire_tween::tweens::sequence::data::<impl spire_tween::tweens::base::spire_tween::SpireTween<spire_tween::tweens::sequence::data::Sequence>>::is_already_inside (spire_tween/src/tweens/sequence/data.rs:1019)
+   GDScript backtrace (most recent call first):
+       [0] test_duplicate_results_are_rejected (res://examples/tests/sequence_ctors.gd:214)
+       [1] run_tests (res://examples/tests/sequence_ctors_runner.gd:25)
+CTOR_PASS test_duplicate_results_are_rejected
+CTOR_START test_self_and_ancestor_results_are_rejected
+ERROR: Cannot append a sequence tween to itself.
+   at: spire_tween::tweens::sequence::data::<impl spire_tween::tweens::base::spire_tween::SpireTween<spire_tween::tweens::sequence::data::Sequence>>::is_already_inside (spire_tween/src/tweens/sequence/data.rs:1011)
+   GDScript backtrace (most recent call first):
+       [0] test_self_and_ancestor_results_are_rejected (res://examples/tests/sequence_ctors.gd:225)
+       [1] run_tests (res://examples/tests/sequence_ctors_runner.gd:25)
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:1128)
+     GDScript backtrace (most recent call first):
+         [0] test_self_and_ancestor_results_are_rejected (res://examples/tests/sequence_ctors.gd:231)
+         [1] run_tests (res://examples/tests/sequence_ctors_runner.gd:25)
+ERROR: Cannot append a sequence tween to itself.
+   at: spire_tween::tweens::sequence::data::<impl spire_tween::tweens::base::spire_tween::SpireTween<spire_tween::tweens::sequence::data::Sequence>>::is_already_inside (spire_tween/src/tweens/sequence/data.rs:1011)
+   GDScript backtrace (most recent call first):
+       [0] test_self_and_ancestor_results_are_rejected (res://examples/tests/sequence_ctors.gd:225)
+       [1] run_tests (res://examples/tests/sequence_ctors_runner.gd:25)
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:1128)
+     GDScript backtrace (most recent call first):
+         [0] test_self_and_ancestor_results_are_rejected (res://examples/tests/sequence_ctors.gd:231)
+         [1] run_tests (res://examples/tests/sequence_ctors_runner.gd:25)
+ERROR: Cannot append a sequence tween to itself.
+   at: spire_tween::tweens::sequence::data::<impl spire_tween::tweens::base::spire_tween::SpireTween<spire_tween::tweens::sequence::data::Sequence>>::is_already_inside (spire_tween/src/tweens/sequence/data.rs:1011)
+   GDScript backtrace (most recent call first):
+       [0] test_self_and_ancestor_results_are_rejected (res://examples/tests/sequence_ctors.gd:225)
+       [1] run_tests (res://examples/tests/sequence_ctors_runner.gd:25)
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:1128)
+     GDScript backtrace (most recent call first):
+         [0] test_self_and_ancestor_results_are_rejected (res://examples/tests/sequence_ctors.gd:231)
+         [1] run_tests (res://examples/tests/sequence_ctors_runner.gd:25)
+CTOR_PASS test_self_and_ancestor_results_are_rejected
+CTOR_START test_current_default_ease_and_explicit_override
+CTOR_PASS test_current_default_ease_and_explicit_override
+CTOR_START test_constructed_child_preserves_binding_and_cancels
+CTOR_PASS test_constructed_child_preserves_binding_and_cancels
+CTOR_START test_bound_arguments_and_child_finished_signals
+CTOR_PASS test_bound_arguments_and_child_finished_signals
+CTOR_START test_many_callables_remain_callbacks
+CTOR_PASS test_many_callables_remain_callbacks
+CTOR_START test_pending_factory_with_weak_parent_can_be_released
+CTOR_PASS test_pending_factory_with_weak_parent_can_be_released
+CTOR_RESULT total=18 failed=0

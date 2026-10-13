@@ -8,6 +8,9 @@ pub struct WeakTweenPtr<T: ITweenable>(
 );
 
 impl<T: ITweenable> WeakTweenPtr<T> {
+    /// Returns a strong pointer while the native tween is alive, promoting its
+    /// Godot back-reference when required. Returns `None` after the final strong
+    /// native owner is released; it never resurrects an expired tween.
     pub fn upgrade(&self) -> Option<TweenPtr<T>> {
         let native = self.0.upgrade()?;
         let ptr = TweenPtr(native, self.1.upgrade());

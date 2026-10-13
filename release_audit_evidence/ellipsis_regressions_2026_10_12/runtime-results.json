@@ -1,0 +1,115 @@
+[
+  {
+    "check": "focused-debug",
+    "profile": "debug",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-ellipse-20261012-lviobzbg/project",
+      "--fixed-fps",
+      "120",
+      "--script",
+      "res://examples/tests/ellipsis_regressions_runner.gd"
+    ],
+    "exit_code": 0,
+    "script_errors": 0,
+    "native_panics": 0,
+    "error_lines": 0,
+    "library_sha256": "c76a5ac6899e9a5657c07cc9bd7c50f9136687fad69cf656138ad33624e3e88a",
+    "markers": [
+      "ELLIPSE_RESULT total=11 cases=119 failed=0"
+    ]
+  },
+  {
+    "check": "focused-release",
+    "profile": "release",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-ellipse-20261012-lviobzbg/project",
+      "--fixed-fps",
+      "120",
+      "--script",
+      "res://examples/tests/ellipsis_regressions_runner.gd"
+    ],
+    "exit_code": 0,
+    "script_errors": 0,
+    "native_panics": 0,
+    "error_lines": 0,
+    "library_sha256": "78637a55dd78fdfca4cb286a61f705bdafb80dfd0bd764aaa194eb4b8320e59c",
+    "markers": [
+      "ELLIPSE_RESULT total=11 cases=119 failed=0"
+    ]
+  },
+  {
+    "check": "regular-harness",
+    "profile": "release",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-ellipse-20261012-lviobzbg/project",
+      "--fixed-fps",
+      "120",
+      "--script",
+      "res://regular_ellipse.gd"
+    ],
+    "exit_code": 0,
+    "script_errors": 0,
+    "native_panics": 0,
+    "error_lines": 0,
+    "library_sha256": "78637a55dd78fdfca4cb286a61f705bdafb80dfd0bd764aaa194eb4b8320e59c",
+    "markers": [
+      "REGULAR_ELLIPSE_RESULT total=11 failed=0"
+    ]
+  },
+  {
+    "check": "catalog-cli",
+    "profile": "release",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-ellipse-20261012-lviobzbg/project",
+      "--fixed-fps",
+      "120",
+      "--script",
+      "res://examples/tests/runner_cli_checks.gd",
+      "--",
+      "--all-tests",
+      "--no-cache"
+    ],
+    "exit_code": 0,
+    "script_errors": 0,
+    "native_panics": 0,
+    "error_lines": 0,
+    "library_sha256": "78637a55dd78fdfca4cb286a61f705bdafb80dfd0bd764aaa194eb4b8320e59c",
+    "markers": [
+      "RUNNER_CLI_RESULT total=15 failed=0"
+    ]
+  },
+  {
+    "check": "sequence-speed-regression",
+    "profile": "release",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-ellipse-20261012-lviobzbg/project",
+      "--fixed-fps",
+      "120",
+      "--script",
+      "res://examples/tests/sequence_speed_runner.gd"
+    ],
+    "exit_code": 0,
+    "script_errors": 0,
+    "native_panics": 0,
+    "error_lines": 0,
+    "library_sha256": "78637a55dd78fdfca4cb286a61f705bdafb80dfd0bd764aaa194eb4b8320e59c",
+    "markers": [
+      "EXCESS_RESULT total=9 cases=121 failed=0"
+    ]
+  }
+]

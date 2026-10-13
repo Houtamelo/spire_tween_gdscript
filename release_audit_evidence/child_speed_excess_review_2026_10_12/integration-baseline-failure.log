@@ -1,0 +1,562 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards strict)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+EXCESS_START test_excess_uses_parent_time_for_all_tween_types
+ERROR: serial method speed=0.5 parent=0.5: successor elapsed=0.05, expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_excess_uses_parent_time_for_all_tween_types (res://examples/tests/sequence_speed.gd:58)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: serial method speed=0.5 parent=1.0: successor elapsed=0.05, expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_excess_uses_parent_time_for_all_tween_types (res://examples/tests/sequence_speed.gd:58)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: serial method speed=0.5 parent=2.0: successor elapsed=0.05, expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_excess_uses_parent_time_for_all_tween_types (res://examples/tests/sequence_speed.gd:58)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: serial method speed=2.0 parent=0.5: successor elapsed=0.2, expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_excess_uses_parent_time_for_all_tween_types (res://examples/tests/sequence_speed.gd:58)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: serial method speed=2.0 parent=1.0: successor elapsed=0.2, expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_excess_uses_parent_time_for_all_tween_types (res://examples/tests/sequence_speed.gd:58)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: serial method speed=2.0 parent=2.0: successor elapsed=0.2, expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_excess_uses_parent_time_for_all_tween_types (res://examples/tests/sequence_speed.gd:58)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: serial delayed speed=0.5 parent=0.5: successor elapsed=0.05, expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_excess_uses_parent_time_for_all_tween_types (res://examples/tests/sequence_speed.gd:58)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: serial delayed speed=0.5 parent=1.0: successor elapsed=0.05, expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_excess_uses_parent_time_for_all_tween_types (res://examples/tests/sequence_speed.gd:58)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: serial delayed speed=0.5 parent=2.0: successor elapsed=0.05, expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_excess_uses_parent_time_for_all_tween_types (res://examples/tests/sequence_speed.gd:58)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: serial delayed speed=2.0 parent=0.5: successor elapsed=0.2, expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_excess_uses_parent_time_for_all_tween_types (res://examples/tests/sequence_speed.gd:58)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: serial delayed speed=2.0 parent=1.0: successor elapsed=0.2, expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_excess_uses_parent_time_for_all_tween_types (res://examples/tests/sequence_speed.gd:58)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: serial delayed speed=2.0 parent=2.0: successor elapsed=0.2, expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_excess_uses_parent_time_for_all_tween_types (res://examples/tests/sequence_speed.gd:58)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: serial sequence speed=0.5 parent=0.5: successor elapsed=0.05, expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_excess_uses_parent_time_for_all_tween_types (res://examples/tests/sequence_speed.gd:58)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: serial sequence speed=0.5 parent=1.0: successor elapsed=0.05, expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_excess_uses_parent_time_for_all_tween_types (res://examples/tests/sequence_speed.gd:58)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: serial sequence speed=0.5 parent=2.0: successor elapsed=0.05, expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_excess_uses_parent_time_for_all_tween_types (res://examples/tests/sequence_speed.gd:58)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: serial sequence speed=2.0 parent=0.5: successor elapsed=0.2, expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_excess_uses_parent_time_for_all_tween_types (res://examples/tests/sequence_speed.gd:58)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: serial sequence speed=2.0 parent=1.0: successor elapsed=0.2, expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_excess_uses_parent_time_for_all_tween_types (res://examples/tests/sequence_speed.gd:58)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: serial sequence speed=2.0 parent=2.0: successor elapsed=0.2, expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_excess_uses_parent_time_for_all_tween_types (res://examples/tests/sequence_speed.gd:58)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: serial absolute speed=0.5 parent=0.5: successor elapsed=0.05, expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_excess_uses_parent_time_for_all_tween_types (res://examples/tests/sequence_speed.gd:58)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: serial absolute speed=0.5 parent=1.0: successor elapsed=0.05, expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_excess_uses_parent_time_for_all_tween_types (res://examples/tests/sequence_speed.gd:58)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: serial absolute speed=0.5 parent=2.0: successor elapsed=0.05, expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_excess_uses_parent_time_for_all_tween_types (res://examples/tests/sequence_speed.gd:58)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: serial absolute speed=2.0 parent=0.5: successor elapsed=0.2, expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_excess_uses_parent_time_for_all_tween_types (res://examples/tests/sequence_speed.gd:58)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: serial absolute speed=2.0 parent=1.0: successor elapsed=0.2, expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_excess_uses_parent_time_for_all_tween_types (res://examples/tests/sequence_speed.gd:58)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: serial absolute speed=2.0 parent=2.0: successor elapsed=0.2, expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_excess_uses_parent_time_for_all_tween_types (res://examples/tests/sequence_speed.gd:58)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: serial relative speed=0.5 parent=0.5: successor elapsed=0.05, expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_excess_uses_parent_time_for_all_tween_types (res://examples/tests/sequence_speed.gd:58)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: serial relative speed=0.5 parent=1.0: successor elapsed=0.05, expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_excess_uses_parent_time_for_all_tween_types (res://examples/tests/sequence_speed.gd:58)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: serial relative speed=0.5 parent=2.0: successor elapsed=0.05, expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_excess_uses_parent_time_for_all_tween_types (res://examples/tests/sequence_speed.gd:58)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: serial relative speed=2.0 parent=0.5: successor elapsed=0.2, expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_excess_uses_parent_time_for_all_tween_types (res://examples/tests/sequence_speed.gd:58)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: serial relative speed=2.0 parent=1.0: successor elapsed=0.2, expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_excess_uses_parent_time_for_all_tween_types (res://examples/tests/sequence_speed.gd:58)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: serial relative speed=2.0 parent=2.0: successor elapsed=0.2, expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_excess_uses_parent_time_for_all_tween_types (res://examples/tests/sequence_speed.gd:58)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: serial speed_based speed=0.5 parent=0.5: successor elapsed=0.05, expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_excess_uses_parent_time_for_all_tween_types (res://examples/tests/sequence_speed.gd:58)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: serial speed_based speed=0.5 parent=1.0: successor elapsed=0.05, expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_excess_uses_parent_time_for_all_tween_types (res://examples/tests/sequence_speed.gd:58)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: serial speed_based speed=0.5 parent=2.0: successor elapsed=0.05, expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_excess_uses_parent_time_for_all_tween_types (res://examples/tests/sequence_speed.gd:58)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: serial speed_based speed=2.0 parent=0.5: successor elapsed=0.2, expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_excess_uses_parent_time_for_all_tween_types (res://examples/tests/sequence_speed.gd:58)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: serial speed_based speed=2.0 parent=1.0: successor elapsed=0.2, expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_excess_uses_parent_time_for_all_tween_types (res://examples/tests/sequence_speed.gd:58)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: serial speed_based speed=2.0 parent=2.0: successor elapsed=0.2, expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_excess_uses_parent_time_for_all_tween_types (res://examples/tests/sequence_speed.gd:58)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+EXCESS_FAIL test_excess_uses_parent_time_for_all_tween_types
+EXCESS_START test_join_excess_uses_latest_finisher_in_parent_time
+ERROR: join reverse=false: elapsed=0.05
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_join_excess_uses_latest_finisher_in_parent_time (res://examples/tests/sequence_speed.gd:74)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: join reverse=true: elapsed=0.05
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_join_excess_uses_latest_finisher_in_parent_time (res://examples/tests/sequence_speed.gd:74)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+EXCESS_FAIL test_join_excess_uses_latest_finisher_in_parent_time
+EXCESS_START test_inserted_child_excess_crosses_sequence_boundaries
+ERROR: insert speed=2.0: elapsed=0.4
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_inserted_child_excess_crosses_sequence_boundaries (res://examples/tests/sequence_speed.gd:88)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+EXCESS_FAIL test_inserted_child_excess_crosses_sequence_boundaries
+EXCESS_START test_nested_sequences_unscale_at_each_level
+ERROR: nested 0.5/0.5/0.5: elapsed=0.0125
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_nested_sequences_unscale_at_each_level (res://examples/tests/sequence_speed.gd:104)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: nested 0.5/0.5/2.0: elapsed=0.05
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_nested_sequences_unscale_at_each_level (res://examples/tests/sequence_speed.gd:104)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: nested 0.5/2.0/0.5: elapsed=0.05
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_nested_sequences_unscale_at_each_level (res://examples/tests/sequence_speed.gd:104)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: nested 0.5/2.0/2.0: elapsed=0.2
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_nested_sequences_unscale_at_each_level (res://examples/tests/sequence_speed.gd:104)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: nested 2.0/0.5/0.5: elapsed=0.05
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_nested_sequences_unscale_at_each_level (res://examples/tests/sequence_speed.gd:104)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: nested 2.0/0.5/2.0: elapsed=0.2
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_nested_sequences_unscale_at_each_level (res://examples/tests/sequence_speed.gd:104)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: nested 2.0/2.0/0.5: elapsed=0.2
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_nested_sequences_unscale_at_each_level (res://examples/tests/sequence_speed.gd:104)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: nested 2.0/2.0/2.0: elapsed=0.225
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_nested_sequences_unscale_at_each_level (res://examples/tests/sequence_speed.gd:104)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+EXCESS_FAIL test_nested_sequences_unscale_at_each_level
+EXCESS_START test_scaled_excess_accounts_for_parent_and_child_delays
+ERROR: delay method/0.5: elapsed=0.05
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_scaled_excess_accounts_for_parent_and_child_delays (res://examples/tests/sequence_speed.gd:117)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: delay method/2.0: elapsed=0.2
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_scaled_excess_accounts_for_parent_and_child_delays (res://examples/tests/sequence_speed.gd:117)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: delay absolute/0.5: elapsed=0.05
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_scaled_excess_accounts_for_parent_and_child_delays (res://examples/tests/sequence_speed.gd:117)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: delay absolute/2.0: elapsed=0.2
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_scaled_excess_accounts_for_parent_and_child_delays (res://examples/tests/sequence_speed.gd:117)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: delay relative/0.5: elapsed=0.05
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_scaled_excess_accounts_for_parent_and_child_delays (res://examples/tests/sequence_speed.gd:117)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: delay relative/2.0: elapsed=0.2
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_scaled_excess_accounts_for_parent_and_child_delays (res://examples/tests/sequence_speed.gd:117)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: delay speed_based/0.5: elapsed=0.05
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_scaled_excess_accounts_for_parent_and_child_delays (res://examples/tests/sequence_speed.gd:117)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: delay speed_based/2.0: elapsed=0.2
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_scaled_excess_accounts_for_parent_and_child_delays (res://examples/tests/sequence_speed.gd:117)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: delay sequence/0.5: elapsed=0.05
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_scaled_excess_accounts_for_parent_and_child_delays (res://examples/tests/sequence_speed.gd:117)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: delay sequence/2.0: elapsed=0.2
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_scaled_excess_accounts_for_parent_and_child_delays (res://examples/tests/sequence_speed.gd:117)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+EXCESS_FAIL test_scaled_excess_accounts_for_parent_and_child_delays
+EXCESS_START test_only_final_loop_excess_is_unscaled
+ERROR: loop excess method/0/0.5: elapsed=0.4 expected=0.8
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_only_final_loop_excess_is_unscaled (res://examples/tests/sequence_speed.gd:134)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: loop excess method/0/2.0: elapsed=0.4 expected=0.2
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_only_final_loop_excess_is_unscaled (res://examples/tests/sequence_speed.gd:134)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: loop excess method/1/0.5: elapsed=0.4 expected=0.8
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_only_final_loop_excess_is_unscaled (res://examples/tests/sequence_speed.gd:134)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: loop excess method/1/2.0: elapsed=0.4 expected=0.2
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_only_final_loop_excess_is_unscaled (res://examples/tests/sequence_speed.gd:134)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: loop excess method/2/0.5: elapsed=0.4 expected=0.8
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_only_final_loop_excess_is_unscaled (res://examples/tests/sequence_speed.gd:134)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: loop excess method/2/2.0: elapsed=0.4 expected=0.2
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_only_final_loop_excess_is_unscaled (res://examples/tests/sequence_speed.gd:134)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: loop excess absolute/0/0.5: elapsed=0.4 expected=0.8
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_only_final_loop_excess_is_unscaled (res://examples/tests/sequence_speed.gd:134)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: loop excess absolute/0/2.0: elapsed=0.4 expected=0.2
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_only_final_loop_excess_is_unscaled (res://examples/tests/sequence_speed.gd:134)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: loop excess absolute/1/0.5: elapsed=0.4 expected=0.8
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_only_final_loop_excess_is_unscaled (res://examples/tests/sequence_speed.gd:134)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: loop excess absolute/1/2.0: elapsed=0.4 expected=0.2
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_only_final_loop_excess_is_unscaled (res://examples/tests/sequence_speed.gd:134)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: loop excess absolute/2/0.5: elapsed=0.4 expected=0.8
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_only_final_loop_excess_is_unscaled (res://examples/tests/sequence_speed.gd:134)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: loop excess absolute/2/2.0: elapsed=0.4 expected=0.2
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_only_final_loop_excess_is_unscaled (res://examples/tests/sequence_speed.gd:134)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: loop excess relative/0/0.5: elapsed=0.4 expected=0.8
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_only_final_loop_excess_is_unscaled (res://examples/tests/sequence_speed.gd:134)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: loop excess relative/0/2.0: elapsed=0.4 expected=0.2
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_only_final_loop_excess_is_unscaled (res://examples/tests/sequence_speed.gd:134)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: loop excess relative/1/0.5: elapsed=0.4 expected=0.8
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_only_final_loop_excess_is_unscaled (res://examples/tests/sequence_speed.gd:134)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: loop excess relative/1/2.0: elapsed=0.4 expected=0.2
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_only_final_loop_excess_is_unscaled (res://examples/tests/sequence_speed.gd:134)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: loop excess relative/2/0.5: elapsed=0.4 expected=0.8
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_only_final_loop_excess_is_unscaled (res://examples/tests/sequence_speed.gd:134)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: loop excess relative/2/2.0: elapsed=0.4 expected=0.2
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_only_final_loop_excess_is_unscaled (res://examples/tests/sequence_speed.gd:134)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+EXCESS_FAIL test_only_final_loop_excess_is_unscaled
+EXCESS_START test_near_zero_speed_suppresses_excess_with_strict_cutoff
+ERROR: cutoff method/0.00001: elapsed=0.000001 expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_near_zero_speed_suppresses_excess_with_strict_cutoff (res://examples/tests/sequence_speed.gd:149)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: cutoff method/0.00002: elapsed=0.000002 expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_near_zero_speed_suppresses_excess_with_strict_cutoff (res://examples/tests/sequence_speed.gd:149)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: cutoff delayed/0.00001: elapsed=0.000001 expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_near_zero_speed_suppresses_excess_with_strict_cutoff (res://examples/tests/sequence_speed.gd:149)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: cutoff delayed/0.00002: elapsed=0.000002 expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_near_zero_speed_suppresses_excess_with_strict_cutoff (res://examples/tests/sequence_speed.gd:149)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: cutoff absolute/0.00001: elapsed=0.000001 expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_near_zero_speed_suppresses_excess_with_strict_cutoff (res://examples/tests/sequence_speed.gd:149)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: cutoff absolute/0.00002: elapsed=0.000002 expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_near_zero_speed_suppresses_excess_with_strict_cutoff (res://examples/tests/sequence_speed.gd:149)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: cutoff relative/0.00001: elapsed=0.000001 expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_near_zero_speed_suppresses_excess_with_strict_cutoff (res://examples/tests/sequence_speed.gd:149)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: cutoff relative/0.00002: elapsed=0.000002 expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_near_zero_speed_suppresses_excess_with_strict_cutoff (res://examples/tests/sequence_speed.gd:149)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: cutoff speed_based/0.00001: elapsed=0.000001 expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_near_zero_speed_suppresses_excess_with_strict_cutoff (res://examples/tests/sequence_speed.gd:149)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: cutoff speed_based/0.00002: elapsed=0.000002 expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_near_zero_speed_suppresses_excess_with_strict_cutoff (res://examples/tests/sequence_speed.gd:149)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: cutoff sequence/0.00001: elapsed=0.000001 expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_near_zero_speed_suppresses_excess_with_strict_cutoff (res://examples/tests/sequence_speed.gd:149)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: cutoff sequence/0.00002: elapsed=0.000002 expected=0.1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_near_zero_speed_suppresses_excess_with_strict_cutoff (res://examples/tests/sequence_speed.gd:149)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+EXCESS_FAIL test_near_zero_speed_suppresses_excess_with_strict_cutoff
+EXCESS_START test_zero_speed_blocks_successor
+EXCESS_PASS test_zero_speed_blocks_successor
+EXCESS_START test_lazy_constructor_excess_uses_parent_time
+ERROR: ctor 0: elapsed=0.35
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_lazy_constructor_excess_uses_parent_time (res://examples/tests/sequence_speed.gd:177)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: ctor 1: elapsed=0.35
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_lazy_constructor_excess_uses_parent_time (res://examples/tests/sequence_speed.gd:177)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+ERROR: ctor 2: elapsed=0.4
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/sequence_speed.gd:20)
+       [1] test_lazy_constructor_excess_uses_parent_time (res://examples/tests/sequence_speed.gd:177)
+       [2] run_tests (res://examples/tests/sequence_speed_runner.gd:26)
+EXCESS_FAIL test_lazy_constructor_excess_uses_parent_time
+EXCESS_RESULT total=9 cases=121 failed=8

@@ -123,16 +123,16 @@ where LerpMethodData<T>: ITweenable
         }
     }
 
-    fn process(&mut self, delta_time: f64, _is_tree_paused: bool) -> AdvanceTimeResult {
+    fn process_internal(&mut self, delta_time: f64, _is_tree_paused: bool) -> AdvanceTimeResult {
         if !self.t.callable.is_valid() {
             return AdvanceTimeResult::ShouldDespawn;
         }
 
         if let Some(owner) = &self.t.owner {
             match self.check_owner_validity_and_pause_mode(owner) {
-                ObjectValidityResult::CanProcess => {}
-                ObjectValidityResult::DontProcess => return AdvanceTimeResult::Paused,
-                ObjectValidityResult::SomeObjectsDead => {
+                NodesValidityResult::CanProcess => {}
+                NodesValidityResult::DontProcess => return AdvanceTimeResult::Paused,
+                NodesValidityResult::SomeNodesDead => {
                     self.stop();
                     return AdvanceTimeResult::ShouldDespawn;
                 }
@@ -154,7 +154,8 @@ where LerpMethodData<T>: ITweenable
         if excess_time < 0. {
             AdvanceTimeResult::Playing
         } else if let Some(excess_time) = self.handle_loop_finished(excess_time) {
-            AdvanceTimeResult::Completed { excess_time }
+            let unscaled_excess_time = unscale_time(excess_time, self.speed_scale);
+            AdvanceTimeResult::Completed { unscaled_excess_time }
         } else {
             AdvanceTimeResult::Playing
         }

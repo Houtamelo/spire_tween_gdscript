@@ -1,0 +1,7 @@
+{
+  "command": "cargo doc -p spire_tween --no-deps --features include_gdext_lib,include_gdscript_bridge --locked",
+  "exit": 0,
+  "warning_count": 1562,
+  "notes": "Godot markup and non-Rust diagram fences trigger repository-wide rustdoc warnings. The new sequence/data and pointer docs had no diagnostic locations in this run.",
+  "native_doc_diagnostic_locations": 0
+}

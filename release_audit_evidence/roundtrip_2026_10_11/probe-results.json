@@ -1,0 +1,66 @@
+[
+  {
+    "profile": "debug",
+    "script": "early",
+    "cmd": [
+      "godot",
+      "--headless",
+      "--max-fps",
+      "120",
+      "--path",
+      "/tmp/spire-roundtrip-20261011-ge7mv8x_/probe",
+      "--script",
+      "res://early.gd"
+    ],
+    "exit": 0,
+    "sha256": "ad4dc29dfb8fd3fa09ea66fa80c602259ac3032f6b347158022c69e56192af7a"
+  },
+  {
+    "profile": "release",
+    "script": "early",
+    "cmd": [
+      "godot",
+      "--headless",
+      "--max-fps",
+      "120",
+      "--path",
+      "/tmp/spire-roundtrip-20261011-ge7mv8x_/probe",
+      "--script",
+      "res://early.gd"
+    ],
+    "exit": 0,
+    "sha256": "4ae302ad5fd741167c1acd843fb4e143968eb127c3012a1e3fed8419c348c3cd"
+  },
+  {
+    "profile": "debug",
+    "script": "probe",
+    "cmd": [
+      "godot",
+      "--headless",
+      "--max-fps",
+      "120",
+      "--path",
+      "/tmp/spire-roundtrip-20261011-ge7mv8x_/probe",
+      "--script",
+      "res://probe.gd"
+    ],
+    "exit": 0,
+    "sha256": "ad4dc29dfb8fd3fa09ea66fa80c602259ac3032f6b347158022c69e56192af7a"
+  },
+  {
+    "profile": "release",
+    "script": "probe",
+    "cmd": [
+      "godot",
+      "--headless",
+      "--max-fps",
+      "120",
+      "--path",
+      "/tmp/spire-roundtrip-20261011-ge7mv8x_/probe",
+      "--script",
+      "res://probe.gd"
+    ],
+    "exit": 0,
+    "sha256": "4ae302ad5fd741167c1acd843fb4e143968eb127c3012a1e3fed8419c348c3cd"
+  }
+]

@@ -1,0 +1,57 @@
+{
+  "scope": "Review of caller-time excess conversion; production source and installed addon libraries were not modified by this review.",
+  "engine": "Godot 4.7.2.stable.official.ed1daf0bf",
+  "binding_api": "4.6",
+  "compilation": {
+    "workspace_all_targets_locked": "passed; six existing native demo warnings",
+    "debug_addon": "passed",
+    "release_addon": "passed"
+  },
+  "checks": {
+    "debug": {
+      "cases": 121,
+      "failed_checks": 0,
+      "exit_code": 0
+    },
+    "release": {
+      "cases": 121,
+      "failed_checks": 0,
+      "exit_code": 0
+    },
+    "previous_installed_debug": {
+      "cases": 121,
+      "failed_checks": 90,
+      "exit_code": 1
+    }
+  },
+  "coverage": [
+    "method, delayed-call, sequence, and absolute/relative/speed-based property children",
+    "child speeds 0.5, 1, 2 and parent speeds 0.5, 1, 2",
+    "joined siblings in both insertion orders",
+    "inserted children and three-level nesting",
+    "child/parent delays",
+    "method/absolute/relative Restart, Yoyo, Incremental loops",
+    "all tween types below, at, and above the near-zero cutoff",
+    "zero-speed children and all lazy-constructor operations"
+  ],
+  "limitations": [
+    "Headless runtime only; no editor import or GUI runs",
+    "Fresh libraries tested in isolated fixtures; actual installed addon paths retain previous libraries",
+    "The new speed regressions are audit probes, not registered in the regular test suite",
+    "Numeric domain policy for negative, infinite, and NaN inputs remains outside this change"
+  ],
+  "review_followups": [
+    "AdvanceTimeResult::Completed documentation still names excess_time; describe unscaled_excess_time as using process input units, including the near-zero suppression policy",
+    "Add the focused speed regressions to the normal integration suite"
+  ],
+  "source_sha256": {
+    "spire_tween/src/tweens/delayed_call/data.rs": "de29a1d2031440293a78f5e1a911eb37a88026ea5b8785da0e1e845cafcab938",
+    "spire_tween/src/tweens/method/data.rs": "ed9f176d5b6073dd333683fb7f87a58ac60b0615fb4df5b7540840f612bebfb0",
+    "spire_tween/src/tweens/mod.rs": "8e16eacee5dc510bef7a1aac48db360f78740b3a52e669a0c9337a60954f6d70",
+    "spire_tween/src/tweens/property/data.rs": "e704c6a02df124872ea623dcd6574bbd090e30961c268b36fce462764b171c16",
+    "spire_tween/src/tweens/sequence/data.rs": "115d04c8d2df1b5ee1367060dd45995789c97d4eb75035762890a03ff4174dc0",
+    "spire_tween/src/tweens/traits.rs": "8b1aa70c16542f3e35d3982b5a3a92f593154c28117b1d34dd0ed995f736a865"
+  },
+  "debug_library_sha256": "fdde6163fe3dc094082b3836f2aa3a5c2b56e7773c6e53c70e1468850d29f8c7",
+  "release_library_sha256": "a25b2232f93e84ee426d2f2bfe0c9713e834b1dd6ea81bbd0eb248910d1d50ae"
+}

@@ -15,6 +15,8 @@ use super::*;
 pub struct TweenPtr<T: ITweenable>(pub(super) Rc<UnsafeCell<SpireTween<T>>>, pub(super) GdHandleSlot<T::GdHandle>);
 
 impl<T: ITweenable> TweenPtr<T> {
+    /// Moves a tween builder into shared ownership without registering it.
+    /// Useful for returning `TweenPtr::new(builder).into()` from a sequence factory.
     pub fn new(tween: SpireTween<T>) -> Self {
         let slot = tween.gd_handle.clone();
         let ptr = Self(Rc::new(UnsafeCell::new(tween)), slot);
@@ -22,8 +24,11 @@ impl<T: ITweenable> TweenPtr<T> {
         ptr
     }
 
+    /// Creates a non-owning observer; it does not keep the tween or wrapper alive.
     pub fn downgrade(&self) -> WeakTweenPtr<T> { WeakTweenPtr(Rc::downgrade(&self.0), self.1.downgrade()) }
 
+    /// Returns the native strong-owner count, including manager, sequence, and
+    /// Godot-wrapper native pointers when present. This is not a Godot reference count.
     pub fn strong_count(&self) -> usize { Rc::strong_count(&self.0) }
 
     /// Callers must ensure no overlapping mutable references exist.

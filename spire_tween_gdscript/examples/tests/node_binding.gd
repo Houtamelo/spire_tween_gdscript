@@ -2,6 +2,17 @@ extends "res://examples/tests/test_base.gd"
 
 var failures: Array[String] = []
 var completions: int = 0
+var sequence_binding_roots: Array[SpireSequence] = []
+var sequence_binding_children: Array[RefCounted] = []
+
+
+func _exit_tree() -> void:
+	for child in sequence_binding_children:
+		child.call("stop")
+		child.call("unregister")
+	for root in sequence_binding_roots:
+		root.stop()
+		root.unregister()
 
 
 func check(condition: bool, message: String) -> void:
@@ -215,6 +226,225 @@ func test_clear_preserves_automatic_method_owner() -> bool:
 	target.queue_free()
 	await flush_frames()
 	check(not tween.is_registered(), "Method owner lifetime must remain automatic after clearing")
+	return failures.is_empty()
+
+
+func sequence_binding_fixture(kind: String, placement: String, nested: bool = false) -> Dictionary:
+	var binding := target_node()
+	var calls := [0]
+	var child: Variant
+	match kind:
+		"method": child = Spire.do_call_float(func(_value): calls[0] += 1, 0.0, 1.0, 1.0)
+		"delayed": child = Spire.do_delayed_call(func(): calls[0] += 1, 1.0)
+		"property":
+			var receiver := Node2D.new()
+			add_child(receiver)
+			child = DoNode2D.position(receiver, Vector2.ONE, 1.0)
+		"sequence": child = Spire.sequence().append_interval(1.0)
+	child.bind_node(binding)
+	sequence_binding_children.append(child)
+	var host := Spire.sequence().set_process_mode(Spire.PROCESS_MODE_MANUAL)
+	sequence_binding_roots.append(host)
+	var factory := func(): return child
+	match placement:
+		"append": host.append(child)
+		"join": host.append_interval(0.1).join(child)
+		"insert": host.insert(0.0, child)
+		"append_ctor": host.append_ctor(factory)
+		"join_ctor": host.append_interval(0.1).join_ctor(factory)
+		"insert_ctor": host.insert_ctor(0.0, factory)
+	var continued := [0]
+	host.append_call(func(): continued[0] += 1)
+	var root := host
+	if nested:
+		root = Spire.sequence().set_process_mode(Spire.PROCESS_MODE_MANUAL).append(host)
+		sequence_binding_roots.append(root)
+	return {"binding": binding, "child": child, "host": host, "root": root, "calls": calls, "continued": continued}
+
+
+func test_dead_bindings_remove_playing_paused_and_stopped_sequence_children() -> bool:
+	for kind in ["method", "delayed", "property", "sequence"]:
+		for placement in ["append", "join", "insert"]:
+			for state in ["playing", "paused", "stopped"]:
+				for nested in [false, true]:
+					var fixture := sequence_binding_fixture(kind, placement, nested)
+					var child: Variant = fixture.child
+					match state:
+						"playing": child.play()
+						"paused": child.pause()
+						"stopped": child.stop()
+					fixture.binding.free()
+					fixture.root.custom_step(0.2)
+					var label := "%s/%s/%s/nested=%s" % [kind, placement, state, nested]
+					check(child.is_stopped() and not child.is_registered(), "Dead binding must cancel " + label)
+					check(not fixture.host.remove(child), "Dead child must be removed even when stopped: " + label)
+					check(fixture.continued[0] == 1 and fixture.root.is_stopped(), "Parent must continue without spending the canceled child's time: " + label)
+					check(fixture.calls[0] == 0, "Canceled child must not invoke its callable: " + label)
+	return failures.is_empty()
+
+
+func test_stopped_children_with_unprocessable_live_bindings_do_not_block() -> bool:
+	for kind in ["method", "delayed", "property", "sequence"]:
+		for placement in ["append", "join", "insert"]:
+			for detached in [false, true]:
+				var fixture := sequence_binding_fixture(kind, placement)
+				fixture.child.stop()
+				if detached: remove_child(fixture.binding)
+				else: fixture.binding.process_mode = Node.PROCESS_MODE_DISABLED
+				fixture.root.custom_step(0.2)
+				check(fixture.continued[0] == 1 and fixture.root.is_stopped(), "A stopped child with a live blocked binding must not stall " + kind + "/" + placement)
+				check(fixture.host.remove(fixture.child), "A live stopped child must remain available for replay")
+				if detached: fixture.binding.free()
+	return failures.is_empty()
+
+
+func test_bound_children_wait_without_advancing_and_resume_after_reentry() -> bool:
+	for kind in ["method", "delayed", "property", "sequence"]:
+		for placement in ["append", "join", "insert"]:
+			for detached in [false, true]:
+				var fixture := sequence_binding_fixture(kind, placement)
+				if detached: remove_child(fixture.binding)
+				else: fixture.binding.process_mode = Node.PROCESS_MODE_DISABLED
+				fixture.root.custom_step(0.2)
+				check(fixture.child.get_total_elapsed_time() == 0.0 and fixture.calls[0] == 0, "Blocked child must not advance or invoke callbacks")
+				# Inserts run independently of the queue, so its callback may already run.
+				var expected_continuation := 1 if placement == "insert" else 0
+				check(fixture.continued[0] == expected_continuation and fixture.root.is_playing(), "Blocked child must keep the parent playing")
+				if detached: add_child(fixture.binding)
+				else: fixture.binding.process_mode = Node.PROCESS_MODE_INHERIT
+				fixture.root.custom_step(1.2)
+				check(fixture.child.is_stopped() and fixture.continued[0] == 1, "Re-entered/enabled binding must permit continuation: " + kind + "/" + placement)
+	return failures.is_empty()
+
+
+func test_process_pause_mode_allows_live_unprocessable_child_bindings() -> bool:
+	for kind in ["method", "delayed", "property", "sequence"]:
+		for placement in ["append", "join", "insert"]:
+			for detached in [false, true]:
+				var fixture := sequence_binding_fixture(kind, placement)
+				fixture.child.set_pause_mode(Spire.PAUSE_MODE_PROCESS)
+				if detached: remove_child(fixture.binding)
+				else: fixture.binding.process_mode = Node.PROCESS_MODE_DISABLED
+				fixture.root.custom_step(1.2)
+				check(fixture.child.is_stopped() and fixture.continued[0] == 1, "Process pause mode must allow a live disabled/detached binding")
+				if detached: fixture.binding.free()
+	return failures.is_empty()
+
+
+func test_manual_step_treats_stop_mode_sequence_children_as_unpaused() -> bool:
+	var original_pause := get_tree().paused
+	for kind in ["method", "delayed", "property", "sequence"]:
+		for placement in ["append", "join", "insert"]:
+			for tree_paused in [false, true]:
+				get_tree().paused = false
+				var fixture := sequence_binding_fixture(kind, placement)
+				fixture.child.set_pause_mode(Spire.PAUSE_MODE_STOP)
+				get_tree().paused = tree_paused
+				fixture.root.custom_step(1.2)
+				get_tree().paused = false
+				check(fixture.child.is_stopped() and fixture.continued[0] == 1, "Manual stepping must treat Stop pause mode as unpaused: " + kind + "/" + placement)
+	get_tree().paused = original_pause
+	return failures.is_empty()
+
+
+func test_lazy_children_with_dead_bindings_are_discarded() -> bool:
+	for kind in ["method", "delayed", "property", "sequence"]:
+		for placement in ["append_ctor", "join_ctor", "insert_ctor"]:
+			for stopped in [false, true]:
+				var fixture := sequence_binding_fixture(kind, placement)
+				if stopped: fixture.child.stop()
+				fixture.binding.free()
+				fixture.root.custom_step(0.2)
+				check(fixture.child.is_stopped() and not fixture.host.remove(fixture.child), "A constructed child with a dead binding must be discarded")
+				check(fixture.continued[0] == 1 and fixture.calls[0] == 0, "Dead constructed child must not block or invoke its callable")
+	return failures.is_empty()
+
+
+func custom_step_fixture(kind: String) -> Dictionary:
+	var binding := target_node()
+	var calls := [0]
+	var finished := [0]
+	var tween: Variant
+	match kind:
+		"method": tween = Spire.do_call_float(func(_value): calls[0] += 1, 0.0, 1.0, 1.0)
+		"delayed": tween = Spire.do_delayed_call(func(): calls[0] += 1, 1.0)
+		"property":
+			var receiver := Node2D.new()
+			add_child(receiver)
+			tween = DoNode2D.position(receiver, Vector2.ONE, 1.0)
+		"sequence": tween = Spire.sequence().append_interval(1.0)
+	tween.bind_node(binding).set_process_mode(Spire.PROCESS_MODE_MANUAL)
+	tween.finished.connect(func(): finished[0] += 1)
+	sequence_binding_children.append(tween)
+	return {"binding": binding, "tween": tween, "calls": calls, "finished": finished}
+
+
+func test_custom_step_reports_completion_and_stopped_bindings() -> bool:
+	for kind in ["method", "delayed", "property", "sequence"]:
+		var fixture := custom_step_fixture(kind)
+		var tween: Variant = fixture.tween
+		check(tween.custom_step(0.2), "Active tween must want to live: " + kind)
+		check(not tween.custom_step(1.2) and tween.is_stopped(), "Completion must return false: " + kind)
+		check(fixture.finished[0] == 1, "Successful completion must emit finished once: " + kind)
+		check(not tween.custom_step(0.2), "Already-stopped tween must return false: " + kind)
+		fixture.binding.process_mode = Node.PROCESS_MODE_DISABLED
+		check(not tween.custom_step(0.2), "Stopped tween with a disabled live binding must return false: " + kind)
+		remove_child(fixture.binding)
+		check(not tween.custom_step(0.2), "Stopped tween with a detached live binding must return false: " + kind)
+		add_child(fixture.binding)
+		fixture.binding.process_mode = Node.PROCESS_MODE_INHERIT
+		tween.play()
+		check(tween.custom_step(0.2), "Retained completed tween must support replay: " + kind)
+		check(not tween.custom_step(1.2) and fixture.finished[0] == 2, "Replay must complete normally: " + kind)
+	return failures.is_empty()
+
+
+func test_custom_step_keeps_live_paused_and_blocked_tweens() -> bool:
+	for kind in ["method", "delayed", "property", "sequence"]:
+		for paused in [false, true]:
+			for binding_state in ["enabled", "disabled", "detached"]:
+				var fixture := custom_step_fixture(kind)
+				var tween: Variant = fixture.tween
+				if paused: tween.pause()
+				if binding_state == "disabled": fixture.binding.process_mode = Node.PROCESS_MODE_DISABLED
+				elif binding_state == "detached": remove_child(fixture.binding)
+				var label := "%s/paused=%s/%s" % [kind, paused, binding_state]
+				check(tween.custom_step(0.2), "Live waiting tween must want to live: " + label)
+				if paused or binding_state != "enabled":
+					check(tween.get_total_elapsed_time() == 0.0 and fixture.calls[0] == 0, "Waiting tween must not advance or invoke its callable: " + label)
+				check(fixture.finished[0] == 0, "Waiting tween must not emit finished: " + label)
+				if binding_state == "disabled": fixture.binding.process_mode = Node.PROCESS_MODE_INHERIT
+				elif binding_state == "detached": add_child(fixture.binding)
+				if paused: tween.play()
+				check(not tween.custom_step(1.2) and fixture.finished[0] == 1, "Resumed tween must complete: " + label)
+	return failures.is_empty()
+
+
+func test_custom_step_reports_dead_bindings_regardless_of_state() -> bool:
+	for kind in ["method", "delayed", "property", "sequence"]:
+		for state in ["playing", "paused", "stopped"]:
+			var fixture := custom_step_fixture(kind)
+			var tween: Variant = fixture.tween
+			if state == "paused": tween.pause()
+			elif state == "stopped": tween.stop()
+			fixture.binding.free()
+			var label: String = kind + "/" + state
+			check(not tween.custom_step(0.2) and tween.is_stopped(), "Dead binding must return false and stop the tween: " + label)
+			check(fixture.finished[0] == 0 and fixture.calls[0] == 0, "Binding cancellation must not invoke callbacks or emit finished: " + label)
+	return failures.is_empty()
+
+
+func test_custom_step_reports_invalid_callables() -> bool:
+	for kind in ["method", "delayed"]:
+		var tween: Variant
+		if kind == "method": tween = Spire.do_call_float(Callable(), 0.0, 1.0, 1.0)
+		else: tween = Spire.do_delayed_call(Callable(), 1.0)
+		tween.set_process_mode(Spire.PROCESS_MODE_MANUAL)
+		sequence_binding_children.append(tween)
+		var finished := [0]
+		tween.finished.connect(func(): finished[0] += 1)
+		check(not tween.custom_step(0.2), "Invalid callable must report cancellation: " + kind)
+		check(finished[0] == 0, "Invalid callable must not emit finished: " + kind)
 	return failures.is_empty()
 
 

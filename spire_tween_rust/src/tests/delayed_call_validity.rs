@@ -101,7 +101,7 @@ fn invalid_manual_processing(_: &mut Gd<Node>) -> PinnedTestTask {
     let mut tween = SpireTween::<Callable>::new(Callable::invalid(), 100.0)
         .with_process_mode(ProcessMode::Manual)
         .register();
-    let _ = tween.process(0.0, false);
+    let _ = tween.custom_step(0.0, false);
     assert_cancelled(&tween);
     Box::pin(async { frames(4).await })
 }
@@ -117,10 +117,10 @@ fn valid_custom_delay(_: &mut Gd<Node>) -> PinnedTestTask {
     let mut tween = SpireTween::<Callable>::new(callable, 0.2)
         .with_process_mode(ProcessMode::Manual)
         .register();
-    let _ = tween.process(0.1, false);
+    let _ = tween.custom_step(0.1, false);
     assert_eq!(*calls, 0);
     assert!(tween.is_playing());
-    let _ = tween.process(0.11, false);
+    let _ = tween.custom_step(0.11, false);
     assert_eq!(*calls, 1);
     assert!(tween.is_stopped());
     tween.unregister();

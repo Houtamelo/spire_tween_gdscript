@@ -1,0 +1,6 @@
+{
+  "gdscript_bindgen/src/classes_gdscript_bridge.rs": "83befad63cf972f78654eefc5a3e0bf41b73e7be5c63e93c035f25d3008242e1",
+  "spire_tween/src/gdscript_bridge/generated/node_3_d.rs": "7359ca4e666079ec9918ade646b6f7b20a0965443b47b911f52ebd7a3b2a3ac3",
+  "spire_tween/src/tweens/templates/do_ellipsis.rs": "295c2f0bbdc019533f789a2ee964e0b9cfae3bb8408e8494b5e54d62ac9cd046",
+  "spire_tween/src/tweens/templates/do_ellipsis_3d.rs": "099deb1b7a7e4b09578b35c4dafdbdb5697233566ac19db22c9ab8054ff5f3ed"
+}

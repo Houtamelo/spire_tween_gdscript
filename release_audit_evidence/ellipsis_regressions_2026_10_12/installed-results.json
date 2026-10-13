@@ -1,0 +1,79 @@
+{
+  "libraries": {
+    "debug": {
+      "path": "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_gdscript/addons/spire_tween/lib/x86_64-unknown-linux-gnu/debug/libspire_tween.so",
+      "sha256": "c76a5ac6899e9a5657c07cc9bd7c50f9136687fad69cf656138ad33624e3e88a",
+      "backup": "/tmp/spire-ellipse-20261012-lviobzbg/before-installed-debug.so"
+    },
+    "release": {
+      "path": "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_gdscript/addons/spire_tween/lib/x86_64-unknown-linux-gnu/release/libspire_tween.so",
+      "sha256": "78637a55dd78fdfca4cb286a61f705bdafb80dfd0bd764aaa194eb4b8320e59c",
+      "backup": "/tmp/spire-ellipse-20261012-lviobzbg/before-installed-release.so"
+    }
+  },
+  "checks": [
+    {
+      "check": "installed-debug",
+      "command": [
+        "/home/houtamelo/bin/godot",
+        "--headless",
+        "--path",
+        "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_gdscript",
+        "--fixed-fps",
+        "120",
+        "--script",
+        "res://examples/tests/ellipsis_regressions_runner.gd"
+      ],
+      "exit_code": 0,
+      "script_errors": 0,
+      "native_panics": 0,
+      "error_lines": 0,
+      "markers": [
+        "ELLIPSE_RESULT total=11 cases=119 failed=0"
+      ]
+    },
+    {
+      "check": "installed-release",
+      "command": [
+        "/home/houtamelo/bin/godot",
+        "--headless",
+        "--path",
+        "/tmp/spire-ellipse-20261012-lviobzbg/project",
+        "--fixed-fps",
+        "120",
+        "--script",
+        "res://examples/tests/ellipsis_regressions_runner.gd"
+      ],
+      "exit_code": 0,
+      "script_errors": 0,
+      "native_panics": 0,
+      "error_lines": 0,
+      "markers": [
+        "ELLIPSE_RESULT total=11 cases=119 failed=0"
+      ]
+    },
+    {
+      "check": "installed-catalog-cli",
+      "command": [
+        "/home/houtamelo/bin/godot",
+        "--headless",
+        "--path",
+        "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_gdscript",
+        "--fixed-fps",
+        "120",
+        "--script",
+        "res://examples/tests/runner_cli_checks.gd",
+        "--",
+        "--all-tests",
+        "--no-cache"
+      ],
+      "exit_code": 0,
+      "script_errors": 0,
+      "native_panics": 0,
+      "error_lines": 0,
+      "markers": [
+        "RUNNER_CLI_RESULT total=15 failed=0"
+      ]
+    }
+  ]
+}

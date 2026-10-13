@@ -1,0 +1,32 @@
+[
+  {
+    "label": "readme-example",
+    "cmd": [
+      "godot",
+      "--headless",
+      "--fixed-fps",
+      "120",
+      "--path",
+      "/tmp/spire-roundtrip-20261011-ge7mv8x_/constructor-tests",
+      "res://readme_constructor.tscn"
+    ],
+    "exit": 0,
+    "script_errors": 0
+  },
+  {
+    "label": "catalog-cli",
+    "cmd": [
+      "godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-roundtrip-20261011-ge7mv8x_/constructor-tests",
+      "--script",
+      "res://examples/tests/runner_cli_checks.gd",
+      "--",
+      "--all-tests",
+      "--no-cache"
+    ],
+    "exit": 0,
+    "script_errors": 0
+  }
+]

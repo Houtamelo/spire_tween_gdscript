@@ -1,0 +1,30 @@
+[
+  {
+    "profile": "debug",
+    "cmd": [
+      "godot",
+      "--headless",
+      "--max-fps",
+      "120",
+      "--path",
+      "/tmp/spire-roundtrip-20261011-ge7mv8x_/probe",
+      "--script",
+      "res://templates.gd"
+    ],
+    "exit": 0
+  },
+  {
+    "profile": "release",
+    "cmd": [
+      "godot",
+      "--headless",
+      "--max-fps",
+      "120",
+      "--path",
+      "/tmp/spire-roundtrip-20261011-ge7mv8x_/probe",
+      "--script",
+      "res://templates.gd"
+    ],
+    "exit": 0
+  }
+]

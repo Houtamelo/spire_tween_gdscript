@@ -1,0 +1,40 @@
+[
+  {
+    "check": "injected-failure",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-ellipse-20261012-lviobzbg/project",
+      "--fixed-fps",
+      "120",
+      "--script",
+      "res://examples/tests/ellipsis_regressions_runner.gd"
+    ],
+    "exit_code": 1,
+    "script_errors": 0,
+    "native_panics": 0,
+    "timeout_seen": false,
+    "markers": [
+      "ELLIPSE_RESULT total=11 cases=119 failed=1"
+    ]
+  },
+  {
+    "check": "watchdog",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-ellipse-20261012-lviobzbg/project",
+      "--fixed-fps",
+      "120",
+      "--script",
+      "res://examples/tests/ellipsis_regressions_runner.gd"
+    ],
+    "exit_code": 1,
+    "script_errors": 0,
+    "native_panics": 0,
+    "timeout_seen": true,
+    "markers": []
+  }
+]

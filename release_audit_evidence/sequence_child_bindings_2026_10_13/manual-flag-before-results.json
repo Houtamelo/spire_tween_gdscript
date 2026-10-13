@@ -1,0 +1,12 @@
+{
+  "exit_code": 1,
+  "script_errors": 0,
+  "native_panics": 0,
+  "failed_checks": 24,
+  "failed_methods": [
+    "BINDING_FAIL test_manual_step_treats_stop_mode_sequence_children_as_unpaused"
+  ],
+  "markers": [
+    "BINDING_RESULT total=19 failed=1"
+  ]
+}

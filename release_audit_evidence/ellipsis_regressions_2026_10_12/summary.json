@@ -1,0 +1,103 @@
+{
+  "source_sha256": {
+    "gdscript_bindgen/src/classes_gdscript_bridge.rs": "9ee2dfdba235e719e9cc66c9868e1c2f3e7fbe6b647c3ab72b7202340ad34ed7",
+    "spire_tween/src/gdscript_bridge/generated/node_3_d.rs": "24e1ef269107822afe7ddbdd1f7f1552fec053031cface100b01e91b458facdc",
+    "spire_tween/src/tweens/templates/do_ellipsis.rs": "6c76101aba1f9c3c27f2185abd3e723a61b345503a2ee47c34f0c7ec8a3644eb",
+    "spire_tween/src/tweens/templates/do_ellipsis_3d.rs": "7d766aa1636b7386fb6b1c2333c02b0ca014130ccedf2aa104861b1dd6666909",
+    "spire_tween_gdscript/examples/tests/ellipsis_regressions.gd": "efcc75df465fb2d4911ac791068eec9a9f3ccf18cf0c258cc347d750be8ac6fd",
+    "spire_tween_gdscript/examples/tests/ellipsis_regressions.tscn": "8005113d86468d2c8ef6cd768f90dd5e4846a7e5527065b1d792dca6166e4c9c",
+    "spire_tween_gdscript/examples/tests/ellipsis_regressions_runner.gd": "9813e5837f63283e099873d7ec7935370fb8aff1730e78c451fc61eacea9a35c",
+    "spire_tween_gdscript/examples/tests/test_runner.gd": "803cd45e805e9f326fde1cd02f41da0790b25a248c0afdee33507525d6139fcb",
+    "spire_tween_gdscript/examples/tests/runner_cli_checks.gd": "51ee289861a0404d4b64b5090ae5dcf1bc9d5ad2434b254cea62565c7f5b732b"
+  },
+  "scope": [
+    "3D circle geometry and generator parity",
+    "explicit template method owners for safe sequence-child cancellation",
+    "normalized-progress/equal-angle/lifetime integration coverage"
+  ],
+  "test_methods": 11,
+  "parameter_cases_per_profile": 119,
+  "engine": "Godot 4.7.2.stable.official.ed1daf0bf",
+  "binding_api": "4.6",
+  "full_suite_success_claim": false,
+  "other_platform_libraries_refreshed": false,
+  "installed": {
+    "libraries": {
+      "debug": {
+        "path": "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_gdscript/addons/spire_tween/lib/x86_64-unknown-linux-gnu/debug/libspire_tween.so",
+        "sha256": "c76a5ac6899e9a5657c07cc9bd7c50f9136687fad69cf656138ad33624e3e88a",
+        "backup": "/tmp/spire-ellipse-20261012-lviobzbg/before-installed-debug.so"
+      },
+      "release": {
+        "path": "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_gdscript/addons/spire_tween/lib/x86_64-unknown-linux-gnu/release/libspire_tween.so",
+        "sha256": "78637a55dd78fdfca4cb286a61f705bdafb80dfd0bd764aaa194eb4b8320e59c",
+        "backup": "/tmp/spire-ellipse-20261012-lviobzbg/before-installed-release.so"
+      }
+    },
+    "checks": [
+      {
+        "check": "installed-debug",
+        "command": [
+          "/home/houtamelo/bin/godot",
+          "--headless",
+          "--path",
+          "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_gdscript",
+          "--fixed-fps",
+          "120",
+          "--script",
+          "res://examples/tests/ellipsis_regressions_runner.gd"
+        ],
+        "exit_code": 0,
+        "script_errors": 0,
+        "native_panics": 0,
+        "error_lines": 0,
+        "markers": [
+          "ELLIPSE_RESULT total=11 cases=119 failed=0"
+        ]
+      },
+      {
+        "check": "installed-release",
+        "command": [
+          "/home/houtamelo/bin/godot",
+          "--headless",
+          "--path",
+          "/tmp/spire-ellipse-20261012-lviobzbg/project",
+          "--fixed-fps",
+          "120",
+          "--script",
+          "res://examples/tests/ellipsis_regressions_runner.gd"
+        ],
+        "exit_code": 0,
+        "script_errors": 0,
+        "native_panics": 0,
+        "error_lines": 0,
+        "markers": [
+          "ELLIPSE_RESULT total=11 cases=119 failed=0"
+        ]
+      },
+      {
+        "check": "installed-catalog-cli",
+        "command": [
+          "/home/houtamelo/bin/godot",
+          "--headless",
+          "--path",
+          "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_gdscript",
+          "--fixed-fps",
+          "120",
+          "--script",
+          "res://examples/tests/runner_cli_checks.gd",
+          "--",
+          "--all-tests",
+          "--no-cache"
+        ],
+        "exit_code": 0,
+        "script_errors": 0,
+        "native_panics": 0,
+        "error_lines": 0,
+        "markers": [
+          "RUNNER_CLI_RESULT total=15 failed=0"
+        ]
+      }
+    ]
+  }
+}

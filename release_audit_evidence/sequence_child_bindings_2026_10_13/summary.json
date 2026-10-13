@@ -1,0 +1,18 @@
+{
+  "source_sha256": {
+    "spire_tween/src/tweens/sequence/data.rs": "2dfc4d571216ddb8b786961867bb11f4a0bf85eec80bd49fcc574a877575d30c",
+    "spire_tween/src/tweens/macros.rs": "9e31d2d83aaf1a246a807651fee74bdcffa7e8e083c8e79e8f32ff42feb83ebd",
+    "spire_tween_gdscript/examples/tests/node_binding.gd": "ec1bcf8810b6592d426770ae3713a5d4a6ade4f09d66fbcd7e6bb40e4e93e5ec"
+  },
+  "new_parameterized_methods": 6,
+  "new_parameter_configurations": 192,
+  "binding_suite_methods": 19,
+  "focused_suites": 7,
+  "passing_methods_per_profile": 87,
+  "profiles": [
+    "debug",
+    "release"
+  ],
+  "production_change_by_agent": "custom_step is_tree_paused argument true -> false; sequence validity change remains as authored by the user",
+  "full_aggregate_success_claim": false
+}

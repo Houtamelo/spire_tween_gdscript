@@ -1,0 +1,21 @@
+{
+  "cmd": [
+    "godot",
+    "--headless",
+    "--fixed-fps",
+    "120",
+    "--path",
+    "/tmp/spire-roundtrip-20261011-ge7mv8x_/constructor-tests",
+    "res://examples/tests/test_runner.tscn",
+    "--",
+    "--all-tests",
+    "--no-cache"
+  ],
+  "exit": 0,
+  "started": 115,
+  "finished": 115,
+  "ctor_started": 18,
+  "script_errors": 1,
+  "panics": 0,
+  "note": "Known invalid-enum script error remains; exit0 is not an overall pass"
+}

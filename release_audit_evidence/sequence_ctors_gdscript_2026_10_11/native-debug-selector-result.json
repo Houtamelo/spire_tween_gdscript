@@ -1,0 +1,25 @@
+{
+  "cmd": [
+    "godot",
+    "--headless",
+    "--fixed-fps",
+    "120",
+    "--path",
+    "/tmp/spire-roundtrip-20261011-ge7mv8x_/spire_tween_rust",
+    "res://test_runner.tscn"
+  ],
+  "exit": 0,
+  "library_sha256": "bcf234193ae74d956ac011c40840f8e5bbe4ea008efdc01432e7f9363ab202ad",
+  "selected_path": "/tmp/spire-roundtrip-20261011-ge7mv8x_/spire_tween_rust/addons/spire_tween/lib/x86_64-unknown-linux-gnu/debug/libspire_tween_rust.so",
+  "strict_safeguards": true,
+  "focused_results": [
+    "NATIVE_DELAY_VALIDITY_RESULT total=9 failed=0",
+    "NATIVE_API_RESULT total=5 failed=0",
+    "NATIVE_OWNERSHIP_RESULT total=10 failed=0",
+    "NATIVE_BINDING_RESULT total=11 failed=0",
+    "NATIVE_CYCLE_RESULT total=10 failed=0"
+  ],
+  "older_started": 68,
+  "older_finished": 66,
+  "note": "45 focused tests pass; older-suite known failures remain, exit0 is not broad success"
+}

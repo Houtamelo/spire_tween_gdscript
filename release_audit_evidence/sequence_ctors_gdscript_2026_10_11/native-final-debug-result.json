@@ -1,0 +1,24 @@
+{
+  "cmd": [
+    "godot",
+    "--headless",
+    "--fixed-fps",
+    "120",
+    "--path",
+    "/tmp/spire-roundtrip-20261011-ge7mv8x_/spire_tween_rust",
+    "res://test_runner.tscn"
+  ],
+  "exit": 0,
+  "profile": "debug",
+  "sha256": "631701540ab4b82fb8c0976bf274380068da2aca3abeddfc81e8ef6fdeada264",
+  "focused_results": [
+    "NATIVE_DELAY_VALIDITY_RESULT total=9 failed=0",
+    "NATIVE_API_RESULT total=5 failed=0",
+    "NATIVE_OWNERSHIP_RESULT total=10 failed=0",
+    "NATIVE_BINDING_RESULT total=11 failed=0",
+    "NATIVE_CYCLE_RESULT total=10 failed=0"
+  ],
+  "older_started": 68,
+  "older_finished": 66,
+  "note": "45 focused tests pass; known broad-suite failures remain"
+}

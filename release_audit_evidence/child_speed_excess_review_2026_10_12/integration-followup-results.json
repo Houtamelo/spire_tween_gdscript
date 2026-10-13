@@ -1,0 +1,98 @@
+[
+  {
+    "check": "focused-release",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-excess-suite-20261012-gg_zcstp/project",
+      "--fixed-fps",
+      "120",
+      "--script",
+      "res://examples/tests/sequence_speed_runner.gd"
+    ],
+    "exit_code": 0,
+    "script_errors": 0,
+    "native_panics": 0,
+    "failed_checks": 0,
+    "markers": [
+      "EXCESS_RESULT total=9 cases=121 failed=0"
+    ]
+  },
+  {
+    "check": "regular-harness-release",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-excess-suite-20261012-gg_zcstp/project",
+      "--fixed-fps",
+      "120",
+      "--script",
+      "res://regular_speed.gd"
+    ],
+    "exit_code": 0,
+    "script_errors": 0,
+    "native_panics": 0,
+    "failed_checks": 0,
+    "markers": [
+      "REGULAR_EXCESS_RESULT total=9 failed=0"
+    ]
+  },
+  {
+    "check": "baseline-failure",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-excess-suite-20261012-gg_zcstp/project",
+      "--fixed-fps",
+      "120",
+      "--script",
+      "res://examples/tests/sequence_speed_runner.gd"
+    ],
+    "exit_code": 1,
+    "script_errors": 0,
+    "native_panics": 0,
+    "failed_checks": 90,
+    "markers": [
+      "EXCESS_RESULT total=9 cases=121 failed=8"
+    ]
+  },
+  {
+    "check": "injected-failure",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-excess-suite-20261012-gg_zcstp/project",
+      "--fixed-fps",
+      "120",
+      "--script",
+      "res://examples/tests/sequence_speed_runner.gd"
+    ],
+    "exit_code": 1,
+    "script_errors": 0,
+    "native_panics": 0,
+    "markers": [
+      "EXCESS_RESULT total=9 cases=121 failed=1"
+    ]
+  },
+  {
+    "check": "watchdog",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-excess-suite-20261012-gg_zcstp/project",
+      "--fixed-fps",
+      "120",
+      "--script",
+      "res://examples/tests/sequence_speed_runner.gd"
+    ],
+    "exit_code": 1,
+    "script_errors": 0,
+    "native_panics": 0,
+    "timeout_message_seen": true
+  }
+]

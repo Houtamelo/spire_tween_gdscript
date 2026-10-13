@@ -1,0 +1,36 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards strict)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: [panic /home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/classes/class_runtime.rs:379]
+  Node2D::upcast_ref: access to instance with ID 29276243482 after it has been freed
+  in <Callable>::do_ellipsis()
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+(backtrace disabled, run application with `RUST_BACKTRACE=1` environment variable)
+ERROR: [panic /home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/classes/class_runtime.rs:379]
+  Node3D::upcast_ref: access to instance with ID 29293020700 after it has been freed
+  in <Callable>::do_ellipsis_3d()
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+(backtrace disabled, run application with `RUST_BACKTRACE=1` environment variable)
+ERROR: [panic /home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/classes/class_runtime.rs:379]
+  Node2D::upcast_ref: access to instance with ID 29276243482 after it has been freed
+  in <Callable>::do_ellipsis()
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+(backtrace disabled, run application with `RUST_BACKTRACE=1` environment variable)
+ERROR: [panic /home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/classes/class_runtime.rs:379]
+  Node3D::upcast_ref: access to instance with ID 29293020700 after it has been freed
+  in <Callable>::do_ellipsis_3d()
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+(backtrace disabled, run application with `RUST_BACKTRACE=1` environment variable)
+ERROR: [panic /home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/classes/class_runtime.rs:379]
+  Node2D::upcast_ref: access to instance with ID 29276243482 after it has been freed
+  in <Callable>::do_ellipsis()
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+(backtrace disabled, run application with `RUST_BACKTRACE=1` environment variable)
+ERROR: [panic /home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/classes/class_runtime.rs:379]
+  Node3D::upcast_ref: access to instance with ID 29293020700 after it has been freed
+  in <Callable>::do_ellipsis_3d()
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+(backtrace disabled, run application with `RUST_BACKTRACE=1` environment variable)
+AUDIT_TEMPLATE freed_ellipse2 {"registered":true,"stopped":false}
+AUDIT_TEMPLATE freed_ellipse3 {"registered":true,"stopped":false}
+AUDIT_TEMPLATE equal_angle (nan, nan)

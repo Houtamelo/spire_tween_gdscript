@@ -1,0 +1,9 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards strict)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+AUDIT_BOOKKEEPING warm nodes_dead_weak_roots=[0, 0, 0, 0] objects=1566.0
+AUDIT_BOOKKEEPING freed_node_batch_1 nodes_dead_weak_roots=[1000, 1000, 0, 0] objects=1566.0
+AUDIT_BOOKKEEPING freed_node_batch_2 nodes_dead_weak_roots=[2000, 2000, 0, 0] objects=1566.0
+AUDIT_BOOKKEEPING expired_binding_batch_1 nodes_dead_weak_roots=[2001, 2000, 1000, 0] objects=1567.0
+AUDIT_BOOKKEEPING expired_binding_batch_2 nodes_dead_weak_roots=[2001, 2000, 2000, 0] objects=1567.0
+AUDIT_BOOKKEEPING bound_node_freed nodes_dead_weak_roots=[2001, 2001, 0, 0] objects=1566.0

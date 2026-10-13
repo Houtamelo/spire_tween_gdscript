@@ -1,0 +1,274 @@
+[
+  {
+    "check": "final-debug-node-binding",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-sequence-binding-20261013-uqhvk9fw/project",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/node_binding_runner.tscn"
+    ],
+    "exit_code": 0,
+    "script_errors": 0,
+    "native_panics": 0,
+    "library_sha256": "f73b9f97a06c4140311fb6e3062ccaf96f954d6181e344b39a47b2ae50688150",
+    "markers": [
+      "BINDING_RESULT total=19 failed=0"
+    ]
+  },
+  {
+    "check": "final-debug-sequence-speed",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-sequence-binding-20261013-uqhvk9fw/project",
+      "--fixed-fps",
+      "120",
+      "--script",
+      "res://examples/tests/sequence_speed_runner.gd"
+    ],
+    "exit_code": 0,
+    "script_errors": 0,
+    "native_panics": 0,
+    "library_sha256": "f73b9f97a06c4140311fb6e3062ccaf96f954d6181e344b39a47b2ae50688150",
+    "markers": [
+      "EXCESS_RESULT total=9 cases=121 failed=0"
+    ]
+  },
+  {
+    "check": "final-debug-sequence-ctors",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-sequence-binding-20261013-uqhvk9fw/project",
+      "--fixed-fps",
+      "120",
+      "--script",
+      "res://examples/tests/sequence_ctors_runner.gd"
+    ],
+    "exit_code": 0,
+    "script_errors": 0,
+    "native_panics": 0,
+    "library_sha256": "f73b9f97a06c4140311fb6e3062ccaf96f954d6181e344b39a47b2ae50688150",
+    "markers": [
+      "CTOR_RESULT total=18 failed=0"
+    ]
+  },
+  {
+    "check": "final-debug-ellipse-lifetime",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-sequence-binding-20261013-uqhvk9fw/project",
+      "--fixed-fps",
+      "120",
+      "--script",
+      "res://examples/tests/ellipsis_regressions_runner.gd"
+    ],
+    "exit_code": 0,
+    "script_errors": 0,
+    "native_panics": 0,
+    "library_sha256": "f73b9f97a06c4140311fb6e3062ccaf96f954d6181e344b39a47b2ae50688150",
+    "markers": [
+      "ELLIPSE_RESULT total=11 cases=119 failed=0"
+    ]
+  },
+  {
+    "check": "final-debug-sequence-cycles",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-sequence-binding-20261013-uqhvk9fw/project",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/sequence_cycles_runner.tscn"
+    ],
+    "exit_code": 0,
+    "script_errors": 0,
+    "native_panics": 0,
+    "library_sha256": "f73b9f97a06c4140311fb6e3062ccaf96f954d6181e344b39a47b2ae50688150",
+    "markers": [
+      "CYCLE_RESULT total=6 failed=0"
+    ]
+  },
+  {
+    "check": "final-debug-ownership",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-sequence-binding-20261013-uqhvk9fw/project",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/ownership_runner.tscn"
+    ],
+    "exit_code": 0,
+    "script_errors": 0,
+    "native_panics": 0,
+    "library_sha256": "f73b9f97a06c4140311fb6e3062ccaf96f954d6181e344b39a47b2ae50688150",
+    "markers": [
+      "OWNERSHIP_RESULT total=15 failed=0"
+    ]
+  },
+  {
+    "check": "final-debug-delayed-call",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-sequence-binding-20261013-uqhvk9fw/project",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/delayed_call_validity_runner.tscn"
+    ],
+    "exit_code": 0,
+    "script_errors": 0,
+    "native_panics": 0,
+    "library_sha256": "f73b9f97a06c4140311fb6e3062ccaf96f954d6181e344b39a47b2ae50688150",
+    "markers": [
+      "DELAY_VALIDITY_RESULT total=9 failed=0"
+    ]
+  },
+  {
+    "check": "final-release-node-binding",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-sequence-binding-20261013-uqhvk9fw/project",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/node_binding_runner.tscn"
+    ],
+    "exit_code": 0,
+    "script_errors": 0,
+    "native_panics": 0,
+    "library_sha256": "0eb6e3ad0c3c3d0d885566c7e08eefa128cc64073b3ff77300e38b72977f21ee",
+    "markers": [
+      "BINDING_RESULT total=19 failed=0"
+    ]
+  },
+  {
+    "check": "final-release-sequence-speed",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-sequence-binding-20261013-uqhvk9fw/project",
+      "--fixed-fps",
+      "120",
+      "--script",
+      "res://examples/tests/sequence_speed_runner.gd"
+    ],
+    "exit_code": 0,
+    "script_errors": 0,
+    "native_panics": 0,
+    "library_sha256": "0eb6e3ad0c3c3d0d885566c7e08eefa128cc64073b3ff77300e38b72977f21ee",
+    "markers": [
+      "EXCESS_RESULT total=9 cases=121 failed=0"
+    ]
+  },
+  {
+    "check": "final-release-sequence-ctors",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-sequence-binding-20261013-uqhvk9fw/project",
+      "--fixed-fps",
+      "120",
+      "--script",
+      "res://examples/tests/sequence_ctors_runner.gd"
+    ],
+    "exit_code": 0,
+    "script_errors": 0,
+    "native_panics": 0,
+    "library_sha256": "0eb6e3ad0c3c3d0d885566c7e08eefa128cc64073b3ff77300e38b72977f21ee",
+    "markers": [
+      "CTOR_RESULT total=18 failed=0"
+    ]
+  },
+  {
+    "check": "final-release-ellipse-lifetime",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-sequence-binding-20261013-uqhvk9fw/project",
+      "--fixed-fps",
+      "120",
+      "--script",
+      "res://examples/tests/ellipsis_regressions_runner.gd"
+    ],
+    "exit_code": 0,
+    "script_errors": 0,
+    "native_panics": 0,
+    "library_sha256": "0eb6e3ad0c3c3d0d885566c7e08eefa128cc64073b3ff77300e38b72977f21ee",
+    "markers": [
+      "ELLIPSE_RESULT total=11 cases=119 failed=0"
+    ]
+  },
+  {
+    "check": "final-release-sequence-cycles",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-sequence-binding-20261013-uqhvk9fw/project",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/sequence_cycles_runner.tscn"
+    ],
+    "exit_code": 0,
+    "script_errors": 0,
+    "native_panics": 0,
+    "library_sha256": "0eb6e3ad0c3c3d0d885566c7e08eefa128cc64073b3ff77300e38b72977f21ee",
+    "markers": [
+      "CYCLE_RESULT total=6 failed=0"
+    ]
+  },
+  {
+    "check": "final-release-ownership",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-sequence-binding-20261013-uqhvk9fw/project",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/ownership_runner.tscn"
+    ],
+    "exit_code": 0,
+    "script_errors": 0,
+    "native_panics": 0,
+    "library_sha256": "0eb6e3ad0c3c3d0d885566c7e08eefa128cc64073b3ff77300e38b72977f21ee",
+    "markers": [
+      "OWNERSHIP_RESULT total=15 failed=0"
+    ]
+  },
+  {
+    "check": "final-release-delayed-call",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-sequence-binding-20261013-uqhvk9fw/project",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/delayed_call_validity_runner.tscn"
+    ],
+    "exit_code": 0,
+    "script_errors": 0,
+    "native_panics": 0,
+    "library_sha256": "0eb6e3ad0c3c3d0d885566c7e08eefa128cc64073b3ff77300e38b72977f21ee",
+    "markers": [
+      "DELAY_VALIDITY_RESULT total=9 failed=0"
+    ]
+  }
+]

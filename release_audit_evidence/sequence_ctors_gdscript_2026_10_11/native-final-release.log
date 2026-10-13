@@ -1,0 +1,423 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards balanced)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+=== SpireTween Rust Test Runner ===
+NATIVE_DELAY_VALIDITY_START freed_node
+NATIVE_DELAY_VALIDITY_PASS freed_node
+NATIVE_DELAY_VALIDITY_START freed_refcounted
+NATIVE_DELAY_VALIDITY_PASS freed_refcounted
+NATIVE_DELAY_VALIDITY_START initially_invalid
+NATIVE_DELAY_VALIDITY_PASS initially_invalid
+NATIVE_DELAY_VALIDITY_START invalid_force_complete
+NATIVE_DELAY_VALIDITY_PASS invalid_force_complete
+NATIVE_DELAY_VALIDITY_START invalid_manual_processing
+NATIVE_DELAY_VALIDITY_PASS invalid_manual_processing
+NATIVE_DELAY_VALIDITY_START valid_custom_delay
+NATIVE_DELAY_VALIDITY_PASS valid_custom_delay
+NATIVE_DELAY_VALIDITY_START valid_force_complete_and_replay
+NATIVE_DELAY_VALIDITY_PASS valid_force_complete_and_replay
+NATIVE_DELAY_VALIDITY_START receiver_and_callable_target_differ
+NATIVE_DELAY_VALIDITY_PASS receiver_and_callable_target_differ
+NATIVE_DELAY_VALIDITY_START sequence_continues_after_invalid_child
+NATIVE_DELAY_VALIDITY_PASS sequence_continues_after_invalid_child
+NATIVE_DELAY_VALIDITY_RESULT total=9 failed=0
+NATIVE_API_START timer
+NATIVE_API_PASS timer
+NATIVE_API_START builtin_position
+NATIVE_API_PASS builtin_position
+NATIVE_API_START builtin_color
+NATIVE_API_PASS builtin_color
+NATIVE_API_START started_position_tween_is_rejected
+EXPECTED_API_FAILURE_BEGIN
+ERROR: Can't append to a Tween that has started. Use stop() first.
+   at: tween_property (scene/animation/tween.cpp:102)
+ERROR: [panic /home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/meta/signature.rs:583]  in function `Tween::tween_property` at return type godot_core::obj::gd::Gd<godot_core::gen::classes::property_tweener::re_export::PropertyTweener>: `Gd` cannot be null: null
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+
+EXPECTED_API_FAILURE_END
+NATIVE_API_PASS started_position_tween_is_rejected
+NATIVE_API_START started_color_tween_is_rejected
+EXPECTED_API_FAILURE_BEGIN
+ERROR: Can't append to a Tween that has started. Use stop() first.
+   at: tween_property (scene/animation/tween.cpp:102)
+ERROR: [panic /home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/meta/signature.rs:583]  in function `Tween::tween_property` at return type godot_core::obj::gd::Gd<godot_core::gen::classes::property_tweener::re_export::PropertyTweener>: `Gd` cannot be null: null
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+
+EXPECTED_API_FAILURE_END
+NATIVE_API_PASS started_color_tween_is_rejected
+NATIVE_API_RESULT total=5 failed=0
+NATIVE_OWNERSHIP_START native_pointer_counts
+NATIVE_OWNERSHIP_PASS native_pointer_counts
+NATIVE_OWNERSHIP_START last_native_owner_releases_wrapper
+NATIVE_OWNERSHIP_PASS last_native_owner_releases_wrapper
+NATIVE_OWNERSHIP_START last_godot_owner_releases_tween
+NATIVE_OWNERSHIP_PASS last_godot_owner_releases_tween
+NATIVE_OWNERSHIP_START clone_promotes_handle
+NATIVE_OWNERSHIP_PASS clone_promotes_handle
+NATIVE_OWNERSHIP_START weak_upgrade_promotes_handle
+NATIVE_OWNERSHIP_PASS weak_upgrade_promotes_handle
+NATIVE_OWNERSHIP_START weak_pointer_does_not_keep_completed_tween
+NATIVE_OWNERSHIP_PASS weak_pointer_does_not_keep_completed_tween
+NATIVE_OWNERSHIP_START native_owner_preserves_godot_signals
+NATIVE_OWNERSHIP_PASS native_owner_preserves_godot_signals
+NATIVE_OWNERSHIP_START unregistered_handle_can_register_again
+NATIVE_OWNERSHIP_PASS unregistered_handle_can_register_again
+NATIVE_OWNERSHIP_START pointer_upgrade_during_signal
+NATIVE_OWNERSHIP_PASS pointer_upgrade_during_signal
+NATIVE_OWNERSHIP_START external_signal_handle
+NATIVE_OWNERSHIP_PASS external_signal_handle
+NATIVE_OWNERSHIP_RESULT total=10 failed=0
+NATIVE_BINDING_START builder_bindings_and_clear
+NATIVE_BINDING_PASS builder_bindings_and_clear
+NATIVE_BINDING_START clear_removes_manager_actions
+NATIVE_BINDING_PASS clear_removes_manager_actions
+NATIVE_BINDING_START duplicate_bind_and_absent_unbind
+NATIVE_BINDING_PASS duplicate_bind_and_absent_unbind
+NATIVE_BINDING_START unbind_preserves_remaining_node
+NATIVE_BINDING_PASS unbind_preserves_remaining_node
+NATIVE_BINDING_START unregister_and_register_preserve_binding
+NATIVE_BINDING_PASS unregister_and_register_preserve_binding
+NATIVE_BINDING_START completion_then_registration_replays
+NATIVE_BINDING_PASS completion_then_registration_replays
+NATIVE_BINDING_START bound_children_append_join_insert
+NATIVE_BINDING_PASS bound_children_append_join_insert
+NATIVE_BINDING_START clear_unregistered_binding
+NATIVE_BINDING_PASS clear_unregistered_binding
+NATIVE_BINDING_START clear_freed_node_binding
+NATIVE_BINDING_PASS clear_freed_node_binding
+NATIVE_BINDING_START automatic_property_and_method_owner
+NATIVE_BINDING_PASS automatic_property_and_method_owner
+NATIVE_BINDING_START kill_then_register_restores_binding
+NATIVE_BINDING_PASS kill_then_register_restores_binding
+NATIVE_BINDING_RESULT total=11 failed=0
+NATIVE_CYCLE_START two_node_cycles
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:1101)
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:1101)
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:1101)
+NATIVE_CYCLE_PASS two_node_cycles
+NATIVE_CYCLE_START deeper_mixed_cycles
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:1101)
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:1101)
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:1101)
+NATIVE_CYCLE_PASS deeper_mixed_cycles
+NATIVE_CYCLE_START rejection_preserves_child
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:1101)
+NATIVE_CYCLE_PASS rejection_preserves_child
+NATIVE_CYCLE_START valid_nested_playback_and_bindings
+NATIVE_CYCLE_PASS valid_nested_playback_and_bindings
+NATIVE_CYCLE_START repeated_incoming_graph
+WARNING: [SpireTween] Sequence insertion rejected: tween 0x20c39660 is referenced more than once (cycle or unsupported reuse).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:1094)
+NATIVE_CYCLE_PASS repeated_incoming_graph
+NATIVE_CYCLE_START registration_rejects_repeated_graph
+WARNING: [SpireTween] Sequence binding traversal rejected: tween 0x20c2fb60 is referenced more than once (cycle or unsupported reuse).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:1094)
+NATIVE_CYCLE_PASS registration_rejects_repeated_graph
+NATIVE_CYCLE_START iterator_forbidden_terminates
+NATIVE_CYCLE_PASS iterator_forbidden_terminates
+NATIVE_CYCLE_START iterator_repeated_terminates
+NATIVE_CYCLE_PASS iterator_repeated_terminates
+NATIVE_CYCLE_START repeated_after_heap_spill
+NATIVE_CYCLE_PASS repeated_after_heap_spill
+NATIVE_CYCLE_START wide_and_deep_hierarchies
+NATIVE_CYCLE_PASS wide_and_deep_hierarchies
+NATIVE_CYCLE_RESULT total=10 failed=0
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::play_pause_stop::PlayPauseStopTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000240f, 2.0083s] Loop completed
+Test Finished: fn(&'_ mut spire_tween_rust::tests::play_pause_stop::PlayPauseStopTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::play_pause_stop::PlayPauseStopTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000601f, 5.0167s] Loop completed
+Test Finished: fn(&'_ mut spire_tween_rust::tests::play_pause_stop::PlayPauseStopTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::play_pause_stop::PlayPauseStopTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000240f, 2.0083s] Loop completed
+[000841f, 7.0167s] Loop completed
+Test Finished: fn(&'_ mut spire_tween_rust::tests::play_pause_stop::PlayPauseStopTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::delays::DelaysTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000719f, 6.0000s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::delays::DelaysTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::delays::DelaysTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000840f, 7.0083s] Loop completed
+[001200f, 10.0083s] Loop completed
+Test Finished: fn(&'_ mut spire_tween_rust::tests::delays::DelaysTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::delays::DelaysTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000600f, 5.0083s] Finished
+[000840f, 7.0083s] Finished
+[001081f, 9.0167s] Finished
+[001321f, 11.0167s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::delays::DelaysTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::delays::DelaysTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000360f, 3.0083s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::delays::DelaysTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::misc::MiscTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000840f, 7.0083s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::misc::MiscTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::misc::MiscTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000721f, 6.0167s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::misc::MiscTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::misc::MiscTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+Test Finished: fn(&'_ mut spire_tween_rust::tests::misc::MiscTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::register_unregister::RegisterUnregisterTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000840f, 7.0083s] Loop completed
+Test Finished: fn(&'_ mut spire_tween_rust::tests::register_unregister::RegisterUnregisterTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::register_unregister::RegisterUnregisterTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+Test Finished: fn(&'_ mut spire_tween_rust::tests::register_unregister::RegisterUnregisterTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+ERROR: Cannot add the same tween to the sequence more than once.
+   at: spire_tween::tweens::sequence::data::<impl spire_tween::tweens::base::spire_tween::SpireTween<spire_tween::tweens::sequence::data::Sequence>>::is_already_inside (spire_tween/src/tweens/sequence/data.rs:992)
+ERROR: Cannot add the same tween to the sequence more than once.
+   at: spire_tween::tweens::sequence::data::<impl spire_tween::tweens::base::spire_tween::SpireTween<spire_tween::tweens::sequence::data::Sequence>>::is_already_inside (spire_tween/src/tweens/sequence/data.rs:992)
+ERROR: Cannot append a sequence tween to itself.
+   at: spire_tween::tweens::sequence::data::<impl spire_tween::tweens::base::spire_tween::SpireTween<spire_tween::tweens::sequence::data::Sequence>>::is_already_inside (spire_tween/src/tweens/sequence/data.rs:984)
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::error_handling::ErrorHandlingTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000360f, 3.0083s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::error_handling::ErrorHandlingTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::error_handling::ErrorHandlingTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+Test Finished: fn(&'_ mut spire_tween_rust::tests::error_handling::ErrorHandlingTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::lerp_modes::LerpModesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000240f, 2.0083s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::lerp_modes::LerpModesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::lerp_modes::LerpModesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000240f, 2.0083s] Finished
+[000360f, 3.0083s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::lerp_modes::LerpModesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::lerp_modes::LerpModesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000526f, 4.3917s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::lerp_modes::LerpModesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::lerp_modes::LerpModesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000360f, 3.0083s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::lerp_modes::LerpModesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::lerp_callable::LerpCallableTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000599f, 5.0000s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::lerp_callable::LerpCallableTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::lerp_callable::LerpCallableTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000599f, 5.0000s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::lerp_callable::LerpCallableTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::lerp_callable::LerpCallableTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+Test Finished: fn(&'_ mut spire_tween_rust::tests::lerp_callable::LerpCallableTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::lerp_callable::LerpCallableTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000240f, 2.0083s] Loop completed
+[000480f, 4.0083s] Loop completed
+Test Finished: fn(&'_ mut spire_tween_rust::tests::lerp_callable::LerpCallableTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::pause_process_modes::PauseProcessModesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000360f, 3.0000s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::pause_process_modes::PauseProcessModesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::pause_process_modes::PauseProcessModesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000960f, 3.0083s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::pause_process_modes::PauseProcessModesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::pause_process_modes::PauseProcessModesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[001082f, 9.0167s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::pause_process_modes::PauseProcessModesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::pause_process_modes::PauseProcessModesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000480f, 4.0083s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::pause_process_modes::PauseProcessModesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::pause_process_modes::PauseProcessModesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000482f, 4.0167s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::pause_process_modes::PauseProcessModesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::pause_process_modes::PauseProcessModesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[001083f, 9.0167s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::pause_process_modes::PauseProcessModesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::sequences::SequencesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000719f, 6.0000s] Loop completed
+Test Finished: fn(&'_ mut spire_tween_rust::tests::sequences::SequencesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::sequences::SequencesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000240f, 2.0083s] Finished
+[000360f, 3.0083s] Loop completed
+Test Finished: fn(&'_ mut spire_tween_rust::tests::sequences::SequencesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::sequences::SequencesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000120f, 1.0083s] Finished
+[000480f, 4.0083s] Finished
+[001319f, 11.0000s] Finished
+[001439f, 12.0000s] Finished
+[001679f, 14.0000s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::sequences::SequencesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::sequences::SequencesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000120f, 1.0083s] Finished
+[000360f, 3.0083s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::sequences::SequencesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::sequences::SequencesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000120f, 1.0083s] Finished
+[000541f, 4.5167s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::sequences::SequencesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::sequences::SequencesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000120f, 1.0083s] Finished
+[000360f, 3.0083s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::sequences::SequencesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::sequences::SequencesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000360f, 3.0083s] Finished
+[000600f, 5.0083s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::sequences::SequencesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::spiral_test::SpiralTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000959f, 8.0000s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::spiral_test::SpiralTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::spiral_test::SpiralTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000959f, 8.0000s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::spiral_test::SpiralTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::spiral_test::SpiralTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000959f, 8.0000s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::spiral_test::SpiralTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::spiral_test::SpiralTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000959f, 8.0000s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::spiral_test::SpiralTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::spiral_test::SpiralTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000959f, 8.0000s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::spiral_test::SpiralTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::spiral_test::SpiralTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000959f, 8.0000s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::spiral_test::SpiralTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::spiral_test::SpiralTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000959f, 8.0000s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::spiral_test::SpiralTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::spiral_test::SpiralTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000959f, 8.0000s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::spiral_test::SpiralTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::spiral_test::SpiralTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000959f, 8.0000s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::spiral_test::SpiralTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::spiral_test::SpiralTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000959f, 8.0000s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::spiral_test::SpiralTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::spiral_test::SpiralTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000959f, 8.0000s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::spiral_test::SpiralTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::spiral_test::SpiralTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000959f, 8.0000s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::spiral_test::SpiralTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::ellipsis_test::EllipsisTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000480f, 4.0083s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::ellipsis_test::EllipsisTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::ellipsis_test::EllipsisTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000480f, 4.0083s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::ellipsis_test::EllipsisTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::ellipsis_test::EllipsisTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000480f, 4.0083s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::ellipsis_test::EllipsisTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::ellipsis_test::EllipsisTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[001440f, 12.0083s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::ellipsis_test::EllipsisTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::ellipsis_test::EllipsisTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[001440f, 12.0083s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::ellipsis_test::EllipsisTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::gd_handle_path::GdHandlePathTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+Test Finished: fn(&'_ mut spire_tween_rust::tests::gd_handle_path::GdHandlePathTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::gd_handle_path::GdHandlePathTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000120f, 1.0083s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::gd_handle_path::GdHandlePathTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::gd_handle_path::GdHandlePathTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000240f, 2.0083s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::gd_handle_path::GdHandlePathTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::gd_handle_path::GdHandlePathTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+Test Finished: fn(&'_ mut spire_tween_rust::tests::gd_handle_path::GdHandlePathTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::templates_test::TemplatesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+Test Finished: fn(&'_ mut spire_tween_rust::tests::templates_test::TemplatesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::templates_test::TemplatesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+Test Finished: fn(&'_ mut spire_tween_rust::tests::templates_test::TemplatesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::templates_test::TemplatesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000120f, 1.0083s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::templates_test::TemplatesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::templates_test::TemplatesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000360f, 3.0083s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::templates_test::TemplatesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::templates_test::TemplatesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000240f, 2.0083s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::templates_test::TemplatesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+ERROR: Contour shape has zero length, returning empty sequence.
+   at: <godot_core::obj::gd::Gd<_> as spire_tween::tweens::templates::do_contour_shape::DoContourShape2D>::do_contour_shape (spire_tween/src/tweens/templates/do_contour_shape.rs:46)
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::templates_test::TemplatesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+Test Finished: fn(&'_ mut spire_tween_rust::tests::templates_test::TemplatesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::templates_test::TemplatesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000240f, 2.0083s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::templates_test::TemplatesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::templates_test::TemplatesTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+ERROR: [panic spire_tween_rust/src/tests/templates_test.rs:402]  ignore_time_scale=true: expected ~0.5 scaled-timer advance, got 1076.0041666720456
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::templates_3d_test::Templates3DTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000120f, 1.0083s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::templates_3d_test::Templates3DTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::templates_3d_test::Templates3DTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000120f, 1.0083s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::templates_3d_test::Templates3DTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::templates_3d_test::Templates3DTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+[000240f, 2.0083s] Finished
+Test Finished: fn(&'_ mut spire_tween_rust::tests::templates_3d_test::Templates3DTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+---------------------------------
+Test Started: fn(&'_ mut spire_tween_rust::tests::templates_3d_test::Templates3DTests) -> core::pin::Pin<alloc::boxed::Box<dyn core::future::future::Future<Output = ()>>>
+ERROR: [panic spire_tween_rust/src/tests/templates_3d_test.rs:191]  at t=duration/2, leader should be near (-2, 0, 0), got (-1.9993147, 0, 0.05235425)
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+
+=== All tests finished! ===
+ERROR: [panic /home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/classes/class_runtime.rs:379]  Node3D::upcast_ref: access to instance with ID 268703893011 after it has been freed
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)

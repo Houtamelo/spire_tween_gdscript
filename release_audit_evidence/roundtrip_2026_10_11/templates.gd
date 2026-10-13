@@ -1,0 +1,26 @@
+extends SceneTree
+func _initialize(): call_deferred("run")
+func observe(label, t): print("AUDIT_TEMPLATE ", label, " ", JSON.stringify({"registered":t.is_registered(),"stopped":t.is_stopped()}))
+func run():
+    var a := Node2D.new()
+    var b := Node3D.new()
+    root.add_child(a)
+    root.add_child(b)
+    var ellipse2 := DoNode2D.ellipsis(a, Vector2.ZERO, 0.0, PI, Vector2.ONE, Vector2.ONE, 1.0)
+    var ellipse3 := DoNode3D.ellipsis(b, Vector3.ZERO, 0.0, PI, Vector3(1,1,0), Vector3(1,1,0), Vector3.UP, 1.0)
+    a.queue_free()
+    b.queue_free()
+    for i in range(4): await process_frame
+    observe("freed_ellipse2", ellipse2)
+    observe("freed_ellipse3", ellipse3)
+    ellipse2.unregister()
+    ellipse3.unregister()
+    var c := Node2D.new()
+    root.add_child(c)
+    var equal_angle := DoNode2D.ellipsis(c, Vector2.ZERO, 0.0, 0.0, Vector2.ONE, Vector2.ONE * 2, 1.0).set_process_mode(Spire.PROCESS_MODE_MANUAL)
+    equal_angle.custom_step(0.5)
+    print("AUDIT_TEMPLATE equal_angle ", str(c.position))
+    equal_angle.unregister()
+    c.queue_free()
+    for i in range(2): await process_frame
+    quit(0)

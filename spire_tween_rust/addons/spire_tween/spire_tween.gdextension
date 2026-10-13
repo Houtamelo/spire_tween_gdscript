@@ -4,7 +4,7 @@ compatibility_minimum = 4.4.1
 reloadable=true
 
 [libraries]
-linux.debug.x86_64 = "res://addons/spire_tween/lib/x86_64-unknown-linux-gnu/release/libspire_tween_rust.so"
+linux.debug.x86_64 = "res://addons/spire_tween/lib/x86_64-unknown-linux-gnu/debug/libspire_tween_rust.so"
 linux.release.x86_64 = "res://addons/spire_tween/lib/x86_64-unknown-linux-gnu/release/libspire_tween_rust.so"
 
 windows.debug.x86_64 = "res://addons/spire_tween/lib/x86_64-pc-windows-msvc/debug/spire_tween_rust.dll"

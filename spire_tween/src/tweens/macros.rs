@@ -342,9 +342,11 @@ macro_rules! define_base_methods {
             #[inline]
             pub fn finished_clear_connections(&mut self);
 
-            #[allow(unused)]
+            /// Advances a playing tween through the canonical checked path.
+            /// See [`TweenPtr::custom_step`] for time units, pause behavior, and
+            /// the caller's responsibility for processing-reference retention.
             #[inline]
-            pub(crate) fn handle_bound_nodes_validity(&mut self, is_tree_paused: bool) -> ObjectValidityResult;
+            pub fn custom_step(&self, delta_time: f64, is_tree_paused: bool) -> TweenStepResult;
         }
     };
 }
@@ -534,25 +536,61 @@ macro_rules! define_base_gd_methods {
                 this
             }
 
-            /// Processes the tween by the given delta time, in seconds.
-            /// This is mostly useful for manual control when the tween is paused.
-            /// Setting delta longer than `duration` can be used to immediately apply the final "frame" of the animation
-            /// (this may also be accomplished by calling [method force_complete]).
+            /// Advances a playing tween by [param delta_time] seconds through the
+            /// same checked processing path used by the manager and sequences.
+            /// Paused or stopped tweens do not advance; call [method play] first
+            /// to resume or restart them. A sufficiently large step can finish
+            /// an animation; [method force_complete] also skips remaining loops.
             ///
             /// If you don't want the tween to process automatically,
             /// set its [enum Spire.ProcessMode] to [constant Spire.PROCESS_MODE_MANUAL].
             /// This can be done with [method set_process_mode].
             ///
+            /// [b]Returns:[/b] Whether the tween "wants to live": `false` after
+            /// completion, when already stopped, or when owner/callable/binding
+            /// validation requests cancellation. Returns `true` while playing,
+            /// paused, or temporarily blocked by live bindings or pause mode.
+            /// Stopped tweens return `false` even if their live bindings cannot process.
+            ///
+            /// A `false` result does not destroy the reference-counted wrapper.
+            /// Manual processors decide when to release their handle or call
+            /// [method unregister]. You may retain a valid completed/stopped
+            /// tween and call [method play] to replay it. The manager and sequences
+            /// apply their own retention rules; this Boolean is for manual callers.
+            ///
             /// [b]Note:[/b] This takes `speed_scale` (see [method set_speed_scale]) into account,
             /// so the effective delta time will be `delta_time * speed_scale`.
+            /// The caller chooses the supplied clock; [method set_ignore_time_scale]
+            /// selects the clock for automatic manager updates, not for this explicit step.
             ///
             /// [b]Note:[/b] This does not bypass the tween's [enum Spire.PauseMode].
             /// However, for the purposes of [constant Spire.PAUSE_MODE_STOP] the SceneTree is considered unpaused.
             /// This method won't do anything if the tween can't process
             /// (such as if pause mode is [constant Spire.PAUSE_MODE_BOUND] and any of the bound nodes can't process).
             /// If this behavior isn't desired, consider setting `pause_mode` to [constant Spire.PAUSE_MODE_PROCESS].
+            ///
+            /// Explicit binding lifetime checks still run for paused/stopped tweens.
+            /// A freed binding stops the tween without emitting completion events.
+            /// Call only on the main thread, and do not step a tween from a callback
+            /// that runs while it is already processing.
             #[func]
-            pub fn custom_step(&self, delta_time: f64) { let _ = self.to_mut().process(delta_time, true); }
+            pub fn custom_step(&self, delta_time: f64) -> bool {
+                let result = self.to_ref().custom_step(delta_time, false);
+                match result {
+                    TweenStepResult::Stepped(advance_time_result) => match advance_time_result {
+                        AdvanceTimeResult::Playing => true,
+                        AdvanceTimeResult::Paused => true,
+                        AdvanceTimeResult::Completed {
+                            unscaled_excess_time: _,
+                        } => false,
+                        AdvanceTimeResult::ShouldDespawn => false,
+                    },
+                    TweenStepResult::AlreadyPaused => true,
+                    TweenStepResult::AlreadyStopped => false,
+                    TweenStepResult::DidNotStepDueToBounds => true,
+                    TweenStepResult::NoLongerValid => false,
+                }
+            }
 
             /// [b]Returns:[/b] The current position of the tween's animation, in seconds. This is the time elapsed
             /// since the start of the current loop.

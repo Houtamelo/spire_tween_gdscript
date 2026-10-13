@@ -1,0 +1,17 @@
+{
+  "cmd": [
+    "godot",
+    "--headless",
+    "--max-fps",
+    "120",
+    "--path",
+    "/tmp/spire-roundtrip-20261011-ge7mv8x_/spire_tween_gdscript",
+    "res://examples/tests/test_runner.tscn",
+    "--",
+    "--all-tests",
+    "--no-cache"
+  ],
+  "exit_code": "timeout",
+  "seconds": 240.00326220399984,
+  "library_sha256": "ad4dc29dfb8fd3fa09ea66fa80c602259ac3032f6b347158022c69e56192af7a"
+}

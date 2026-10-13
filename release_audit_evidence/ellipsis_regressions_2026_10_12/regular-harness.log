@@ -1,0 +1,37 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards balanced)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+---------------------------------
+Test Started: test_circle3_stays_planar_with_constant_radius
+Test Finished: test_circle3_stays_planar_with_constant_radius
+---------------------------------
+Test Started: test_circle3_full_turns_return_to_start
+Test Finished: test_circle3_full_turns_return_to_start
+---------------------------------
+Test Started: test_circle3_uses_global_center_under_transformed_parent
+Test Finished: test_circle3_uses_global_center_under_transformed_parent
+---------------------------------
+Test Started: test_equal_angle_ellipse2_interpolates_radius
+Test Finished: test_equal_angle_ellipse2_interpolates_radius
+---------------------------------
+Test Started: test_equal_angle_ellipse3_interpolates_radius
+Test Finished: test_equal_angle_ellipse3_interpolates_radius
+---------------------------------
+Test Started: test_ellipse3_preserves_requested_helical_displacement
+Test Finished: test_ellipse3_preserves_requested_helical_displacement
+---------------------------------
+Test Started: test_valid_templates_finish_once_normally_and_when_forced
+Test Finished: test_valid_templates_finish_once_normally_and_when_forced
+---------------------------------
+Test Started: test_immediate_receiver_deletion_cancels_registered_templates
+Test Finished: test_immediate_receiver_deletion_cancels_registered_templates
+---------------------------------
+Test Started: test_deferred_receiver_deletion_cancels_registered_templates
+Test Finished: test_deferred_receiver_deletion_cancels_registered_templates
+---------------------------------
+Test Started: test_immediate_receiver_deletion_cancels_sequence_children
+Test Finished: test_immediate_receiver_deletion_cancels_sequence_children
+---------------------------------
+Test Started: test_deferred_receiver_deletion_cancels_sequence_children
+Test Finished: test_deferred_receiver_deletion_cancels_sequence_children
+REGULAR_ELLIPSE_RESULT total=11 failed=0

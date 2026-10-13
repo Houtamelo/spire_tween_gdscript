@@ -1,0 +1,169 @@
+{
+  "date": "2026-10-13",
+  "godot_runtime": "4.7.2.stable.official.ed1daf0bf",
+  "dependency_versions": {
+    "godot": "0.5.5"
+  },
+  "api": "4.6 default",
+  "headless": true,
+  "profiles": {
+    "debug": {
+      "profile": "debug",
+      "library_sha256": "4ae08db42d0eee7fa4ce1a5c85c15bb122a741df736a75d56598dc8fbba2d9d0",
+      "results": [
+        {
+          "suite": "node-binding",
+          "exit_code": 0,
+          "results": [
+            "BINDING_RESULT total=23 failed=0"
+          ],
+          "script_errors": 0,
+          "panics": 0
+        },
+        {
+          "suite": "sequence-speed",
+          "exit_code": 0,
+          "results": [
+            "EXCESS_RESULT total=9 cases=121 failed=0"
+          ],
+          "script_errors": 0,
+          "panics": 0
+        },
+        {
+          "suite": "sequence-ctors",
+          "exit_code": 0,
+          "results": [
+            "CTOR_RESULT total=18 failed=0"
+          ],
+          "script_errors": 0,
+          "panics": 0
+        },
+        {
+          "suite": "ellipse",
+          "exit_code": 0,
+          "results": [
+            "ELLIPSE_RESULT total=11 cases=119 failed=0"
+          ],
+          "script_errors": 0,
+          "panics": 0
+        },
+        {
+          "suite": "sequence-cycles",
+          "exit_code": 0,
+          "results": [
+            "CYCLE_RESULT total=6 failed=0"
+          ],
+          "script_errors": 0,
+          "panics": 0
+        },
+        {
+          "suite": "ownership",
+          "exit_code": 0,
+          "results": [
+            "OWNERSHIP_RESULT total=15 failed=0"
+          ],
+          "script_errors": 0,
+          "panics": 0
+        },
+        {
+          "suite": "delayed-call",
+          "exit_code": 0,
+          "results": [
+            "DELAY_VALIDITY_RESULT total=9 failed=0"
+          ],
+          "script_errors": 0,
+          "panics": 0
+        }
+      ],
+      "method_count": 91
+    },
+    "release": {
+      "profile": "release",
+      "library_sha256": "a0a2cd0d81fef9b2c24cc23afae560fc59e228a2e1978d9487365cf21bdf0453",
+      "results": [
+        {
+          "suite": "node-binding",
+          "exit_code": 0,
+          "results": [
+            "BINDING_RESULT total=23 failed=0"
+          ],
+          "script_errors": 0,
+          "panics": 0
+        },
+        {
+          "suite": "sequence-speed",
+          "exit_code": 0,
+          "results": [
+            "EXCESS_RESULT total=9 cases=121 failed=0"
+          ],
+          "script_errors": 0,
+          "panics": 0
+        },
+        {
+          "suite": "sequence-ctors",
+          "exit_code": 0,
+          "results": [
+            "CTOR_RESULT total=18 failed=0"
+          ],
+          "script_errors": 0,
+          "panics": 0
+        },
+        {
+          "suite": "ellipse",
+          "exit_code": 0,
+          "results": [
+            "ELLIPSE_RESULT total=11 cases=119 failed=0"
+          ],
+          "script_errors": 0,
+          "panics": 0
+        },
+        {
+          "suite": "sequence-cycles",
+          "exit_code": 0,
+          "results": [
+            "CYCLE_RESULT total=6 failed=0"
+          ],
+          "script_errors": 0,
+          "panics": 0
+        },
+        {
+          "suite": "ownership",
+          "exit_code": 0,
+          "results": [
+            "OWNERSHIP_RESULT total=15 failed=0"
+          ],
+          "script_errors": 0,
+          "panics": 0
+        },
+        {
+          "suite": "delayed-call",
+          "exit_code": 0,
+          "results": [
+            "DELAY_VALIDITY_RESULT total=9 failed=0"
+          ],
+          "script_errors": 0,
+          "panics": 0
+        }
+      ],
+      "method_count": 91
+    }
+  },
+  "added_return_test_methods": 4,
+  "added_return_configurations": 42,
+  "existing_sequence_binding_configurations": 192,
+  "rustdoc_native_warnings": 39,
+  "rustdoc_bridge_warnings": 1582,
+  "stepping_doctest": "1 compiled example passed",
+  "readme_gdscript_example": "passed in Godot",
+  "source_sha256": {
+    "README.md": "b59852b298a3971643f281836ed7cb7e88bbae72b0d3f28712d4fb4882c1d64b",
+    "spire_tween/README.md": "382e0d297559fbf69dd02bbecfde3bd4b67a5fd869b2fd3e207ac3de30542692",
+    "spire_tween/src/lib.rs": "51748a31d2305a4d7233917756822ace9359c2d762552767629a052bd7c9b7ce",
+    "spire_tween/src/tweens/base/spire_tween.rs": "1328b0112208f08edcf8355ef24d9c1af238ad92c329720697b04539b67cffef",
+    "spire_tween/src/tweens/traits.rs": "daa5ff25446742d1e37fceb176401fd4aa186a13bd1873aa699f475162635b65",
+    "spire_tween/src/tweens/macros.rs": "dee1c77ff2cdea6fa53f7e5d13b800021bec2c83bc2b7d6f51c17be6657cbc85",
+    "spire_tween/src/tweens/sequence/data.rs": "d46a42100ecaa8435a91c55d895262896a5d87d35929c3f1dcd19c66d86a8c86",
+    "spire_tween/src/global/tweens_map.rs": "a309746322b630dbf0faeda295bbeef33a90c7b04b12fed0dc67801b59200005",
+    "spire_tween_gdscript/examples/tests/node_binding.gd": "2c150bd5357bc93998203d8a30b3e7a5b391cac6d6d991770722699a0924dc53"
+  }
+}

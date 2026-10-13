@@ -5,6 +5,8 @@ class QuietRunner extends "res://examples/tests/test_runner.gd":
 		pass
 
 const ELLIPSIS := preload("res://examples/tests/ellipsis.tscn")
+const SEQUENCE_SPEED := preload("res://examples/tests/sequence_speed.tscn")
+const ELLIPSIS_REGRESSIONS := preload("res://examples/tests/ellipsis_regressions.tscn")
 var total := 0
 var failed := 0
 
@@ -53,10 +55,18 @@ func run_checks() -> void:
 	check(runner.cached_results.is_empty(), "invalid_cache_is_ignored")
 
 	var included := false
+	var speed_included := false
+	var ellipsis_regressions_included := false
 	for scene: PackedScene in QuietRunner.TESTS:
 		if scene.resource_path == ELLIPSIS.resource_path:
 			included = true
+		if scene.resource_path == SEQUENCE_SPEED.resource_path:
+			speed_included = true
+		if scene.resource_path == ELLIPSIS_REGRESSIONS.resource_path:
+			ellipsis_regressions_included = true
 	check(included, "ellipsis_scene_is_in_catalog")
+	check(speed_included, "sequence_speed_scene_is_in_catalog")
+	check(ellipsis_regressions_included, "ellipsis_regressions_scene_is_in_catalog")
 	var all_suites_runnable := true
 	for suite: PackedScene in QuietRunner.TESTS:
 		var instance := suite.instantiate()
@@ -66,6 +76,8 @@ func run_checks() -> void:
 	var names: Array = runner.get_prefab_test_names(ELLIPSIS)
 	names.sort()
 	check(names == ["test_circle", "test_circle_inverted", "test_ellipsis", "test_ellipsis_varying", "test_ellipsis_varying_inverted"], "all_five_ellipsis_tests_are_discovered")
+	check(runner.get_prefab_test_names(SEQUENCE_SPEED).size() == 9, "all_nine_sequence_speed_tests_are_discovered")
+	check(runner.get_prefab_test_names(ELLIPSIS_REGRESSIONS).size() == 11, "all_eleven_ellipsis_regressions_are_discovered")
 	await process_frame
 	runner.get_prefab_hash(ELLIPSIS)
 	var count_before := Performance.get_monitor(Performance.OBJECT_COUNT)

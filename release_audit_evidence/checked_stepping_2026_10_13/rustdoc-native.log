@@ -1,0 +1,2012 @@
+ Documenting spire_tween v1.4.0 (/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween)
+warning: unresolved link to `b`
+  --> spire_tween/src/tweens/macros.rs:23:13
+   |
+23 | /             /// Binds this tween to the given node.
+24 | |             /// Unlike the built-in [Tween], Spire tweens can be bound to any number of nodes.
+25 | |             ///
+26 | |             /// This influences the tween in several ways:
+...  |
+35 | |             /// [b]Note:[/b] Property/Method tweeners also track their animated node's
+36 | |             /// lifetime automatically; explicit binding does not change that behavior.
+   | |_______________________________________________________________________________________^
+   |
+  ::: spire_tween/src/tweens/any_tween.rs:50:1
+   |
+50 |   define_tween_ptr_methods! { Strong = AnyTween; Weak = WeakAnyTween; }
+   |   --------------------------------------------------------------------- in this macro invocation
+   |
+   = note: the link appears in this line:
+
+           [b]Note:[/b] Property/Method tweeners also track their animated node's
+            ^
+   = note: no item named `b` in scope
+   = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+   = note: `#[warn(rustdoc::broken_intra_doc_links)]` on by default
+   = note: this warning originates in the macro `define_tween_ptr_methods` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unresolved link to `b`
+  --> spire_tween/src/tweens/base/ptr_methods.rs:16:10
+   |
+16 |     /// [b]Note:[/b] Property/Method tweeners also track their animated node's
+   |          ^ no item named `b` in scope
+   |
+   = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: public documentation for `absolute` links to private item `FromValue::PendingEvaluation`
+  --> spire_tween/src/tweens/lerping/lerp_mode.rs:47:11
+   |
+47 |     /// [`FromValue::PendingEvaluation`] (read from the property on first tick).
+   |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ this item is private
+   |
+   = note: this link will resolve properly if you pass `--document-private-items`
+   = note: `#[warn(rustdoc::private_intra_doc_links)]` on by default
+
+warning: public documentation for `reset_state` links to private item `FromValue::Explicit`
+  --> spire_tween/src/tweens/lerping/lerp_mode.rs:80:41
+   |
+80 |     /// re-evaluates `from` (when not [`FromValue::Explicit`]), clears
+   |                                         ^^^^^^^^^^^^^^^^^^^ this item is private
+   |
+   = note: this link will resolve properly if you pass `--document-private-items`
+
+warning: public documentation for `spire_step` links to private item `StepResult`
+  --> spire_tween/src/tweens/lerping/spire_lerp.rs:81:32
+   |
+81 |     /// the new value plus a [`StepResult`] indicating whether the target was reached.
+   |                                ^^^^^^^^^^ this item is private
+   |
+   = note: this link will resolve properly if you pass `--document-private-items`
+
+warning: public documentation for `spire_step` links to private item `StepResult::Unfinished::accumulated_time`
+  --> spire_tween/src/tweens/lerping/spire_lerp.rs:86:61
+   |
+86 |     /// "fuel" that callers can save up between ticks via [`StepResult::Unfinished::accumulated_time`]
+   |                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ this item is private
+   |
+   = note: this link will resolve properly if you pass `--document-private-items`
+
+warning: public documentation for `spire_step` links to private item `StepResult::Finished`
+  --> spire_tween/src/tweens/lerping/spire_lerp.rs:91:49
+   |
+91 |     /// - When the result equals `to`, return [`StepResult::Finished`] with the unspent
+   |                                                 ^^^^^^^^^^^^^^^^^^^^ this item is private
+   |
+   = note: this link will resolve properly if you pass `--document-private-items`
+
+warning: public documentation for `spire_step` links to private item `StepResult::Unfinished`
+  --> spire_tween/src/tweens/lerping/spire_lerp.rs:94:30
+   |
+94 |     /// - Otherwise return [`StepResult::Unfinished`] with the saved-up fuel as
+   |                              ^^^^^^^^^^^^^^^^^^^^^^ this item is private
+   |
+   = note: this link will resolve properly if you pass `--document-private-items`
+
+warning: public documentation for `lerper` links to private item `CustomBasicLerper`
+  --> spire_tween/src/tweens/method/data.rs:29:62
+   |
+29 |     /// The lerping math itself — `()` for built-in types, [`CustomBasicLerper`] for
+   |                                                              ^^^^^^^^^^^^^^^^^ this item is private
+   |
+   = note: this link will resolve properly if you pass `--document-private-items`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/macros.rs:23:13
+    |
+ 23 | /             /// Binds this tween to the given node.
+ 24 | |             /// Unlike the built-in [Tween], Spire tweens can be bound to any number of nodes.
+ 25 | |             ///
+ 26 | |             /// This influences the tween in several ways:
+...   |
+ 35 | |             /// [b]Note:[/b] Property/Method tweeners also track their animated node's
+ 36 | |             /// lifetime automatically; explicit binding does not change that behavior.
+    | |_______________________________________________________________________________________^
+    |
+   ::: spire_tween/src/tweens/method/data_enum.rs:132:1
+    |
+132 |   define_tween_ptr_methods! { Strong = AnyMethodTween; Weak = WeakMethodTween; }
+    |   ------------------------------------------------------------------------------ in this macro invocation
+    |
+    = note: the link appears in this line:
+
+            [b]Note:[/b] Property/Method tweeners also track their animated node's
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+    = note: this warning originates in the macro `define_tween_ptr_methods` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: public documentation for `DoVarMethod` links to private item `CustomBasicLerper`
+  --> spire_tween/src/tweens/method/do_method.rs:92:7
+   |
+92 | /// [`CustomBasicLerper`].
+   |       ^^^^^^^^^^^^^^^^^ this item is private
+   |
+   = note: this link will resolve properly if you pass `--document-private-items`
+
+warning: public documentation for `data` links to private item `PropertyDataViaCallable`
+  --> spire_tween/src/tweens/property/data.rs:14:11
+   |
+14 |     /// [`PropertyDataViaCallable`] or `PropertyDataCustom`.
+   |           ^^^^^^^^^^^^^^^^^^^^^^^ this item is private
+   |
+   = note: this link will resolve properly if you pass `--document-private-items`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/macros.rs:23:13
+    |
+ 23 | /             /// Binds this tween to the given node.
+ 24 | |             /// Unlike the built-in [Tween], Spire tweens can be bound to any number of nodes.
+ 25 | |             ///
+ 26 | |             /// This influences the tween in several ways:
+...   |
+ 35 | |             /// [b]Note:[/b] Property/Method tweeners also track their animated node's
+ 36 | |             /// lifetime automatically; explicit binding does not change that behavior.
+    | |_______________________________________________________________________________________^
+    |
+   ::: spire_tween/src/tweens/property/data_enum.rs:132:1
+    |
+132 |   define_tween_ptr_methods! { Strong = AnyPropertyTween; Weak = WeakPropertyTween; }
+    |   ---------------------------------------------------------------------------------- in this macro invocation
+    |
+    = note: the link appears in this line:
+
+            [b]Note:[/b] Property/Method tweeners also track their animated node's
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+    = note: this warning originates in the macro `define_tween_ptr_methods` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: public documentation for `PropertyDataCustom` links to private item `PropertyDataViaCallable`
+  --> spire_tween/src/tweens/property/data_impls/custom.rs:14:48
+   |
+14 | /// properties exposed via callables, prefer [`PropertyDataViaCallable`].
+   |                                                ^^^^^^^^^^^^^^^^^^^^^^^ this item is private
+   |
+   = note: this link will resolve properly if you pass `--document-private-items`
+
+warning: public documentation for `append_ctor_callable` links to private item `SpireSequence`
+   --> spire_tween/src/tweens/sequence/data.rs:644:13
+    |
+644 |     /// a [`SpireSequence`]. It is called at most once. Invalid callables, nil or
+    |             ^^^^^^^^^^^^^ this item is private
+    |
+    = note: this link will resolve properly if you pass `--document-private-items`
+
+warning: public documentation for `DoBone` links to private item `PropertyDataViaCallable`
+  --> spire_tween/src/tweens/templates/do_bone.rs:12:37
+   |
+12 | /// Implementation note: built on [`PropertyDataViaCallable`] because
+   |                                     ^^^^^^^^^^^^^^^^^^^^^^^ this item is private
+   |
+   = note: this link will resolve properly if you pass `--document-private-items`
+
+warning: could not parse code block as Rust code
+  --> spire_tween/src/enums/ease.rs:17:9
+   |
+17 | /         /// f(x) = x
+18 | |         ///
+19 | |         /// ```ignore
+20 | |         /// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░████
+...  |
+34 | |         /// ████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+35 | |         /// ```
+   | |_______________^
+   |
+   = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2593}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2593}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: `#[warn(rustdoc::invalid_rust_codeblocks)]` on by default
+   = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: could not parse code block as Rust code
+  --> spire_tween/src/enums/ease.rs:38:9
+   |
+38 | /         /// f(x) = sin((x - 1.0)π/2) + 1
+39 | |         ///
+40 | |         /// ```ignore
+41 | |         /// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▓██
+...  |
+57 | |         /// ▓▓▓▓▓█████████▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+58 | |         /// ```
+   | |_______________^
+   |
+   = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2593}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2592}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2592}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2592}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2592}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2593}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2593}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2592}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2592}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2592}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2593}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2592}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2593}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2593}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2592}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: could not parse code block as Rust code
+  --> spire_tween/src/enums/ease.rs:61:9
+   |
+61 | /         /// f(x) = x^2
+62 | |         ///
+63 | |         /// ```ignore
+64 | |         /// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+...  |
+80 | |         /// ▓▓▓▓▓██████████▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+81 | |         /// ```
+   | |_______________^
+   |
+   = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2593}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2593}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2593}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2592}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2592}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2593}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2593}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2592}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2593}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2593}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2593}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2593}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2593}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2593}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2593}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2593}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2593}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: could not parse code block as Rust code
+   --> spire_tween/src/enums/ease.rs:84:9
+    |
+ 84 | /         /// f(x) = x^3
+ 85 | |         ///
+ 86 | |         /// ```ignore
+ 87 | |         /// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+...   |
+103 | |         /// ▓▓▓▓▓▓▓▓▓▓██████████████▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+104 | |         /// ```
+    | |_______________^
+    |
+    = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: could not parse code block as Rust code
+   --> spire_tween/src/enums/ease.rs:107:9
+    |
+107 | /         /// f(x) = x^4
+108 | |         ///
+109 | |         /// ```ignore
+110 | |         /// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▓█
+...   |
+126 | |         /// ▓▓▓▓▓▓▓▓▓▓▓▓▓▓████████████████▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+127 | |         /// ```
+    | |_______________^
+    |
+    = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: could not parse code block as Rust code
+   --> spire_tween/src/enums/ease.rs:130:9
+    |
+130 | /         /// f(x) = x^5
+131 | |         ///
+132 | |         /// ```ignore
+133 | |         /// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒█
+...   |
+149 | |         /// ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓█████████████████▓▒░░░░░░░░░░░░░░░░░░░░░░░░░░░
+150 | |         /// ```
+    | |_______________^
+    |
+    = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: could not parse code block as Rust code
+   --> spire_tween/src/enums/ease.rs:153:9
+    |
+153 | /         /// f(x) = 1 - sqrt(1 - x^2)
+154 | |         ///
+155 | |         /// ```ignore
+156 | |         /// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░█
+...   |
+172 | |         /// ▓▓▓▓▓▓▓████████████████▓▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+173 | |         /// ```
+    | |_______________^
+    |
+    = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: could not parse code block as Rust code
+   --> spire_tween/src/enums/ease.rs:176:9
+    |
+176 | /         /// f(x) = 2^(10x - 10)
+177 | |         ///
+178 | |         /// ```ignore
+179 | |         /// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░█
+...   |
+195 | |         /// ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓█████████████████▓░░░░░░░░░░░░░░░░░░░░░░░░░
+196 | |         /// ```
+    | |_______________^
+    |
+    = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: could not parse code block as Rust code
+   --> spire_tween/src/enums/ease.rs:199:9
+    |
+199 | /         /// f(x) = sin(xπ / 3)
+200 | |         ///
+201 | |         /// ```ignore
+202 | |         /// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒█████████▓▓▓▓▓
+...   |
+218 | |         /// ███░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+219 | |         /// ```
+    | |_______________^
+    |
+    = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: could not parse code block as Rust code
+   --> spire_tween/src/enums/ease.rs:222:9
+    |
+222 | /         /// f(x) = x(3 - x)
+223 | |         ///
+224 | |         /// ```ignore
+225 | |         /// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒██████████▓▓▓▓▓
+...   |
+241 | |         /// ██▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+242 | |         /// ```
+    | |_______________^
+    |
+    = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: could not parse code block as Rust code
+   --> spire_tween/src/enums/ease.rs:245:9
+    |
+245 | /         /// f(x) = 2 + (x - 2)^4
+246 | |         ///
+247 | |         /// ```ignore
+248 | |         /// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒██████████████▓▓▓▓▓▓▓▓▓▓
+...   |
+264 | |         /// ██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+265 | |         /// ```
+    | |_______________^
+    |
+    = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: could not parse code block as Rust code
+   --> spire_tween/src/enums/ease.rs:268:9
+    |
+268 | /         /// f(x) = 2 - (x - 2)^5
+269 | |         ///
+270 | |         /// ```ignore
+271 | |         /// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▓████████████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+...   |
+287 | |         /// █▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+288 | |         /// ```
+    | |_______________^
+    |
+    = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: could not parse code block as Rust code
+   --> spire_tween/src/enums/ease.rs:291:9
+    |
+291 | /         /// f(x) = 2 + (x - 2)^6
+292 | |         ///
+293 | |         /// ```ignore
+294 | |         /// ░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▓██████████████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+...   |
+310 | |         /// █▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+311 | |         /// ```
+    | |_______________^
+    |
+    = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: could not parse code block as Rust code
+   --> spire_tween/src/enums/ease.rs:314:9
+    |
+314 | /         /// f(x) = sqrt(2 - (x - 2)^3)
+315 | |         ///
+316 | |         /// ```ignore
+317 | |         /// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒█████████████████▓▓▓▓▓▓
+...   |
+333 | |         /// █░░░░░░░░░░░░░░░░░░░░░░░░ ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+334 | |         /// ```
+    | |_______________^
+    |
+    = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: could not parse code block as Rust code
+   --> spire_tween/src/enums/ease.rs:337:9
+    |
+337 | /         /// f(x) = 2 - 3^(-9x)
+338 | |         ///
+339 | |         /// ```ignore
+340 | |         /// ░░░░░░░░░░░░░░░░░░░░░░░░░▓██████████████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+...   |
+356 | |         /// █░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+357 | |         /// ```
+    | |_______________^
+    |
+    = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: could not parse code block as Rust code
+   --> spire_tween/src/enums/ease.rs:360:9
+    |
+360 | /         /// f(x) = 0.6 * (2 - cos(πx))
+361 | |         ///
+362 | |         /// ```ignore
+363 | |         /// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒████████▓▓
+...   |
+379 | |         /// ▓▓▓███████▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+380 | |         /// ```
+    | |_______________^
+    |
+    = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: could not parse code block as Rust code
+   --> spire_tween/src/enums/ease.rs:383:9
+    |
+383 | /         /// ```ignore
+384 | |         /// if x < 0.6: f(x) = 3 * x^3
+385 | |         /// else:       f(x) = 0 + x * (5 - 3x)
+386 | |         /// ```
+...   |
+405 | |         /// ▓▓▓████████▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+406 | |         /// ```
+    | |_______________^
+    |
+    = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: could not parse code block as Rust code
+   --> spire_tween/src/enums/ease.rs:409:9
+    |
+409 | /         /// ```ignore
+410 | |         /// if x < 0.6: f(x) = 5 * x^4
+411 | |         /// else:       f(x) = 2 + (x - 2) * (3x - 3)^3
+412 | |         /// ```
+...   |
+431 | |         /// ▓▓▓▓██████████▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+432 | |         /// ```
+    | |_______________^
+    |
+    = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: could not parse code block as Rust code
+   --> spire_tween/src/enums/ease.rs:435:9
+    |
+435 | /         /// ```ignore
+436 | |         /// if x < 0.6: f(x) = 9 * x^5
+437 | |         /// else:       f(x) = 2 - 9 * (x - 2)^5
+438 | |         /// ```
+...   |
+457 | |         /// ▓▓▓▓▓███████████▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+458 | |         /// ```
+    | |_______________^
+    |
+    = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: could not parse code block as Rust code
+   --> spire_tween/src/enums/ease.rs:461:9
+    |
+461 | /         /// ```ignore
+462 | |         /// if x < 0.6: f(x) = 17 * x^6
+463 | |         /// else:       f(x) = 2 + 17 * (x - 2)^6
+464 | |         /// ```
+...   |
+482 | |         /// ░░░░░░░░░░░░░░░░░▓█████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+483 | |         /// ▓▓▓▓▓▓███████████▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+    | |___________________________________________________________________________^
+    |
+    = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: could not parse code block as Rust code
+   --> spire_tween/src/enums/ease.rs:486:9
+    |
+486 | /         /// ```ignore
+487 | |         /// if x < 0.6: f(x) = (2 - sqrt(2 - 5x^3)) / 3
+488 | |         /// else:       f(x) = (2 + sqrt(2 - (3 - 3x)^3)) / 3
+489 | |         /// ```
+...   |
+508 | |         /// ▓▓▓▓▓▓████████████▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+509 | |         /// ```
+    | |_______________^
+    |
+    = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: could not parse code block as Rust code
+   --> spire_tween/src/enums/ease.rs:512:9
+    |
+512 | /         /// ```ignore
+513 | |         /// if x < 0.6: f(x) = (3^(21x - 11)) / 3
+514 | |         /// else:       f(x) = (3 - 3^(11 - 21x)) / 3
+515 | |         /// ```
+...   |
+534 | |         /// ▓▓▓▓▓▓████████████▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+535 | |         /// ```
+    | |_______________^
+    |
+    = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: could not parse code block as Rust code
+   --> spire_tween/src/enums/ease.rs:538:9
+    |
+538 | /         /// f(x) = 5.9 * sin(x * π * 9) * exp(-7 * x)
+539 | |         ///
+540 | |         /// A punch effect that does not overshoot the target, but
+541 | |         /// does slightly undershoot the starting position midway through the tween.
+...   |
+562 | |         /// ░░░░░░░░░░░░░░░░░░░░░░░░█████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+563 | |         /// ```
+    | |_______________^
+    |
+    = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: `spire_tween` (lib doc) generated 39 warnings
+    Finished `dev` profile [optimized + debuginfo] target(s) in 2.04s
+   Generated /home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/target/doc/spire_tween/index.html
