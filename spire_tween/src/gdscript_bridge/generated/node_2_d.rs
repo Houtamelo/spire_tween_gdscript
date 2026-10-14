@@ -229,6 +229,11 @@ impl DoNode2D {
         let tween = node.do_global_scale(to, duration).register();
         gd_from_native_tween(tween)
     }
+    /// Moves [param node] toward [param follow_this]'s global position at [param speed] units per second,
+    /// sampling the target every processing step. By default, the tween finishes once it reaches the target.
+    /// For continuous following, call [code]set_loops(-1, Spire.LOOP_MODE_RESTART)[/code] on the returned handle.
+    /// If [param follow_this] is freed, the tween continues toward its last known global position with the
+    /// configured loop setting instead of cancelling. The returned tween is already registered.
     #[func]
     fn follow(
         node: Gd<Node2D>,

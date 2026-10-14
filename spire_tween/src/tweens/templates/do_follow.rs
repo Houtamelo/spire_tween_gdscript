@@ -27,17 +27,19 @@ impl IPropertyData for PropertyVec2Node2DFollowData {
 /// Speed-based tween that chases another `Node2D`'s `global_position`.
 ///
 /// The receiver moves toward `follow_this`'s current position at `speed` units per
-/// second — re-evaluated every tick, so the receiver tracks the target wherever it
-/// goes. The tween never "completes" in the usual sense — it just keeps catching
-/// up — so it loops forever unless explicitly stopped or until `follow_this` is
-/// freed (then the tween auto-stops).
+/// second, re-evaluating the target every processing step. By default, the tween
+/// completes once it reaches the target. To keep following after catching up,
+/// call [`set_loops(-1, LoopMode::Restart)`](SpireTween::set_loops).
+///
+/// If `follow_this` is freed, the tween continues toward its last known position
+/// instead of cancelling. Its loop setting still applies: the default tween
+/// completes there, while an infinitely looping tween remains active until stopped.
 ///
 /// Implemented for any `Gd<T: Inherits<Node2D>>`. Returns an unregistered
 /// [`SpireTween<LerpPropertyData<Vector2>>`] — call [`register`](SpireTween::register).
 ///
-/// **Note:** Built on the [`Evaluator::Dynamic`] target mechanism — `follow_this`
-/// is captured by closure. If `follow_this` becomes invalid mid-tween, the tween
-/// uses the last-known position rather than crashing.
+/// Built on [`Evaluator::Dynamic`]. The cached position starts at `follow_this`'s
+/// global position during construction and updates whenever the live target is sampled.
 pub trait DoFollow2D<Marker = ()> {
     fn do_follow(&self, follow_this: Gd<Node2D>, speed: f64) -> SpireTween<LerpPropertyData<Vector2>>;
 }

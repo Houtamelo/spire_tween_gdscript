@@ -164,6 +164,11 @@ fn template_bridge_methods(class_ident: &Ident) -> TokenStream {
     let class_name = class_ident.to_string();
     match class_name.as_str() {
         "Node2D" => quote! {
+            /// Moves [param node] toward [param follow_this]'s global position at [param speed] units per second,
+            /// sampling the target every processing step. By default, the tween finishes once it reaches the target.
+            /// For continuous following, call [code]set_loops(-1, Spire.LOOP_MODE_RESTART)[/code] on the returned handle.
+            /// If [param follow_this] is freed, the tween continues toward its last known global position with the
+            /// configured loop setting instead of cancelling. The returned tween is already registered.
             #[func]
             fn follow(node: Gd<Node2D>, follow_this: Gd<Node2D>, speed: f64) -> Gd<SpirePropertyVec2> {
                 let tween = node.do_follow(follow_this, speed).register();
@@ -240,6 +245,11 @@ fn template_bridge_methods(class_ident: &Ident) -> TokenStream {
             }
         },
         "Node3D" => quote! {
+            /// Moves [param node] toward [param follow_this]'s global position at [param speed] units per second,
+            /// sampling the target every processing step. By default, the tween finishes once it reaches the target.
+            /// For continuous following, call [code]set_loops(-1, Spire.LOOP_MODE_RESTART)[/code] on the returned handle.
+            /// If [param follow_this] is freed, the tween continues toward its last known global position with the
+            /// configured loop setting instead of cancelling. The returned tween is already registered.
             #[func]
             fn follow(node: Gd<Node3D>, follow_this: Gd<Node3D>, speed: f64) -> Gd<SpirePropertyVec3> {
                 let tween = node.do_follow(follow_this, speed).register();

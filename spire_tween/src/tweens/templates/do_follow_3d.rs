@@ -29,6 +29,10 @@ impl IPropertyData for PropertyVec3Node3DFollowData {
 ///
 /// See [`DoFollow2D`] for behavior — same semantics in 3D space (Euclidean speed
 /// across `(x, y, z)`).
+/// By default, the tween completes once it reaches the target. Use
+/// [`set_loops(-1, LoopMode::Restart)`](SpireTween::set_loops) for continuous following.
+/// If the target is freed, the tween continues toward its last known global position
+/// with the configured loop setting.
 pub trait DoFollow3D<Marker = ()> {
     fn do_follow(&self, follow_this: Gd<Node3D>, speed: f64) -> SpireTween<LerpPropertyData<Vector3>>;
 }

@@ -448,6 +448,17 @@ func spire_impl():
 	DoCanvasItem.modulate_r(circle, 1.0, duration)
 ```
 
+### Following a node
+
+`DoNode2D.follow(follower, target, speed)` and `DoNode3D.follow(follower, target, speed)` move toward the target's current global position at `speed` units per second. By default, they complete once the follower catches up. For continuous following, configure infinite Restart loops:
+
+```gdscript
+var tween = DoNode2D.follow(follower, target, 200.0)
+tween.set_loops(-1, Spire.LOOP_MODE_RESTART)
+```
+
+If the target is freed, the tween continues toward its last known global position. A default tween completes there; an infinitely looping tween remains active until stopped.
+
 ### Custom/uncommon properties
 
 Example: Tweening the distance of a ball from the center of the screen, using a custom property with getter/setter.

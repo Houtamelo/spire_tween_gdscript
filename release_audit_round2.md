@@ -132,12 +132,13 @@ or autoload startup defect. A deferred first-use control works in the other prob
 
 ### 17. Follow behavior contradicts its public Rust documentation
 
-**Medium priority; behavior/documentation decision.** [do_follow.rs:27](spire_tween/src/tweens/templates/do_follow.rs) promises continuous following until stopped or the target is freed. Its builder
-leaves the normal one-loop limit intact. A follower one unit from its target, speed 1, stops after a 1.1-second step with `get_loops() == 1`. Moving the target afterward will not automatically resume
-a stopped manager-driven tween.
+**2026-10-14 decision: resolved by documentation correction.** The intended template completes once it reaches the target; continuous following requires `set_loops(-1, Restart)`. A freed target
+deliberately leaves the tween chasing its last known position with the configured loop setting. Rust trait docs, generated Godot method docs and their generator, and both READMEs now state this
+contract. Runtime behavior is unchanged.
 
-The closure safely retains the last known position when the target is freed, which also differs from the immediate auto-stop claim. Decide whether this is a finite chase tween requiring explicit
-infinite looping or a continuous-follow template, then align implementation, Rust/Godot docs, and moving/freed-target tests. The 3D implementation shares the same construction pattern.
+**Original documentation mismatch.** [do_follow.rs:27](spire_tween/src/tweens/templates/do_follow.rs) incorrectly promised continuous following until stopped or the target was freed. Its builder
+keeps the normal one-loop limit: the audit's follower one unit from its target, speed 1, stopped after a 1.1-second step with `get_loops() == 1`. Moving the target afterward does not automatically
+resume that completed tween. The last-known-position fallback also contradicted the immediate auto-stop claim. Both behaviors are intended, and the 3D implementation uses the same construction pattern.
 
 ## Earlier release items still open
 
@@ -206,7 +207,7 @@ stands; no graphical testing was repeated and this is not a new ordinary-editor 
 
 1. Repair sequence time-unit conversion and ellipse owner lifetime, then geometry and cancellation states.
 2. Make the runners trustworthy and obtain uncached debug/release passing results with suitable clock modes.
-3. Address manager pruning and reconcile follow/numeric contracts. First-use SceneTree availability is an accepted startup requirement, as recorded in finding 16.
+3. Reconcile numeric contracts. Manager runtime pruning and follow documentation are resolved; first-use SceneTree availability is an accepted startup requirement, as recorded in findings 14, 16, and 17.
 4. Freeze the source/API/platform scope, rebuild and assemble permitted archives, then verify extracted install/runtime/export and publish matching support promises.
 
 ## Work after the review

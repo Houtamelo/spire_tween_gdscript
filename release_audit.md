@@ -7,6 +7,9 @@ unresolved distribution decisions.
 **2026-10-14 startup decision:** early manager initialization is an accepted startup restriction, not a release blocker. First use requires an installed `SceneTree` main loop with an available root;
 failure logs an explanatory error and is not retried. The installation and Rust quickstart documentation state the requirement. See [finding 16](release_audit_round2.md#16-an-early-failed-manager-initialization-disables-subsequent-playback).
 
+**2026-10-14 follow decision:** the follow template intentionally completes on reaching its target, supports continuous following through infinite Restart loops, and chases the last known position
+when the target is freed. The incorrect Rust documentation and missing Godot method descriptions are corrected. See [finding 17](release_audit_round2.md#17-follow-behavior-contradicts-its-public-rust-documentation).
+
 **Hold the commercial release.** Normal tweening and a Linux release export work, but the current source and local addon binaries have reproducible ownership, binding, sequence, installation, and
 release-packaging defects. This audit examines commit `f518d78` on 2026-10-07. The working tree was clean before the audit.
 

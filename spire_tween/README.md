@@ -47,6 +47,22 @@ seq.append(my_node.do_position(target_b, 1.0));
 seq.register();
 ```
 
+## Following a node
+
+`DoFollow2D::do_follow` and `DoFollow3D::do_follow` chase the target's current global
+position at a fixed speed and complete once they catch up. For continuous following,
+configure infinite Restart loops before registering:
+
+```rust
+let mut tween = follower.do_follow(target, 200.0);
+tween.set_loops(-1, LoopMode::Restart);
+let handle = tween.register();
+```
+
+If the target is freed, the tween continues toward its last known global position.
+The loop setting still applies: a default tween completes there; an infinite tween
+remains active until stopped.
+
 ## Lazy sequence children
 
 `append_ctor` and `join_ctor` accept a `FnOnce() -> AnyTween` and defer child construction until the new/last block starts. `insert_ctor(time, factory)` constructs at the insertion offset plus the sequence delay. All factories run synchronously on the main thread.
