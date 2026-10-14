@@ -1,0 +1,98 @@
+{
+  "profile": "release",
+  "library_sha256": "65fa597e4fe43061bae66bef01738f3b8184051a97ae06f34fa2af09fa7b4260",
+  "results": [
+    {
+      "suite": "bookkeeping",
+      "exit_code": 1,
+      "events": [
+        "BOOKKEEPING_SNAPSHOT node-batches/baseline BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }",
+        "BOOKKEEPING_SNAPSHOT node-batches/round-1 BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }",
+        "BOOKKEEPING_SNAPSHOT node-batches/round-2 BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }",
+        "BOOKKEEPING_SNAPSHOT node-batches/round-3 BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }",
+        "BOOKKEEPING_SNAPSHOT node-batches/baseline BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }",
+        "BOOKKEEPING_SNAPSHOT node-batches/round-1 BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }",
+        "BOOKKEEPING_SNAPSHOT node-batches/round-2 BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }",
+        "BOOKKEEPING_SNAPSHOT node-batches/round-3 BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }",
+        "BOOKKEEPING_SNAPSHOT node-batches/baseline BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }",
+        "BOOKKEEPING_SNAPSHOT node-batches/round-1 BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }",
+        "BOOKKEEPING_SNAPSHOT node-batches/round-2 BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }",
+        "BOOKKEEPING_SNAPSHOT node-batches/round-3 BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }",
+        "BOOKKEEPING_SNAPSHOT node-batches/baseline BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }",
+        "BOOKKEEPING_SNAPSHOT node-batches/round-1 BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }",
+        "BOOKKEEPING_SNAPSHOT node-batches/round-2 BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }",
+        "BOOKKEEPING_SNAPSHOT node-batches/round-3 BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }",
+        "BOOKKEEPING_SNAPSHOT both-loops/baseline BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }",
+        "BOOKKEEPING_SNAPSHOT both-loops/settled BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }",
+        "BOOKKEEPING_SNAPSHOT both-loops/settled BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }",
+        "BOOKKEEPING_SNAPSHOT expired-bindings/baseline BookkeepingSnapshot { tracked_nodes: 1, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }",
+        "BOOKKEEPING_SNAPSHOT expired-bindings/round-1 BookkeepingSnapshot { tracked_nodes: 1, dead_nodes: 0, binding_entries: 1000, expired_bindings: 1000, root_tweens: 0, deferred_ops: 0 }",
+        "BOOKKEEPING_SNAPSHOT expired-bindings/round-2 BookkeepingSnapshot { tracked_nodes: 1, dead_nodes: 0, binding_entries: 2000, expired_bindings: 2000, root_tweens: 0, deferred_ops: 0 }",
+        "BOOKKEEPING_SNAPSHOT expired-bindings/round-3 BookkeepingSnapshot { tracked_nodes: 1, dead_nodes: 0, binding_entries: 3000, expired_bindings: 3000, root_tweens: 0, deferred_ops: 0 }",
+        "NATIVE_BOOKKEEPING_FAIL expired_bindings_on_living_node_plateau",
+        "BOOKKEEPING_SNAPSHOT expired-bindings/baseline BookkeepingSnapshot { tracked_nodes: 1, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }",
+        "BOOKKEEPING_SNAPSHOT expired-bindings/round-1 BookkeepingSnapshot { tracked_nodes: 1, dead_nodes: 0, binding_entries: 1000, expired_bindings: 1000, root_tweens: 0, deferred_ops: 0 }",
+        "BOOKKEEPING_SNAPSHOT expired-bindings/round-2 BookkeepingSnapshot { tracked_nodes: 1, dead_nodes: 0, binding_entries: 2000, expired_bindings: 2000, root_tweens: 0, deferred_ops: 0 }",
+        "BOOKKEEPING_SNAPSHOT expired-bindings/round-3 BookkeepingSnapshot { tracked_nodes: 1, dead_nodes: 0, binding_entries: 3000, expired_bindings: 3000, root_tweens: 0, deferred_ops: 0 }",
+        "NATIVE_BOOKKEEPING_FAIL expired_bindings_on_detached_node_plateau",
+        "BOOKKEEPING_SNAPSHOT retained/baseline BookkeepingSnapshot { tracked_nodes: 1, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }",
+        "BOOKKEEPING_SNAPSHOT retained/completed BookkeepingSnapshot { tracked_nodes: 1, dead_nodes: 0, binding_entries: 1, expired_bindings: 0, root_tweens: 1, deferred_ops: 0 }",
+        "BOOKKEEPING_SNAPSHOT retained/unregistered BookkeepingSnapshot { tracked_nodes: 1, dead_nodes: 0, binding_entries: 1, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }",
+        "BOOKKEEPING_SNAPSHOT retained/reregistered BookkeepingSnapshot { tracked_nodes: 1, dead_nodes: 0, binding_entries: 1, expired_bindings: 0, root_tweens: 1, deferred_ops: 0 }",
+        "BOOKKEEPING_SNAPSHOT duplicate/baseline BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }",
+        "BOOKKEEPING_DUPLICATE shared_tracker=true",
+        "BOOKKEEPING_SNAPSHOT duplicate/source-freed-duplicate-alive BookkeepingSnapshot { tracked_nodes: 1, dead_nodes: 0, binding_entries: 1, expired_bindings: 0, root_tweens: 1, deferred_ops: 0 }",
+        "BOOKKEEPING_SNAPSHOT duplicate/both-freed BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }",
+        "NATIVE_BOOKKEEPING_FAIL duplicated_metadata_does_not_delay_source_cleanup",
+        "NATIVE_BOOKKEEPING_RESULT total=11 failed=3"
+      ],
+      "script_errors": 0,
+      "panic_reports": 3
+    },
+    {
+      "suite": "ownership",
+      "exit_code": 0,
+      "events": [
+        "NATIVE_OWNERSHIP_RESULT total=10 failed=0"
+      ],
+      "script_errors": 0,
+      "panic_reports": 0
+    },
+    {
+      "suite": "node_binding",
+      "exit_code": 0,
+      "events": [
+        "NATIVE_BINDING_RESULT total=11 failed=0"
+      ],
+      "script_errors": 0,
+      "panic_reports": 0
+    },
+    {
+      "suite": "sequence_cycles",
+      "exit_code": 0,
+      "events": [
+        "NATIVE_CYCLE_RESULT total=10 failed=0"
+      ],
+      "script_errors": 0,
+      "panic_reports": 0
+    },
+    {
+      "suite": "delayed_call_validity",
+      "exit_code": 0,
+      "events": [
+        "NATIVE_DELAY_VALIDITY_RESULT total=9 failed=0"
+      ],
+      "script_errors": 0,
+      "panic_reports": 0
+    },
+    {
+      "suite": "api_compatibility",
+      "exit_code": 0,
+      "events": [
+        "NATIVE_API_RESULT total=5 failed=0"
+      ],
+      "script_errors": 0,
+      "panic_reports": 2
+    }
+  ]
+}

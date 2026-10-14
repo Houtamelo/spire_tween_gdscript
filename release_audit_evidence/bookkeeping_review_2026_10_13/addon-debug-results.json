@@ -1,0 +1,69 @@
+{
+  "profile": "debug",
+  "library_sha256": "89955322d5f1a475e4318950b5a8437e1a3b71e9709eba24e6491509237450c3",
+  "results": [
+    {
+      "suite": "node-binding",
+      "exit_code": 0,
+      "results": [
+        "BINDING_RESULT total=23 failed=0"
+      ],
+      "script_errors": 0,
+      "panic_reports": 0
+    },
+    {
+      "suite": "sequence-speed",
+      "exit_code": 0,
+      "results": [
+        "EXCESS_RESULT total=9 cases=121 failed=0"
+      ],
+      "script_errors": 0,
+      "panic_reports": 0
+    },
+    {
+      "suite": "sequence-ctors",
+      "exit_code": 0,
+      "results": [
+        "CTOR_RESULT total=18 failed=0"
+      ],
+      "script_errors": 0,
+      "panic_reports": 0
+    },
+    {
+      "suite": "ellipse",
+      "exit_code": 0,
+      "results": [
+        "ELLIPSE_RESULT total=11 cases=119 failed=0"
+      ],
+      "script_errors": 0,
+      "panic_reports": 0
+    },
+    {
+      "suite": "sequence-cycles",
+      "exit_code": 0,
+      "results": [
+        "CYCLE_RESULT total=6 failed=0"
+      ],
+      "script_errors": 0,
+      "panic_reports": 0
+    },
+    {
+      "suite": "ownership",
+      "exit_code": 0,
+      "results": [
+        "OWNERSHIP_RESULT total=15 failed=0"
+      ],
+      "script_errors": 0,
+      "panic_reports": 0
+    },
+    {
+      "suite": "delayed-call",
+      "exit_code": 0,
+      "results": [
+        "DELAY_VALIDITY_RESULT total=9 failed=0"
+      ],
+      "script_errors": 0,
+      "panic_reports": 0
+    }
+  ]
+}

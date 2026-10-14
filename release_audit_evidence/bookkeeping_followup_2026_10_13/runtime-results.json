@@ -1,0 +1,606 @@
+[
+  {
+    "label": "native-debug-bookkeeping",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-bookkeeping-fixed-20261013-nxl06oe1/native-project",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/bookkeeping_runner.tscn"
+    ],
+    "exit_code": 0,
+    "seconds": 0.371,
+    "results": [
+      "NATIVE_BOOKKEEPING_RESULT total=11 failed=0"
+    ],
+    "script_errors": 0,
+    "panic_reports": 0,
+    "profile": "debug",
+    "kind": "native",
+    "methods": 11,
+    "unexpected_panic_reports": 0
+  },
+  {
+    "label": "native-debug-ownership",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-bookkeeping-fixed-20261013-nxl06oe1/native-project",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/ownership_runner.tscn"
+    ],
+    "exit_code": 0,
+    "seconds": 0.164,
+    "results": [
+      "NATIVE_OWNERSHIP_RESULT total=10 failed=0"
+    ],
+    "script_errors": 0,
+    "panic_reports": 0,
+    "profile": "debug",
+    "kind": "native",
+    "methods": 10,
+    "unexpected_panic_reports": 0
+  },
+  {
+    "label": "native-debug-node-binding",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-bookkeeping-fixed-20261013-nxl06oe1/native-project",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/node_binding_runner.tscn"
+    ],
+    "exit_code": 0,
+    "seconds": 0.164,
+    "results": [
+      "NATIVE_BINDING_RESULT total=11 failed=0"
+    ],
+    "script_errors": 0,
+    "panic_reports": 0,
+    "profile": "debug",
+    "kind": "native",
+    "methods": 11,
+    "unexpected_panic_reports": 0
+  },
+  {
+    "label": "native-debug-sequence-cycles",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-bookkeeping-fixed-20261013-nxl06oe1/native-project",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/sequence_cycles_runner.tscn"
+    ],
+    "exit_code": 0,
+    "seconds": 0.164,
+    "results": [
+      "NATIVE_CYCLE_RESULT total=10 failed=0"
+    ],
+    "script_errors": 0,
+    "panic_reports": 0,
+    "profile": "debug",
+    "kind": "native",
+    "methods": 10,
+    "unexpected_panic_reports": 0
+  },
+  {
+    "label": "native-debug-delayed-call",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-bookkeeping-fixed-20261013-nxl06oe1/native-project",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/delayed_call_validity_runner.tscn"
+    ],
+    "exit_code": 0,
+    "seconds": 0.164,
+    "results": [
+      "NATIVE_DELAY_VALIDITY_RESULT total=9 failed=0"
+    ],
+    "script_errors": 0,
+    "panic_reports": 0,
+    "profile": "debug",
+    "kind": "native",
+    "methods": 9,
+    "unexpected_panic_reports": 0
+  },
+  {
+    "label": "native-debug-api-compatibility",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-bookkeeping-fixed-20261013-nxl06oe1/native-project",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/api_compatibility_runner.tscn"
+    ],
+    "exit_code": 0,
+    "seconds": 0.164,
+    "results": [
+      "NATIVE_API_RESULT total=5 failed=0"
+    ],
+    "script_errors": 0,
+    "panic_reports": 2,
+    "profile": "debug",
+    "kind": "native",
+    "methods": 5,
+    "unexpected_panic_reports": 0
+  },
+  {
+    "label": "gdscript-debug-node-binding",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-bookkeeping-fixed-20261013-nxl06oe1/gdscript-project",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/node_binding_runner.tscn"
+    ],
+    "exit_code": 0,
+    "seconds": 0.164,
+    "results": [
+      "BINDING_RESULT total=23 failed=0"
+    ],
+    "script_errors": 0,
+    "panic_reports": 0,
+    "profile": "debug",
+    "kind": "gdscript",
+    "methods": 23,
+    "unexpected_panic_reports": 0
+  },
+  {
+    "label": "gdscript-debug-sequence-speed",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-bookkeeping-fixed-20261013-nxl06oe1/gdscript-project",
+      "--fixed-fps",
+      "120",
+      "--script",
+      "res://examples/tests/sequence_speed_runner.gd"
+    ],
+    "exit_code": 0,
+    "seconds": 0.164,
+    "results": [
+      "EXCESS_RESULT total=9 cases=121 failed=0"
+    ],
+    "script_errors": 0,
+    "panic_reports": 0,
+    "profile": "debug",
+    "kind": "gdscript",
+    "methods": 9,
+    "unexpected_panic_reports": 0
+  },
+  {
+    "label": "gdscript-debug-sequence-ctors",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-bookkeeping-fixed-20261013-nxl06oe1/gdscript-project",
+      "--fixed-fps",
+      "120",
+      "--script",
+      "res://examples/tests/sequence_ctors_runner.gd"
+    ],
+    "exit_code": 0,
+    "seconds": 0.164,
+    "results": [
+      "CTOR_RESULT total=18 failed=0"
+    ],
+    "script_errors": 0,
+    "panic_reports": 0,
+    "profile": "debug",
+    "kind": "gdscript",
+    "methods": 18,
+    "unexpected_panic_reports": 0
+  },
+  {
+    "label": "gdscript-debug-ellipse",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-bookkeeping-fixed-20261013-nxl06oe1/gdscript-project",
+      "--fixed-fps",
+      "120",
+      "--script",
+      "res://examples/tests/ellipsis_regressions_runner.gd"
+    ],
+    "exit_code": 0,
+    "seconds": 0.164,
+    "results": [
+      "ELLIPSE_RESULT total=11 cases=119 failed=0"
+    ],
+    "script_errors": 0,
+    "panic_reports": 0,
+    "profile": "debug",
+    "kind": "gdscript",
+    "methods": 11,
+    "unexpected_panic_reports": 0
+  },
+  {
+    "label": "gdscript-debug-sequence-cycles",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-bookkeeping-fixed-20261013-nxl06oe1/gdscript-project",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/sequence_cycles_runner.tscn"
+    ],
+    "exit_code": 0,
+    "seconds": 0.164,
+    "results": [
+      "CYCLE_RESULT total=6 failed=0"
+    ],
+    "script_errors": 0,
+    "panic_reports": 0,
+    "profile": "debug",
+    "kind": "gdscript",
+    "methods": 6,
+    "unexpected_panic_reports": 0
+  },
+  {
+    "label": "gdscript-debug-ownership",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-bookkeeping-fixed-20261013-nxl06oe1/gdscript-project",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/ownership_runner.tscn"
+    ],
+    "exit_code": 0,
+    "seconds": 0.164,
+    "results": [
+      "OWNERSHIP_RESULT total=15 failed=0"
+    ],
+    "script_errors": 0,
+    "panic_reports": 0,
+    "profile": "debug",
+    "kind": "gdscript",
+    "methods": 15,
+    "unexpected_panic_reports": 0
+  },
+  {
+    "label": "gdscript-debug-delayed-call",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-bookkeeping-fixed-20261013-nxl06oe1/gdscript-project",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/delayed_call_validity_runner.tscn"
+    ],
+    "exit_code": 0,
+    "seconds": 0.164,
+    "results": [
+      "DELAY_VALIDITY_RESULT total=9 failed=0"
+    ],
+    "script_errors": 0,
+    "panic_reports": 0,
+    "profile": "debug",
+    "kind": "gdscript",
+    "methods": 9,
+    "unexpected_panic_reports": 0
+  },
+  {
+    "label": "native-release-bookkeeping",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-bookkeeping-fixed-20261013-nxl06oe1/native-project",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/bookkeeping_runner.tscn"
+    ],
+    "exit_code": 0,
+    "seconds": 0.164,
+    "results": [
+      "NATIVE_BOOKKEEPING_RESULT total=11 failed=0"
+    ],
+    "script_errors": 0,
+    "panic_reports": 0,
+    "profile": "release",
+    "kind": "native",
+    "methods": 11,
+    "unexpected_panic_reports": 0
+  },
+  {
+    "label": "native-release-ownership",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-bookkeeping-fixed-20261013-nxl06oe1/native-project",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/ownership_runner.tscn"
+    ],
+    "exit_code": 0,
+    "seconds": 0.164,
+    "results": [
+      "NATIVE_OWNERSHIP_RESULT total=10 failed=0"
+    ],
+    "script_errors": 0,
+    "panic_reports": 0,
+    "profile": "release",
+    "kind": "native",
+    "methods": 10,
+    "unexpected_panic_reports": 0
+  },
+  {
+    "label": "native-release-node-binding",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-bookkeeping-fixed-20261013-nxl06oe1/native-project",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/node_binding_runner.tscn"
+    ],
+    "exit_code": 0,
+    "seconds": 0.164,
+    "results": [
+      "NATIVE_BINDING_RESULT total=11 failed=0"
+    ],
+    "script_errors": 0,
+    "panic_reports": 0,
+    "profile": "release",
+    "kind": "native",
+    "methods": 11,
+    "unexpected_panic_reports": 0
+  },
+  {
+    "label": "native-release-sequence-cycles",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-bookkeeping-fixed-20261013-nxl06oe1/native-project",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/sequence_cycles_runner.tscn"
+    ],
+    "exit_code": 0,
+    "seconds": 0.164,
+    "results": [
+      "NATIVE_CYCLE_RESULT total=10 failed=0"
+    ],
+    "script_errors": 0,
+    "panic_reports": 0,
+    "profile": "release",
+    "kind": "native",
+    "methods": 10,
+    "unexpected_panic_reports": 0
+  },
+  {
+    "label": "native-release-delayed-call",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-bookkeeping-fixed-20261013-nxl06oe1/native-project",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/delayed_call_validity_runner.tscn"
+    ],
+    "exit_code": 0,
+    "seconds": 0.164,
+    "results": [
+      "NATIVE_DELAY_VALIDITY_RESULT total=9 failed=0"
+    ],
+    "script_errors": 0,
+    "panic_reports": 0,
+    "profile": "release",
+    "kind": "native",
+    "methods": 9,
+    "unexpected_panic_reports": 0
+  },
+  {
+    "label": "native-release-api-compatibility",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-bookkeeping-fixed-20261013-nxl06oe1/native-project",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/api_compatibility_runner.tscn"
+    ],
+    "exit_code": 0,
+    "seconds": 0.164,
+    "results": [
+      "NATIVE_API_RESULT total=5 failed=0"
+    ],
+    "script_errors": 0,
+    "panic_reports": 2,
+    "profile": "release",
+    "kind": "native",
+    "methods": 5,
+    "unexpected_panic_reports": 0
+  },
+  {
+    "label": "gdscript-release-node-binding",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-bookkeeping-fixed-20261013-nxl06oe1/gdscript-project",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/node_binding_runner.tscn"
+    ],
+    "exit_code": 0,
+    "seconds": 0.164,
+    "results": [
+      "BINDING_RESULT total=23 failed=0"
+    ],
+    "script_errors": 0,
+    "panic_reports": 0,
+    "profile": "release",
+    "kind": "gdscript",
+    "methods": 23,
+    "unexpected_panic_reports": 0
+  },
+  {
+    "label": "gdscript-release-sequence-speed",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-bookkeeping-fixed-20261013-nxl06oe1/gdscript-project",
+      "--fixed-fps",
+      "120",
+      "--script",
+      "res://examples/tests/sequence_speed_runner.gd"
+    ],
+    "exit_code": 0,
+    "seconds": 0.164,
+    "results": [
+      "EXCESS_RESULT total=9 cases=121 failed=0"
+    ],
+    "script_errors": 0,
+    "panic_reports": 0,
+    "profile": "release",
+    "kind": "gdscript",
+    "methods": 9,
+    "unexpected_panic_reports": 0
+  },
+  {
+    "label": "gdscript-release-sequence-ctors",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-bookkeeping-fixed-20261013-nxl06oe1/gdscript-project",
+      "--fixed-fps",
+      "120",
+      "--script",
+      "res://examples/tests/sequence_ctors_runner.gd"
+    ],
+    "exit_code": 0,
+    "seconds": 0.164,
+    "results": [
+      "CTOR_RESULT total=18 failed=0"
+    ],
+    "script_errors": 0,
+    "panic_reports": 0,
+    "profile": "release",
+    "kind": "gdscript",
+    "methods": 18,
+    "unexpected_panic_reports": 0
+  },
+  {
+    "label": "gdscript-release-ellipse",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-bookkeeping-fixed-20261013-nxl06oe1/gdscript-project",
+      "--fixed-fps",
+      "120",
+      "--script",
+      "res://examples/tests/ellipsis_regressions_runner.gd"
+    ],
+    "exit_code": 0,
+    "seconds": 0.164,
+    "results": [
+      "ELLIPSE_RESULT total=11 cases=119 failed=0"
+    ],
+    "script_errors": 0,
+    "panic_reports": 0,
+    "profile": "release",
+    "kind": "gdscript",
+    "methods": 11,
+    "unexpected_panic_reports": 0
+  },
+  {
+    "label": "gdscript-release-sequence-cycles",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-bookkeeping-fixed-20261013-nxl06oe1/gdscript-project",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/sequence_cycles_runner.tscn"
+    ],
+    "exit_code": 0,
+    "seconds": 0.164,
+    "results": [
+      "CYCLE_RESULT total=6 failed=0"
+    ],
+    "script_errors": 0,
+    "panic_reports": 0,
+    "profile": "release",
+    "kind": "gdscript",
+    "methods": 6,
+    "unexpected_panic_reports": 0
+  },
+  {
+    "label": "gdscript-release-ownership",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-bookkeeping-fixed-20261013-nxl06oe1/gdscript-project",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/ownership_runner.tscn"
+    ],
+    "exit_code": 0,
+    "seconds": 0.164,
+    "results": [
+      "OWNERSHIP_RESULT total=15 failed=0"
+    ],
+    "script_errors": 0,
+    "panic_reports": 0,
+    "profile": "release",
+    "kind": "gdscript",
+    "methods": 15,
+    "unexpected_panic_reports": 0
+  },
+  {
+    "label": "gdscript-release-delayed-call",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-bookkeeping-fixed-20261013-nxl06oe1/gdscript-project",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/delayed_call_validity_runner.tscn"
+    ],
+    "exit_code": 0,
+    "seconds": 0.164,
+    "results": [
+      "DELAY_VALIDITY_RESULT total=9 failed=0"
+    ],
+    "script_errors": 0,
+    "panic_reports": 0,
+    "profile": "release",
+    "kind": "gdscript",
+    "methods": 9,
+    "unexpected_panic_reports": 0
+  }
+]

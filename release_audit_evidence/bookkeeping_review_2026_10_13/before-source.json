@@ -1,0 +1,8 @@
+{
+  "spire_tween/src/global/mod.rs": "66355f7507888903a6299c64ffade9bb7d5fab21148651a4e7b210b8552e6c0b",
+  "spire_tween/src/global/node_status.rs": "3d306e1287b098c3a61fa4652e5267dcd457f2bbea59cccc3eb5537ffdc2369e",
+  "spire_tween/src/global/tweens_map.rs": "a2b3cbd9d2d9c15e0ba61109bdf12d447b3caf3eada274611a0fe92b9a25968b",
+  "spire_tween/src/object_or_node.rs": "e0a5993ea01e8a1f712a7c843809a18c1cae40cafbbcf86f28d68a4eb536540b",
+  "spire_tween/src/tweens/base/spire_tween.rs": "1270b8d8b1ded1b1c5e0cfac8ec9bfac7a734b88cd046dd9adf3a6b02e96ec85",
+  "spire_tween_rust/src/tests/bookkeeping.rs": "bb3ce3333222d91597106df70f19c2390aa3e207e3685d1e0125585f374676e9"
+}

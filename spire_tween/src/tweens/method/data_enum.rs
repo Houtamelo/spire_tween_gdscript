@@ -111,7 +111,7 @@ pub enum WeakMethodTween {
 impl WeakMethodTween {
     #[inline]
     pub fn upgrade(&self) -> Option<AnyMethodTween> {
-        delegate_weak_method_tween! { self => |arg| arg.upgrade().map(Into::into) }
+        delegate_weak_method_tween! { self.upgrade().map(Into::into) }
     }
 }
 

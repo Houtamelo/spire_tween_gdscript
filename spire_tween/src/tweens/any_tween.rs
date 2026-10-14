@@ -41,9 +41,8 @@ pub enum WeakAnyTween {
 }
 
 impl WeakAnyTween {
-    #[inline]
     pub fn upgrade(&self) -> Option<AnyTween> {
-        delegate_weak_any_tween! { self => |arg| arg.upgrade().map(Into::into) }
+        delegate_weak_any_tween! { self.upgrade().map(Into::into) }
     }
 }
 

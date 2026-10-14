@@ -111,7 +111,7 @@ pub enum WeakPropertyTween {
 impl WeakPropertyTween {
     #[inline]
     pub fn upgrade(&self) -> Option<AnyPropertyTween> {
-        delegate_weak_property_tween! { self => |arg| arg.upgrade().map(Into::into) }
+        delegate_weak_property_tween! { self.upgrade().map(Into::into) }
     }
 }
 

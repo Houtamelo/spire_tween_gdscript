@@ -29,6 +29,63 @@ unsafe impl Send for TweensMap {}
 
 unsafe impl Sync for TweensMap {}
 
+/// Read-only observations used by the real-Godot integration tests.
+/// Available only with `integration-tests`, outside the supported addon API.
+#[cfg(feature = "integration-tests")]
+#[doc(hidden)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct BookkeepingSnapshot {
+    pub tracked_nodes: usize,
+    pub dead_nodes: usize,
+    pub binding_entries: usize,
+    pub expired_bindings: usize,
+    pub root_tweens: usize,
+    pub deferred_ops: usize,
+}
+
+#[cfg(feature = "integration-tests")]
+impl TweensMap {
+    /// Observe settled manager state on the main thread, outside processing.
+    /// Does not upgrade weak pointers or change registrations/bindings.
+    #[doc(hidden)]
+    pub fn bookkeeping_snapshot(&self) -> BookkeepingSnapshot {
+        let nodes = unsafe { &*self.tracked_nodes.get() };
+        let mut snapshot = BookkeepingSnapshot {
+            tracked_nodes: nodes.len(),
+            dead_nodes: 0,
+            binding_entries: 0,
+            expired_bindings: 0,
+            root_tweens: unsafe { (*self.root_tweens.get()).len() },
+            deferred_ops: unsafe { (*self.deferred_ops.get()).len() },
+        };
+        for state in nodes.values() {
+            snapshot.dead_nodes += usize::from(matches!(state.status, NodeStatus::Dead { .. }));
+            snapshot.binding_entries += state.bound_tweens.len();
+            snapshot.expired_bindings += state
+                .bound_tweens
+                .iter()
+                .filter(|weak| match weak {
+                    WeakAnyTween::Property(weak) => {
+                        delegate_weak_property_tween! { weak => |pointer| pointer.is_expired() }
+                    }
+                    WeakAnyTween::Method(weak) => {
+                        delegate_weak_method_tween! { weak => |pointer| pointer.is_expired() }
+                    }
+                    WeakAnyTween::DelayedCall(weak) => weak.is_expired(),
+                    WeakAnyTween::Sequence(weak) => weak.is_expired(),
+                })
+                .count();
+        }
+        snapshot
+    }
+
+    /// Observe a cached record without creating it or consulting the node.
+    #[doc(hidden)]
+    pub fn bookkeeping_node_status(&self, id: i64) -> Option<NodeStatus> {
+        unsafe { (*self.tracked_nodes.get()).get(&id).map(|state| state.status) }
+    }
+}
+
 impl TweensMap {
     pub fn node_bind(&self, node: Gd<Node>, weak: impl Into<WeakAnyTween>) {
         let entry = unsafe { self.node_ensure_tracked(node) };
@@ -49,14 +106,17 @@ impl TweensMap {
     }
 
     pub fn node_get_status_fresh(&self, node: Gd<Node>) -> NodeStatus {
-        let node_id = node.instance_id_unchecked().to_i64();
+        //let node_id = node.instance_id_unchecked().to_i64();
         let entry = unsafe { self.node_ensure_tracked(node) };
 
-        if let NodeStatus::OutsideTreeMaybeDead = entry.status
-            && !is_instance_id_valid(node_id)
-        {
-            entry.status = NodeStatus::Dead;
-        }
+        // if let NodeStatus::OutsideTree = entry.status
+        //     && !is_instance_id_valid(node_id)
+        // {
+        //     entry.status = NodeStatus::Dead {
+        //         seen_by_process: false,
+        //         seen_by_physics: false,
+        //     };
+        // }
 
         entry.status
     }
@@ -166,8 +226,70 @@ impl TweensMap {
 }
 
 impl TweensMap {
-    // TODO: IGNORE FOR NOW, WIP
-    fn notify_node_about_to_be_freed(&self, node: Gd<Node>) {}
+    unsafe fn notify_node_about_to_be_freed(&self, id: i64) {
+        let mut entry = {
+            let tracked_nodes_mut = &mut *self.tracked_nodes.get();
+
+            match tracked_nodes_mut.entry(id) {
+                Entry::Occupied(mut entry) => {
+                    let state = entry.get_mut();
+                    match state.status {
+                        NodeStatus::InsideTree | NodeStatus::OutsideTree => {
+                            state.status = NodeStatus::Dead {
+                                seen_by_process: false,
+                                seen_by_physics: false,
+                            };
+                        }
+                        NodeStatus::Dead { .. } => {}
+                    }
+
+                    entry
+                }
+                Entry::Vacant(entry) => entry.insert_entry(NodeState {
+                    bound_tweens: Default::default(),
+                    status: NodeStatus::Dead {
+                        seen_by_process: false,
+                        seen_by_physics: false,
+                    },
+                }),
+            }
+        };
+
+        let bound_tweens = std::mem::take(&mut entry.get_mut().bound_tweens);
+
+        (*self.deferred_ops.get()).extend(bound_tweens.iter().map(|weak| (weak.address(), DeferredOp::Remove)));
+
+        #[allow(clippy::drop_non_drop)]
+        drop(entry); // Release lock before passing context back to Godot.
+
+        for mut tween in bound_tweens.iter().filter_map(WeakAnyTween::upgrade) {
+            tween.stop();
+        }
+    }
+
+    unsafe fn notify_node_entering_tree(&self, id: i64) {
+        let Entry::Occupied(mut entry) = (*self.tracked_nodes.get()).entry(id) else { return };
+
+        match &mut entry.get_mut().status {
+            status @ NodeStatus::OutsideTree => {
+                *status = NodeStatus::InsideTree;
+            }
+            NodeStatus::InsideTree => {}
+            NodeStatus::Dead { .. } => {}
+        }
+    }
+
+    unsafe fn notify_node_exiting_tree(&self, id: i64) {
+        let Entry::Occupied(mut entry) = (*self.tracked_nodes.get()).entry(id) else { return };
+
+        match &mut entry.get_mut().status {
+            status @ NodeStatus::InsideTree => {
+                *status = NodeStatus::OutsideTree;
+            }
+            NodeStatus::OutsideTree => {}
+            NodeStatus::Dead { .. } => {}
+        }
+    }
 
     unsafe fn node_ensure_tracked(&self, node: Gd<Node>) -> &mut NodeState {
         let node_id = node.instance_id_unchecked().to_i64();
@@ -175,38 +297,19 @@ impl TweensMap {
         (*self.tracked_nodes.get()).entry(node_id).or_insert_with(|| {
             let status = eval_node_status(&node);
 
-            if let NodeStatus::InsideTree | NodeStatus::OutsideTreeMaybeDead = status {
-                let node_for_exit = node.clone();
+            match status {
+                NodeStatus::InsideTree | NodeStatus::OutsideTree => {
+                    node.signals()
+                        .tree_entered()
+                        .connect(move || (*TM).notify_node_entering_tree(node_id));
 
-                node.clone().signals().tree_exiting().connect(move || {
-                    let tm = &*TM;
-                    let Entry::Occupied(mut entry) = (*tm.tracked_nodes.get()).entry(node_id) else { return };
-
-                    if !node_for_exit.is_queued_for_deletion() {
-                        entry.get_mut().status = NodeStatus::OutsideTreeMaybeDead;
-                        return;
-                    }
-
-                    let entry_mut = entry.get_mut();
-                    entry_mut.status = NodeStatus::Dead;
-                    let bound_tweens = std::mem::take(&mut entry_mut.bound_tweens);
-
-                    (*tm.deferred_ops.get())
-                        .extend(bound_tweens.iter().map(|weak| (weak.address(), DeferredOp::Remove)));
-
-                    #[allow(clippy::drop_non_drop)]
-                    drop(entry); // Release lock before passing context back to Godot.
-
-                    for mut tween in bound_tweens.iter().filter_map(WeakAnyTween::upgrade) {
-                        tween.stop();
-                    }
-                });
-
-                node.signals().tree_entered().connect(move || {
-                    if let Some(state) = (*TM.tracked_nodes.get()).get_mut(&node_id) {
-                        state.status = NodeStatus::InsideTree;
-                    }
-                });
+                    let tracker = Gd::from_object(NodeLifetimeTracker { node_id });
+                    node.signals().tree_exiting().connect(move || {
+                        let _keep_tracker_alive = &tracker;
+                        (*TM).notify_node_exiting_tree(node_id);
+                    });
+                }
+                NodeStatus::Dead { .. } => {}
             };
 
             NodeState {
@@ -281,6 +384,20 @@ impl TweensMap {
     }
 
     pub(super) unsafe fn tick_process(&self, is_tree_paused: bool, scaled_delta_time: f64, unscaled_delta_time: f64) {
+        {
+            let tracked_nodes = &mut *self.tracked_nodes.get();
+            for state in tracked_nodes.values_mut() {
+                match &mut state.status {
+                    NodeStatus::InsideTree | NodeStatus::OutsideTree => {}
+                    NodeStatus::Dead {
+                        seen_by_process,
+                        seen_by_physics: _,
+                    } => {
+                        *seen_by_process = true;
+                    }
+                }
+            }
+        }
         self.handle_deferred_ops();
 
         let mut idx = 0;
@@ -321,9 +438,26 @@ impl TweensMap {
         }
 
         self.handle_deferred_ops();
+        self.prune_dead_nodes_seen_by_both();
+        self.prune_weak_tweens();
     }
 
     pub(super) unsafe fn tick_physics(&self, is_tree_paused: bool, scaled_delta_time: f64, unscaled_delta_time: f64) {
+        {
+            let tracked_nodes = &mut *self.tracked_nodes.get();
+            for state in tracked_nodes.values_mut() {
+                match &mut state.status {
+                    NodeStatus::InsideTree | NodeStatus::OutsideTree => {}
+                    NodeStatus::Dead {
+                        seen_by_process: _,
+                        seen_by_physics,
+                    } => {
+                        *seen_by_physics = true;
+                    }
+                }
+            }
+        }
+
         self.handle_deferred_ops();
 
         let mut idx = 0;
@@ -364,6 +498,28 @@ impl TweensMap {
         }
 
         self.handle_deferred_ops();
+        self.prune_dead_nodes_seen_by_both();
+        self.prune_weak_tweens();
+    }
+
+    unsafe fn prune_dead_nodes_seen_by_both(&self) {
+        let tracked_nodes = &mut *self.tracked_nodes.get();
+        tracked_nodes.retain(|_, state| match state.status {
+            NodeStatus::InsideTree | NodeStatus::OutsideTree => true,
+            NodeStatus::Dead {
+                seen_by_process: true,
+                seen_by_physics: true,
+            } => false,
+            NodeStatus::Dead { .. } => true,
+        });
+    }
+
+    unsafe fn prune_weak_tweens(&self) {
+        let tracked_nodes = &mut *self.tracked_nodes.get();
+
+        for state in tracked_nodes.values_mut() {
+            state.bound_tweens.retain(|weak| !weak.is_expired());
+        }
     }
 }
 
@@ -388,15 +544,17 @@ fn handle_tween_step(tween: &AnyTween, delta_time: f64, is_tree_paused: bool) ->
     }
 }
 
-// TODO: IGNORE FOR NOW, WIP
 #[derive(GodotClass)]
-#[class(base = RefCounted, no_init)]
+#[class(base = RefCounted, no_init, internal)]
 struct NodeLifetimeTracker {
-    tracking: Gd<Node>,
+    node_id: i64,
 }
 
-// TODO: IGNORE FOR NOW, WIP
 #[godot_api]
 impl IRefCounted for NodeLifetimeTracker {
-    fn on_notification(&mut self, what: ObjectNotification) { if what == ObjectNotification::PREDELETE {} }
+    fn on_notification(&mut self, what: ObjectNotification) {
+        if what == ObjectNotification::PREDELETE {
+            unsafe { TM.notify_node_about_to_be_freed(self.node_id) };
+        }
+    }
 }

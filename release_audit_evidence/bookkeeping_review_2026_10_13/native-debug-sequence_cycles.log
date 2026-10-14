@@ -1,0 +1,42 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards strict)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+NATIVE_CYCLE_START two_node_cycles
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:1134)
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:1134)
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:1134)
+NATIVE_CYCLE_PASS two_node_cycles
+NATIVE_CYCLE_START deeper_mixed_cycles
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:1134)
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:1134)
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:1134)
+NATIVE_CYCLE_PASS deeper_mixed_cycles
+NATIVE_CYCLE_START rejection_preserves_child
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:1134)
+NATIVE_CYCLE_PASS rejection_preserves_child
+NATIVE_CYCLE_START valid_nested_playback_and_bindings
+NATIVE_CYCLE_PASS valid_nested_playback_and_bindings
+NATIVE_CYCLE_START repeated_incoming_graph
+WARNING: [SpireTween] Sequence insertion rejected: tween 0x122253a0 is referenced more than once (cycle or unsupported reuse).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:1127)
+NATIVE_CYCLE_PASS repeated_incoming_graph
+NATIVE_CYCLE_START registration_rejects_repeated_graph
+WARNING: [SpireTween] Sequence binding traversal rejected: tween 0x1207c900 is referenced more than once (cycle or unsupported reuse).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:1127)
+NATIVE_CYCLE_PASS registration_rejects_repeated_graph
+NATIVE_CYCLE_START iterator_forbidden_terminates
+NATIVE_CYCLE_PASS iterator_forbidden_terminates
+NATIVE_CYCLE_START iterator_repeated_terminates
+NATIVE_CYCLE_PASS iterator_repeated_terminates
+NATIVE_CYCLE_START repeated_after_heap_spill
+NATIVE_CYCLE_PASS repeated_after_heap_spill
+NATIVE_CYCLE_START wide_and_deep_hierarchies
+NATIVE_CYCLE_PASS wide_and_deep_hierarchies
+NATIVE_CYCLE_RESULT total=10 failed=0

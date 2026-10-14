@@ -212,6 +212,8 @@ pub mod prelude {
 #[doc(hidden)]
 pub mod unversioned_api {
     pub use crate::global::{NodeStatus, TM, TweensMap};
+    #[cfg(feature = "integration-tests")]
+    pub use crate::global::BookkeepingSnapshot;
 }
 
 #[allow(unused_imports)]

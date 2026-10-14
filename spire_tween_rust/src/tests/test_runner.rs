@@ -64,6 +64,10 @@ impl INode for TestRunner {
 
         let mut base = self.base().clone();
         godot::task::spawn(async move {
+            if super::bookkeeping::run_bookkeeping_tests(&mut base).await != 0 {
+                base.get_tree().quit_ex().exit_code(1).done();
+                return;
+            }
             if super::delayed_call_validity::run_delayed_call_validity_tests(&mut base).await != 0 {
                 base.get_tree().quit_ex().exit_code(1).done();
                 return;

@@ -1,0 +1,80 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards strict)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+NATIVE_BOOKKEEPING_START free_inside_tree_batches_plateau
+BOOKKEEPING_SNAPSHOT node-batches/baseline BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT node-batches/round-1 BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT node-batches/round-2 BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT node-batches/round-3 BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+NATIVE_BOOKKEEPING_PASS free_inside_tree_batches_plateau
+NATIVE_BOOKKEEPING_START free_outside_tree_batches_plateau
+BOOKKEEPING_SNAPSHOT node-batches/baseline BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT node-batches/round-1 BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT node-batches/round-2 BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT node-batches/round-3 BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+NATIVE_BOOKKEEPING_PASS free_outside_tree_batches_plateau
+NATIVE_BOOKKEEPING_START queue_free_inside_tree_batches_plateau
+BOOKKEEPING_SNAPSHOT node-batches/baseline BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT node-batches/round-1 BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT node-batches/round-2 BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT node-batches/round-3 BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+NATIVE_BOOKKEEPING_PASS queue_free_inside_tree_batches_plateau
+NATIVE_BOOKKEEPING_START queue_free_outside_tree_batches_plateau
+BOOKKEEPING_SNAPSHOT node-batches/baseline BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT node-batches/round-1 BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT node-batches/round-2 BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT node-batches/round-3 BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+NATIVE_BOOKKEEPING_PASS queue_free_outside_tree_batches_plateau
+NATIVE_BOOKKEEPING_START dead_records_wait_for_both_loops
+BOOKKEEPING_SNAPSHOT both-loops/baseline BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT both-loops/settled BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT both-loops/settled BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+NATIVE_BOOKKEEPING_PASS dead_records_wait_for_both_loops
+NATIVE_BOOKKEEPING_START expired_bindings_on_living_node_plateau
+BOOKKEEPING_SNAPSHOT expired-bindings/baseline BookkeepingSnapshot { tracked_nodes: 1, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT expired-bindings/round-1 BookkeepingSnapshot { tracked_nodes: 1, dead_nodes: 0, binding_entries: 1000, expired_bindings: 1000, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT expired-bindings/round-2 BookkeepingSnapshot { tracked_nodes: 1, dead_nodes: 0, binding_entries: 2000, expired_bindings: 2000, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT expired-bindings/round-3 BookkeepingSnapshot { tracked_nodes: 1, dead_nodes: 0, binding_entries: 3000, expired_bindings: 3000, root_tweens: 0, deferred_ops: 0 }
+ERROR: [panic spire_tween_rust/src/tests/bookkeeping.rs:82]
+  assertion `left == right` failed: expired bindings must be pruned while their bound node remains alive
+    left: 1000
+   right: 0
+  in async task #0
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+(backtrace disabled, run application with `RUST_BACKTRACE=1` environment variable)
+NATIVE_BOOKKEEPING_FAIL expired_bindings_on_living_node_plateau
+NATIVE_BOOKKEEPING_START expired_bindings_on_detached_node_plateau
+BOOKKEEPING_SNAPSHOT expired-bindings/baseline BookkeepingSnapshot { tracked_nodes: 1, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT expired-bindings/round-1 BookkeepingSnapshot { tracked_nodes: 1, dead_nodes: 0, binding_entries: 1000, expired_bindings: 1000, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT expired-bindings/round-2 BookkeepingSnapshot { tracked_nodes: 1, dead_nodes: 0, binding_entries: 2000, expired_bindings: 2000, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT expired-bindings/round-3 BookkeepingSnapshot { tracked_nodes: 1, dead_nodes: 0, binding_entries: 3000, expired_bindings: 3000, root_tweens: 0, deferred_ops: 0 }
+ERROR: [panic spire_tween_rust/src/tests/bookkeeping.rs:82]
+  assertion `left == right` failed: expired bindings must be pruned while their bound node remains alive
+    left: 1000
+   right: 0
+  in async task #0
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+(backtrace disabled, run application with `RUST_BACKTRACE=1` environment variable)
+NATIVE_BOOKKEEPING_FAIL expired_bindings_on_detached_node_plateau
+NATIVE_BOOKKEEPING_START retained_bindings_survive_pruning
+BOOKKEEPING_SNAPSHOT retained/baseline BookkeepingSnapshot { tracked_nodes: 1, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT retained/completed BookkeepingSnapshot { tracked_nodes: 1, dead_nodes: 0, binding_entries: 1, expired_bindings: 0, root_tweens: 1, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT retained/unregistered BookkeepingSnapshot { tracked_nodes: 1, dead_nodes: 0, binding_entries: 1, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT retained/reregistered BookkeepingSnapshot { tracked_nodes: 1, dead_nodes: 0, binding_entries: 1, expired_bindings: 0, root_tweens: 1, deferred_ops: 0 }
+NATIVE_BOOKKEEPING_PASS retained_bindings_survive_pruning
+NATIVE_BOOKKEEPING_START detached_node_reentry_preserves_bindings
+NATIVE_BOOKKEEPING_PASS detached_node_reentry_preserves_bindings
+NATIVE_BOOKKEEPING_START deletion_cancels_all_clock_and_playback_modes
+NATIVE_BOOKKEEPING_PASS deletion_cancels_all_clock_and_playback_modes
+NATIVE_BOOKKEEPING_START duplicated_metadata_does_not_delay_source_cleanup
+BOOKKEEPING_SNAPSHOT duplicate/baseline BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_DUPLICATE shared_tracker=true
+BOOKKEEPING_SNAPSHOT duplicate/source-freed-duplicate-alive BookkeepingSnapshot { tracked_nodes: 1, dead_nodes: 0, binding_entries: 1, expired_bindings: 0, root_tweens: 1, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT duplicate/both-freed BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+ERROR: [panic spire_tween_rust/src/tests/bookkeeping.rs:272]
+  duplicated metadata must not delay cancellation when the original node is freed
+  in async task #0
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+(backtrace disabled, run application with `RUST_BACKTRACE=1` environment variable)
+NATIVE_BOOKKEEPING_FAIL duplicated_metadata_does_not_delay_source_cleanup
+NATIVE_BOOKKEEPING_RESULT total=11 failed=3

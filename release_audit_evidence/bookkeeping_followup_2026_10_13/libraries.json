@@ -1,0 +1,30 @@
+[
+  {
+    "kind": "native",
+    "profile": "debug",
+    "source": "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/target/debug/libspire_tween_rust.so",
+    "installed": "/tmp/spire-bookkeeping-fixed-20261013-nxl06oe1/native-project/addons/spire_tween/lib/x86_64-unknown-linux-gnu/debug/libspire_tween_rust.so",
+    "sha256": "7a3eec676ce458e2ee0bc5587fbbaf07f184e51a0e12e1d2c362b7c3dc05be05"
+  },
+  {
+    "kind": "gdscript",
+    "profile": "debug",
+    "source": "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/target/debug/libspire_tween.so",
+    "installed": "/tmp/spire-bookkeeping-fixed-20261013-nxl06oe1/gdscript-project/addons/spire_tween/lib/x86_64-unknown-linux-gnu/debug/libspire_tween.so",
+    "sha256": "c972ca13a5aaacf8c17e12131de91dbbff6765da6fc077e508c5ff09fe723fb8"
+  },
+  {
+    "kind": "native",
+    "profile": "release",
+    "source": "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/target/release/libspire_tween_rust.so",
+    "installed": "/tmp/spire-bookkeeping-fixed-20261013-nxl06oe1/native-project/addons/spire_tween/lib/x86_64-unknown-linux-gnu/release/libspire_tween_rust.so",
+    "sha256": "a836f0d351ea939cb9aca52e56efaebee058ec6d9f7169e61d28bab277af911f"
+  },
+  {
+    "kind": "gdscript",
+    "profile": "release",
+    "source": "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/target/release/libspire_tween.so",
+    "installed": "/tmp/spire-bookkeeping-fixed-20261013-nxl06oe1/gdscript-project/addons/spire_tween/lib/x86_64-unknown-linux-gnu/release/libspire_tween.so",
+    "sha256": "f70aba605be6b6ec6e470a179df7e9e0e63dbeb7395a5d2784e3b8754f88c119"
+  }
+]

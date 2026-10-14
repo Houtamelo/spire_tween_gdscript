@@ -1,0 +1,22 @@
+{
+  "godot": "4.7.2.stable.official.ed1daf0bf",
+  "godot_crate": "0.5.5",
+  "default_api": "4.6",
+  "headless": true,
+  "bookkeeping_methods_per_profile": 11,
+  "bookkeeping_failures_per_profile": 0,
+  "ordinary_node_deletions_per_profile": 12000,
+  "expired_bindings_after_each_1000_tween_batch": 0,
+  "node_duplication_configurations": 4,
+  "native_existing_methods_per_profile": 45,
+  "gdscript_methods_per_profile": 91,
+  "runtime_processes": 26,
+  "runtime_failures": 0,
+  "expected_api_compatibility_panics_per_profile": 2,
+  "unexpected_panics": 0,
+  "source_verification": {
+    "changed_during_verification": []
+  },
+  "editor_runtime_validated": false,
+  "production_cleanup_changed_by_review": false
+}

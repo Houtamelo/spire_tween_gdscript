@@ -155,6 +155,25 @@ To check the runner's command-line configuration and cache handling directly:
 godot --headless --path spire_tween_gdscript --script res://examples/tests/runner_cli_checks.gd -- --all-tests --no-cache
 ```
 
+The native manager-bookkeeping suite observes actual node records and weak binding
+entries through read-only counters gated by `integration-tests`. The native demo/test
+crate enables that feature; standalone addon builds leave it disabled. Build the
+native test extension and place its fresh library at the path selected by
+[`spire_tween_rust/addons/spire_tween/spire_tween.gdextension`](spire_tween_rust/addons/spire_tween/spire_tween.gdextension), then run:
+
+```sh
+cargo build -p spire_tween_rust --locked --features spire_tween/include_gdscript_bridge
+# Confirm the manifest resolves to the fresh build before running.
+godot --headless --path spire_tween_rust --fixed-fps 120 res://examples/tests/bookkeeping_runner.tscn
+```
+
+The focused runner exits nonzero on failed assertions. It covers repeated deletion
+batches, both processing loops, expired bindings on living nodes, retained handles,
+node re-entry, and node duplication. The regular native runner also runs these
+checks before its other suites. The passing runtime verification and remaining
+editor execution caveat are recorded in
+[the follow-up evidence](release_audit_evidence/bookkeeping_followup_2026_10_13/README.md).
+
 # Platform Support
 
 SpireTween is made with [Godot-Rust](https://github.com/godot-rust/gdext), a GdExtension that provides Rust bindings for Godot. It *should* be compatible with all platforms supported by Godot-Rust.

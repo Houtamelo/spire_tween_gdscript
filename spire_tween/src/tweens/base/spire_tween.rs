@@ -457,13 +457,12 @@ impl<T: ITweenable> SpireTween<T> {
                             return NodesValidityResult::DontProcess;
                         }
                     }
-                    // When using get_status_fresh this is guaranteed to be OutsideTree + NOT dead.
-                    NodeStatus::OutsideTreeMaybeDead => {
+                    NodeStatus::OutsideTree => {
                         if let PauseMode::Bound = self.pause_mode {
                             return NodesValidityResult::DontProcess;
                         }
                     }
-                    NodeStatus::Dead => {
+                    NodeStatus::Dead { .. } => {
                         return NodesValidityResult::SomeNodesDead;
                     }
                 }
@@ -618,8 +617,8 @@ where T: ITweenable
     ///
     /// let mut sequence = SpireTween::<Sequence>::new();
     /// sequence.append_interval(1.0);
-    /// let tween = TweenPtr::new(sequence);
-    /// let result = tween.custom_step(0.25, false);
+    /// let registered_sequence = sequence.register();
+    /// let result = registered_sequence.custom_step(0.25, false);
     /// assert!(matches!(result, TweenStepResult::Stepped(AdvanceTimeResult::Playing)));
     /// ```
     pub fn custom_step(&self, delta_time: f64, is_tree_paused: bool) -> TweenStepResult
@@ -685,10 +684,10 @@ where T: ITweenable
 
                 match TM.node_get_status_fresh(node.clone()) {
                     NodeStatus::InsideTree => {}
-                    NodeStatus::OutsideTreeMaybeDead => {
+                    NodeStatus::OutsideTree => {
                         any_outside = true;
                     }
-                    NodeStatus::Dead => return BoundNodesState::SomeDead,
+                    NodeStatus::Dead { .. } => return BoundNodesState::SomeDead,
                 }
             }
 

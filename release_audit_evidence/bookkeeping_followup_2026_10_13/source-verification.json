@@ -1,0 +1,10 @@
+{
+  "changed_during_verification": [],
+  "format_only_changes_after_verification": {
+    "spire_tween/src/tweens/macros.rs": {
+      "tested_sha256": "96ea1f56e51e414d034a50eff91e161bc349f6417f5af58eb0a91de944ad88de",
+      "committed_source_sha256": "ca4fbe843b20aa8305b03bd60734c60381ea9b844d9792ab58d0cccb887c1bd1",
+      "change": "Remove trailing spaces from one blank line."
+    }
+  }
+}

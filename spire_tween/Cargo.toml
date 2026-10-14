@@ -38,6 +38,8 @@ include_gdext_lib = []
 include_gdscript_bridge = []
 nothreads = ["godot/experimental-wasm-nothreads"]
 verbose-stdout = []
+# Read-only native bookkeeping observations for the real-engine test crate.
+integration-tests = []
 
 [[test]]
 name = "must_compile"

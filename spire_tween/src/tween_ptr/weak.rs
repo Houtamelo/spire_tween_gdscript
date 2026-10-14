@@ -8,6 +8,8 @@ pub struct WeakTweenPtr<T: ITweenable>(
 );
 
 impl<T: ITweenable> WeakTweenPtr<T> {
+    pub fn is_expired(&self) -> bool { self.0.strong_count() == 0 }
+
     /// Returns a strong pointer while the native tween is alive, promoting its
     /// Godot back-reference when required. Returns `None` after the final strong
     /// native owner is released; it never resurrects an expired tween.

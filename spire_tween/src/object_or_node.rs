@@ -22,8 +22,8 @@ impl ObjectOrNode {
                     return false;
                 }
                 match TM.node_get_status_fresh(node.clone()) {
-                    NodeStatus::InsideTree | NodeStatus::OutsideTreeMaybeDead => true,
-                    NodeStatus::Dead => false,
+                    NodeStatus::InsideTree | NodeStatus::OutsideTree => true,
+                    NodeStatus::Dead { .. } => false,
                 }
             }
         }

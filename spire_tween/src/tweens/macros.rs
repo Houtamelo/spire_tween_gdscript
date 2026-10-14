@@ -106,6 +106,11 @@ macro_rules! define_tween_ptr_methods {
             fn address(&self) -> *const ();
         }
 
+        #[delegate_impl]
+        impl $Weak {
+            pub fn is_expired(&self) -> bool;
+        }
+
         impl PartialEq for $Weak {
             #[inline]
             fn eq(&self, other: &Self) -> bool { std::ptr::addr_eq(self.address(), other.address()) }

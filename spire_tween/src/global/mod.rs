@@ -17,12 +17,15 @@ pub use self::{node_status::*, tweens_map::*};
 fn eval_node_status(node: &Gd<Node>) -> NodeStatus {
     let node_id = node.instance_id_unchecked().to_i64();
 
-    if !is_instance_id_valid(node_id) {
-        NodeStatus::Dead
-    } else {
+    if is_instance_id_valid(node_id) {
         match node.is_inside_tree() {
             true => NodeStatus::InsideTree,
-            false => NodeStatus::OutsideTreeMaybeDead,
+            false => NodeStatus::OutsideTree,
+        }
+    } else {
+        NodeStatus::Dead {
+            seen_by_process: false,
+            seen_by_physics: false,
         }
     }
 }
@@ -91,10 +94,7 @@ impl INode for TweensController {
         let unscaled_delta_time = (curr_ticks_usec - self.last_process_ticks_usec) as f64 / 1_000_000.0;
         self.last_process_ticks_usec = curr_ticks_usec;
 
-        #[allow(unused_unsafe)]
-        unsafe {
-            TM.tick_process(is_tree_paused, delta_time, unscaled_delta_time)
-        }
+        unsafe { TM.tick_process(is_tree_paused, delta_time, unscaled_delta_time) };
     }
 
     fn physics_process(&mut self, delta_time: f64) {
@@ -104,9 +104,6 @@ impl INode for TweensController {
         let unscaled_delta_time = (curr_ticks_usec - self.last_physics_process_ticks_usec) as f64 / 1_000_000.0;
         self.last_physics_process_ticks_usec = curr_ticks_usec;
 
-        #[allow(unused_unsafe)]
-        unsafe {
-            TM.tick_physics(is_tree_paused, delta_time, unscaled_delta_time)
-        }
+        unsafe { TM.tick_physics(is_tree_paused, delta_time, unscaled_delta_time) };
     }
 }

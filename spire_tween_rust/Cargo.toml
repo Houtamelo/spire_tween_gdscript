@@ -9,7 +9,7 @@ crate-type = ["cdylib"]
 
 [dependencies]
 godot = { version = "0.5", features = ["experimental-wasm", "register-docs"] }
-spire_tween = { path = "../spire_tween" }
+spire_tween = { path = "../spire_tween", features = ["integration-tests"] }
 futures-timer = "3.0.3"
 
 [features]

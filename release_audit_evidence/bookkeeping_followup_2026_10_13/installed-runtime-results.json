@@ -1,0 +1,53 @@
+[
+  {
+    "label": "installed-native-bookkeeping",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_rust",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/bookkeeping_runner.tscn"
+    ],
+    "exit_code": 0,
+    "results": [
+      "NATIVE_BOOKKEEPING_RESULT total=11 failed=0"
+    ],
+    "script_errors": 0
+  },
+  {
+    "label": "installed-addon-node-binding",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/node_binding_runner.tscn"
+    ],
+    "exit_code": 0,
+    "results": [
+      "BINDING_RESULT total=23 failed=0"
+    ],
+    "script_errors": 0
+  },
+  {
+    "label": "installed-addon-ownership",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/ownership_runner.tscn"
+    ],
+    "exit_code": 0,
+    "results": [
+      "OWNERSHIP_RESULT total=15 failed=0"
+    ],
+    "script_errors": 0
+  }
+]

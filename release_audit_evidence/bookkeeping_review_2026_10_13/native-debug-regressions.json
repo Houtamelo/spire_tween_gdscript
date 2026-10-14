@@ -1,0 +1,47 @@
+[
+  {
+    "suite": "ownership",
+    "exit_code": 0,
+    "results": [
+      "NATIVE_OWNERSHIP_RESULT total=10 failed=0"
+    ],
+    "script_errors": 0,
+    "panic_reports": 0
+  },
+  {
+    "suite": "node_binding",
+    "exit_code": 0,
+    "results": [
+      "NATIVE_BINDING_RESULT total=11 failed=0"
+    ],
+    "script_errors": 0,
+    "panic_reports": 0
+  },
+  {
+    "suite": "sequence_cycles",
+    "exit_code": 0,
+    "results": [
+      "NATIVE_CYCLE_RESULT total=10 failed=0"
+    ],
+    "script_errors": 0,
+    "panic_reports": 0
+  },
+  {
+    "suite": "delayed_call_validity",
+    "exit_code": 0,
+    "results": [
+      "NATIVE_DELAY_VALIDITY_RESULT total=9 failed=0"
+    ],
+    "script_errors": 0,
+    "panic_reports": 0
+  },
+  {
+    "suite": "api_compatibility",
+    "exit_code": 0,
+    "results": [
+      "NATIVE_API_RESULT total=5 failed=0"
+    ],
+    "script_errors": 0,
+    "panic_reports": 2
+  }
+]

@@ -1,0 +1,177 @@
+{
+  "date": "2026-10-13",
+  "base_commit": "0728694",
+  "godot": "4.7.2.stable.official.ed1daf0bf",
+  "default_api": "4.6",
+  "godot_crate": "0.5.5",
+  "headless": true,
+  "bookkeeping_per_profile": {
+    "methods": 11,
+    "passed": 8,
+    "failed": 3,
+    "exit_code": 1,
+    "ordinary_deletions": 12000,
+    "expired_binding_counts_per_live_node": [
+      1000,
+      2000,
+      3000
+    ],
+    "duplicated_tracker_shared": true
+  },
+  "native_existing_methods_per_profile": 45,
+  "addon_methods_per_profile": 91,
+  "production_cleanup_changed_by_review": false,
+  "test_observability_feature": "integration-tests",
+  "source_sha256": {
+    "spire_tween/src/global/mod.rs": "66355f7507888903a6299c64ffade9bb7d5fab21148651a4e7b210b8552e6c0b",
+    "spire_tween/src/global/node_status.rs": "3d306e1287b098c3a61fa4652e5267dcd457f2bbea59cccc3eb5537ffdc2369e",
+    "spire_tween/src/global/tweens_map.rs": "a2b3cbd9d2d9c15e0ba61109bdf12d447b3caf3eada274611a0fe92b9a25968b",
+    "spire_tween/src/object_or_node.rs": "e0a5993ea01e8a1f712a7c843809a18c1cae40cafbbcf86f28d68a4eb536540b",
+    "spire_tween/src/tweens/base/spire_tween.rs": "1270b8d8b1ded1b1c5e0cfac8ec9bfac7a734b88cd046dd9adf3a6b02e96ec85",
+    "spire_tween_rust/src/tests/bookkeeping.rs": "bb3ce3333222d91597106df70f19c2390aa3e207e3685d1e0125585f374676e9"
+  },
+  "addon_results": {
+    "debug": {
+      "profile": "debug",
+      "library_sha256": "89955322d5f1a475e4318950b5a8437e1a3b71e9709eba24e6491509237450c3",
+      "results": [
+        {
+          "suite": "node-binding",
+          "exit_code": 0,
+          "results": [
+            "BINDING_RESULT total=23 failed=0"
+          ],
+          "script_errors": 0,
+          "panic_reports": 0
+        },
+        {
+          "suite": "sequence-speed",
+          "exit_code": 0,
+          "results": [
+            "EXCESS_RESULT total=9 cases=121 failed=0"
+          ],
+          "script_errors": 0,
+          "panic_reports": 0
+        },
+        {
+          "suite": "sequence-ctors",
+          "exit_code": 0,
+          "results": [
+            "CTOR_RESULT total=18 failed=0"
+          ],
+          "script_errors": 0,
+          "panic_reports": 0
+        },
+        {
+          "suite": "ellipse",
+          "exit_code": 0,
+          "results": [
+            "ELLIPSE_RESULT total=11 cases=119 failed=0"
+          ],
+          "script_errors": 0,
+          "panic_reports": 0
+        },
+        {
+          "suite": "sequence-cycles",
+          "exit_code": 0,
+          "results": [
+            "CYCLE_RESULT total=6 failed=0"
+          ],
+          "script_errors": 0,
+          "panic_reports": 0
+        },
+        {
+          "suite": "ownership",
+          "exit_code": 0,
+          "results": [
+            "OWNERSHIP_RESULT total=15 failed=0"
+          ],
+          "script_errors": 0,
+          "panic_reports": 0
+        },
+        {
+          "suite": "delayed-call",
+          "exit_code": 0,
+          "results": [
+            "DELAY_VALIDITY_RESULT total=9 failed=0"
+          ],
+          "script_errors": 0,
+          "panic_reports": 0
+        }
+      ],
+      "method_count": 91
+    },
+    "release": {
+      "profile": "release",
+      "library_sha256": "60ecbabdc5cb6f9b8d6cb982f4aa54f888dd7a2c34c1ad0c7500be4fa3d17824",
+      "results": [
+        {
+          "suite": "node-binding",
+          "exit_code": 0,
+          "results": [
+            "BINDING_RESULT total=23 failed=0"
+          ],
+          "script_errors": 0,
+          "panic_reports": 0
+        },
+        {
+          "suite": "sequence-speed",
+          "exit_code": 0,
+          "results": [
+            "EXCESS_RESULT total=9 cases=121 failed=0"
+          ],
+          "script_errors": 0,
+          "panic_reports": 0
+        },
+        {
+          "suite": "sequence-ctors",
+          "exit_code": 0,
+          "results": [
+            "CTOR_RESULT total=18 failed=0"
+          ],
+          "script_errors": 0,
+          "panic_reports": 0
+        },
+        {
+          "suite": "ellipse",
+          "exit_code": 0,
+          "results": [
+            "ELLIPSE_RESULT total=11 cases=119 failed=0"
+          ],
+          "script_errors": 0,
+          "panic_reports": 0
+        },
+        {
+          "suite": "sequence-cycles",
+          "exit_code": 0,
+          "results": [
+            "CYCLE_RESULT total=6 failed=0"
+          ],
+          "script_errors": 0,
+          "panic_reports": 0
+        },
+        {
+          "suite": "ownership",
+          "exit_code": 0,
+          "results": [
+            "OWNERSHIP_RESULT total=15 failed=0"
+          ],
+          "script_errors": 0,
+          "panic_reports": 0
+        },
+        {
+          "suite": "delayed-call",
+          "exit_code": 0,
+          "results": [
+            "DELAY_VALIDITY_RESULT total=9 failed=0"
+          ],
+          "script_errors": 0,
+          "panic_reports": 0
+        }
+      ],
+      "method_count": 91
+    }
+  },
+  "native_debug_library_sha256": "e935a8d24a3883546f0ab2af5cff9394e04773aac19720bb3a8153ca0a5b4d00",
+  "native_release_library_sha256": "65fa597e4fe43061bae66bef01738f3b8184051a97ae06f34fa2af09fa7b4260"
+}

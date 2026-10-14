@@ -1,0 +1,6 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards balanced)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+DUPLICATE_TRACKER_SHARED true
+DUPLICATE_SOURCE_FREED original_alive=false playing=true registered=true
+DUPLICATE_BOTH_FREED playing=false registered=false
