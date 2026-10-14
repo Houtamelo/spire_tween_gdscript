@@ -4,6 +4,9 @@
 native-bookkeeping, cancellation-state, and startup issues, while preserving the earlier focused repairs. Fresh builds and real-engine evidence are recorded separately from old artifacts and
 unresolved distribution decisions.
 
+**2026-10-14 startup decision:** early manager initialization is an accepted startup restriction, not a release blocker. First use requires an installed `SceneTree` main loop with an available root;
+failure logs an explanatory error and is not retried. The installation and Rust quickstart documentation state the requirement. See [finding 16](release_audit_round2.md#16-an-early-failed-manager-initialization-disables-subsequent-playback).
+
 **Hold the commercial release.** Normal tweening and a Linux release export work, but the current source and local addon binaries have reproducible ownership, binding, sequence, installation, and
 release-packaging defects. This audit examines commit `f518d78` on 2026-10-07. The working tree was clean before the audit.
 
@@ -342,8 +345,8 @@ release archive.
 
 These are source-review concerns or unverified boundaries, rather than additional confirmed crashes:
 
-- **Early manager initialization:** `global/index_map_impl.rs:8` logs an unsuccessful `try_init_singleton()` but still initializes the `LazyLock`. There is no later retry if the first access lacks a
-  valid SceneTree. Test supported initialization phases or document restrictions.
+- **Early manager initialization — accepted restriction, 2026-10-14:** first use requires an installed `SceneTree` with an available root. Failed initialization logs an error and is not retried;
+  correct the startup call and restart the application. The requirement is documented. See [finding 16](release_audit_round2.md#16-an-early-failed-manager-initialization-disables-subsequent-playback) for the custom-main-loop constructor reproduction and accepted scope.
 - **Reentrancy and aliasing:** synchronous callbacks run while mutable tween/connection data is borrowed (`tweens/base/spire_tween.rs:528`, `:550`); `RcPtr` uses unchecked mutable access. One GDScript
   synchronous restart probe worked, so a blanket claim that all synchronous callbacks fail would be false. Test same-tween callback mutation and native connection-list mutation explicitly; assess Rust
   aliasing separately from a successful runtime probe.

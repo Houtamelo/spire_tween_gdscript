@@ -16,6 +16,13 @@ This crate is the Rust core. There's also a [GDScript-facing addon] built on top
 
 ## Quickstart
 
+SpireTween requires an installed `SceneTree` main loop with an available root before
+the tween manager's first use, including registration and node binding. A scene
+Node's `ready()` is a suitable starting point. Custom main-loop constructors and
+member initializers can run before `Engine::get_main_loop()` exposes the tree;
+defer tween setup until the main loop is installed. Failed initialization logs an
+error and is not retried: correct the startup call and restart the application.
+
 ```rust
 use spire_tween::prelude::*;
 

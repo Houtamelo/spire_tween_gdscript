@@ -76,6 +76,8 @@ When exporting, Godot will automatically include the necessary binary for the ch
 
 The GDExtension registers `Spire`, `Do{Class}`, `SpireSequence`, and the other classes automatically. No Project Settings → Plugins switch or autoload setup is required; the tween manager initializes on first use.
 
+SpireTween requires `Engine.get_main_loop()` to return a `SceneTree` with an available root before the manager's first use. Creating tweens from a scene Node's `_ready()` satisfies this requirement. In a custom `SceneTree` main-loop script, defer tween creation until the main loop is installed; its constructor and member initializers run too early. An unsupported main-loop type or premature first use prints an initialization error. The manager does not retry initialization, so correct the startup call and restart the application if this error occurs.
+
 Attach this script to a Node and run the scene to check installation:
 
 ```gdscript

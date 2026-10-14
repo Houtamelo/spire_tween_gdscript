@@ -117,14 +117,18 @@ cancellation should stop as documented; decide whether forced invalid-target com
 
 ### 16. An early failed manager initialization disables subsequent playback
 
-**Medium priority; restricted startup phase, permanent effect.** [global/tweens_map.rs](spire_tween/src/global/tweens_map.rs) logs failure from `try_init_singleton()` but still commits the
+**2026-10-14 decision: accepted startup restriction; not a release blocker.** SpireTween explicitly requires an installed `SceneTree` main loop with an available root before the manager's first use.
+Initialization errors explain an unavailable tree or unsupported main-loop type and expose incorrect startup ordering during testing. The installation and Rust quickstart documentation now state this
+requirement and the absence of automatic retry. No runtime change is required under the accepted contract.
+
+**Original reproduction; restricted startup phase, permanent effect.** [global/tweens_map.rs](spire_tween/src/global/tweens_map.rs) logs failure from `try_init_singleton()` but still commits the
 `LazyLock` value. There is no retry.
 
 A `SceneTree` script creates a delayed call in a member initializer, before `Engine.get_main_loop()` is set. Later, after the tree is running, a second ordinary delayed call still never fires: both
 call counts remain zero, registration reports true, and the root has no controller. Both profiles reproduce this.
 
-Make initialization recoverable when the SceneTree becomes available, or reject early registrations without poisoning subsequent supported calls. Document the supported first-use phase. A normal
-deferred first-use control works in the other probes.
+This reproduction calls Spire while the custom `SceneTree` itself is being constructed, before Godot installs it as the main loop. It exercises unsupported first use, rather than an ordinary scene
+or autoload startup defect. A deferred first-use control works in the other probes. After an initialization error, the user must correct the startup call and restart the application.
 
 ### 17. Follow behavior contradicts its public Rust documentation
 
@@ -202,7 +206,7 @@ stands; no graphical testing was repeated and this is not a new ordinary-editor 
 
 1. Repair sequence time-unit conversion and ellipse owner lifetime, then geometry and cancellation states.
 2. Make the runners trustworthy and obtain uncached debug/release passing results with suitable clock modes.
-3. Address manager pruning/startup and reconcile follow/numeric contracts.
+3. Address manager pruning and reconcile follow/numeric contracts. First-use SceneTree availability is an accepted startup requirement, as recorded in finding 16.
 4. Freeze the source/API/platform scope, rebuild and assemble permitted archives, then verify extracted install/runtime/export and publish matching support promises.
 
 ## Work after the review
