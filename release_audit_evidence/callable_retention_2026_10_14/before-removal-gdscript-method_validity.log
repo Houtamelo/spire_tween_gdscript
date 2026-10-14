@@ -1,0 +1,84 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards strict)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+METHOD_VALIDITY_START test_initially_invalid_callables_across_clocks
+METHOD_VALIDITY_PASS test_initially_invalid_callables_across_clocks
+METHOD_VALIDITY_START test_freed_node_target_during_processing
+METHOD_VALIDITY_PASS test_freed_node_target_during_processing
+METHOD_VALIDITY_START test_invalid_manual_step_keeps_owner_control
+ERROR: Manual stepping must leave registration policy to its caller
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/method_validity.gd:12)
+       [1] test_invalid_manual_step_keeps_owner_control (res://examples/tests/method_validity.gd:66)
+       [2] frames (res://examples/tests/method_validity.gd:8)
+ERROR: Manual stepping must leave registration policy to its caller
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/method_validity.gd:12)
+       [1] test_invalid_manual_step_keeps_owner_control (res://examples/tests/method_validity.gd:66)
+       [2] frames (res://examples/tests/method_validity.gd:8)
+ERROR: Manual stepping must leave registration policy to its caller
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/method_validity.gd:12)
+       [1] test_invalid_manual_step_keeps_owner_control (res://examples/tests/method_validity.gd:66)
+       [2] frames (res://examples/tests/method_validity.gd:8)
+METHOD_VALIDITY_FAIL test_invalid_manual_step_keeps_owner_control
+METHOD_VALIDITY_START test_invalid_force_complete_playing_and_paused
+ERROR: A retained stopped handle must preserve registration
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/method_validity.gd:12)
+       [1] test_invalid_force_complete_playing_and_paused (res://examples/tests/method_validity.gd:97)
+       [2] frames (res://examples/tests/method_validity.gd:8)
+ERROR: A retained stopped handle must preserve registration
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/method_validity.gd:12)
+       [1] test_invalid_force_complete_playing_and_paused (res://examples/tests/method_validity.gd:97)
+       [2] frames (res://examples/tests/method_validity.gd:8)
+ERROR: A retained stopped handle must preserve registration
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/method_validity.gd:12)
+       [1] test_invalid_force_complete_playing_and_paused (res://examples/tests/method_validity.gd:97)
+       [2] frames (res://examples/tests/method_validity.gd:8)
+ERROR: A retained stopped handle must preserve registration
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/method_validity.gd:12)
+       [1] test_invalid_force_complete_playing_and_paused (res://examples/tests/method_validity.gd:97)
+       [2] frames (res://examples/tests/method_validity.gd:8)
+ERROR: A retained stopped handle must preserve registration
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/method_validity.gd:12)
+       [1] test_invalid_force_complete_playing_and_paused (res://examples/tests/method_validity.gd:97)
+       [2] frames (res://examples/tests/method_validity.gd:8)
+ERROR: A retained stopped handle must preserve registration
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/method_validity.gd:12)
+       [1] test_invalid_force_complete_playing_and_paused (res://examples/tests/method_validity.gd:97)
+       [2] frames (res://examples/tests/method_validity.gd:8)
+METHOD_VALIDITY_FAIL test_invalid_force_complete_playing_and_paused
+METHOD_VALIDITY_START test_invalid_custom_method_skips_lerper
+ERROR: Custom method validation must stop silently without choosing registration policy
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/method_validity.gd:12)
+       [1] test_invalid_custom_method_skips_lerper (res://examples/tests/method_validity.gd:120)
+       [2] _ready (res://examples/tests/method_validity_runner.gd:17)
+ERROR: Custom method validation must stop silently without choosing registration policy
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/method_validity.gd:12)
+       [1] test_invalid_custom_method_skips_lerper (res://examples/tests/method_validity.gd:120)
+       [2] _ready (res://examples/tests/method_validity_runner.gd:17)
+METHOD_VALIDITY_FAIL test_invalid_custom_method_skips_lerper
+METHOD_VALIDITY_START test_valid_completion_force_complete_and_replay
+METHOD_VALIDITY_PASS test_valid_completion_force_complete_and_replay
+METHOD_VALIDITY_START test_invalid_sequence_child_does_not_block
+METHOD_VALIDITY_PASS test_invalid_sequence_child_does_not_block
+METHOD_VALIDITY_RESULT total=7 failed=3

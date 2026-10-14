@@ -61,20 +61,24 @@ func test_initially_invalid_callables() -> bool:
 
 func test_invalid_force_complete_playing_and_paused() -> bool:
 	var ok := true
-	for paused in [false, true]:
-		var target := Node.new()
-		add_child(target)
-		var tween := Spire.do_delayed_call(Callable(target, &"queue_free"), 100.0)
-		var events := [0, 0]
-		tween.finished.connect(func(): events[0] += 1)
-		tween.loop_finished.connect(func(): events[1] += 1)
-		if paused:
-			tween.pause()
-		target.free()
-		tween.force_complete()
-		ok = check(tween.is_stopped() and not tween.is_registered(), "Invalid forced completion must stop and unregister immediately") and ok
-		ok = check(events == [0, 0], "Invalid forced completion must not emit completion signals") and ok
-		cleanup(tween)
+	for mode in [Spire.PROCESS_MODE_IDLE, Spire.PROCESS_MODE_PHYSICS, Spire.PROCESS_MODE_MANUAL]:
+		for paused in [false, true]:
+			var tween := Spire.do_delayed_call(Callable(), 100.0).set_process_mode(mode)
+			var events := [0, 0]
+			var weak: WeakRef = weakref(tween)
+			tween.finished.connect(func(): events[0] += 1)
+			tween.loop_finished.connect(func(): events[1] += 1)
+			if paused:
+				tween.pause()
+			tween.force_complete()
+			ok = check(tween.is_stopped() and events == [0, 0], "Invalid forced completion must stop silently") and ok
+			await frames()
+			ok = check(tween.is_registered(), "A retained stopped call must preserve registration") and ok
+			tween.force_complete()
+			ok = check(events == [0, 0], "Repeated forced stopping must remain silent") and ok
+			tween = null
+			await frames()
+			ok = check(weak.get_ref() == null, "Manager must release the stopped call when its owner drops it") and ok
 	await frames()
 	return ok
 

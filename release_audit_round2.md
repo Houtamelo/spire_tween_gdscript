@@ -113,6 +113,8 @@ A freed method target yields `is_registered() == false` while `is_playing() == t
 Forced completion is also inconsistent with delayed calls: `seek_end()` skips an invalid Callable, but `force_complete()` still emits `finished`. The probe observes one finish signal. Natural
 cancellation should stop as documented; decide whether forced invalid-target completion should follow delayed-call cancellation semantics or retain an explicitly documented distinct contract.
 
+**2026-10-14 follow-up: resolved.** The chosen contract keeps stopping separate from finishing and leaves removal to the owning processor. Method/delayed-call validity guards stop invalid callables without invocation, completion events, or manager mutation. Automatic processing consumes `ShouldDespawn` and removes invalid tweens. Manual stepping and forced stopping preserve registration while external handles remain; owners may unregister or release those handles. Real-Godot tests cover retained stopped handles, collection after the final owner drops, idle/physics/manual roots, playing/paused forced stopping, raw builders without manager side effects, custom interpolation, sequence children, and valid completion/replay. All focused suites pass: 66 native and 98 GDScript methods per profile. See the [initial method-validity evidence](release_audit_evidence/method_validity_2026_10_13/README.md) and [ownership follow-up](release_audit_evidence/callable_retention_2026_10_14/README.md).
+
 ### 16. An early failed manager initialization disables subsequent playback
 
 **Medium priority; restricted startup phase, permanent effect.** [global/tweens_map.rs](spire_tween/src/global/tweens_map.rs) logs failure from `try_init_singleton()` but still commits the

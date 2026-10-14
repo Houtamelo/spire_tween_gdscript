@@ -3,6 +3,7 @@ use std::panic::{AssertUnwindSafe, catch_unwind};
 
 use godot::prelude::*;
 use spire_tween::prelude::*;
+use spire_tween::unversioned_api::TM;
 
 use super::{
     ownership::{CatchTestPanic, frames},
@@ -70,40 +71,51 @@ fn initially_invalid(parent: &mut Gd<Node>) -> PinnedTestTask {
 }
 
 fn invalid_force_complete(_: &mut Gd<Node>) -> PinnedTestTask {
-    let events = RcPtr::new(0usize);
-    for paused in [false, true] {
-        let mut tween = SpireTween::<Callable>::new(Callable::invalid(), 100.0).register();
-        let finished = events.clone();
-        tween
-            .to_mut()
-            .finished_connect(move || *finished.to_mut() += 1, SpireFlags::empty());
-        let looped = events.clone();
-        tween
-            .to_mut()
-            .loop_finished_connect(move || *looped.to_mut() += 1, SpireFlags::empty());
-        if paused {
-            tween.pause();
-        }
-        tween.force_complete();
-        assert_cancelled(&tween);
-    }
-    // A raw unregistered builder has no TweenPtr or Godot wrapper to recover.
-    let mut builder = SpireTween::<Callable>::new(Callable::invalid(), 100.0);
-    builder.force_complete();
-    assert!(builder.is_stopped());
     Box::pin(async move {
+        let events = RcPtr::new(0usize);
+        for mode in [ProcessMode::Idle, ProcessMode::Physics, ProcessMode::Manual] {
+            for paused in [false, true] {
+                let mut tween = SpireTween::<Callable>::new(Callable::invalid(), 100.0)
+                    .with_process_mode(mode).register();
+                let weak = tween.downgrade();
+                let finished = events.clone();
+                tween.to_mut().finished_connect(move || *finished.to_mut() += 1, SpireFlags::empty());
+                let looped = events.clone();
+                tween.to_mut().loop_finished_connect(move || *looped.to_mut() += 1, SpireFlags::empty());
+                if paused { tween.pause(); }
+                tween.force_complete();
+                assert!(tween.is_stopped());
+                frames(8).await;
+                assert!(tween.is_registered(), "forced stopping must preserve externally retained registration");
+                assert_eq!(*events, 0, "invalidation must not emit completion events");
+                drop(tween);
+                frames(8).await;
+                assert!(weak.is_expired(), "manager must release the stopped call when its owner drops it");
+            }
+        }
+        let mut builder = SpireTween::<Callable>::new(Callable::invalid(), 100.0);
+        let before = TM.bookkeeping_snapshot();
+        builder.force_complete();
+        assert!(builder.is_stopped());
+        assert_eq!(TM.bookkeeping_snapshot(), before, "raw builder validation must not enqueue manager operations");
         frames(4).await;
-        assert_eq!(*events, 0, "cancellation must not emit completion events");
+        assert_eq!(*events, 0);
     })
 }
 
 fn invalid_manual_processing(_: &mut Gd<Node>) -> PinnedTestTask {
-    let mut tween = SpireTween::<Callable>::new(Callable::invalid(), 100.0)
-        .with_process_mode(ProcessMode::Manual)
-        .register();
-    let _ = tween.custom_step(0.0, false);
-    assert_cancelled(&tween);
-    Box::pin(async { frames(4).await })
+    Box::pin(async move {
+        let mut tween = SpireTween::<Callable>::new(Callable::invalid(), 100.0)
+            .with_process_mode(ProcessMode::Manual).register();
+        assert!(matches!(tween.custom_step(0.0, false),
+            TweenStepResult::Stepped(AdvanceTimeResult::ShouldDespawn)));
+        assert!(tween.is_stopped());
+        frames(8).await;
+        assert!(tween.is_registered(), "manual stepping must leave registration policy to its caller");
+        tween.unregister();
+        assert_cancelled(&tween);
+        frames(4).await;
+    })
 }
 
 fn valid_custom_delay(_: &mut Gd<Node>) -> PinnedTestTask {

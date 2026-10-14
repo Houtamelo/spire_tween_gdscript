@@ -57,9 +57,6 @@ impl SpireTween<Callable> {
         }
 
         self.stop();
-        // TweenPtr's Rc<UnsafeCell<SpireTween>> points at this same allocation.
-        // Trait methods only have &mut self, so enqueue removal by its address.
-        TM.tween_unregister_address(std::ptr::from_ref(self).cast());
         false
     }
 
@@ -78,9 +75,11 @@ impl SpireTween<Callable> {
     /// Constructs a delayed-call tween: invokes `callable` once after `delay` seconds
     /// have elapsed, then auto-stops. The callable receives no arguments — bind any
     /// extra args via `Callable::from_fn` or `Callable::bind` first.
-    /// Invalid callables stop and unregister on the next processing step, or
-    /// immediately when forced to complete. Cancellation does not emit finish
-    /// or loop-finish events.
+    /// Invalid callables stop on the next processing step, or immediately when
+    /// forced to complete, without invocation or finish/loop-finish events.
+    /// Processing reports [`AdvanceTimeResult::ShouldDespawn`] to its consumer.
+    /// Manual callers choose when to unregister or release their handles;
+    /// forced stopping preserves registration while external owners remain.
     ///
     /// You usually don't call this directly — use [`DoDelayedCall::do_delayed_call`]
     /// (closure form) or [`DoDelayedCallable::do_delayed_callable`] (existing

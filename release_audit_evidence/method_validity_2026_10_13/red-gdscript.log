@@ -1,0 +1,154 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards strict)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+METHOD_VALIDITY_START test_initially_invalid_callables_across_clocks
+ERROR: Invalid method must stop and unregister
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/method_validity.gd:12)
+       [1] cancelled (res://examples/tests/method_validity.gd:22)
+       [2] test_initially_invalid_callables_across_clocks (res://examples/tests/method_validity.gd:36)
+       [3] frames (res://examples/tests/method_validity.gd:8)
+ERROR: Invalid method must stop and unregister
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/method_validity.gd:12)
+       [1] cancelled (res://examples/tests/method_validity.gd:22)
+       [2] test_initially_invalid_callables_across_clocks (res://examples/tests/method_validity.gd:36)
+       [3] frames (res://examples/tests/method_validity.gd:8)
+ERROR: Invalid method must stop and unregister
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/method_validity.gd:12)
+       [1] cancelled (res://examples/tests/method_validity.gd:22)
+       [2] test_initially_invalid_callables_across_clocks (res://examples/tests/method_validity.gd:36)
+       [3] frames (res://examples/tests/method_validity.gd:8)
+ERROR: Invalid method must stop and unregister
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/method_validity.gd:12)
+       [1] cancelled (res://examples/tests/method_validity.gd:22)
+       [2] test_initially_invalid_callables_across_clocks (res://examples/tests/method_validity.gd:36)
+       [3] frames (res://examples/tests/method_validity.gd:8)
+METHOD_VALIDITY_FAIL test_initially_invalid_callables_across_clocks
+METHOD_VALIDITY_START test_freed_node_target_during_processing
+ERROR: Invalid method must stop and unregister
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/method_validity.gd:12)
+       [1] cancelled (res://examples/tests/method_validity.gd:22)
+       [2] test_freed_node_target_during_processing (res://examples/tests/method_validity.gd:50)
+       [3] frames (res://examples/tests/method_validity.gd:8)
+ERROR: Invalid method must stop and unregister
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/method_validity.gd:12)
+       [1] cancelled (res://examples/tests/method_validity.gd:22)
+       [2] test_freed_node_target_during_processing (res://examples/tests/method_validity.gd:50)
+       [3] frames (res://examples/tests/method_validity.gd:8)
+METHOD_VALIDITY_FAIL test_freed_node_target_during_processing
+METHOD_VALIDITY_START test_invalid_manual_step_typed_and_variant
+ERROR: Invalid method must stop and unregister
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/method_validity.gd:12)
+       [1] cancelled (res://examples/tests/method_validity.gd:22)
+       [2] test_invalid_manual_step_typed_and_variant (res://examples/tests/method_validity.gd:64)
+       [3] _ready (res://examples/tests/method_validity_runner.gd:17)
+ERROR: Repeated cancellation must stay silent
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/method_validity.gd:12)
+       [1] test_invalid_manual_step_typed_and_variant (res://examples/tests/method_validity.gd:67)
+       [2] _ready (res://examples/tests/method_validity_runner.gd:17)
+ERROR: Invalid method must stop and unregister
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/method_validity.gd:12)
+       [1] cancelled (res://examples/tests/method_validity.gd:22)
+       [2] test_invalid_manual_step_typed_and_variant (res://examples/tests/method_validity.gd:64)
+       [3] _ready (res://examples/tests/method_validity_runner.gd:17)
+ERROR: Repeated cancellation must stay silent
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/method_validity.gd:12)
+       [1] test_invalid_manual_step_typed_and_variant (res://examples/tests/method_validity.gd:67)
+       [2] _ready (res://examples/tests/method_validity_runner.gd:17)
+METHOD_VALIDITY_FAIL test_invalid_manual_step_typed_and_variant
+METHOD_VALIDITY_START test_invalid_force_complete_playing_and_paused
+ERROR: Invalid method must stop and unregister
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/method_validity.gd:12)
+       [1] cancelled (res://examples/tests/method_validity.gd:22)
+       [2] test_invalid_force_complete_playing_and_paused (res://examples/tests/method_validity.gd:83)
+       [3] _ready (res://examples/tests/method_validity_runner.gd:17)
+ERROR: Cancellation must not emit finished or loop_finished
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/method_validity.gd:12)
+       [1] cancelled (res://examples/tests/method_validity.gd:23)
+       [2] test_invalid_force_complete_playing_and_paused (res://examples/tests/method_validity.gd:83)
+       [3] _ready (res://examples/tests/method_validity_runner.gd:17)
+ERROR: Repeated invalid force_complete must stay silent
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/method_validity.gd:12)
+       [1] test_invalid_force_complete_playing_and_paused (res://examples/tests/method_validity.gd:85)
+       [2] _ready (res://examples/tests/method_validity_runner.gd:17)
+ERROR: Invalid method must stop and unregister
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/method_validity.gd:12)
+       [1] cancelled (res://examples/tests/method_validity.gd:22)
+       [2] test_invalid_force_complete_playing_and_paused (res://examples/tests/method_validity.gd:83)
+       [3] _ready (res://examples/tests/method_validity_runner.gd:17)
+ERROR: Cancellation must not emit finished or loop_finished
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/method_validity.gd:12)
+       [1] cancelled (res://examples/tests/method_validity.gd:23)
+       [2] test_invalid_force_complete_playing_and_paused (res://examples/tests/method_validity.gd:83)
+       [3] _ready (res://examples/tests/method_validity_runner.gd:17)
+ERROR: Repeated invalid force_complete must stay silent
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/method_validity.gd:12)
+       [1] test_invalid_force_complete_playing_and_paused (res://examples/tests/method_validity.gd:85)
+       [2] _ready (res://examples/tests/method_validity_runner.gd:17)
+METHOD_VALIDITY_FAIL test_invalid_force_complete_playing_and_paused
+METHOD_VALIDITY_START test_invalid_custom_method_skips_lerper
+ERROR: Invalid method must stop and unregister
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/method_validity.gd:12)
+       [1] cancelled (res://examples/tests/method_validity.gd:22)
+       [2] test_invalid_custom_method_skips_lerper (res://examples/tests/method_validity.gd:103)
+       [3] _ready (res://examples/tests/method_validity_runner.gd:17)
+ERROR: Invalid method must stop and unregister
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/method_validity.gd:12)
+       [1] cancelled (res://examples/tests/method_validity.gd:22)
+       [2] test_invalid_custom_method_skips_lerper (res://examples/tests/method_validity.gd:103)
+       [3] _ready (res://examples/tests/method_validity_runner.gd:17)
+ERROR: Cancellation must not emit finished or loop_finished
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/method_validity.gd:12)
+       [1] cancelled (res://examples/tests/method_validity.gd:23)
+       [2] test_invalid_custom_method_skips_lerper (res://examples/tests/method_validity.gd:103)
+       [3] _ready (res://examples/tests/method_validity_runner.gd:17)
+METHOD_VALIDITY_FAIL test_invalid_custom_method_skips_lerper
+METHOD_VALIDITY_START test_valid_completion_force_complete_and_replay
+METHOD_VALIDITY_PASS test_valid_completion_force_complete_and_replay
+METHOD_VALIDITY_START test_invalid_sequence_child_does_not_block
+ERROR: Invalid method must stop and unregister
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/method_validity.gd:12)
+       [1] cancelled (res://examples/tests/method_validity.gd:22)
+       [2] test_invalid_sequence_child_does_not_block (res://examples/tests/method_validity.gd:146)
+       [3] _ready (res://examples/tests/method_validity_runner.gd:17)
+METHOD_VALIDITY_FAIL test_invalid_sequence_child_does_not_block
+METHOD_VALIDITY_RESULT total=7 failed=6

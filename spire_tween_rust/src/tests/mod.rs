@@ -8,6 +8,7 @@ mod gd_handle_path;
 mod lerp_callable;
 mod lerp_modes;
 mod misc;
+mod method_validity;
 mod node_binding;
 mod ownership;
 mod pause_process_modes;

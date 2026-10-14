@@ -1,0 +1,87 @@
+[
+  {
+    "label": "workspace-check",
+    "command": [
+      "cargo",
+      "check",
+      "--workspace",
+      "--all-targets",
+      "--locked"
+    ],
+    "exit_code": 0,
+    "seconds": 4.22,
+    "results": [],
+    "script_errors": 0,
+    "panic_reports": 0
+  },
+  {
+    "label": "native-debug-build",
+    "command": [
+      "cargo",
+      "build",
+      "-p",
+      "spire_tween_rust",
+      "--locked",
+      "--features",
+      "spire_tween/include_gdscript_bridge"
+    ],
+    "exit_code": 0,
+    "seconds": 30.71,
+    "results": [],
+    "script_errors": 0,
+    "panic_reports": 0
+  },
+  {
+    "label": "native-release-build",
+    "command": [
+      "cargo",
+      "build",
+      "-p",
+      "spire_tween_rust",
+      "--release",
+      "--locked",
+      "--features",
+      "spire_tween/include_gdscript_bridge"
+    ],
+    "exit_code": 0,
+    "seconds": 46.588,
+    "results": [],
+    "script_errors": 0,
+    "panic_reports": 0
+  },
+  {
+    "label": "addon-debug-build",
+    "command": [
+      "cargo",
+      "build",
+      "-p",
+      "spire_tween",
+      "--locked",
+      "--features",
+      "include_gdext_lib,include_gdscript_bridge"
+    ],
+    "exit_code": 0,
+    "seconds": 26.294,
+    "results": [],
+    "script_errors": 0,
+    "panic_reports": 0
+  },
+  {
+    "label": "addon-release-build",
+    "command": [
+      "cargo",
+      "build",
+      "-p",
+      "spire_tween",
+      "--release",
+      "--locked",
+      "--features",
+      "include_gdext_lib,include_gdscript_bridge"
+    ],
+    "exit_code": 0,
+    "seconds": 22.692,
+    "results": [],
+    "script_errors": 0,
+    "panic_reports": 0
+  }
+]

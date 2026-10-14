@@ -1,0 +1,70 @@
+[
+  {
+    "label": "installed-native-method_validity",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_rust",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/method_validity_runner.tscn"
+    ],
+    "exit_code": 0,
+    "results": [
+      "NATIVE_METHOD_VALIDITY_RESULT total=10 failed=0"
+    ],
+    "script_errors": 0
+  },
+  {
+    "label": "installed-native-delayed_call_validity",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_rust",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/delayed_call_validity_runner.tscn"
+    ],
+    "exit_code": 0,
+    "results": [
+      "NATIVE_DELAY_VALIDITY_RESULT total=9 failed=0"
+    ],
+    "script_errors": 0
+  },
+  {
+    "label": "installed-gdscript-method_validity",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/method_validity_runner.tscn"
+    ],
+    "exit_code": 0,
+    "results": [
+      "METHOD_VALIDITY_RESULT total=7 failed=0"
+    ],
+    "script_errors": 0
+  },
+  {
+    "label": "installed-gdscript-delayed_call_validity",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/delayed_call_validity_runner.tscn"
+    ],
+    "exit_code": 0,
+    "results": [
+      "DELAY_VALIDITY_RESULT total=9 failed=0"
+    ],
+    "script_errors": 0
+  }
+]

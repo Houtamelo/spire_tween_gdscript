@@ -1,0 +1,30 @@
+[
+  {
+    "kind": "native",
+    "profile": "debug",
+    "source": "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/target/debug/libspire_tween_rust.so",
+    "installed": "/tmp/spire-method-validity-20261013-l_liukx5/native-project/addons/spire_tween/lib/x86_64-unknown-linux-gnu/debug/libspire_tween_rust.so",
+    "sha256": "bd1c172352dfc047a3cc8d7954fcb52265da680e10026d84f3ef65d619b461df"
+  },
+  {
+    "kind": "gdscript",
+    "profile": "debug",
+    "source": "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/target/debug/libspire_tween.so",
+    "installed": "/tmp/spire-method-validity-20261013-l_liukx5/gdscript-project/addons/spire_tween/lib/x86_64-unknown-linux-gnu/debug/libspire_tween.so",
+    "sha256": "0cc81dfda8a3e498b2623c4a954b1ca637cacfa4de6543c492a64455dcff2580"
+  },
+  {
+    "kind": "native",
+    "profile": "release",
+    "source": "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/target/release/libspire_tween_rust.so",
+    "installed": "/tmp/spire-method-validity-20261013-l_liukx5/native-project/addons/spire_tween/lib/x86_64-unknown-linux-gnu/release/libspire_tween_rust.so",
+    "sha256": "78a9cec5464e3cc3839872366941679bb9520952f3ec97a2f3ef544f02366a62"
+  },
+  {
+    "kind": "gdscript",
+    "profile": "release",
+    "source": "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/target/release/libspire_tween.so",
+    "installed": "/tmp/spire-method-validity-20261013-l_liukx5/gdscript-project/addons/spire_tween/lib/x86_64-unknown-linux-gnu/release/libspire_tween.so",
+    "sha256": "20e0d521fd4e3106a79fc31f5893940577306c840a2342a68d21e900e159b985"
+  }
+]

@@ -1,0 +1,32 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards strict)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+NATIVE_DELAY_VALIDITY_START freed_node
+NATIVE_DELAY_VALIDITY_PASS freed_node
+NATIVE_DELAY_VALIDITY_START freed_refcounted
+NATIVE_DELAY_VALIDITY_PASS freed_refcounted
+NATIVE_DELAY_VALIDITY_START initially_invalid
+NATIVE_DELAY_VALIDITY_PASS initially_invalid
+NATIVE_DELAY_VALIDITY_START invalid_force_complete
+ERROR: [panic spire_tween_rust/src/tests/delayed_call_validity.rs:89]
+  forced stopping must preserve externally retained registration
+  in async task #0
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+(backtrace disabled, run application with `RUST_BACKTRACE=1` environment variable)
+NATIVE_DELAY_VALIDITY_FAIL invalid_force_complete
+NATIVE_DELAY_VALIDITY_START invalid_manual_processing
+ERROR: [panic spire_tween_rust/src/tests/delayed_call_validity.rs:114]
+  manual stepping must leave registration policy to its caller
+  in async task #0
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+(backtrace disabled, run application with `RUST_BACKTRACE=1` environment variable)
+NATIVE_DELAY_VALIDITY_FAIL invalid_manual_processing
+NATIVE_DELAY_VALIDITY_START valid_custom_delay
+NATIVE_DELAY_VALIDITY_PASS valid_custom_delay
+NATIVE_DELAY_VALIDITY_START valid_force_complete_and_replay
+NATIVE_DELAY_VALIDITY_PASS valid_force_complete_and_replay
+NATIVE_DELAY_VALIDITY_START receiver_and_callable_target_differ
+NATIVE_DELAY_VALIDITY_PASS receiver_and_callable_target_differ
+NATIVE_DELAY_VALIDITY_START sequence_continues_after_invalid_child
+NATIVE_DELAY_VALIDITY_PASS sequence_continues_after_invalid_child
+NATIVE_DELAY_VALIDITY_RESULT total=9 failed=2

@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-13",
+  "base_commit": "0c2c917",
+  "godot": "4.7.2.stable.official.ed1daf0bf",
+  "godot_crate": "0.5.5",
+  "default_api": "4.6",
+  "headless": true,
+  "before_fix": {
+    "native_methods": 10,
+    "native_failed": 8,
+    "gdscript_methods": 7,
+    "gdscript_failed": 6,
+    "both_exit_codes": 1
+  },
+  "after_fix_per_profile": {
+    "new_native_methods": 10,
+    "new_gdscript_methods": 7,
+    "native_total": 66,
+    "gdscript_total": 98,
+    "failed": 0
+  },
+  "fixture_processes": 30,
+  "unexpected_panics": 0,
+  "expected_api_compatibility_panics_per_profile": 2,
+  "source_verification": {
+    "changed_during_verification": []
+  },
+  "rustdoc": {
+    "command": [
+      "cargo",
+      "doc",
+      "-p",
+      "spire_tween",
+      "--no-deps",
+      "--locked"
+    ],
+    "exit_code": 0,
+    "warnings": 40
+  }
+}

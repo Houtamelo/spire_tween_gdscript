@@ -2,7 +2,7 @@ use super::*;
 
 #[godot_api(secondary)]
 impl Spire {
-    /// [b]Behavior:[/b] Invokes [param call] after [param delay] seconds have passed.
+    /// [b]Behavior:[/b] Invokes [param callable] after [param delay] seconds have passed.
     ///
     /// [b]Usage:[/b] This is similar to using a timer:
     /// ```gdscript
@@ -12,13 +12,16 @@ impl Spire {
     ///
     /// [b]Returns:[/b] A handle that can be used to further customize the tween.
     ///
-    /// [b]Note:[/b] No arguments will be passed when invoking [param call]. If it
+    /// [b]Note:[/b] No arguments will be passed when invoking [param callable]. If it
     /// requires arguments, then either they should have default values, or you can
     /// use [method Callable.bind] to bind fixed arguments to the Callable.
     ///
-    /// [b]Note:[/b] If [param call] becomes invalid, including when its target
-    /// object is freed, the tween stops and unregisters on its next processing
-    /// step or when forced to complete. Cancellation does not emit completion signals.
+    /// [b]Note:[/b] If [param callable] becomes invalid, including when its target
+    /// object is freed, the tween stops on its next processing step or when forced
+    /// to complete. Cancellation does not emit completion signals. Automatic
+    /// processing removes invalid tweens; manual callers choose when to unregister
+    /// or release their handles. Forced stopping preserves registration while
+    /// external owners remain.
     #[func]
     pub fn do_delayed_call(callable: Callable, delay: f64) -> Gd<SpireDelayedCall> {
         SpireDelayedCall::build(callable, delay)

@@ -117,14 +117,13 @@ where LerpMethodData<T>: ITweenable
         match self.state {
             | State::Playing | State::Paused => {
                 self.seek_end();
-                self.handle_finished();
             }
             State::Stopped => {}
         }
     }
 
     fn process_internal(&mut self, delta_time: f64, _is_tree_paused: bool) -> AdvanceTimeResult {
-        if !self.t.callable.is_valid() {
+        if !self.check_callable_validity() {
             return AdvanceTimeResult::ShouldDespawn;
         }
 
@@ -167,8 +166,17 @@ where
     T: ToGodot,
     LerpMethodData<T>: ITweenable,
 {
+    fn check_callable_validity(&mut self) -> bool {
+        if self.t.callable.is_valid() {
+            return true;
+        }
+
+        self.stop();
+        false
+    }
+
     fn seek_end(&mut self) {
-        if !self.t.callable.is_valid() {
+        if !self.check_callable_validity() {
             return;
         }
 
@@ -178,6 +186,7 @@ where
         };
 
         self.t.callable.call(&[target_value.to_variant()]);
+        self.handle_finished();
     }
 }
 
@@ -229,6 +238,11 @@ where
     /// Constructs a method tween. `owner` is auto-derived from the callable's
     /// underlying object (if any) so the tween auto-stops when that object is freed.
     /// Default ease is [`EaseKind::default()`]; default lerper is `T::BasicLerper::default()`.
+    /// Invalid callables stop on the next processing step, or immediately when
+    /// forced to complete, without invocation or finish/loop-finish events.
+    /// Processing reports [`AdvanceTimeResult::ShouldDespawn`] to its consumer.
+    /// Manual callers choose when to unregister or release their handles;
+    /// forced stopping preserves registration while external owners remain.
     ///
     /// You usually don't call this directly — use [`DoMethod::do_method`] or one of
     /// its variants.
@@ -258,6 +272,8 @@ impl SpireTween<LerpMethodData<Variant>> {
     /// Constructs a `Variant`-typed method tween that uses a user-supplied [`Callable`]
     /// as the lerping function. Use this when the tweened type isn't one Spire
     /// natively supports.
+    /// Invalid target callables cancel with the same semantics as [`Self::new`],
+    /// without invoking the target or custom lerper.
     ///
     /// The `lerper` callable must have signature `func(from: Variant, to: Variant, weight: float) -> Variant`,
     /// returning the interpolated value.

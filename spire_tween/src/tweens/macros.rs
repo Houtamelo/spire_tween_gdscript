@@ -771,6 +771,11 @@ macro_rules! define_base_gd_methods {
             /// - This will emit the `finished` signal if the tween was paused/playing.
             /// - This ignores any remaining loops and will not emit `loop_finished` for them.
             ///
+            /// Method and delayed-call tweens with an invalid Callable cancel instead:
+            /// they stop without invoking the callable or emitting completion signals.
+            /// Registration is preserved while external owners retain the stopped tween;
+            /// release the handle or call [method unregister] when it is no longer wanted.
+            ///
             /// After this is called, the tween's state will reset to [constant Spire.STATE_STOPPED].
             #[func]
             pub fn force_complete(&self) { self.to_mut().force_complete(); }

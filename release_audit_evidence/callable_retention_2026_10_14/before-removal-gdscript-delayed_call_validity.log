@@ -1,0 +1,58 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards strict)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+DELAY_VALIDITY_START test_freed_node_during_delay
+DELAY_VALIDITY_PASS test_freed_node_during_delay
+DELAY_VALIDITY_START test_freed_refcounted_during_delay
+DELAY_VALIDITY_PASS test_freed_refcounted_during_delay
+DELAY_VALIDITY_START test_initially_invalid_callables
+DELAY_VALIDITY_PASS test_initially_invalid_callables
+DELAY_VALIDITY_START test_invalid_force_complete_playing_and_paused
+ERROR: A retained stopped call must preserve registration
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/delayed_call_validity.gd:16)
+       [1] test_invalid_force_complete_playing_and_paused (res://examples/tests/delayed_call_validity.gd:76)
+       [2] frames (res://examples/tests/delayed_call_validity.gd:12)
+ERROR: A retained stopped call must preserve registration
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/delayed_call_validity.gd:16)
+       [1] test_invalid_force_complete_playing_and_paused (res://examples/tests/delayed_call_validity.gd:76)
+       [2] frames (res://examples/tests/delayed_call_validity.gd:12)
+ERROR: A retained stopped call must preserve registration
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/delayed_call_validity.gd:16)
+       [1] test_invalid_force_complete_playing_and_paused (res://examples/tests/delayed_call_validity.gd:76)
+       [2] frames (res://examples/tests/delayed_call_validity.gd:12)
+ERROR: A retained stopped call must preserve registration
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/delayed_call_validity.gd:16)
+       [1] test_invalid_force_complete_playing_and_paused (res://examples/tests/delayed_call_validity.gd:76)
+       [2] frames (res://examples/tests/delayed_call_validity.gd:12)
+ERROR: A retained stopped call must preserve registration
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/delayed_call_validity.gd:16)
+       [1] test_invalid_force_complete_playing_and_paused (res://examples/tests/delayed_call_validity.gd:76)
+       [2] frames (res://examples/tests/delayed_call_validity.gd:12)
+ERROR: A retained stopped call must preserve registration
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://examples/tests/delayed_call_validity.gd:16)
+       [1] test_invalid_force_complete_playing_and_paused (res://examples/tests/delayed_call_validity.gd:76)
+       [2] frames (res://examples/tests/delayed_call_validity.gd:12)
+DELAY_VALIDITY_FAIL test_invalid_force_complete_playing_and_paused
+DELAY_VALIDITY_START test_valid_anonymous_call_respects_delay
+DELAY_VALIDITY_PASS test_valid_anonymous_call_respects_delay
+DELAY_VALIDITY_START test_valid_refcounted_method
+DELAY_VALIDITY_PASS test_valid_refcounted_method
+DELAY_VALIDITY_START test_valid_force_complete_and_replay
+DELAY_VALIDITY_PASS test_valid_force_complete_and_replay
+DELAY_VALIDITY_START test_callback_invalidates_its_looping_target
+DELAY_VALIDITY_PASS test_callback_invalidates_its_looping_target
+DELAY_VALIDITY_START test_invalid_sequence_child_does_not_block_following_call
+DELAY_VALIDITY_PASS test_invalid_sequence_child_does_not_block_following_call
+DELAY_VALIDITY_RESULT total=9 failed=1

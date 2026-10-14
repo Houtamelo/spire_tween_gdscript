@@ -174,6 +174,22 @@ checks before its other suites. The passing runtime verification and remaining
 editor execution caveat are recorded in
 [the follow-up evidence](release_audit_evidence/bookkeeping_followup_2026_10_13/README.md).
 
+The method-validity suites cover silent cancellation of invalid callables, manual
+stepping, paused/playing forced completion, custom interpolation, and sequence
+children, with successful completion and replay controls. After installing fresh
+native and standalone addon libraries, run the focused suites:
+
+```sh
+godot --headless --path spire_tween_rust --fixed-fps 120 res://examples/tests/method_validity_runner.tscn
+godot --headless --path spire_tween_gdscript --fixed-fps 120 res://examples/tests/method_validity_runner.tscn
+```
+
+Both runners exit nonzero on a failed check and are included in the regular test
+catalogs. [Verification evidence](release_audit_evidence/method_validity_2026_10_13/README.md)
+records the initial failing controls. The
+[ownership follow-up](release_audit_evidence/callable_retention_2026_10_14/README.md)
+verifies consumer-owned removal and retained stopped handles in debug/release.
+
 # Platform Support
 
 SpireTween is made with [Godot-Rust](https://github.com/godot-rust/gdext), a GdExtension that provides Rust bindings for Godot. It *should* be compatible with all platforms supported by Godot-Rust.
@@ -370,7 +386,12 @@ without emitting completion events.
 A `false` return does not destroy the reference-counted wrapper. You may retain a
 valid completed/stopped tween for replay, or unregister and release it as above.
 Sequences retain their valid completed children for replay; the manager applies
-its own reference-retention rules. Call only on the main thread, and do not step
+its own reference-retention rules. Invalid method/delayed-call validation only
+stops the tween. Automatic processing unregisters it; manual callers choose when
+to unregister or release their handles. Forced stopping preserves registration
+while an external owner retains the handle.
+
+Call only on the main thread, and do not step
 a tween from a callback while it is already processing. Native Rust callers use
 the richer [TweenStepResult contract](spire_tween/README.md#manual-stepping).
 

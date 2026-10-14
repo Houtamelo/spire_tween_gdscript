@@ -1,0 +1,17 @@
+   Compiling spire_tween v1.4.0 (/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween)
+warning: unused import: `crate::internal_prelude::notify::ObjectNotification`
+ --> spire_tween/src/global/node_lifetime_tracker.rs:1:5
+  |
+1 | use crate::internal_prelude::notify::ObjectNotification;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `super::*`
+ --> spire_tween/src/global/node_lifetime_tracker.rs:2:5
+  |
+2 | use super::*;
+  |     ^^^^^^^^
+
+warning: `spire_tween` (lib) generated 2 warnings (run `cargo fix --lib -p spire_tween` to apply 2 suggestions)
+    Finished `dev` profile [optimized + debuginfo] target(s) in 26.27s

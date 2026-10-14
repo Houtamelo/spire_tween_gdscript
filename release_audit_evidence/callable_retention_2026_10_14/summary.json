@@ -1,0 +1,81 @@
+{
+  "date": "2026-10-14",
+  "base_commit": "0c2c917",
+  "godot": "4.7.2.stable.official.ed1daf0bf",
+  "godot_crate": "0.5.5",
+  "default_api": "4.6",
+  "headless": true,
+  "contract": "Validity guards stop silently and report invalidity. Consumers own removal; retained stopped handles preserve registration after manual stepping or forced stopping.",
+  "before_removal": [
+    {
+      "kind": "native",
+      "suite": "method_validity",
+      "exit_code": 1,
+      "results": [
+        "NATIVE_METHOD_VALIDITY_FAIL invalid_force_complete_playing_and_paused",
+        "NATIVE_METHOD_VALIDITY_FAIL invalid_manual_processing",
+        "NATIVE_METHOD_VALIDITY_FAIL invalid_unregistered_builder",
+        "NATIVE_METHOD_VALIDITY_FAIL invalid_custom_method_skips_lerper",
+        "NATIVE_METHOD_VALIDITY_RESULT total=10 failed=4"
+      ],
+      "script_errors": 0
+    },
+    {
+      "kind": "native",
+      "suite": "delayed_call_validity",
+      "exit_code": 1,
+      "results": [
+        "NATIVE_DELAY_VALIDITY_FAIL invalid_force_complete",
+        "NATIVE_DELAY_VALIDITY_FAIL invalid_manual_processing",
+        "NATIVE_DELAY_VALIDITY_RESULT total=9 failed=2"
+      ],
+      "script_errors": 0
+    },
+    {
+      "kind": "gdscript",
+      "suite": "method_validity",
+      "exit_code": 1,
+      "results": [
+        "METHOD_VALIDITY_FAIL test_invalid_manual_step_keeps_owner_control",
+        "METHOD_VALIDITY_FAIL test_invalid_force_complete_playing_and_paused",
+        "METHOD_VALIDITY_FAIL test_invalid_custom_method_skips_lerper",
+        "METHOD_VALIDITY_RESULT total=7 failed=3"
+      ],
+      "script_errors": 0
+    },
+    {
+      "kind": "gdscript",
+      "suite": "delayed_call_validity",
+      "exit_code": 1,
+      "results": [
+        "DELAY_VALIDITY_FAIL test_invalid_force_complete_playing_and_paused",
+        "DELAY_VALIDITY_RESULT total=9 failed=1"
+      ],
+      "script_errors": 0
+    }
+  ],
+  "after_removal_per_profile": {
+    "native_methods": 66,
+    "gdscript_methods": 98,
+    "failed": 0
+  },
+  "fixture_processes": 30,
+  "installed_processes": 4,
+  "unexpected_panics": 0,
+  "expected_api_compatibility_panics_per_profile": 2,
+  "source_verification": {
+    "changed_during_verification": []
+  },
+  "rustdoc": {
+    "command": [
+      "cargo",
+      "doc",
+      "-p",
+      "spire_tween",
+      "--no-deps",
+      "--locked"
+    ],
+    "exit_code": 0,
+    "warnings": 40
+  }
+}

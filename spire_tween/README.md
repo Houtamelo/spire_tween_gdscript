@@ -106,6 +106,11 @@ keep valid completed children for loops and replay. Manual processors decide whe
 to unregister or release their handles. Completed excess is deliberately zero when
 `abs(speed_scale) < 0.00001`; exactly the cutoff still divides by the speed.
 
+Method/delayed-call validity checks stop invalid tweens without changing manager
+registration. The processor consumes `ShouldDespawn` and removes its reference.
+After manual stepping or forced stopping, retained external handles may keep the
+stopped tween registered; unregister or drop the handle when it is no longer wanted.
+
 Call only on the main thread, without overlapping mutable access or stepping from
 a callback while the same tween is processing. GDScript wrappers expose a separate
 Boolean contract, described in the [addon guide](../README.md#manual-stepping).

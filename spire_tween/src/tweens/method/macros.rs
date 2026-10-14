@@ -15,6 +15,12 @@ macro_rules! gd_method_tween {
         /// lerping between [method get_start_value] and [method get_final_value] based on how much time has passed,
         /// relative to [method get_duration].
         ///
+        /// An invalid Callable stops the tween on its next processing step,
+        /// or immediately when [method force_complete] is called. Cancellation skips the
+        /// callable and emits neither [signal finished] nor [signal loop_finished].
+        /// Automatic processing removes invalid tweens. After manual stepping or forced
+        /// stopping, the caller chooses when to unregister or release its handle.
+        ///
         /// [b]Note:[/b] You should not instantiate this class directly,
         /// instead use one of the `do_call_*` methods on [Spire].
         #[derive(GodotClass)]
@@ -35,8 +41,9 @@ macro_rules! gd_method_tween {
             /// Emitted when this tween finishes playing.
             /// This happens when the tween completes all its loops, or when [method force_complete] is called.
             ///
-            /// [b]Note:[/b] This will never be emitted if the tween is set to loop infinitely
-            /// (e.g. calling [method set_loops] with `-1`).
+            /// Invalid callable cancellation does not emit this signal.
+            /// Infinite looping prevents natural completion; a valid [method force_complete]
+            /// still emits this signal.
             #[signal]
             pub fn finished();
 

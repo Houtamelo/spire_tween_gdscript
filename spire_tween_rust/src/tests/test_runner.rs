@@ -72,6 +72,10 @@ impl INode for TestRunner {
                 base.get_tree().quit_ex().exit_code(1).done();
                 return;
             }
+            if super::method_validity::run_method_validity_tests(&mut base).await != 0 {
+                base.get_tree().quit_ex().exit_code(1).done();
+                return;
+            }
             if super::api_compatibility::run_api_compatibility_tests(&mut base).await != 0 {
                 base.get_tree().quit_ex().exit_code(1).done();
                 return;

@@ -1,0 +1,48 @@
+[
+  {
+    "kind": "native",
+    "suite": "method_validity",
+    "exit_code": 1,
+    "results": [
+      "NATIVE_METHOD_VALIDITY_FAIL invalid_force_complete_playing_and_paused",
+      "NATIVE_METHOD_VALIDITY_FAIL invalid_manual_processing",
+      "NATIVE_METHOD_VALIDITY_FAIL invalid_unregistered_builder",
+      "NATIVE_METHOD_VALIDITY_FAIL invalid_custom_method_skips_lerper",
+      "NATIVE_METHOD_VALIDITY_RESULT total=10 failed=4"
+    ],
+    "script_errors": 0
+  },
+  {
+    "kind": "native",
+    "suite": "delayed_call_validity",
+    "exit_code": 1,
+    "results": [
+      "NATIVE_DELAY_VALIDITY_FAIL invalid_force_complete",
+      "NATIVE_DELAY_VALIDITY_FAIL invalid_manual_processing",
+      "NATIVE_DELAY_VALIDITY_RESULT total=9 failed=2"
+    ],
+    "script_errors": 0
+  },
+  {
+    "kind": "gdscript",
+    "suite": "method_validity",
+    "exit_code": 1,
+    "results": [
+      "METHOD_VALIDITY_FAIL test_invalid_manual_step_keeps_owner_control",
+      "METHOD_VALIDITY_FAIL test_invalid_force_complete_playing_and_paused",
+      "METHOD_VALIDITY_FAIL test_invalid_custom_method_skips_lerper",
+      "METHOD_VALIDITY_RESULT total=7 failed=3"
+    ],
+    "script_errors": 0
+  },
+  {
+    "kind": "gdscript",
+    "suite": "delayed_call_validity",
+    "exit_code": 1,
+    "results": [
+      "DELAY_VALIDITY_FAIL test_invalid_force_complete_playing_and_paused",
+      "DELAY_VALIDITY_RESULT total=9 failed=1"
+    ],
+    "script_errors": 0
+  }
+]

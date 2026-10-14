@@ -22,6 +22,7 @@ const TESTS: Array[PackedScene] = [
 	preload("res://examples/tests/node_binding.tscn"),
 	preload("res://examples/tests/sequence_cycles.tscn"),
 	preload("res://examples/tests/delayed_call_validity.tscn"),
+	preload("res://examples/tests/method_validity.tscn"),
 ]
 
 

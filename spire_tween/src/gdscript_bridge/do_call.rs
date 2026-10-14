@@ -7,7 +7,7 @@ macro_rules! define_manual_tween_builders {
         #[godot_api(secondary)]
         impl Spire {
             $(
-                /// [b]Behavior:[/b] Once every update, invokes [param call], passing a single
+                /// [b]Behavior:[/b] Once every update, invokes [param callable], passing a single
                 /// argument being the value computed by lerping [param from] towards [param to],
                 /// based on how much time has passed relative to [param duration].
                 ///
@@ -17,6 +17,13 @@ macro_rules! define_manual_tween_builders {
                 /// type as [param from] and [param to]. If it requires more arguments,
                 /// then either they should have default values, or you can use [method Callable.bind]
                 /// to bind fixed arguments to the Callable.
+                ///
+                /// Invalid callables stop on the next processing step,
+                /// or immediately on [method SpireMethod.force_complete]. Cancellation
+                /// does not invoke the callable or emit completion signals.
+                /// Automatic processing removes invalid tweens. Manual callers choose
+                /// when to unregister or release their handles; forced stopping preserves
+                /// registration while external owners remain.
                 #[func]
                 pub fn $FnName(
                     callable: Callable,
@@ -47,7 +54,7 @@ define_manual_tween_builders! {
 
 #[godot_api(secondary)]
 impl Spire {
-    /// [b]Behavior:[/b] Once every update, invokes [param call], passing a single argument
+    /// [b]Behavior:[/b] Once every update, invokes [param callable], passing a single argument
     /// being the value computed by invoking [param lerp_func] with the arguments
     /// ([param from], [param to], and `weight`), where `weight` is a float
     /// that represents the progress of the tween towards completion (usually computed as: `elapsed_time/duration`).
@@ -61,11 +68,17 @@ impl Spire {
     ///
     /// [b]Parameter [param lerp_func]:[/b] A Callable that takes three arguments: (`from`, `to`, `weight`),
     /// and returns the result of interpolating between `from` and `to` by `weight`. The return value will be
-    /// used when invoking [param call].
+    /// used when invoking [param callable].
     ///
-    /// [b]Note:[/b] [param call] must accept a single argument. If it requires more arguments,
+    /// [b]Note:[/b] [param callable] must accept a single argument. If it requires more arguments,
     /// then either they should have default values, or you can use [method Callable.bind] to bind fixed
     /// arguments to the Callable.
+    ///
+    /// Invalid target callables stop on the next processing step,
+    /// or immediately on [method SpireMethod.force_complete]. Cancellation skips
+    /// both the target callable and [param lerp_func], and emits no completion signals.
+    /// Automatic processing removes invalid tweens. After manual stepping or forced
+    /// stopping, the caller chooses when to unregister or release its handle.
     ///
     /// [b]Note:[/b] Usually, the weight argument passed to [param lerp_func] will be in the range
     /// `0.0 ~ 1.0`, but that is not guaranteed, the Callable must be able to handle arguments outside that range.

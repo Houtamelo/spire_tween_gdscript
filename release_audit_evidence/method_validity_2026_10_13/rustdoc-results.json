@@ -1,0 +1,12 @@
+{
+  "command": [
+    "cargo",
+    "doc",
+    "-p",
+    "spire_tween",
+    "--no-deps",
+    "--locked"
+  ],
+  "exit_code": 0,
+  "warnings": 40
+}

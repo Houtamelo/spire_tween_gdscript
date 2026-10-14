@@ -19,8 +19,9 @@ impl SpireDelayedCall {
     /// Emitted when this tween finishes playing.
     /// This happens when the tween completes all its loops, or when [method force_complete] is called.
     ///
-    /// [b]Note:[/b] This will never be emitted if the tween is set to loop infinitely
-    /// (e.g. calling [method set_loops] with `-1`).
+    /// Invalid callable cancellation does not emit this signal.
+    /// Infinite looping prevents natural completion; a valid [method force_complete]
+    /// still emits this signal.
     #[signal]
     pub fn finished();
 

@@ -18,6 +18,8 @@ and [the sequence-cycle follow-up](#sequence-cycle-follow-up-2026-10-08). The or
 API selection. See [the API follow-up](#godot-api-follow-up-2026-10-09). Release API selection, other platform artifacts, and remaining compatibility checks still need resolution.
 
 **2026-10-09 delayed-call follow-up:** finding 6 is repaired for normal processing and forced completion: invalid callables stop and unregister without invocation or completion signals.
+
+**2026-10-14 ownership clarification:** validity checks now only stop and report invalidity. Automatic processors remove tweens reporting `ShouldDespawn`; manual callers and owners of forcibly stopped tweens choose when to unregister or release their handles. Retained stopped handles may remain registered. The earlier 2026-10-09 run below records the superseded helper-driven unregistration policy; [current ownership evidence](release_audit_evidence/callable_retention_2026_10_14/README.md) verifies the final contract.
 See [the delayed-call follow-up](#delayed-call-follow-up-2026-10-09).
 
 **2026-10-10 shake follow-up:** finding 7 is repaired in the working tree for the accepted Restart-only template contract; all 28 focused current-source checks pass in debug and release.

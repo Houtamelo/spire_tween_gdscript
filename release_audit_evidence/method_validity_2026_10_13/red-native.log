@@ -1,0 +1,80 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards strict)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+NATIVE_METHOD_VALIDITY_START freed_node
+ERROR: [panic spire_tween_rust/src/tests/method_validity.rs:40]
+  assertion `left == right` failed: invalid methods must cancel without completion events
+    left: (false, false, [0, 0])
+   right: (true, false, [0, 0])
+  in async task #0
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+(backtrace disabled, run application with `RUST_BACKTRACE=1` environment variable)
+NATIVE_METHOD_VALIDITY_FAIL freed_node
+NATIVE_METHOD_VALIDITY_START freed_object
+ERROR: [panic spire_tween_rust/src/tests/method_validity.rs:40]
+  assertion `left == right` failed: invalid methods must cancel without completion events
+    left: (false, true, [0, 0])
+   right: (true, false, [0, 0])
+  in async task #0
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+(backtrace disabled, run application with `RUST_BACKTRACE=1` environment variable)
+NATIVE_METHOD_VALIDITY_FAIL freed_object
+NATIVE_METHOD_VALIDITY_START initially_invalid
+ERROR: [panic spire_tween_rust/src/tests/method_validity.rs:40]
+  assertion `left == right` failed: invalid methods must cancel without completion events
+    left: (false, false, [0, 0])
+   right: (true, false, [0, 0])
+  in async task #0
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+(backtrace disabled, run application with `RUST_BACKTRACE=1` environment variable)
+NATIVE_METHOD_VALIDITY_FAIL initially_invalid
+NATIVE_METHOD_VALIDITY_START invalid_force_complete_playing_and_paused
+ERROR: [panic spire_tween_rust/src/tests/method_validity.rs:40]
+  assertion `left == right` failed: invalid methods must cancel without completion events
+    left: (true, true, [1, 0])
+   right: (true, false, [0, 0])
+  in async task #0
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+(backtrace disabled, run application with `RUST_BACKTRACE=1` environment variable)
+NATIVE_METHOD_VALIDITY_FAIL invalid_force_complete_playing_and_paused
+NATIVE_METHOD_VALIDITY_START invalid_manual_processing
+ERROR: [panic spire_tween_rust/src/tests/method_validity.rs:40]
+  assertion `left == right` failed: invalid methods must cancel without completion events
+    left: (false, true, [0, 0])
+   right: (true, false, [0, 0])
+  in async task #0
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+(backtrace disabled, run application with `RUST_BACKTRACE=1` environment variable)
+NATIVE_METHOD_VALIDITY_FAIL invalid_manual_processing
+NATIVE_METHOD_VALIDITY_START invalid_unregistered_builder
+ERROR: [panic spire_tween_rust/src/tests/method_validity.rs:124]
+  assertion `left == right` failed: unregistered builders must also cancel silently
+    left: 1
+   right: 0
+  in async task #0
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+(backtrace disabled, run application with `RUST_BACKTRACE=1` environment variable)
+NATIVE_METHOD_VALIDITY_FAIL invalid_unregistered_builder
+NATIVE_METHOD_VALIDITY_START invalid_custom_method_skips_lerper
+ERROR: [panic spire_tween_rust/src/tests/method_validity.rs:144]
+  assertion `left == right` failed: invalid targets must skip lerping and completion
+    left: (false, true, [0, 0])
+   right: (true, false, [0, 0])
+  in async task #0
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+(backtrace disabled, run application with `RUST_BACKTRACE=1` environment variable)
+NATIVE_METHOD_VALIDITY_FAIL invalid_custom_method_skips_lerper
+NATIVE_METHOD_VALIDITY_START valid_delay_and_completion
+NATIVE_METHOD_VALIDITY_PASS valid_delay_and_completion
+NATIVE_METHOD_VALIDITY_START valid_force_complete_and_replay
+NATIVE_METHOD_VALIDITY_PASS valid_force_complete_and_replay
+NATIVE_METHOD_VALIDITY_START sequence_continues_after_invalid_child
+ERROR: [panic spire_tween_rust/src/tests/method_validity.rs:40]
+  assertion `left == right` failed: invalid methods must cancel without completion events
+    left: (false, false, [0, 0])
+   right: (true, false, [0, 0])
+  in async task #0
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+(backtrace disabled, run application with `RUST_BACKTRACE=1` environment variable)
+NATIVE_METHOD_VALIDITY_FAIL sequence_continues_after_invalid_child
+NATIVE_METHOD_VALIDITY_RESULT total=10 failed=8

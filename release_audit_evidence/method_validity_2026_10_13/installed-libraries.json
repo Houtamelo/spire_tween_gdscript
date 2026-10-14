@@ -1,0 +1,38 @@
+[
+  {
+    "kind": "native",
+    "profile": "debug",
+    "path": "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_rust/addons/spire_tween/lib/x86_64-unknown-linux-gnu/debug/libspire_tween_rust.so",
+    "symlink": true,
+    "source_sha256": "bd1c172352dfc047a3cc8d7954fcb52265da680e10026d84f3ef65d619b461df",
+    "link_target": "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/target/debug/libspire_tween_rust.so",
+    "installed_sha256": "bd1c172352dfc047a3cc8d7954fcb52265da680e10026d84f3ef65d619b461df"
+  },
+  {
+    "kind": "native",
+    "profile": "release",
+    "path": "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_rust/addons/spire_tween/lib/x86_64-unknown-linux-gnu/release/libspire_tween_rust.so",
+    "symlink": true,
+    "source_sha256": "78a9cec5464e3cc3839872366941679bb9520952f3ec97a2f3ef544f02366a62",
+    "link_target": "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/target/release/libspire_tween_rust.so",
+    "installed_sha256": "78a9cec5464e3cc3839872366941679bb9520952f3ec97a2f3ef544f02366a62"
+  },
+  {
+    "kind": "gdscript",
+    "profile": "debug",
+    "path": "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_gdscript/addons/spire_tween/lib/x86_64-unknown-linux-gnu/debug/libspire_tween.so",
+    "symlink": false,
+    "source_sha256": "0cc81dfda8a3e498b2623c4a954b1ca637cacfa4de6543c492a64455dcff2580",
+    "previous_sha256": "c972ca13a5aaacf8c17e12131de91dbbff6765da6fc077e508c5ff09fe723fb8",
+    "installed_sha256": "0cc81dfda8a3e498b2623c4a954b1ca637cacfa4de6543c492a64455dcff2580"
+  },
+  {
+    "kind": "gdscript",
+    "profile": "release",
+    "path": "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_gdscript/addons/spire_tween/lib/x86_64-unknown-linux-gnu/release/libspire_tween.so",
+    "symlink": false,
+    "source_sha256": "20e0d521fd4e3106a79fc31f5893940577306c840a2342a68d21e900e159b985",
+    "previous_sha256": "f70aba605be6b6ec6e470a179df7e9e0e63dbeb7395a5d2784e3b8754f88c119",
+    "installed_sha256": "20e0d521fd4e3106a79fc31f5893940577306c840a2342a68d21e900e159b985"
+  }
+]

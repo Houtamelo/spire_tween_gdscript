@@ -1,0 +1,33 @@
+[
+  {
+    "kind": "native",
+    "exit_code": 1,
+    "markers": [
+      "NATIVE_METHOD_VALIDITY_FAIL freed_node",
+      "NATIVE_METHOD_VALIDITY_FAIL freed_object",
+      "NATIVE_METHOD_VALIDITY_FAIL initially_invalid",
+      "NATIVE_METHOD_VALIDITY_FAIL invalid_force_complete_playing_and_paused",
+      "NATIVE_METHOD_VALIDITY_FAIL invalid_manual_processing",
+      "NATIVE_METHOD_VALIDITY_FAIL invalid_unregistered_builder",
+      "NATIVE_METHOD_VALIDITY_FAIL invalid_custom_method_skips_lerper",
+      "NATIVE_METHOD_VALIDITY_PASS valid_delay_and_completion",
+      "NATIVE_METHOD_VALIDITY_PASS valid_force_complete_and_replay",
+      "NATIVE_METHOD_VALIDITY_FAIL sequence_continues_after_invalid_child",
+      "NATIVE_METHOD_VALIDITY_RESULT total=10 failed=8"
+    ]
+  },
+  {
+    "kind": "gdscript",
+    "exit_code": 1,
+    "markers": [
+      "METHOD_VALIDITY_FAIL test_initially_invalid_callables_across_clocks",
+      "METHOD_VALIDITY_FAIL test_freed_node_target_during_processing",
+      "METHOD_VALIDITY_FAIL test_invalid_manual_step_typed_and_variant",
+      "METHOD_VALIDITY_FAIL test_invalid_force_complete_playing_and_paused",
+      "METHOD_VALIDITY_FAIL test_invalid_custom_method_skips_lerper",
+      "METHOD_VALIDITY_PASS test_valid_completion_force_complete_and_replay",
+      "METHOD_VALIDITY_FAIL test_invalid_sequence_child_does_not_block",
+      "METHOD_VALIDITY_RESULT total=7 failed=6"
+    ]
+  }
+]
