@@ -225,6 +225,7 @@ jobs:
         run: |
           ndk=$(jq -r .android_ndk release/config.json)
           cargo_ndk=$(jq -r .cargo_ndk release/config.json)
+          { yes || true; } | sdkmanager --licenses > /dev/null
           sdkmanager --install "ndk;$ndk"
           echo "ANDROID_NDK_HOME=$ANDROID_HOME/ndk/$ndk" >> "$GITHUB_ENV"
           rustup target add aarch64-linux-android x86_64-linux-android

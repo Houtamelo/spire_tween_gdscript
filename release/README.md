@@ -44,6 +44,8 @@ Scripts stage only intended addon libraries, native test libraries, license/sour
 
 macOS builds compile ARM64 and Intel in both profiles, merge each pair with `lipo`, package universal frameworks, and ad-hoc sign them. Their deployment target is macOS 11.0; the workflow's macOS 14/15 runners do not establish runtime compatibility with macOS 11.0. Linux runtime requirements must be measured from the actual linked artifacts, not inferred from the Rust target name.
 
+Windows release builds statically link the Visual C++ runtime. Artifact verification reads the actual PE import tables and rejects a remaining `VCRUNTIME`/`MSVCP` DLL dependency. This avoids requiring a separate Visual C++ runtime installation for the addon.
+
 ## Verify a platform build
 
 ```bash
@@ -75,6 +77,8 @@ cargo run --locked -p spire_release -- test-archive \
 ```
 
 The package uses an allowlist: addon runtime binaries/manifest, project license, README/release instructions, dependency notices, unmodified MPL dependency sources, provenance and SHA-256 manifests. It excludes example assets (including Girl Knight), native test libraries, caches, Rust intermediates, PDBs and import libraries. Debug runtime libraries remain included because the editor needs them.
+
+For a local partial candidate, pass `--platforms linux` or `--platforms linux,windows` together with `--candidate`. Its filename and manifest identify only the included platforms. Commercial packaging always requires all three desktop platforms. Rust standard-library copyright/license notices are included alongside the Cargo dependency inventory.
 
 Without `--candidate`, packaging additionally requires a clean common source revision, signed/notarized macOS artifacts, and matching successful full-suite/export reports for every configured engine/platform/architecture. Archive extraction verifies every internal checksum and rejects extra files, then installs and runs both library profiles and exported games. The workflow delivers the exact archive that passed those checks. Toolchain/dependency/source pinning records reproducible inputs; bit-identical compilation across different machines is not claimed.
 

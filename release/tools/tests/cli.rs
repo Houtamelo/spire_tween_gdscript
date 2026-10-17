@@ -37,6 +37,35 @@ fn refuses_existing_output_and_missing_artifacts() {
     fails(&["build", "--platform", "linux", "--out", text], "output already exists");
     fails(&["verify", "--stage", text], "build.json");
     fails(&["package", "--staging", text, "--reports", text, "--out", text], "build.json");
+    fails(
+        &[
+            "package",
+            "--staging",
+            text,
+            "--reports",
+            text,
+            "--out",
+            text,
+            "--platforms",
+            "linux",
+        ],
+        "must include all desktop",
+    );
+    fails(
+        &[
+            "package",
+            "--staging",
+            text,
+            "--reports",
+            text,
+            "--out",
+            text,
+            "--platforms",
+            "linux,linux",
+            "--candidate",
+        ],
+        "duplicated desktop platform",
+    );
     fs::remove_dir_all(path).unwrap();
 }
 #[test]

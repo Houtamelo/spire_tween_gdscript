@@ -156,6 +156,19 @@ fn cargo_build(
         command.arg("--release");
     }
     command.env("CARGO_TARGET_DIR", directory);
+    if target.ends_with("windows-msvc") {
+        // Keep the extension self-contained: do not require a separately
+        // installed Visual C++ runtime. Preserve encoded SDK paths with spaces.
+        if let Ok(flags) = std::env::var("CARGO_ENCODED_RUSTFLAGS") {
+            let prefix = if flags.is_empty() { flags } else { format!("{flags}\x1f") };
+            command.env("CARGO_ENCODED_RUSTFLAGS", format!("{prefix}-C\x1ftarget-feature=+crt-static"));
+        } else {
+            command.env(
+                "RUSTFLAGS",
+                format!("{} -C target-feature=+crt-static", std::env::var("RUSTFLAGS").unwrap_or_default()),
+            );
+        }
+    }
     if target.ends_with("apple-darwin") {
         command.env("MACOSX_DEPLOYMENT_TARGET", config()["macos_deployment_target"].as_str().unwrap());
     }
@@ -351,7 +364,7 @@ fn build(platform: &str, stage: &Path) -> Result<()> {
     );
     let mut record = json!({"schema": 1, "platform": platform, "api": "4.4", "source": source,
         "rustc": output(Command::new("rustc").arg("--version"))?.trim(), "cargo": output(Command::new("cargo").arg("--version"))?.trim(),
-        "host": std::env::consts::OS, "host_arch": std::env::consts::ARCH,
+        "host": std::env::consts::OS, "host_arch": std::env::consts::ARCH, "crt_static": platform == "windows",
         "signing": if platform == "macos" { "ad-hoc" } else { "not-applicable" }});
     record_environment(stage, platform, &mut record)?;
     seal(stage, &mut record)?;
@@ -386,7 +399,82 @@ fn verify(stage: &Path) -> Result<Value> {
             ensure!(record["files"].get(&name).is_some(), "unrecorded artifact: {name}");
         }
     }
+    if record["platform"] == "windows" {
+        for directory in ["addon", "tests"] {
+            for path in files(&stage.join(directory))?
+                .into_iter()
+                .filter(|p| p.extension().is_some_and(|e| e == "dll"))
+            {
+                for name in pe_imports(&fs::read(&path)?)? {
+                    let lower = name.to_ascii_lowercase();
+                    ensure!(
+                        !lower.starts_with("vcruntime") && !lower.starts_with("msvcp"),
+                        "Windows artifact depends on external Visual C++ runtime: {name}"
+                    );
+                }
+            }
+        }
+    }
     Ok(record)
+}
+fn pe_imports(data: &[u8]) -> Result<Vec<String>> {
+    let word = |offset: usize| -> Result<u16> {
+        Ok(u16::from_le_bytes(
+            data.get(offset..offset + 2)
+                .context("truncated PE header")?
+                .try_into()?,
+        ))
+    };
+    let dword = |offset: usize| -> Result<u32> {
+        Ok(u32::from_le_bytes(
+            data.get(offset..offset + 4)
+                .context("truncated PE header")?
+                .try_into()?,
+        ))
+    };
+    ensure!(data.starts_with(b"MZ"), "not a Windows DLL");
+    let pe = dword(0x3c)? as usize;
+    ensure!(data.get(pe..pe + 4) == Some(b"PE\0\0") && word(pe + 4)? == 0x8664, "not an x86_64 PE binary");
+    let optional = pe + 24;
+    ensure!(word(optional)? == 0x20b, "not a PE32+ binary");
+    let sections = word(pe + 6)? as usize;
+    let table = optional + word(pe + 20)? as usize;
+    let offset = |rva: u32| -> Result<usize> {
+        for section in 0..sections {
+            let header = table + section * 40;
+            let start = dword(header + 12)?;
+            let size = dword(header + 8)?.max(dword(header + 16)?);
+            if rva >= start && rva - start < size {
+                return Ok((dword(header + 20)? + rva - start) as usize);
+            }
+        }
+        bail!("unmapped PE import address")
+    };
+    let import = dword(optional + 112 + 8)?;
+    if import == 0 {
+        return Ok(Vec::new());
+    }
+    let mut entry = offset(import)?;
+    let mut names = Vec::new();
+    for _ in 0..4096 {
+        if data
+            .get(entry..entry + 20)
+            .context("truncated PE imports")?
+            .iter()
+            .all(|x| *x == 0)
+        {
+            return Ok(names);
+        }
+        let name = offset(dword(entry + 12)?)?;
+        let rest = data.get(name..).context("truncated PE import name")?;
+        let end = rest
+            .iter()
+            .position(|x| *x == 0)
+            .context("unterminated PE import name")?;
+        names.push(std::str::from_utf8(&rest[..end])?.to_owned());
+        entry += 20;
+    }
+    bail!("too many PE imports")
 }
 fn run_logged(command: &mut Command, log: &Path, seconds: u64, expected: i32, marker: &str) -> Result<String> {
     fs::create_dir_all(log.parent().unwrap())?;
@@ -834,11 +922,19 @@ fn download(version: &str, out: &Path, templates: bool) -> Result<()> {
     fs::write(out.join("godot-path"), binary.canonicalize()?.to_string_lossy().as_bytes())?;
     Ok(())
 }
-fn package(staging: &Path, reports: &Path, out: &Path, candidate: bool) -> Result<()> {
+fn package(staging: &Path, reports: &Path, out: &Path, candidate: bool, platforms: &[String]) -> Result<()> {
+    let desktop = vec!["linux".to_owned(), "windows".to_owned(), "macos".to_owned()];
+    ensure!(candidate || platforms == desktop, "commercial archive must include all desktop platforms");
+    let mut seen = BTreeSet::new();
+    for platform in platforms {
+        ensure!(desktop.contains(platform) && seen.insert(platform), "invalid or duplicated desktop platform");
+    }
+    ensure!(!platforms.is_empty(), "empty platform list");
     let mut records = Vec::new();
     let mut source = Value::Null;
     let mut payload = BTreeMap::<String, Vec<u8>>::new();
-    for platform in ["linux", "windows", "macos"] {
+    for platform in platforms {
+        let platform = platform.as_str();
         let stage = staging.join(platform);
         let record = verify(&stage)?;
         ensure!(record["platform"] == platform, "platform metadata mismatch");
@@ -900,10 +996,7 @@ fn package(staging: &Path, reports: &Path, out: &Path, candidate: bool) -> Resul
         source_identity()?["sha256"] == source["sha256"],
         "packaging checkout does not match the artifact source snapshot"
     );
-    payload.insert(
-        "addons/spire_tween/spire_tween.gdextension".into(),
-        manifest(&["linux".into(), "windows".into(), "macos".into()], false).into_bytes(),
-    );
+    payload.insert("addons/spire_tween/spire_tween.gdextension".into(), manifest(platforms, false).into_bytes());
     for (file, name) in [
         ("LICENSE", "LICENSE"),
         ("LICENSE", "addons/spire_tween/LICENSE"),
@@ -915,10 +1008,17 @@ fn package(staging: &Path, reports: &Path, out: &Path, candidate: bool) -> Resul
     ] {
         payload.insert(name.into(), fs::read(root().join(file))?);
     }
+    let mut validations = Vec::new();
+    for path in files(reports)?
+        .into_iter()
+        .filter(|p| p.file_name().is_some_and(|n| n == "validation.json"))
+    {
+        validations.push(read_json(&path)?);
+    }
     payload.insert(
         "release.json".into(),
         serde_json::to_vec_pretty(
-            &json!({"schema":1,"candidate":candidate,"platforms":records,"godot_versions":config()["godot_versions"]}),
+            &json!({"schema":1,"candidate":candidate,"platforms":records,"required_validation_versions":config()["godot_versions"],"validations":validations}),
         )?,
     );
     let sums = payload
@@ -928,11 +1028,16 @@ fn package(staging: &Path, reports: &Path, out: &Path, candidate: bool) -> Resul
     payload.insert("SHA256SUMS".into(), sums.into_bytes());
     fs::create_dir_all(out)?;
     let package: toml::Value = toml::from_str(&fs::read_to_string(root().join("spire_tween/Cargo.toml"))?)?;
+    let label = if platforms == desktop {
+        if candidate { "candidate".into() } else { "desktop".into() }
+    } else {
+        format!("candidate-{}", platforms.join("-"))
+    };
     let name = format!(
         "SpireTween-{}-{}-{}.zip",
         package["package"]["version"].as_str().unwrap(),
         &source["revision"].as_str().unwrap()[..12],
-        if candidate { "candidate" } else { "desktop" }
+        label
     );
     let archive = out.join(name);
     let mut zip = zip::ZipWriter::new(fs::File::create(&archive)?);
@@ -1014,7 +1119,7 @@ fn main() -> Result<()> {
         "test-archive" => &["--archive", "--godot", "--out", "--templates"],
         "verify" | "seal-signed-macos" => &["--stage"],
         "download" => &["--version", "--out", "--download-templates"],
-        "package" => &["--staging", "--reports", "--out", "--candidate"],
+        "package" => &["--staging", "--reports", "--out", "--candidate", "--platforms"],
         _ => bail!("unknown command {command}"),
     };
     for key in values.keys().chain(flags.iter()) {
@@ -1076,6 +1181,10 @@ fn main() -> Result<()> {
             Path::new(get("--reports")?),
             Path::new(get("--out")?),
             flags.contains("--candidate"),
+            &values
+                .get("--platforms")
+                .map(|s| s.split(',').map(str::to_owned).collect::<Vec<_>>())
+                .unwrap_or_else(|| vec!["linux".into(), "windows".into(), "macos".into()]),
         ),
         _ => bail!("unknown command {command}"),
     }

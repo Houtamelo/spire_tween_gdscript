@@ -2,6 +2,7 @@
 //! the full suites; local use is documented in release/README.md.
 use std::{
     fs,
+    io::Write,
     path::{Path, PathBuf},
     process::Command,
     time::{SystemTime, UNIX_EPOCH},
@@ -111,5 +112,82 @@ fn installed_smoke_passes_and_missing_library_cannot_false_pass() {
         false,
     );
     assert!(!directory.join("bad/validation.json").exists());
+    fs::remove_dir_all(directory).unwrap();
+}
+
+#[test]
+#[ignore = "requires SPIRE_RELEASE_STAGE and SPIRE_RELEASE_GODOT; assembles and runs a real archive"]
+fn candidate_archive_installs_and_rejects_extra_files() {
+    let source = PathBuf::from(std::env::var("SPIRE_RELEASE_STAGE").unwrap());
+    let godot = std::env::var("SPIRE_RELEASE_GODOT").unwrap();
+    let metadata: Value = serde_json::from_slice(&fs::read(source.join("build.json")).unwrap()).unwrap();
+    let platform = metadata["platform"].as_str().unwrap();
+    let directory = temp();
+    clone_stage(&source, &directory.join("staging").join(platform));
+    let archive_dir = directory.join("archives");
+    run(
+        &[
+            "package",
+            "--staging",
+            directory.join("staging").to_str().unwrap(),
+            "--reports",
+            directory.to_str().unwrap(),
+            "--out",
+            archive_dir.to_str().unwrap(),
+            "--platforms",
+            platform,
+            "--candidate",
+        ],
+        true,
+    );
+    let archive = fs::read_dir(&archive_dir)
+        .unwrap()
+        .map(|e| e.unwrap().path())
+        .find(|p| p.extension().is_some_and(|s| s == "zip"))
+        .unwrap();
+    {
+        let mut zip = zip::ZipArchive::new(fs::File::open(&archive).unwrap()).unwrap();
+        assert!(!zip.is_empty());
+        for i in 0..zip.len() {
+            let file = zip.by_index(i).unwrap();
+            assert!(!file.name().ends_with(".rlib") && !file.name().ends_with(".pdb"));
+            assert!(!file.name().starts_with("tests/") && !file.name().contains("GirlKnight"));
+        }
+        zip.by_name("addons/spire_tween/spire_tween.gdextension").unwrap();
+        zip.by_name("build/Cargo.lock").unwrap();
+        zip.by_name("SHA256SUMS").unwrap();
+    }
+    run(
+        &[
+            "test-archive",
+            "--archive",
+            archive.to_str().unwrap(),
+            "--godot",
+            &godot,
+            "--out",
+            directory.join("good-archive").to_str().unwrap(),
+        ],
+        true,
+    );
+    let file = fs::OpenOptions::new().read(true).write(true).open(&archive).unwrap();
+    let mut zip = zip::ZipWriter::new_append(file).unwrap();
+    zip.start_file("unexpected.rlib", zip::write::SimpleFileOptions::default())
+        .unwrap();
+    zip.write_all(b"unrecorded build debris").unwrap();
+    zip.finish().unwrap();
+    let result = run(
+        &[
+            "test-archive",
+            "--archive",
+            archive.to_str().unwrap(),
+            "--godot",
+            &godot,
+            "--out",
+            directory.join("bad-archive").to_str().unwrap(),
+        ],
+        false,
+    );
+    assert!(result.contains("unrecorded archive file"));
+    assert!(!directory.join("bad-archive/archive-validation.json").exists());
     fs::remove_dir_all(directory).unwrap();
 }
