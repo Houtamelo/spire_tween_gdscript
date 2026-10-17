@@ -1,5 +1,4 @@
-use godot::classes::CollisionShape2D;
-use godot::prelude::*;
+use godot::{classes::CollisionShape2D, prelude::*};
 use spire_tween::prelude::*;
 
 use super::util::*;
@@ -20,12 +19,12 @@ impl_test_base! { INode2D, DelaysTests }
 impl ITestClass for DelaysTests {
     const PREFAB_PATH: &'static str = "res://examples/tests/delays.tscn";
 
-    fn test_list() -> Vec<fn(&mut Self) -> PinnedTestTask> {
+    fn test_list() -> Vec<NamedTest<Self>> {
         vec![
-            Self::test_delay_is_respected,
-            Self::test_extra_loops_dont_have_delay,
-            Self::test_sequence_respects_delay,
-            Self::test_delayed_call,
+            ("test_delay_is_respected", Self::test_delay_is_respected),
+            ("test_extra_loops_dont_have_delay", Self::test_extra_loops_dont_have_delay),
+            ("test_sequence_respects_delay", Self::test_sequence_respects_delay),
+            ("test_delayed_call", Self::test_delayed_call),
         ]
     }
 
@@ -145,10 +144,14 @@ impl DelaysTests {
         let final_val = Vector2::ONE * 3.0;
 
         let mut shape_for_call = shape.clone();
-        let tween = shape.do_delayed_call(
-            move || { shape_for_call.set_scale(final_val); },
-            3.0,
-        ).register();
+        let tween = shape
+            .do_delayed_call(
+                move || {
+                    shape_for_call.set_scale(final_val);
+                },
+                3.0,
+            )
+            .register();
         let tracker = RcPtr::clone(&self.time_tracker);
 
         Box::pin(async move {

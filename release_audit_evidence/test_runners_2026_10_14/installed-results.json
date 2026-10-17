@@ -1,0 +1,69 @@
+[
+  {
+    "kind": "native",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "spire_tween_rust",
+      "--fixed-fps",
+      "120",
+      "res://test_runner.tscn",
+      "--",
+      "--runner-self-test=async_panic"
+    ],
+    "exit": 1,
+    "expected": 1
+  },
+  {
+    "kind": "gdscript",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "spire_tween_gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=helper_failure"
+    ],
+    "exit": 1,
+    "expected": 1
+  },
+  {
+    "kind": "native",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "spire_tween_rust",
+      "--fixed-fps",
+      "120",
+      "res://test_runner.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=pass"
+    ],
+    "exit": 0,
+    "expected": 0
+  },
+  {
+    "kind": "gdscript",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "spire_tween_gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=pass"
+    ],
+    "exit": 0,
+    "expected": 0
+  }
+]

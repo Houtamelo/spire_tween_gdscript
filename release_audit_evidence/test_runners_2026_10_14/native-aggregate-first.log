@@ -1,0 +1,447 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards strict)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+=== SpireTween Rust Test Runner ===
+NATIVE_BOOKKEEPING_START free_inside_tree_batches_plateau
+BOOKKEEPING_SNAPSHOT node-batches/baseline BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT node-batches/round-1 BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT node-batches/round-2 BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT node-batches/round-3 BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+NATIVE_BOOKKEEPING_PASS free_inside_tree_batches_plateau
+NATIVE_BOOKKEEPING_START free_outside_tree_batches_plateau
+BOOKKEEPING_SNAPSHOT node-batches/baseline BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT node-batches/round-1 BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT node-batches/round-2 BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT node-batches/round-3 BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+NATIVE_BOOKKEEPING_PASS free_outside_tree_batches_plateau
+NATIVE_BOOKKEEPING_START queue_free_inside_tree_batches_plateau
+BOOKKEEPING_SNAPSHOT node-batches/baseline BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT node-batches/round-1 BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT node-batches/round-2 BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT node-batches/round-3 BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+NATIVE_BOOKKEEPING_PASS queue_free_inside_tree_batches_plateau
+NATIVE_BOOKKEEPING_START queue_free_outside_tree_batches_plateau
+BOOKKEEPING_SNAPSHOT node-batches/baseline BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT node-batches/round-1 BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT node-batches/round-2 BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT node-batches/round-3 BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+NATIVE_BOOKKEEPING_PASS queue_free_outside_tree_batches_plateau
+NATIVE_BOOKKEEPING_START dead_records_wait_for_both_loops
+BOOKKEEPING_SNAPSHOT both-loops/baseline BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT both-loops/settled BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT both-loops/settled BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+NATIVE_BOOKKEEPING_PASS dead_records_wait_for_both_loops
+NATIVE_BOOKKEEPING_START expired_bindings_on_living_node_plateau
+BOOKKEEPING_SNAPSHOT expired-bindings/baseline BookkeepingSnapshot { tracked_nodes: 1, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT expired-bindings/round-1 BookkeepingSnapshot { tracked_nodes: 1, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT expired-bindings/round-2 BookkeepingSnapshot { tracked_nodes: 1, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT expired-bindings/round-3 BookkeepingSnapshot { tracked_nodes: 1, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+NATIVE_BOOKKEEPING_PASS expired_bindings_on_living_node_plateau
+NATIVE_BOOKKEEPING_START expired_bindings_on_detached_node_plateau
+BOOKKEEPING_SNAPSHOT expired-bindings/baseline BookkeepingSnapshot { tracked_nodes: 1, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT expired-bindings/round-1 BookkeepingSnapshot { tracked_nodes: 1, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT expired-bindings/round-2 BookkeepingSnapshot { tracked_nodes: 1, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT expired-bindings/round-3 BookkeepingSnapshot { tracked_nodes: 1, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+NATIVE_BOOKKEEPING_PASS expired_bindings_on_detached_node_plateau
+NATIVE_BOOKKEEPING_START retained_bindings_survive_pruning
+BOOKKEEPING_SNAPSHOT retained/baseline BookkeepingSnapshot { tracked_nodes: 1, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT retained/completed BookkeepingSnapshot { tracked_nodes: 1, dead_nodes: 0, binding_entries: 1, expired_bindings: 0, root_tweens: 1, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT retained/unregistered BookkeepingSnapshot { tracked_nodes: 1, dead_nodes: 0, binding_entries: 1, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT retained/reregistered BookkeepingSnapshot { tracked_nodes: 1, dead_nodes: 0, binding_entries: 1, expired_bindings: 0, root_tweens: 1, deferred_ops: 0 }
+NATIVE_BOOKKEEPING_PASS retained_bindings_survive_pruning
+NATIVE_BOOKKEEPING_START detached_node_reentry_preserves_bindings
+NATIVE_BOOKKEEPING_PASS detached_node_reentry_preserves_bindings
+NATIVE_BOOKKEEPING_START deletion_cancels_all_clock_and_playback_modes
+NATIVE_BOOKKEEPING_PASS deletion_cancels_all_clock_and_playback_modes
+NATIVE_BOOKKEEPING_START duplicating_nodes_does_not_delay_source_cleanup
+BOOKKEEPING_SNAPSHOT duplicate/baseline BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT duplicate/source-freed BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT duplicate/both-freed BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT duplicate/source-freed BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT duplicate/both-freed BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT duplicate/source-freed BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT duplicate/both-freed BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT duplicate/source-freed BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+BOOKKEEPING_SNAPSHOT duplicate/both-freed BookkeepingSnapshot { tracked_nodes: 0, dead_nodes: 0, binding_entries: 0, expired_bindings: 0, root_tweens: 0, deferred_ops: 0 }
+NATIVE_BOOKKEEPING_PASS duplicating_nodes_does_not_delay_source_cleanup
+NATIVE_BOOKKEEPING_RESULT total=11 failed=0
+NATIVE_DELAY_VALIDITY_START freed_node
+NATIVE_DELAY_VALIDITY_PASS freed_node
+NATIVE_DELAY_VALIDITY_START freed_refcounted
+NATIVE_DELAY_VALIDITY_PASS freed_refcounted
+NATIVE_DELAY_VALIDITY_START initially_invalid
+NATIVE_DELAY_VALIDITY_PASS initially_invalid
+NATIVE_DELAY_VALIDITY_START invalid_force_complete
+NATIVE_DELAY_VALIDITY_PASS invalid_force_complete
+NATIVE_DELAY_VALIDITY_START invalid_manual_processing
+NATIVE_DELAY_VALIDITY_PASS invalid_manual_processing
+NATIVE_DELAY_VALIDITY_START valid_custom_delay
+NATIVE_DELAY_VALIDITY_PASS valid_custom_delay
+NATIVE_DELAY_VALIDITY_START valid_force_complete_and_replay
+NATIVE_DELAY_VALIDITY_PASS valid_force_complete_and_replay
+NATIVE_DELAY_VALIDITY_START receiver_and_callable_target_differ
+NATIVE_DELAY_VALIDITY_PASS receiver_and_callable_target_differ
+NATIVE_DELAY_VALIDITY_START sequence_continues_after_invalid_child
+NATIVE_DELAY_VALIDITY_PASS sequence_continues_after_invalid_child
+NATIVE_DELAY_VALIDITY_RESULT total=9 failed=0
+NATIVE_METHOD_VALIDITY_START freed_node
+NATIVE_METHOD_VALIDITY_PASS freed_node
+NATIVE_METHOD_VALIDITY_START freed_object
+NATIVE_METHOD_VALIDITY_PASS freed_object
+NATIVE_METHOD_VALIDITY_START initially_invalid
+NATIVE_METHOD_VALIDITY_PASS initially_invalid
+NATIVE_METHOD_VALIDITY_START invalid_force_complete_playing_and_paused
+NATIVE_METHOD_VALIDITY_PASS invalid_force_complete_playing_and_paused
+NATIVE_METHOD_VALIDITY_START invalid_manual_processing
+NATIVE_METHOD_VALIDITY_PASS invalid_manual_processing
+NATIVE_METHOD_VALIDITY_START invalid_unregistered_builder
+NATIVE_METHOD_VALIDITY_PASS invalid_unregistered_builder
+NATIVE_METHOD_VALIDITY_START invalid_custom_method_skips_lerper
+NATIVE_METHOD_VALIDITY_PASS invalid_custom_method_skips_lerper
+NATIVE_METHOD_VALIDITY_START valid_delay_and_completion
+NATIVE_METHOD_VALIDITY_PASS valid_delay_and_completion
+NATIVE_METHOD_VALIDITY_START valid_force_complete_and_replay
+NATIVE_METHOD_VALIDITY_PASS valid_force_complete_and_replay
+NATIVE_METHOD_VALIDITY_START sequence_continues_after_invalid_child
+NATIVE_METHOD_VALIDITY_PASS sequence_continues_after_invalid_child
+NATIVE_METHOD_VALIDITY_RESULT total=10 failed=0
+NATIVE_API_START timer
+NATIVE_API_PASS timer
+NATIVE_API_START builtin_position
+NATIVE_API_PASS builtin_position
+NATIVE_API_START builtin_color
+NATIVE_API_PASS builtin_color
+NATIVE_API_START started_position_tween_is_rejected
+EXPECTED_API_FAILURE_BEGIN
+ERROR: Can't append to a Tween that has started. Use stop() first.
+   at: tween_property (scene/animation/tween.cpp:102)
+ERROR: [panic /home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/meta/signature.rs:583]
+  in function `Tween::tween_property` at return type godot_core::obj::gd::Gd<godot_core::gen::classes::property_tweener::re_export::PropertyTweener>: `Gd` cannot be null: null
+  in async task #0
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+(backtrace disabled, run application with `RUST_BACKTRACE=1` environment variable)
+EXPECTED_API_FAILURE_END
+NATIVE_API_PASS started_position_tween_is_rejected
+NATIVE_API_START started_color_tween_is_rejected
+EXPECTED_API_FAILURE_BEGIN
+ERROR: Can't append to a Tween that has started. Use stop() first.
+   at: tween_property (scene/animation/tween.cpp:102)
+ERROR: [panic /home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/meta/signature.rs:583]
+  in function `Tween::tween_property` at return type godot_core::obj::gd::Gd<godot_core::gen::classes::property_tweener::re_export::PropertyTweener>: `Gd` cannot be null: null
+  in async task #0
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+(backtrace disabled, run application with `RUST_BACKTRACE=1` environment variable)
+EXPECTED_API_FAILURE_END
+NATIVE_API_PASS started_color_tween_is_rejected
+NATIVE_API_RESULT total=5 failed=0
+NATIVE_OWNERSHIP_START native_pointer_counts
+NATIVE_OWNERSHIP_PASS native_pointer_counts
+NATIVE_OWNERSHIP_START last_native_owner_releases_wrapper
+NATIVE_OWNERSHIP_PASS last_native_owner_releases_wrapper
+NATIVE_OWNERSHIP_START last_godot_owner_releases_tween
+NATIVE_OWNERSHIP_PASS last_godot_owner_releases_tween
+NATIVE_OWNERSHIP_START clone_promotes_handle
+NATIVE_OWNERSHIP_PASS clone_promotes_handle
+NATIVE_OWNERSHIP_START weak_upgrade_promotes_handle
+NATIVE_OWNERSHIP_PASS weak_upgrade_promotes_handle
+NATIVE_OWNERSHIP_START weak_pointer_does_not_keep_completed_tween
+NATIVE_OWNERSHIP_PASS weak_pointer_does_not_keep_completed_tween
+NATIVE_OWNERSHIP_START native_owner_preserves_godot_signals
+NATIVE_OWNERSHIP_PASS native_owner_preserves_godot_signals
+NATIVE_OWNERSHIP_START unregistered_handle_can_register_again
+NATIVE_OWNERSHIP_PASS unregistered_handle_can_register_again
+NATIVE_OWNERSHIP_START pointer_upgrade_during_signal
+NATIVE_OWNERSHIP_PASS pointer_upgrade_during_signal
+NATIVE_OWNERSHIP_START external_signal_handle
+NATIVE_OWNERSHIP_PASS external_signal_handle
+NATIVE_OWNERSHIP_RESULT total=10 failed=0
+NATIVE_BINDING_START builder_bindings_and_clear
+NATIVE_BINDING_PASS builder_bindings_and_clear
+NATIVE_BINDING_START clear_removes_manager_actions
+NATIVE_BINDING_PASS clear_removes_manager_actions
+NATIVE_BINDING_START duplicate_bind_and_absent_unbind
+NATIVE_BINDING_PASS duplicate_bind_and_absent_unbind
+NATIVE_BINDING_START unbind_preserves_remaining_node
+NATIVE_BINDING_PASS unbind_preserves_remaining_node
+NATIVE_BINDING_START unregister_and_register_preserve_binding
+NATIVE_BINDING_PASS unregister_and_register_preserve_binding
+NATIVE_BINDING_START completion_then_registration_replays
+NATIVE_BINDING_PASS completion_then_registration_replays
+NATIVE_BINDING_START bound_children_append_join_insert
+NATIVE_BINDING_PASS bound_children_append_join_insert
+NATIVE_BINDING_START clear_unregistered_binding
+NATIVE_BINDING_PASS clear_unregistered_binding
+NATIVE_BINDING_START clear_freed_node_binding
+NATIVE_BINDING_PASS clear_freed_node_binding
+NATIVE_BINDING_START automatic_property_and_method_owner
+NATIVE_BINDING_PASS automatic_property_and_method_owner
+NATIVE_BINDING_START kill_then_register_restores_binding
+NATIVE_BINDING_PASS kill_then_register_restores_binding
+NATIVE_BINDING_RESULT total=11 failed=0
+NATIVE_CYCLE_START two_node_cycles
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:1134)
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:1134)
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:1134)
+NATIVE_CYCLE_PASS two_node_cycles
+NATIVE_CYCLE_START deeper_mixed_cycles
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:1134)
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:1134)
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:1134)
+NATIVE_CYCLE_PASS deeper_mixed_cycles
+NATIVE_CYCLE_START rejection_preserves_child
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:1134)
+NATIVE_CYCLE_PASS rejection_preserves_child
+NATIVE_CYCLE_START valid_nested_playback_and_bindings
+NATIVE_CYCLE_PASS valid_nested_playback_and_bindings
+NATIVE_CYCLE_START repeated_incoming_graph
+WARNING: [SpireTween] Sequence insertion rejected: tween 0x1e584a70 is referenced more than once (cycle or unsupported reuse).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:1127)
+NATIVE_CYCLE_PASS repeated_incoming_graph
+NATIVE_CYCLE_START registration_rejects_repeated_graph
+WARNING: [SpireTween] Sequence binding traversal rejected: tween 0x1e585fc0 is referenced more than once (cycle or unsupported reuse).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:1127)
+NATIVE_CYCLE_PASS registration_rejects_repeated_graph
+NATIVE_CYCLE_START iterator_forbidden_terminates
+NATIVE_CYCLE_PASS iterator_forbidden_terminates
+NATIVE_CYCLE_START iterator_repeated_terminates
+NATIVE_CYCLE_PASS iterator_repeated_terminates
+NATIVE_CYCLE_START repeated_after_heap_spill
+NATIVE_CYCLE_PASS repeated_after_heap_spill
+NATIVE_CYCLE_START wide_and_deep_hierarchies
+NATIVE_CYCLE_PASS wide_and_deep_hierarchies
+NATIVE_CYCLE_RESULT total=10 failed=0
+Test Started: res://examples/tests/play_pause_stop.tscn::test_play_works
+[000240f, 2.0083s] Loop completed
+TEST_PASS res://examples/tests/play_pause_stop.tscn::test_play_works
+Test Started: res://examples/tests/play_pause_stop.tscn::test_pause_play_works
+[000601f, 5.0167s] Loop completed
+TEST_PASS res://examples/tests/play_pause_stop.tscn::test_pause_play_works
+Test Started: res://examples/tests/play_pause_stop.tscn::test_play_stop_play_works
+[000240f, 2.0083s] Loop completed
+[000841f, 7.0167s] Loop completed
+TEST_PASS res://examples/tests/play_pause_stop.tscn::test_play_stop_play_works
+Test Started: res://examples/tests/delays.tscn::test_delay_is_respected
+[000719f, 6.0000s] Finished
+TEST_PASS res://examples/tests/delays.tscn::test_delay_is_respected
+Test Started: res://examples/tests/delays.tscn::test_extra_loops_dont_have_delay
+[000840f, 7.0083s] Loop completed
+[001200f, 10.0083s] Loop completed
+TEST_PASS res://examples/tests/delays.tscn::test_extra_loops_dont_have_delay
+Test Started: res://examples/tests/delays.tscn::test_sequence_respects_delay
+[000600f, 5.0083s] Finished
+[000840f, 7.0083s] Finished
+[001081f, 9.0167s] Finished
+[001321f, 11.0167s] Finished
+TEST_PASS res://examples/tests/delays.tscn::test_sequence_respects_delay
+Test Started: res://examples/tests/delays.tscn::test_delayed_call
+[000360f, 3.0083s] Finished
+TEST_PASS res://examples/tests/delays.tscn::test_delayed_call
+Test Started: res://examples/tests/misc.tscn::test_force_complete
+[000840f, 7.0083s] Finished
+TEST_PASS res://examples/tests/misc.tscn::test_force_complete
+Test Started: res://examples/tests/misc.tscn::test_dyn_target
+[000721f, 6.0167s] Finished
+TEST_PASS res://examples/tests/misc.tscn::test_dyn_target
+Test Started: res://examples/tests/misc.tscn::test_property_path
+TEST_PASS res://examples/tests/misc.tscn::test_property_path
+Test Started: res://examples/tests/register_unregister.tscn::test_unregistered_does_not_affect_game
+[000840f, 7.0083s] Loop completed
+TEST_PASS res://examples/tests/register_unregister.tscn::test_unregistered_does_not_affect_game
+Test Started: res://examples/tests/register_unregister.tscn::test_unregistered_can_be_manually_stepped
+TEST_PASS res://examples/tests/register_unregister.tscn::test_unregistered_can_be_manually_stepped
+Test Started: res://examples/tests/error_handling.tscn::test_invalid_sequence_adding
+ERROR: Cannot add the same tween to the sequence more than once.
+   at: spire_tween::tweens::sequence::data::<impl spire_tween::tweens::base::spire_tween::SpireTween<spire_tween::tweens::sequence::data::Sequence>>::is_already_inside (spire_tween/src/tweens/sequence/data.rs:1025)
+ERROR: Cannot add the same tween to the sequence more than once.
+   at: spire_tween::tweens::sequence::data::<impl spire_tween::tweens::base::spire_tween::SpireTween<spire_tween::tweens::sequence::data::Sequence>>::is_already_inside (spire_tween/src/tweens/sequence/data.rs:1025)
+ERROR: Cannot append a sequence tween to itself.
+   at: spire_tween::tweens::sequence::data::<impl spire_tween::tweens::base::spire_tween::SpireTween<spire_tween::tweens::sequence::data::Sequence>>::is_already_inside (spire_tween/src/tweens/sequence/data.rs:1017)
+[000360f, 3.0083s] Finished
+TEST_PASS res://examples/tests/error_handling.tscn::test_invalid_sequence_adding
+Test Started: res://examples/tests/error_handling.tscn::test_free_while_playing
+TEST_PASS res://examples/tests/error_handling.tscn::test_free_while_playing
+Test Started: res://examples/tests/lerp_modes.tscn::test_relative
+[000240f, 2.0083s] Finished
+TEST_PASS res://examples/tests/lerp_modes.tscn::test_relative
+Test Started: res://examples/tests/lerp_modes.tscn::test_two_relatives
+[000240f, 2.0083s] Finished
+[000360f, 3.0083s] Finished
+TEST_PASS res://examples/tests/lerp_modes.tscn::test_two_relatives
+Test Started: res://examples/tests/lerp_modes.tscn::test_speed_based
+[000526f, 4.3917s] Finished
+TEST_PASS res://examples/tests/lerp_modes.tscn::test_speed_based
+Test Started: res://examples/tests/lerp_modes.tscn::test_speed_based_plus_relative
+[000360f, 3.0083s] Finished
+TEST_PASS res://examples/tests/lerp_modes.tscn::test_speed_based_plus_relative
+Test Started: res://examples/tests/lerp_callable.tscn::test_lerp_call
+[000599f, 5.0000s] Finished
+TEST_PASS res://examples/tests/lerp_callable.tscn::test_lerp_call
+Test Started: res://examples/tests/lerp_callable.tscn::test_lerp_call_float
+[000599f, 5.0000s] Finished
+TEST_PASS res://examples/tests/lerp_callable.tscn::test_lerp_call_float
+Test Started: res://examples/tests/lerp_callable.tscn::test_lerp_call_with_ease
+TEST_PASS res://examples/tests/lerp_callable.tscn::test_lerp_call_with_ease
+Test Started: res://examples/tests/lerp_callable.tscn::test_lerp_call_with_loop
+[000240f, 2.0083s] Loop completed
+[000480f, 4.0083s] Loop completed
+TEST_PASS res://examples/tests/lerp_callable.tscn::test_lerp_call_with_loop
+Test Started: res://examples/tests/pause_process_modes.tscn::test_pause_mode_process
+[000360f, 3.0000s] Finished
+TEST_PASS res://examples/tests/pause_process_modes.tscn::test_pause_mode_process
+Test Started: res://examples/tests/pause_process_modes.tscn::test_pause_mode_stop
+[000960f, 3.0083s] Finished
+TEST_PASS res://examples/tests/pause_process_modes.tscn::test_pause_mode_stop
+Test Started: res://examples/tests/pause_process_modes.tscn::test_pause_mode_bound
+[001082f, 9.0167s] Finished
+TEST_PASS res://examples/tests/pause_process_modes.tscn::test_pause_mode_bound
+Test Started: res://examples/tests/pause_process_modes.tscn::test_process_mode_idle
+[000480f, 4.0083s] Finished
+TEST_PASS res://examples/tests/pause_process_modes.tscn::test_process_mode_idle
+Test Started: res://examples/tests/pause_process_modes.tscn::test_process_mode_physics
+[000481f, 4.0083s] Finished
+TEST_PASS res://examples/tests/pause_process_modes.tscn::test_process_mode_physics
+Test Started: res://examples/tests/pause_process_modes.tscn::test_pause_mode_bound_process_mode_physics
+[001083f, 9.0167s] Finished
+TEST_PASS res://examples/tests/pause_process_modes.tscn::test_pause_mode_bound_process_mode_physics
+Test Started: res://examples/tests/sequences.tscn::test_proper_ordering
+[000719f, 6.0000s] Loop completed
+TEST_PASS res://examples/tests/sequences.tscn::test_proper_ordering
+Test Started: res://examples/tests/sequences.tscn::test_stopped_child_does_not_halt_sequence
+[000240f, 2.0083s] Finished
+[000360f, 3.0083s] Loop completed
+TEST_PASS res://examples/tests/sequences.tscn::test_stopped_child_does_not_halt_sequence
+Test Started: res://examples/tests/sequences.tscn::test_append_many
+[000120f, 1.0083s] Finished
+[000480f, 4.0083s] Finished
+[001319f, 11.0000s] Finished
+[001439f, 12.0000s] Finished
+[001679f, 14.0000s] Finished
+TEST_PASS res://examples/tests/sequences.tscn::test_append_many
+Test Started: res://examples/tests/sequences.tscn::test_remove
+[000120f, 1.0083s] Finished
+[000360f, 3.0083s] Finished
+TEST_PASS res://examples/tests/sequences.tscn::test_remove
+Test Started: res://examples/tests/sequences.tscn::test_remove_midway
+[000120f, 1.0083s] Finished
+[000541f, 4.5167s] Finished
+TEST_PASS res://examples/tests/sequences.tscn::test_remove_midway
+Test Started: res://examples/tests/sequences.tscn::test_remove_call
+[000120f, 1.0083s] Finished
+[000360f, 3.0083s] Finished
+TEST_PASS res://examples/tests/sequences.tscn::test_remove_call
+Test Started: res://examples/tests/sequences.tscn::test_default_children_ease
+[000360f, 3.0083s] Finished
+[000600f, 5.0083s] Finished
+TEST_PASS res://examples/tests/sequences.tscn::test_default_children_ease
+Test Started: res://examples/tests/spiral.tscn::test_spiral_logarithmic
+[000959f, 8.0000s] Finished
+TEST_PASS res://examples/tests/spiral.tscn::test_spiral_logarithmic
+Test Started: res://examples/tests/spiral.tscn::test_spiral_logarithmic_sheared
+[000959f, 8.0000s] Finished
+TEST_PASS res://examples/tests/spiral.tscn::test_spiral_logarithmic_sheared
+Test Started: res://examples/tests/spiral.tscn::test_spiral_logarithmic_inverted
+[000959f, 8.0000s] Finished
+TEST_PASS res://examples/tests/spiral.tscn::test_spiral_logarithmic_inverted
+Test Started: res://examples/tests/spiral.tscn::test_spiral_archimedean
+[000959f, 8.0000s] Finished
+TEST_PASS res://examples/tests/spiral.tscn::test_spiral_archimedean
+Test Started: res://examples/tests/spiral.tscn::test_spiral_archimedean_sheared
+[000959f, 8.0000s] Finished
+TEST_PASS res://examples/tests/spiral.tscn::test_spiral_archimedean_sheared
+Test Started: res://examples/tests/spiral.tscn::test_spiral_archimedean_inverted
+[000959f, 8.0000s] Finished
+TEST_PASS res://examples/tests/spiral.tscn::test_spiral_archimedean_inverted
+Test Started: res://examples/tests/spiral.tscn::test_spiral_hyperbolic
+[000959f, 8.0000s] Finished
+TEST_PASS res://examples/tests/spiral.tscn::test_spiral_hyperbolic
+Test Started: res://examples/tests/spiral.tscn::test_spiral_hyperbolic_sheared
+[000959f, 8.0000s] Finished
+TEST_PASS res://examples/tests/spiral.tscn::test_spiral_hyperbolic_sheared
+Test Started: res://examples/tests/spiral.tscn::test_spiral_hyperbolic_inverted
+[000959f, 8.0000s] Finished
+TEST_PASS res://examples/tests/spiral.tscn::test_spiral_hyperbolic_inverted
+Test Started: res://examples/tests/spiral.tscn::test_spiral_fermat
+[000959f, 8.0000s] Finished
+TEST_PASS res://examples/tests/spiral.tscn::test_spiral_fermat
+Test Started: res://examples/tests/spiral.tscn::test_spiral_fermat_sheared
+[000959f, 8.0000s] Finished
+TEST_PASS res://examples/tests/spiral.tscn::test_spiral_fermat_sheared
+Test Started: res://examples/tests/spiral.tscn::test_spiral_fermat_inverted
+[000959f, 8.0000s] Finished
+TEST_PASS res://examples/tests/spiral.tscn::test_spiral_fermat_inverted
+Test Started: res://examples/tests/ellipsis.tscn::test_circle
+[000480f, 4.0083s] Finished
+TEST_PASS res://examples/tests/ellipsis.tscn::test_circle
+Test Started: res://examples/tests/ellipsis.tscn::test_circle_inverted
+[000480f, 4.0083s] Finished
+TEST_PASS res://examples/tests/ellipsis.tscn::test_circle_inverted
+Test Started: res://examples/tests/ellipsis.tscn::test_ellipsis
+[000480f, 4.0083s] Finished
+TEST_PASS res://examples/tests/ellipsis.tscn::test_ellipsis
+Test Started: res://examples/tests/ellipsis.tscn::test_ellipsis_varying
+[001440f, 12.0083s] Finished
+TEST_PASS res://examples/tests/ellipsis.tscn::test_ellipsis_varying
+Test Started: res://examples/tests/ellipsis.tscn::test_ellipsis_varying_inverted
+[001440f, 12.0083s] Finished
+TEST_PASS res://examples/tests/ellipsis.tscn::test_ellipsis_varying_inverted
+Test Started: res://examples/tests/gd_handle_path.tscn::test_gd_handle_attached
+TEST_PASS res://examples/tests/gd_handle_path.tscn::test_gd_handle_attached
+Test Started: res://examples/tests/gd_handle_path.tscn::test_godot_signal_finished_fires
+[000120f, 1.0083s] Finished
+TEST_PASS res://examples/tests/gd_handle_path.tscn::test_godot_signal_finished_fires
+Test Started: res://examples/tests/gd_handle_path.tscn::test_godot_signal_loop_finished_fires
+[000240f, 2.0083s] Finished
+TEST_PASS res://examples/tests/gd_handle_path.tscn::test_godot_signal_loop_finished_fires
+Test Started: res://examples/tests/gd_handle_path.tscn::test_is_registered_via_gd_handle
+TEST_PASS res://examples/tests/gd_handle_path.tscn::test_is_registered_via_gd_handle
+Test Started: res://examples/tests/templates.tscn::test_do_shake
+TEST_PASS res://examples/tests/templates.tscn::test_do_shake
+Test Started: res://examples/tests/templates.tscn::test_do_shake_stays_within_radius
+TEST_PASS res://examples/tests/templates.tscn::test_do_shake_stays_within_radius
+Test Started: res://examples/tests/templates.tscn::test_do_shake_returns_to_origin
+[000120f, 1.0083s] Finished
+TEST_PASS res://examples/tests/templates.tscn::test_do_shake_returns_to_origin
+Test Started: res://examples/tests/templates.tscn::test_do_contour_shape
+[000360f, 3.0083s] Finished
+TEST_PASS res://examples/tests/templates.tscn::test_do_contour_shape
+Test Started: res://examples/tests/templates.tscn::test_do_contour_shape_speed_based
+[000240f, 2.0083s] Finished
+TEST_PASS res://examples/tests/templates.tscn::test_do_contour_shape_speed_based
+Test Started: res://examples/tests/templates.tscn::test_do_contour_shape_empty
+ERROR: Contour shape has zero length, returning empty sequence.
+   at: <godot_core::obj::gd::Gd<_> as spire_tween::tweens::templates::do_contour_shape::DoContourShape2D>::do_contour_shape (spire_tween/src/tweens/templates/do_contour_shape.rs:46)
+TEST_PASS res://examples/tests/templates.tscn::test_do_contour_shape_empty
+Test Started: res://examples/tests/templates.tscn::test_do_follow
+[000240f, 2.0083s] Finished
+TEST_PASS res://examples/tests/templates.tscn::test_do_follow
+Test Started: res://examples/tests/templates.tscn::test_ignore_time_scale
+ERROR: [panic spire_tween_rust/src/tests/templates_test.rs:402]
+  ignore_time_scale=true: expected ~0.5 scaled-timer advance, got 848.7375000039042
+  in async task #64
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+(backtrace disabled, run application with `RUST_BACKTRACE=1` environment variable)
+TEST_FAIL res://examples/tests/templates.tscn::test_ignore_time_scale
+Test Started: res://examples/tests/templates_3d.tscn::test_do_bone_position
+[000120f, 1.0083s] Finished
+TEST_PASS res://examples/tests/templates_3d.tscn::test_do_bone_position
+Test Started: res://examples/tests/templates_3d.tscn::test_do_bone_scale
+[000120f, 1.0083s] Finished
+TEST_PASS res://examples/tests/templates_3d.tscn::test_do_bone_scale
+Test Started: res://examples/tests/templates_3d.tscn::test_do_follow_3d
+[000240f, 2.0083s] Finished
+TEST_PASS res://examples/tests/templates_3d.tscn::test_do_follow_3d
+Test Started: res://examples/tests/templates_3d.tscn::test_do_ellipsis_3d
+ERROR: [panic spire_tween_rust/src/tests/templates_3d_test.rs:191]
+  at t=duration/2, leader should be near (-2, 0, 0), got (-1.9993147, 0, 0.05235425)
+  in async task #68
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+(backtrace disabled, run application with `RUST_BACKTRACE=1` environment variable)
+TEST_FAIL res://examples/tests/templates_3d.tscn::test_do_ellipsis_3d
+NATIVE_TEST_RESULT total=68 failed=2

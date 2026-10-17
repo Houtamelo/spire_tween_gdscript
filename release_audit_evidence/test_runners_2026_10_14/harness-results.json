@@ -1,0 +1,1298 @@
+[
+  {
+    "label": "debug-gdscript-pass",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/debug-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=pass",
+      "--test-timeout=0.1"
+    ],
+    "exit_code": 0,
+    "expected": 0,
+    "passed": true
+  },
+  {
+    "label": "debug-gdscript-async_pass",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/debug-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=async_pass",
+      "--test-timeout=0.1"
+    ],
+    "exit_code": 0,
+    "expected": 0,
+    "passed": true
+  },
+  {
+    "label": "debug-gdscript-helper_failure",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/debug-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=helper_failure",
+      "--test-timeout=0.1"
+    ],
+    "exit_code": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "debug-gdscript-other_helpers_fail",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/debug-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=other_helpers_fail",
+      "--test-timeout=0.1"
+    ],
+    "exit_code": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "debug-gdscript-false_return",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/debug-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=false_return",
+      "--test-timeout=0.1"
+    ],
+    "exit_code": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "debug-gdscript-nil_return",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/debug-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=nil_return",
+      "--test-timeout=0.1"
+    ],
+    "exit_code": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "debug-gdscript-body_assertion",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/debug-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=body_assertion",
+      "--test-timeout=0.1"
+    ],
+    "exit_code": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "debug-gdscript-async_assertion",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/debug-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=async_assertion",
+      "--test-timeout=0.1"
+    ],
+    "exit_code": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "debug-gdscript-callback_failure",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/debug-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=callback_failure",
+      "--test-timeout=0.1"
+    ],
+    "exit_code": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "debug-gdscript-timeout",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/debug-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=timeout",
+      "--test-timeout=0.1"
+    ],
+    "exit_code": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "debug-gdscript-paused_timeout",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/debug-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=paused_timeout",
+      "--test-timeout=0.1"
+    ],
+    "exit_code": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "debug-gdscript-suite-timeout",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/debug-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=timeout",
+      "--test-timeout=10",
+      "--suite-timeout=0.1"
+    ],
+    "exit_code": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "debug-gdscript-paused-suite-timeout",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/debug-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=paused_timeout",
+      "--test-timeout=10",
+      "--suite-timeout=0.1"
+    ],
+    "exit_code": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "debug-gdscript-unknown-test",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/debug-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--no-cache",
+      "--test=does_not_exist"
+    ],
+    "exit_code": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "debug-gdscript-invalid-timeout",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/debug-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--no-cache",
+      "--test-timeout=NaN"
+    ],
+    "exit_code": 2,
+    "expected": 2,
+    "passed": true
+  },
+  {
+    "label": "debug-native-pass",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/debug-native",
+      "--fixed-fps",
+      "120",
+      "res://test_runner.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=pass",
+      "--test-timeout=0.1"
+    ],
+    "exit_code": 0,
+    "expected": 0,
+    "passed": true
+  },
+  {
+    "label": "debug-native-async_pass",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/debug-native",
+      "--fixed-fps",
+      "120",
+      "res://test_runner.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=async_pass",
+      "--test-timeout=0.1"
+    ],
+    "exit_code": 0,
+    "expected": 0,
+    "passed": true
+  },
+  {
+    "label": "debug-native-setup_panic",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/debug-native",
+      "--fixed-fps",
+      "120",
+      "res://test_runner.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=setup_panic",
+      "--test-timeout=0.1"
+    ],
+    "exit_code": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "debug-native-async_panic",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/debug-native",
+      "--fixed-fps",
+      "120",
+      "res://test_runner.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=async_panic",
+      "--test-timeout=0.1"
+    ],
+    "exit_code": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "debug-native-callback_panic",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/debug-native",
+      "--fixed-fps",
+      "120",
+      "res://test_runner.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=callback_panic",
+      "--test-timeout=0.1"
+    ],
+    "exit_code": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "debug-native-timeout",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/debug-native",
+      "--fixed-fps",
+      "120",
+      "res://test_runner.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=timeout",
+      "--test-timeout=0.1"
+    ],
+    "exit_code": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "debug-native-paused_timeout",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/debug-native",
+      "--fixed-fps",
+      "120",
+      "res://test_runner.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=paused_timeout",
+      "--test-timeout=0.1"
+    ],
+    "exit_code": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "debug-native-suite-timeout",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/debug-native",
+      "--fixed-fps",
+      "120",
+      "res://test_runner.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=timeout",
+      "--test-timeout=10",
+      "--suite-timeout=0.1"
+    ],
+    "exit_code": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "debug-native-paused-suite-timeout",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/debug-native",
+      "--fixed-fps",
+      "120",
+      "res://test_runner.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=paused_timeout",
+      "--test-timeout=10",
+      "--suite-timeout=0.1"
+    ],
+    "exit_code": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "debug-native-unknown-test",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/debug-native",
+      "--fixed-fps",
+      "120",
+      "res://test_runner.tscn",
+      "--",
+      "--no-cache",
+      "--test=does_not_exist"
+    ],
+    "exit_code": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "debug-native-invalid-timeout",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/debug-native",
+      "--fixed-fps",
+      "120",
+      "res://test_runner.tscn",
+      "--",
+      "--no-cache",
+      "--test-timeout=NaN"
+    ],
+    "exit_code": 2,
+    "expected": 2,
+    "passed": true
+  },
+  {
+    "label": "debug-cache-first",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/debug-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--runner-self-test=cache"
+    ],
+    "exit_code": 0,
+    "expected": 0,
+    "passed": true
+  },
+  {
+    "label": "debug-cache-reuse",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/debug-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--runner-self-test=cache"
+    ],
+    "exit_code": 0,
+    "expected": 0,
+    "passed": true
+  },
+  {
+    "label": "debug-cache-bypass",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/debug-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--runner-self-test=cache",
+      "--no-cache"
+    ],
+    "exit_code": 0,
+    "expected": 0,
+    "passed": true
+  },
+  {
+    "label": "debug-cache-source-change",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/debug-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--runner-self-test=cache"
+    ],
+    "exit_code": 0,
+    "expected": 0,
+    "passed": true
+  },
+  {
+    "label": "debug-cache-source-reuse",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/debug-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--runner-self-test=cache"
+    ],
+    "exit_code": 0,
+    "expected": 0,
+    "passed": true
+  },
+  {
+    "label": "debug-cache-example-source-change",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/debug-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--runner-self-test=cache"
+    ],
+    "exit_code": 0,
+    "expected": 0,
+    "passed": true
+  },
+  {
+    "label": "debug-cache-binary-change",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/debug-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--runner-self-test=cache"
+    ],
+    "exit_code": 0,
+    "expected": 0,
+    "passed": true
+  },
+  {
+    "label": "debug-cache-binary-reuse",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/debug-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--runner-self-test=cache"
+    ],
+    "exit_code": 0,
+    "expected": 0,
+    "passed": true
+  },
+  {
+    "label": "debug-cache-engine-change",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/debug-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--runner-self-test=cache"
+    ],
+    "exit_code": 0,
+    "expected": 0,
+    "passed": true
+  },
+  {
+    "label": "release-gdscript-pass",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/release-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=pass",
+      "--test-timeout=0.1"
+    ],
+    "exit_code": 0,
+    "expected": 0,
+    "passed": true
+  },
+  {
+    "label": "release-gdscript-async_pass",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/release-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=async_pass",
+      "--test-timeout=0.1"
+    ],
+    "exit_code": 0,
+    "expected": 0,
+    "passed": true
+  },
+  {
+    "label": "release-gdscript-helper_failure",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/release-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=helper_failure",
+      "--test-timeout=0.1"
+    ],
+    "exit_code": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "release-gdscript-other_helpers_fail",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/release-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=other_helpers_fail",
+      "--test-timeout=0.1"
+    ],
+    "exit_code": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "release-gdscript-false_return",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/release-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=false_return",
+      "--test-timeout=0.1"
+    ],
+    "exit_code": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "release-gdscript-nil_return",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/release-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=nil_return",
+      "--test-timeout=0.1"
+    ],
+    "exit_code": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "release-gdscript-body_assertion",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/release-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=body_assertion",
+      "--test-timeout=0.1"
+    ],
+    "exit_code": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "release-gdscript-async_assertion",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/release-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=async_assertion",
+      "--test-timeout=0.1"
+    ],
+    "exit_code": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "release-gdscript-callback_failure",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/release-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=callback_failure",
+      "--test-timeout=0.1"
+    ],
+    "exit_code": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "release-gdscript-timeout",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/release-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=timeout",
+      "--test-timeout=0.1"
+    ],
+    "exit_code": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "release-gdscript-paused_timeout",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/release-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=paused_timeout",
+      "--test-timeout=0.1"
+    ],
+    "exit_code": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "release-gdscript-suite-timeout",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/release-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=timeout",
+      "--test-timeout=10",
+      "--suite-timeout=0.1"
+    ],
+    "exit_code": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "release-gdscript-paused-suite-timeout",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/release-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=paused_timeout",
+      "--test-timeout=10",
+      "--suite-timeout=0.1"
+    ],
+    "exit_code": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "release-gdscript-unknown-test",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/release-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--no-cache",
+      "--test=does_not_exist"
+    ],
+    "exit_code": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "release-gdscript-invalid-timeout",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/release-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--no-cache",
+      "--test-timeout=NaN"
+    ],
+    "exit_code": 2,
+    "expected": 2,
+    "passed": true
+  },
+  {
+    "label": "release-native-pass",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/release-native",
+      "--fixed-fps",
+      "120",
+      "res://test_runner.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=pass",
+      "--test-timeout=0.1"
+    ],
+    "exit_code": 0,
+    "expected": 0,
+    "passed": true
+  },
+  {
+    "label": "release-native-async_pass",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/release-native",
+      "--fixed-fps",
+      "120",
+      "res://test_runner.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=async_pass",
+      "--test-timeout=0.1"
+    ],
+    "exit_code": 0,
+    "expected": 0,
+    "passed": true
+  },
+  {
+    "label": "release-native-setup_panic",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/release-native",
+      "--fixed-fps",
+      "120",
+      "res://test_runner.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=setup_panic",
+      "--test-timeout=0.1"
+    ],
+    "exit_code": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "release-native-async_panic",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/release-native",
+      "--fixed-fps",
+      "120",
+      "res://test_runner.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=async_panic",
+      "--test-timeout=0.1"
+    ],
+    "exit_code": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "release-native-callback_panic",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/release-native",
+      "--fixed-fps",
+      "120",
+      "res://test_runner.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=callback_panic",
+      "--test-timeout=0.1"
+    ],
+    "exit_code": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "release-native-timeout",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/release-native",
+      "--fixed-fps",
+      "120",
+      "res://test_runner.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=timeout",
+      "--test-timeout=0.1"
+    ],
+    "exit_code": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "release-native-paused_timeout",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/release-native",
+      "--fixed-fps",
+      "120",
+      "res://test_runner.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=paused_timeout",
+      "--test-timeout=0.1"
+    ],
+    "exit_code": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "release-native-suite-timeout",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/release-native",
+      "--fixed-fps",
+      "120",
+      "res://test_runner.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=timeout",
+      "--test-timeout=10",
+      "--suite-timeout=0.1"
+    ],
+    "exit_code": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "release-native-paused-suite-timeout",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/release-native",
+      "--fixed-fps",
+      "120",
+      "res://test_runner.tscn",
+      "--",
+      "--no-cache",
+      "--runner-self-test=paused_timeout",
+      "--test-timeout=10",
+      "--suite-timeout=0.1"
+    ],
+    "exit_code": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "release-native-unknown-test",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/release-native",
+      "--fixed-fps",
+      "120",
+      "res://test_runner.tscn",
+      "--",
+      "--no-cache",
+      "--test=does_not_exist"
+    ],
+    "exit_code": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "label": "release-native-invalid-timeout",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/release-native",
+      "--fixed-fps",
+      "120",
+      "res://test_runner.tscn",
+      "--",
+      "--no-cache",
+      "--test-timeout=NaN"
+    ],
+    "exit_code": 2,
+    "expected": 2,
+    "passed": true
+  },
+  {
+    "label": "release-cache-first",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/release-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--runner-self-test=cache"
+    ],
+    "exit_code": 0,
+    "expected": 0,
+    "passed": true
+  },
+  {
+    "label": "release-cache-reuse",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/release-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--runner-self-test=cache"
+    ],
+    "exit_code": 0,
+    "expected": 0,
+    "passed": true
+  },
+  {
+    "label": "release-cache-bypass",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/release-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--runner-self-test=cache",
+      "--no-cache"
+    ],
+    "exit_code": 0,
+    "expected": 0,
+    "passed": true
+  },
+  {
+    "label": "release-cache-source-change",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/release-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--runner-self-test=cache"
+    ],
+    "exit_code": 0,
+    "expected": 0,
+    "passed": true
+  },
+  {
+    "label": "release-cache-source-reuse",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/release-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--runner-self-test=cache"
+    ],
+    "exit_code": 0,
+    "expected": 0,
+    "passed": true
+  },
+  {
+    "label": "release-cache-example-source-change",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/release-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--runner-self-test=cache"
+    ],
+    "exit_code": 0,
+    "expected": 0,
+    "passed": true
+  },
+  {
+    "label": "release-cache-binary-change",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/release-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--runner-self-test=cache"
+    ],
+    "exit_code": 0,
+    "expected": 0,
+    "passed": true
+  },
+  {
+    "label": "release-cache-binary-reuse",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/release-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--runner-self-test=cache"
+    ],
+    "exit_code": 0,
+    "expected": 0,
+    "passed": true
+  },
+  {
+    "label": "release-cache-engine-change",
+    "command": [
+      "/home/houtamelo/bin/godot",
+      "--headless",
+      "--path",
+      "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/release-gdscript",
+      "--fixed-fps",
+      "120",
+      "res://examples/tests/runner_failure_entry.tscn",
+      "--",
+      "--runner-self-test=cache"
+    ],
+    "exit_code": 0,
+    "expected": 0,
+    "passed": true
+  }
+]

@@ -1,0 +1,13 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards strict)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+---------------------------------
+Test Started: test_async_assertion
+SCRIPT ERROR: Assertion failed: deliberate asynchronous assertion
+          at: test_async_assertion (res://examples/tests/runner_failure_fixture.gd:40)
+          GDScript backtrace (most recent call first):
+              [0] test_async_assertion (res://examples/tests/runner_failure_fixture.gd:40)
+              [1] next_frame (res://examples/tests/test_base.gd:39)
+Test Finished: test_async_assertion
+TEST_FAIL res://examples/tests/runner_failure_fixture.tscn::test_async_assertion
+GDSCRIPT_TEST_RESULT total=1 failed=1 skipped=0

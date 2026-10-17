@@ -1,5 +1,4 @@
-use godot::classes::CollisionShape2D;
-use godot::prelude::*;
+use godot::{classes::CollisionShape2D, prelude::*};
 use spire_tween::prelude::*;
 
 use super::util::*;
@@ -20,11 +19,11 @@ impl_test_base! { INode2D, MiscTests }
 impl ITestClass for MiscTests {
     const PREFAB_PATH: &'static str = "res://examples/tests/misc.tscn";
 
-    fn test_list() -> Vec<fn(&mut Self) -> PinnedTestTask> {
+    fn test_list() -> Vec<NamedTest<Self>> {
         vec![
-            Self::test_force_complete,
-            Self::test_dyn_target,
-            Self::test_property_path,
+            ("test_force_complete", Self::test_force_complete),
+            ("test_dyn_target", Self::test_dyn_target),
+            ("test_property_path", Self::test_property_path),
         ]
     }
 
@@ -78,7 +77,8 @@ impl MiscTests {
             let expected_scale = initial_scale.move_toward(*dyn_target, (speed * wait_time) as f32);
             assert!(
                 shape.get_scale().distance_to(expected_scale) <= 0.01,
-                "Expected near {expected_scale}, got {}", shape.get_scale(),
+                "Expected near {expected_scale}, got {}",
+                shape.get_scale(),
             );
 
             *dyn_target.to_mut() = Vector2::ONE;

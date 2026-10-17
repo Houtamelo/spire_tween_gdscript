@@ -1,0 +1,8 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards strict)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+---------------------------------
+Test Started: test_async_pass
+Test Finished: test_async_pass
+TEST_PASS res://examples/tests/runner_failure_fixture.tscn::test_async_pass
+GDSCRIPT_TEST_RESULT total=1 failed=0 skipped=0

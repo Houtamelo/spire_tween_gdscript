@@ -19,11 +19,11 @@ impl_test_base! { INode2D, ErrorHandlingTests }
 impl ITestClass for ErrorHandlingTests {
     const PREFAB_PATH: &'static str = "res://examples/tests/error_handling.tscn";
 
-    fn test_list() -> Vec<fn(&mut Self) -> PinnedTestTask> {
+    fn test_list() -> Vec<NamedTest<Self>> {
         vec![
-            Self::test_invalid_sequence_adding,
+            ("test_invalid_sequence_adding", Self::test_invalid_sequence_adding),
             // test_free_while_playing must be last (frees sprite)
-            Self::test_free_while_playing,
+            ("test_free_while_playing", Self::test_free_while_playing),
         ]
     }
 

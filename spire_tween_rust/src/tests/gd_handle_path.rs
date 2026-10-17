@@ -25,12 +25,12 @@ impl_test_base! { INode2D, GdHandlePathTests }
 impl ITestClass for GdHandlePathTests {
     const PREFAB_PATH: &'static str = "res://examples/tests/gd_handle_path.tscn";
 
-    fn test_list() -> Vec<fn(&mut Self) -> PinnedTestTask> {
+    fn test_list() -> Vec<NamedTest<Self>> {
         vec![
-            Self::test_gd_handle_attached,
-            Self::test_godot_signal_finished_fires,
-            Self::test_godot_signal_loop_finished_fires,
-            Self::test_is_registered_via_gd_handle,
+            ("test_gd_handle_attached", Self::test_gd_handle_attached),
+            ("test_godot_signal_finished_fires", Self::test_godot_signal_finished_fires),
+            ("test_godot_signal_loop_finished_fires", Self::test_godot_signal_loop_finished_fires),
+            ("test_is_registered_via_gd_handle", Self::test_is_registered_via_gd_handle),
         ]
     }
 

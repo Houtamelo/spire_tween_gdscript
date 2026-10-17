@@ -5,6 +5,10 @@ var timer: float = 0
 
 var start_frame: int = 0
 
+# Tests run sequentially. Helpers must record failures rather than aborting only
+# their own stack frame (Godot's assert does not propagate to the calling test).
+static var assertion_failures: int = 0
+
 func _time_since_start_seconds() -> float:
 	return timer
 
@@ -24,11 +28,12 @@ func _process(delta: float) -> void:
 func run_test(callable: Callable) -> bool:
 	timer = 0
 	start_frame = Engine.get_process_frames()
+	var failures_before := assertion_failures
 	print("---------------------------------")
 	print("Test Started: " + callable.get_method())
-	var result: bool = await callable.call()
+	var result: Variant = await callable.call()
 	print("Test Finished: " + callable.get_method())
-	return result
+	return result is bool and result and assertion_failures == failures_before
 
 
 func next_frame(): await get_tree().process_frame
@@ -63,15 +68,20 @@ func debug(message: String):
 const TIME_TOLERANCE: float = 0.017 # slightly bigger than the length of 1 frame (at 60 fps)
 
 static func _assert_within_tolerance(num: float, tolerance: float = TIME_TOLERANCE):
-	assert(abs(num) <= tolerance, "Abs({0}) is bigger than tolerance `{1}`".format([num, tolerance]))
+	assert_true(abs(num) <= tolerance, "Abs({0}) is bigger than tolerance `{1}`".format([num, tolerance]))
 
-static func assert_eq(a, b): assert(a == b, fmt(a) + " != " + fmt(b))
+static func assert_true(condition: bool, message: String = "Expected true") -> void:
+	if not condition:
+		assertion_failures += 1
+		push_error("TEST_ASSERTION_FAILED: " + message)
 
-static func assert_ne(a, b): assert(a != b, fmt(a) + " == " + fmt(b))
+static func assert_eq(a, b): assert_true(a == b, fmt(a) + " != " + fmt(b))
 
-static func assert_le(small, big): assert(small <= big, fmt(small) + " > " + fmt(big))
+static func assert_ne(a, b): assert_true(a != b, fmt(a) + " == " + fmt(b))
 
-static func assert_ge(big, small): assert(big >= small,  fmt(big) + " < " +  fmt(small))
+static func assert_le(small, big): assert_true(small <= big, fmt(small) + " > " + fmt(big))
+
+static func assert_ge(big, small): assert_true(big >= small, fmt(big) + " < " + fmt(small))
 
 static func fmt(a) -> String:
 	if a is int: return String.num_int64(a)

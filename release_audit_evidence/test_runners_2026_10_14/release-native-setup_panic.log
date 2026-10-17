@@ -1,0 +1,10 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards balanced)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+=== SpireTween Rust Test Runner ===
+Test Started: runner-self-test::setup_panic
+ERROR: [panic spire_tween_rust/src/tests/harness_checks.rs:14]  deliberate setup failure
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+
+TEST_FAIL runner-self-test::setup_panic
+NATIVE_TEST_RESULT total=1 failed=1

@@ -7,7 +7,7 @@ func test_force_complete() -> bool:
 	var final_value := Vector2.ONE * 2.5
 	var tween := DoNode2D.scale(shape, final_value, 5.0)
 	tween.force_complete()
-	assert(tween.is_stopped())
+	assert_true(tween.is_stopped())
 	assert_eq(shape.scale, final_value)
 	
 	await wait_seconds(2.0)

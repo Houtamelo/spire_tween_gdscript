@@ -1,5 +1,4 @@
-use godot::classes::Sprite2D;
-use godot::prelude::*;
+use godot::{classes::Sprite2D, prelude::*};
 use spire_tween::prelude::*;
 
 use super::util::*;
@@ -20,11 +19,11 @@ impl_test_base! { INode2D, PlayPauseStopTests }
 impl ITestClass for PlayPauseStopTests {
     const PREFAB_PATH: &'static str = "res://examples/tests/play_pause_stop.tscn";
 
-    fn test_list() -> Vec<fn(&mut Self) -> PinnedTestTask> {
+    fn test_list() -> Vec<NamedTest<Self>> {
         vec![
-            Self::test_play_works,
-            Self::test_pause_play_works,
-            Self::test_play_stop_play_works,
+            ("test_play_works", Self::test_play_works),
+            ("test_pause_play_works", Self::test_pause_play_works),
+            ("test_play_stop_play_works", Self::test_play_stop_play_works),
         ]
     }
 
@@ -86,12 +85,8 @@ impl PlayPauseStopTests {
             assert!(handle.is_stopped());
 
             // Verify that a stopped tween never emits events again.
-            assert_upon_loop_finished(&handle, || {
-                panic!("Unexpected emission of `loop_finished` on stopped tween")
-            });
-            assert_upon_finished(&handle, || {
-                panic!("Unexpected emission of `finished` on stopped tween")
-            });
+            assert_upon_loop_finished(&handle, || panic!("Unexpected emission of `loop_finished` on stopped tween"));
+            assert_upon_finished(&handle, || panic!("Unexpected emission of `finished` on stopped tween"));
         })
     }
 

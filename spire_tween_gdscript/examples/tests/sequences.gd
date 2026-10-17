@@ -55,7 +55,7 @@ func test_stopped_child_does_not_halt_sequence() -> bool:
 	
 	await get_tree().process_frame
 	
-	assert(stopped_child.is_stopped())
+	assert_true(stopped_child.is_stopped())
 	
 	await wait_finished(good_child, 2, "Good child")
 	assert_eq(shape.scale, Vector2(3, 3))
@@ -116,7 +116,7 @@ func test_remove() -> bool:
 	seq.append(second)
 	seq.append(third)
 	
-	assert(seq.remove(second))
+	assert_true(seq.remove(second))
 	
 	await wait_finished(first, 1, "First")
 	assert_eq(shape.scale, grown_scale)
@@ -144,7 +144,7 @@ func test_remove_midway() -> bool:
 	assert_eq(shape.scale, grown_scale)
 	
 	await wait_seconds(1.5)
-	assert(seq.remove(second))
+	assert_true(seq.remove(second))
 	
 	await wait_finished(third, 4.5, "Third")
 	assert_eq(shape.scale, shrink_scale)
@@ -165,7 +165,7 @@ func test_remove_call() -> bool:
 	seq.append_call(callable)
 	seq.append(third)
 	
-	assert(seq.remove_call(callable))
+	assert_true(seq.remove_call(callable))
 	
 	await wait_finished(first, 1, "First")
 	assert_eq(shape.scale, grown_scale)

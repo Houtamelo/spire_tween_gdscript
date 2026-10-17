@@ -1,0 +1,6 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards strict)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+=== SpireTween Rust Test Runner ===
+ERROR: Invalid timeout: --test-timeout=NaN
+   at: <spire_tween_rust::tests::test_runner::TestRunner as godot_core::gen::classes::node::re_export::INode>::ready (spire_tween_rust/src/tests/test_runner.rs:88)

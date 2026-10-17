@@ -1,0 +1,31 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards balanced)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+RUNNER_CLI_PASS command_line_run_mode
+RUNNER_CLI_PASS command_line_cache_mode
+RUNNER_CLI_PASS missing_cache_is_allowed
+Loaded matching cached results
+RUNNER_CLI_PASS cache_read_or_bypass
+RUNNER_CLI_PASS cache_write_or_bypass
+Ignoring stale test cache
+RUNNER_CLI_PASS old_cache_schema_is_rejected
+Ignoring stale test cache
+RUNNER_CLI_PASS changed_binary_invalidates_cache
+Ignoring stale test cache
+RUNNER_CLI_PASS changed_engine_invalidates_cache
+Ignoring stale test cache
+RUNNER_CLI_PASS changed_sources_invalidates_cache
+Ignoring stale test cache
+RUNNER_CLI_PASS changed_clock_args_invalidates_cache
+Failed to load cached results: Err=43, data=<null>
+RUNNER_CLI_PASS invalid_cache_is_ignored
+RUNNER_CLI_PASS ellipsis_scene_is_in_catalog
+RUNNER_CLI_PASS sequence_speed_scene_is_in_catalog
+RUNNER_CLI_PASS ellipsis_regressions_scene_is_in_catalog
+RUNNER_CLI_PASS every_catalog_suite_has_the_runner_interface
+RUNNER_CLI_PASS all_five_ellipsis_tests_are_discovered
+RUNNER_CLI_PASS all_nine_sequence_speed_tests_are_discovered
+RUNNER_CLI_PASS all_eleven_ellipsis_regressions_are_discovered
+RUNNER_CLI_PASS hashing_frees_temporary_nodes
+RUNNER_CLI_PASS ellipsis_initializes_test_base
+RUNNER_CLI_RESULT total=20 failed=0

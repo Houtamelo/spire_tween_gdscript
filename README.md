@@ -133,7 +133,32 @@ From the repository root, request every GDScript test without reading or writing
 godot --headless --path spire_tween_gdscript res://examples/tests/test_runner.tscn -- --all-tests --no-cache
 ```
 
-The editor's run-mode setting remains available for selective runs. Failure propagation in the older test harness is still being corrected: inspect the output for script/assertion errors even if the process exits successfully.
+The editor's run-mode setting remains available for selective runs. The aggregate runners exit nonzero on failed tests or timeouts. GDScript tests must use `TestBase.assert_true`, `assert_eq`, `assert_ne`, `assert_le`, `assert_ge`, or `_assert_within_tolerance`: these record failures even when a test body returns `true`. Godot's built-in `assert` only aborts its current function and must not be used in ordinary assertion helpers. Native cases report named setup and async failures; use `assert_finished_timing` or the `assert_upon_*` helpers for assertions invoked through signals or tween callbacks.
+
+Both runners accept `--test=test_name`, `--test-timeout=seconds`, and `--suite-timeout=seconds` after `--`. Deadlines use elapsed wall time and default to 60 seconds per test and 900 seconds for the suite; the suite watchdog continues while the tree is paused or time-scaled. An unmatched test name or invalid timeout exits nonzero.
+
+The GDScript cache includes the selected addon binary and engine executable SHA-256, engine version, shared test scripts/scenes, project/extension configuration, and clock settings. `--no-cache` bypasses both cache reads and writes. Old cache formats and changed identities are discarded.
+
+Run the full native suite with a real clock, because its `ignore_time_scale` test compares engine time with wall time:
+
+```sh
+godot --headless --path spire_tween_rust --max-fps 120 res://test_runner.tscn
+```
+
+To verify the runners themselves on Linux x86_64, build both profiles of the native test extension
+and standalone addon, then run the real-engine failure/cache regression checks:
+
+```sh
+cargo build -p spire_tween_rust --locked --features spire_tween/include_gdscript_bridge
+cargo build -p spire_tween_rust --release --locked --features spire_tween/include_gdscript_bridge
+cargo build -p spire_tween --locked --features include_gdext_lib,include_gdscript_bridge
+cargo build -p spire_tween --release --locked --features include_gdext_lib,include_gdscript_bridge
+python3 scripts/verify_test_runners.py --godot godot
+```
+
+The verifier copies the example projects' existing imported caches and fresh libraries
+into temporary fixtures. It checks passing cases, deliberately failing cases, paused-tree
+timeouts, and cache invalidation after changing actual source files and addon artifacts.
 
 The sequence speed suite is included in the regular test catalog. To run its 121
 parameter cases independently, use the focused runner, which exits nonzero on a

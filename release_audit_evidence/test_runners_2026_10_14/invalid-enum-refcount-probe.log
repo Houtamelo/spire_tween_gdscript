@@ -1,0 +1,19 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards strict)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+REFS before=2
+ERROR: godot-rust function call failed: SpirePropertyVec2::set_loops()
+    Reason: parameter #1 (LoopMode) conversion
+  Source: invalid LoopMode variant: -1
+   at: godot_core::private::handle_fallible_call (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:539)
+   GDScript backtrace (most recent call first):
+       [0] bad (res://invalid_refcount_probe.gd:3)
+       [1] run (res://invalid_refcount_probe.gd:9)
+SCRIPT ERROR: Bug: Invalid call error code 1337.
+          at: bad (res://invalid_refcount_probe.gd:3)
+          GDScript backtrace (most recent call first):
+              [0] bad (res://invalid_refcount_probe.gd:3)
+              [1] run (res://invalid_refcount_probe.gd:9)
+REFS after=2 rejected=<null>
+REFS unregister=1
+REFS remains=false

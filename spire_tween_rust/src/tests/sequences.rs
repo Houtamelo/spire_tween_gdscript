@@ -19,15 +19,15 @@ impl_test_base! { INode2D, SequencesTests }
 impl ITestClass for SequencesTests {
     const PREFAB_PATH: &'static str = "res://examples/tests/sequences.tscn";
 
-    fn test_list() -> Vec<fn(&mut Self) -> PinnedTestTask> {
+    fn test_list() -> Vec<NamedTest<Self>> {
         vec![
-            Self::test_proper_ordering,
-            Self::test_stopped_child_does_not_halt_sequence,
-            Self::test_append_many,
-            Self::test_remove,
-            Self::test_remove_midway,
-            Self::test_remove_call,
-            Self::test_default_children_ease,
+            ("test_proper_ordering", Self::test_proper_ordering),
+            ("test_stopped_child_does_not_halt_sequence", Self::test_stopped_child_does_not_halt_sequence),
+            ("test_append_many", Self::test_append_many),
+            ("test_remove", Self::test_remove),
+            ("test_remove_midway", Self::test_remove_midway),
+            ("test_remove_call", Self::test_remove_call),
+            ("test_default_children_ease", Self::test_default_children_ease),
         ]
     }
 
@@ -62,10 +62,14 @@ impl SequencesTests {
         }));
 
         let msgs_c = msgs.clone();
-        let delayed = shape.do_delayed_call(
-            move || { msgs_c.to_mut().push("Third call with delay".into()); },
-            2.0,
-        ).register();
+        let delayed = shape
+            .do_delayed_call(
+                move || {
+                    msgs_c.to_mut().push("Third call with delay".into());
+                },
+                2.0,
+            )
+            .register();
         seq.append_ptr(delayed);
 
         seq.join_interval(5.0);
@@ -107,7 +111,7 @@ impl SequencesTests {
         let dead_child = shape.do_position(Vector2::new(-500.0, 30.0), 0.5).register();
         seq.append_ptr(dead_child);
 
-        seq.append_call(Callable::from_fn("last_block", |_| { Variant::nil() }));
+        seq.append_call(Callable::from_fn("last_block", |_| Variant::nil()));
 
         let seq = seq.register();
         let tracker = RcPtr::clone(&self.time_tracker);
@@ -146,16 +150,16 @@ impl SequencesTests {
         let mut seq = SpireTween::<Sequence>::new();
         seq.append_ptr(first.clone());
         seq.append_ptr(second.clone());
-        seq.append_call(Callable::from_fn("wait_msg", |_| { Variant::nil() }));
+        seq.append_call(Callable::from_fn("wait_msg", |_| Variant::nil()));
 
         let wait_call = shape.do_delayed_call(|| {}, 5.0).register();
         seq.append_ptr(wait_call);
 
         seq.append_ptr(third.clone());
         seq.append_ptr(fourth.clone());
-        seq.append_call(Callable::from_fn("wait_msg2", |_| { Variant::nil() }));
+        seq.append_call(Callable::from_fn("wait_msg2", |_| Variant::nil()));
         seq.append_interval(2.0);
-        seq.append_call(Callable::from_fn("done_msg", |_| { Variant::nil() }));
+        seq.append_call(Callable::from_fn("done_msg", |_| Variant::nil()));
 
         let seq = seq.register();
         let tracker = RcPtr::clone(&self.time_tracker);
@@ -271,7 +275,7 @@ impl SequencesTests {
         let first = shape.do_scale(grown_scale, 1.0).register();
         let third = shape.do_scale(shrink_scale, 2.0).register();
 
-        let callable = Callable::from_fn("removable_call", |_| { Variant::nil() });
+        let callable = Callable::from_fn("removable_call", |_| Variant::nil());
 
         let mut seq = SpireTween::<Sequence>::new();
         seq.append_ptr(first.clone());

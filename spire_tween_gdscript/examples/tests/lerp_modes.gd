@@ -11,7 +11,7 @@ func test_relative() -> bool:
 		.as_relative()
 	
 	await wait_seconds(1)
-	assert(tween.is_relative())
+	assert_true(tween.is_relative())
 	var progress := tween.get_animation_position() / tween.get_duration()
 	var expected_pos := initial_pos + translation * progress
 	assert_le(ball.global_position.distance_to(expected_pos), 0.1)
@@ -36,12 +36,12 @@ func test_two_relatives() -> bool:
 	var second := DoNode2D.global_position(ball, second_trans, 3)\
 		.as_relative()
 	
-	assert(first.is_relative())
+	assert_true(first.is_relative())
 	
 	await wait_finished(first, 2)
 	
-	assert(first.is_relative())
-	assert(second.is_relative())
+	assert_true(first.is_relative())
+	assert_true(second.is_relative())
 	
 	var second_progress := second.get_animation_position() / second.get_duration()
 	var expected_pos := initial_pos + first_trans + second_trans * second_progress
@@ -66,7 +66,7 @@ func test_speed_based() -> bool:
 	
 	var tween := DoNode2D.move(ball, final_pos, speed).as_speed_based()
 	
-	assert(tween.is_speed_based())
+	assert_true(tween.is_speed_based())
 	
 	var distance := initial_pos.distance_to(final_pos)
 	var expected_time := distance / speed
@@ -90,11 +90,11 @@ func test_speed_based_plus_relative() -> bool:
 	
 	var trans := Vector2(600, 200)
 	var relative_tween := DoNode2D.move(ball, trans, 3).as_relative()
-	assert(relative_tween.is_relative())
+	assert_true(relative_tween.is_relative())
 	
 	await wait_finished(relative_tween, 3, "Relative")
-	assert(speed_tween.is_playing())
-	assert(speed_tween.is_speed_based())
+	assert_true(speed_tween.is_playing())
+	assert_true(speed_tween.is_speed_based())
 	
 	var distance := ball.global_position.distance_to(final_pos)
 	var expected_time := distance / speed

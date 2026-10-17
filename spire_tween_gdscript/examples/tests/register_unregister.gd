@@ -13,20 +13,20 @@ func test_unregistered_does_not_affect_game() -> bool:
 	
 	assert_eq(shape.scale, initial_scale)
 	assert_eq(tween.get_total_elapsed_time(), 0)
-	assert(tween.is_playing()) # Unregistering does not pause a tween
-	assert(!tween.is_registered())
+	assert_true(tween.is_playing()) # Unregistering does not pause a tween
+	assert_true(!tween.is_registered())
 	
 	debug("Re-Registering")
 	tween.register()
-	assert(tween.is_registered())
+	assert_true(tween.is_registered())
 	debug("Is registered")
 	
 	await wait_loop_finished(tween, 7)
 	await wait_finished(tween, 7)
 	
 	assert_eq(shape.scale, final_scale)
-	assert(tween.is_stopped())
-	assert(tween.is_registered())
+	assert_true(tween.is_stopped())
+	assert_true(tween.is_registered())
 	return true
 
 
@@ -44,7 +44,7 @@ func test_unregistered_can_be_manually_stepped() -> bool:
 		time = curr_time
 		tween.custom_step(delta)
 	
-	assert(tween.is_stopped())
-	assert(!tween.is_registered())
+	assert_true(tween.is_stopped())
+	assert_true(!tween.is_registered())
 	assert_eq(shape.scale, final_scale)
 	return true

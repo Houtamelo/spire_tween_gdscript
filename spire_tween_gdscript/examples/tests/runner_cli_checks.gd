@@ -40,14 +40,27 @@ func run_checks() -> void:
 	runner.load_cache_from_disk()
 	check(runner.cached_results.is_empty(), "missing_cache_is_allowed")
 
-	var sentinel := '{"sentinel": true}'
+	var sentinel := JSON.stringify({"schema": QuietRunner.CACHE_SCHEMA, "identity": runner.get_cache_identity(), "results": {"sentinel": true}})
 	write_cache(sentinel)
 	runner.load_cache_from_disk()
 	check(runner.cached_results.has("sentinel") == runner.use_cache, "cache_read_or_bypass")
 	runner.cached_results = {"saved": true}
 	runner.save_cache_to_disk()
 	var contents := FileAccess.get_file_as_string(QuietRunner.CACHE_PATH)
-	check(JSON.parse_string(contents).has("saved") if runner.use_cache else contents == sentinel, "cache_write_or_bypass")
+	check(JSON.parse_string(contents).results.has("saved") if runner.use_cache else contents == sentinel, "cache_write_or_bypass")
+
+	# Old caches and changed engine/library/source identities cannot preserve passes.
+	if runner.use_cache:
+		write_cache('{"sentinel": true}')
+		runner.load_cache_from_disk()
+		check(runner.cached_results.is_empty(), "old_cache_schema_is_rejected")
+		var changed := runner.get_cache_identity()
+		for key in ["binary", "engine", "sources", "clock_args"]:
+			var identity := changed.duplicate(true)
+			identity[key] = "different"
+			write_cache(JSON.stringify({"schema": QuietRunner.CACHE_SCHEMA, "identity": identity, "results": {"sentinel": true}}))
+			runner.load_cache_from_disk()
+			check(runner.cached_results.is_empty(), "changed_" + key + "_invalidates_cache")
 
 	runner.cached_results = {}
 	write_cache("{ invalid json")

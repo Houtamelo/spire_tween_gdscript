@@ -1,4 +1,10 @@
-use std::pin::Pin;
+use std::{
+    cell::Cell,
+    panic::{AssertUnwindSafe, catch_unwind},
+    pin::Pin,
+    rc::Rc,
+    time::{Duration, Instant},
+};
 
 use godot::{
     classes::{Engine, object::ConnectFlags},
@@ -10,22 +16,64 @@ use spire_tween::prelude::*;
 pub const TIME_TOLERANCE: f64 = 0.017;
 
 pub type PinnedTestTask = Pin<Box<dyn Future<Output = ()> + 'static>>;
+pub type NamedTest<T> = (&'static str, fn(&mut T) -> PinnedTestTask);
+
+thread_local! {
+    static CALLBACK_FAILURE: std::cell::RefCell<Option<Rc<Cell<bool>>>> = const { std::cell::RefCell::new(None) };
+}
+
+pub struct TestRun {
+    handle: Option<godot::task::TaskHandle>,
+    result: Rc<Cell<Option<bool>>>,
+    callback_failure: Rc<Cell<bool>>,
+    name: String,
+}
+
+pub fn start_test(name: String, setup: impl FnOnce() -> PinnedTestTask) -> TestRun {
+    let result = Rc::new(Cell::new(None));
+    let callback_failure = Rc::new(Cell::new(false));
+    CALLBACK_FAILURE.with(|slot| *slot.borrow_mut() = Some(callback_failure.clone()));
+    godot_print!("Test Started: {name}");
+    let handle = match catch_unwind(AssertUnwindSafe(setup)) {
+        Ok(task) => {
+            let outcome = result.clone();
+            Some(godot::task::spawn(async move {
+                outcome.set(Some(super::ownership::CatchTestPanic(task).await.is_ok()));
+            }))
+        }
+        Err(_) => {
+            result.set(Some(false));
+            None
+        }
+    };
+    TestRun {
+        handle,
+        result,
+        callback_failure,
+        name,
+    }
+}
+
+fn checked_callback(mut callback: impl FnMut() + 'static) -> impl FnMut() {
+    let failure = CALLBACK_FAILURE.with(|slot| slot.borrow().clone());
+    move || {
+        if catch_unwind(AssertUnwindSafe(&mut callback)).is_err() {
+            if let Some(failure) = &failure {
+                failure.set(true);
+            }
+        }
+    }
+}
 
 pub trait ITestClass: GodotClass + Bounds<Declarer = bounds::DeclUser> + Inherits<Node> {
     const PREFAB_PATH: &'static str;
-    fn test_list() -> Vec<fn(&mut Self) -> PinnedTestTask>;
+    fn test_list() -> Vec<NamedTest<Self>>;
     fn time_tracker(&self) -> &RcPtr<TimeTracker>;
 
-    fn run_test(&mut self, test_fn: fn(&mut Self) -> PinnedTestTask) -> godot::task::TaskHandle {
-        self.time_tracker().to_mut().reset();
-        let test_task = test_fn(self);
-        let test_name = std::any::type_name_of_val(&test_fn);
-
-        godot::task::spawn(async move {
-            godot_print!("---------------------------------");
-            godot_print!("Test Started: {test_name}");
-            test_task.await;
-            godot_print!("Test Finished: {test_name}");
+    fn run_test(&mut self, name: &'static str, test_fn: fn(&mut Self) -> PinnedTestTask) -> TestRun {
+        start_test(format!("{}::{name}", Self::PREFAB_PATH), || {
+            self.time_tracker().to_mut().reset();
+            test_fn(self)
         })
     }
 }
@@ -187,7 +235,7 @@ pub fn assert_finished_timing<T>(tween: &TweenPtr<T>, tracker: &RcPtr<TimeTracke
 where T: ITweenable {
     let tracker_c = tracker.clone();
     tween.to_mut().finished_connect(
-        move || assert_within_tolerance(tracker_c.timer - expected_end_time, TIME_TOLERANCE),
+        checked_callback(move || assert_within_tolerance(tracker_c.timer - expected_end_time, TIME_TOLERANCE)),
         SpireFlags::ONE_SHOT,
     );
 }
@@ -200,7 +248,9 @@ where
     T: ITweenable,
     F: FnMut() + 'static,
 {
-    tween.to_mut().finished_connect(assert_fn, SpireFlags::empty());
+    tween
+        .to_mut()
+        .finished_connect(checked_callback(assert_fn), SpireFlags::empty());
 }
 
 /// Registers a closure to run whenever the tween's `loop_finished` event fires.
@@ -210,14 +260,13 @@ where
     T: ITweenable,
     F: FnMut() + 'static,
 {
-    tween.to_mut().loop_finished_connect(assert_fn, SpireFlags::empty());
+    tween
+        .to_mut()
+        .loop_finished_connect(checked_callback(assert_fn), SpireFlags::empty());
 }
 
 /// Captures a value at the exact moment the tween's `finished` event fires.
-pub fn snapshot_on_finished<T, V>(
-    tween: &TweenPtr<T>,
-    capture_fn: impl Fn() -> V + 'static,
-) -> RcPtr<Option<V>>
+pub fn snapshot_on_finished<T, V>(tween: &TweenPtr<T>, capture_fn: impl Fn() -> V + 'static) -> RcPtr<Option<V>>
 where
     T: ITweenable,
     V: 'static,
@@ -248,19 +297,30 @@ pub fn snapshot_on_signal<T: 'static>(signal: &Signal, capture_fn: impl Fn() -> 
 
 /// Generic Signal-based one-shot assertion (kept for tree-signal scenarios).
 pub fn assert_upon_emission(signal: Signal, assert_fn: impl Fn() + 'static) {
+    let mut assertion = checked_callback(assert_fn);
     signal.connect_flags(
         &Callable::from_fn("assert_upon_emission", move |_| {
-            assert_fn();
+            assertion();
             Variant::nil()
         }),
         ConnectFlags::ONE_SHOT,
     );
 }
 
-pub async fn wait_for_task(handle: godot::task::TaskHandle) {
-    while handle.is_pending() {
+pub async fn wait_for_task(mut run: TestRun, timeout: Duration) -> bool {
+    let started = Instant::now();
+    while run.result.get().is_none() && run.handle.as_ref().is_some_and(|handle| handle.is_pending()) {
+        if started.elapsed() >= timeout {
+            run.handle.take().unwrap().cancel();
+            godot_print!("TEST_TIMEOUT {}", run.name);
+            break;
+        }
         next_frame().await;
     }
+    let passed = run.result.get() == Some(true) && !run.callback_failure.get();
+    godot_print!("{} {}", if passed { "TEST_PASS" } else { "TEST_FAIL" }, run.name);
+    CALLBACK_FAILURE.with(|slot| *slot.borrow_mut() = None);
+    passed
 }
 
 pub async fn next_frame() {

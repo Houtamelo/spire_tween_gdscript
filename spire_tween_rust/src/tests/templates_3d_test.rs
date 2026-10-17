@@ -8,8 +8,10 @@
 
 use std::f32::consts::PI;
 
-use godot::classes::{Node3D, Skeleton3D};
-use godot::prelude::*;
+use godot::{
+    classes::{Node3D, Skeleton3D},
+    prelude::*,
+};
 use spire_tween::prelude::*;
 
 use super::util::*;
@@ -34,12 +36,12 @@ impl_test_base! { INode3D, Templates3DTests }
 impl ITestClass for Templates3DTests {
     const PREFAB_PATH: &'static str = "res://examples/tests/templates_3d.tscn";
 
-    fn test_list() -> Vec<fn(&mut Self) -> PinnedTestTask> {
+    fn test_list() -> Vec<NamedTest<Self>> {
         vec![
-            Self::test_do_bone_position,
-            Self::test_do_bone_scale,
-            Self::test_do_follow_3d,
-            Self::test_do_ellipsis_3d,
+            ("test_do_bone_position", Self::test_do_bone_position),
+            ("test_do_bone_scale", Self::test_do_bone_scale),
+            ("test_do_follow_3d", Self::test_do_follow_3d),
+            ("test_do_ellipsis_3d", Self::test_do_ellipsis_3d),
         ]
     }
 
@@ -61,11 +63,7 @@ impl Templates3DTests {
 
         // Reset to a known starting state.
         skeleton.set_bone_pose_position(bone_idx, Vector3::ZERO);
-        assert_eq!(
-            skeleton.get_bone_pose_position(bone_idx),
-            Vector3::ZERO,
-            "set/get round-trip on a configured bone"
-        );
+        assert_eq!(skeleton.get_bone_pose_position(bone_idx), Vector3::ZERO, "set/get round-trip on a configured bone");
 
         let target = Vector3::new(1.0, 2.0, 3.0);
         let handle = skeleton.do_bone_position(bone_idx, target, 1.0).register();
@@ -138,10 +136,7 @@ impl Templates3DTests {
             }
 
             let dist = follower.get_global_position().distance_to(leader_target);
-            assert!(
-                dist < 0.01,
-                "follower failed to converge: distance {dist} from leader at {leader_target}"
-            );
+            assert!(dist < 0.01, "follower failed to converge: distance {dist} from leader at {leader_target}");
         })
     }
 
@@ -172,32 +167,40 @@ impl Templates3DTests {
             .clone()
             .do_ellipsis(center, 0.0, 2.0 * PI, radius, radius, axis, duration)
             .register();
-
-        let tracker = RcPtr::clone(&self.time_tracker);
-        assert_finished_timing(&handle, &tracker, duration);
+        handle.to_mut().set_process_mode(ProcessMode::Manual);
 
         Box::pin(async move {
-            // Sample mid-tween at the quarter mark (theta ~= PI/2, expected ~(0, 0, -2)).
-            tracker.wait_seconds(duration * 0.25).await;
+            // Geometry uses exact manual steps; timer wake-ups can occur several
+            // frames after nominal sample times and are not geometry defects.
+            assert!(matches!(
+                handle.custom_step(duration * 0.25, false),
+                TweenStepResult::Stepped(AdvanceTimeResult::Playing)
+            ));
             let pos_quarter = leader.get_global_position();
             assert!(
-                vec3_close(pos_quarter, Vector3::new(0.0, 0.0, -2.0), 0.05),
+                vec3_close(pos_quarter, Vector3::new(0.0, 0.0, -2.0), 0.0001),
                 "at t=duration/4, leader should be near (0, 0, -2), got {pos_quarter}"
             );
 
             // Sample at half-way (theta = PI, expected (-2, 0, 0)).
-            tracker.wait_seconds(duration * 0.25).await;
+            assert!(matches!(
+                handle.custom_step(duration * 0.25, false),
+                TweenStepResult::Stepped(AdvanceTimeResult::Playing)
+            ));
             let pos_half = leader.get_global_position();
             assert!(
-                vec3_close(pos_half, Vector3::new(-2.0, 0.0, 0.0), 0.05),
+                vec3_close(pos_half, Vector3::new(-2.0, 0.0, 0.0), 0.0001),
                 "at t=duration/2, leader should be near (-2, 0, 0), got {pos_half}"
             );
 
             // Wait for finish (theta = 2*PI, expected back at start (2, 0, 0)).
-            wait_finished(&handle, &tracker, duration).await;
+            assert!(matches!(
+                handle.custom_step(duration * 0.5, false),
+                TweenStepResult::Stepped(AdvanceTimeResult::Completed { .. })
+            ));
             let pos_end = leader.get_global_position();
             assert!(
-                vec3_close(pos_end, Vector3::new(2.0, 0.0, 0.0), 0.05),
+                vec3_close(pos_end, Vector3::new(2.0, 0.0, 0.0), 0.0001),
                 "at finish, leader should be back at (2, 0, 0), got {pos_end}"
             );
         })

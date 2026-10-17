@@ -1,0 +1,7 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards balanced)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+=== SpireTween Rust Test Runner ===
+Test Started: runner-self-test::async_pass
+TEST_PASS runner-self-test::async_pass
+NATIVE_TEST_RESULT total=1 failed=0

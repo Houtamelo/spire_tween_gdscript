@@ -32,17 +32,17 @@ impl_test_base! { INode2D, TemplatesTests }
 impl ITestClass for TemplatesTests {
     const PREFAB_PATH: &'static str = "res://examples/tests/templates.tscn";
 
-    fn test_list() -> Vec<fn(&mut Self) -> PinnedTestTask> {
+    fn test_list() -> Vec<NamedTest<Self>> {
         vec![
-            Self::test_do_shake,
-            Self::test_do_shake_stays_within_radius,
-            Self::test_do_shake_returns_to_origin,
-            Self::test_do_contour_shape,
-            Self::test_do_contour_shape_speed_based,
-            Self::test_do_contour_shape_empty,
-            Self::test_do_follow,
+            ("test_do_shake", Self::test_do_shake),
+            ("test_do_shake_stays_within_radius", Self::test_do_shake_stays_within_radius),
+            ("test_do_shake_returns_to_origin", Self::test_do_shake_returns_to_origin),
+            ("test_do_contour_shape", Self::test_do_contour_shape),
+            ("test_do_contour_shape_speed_based", Self::test_do_contour_shape_speed_based),
+            ("test_do_contour_shape_empty", Self::test_do_contour_shape_empty),
+            ("test_do_follow", Self::test_do_follow),
             // ignore_time_scale must be last because it touches Engine.time_scale globally.
-            Self::test_ignore_time_scale,
+            ("test_ignore_time_scale", Self::test_ignore_time_scale),
         ]
     }
 

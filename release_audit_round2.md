@@ -144,7 +144,17 @@ resume that completed tween. The last-known-position fallback also contradicted 
 
 ### 8. Test success still cannot certify a release
 
-The current aggregate GDScript runner ignores Boolean results when choosing its exit code. More seriously, a fresh real-Godot probe calls the actual `TestBase.assert_eq(1, 2)` helper, logs an
+**2026-10-14 follow-up: audited harness defects resolved.** GDScript assertion helpers record failures independently of returned Booleans; ordinary tests use these helpers rather than built-in `assert`.
+Aggregate runners report failures and exit nonzero. Native cases have individual names and explicit setup/async/callback assertion outcomes. Per-test wall-clock deadlines and always-processing,
+time-scale-independent suite watchdogs bound execution, including paused-tree cases. GDScript cache identity includes the selected addon binary and engine executable hashes, engine version, shared
+scripts/scenes, project/extension configuration, and clock settings; old or mismatching cache data is rejected, and `--no-cache` bypasses reads and writes.
+
+All 70 real-Godot runner regression checks pass across debug/release. Complete suites pass per profile: 134 native cases (66 focused plus 68 other cases) with real time, and 152 GDScript cases with
+fixed FPS. The invalid-enum test now expects rejected calls and verifies the original valid tween remains usable; expected binding/script diagnostics are delimited. The 3D ellipse geometry test uses
+exact manual steps and a tighter spatial tolerance rather than delayed timer samples. Installed-project positive/negative controls also pass. See [runner evidence](release_audit_evidence/test_runners_2026_10_14/README.md).
+The GDScript aggregate still reports shutdown object/resource warnings; their cause is not attributed to the addon and is recorded for separate investigation in [shutdown warnings](release_audit_evidence/test_runners_2026_10_14/shutdown_warnings.md).
+
+**Original audit observation.** The aggregate GDScript runner ignored Boolean results when choosing its exit code. More seriously, a fresh real-Godot probe calls the actual `TestBase.assert_eq(1, 2)` helper, logs an
 assertion failure, then **returns success and exits 0**. The assertion aborts only the helper, allowing the test body to reach `return true`. Specialized runners counting returned Booleans do not
 solve this by themselves.
 
@@ -153,8 +163,8 @@ treated as finished: it starts 68, completes 66, prints all tests finished, and 
 deferred task resumption make this a frame-sensitive assertion. Its real-clock time-scale check is invalid under fixed FPS. Neither is proof of a tween math defect. The freed-owner panic is
 independently confirmed by finding 13.
 
-Required: assertions that propagate failure, explicit async outcomes and timeouts, nonzero failure exits, and cache identity including native artifact/engine/source. The existing cache bypass and
-missing-suite repairs remain useful but do not close this item. The native debug manifest must select its actual debug artifact so routine runs exercise debug assertions.
+The earlier assertion propagation, async outcome, timeout, failure-exit, and cache-identity requirements are covered by the follow-up above. The native debug manifest already selects its actual debug
+artifact. Passing these functional checks does not certify the remaining distribution/support items or resolve the separately recorded shutdown warnings.
 
 ### 4 and 10. Current source is ahead of the files a buyer would receive
 

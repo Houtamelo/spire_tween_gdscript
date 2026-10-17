@@ -1,5 +1,4 @@
-use godot::classes::Sprite2D;
-use godot::prelude::*;
+use godot::{classes::Sprite2D, prelude::*};
 use spire_tween::prelude::*;
 
 use super::util::*;
@@ -20,12 +19,12 @@ impl_test_base! { INode2D, LerpModesTests }
 impl ITestClass for LerpModesTests {
     const PREFAB_PATH: &'static str = "res://examples/tests/lerp_modes.tscn";
 
-    fn test_list() -> Vec<fn(&mut Self) -> PinnedTestTask> {
+    fn test_list() -> Vec<NamedTest<Self>> {
         vec![
-            Self::test_relative,
-            Self::test_two_relatives,
-            Self::test_speed_based,
-            Self::test_speed_based_plus_relative,
+            ("test_relative", Self::test_relative),
+            ("test_two_relatives", Self::test_two_relatives),
+            ("test_speed_based", Self::test_speed_based),
+            ("test_speed_based_plus_relative", Self::test_speed_based_plus_relative),
         ]
     }
 
@@ -38,7 +37,8 @@ impl LerpModesTests {
         let initial_pos = ball.get_global_position();
         let translation = Vector2::new(0.0, -500.0);
 
-        let handle = ball.do_global_position(translation, 2.0)
+        let handle = ball
+            .do_global_position(translation, 2.0)
             .as_relative(Vector2::ZERO)
             .register();
         let tracker = RcPtr::clone(&self.time_tracker);
@@ -65,12 +65,14 @@ impl LerpModesTests {
         let initial_pos = ball.get_global_position();
 
         let first_trans = Vector2::new(0.0, -500.0);
-        let first = ball.do_global_position(first_trans, 2.0)
+        let first = ball
+            .do_global_position(first_trans, 2.0)
             .as_relative(Vector2::ZERO)
             .register();
 
         let second_trans = Vector2::new(200.0, -100.0);
-        let second = ball.do_global_position(second_trans, 3.0)
+        let second = ball
+            .do_global_position(second_trans, 3.0)
             .as_relative(Vector2::ZERO)
             .register();
 
@@ -121,9 +123,7 @@ impl LerpModesTests {
         let speed_tween = ball.do_move(final_pos, speed).as_speed_based().register();
 
         let trans = Vector2::new(600.0, 200.0);
-        let relative_tween = ball.do_move(trans, 3.0)
-            .as_relative(Vector2::ZERO)
-            .register();
+        let relative_tween = ball.do_move(trans, 3.0).as_relative(Vector2::ZERO).register();
         assert!(relative_tween.is_relative());
 
         let tracker = RcPtr::clone(&self.time_tracker);
@@ -132,10 +132,9 @@ impl LerpModesTests {
         let tracker_for_check = tracker.clone();
         let timer_at_speed_done = RcPtr::new(None::<f64>);
         let timer_slot = timer_at_speed_done.clone();
-        speed_tween.to_mut().finished_connect(
-            move || *timer_slot.to_mut() = Some(tracker_for_check.timer),
-            SpireFlags::ONE_SHOT,
-        );
+        speed_tween
+            .to_mut()
+            .finished_connect(move || *timer_slot.to_mut() = Some(tracker_for_check.timer), SpireFlags::ONE_SHOT);
 
         Box::pin(async move {
             wait_finished(&relative_tween, &tracker, 3.0).await;

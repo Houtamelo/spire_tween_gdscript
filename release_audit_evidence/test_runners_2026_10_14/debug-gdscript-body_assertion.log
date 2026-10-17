@@ -1,0 +1,18 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards strict)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+---------------------------------
+Test Started: test_body_assertion
+SCRIPT ERROR: Assertion failed: deliberate direct assertion
+          at: test_body_assertion (res://examples/tests/runner_failure_fixture.gd:35)
+          GDScript backtrace (most recent call first):
+              [0] test_body_assertion (res://examples/tests/runner_failure_fixture.gd:35)
+              [1] run_test (res://examples/tests/test_base.gd:34)
+              [2] _execute_test (res://examples/tests/test_runner.gd:235)
+              [3] run_test (res://examples/tests/test_runner.gd:213)
+              [4] run_test_by_name (res://examples/tests/test_runner.gd:245)
+              [5] _ready (res://examples/tests/test_runner.gd:73)
+              [6] _ready (res://examples/tests/runner_failure_entry.gd:13)
+Test Finished: test_body_assertion
+TEST_FAIL res://examples/tests/runner_failure_fixture.tscn::test_body_assertion
+GDSCRIPT_TEST_RESULT total=1 failed=1 skipped=0

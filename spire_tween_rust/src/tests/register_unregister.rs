@@ -19,10 +19,10 @@ impl_test_base! { INode2D, RegisterUnregisterTests }
 impl ITestClass for RegisterUnregisterTests {
     const PREFAB_PATH: &'static str = "res://examples/tests/register_unregister.tscn";
 
-    fn test_list() -> Vec<fn(&mut Self) -> PinnedTestTask> {
+    fn test_list() -> Vec<NamedTest<Self>> {
         vec![
-            Self::test_unregistered_does_not_affect_game,
-            Self::test_unregistered_can_be_manually_stepped,
+            ("test_unregistered_does_not_affect_game", Self::test_unregistered_does_not_affect_game),
+            ("test_unregistered_can_be_manually_stepped", Self::test_unregistered_can_be_manually_stepped),
         ]
     }
 

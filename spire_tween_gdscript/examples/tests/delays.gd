@@ -63,8 +63,8 @@ func test_sequence_respects_delay() -> bool:
 	await wait_loop_finished(seq, 7, "Sequence")
 	assert_eq(shape.scale, initial_value)
 	
-	assert(seq.get_total_elapsed_time() >= 7.0)
-	assert(seq.get_total_elapsed_time() <= 7.1)
+	assert_true(seq.get_total_elapsed_time() >= 7.0)
+	assert_true(seq.get_total_elapsed_time() <= 7.1)
 	
 	await wait_finished(first_tween, 9, "Grow")
 	assert_eq(shape.scale, final_value)

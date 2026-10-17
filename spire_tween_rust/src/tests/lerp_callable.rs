@@ -1,5 +1,4 @@
-use godot::classes::Sprite2D;
-use godot::prelude::*;
+use godot::{classes::Sprite2D, prelude::*};
 use spire_tween::prelude::*;
 
 use super::util::*;
@@ -20,12 +19,12 @@ impl_test_base! { INode2D, LerpCallableTests }
 impl ITestClass for LerpCallableTests {
     const PREFAB_PATH: &'static str = "res://examples/tests/lerp_callable.tscn";
 
-    fn test_list() -> Vec<fn(&mut Self) -> PinnedTestTask> {
+    fn test_list() -> Vec<NamedTest<Self>> {
         vec![
-            Self::test_lerp_call,
-            Self::test_lerp_call_float,
-            Self::test_lerp_call_with_ease,
-            Self::test_lerp_call_with_loop,
+            ("test_lerp_call", Self::test_lerp_call),
+            ("test_lerp_call_float", Self::test_lerp_call_float),
+            ("test_lerp_call_with_ease", Self::test_lerp_call_with_ease),
+            ("test_lerp_call_with_loop", Self::test_lerp_call_with_loop),
         ]
     }
 
@@ -49,9 +48,8 @@ impl LerpCallableTests {
             Variant::nil()
         });
 
-        let tween = SpireTween::<LerpMethodData<Vector2>>::new(
-            callable.clone(), initial_pos, final_pos, 5.0,
-        ).register();
+        let tween =
+            SpireTween::<LerpMethodData<Vector2>>::new(callable.clone(), initial_pos, final_pos, 5.0).register();
         assert_eq!(tween.get_start_value(), initial_pos);
         assert_eq!(tween.get_final_value(), final_pos);
         assert_eq!(tween.get_duration(), 5.0);
@@ -85,9 +83,7 @@ impl LerpCallableTests {
             Variant::nil()
         });
 
-        let tween = SpireTween::<LerpMethodData<f64>>::new(
-            callable.clone(), initial_val, final_val, 5.0,
-        ).register();
+        let tween = SpireTween::<LerpMethodData<f64>>::new(callable.clone(), initial_val, final_val, 5.0).register();
         assert_eq!(tween.get_start_value(), initial_val);
         assert_eq!(tween.get_final_value(), final_val);
         assert_eq!(tween.get_duration(), 5.0);
@@ -119,9 +115,7 @@ impl LerpCallableTests {
             Variant::nil()
         });
 
-        let mut eased = SpireTween::<LerpMethodData<Vector2>>::new(
-            callable, initial_pos, final_pos, 5.0,
-        );
+        let mut eased = SpireTween::<LerpMethodData<Vector2>>::new(callable, initial_pos, final_pos, 5.0);
         eased.set_ease(EaseKind::Basic(Ease::InOutCubic));
         let eased_handle = eased.register();
 
@@ -132,9 +126,8 @@ impl LerpCallableTests {
             second_ball_c.set_global_position(val);
             Variant::nil()
         });
-        let linear_handle = SpireTween::<LerpMethodData<Vector2>>::new(
-            linear_callable, initial_pos, final_pos, 5.0,
-        ).register();
+        let linear_handle =
+            SpireTween::<LerpMethodData<Vector2>>::new(linear_callable, initial_pos, final_pos, 5.0).register();
 
         let tracker = RcPtr::clone(&self.time_tracker);
         let mut base = self.base().clone();
@@ -183,9 +176,7 @@ impl LerpCallableTests {
             Variant::nil()
         });
 
-        let mut tween = SpireTween::<LerpMethodData<Vector2>>::new(
-            callable, initial_pos, final_pos, 2.0,
-        );
+        let mut tween = SpireTween::<LerpMethodData<Vector2>>::new(callable, initial_pos, final_pos, 2.0);
         tween.set_loops(2, LoopMode::Yoyo);
         let handle = tween.register();
         let tracker = RcPtr::clone(&self.time_tracker);

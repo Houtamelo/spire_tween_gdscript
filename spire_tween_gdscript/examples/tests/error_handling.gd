@@ -6,37 +6,53 @@ extends "res://examples/tests/test_base.gd"
 func test_invalid_enum() -> bool:
 	var initial_scale := sprite.scale
 	var final_scale := Vector2.ZERO
-	@warning_ignore("int_as_enum_without_match")
 	# `from()` is Needed for loop to restart properly
 	var tween := DoNode2D.scale(sprite, final_scale, 5.0)\
 		.from(initial_scale)\
-		.set_loops(2, -1 as Spire.LoopMode) # Should print error but work fine otherwise
-	
-	tween.call(&"set_loops", 2, -1)
+		.set_loops(2, Spire.LOOP_MODE_RESTART)
+	# Invalid enum conversion rejects the call and returns nil; keep the original
+	# valid handle rather than treating the rejected fluent call as a tween.
+	print("EXPECTED_INVALID_ENUM_BEGIN")
+	var rejected: Variant = _attempt_bad_loop_mode(tween)
+	var dynamic_rejected: Variant = _attempt_bad_loop_mode_dynamic(tween)
+	print("EXPECTED_INVALID_ENUM_END")
+	assert_eq(rejected, null)
+	assert_eq(dynamic_rejected, null)
+	assert_eq(tween.get_loops(), 2)
+	assert_eq(tween.get_loop_mode(), Spire.LOOP_MODE_RESTART)
 	
 	await wait_loop_finished(tween, 5)
 	 # assert_eq doesn't work because Godot does not allow scale = ZERO
-	assert(sprite.scale.distance_to(final_scale) < 0.001)
+	assert_true(sprite.scale.distance_to(final_scale) < 0.001)
 	
 	await get_tree().process_frame
 	await get_tree().process_frame
-	assert(tween.get_animation_position() < 0.02)
+	assert_true(tween.get_animation_position() < 0.02)
 	
 	await wait_finished(tween, 10)
-	assert(sprite.scale.distance_to(final_scale) < 0.001)
+	assert_true(sprite.scale.distance_to(final_scale) < 0.001)
 	assert_eq(tween.get_loops_finished(), 2)
 	assert_eq(tween.get_loops_left(), 0)
 	return true
 
 
+func _attempt_bad_loop_mode(tween):
+	@warning_ignore("int_as_enum_without_match")
+	return tween.set_loops(2, -1 as Spire.LoopMode)
+
+
+func _attempt_bad_loop_mode_dynamic(tween):
+	return tween.call(&"set_loops", 2, -1)
+
+
 func test_invalid_tween() -> bool:
 	var ref_counted := RefCounted.new()
 	# These should print errors but that's it
-	assert(!Spire.is_registered(ref_counted))
+	assert_true(!Spire.is_registered(ref_counted))
 	Spire.register(ref_counted)
 	Spire.unregister(ref_counted)
 	
-	assert(!Spire.is_registered(null))
+	assert_true(!Spire.is_registered(null))
 	Spire.register(null)
 	Spire.unregister(null)
 	return true
@@ -50,8 +66,8 @@ func test_free_while_playing() -> bool:
 	
 	await next_frame()
 	await next_frame()
-	assert(!tween.is_registered())
-	assert(tween.is_stopped())
+	assert_true(!tween.is_registered())
+	assert_true(tween.is_stopped())
 	return true
 
 

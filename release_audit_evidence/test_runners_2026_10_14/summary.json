@@ -1,0 +1,112 @@
+{
+  "date": "2026-10-14",
+  "base_commit": "8a7066ac302944586571e18cbc1a5367cf46a0be",
+  "harness_process_checks": 70,
+  "harness_failed": 0,
+  "native_cases_per_profile": 134,
+  "gdscript_cases_per_profile": 152,
+  "native_clock": "real time, max-fps 120",
+  "gdscript_clock": "fixed-fps 120",
+  "aggregate_runs": [
+    {
+      "kind": "native",
+      "profile": "debug",
+      "command": [
+        "/home/houtamelo/bin/godot",
+        "--headless",
+        "--path",
+        "/tmp/spire-runner-20261014-59zaxyrt/harness-final/debug-native",
+        "--max-fps",
+        "120",
+        "res://test_runner.tscn"
+      ],
+      "exit": 0,
+      "seconds": 361.436,
+      "failed": [],
+      "results": [
+        "NATIVE_BOOKKEEPING_RESULT total=11 failed=0",
+        "NATIVE_DELAY_VALIDITY_RESULT total=9 failed=0",
+        "NATIVE_METHOD_VALIDITY_RESULT total=10 failed=0",
+        "NATIVE_API_RESULT total=5 failed=0",
+        "NATIVE_OWNERSHIP_RESULT total=10 failed=0",
+        "NATIVE_BINDING_RESULT total=11 failed=0",
+        "NATIVE_CYCLE_RESULT total=10 failed=0",
+        "NATIVE_TEST_RESULT total=68 failed=0"
+      ]
+    },
+    {
+      "kind": "native",
+      "profile": "release",
+      "command": [
+        "/home/houtamelo/bin/godot",
+        "--headless",
+        "--path",
+        "/tmp/spire-runner-20261014-59zaxyrt/harness-final/release-native",
+        "--max-fps",
+        "120",
+        "res://test_runner.tscn"
+      ],
+      "exit": 0,
+      "seconds": 361.439,
+      "failed": [],
+      "results": [
+        "NATIVE_BOOKKEEPING_RESULT total=11 failed=0",
+        "NATIVE_DELAY_VALIDITY_RESULT total=9 failed=0",
+        "NATIVE_METHOD_VALIDITY_RESULT total=10 failed=0",
+        "NATIVE_API_RESULT total=5 failed=0",
+        "NATIVE_OWNERSHIP_RESULT total=10 failed=0",
+        "NATIVE_BINDING_RESULT total=11 failed=0",
+        "NATIVE_CYCLE_RESULT total=10 failed=0",
+        "NATIVE_TEST_RESULT total=68 failed=0"
+      ]
+    },
+    {
+      "kind": "gdscript",
+      "profile": "debug",
+      "command": [
+        "/home/houtamelo/bin/godot",
+        "--headless",
+        "--path",
+        "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/debug-gdscript",
+        "--fixed-fps",
+        "120",
+        "res://examples/tests/test_runner.tscn",
+        "--",
+        "--all-tests",
+        "--no-cache"
+      ],
+      "exit": 0,
+      "seconds": 9.126,
+      "failed": [],
+      "results": [
+        "GDSCRIPT_TEST_RESULT total=152 failed=0 skipped=0"
+      ]
+    },
+    {
+      "kind": "gdscript",
+      "profile": "release",
+      "command": [
+        "/home/houtamelo/bin/godot",
+        "--headless",
+        "--path",
+        "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/release-gdscript",
+        "--fixed-fps",
+        "120",
+        "res://examples/tests/test_runner.tscn",
+        "--",
+        "--all-tests",
+        "--no-cache"
+      ],
+      "exit": 0,
+      "seconds": 8.475,
+      "failed": [],
+      "results": [
+        "GDSCRIPT_TEST_RESULT total=152 failed=0 skipped=0"
+      ]
+    }
+  ],
+  "gdscript_shutdown_warnings": "12 ObjectDB instances and 2 resources per profile; separately reported, cause unassigned",
+  "default_api": "4.6",
+  "api44_compilation": "pass, opt-in only",
+  "source_verification": "GDScript test sources match both tested fixtures"
+}

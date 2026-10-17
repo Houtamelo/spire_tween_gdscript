@@ -1,7 +1,6 @@
 use std::f32::consts::PI;
 
-use godot::classes::Sprite2D;
-use godot::prelude::*;
+use godot::{classes::Sprite2D, prelude::*};
 use spire_tween::prelude::*;
 
 use super::util::*;
@@ -24,20 +23,20 @@ impl_test_base! { INode2D, SpiralTests }
 impl ITestClass for SpiralTests {
     const PREFAB_PATH: &'static str = "res://examples/tests/spiral.tscn";
 
-    fn test_list() -> Vec<fn(&mut Self) -> PinnedTestTask> {
+    fn test_list() -> Vec<NamedTest<Self>> {
         vec![
-            Self::test_spiral_logarithmic,
-            Self::test_spiral_logarithmic_sheared,
-            Self::test_spiral_logarithmic_inverted,
-            Self::test_spiral_archimedean,
-            Self::test_spiral_archimedean_sheared,
-            Self::test_spiral_archimedean_inverted,
-            Self::test_spiral_hyperbolic,
-            Self::test_spiral_hyperbolic_sheared,
-            Self::test_spiral_hyperbolic_inverted,
-            Self::test_spiral_fermat,
-            Self::test_spiral_fermat_sheared,
-            Self::test_spiral_fermat_inverted,
+            ("test_spiral_logarithmic", Self::test_spiral_logarithmic),
+            ("test_spiral_logarithmic_sheared", Self::test_spiral_logarithmic_sheared),
+            ("test_spiral_logarithmic_inverted", Self::test_spiral_logarithmic_inverted),
+            ("test_spiral_archimedean", Self::test_spiral_archimedean),
+            ("test_spiral_archimedean_sheared", Self::test_spiral_archimedean_sheared),
+            ("test_spiral_archimedean_inverted", Self::test_spiral_archimedean_inverted),
+            ("test_spiral_hyperbolic", Self::test_spiral_hyperbolic),
+            ("test_spiral_hyperbolic_sheared", Self::test_spiral_hyperbolic_sheared),
+            ("test_spiral_hyperbolic_inverted", Self::test_spiral_hyperbolic_inverted),
+            ("test_spiral_fermat", Self::test_spiral_fermat),
+            ("test_spiral_fermat_sheared", Self::test_spiral_fermat_sheared),
+            ("test_spiral_fermat_inverted", Self::test_spiral_fermat_inverted),
         ]
     }
 
@@ -55,9 +54,9 @@ impl SpiralTests {
         mode: Spiral,
         log_growth: Vector2,
     ) -> TweenPtr<LerpMethodData<f64>> {
-        self.ball.do_spiral(
-            CENTER, from_angle, to_angle, scale, duration, 0.0, shear, mode, log_growth,
-        ).register()
+        self.ball
+            .do_spiral(CENTER, from_angle, to_angle, scale, duration, 0.0, shear, mode, log_growth)
+            .register()
     }
 
     fn spiral_test(
@@ -97,13 +96,37 @@ impl SpiralTests {
         self.spiral_test(64.0 * PI, 0.0, Vector2::ONE * 5.0, 0.0, 8.0, Spiral::Archimedean, Vector2::new(0.05, 0.05))
     }
     fn test_spiral_hyperbolic(&mut self) -> PinnedTestTask {
-        self.spiral_test(0.3, 16.0 * PI, Vector2::new(512.0, 512.0), 0.0, 8.0, Spiral::Hyperbolic, Vector2::new(0.05, 0.05))
+        self.spiral_test(
+            0.3,
+            16.0 * PI,
+            Vector2::new(512.0, 512.0),
+            0.0,
+            8.0,
+            Spiral::Hyperbolic,
+            Vector2::new(0.05, 0.05),
+        )
     }
     fn test_spiral_hyperbolic_sheared(&mut self) -> PinnedTestTask {
-        self.spiral_test(0.3, 16.0 * PI, Vector2::new(512.0, 512.0), 0.7, 8.0, Spiral::Hyperbolic, Vector2::new(0.05, 0.05))
+        self.spiral_test(
+            0.3,
+            16.0 * PI,
+            Vector2::new(512.0, 512.0),
+            0.7,
+            8.0,
+            Spiral::Hyperbolic,
+            Vector2::new(0.05, 0.05),
+        )
     }
     fn test_spiral_hyperbolic_inverted(&mut self) -> PinnedTestTask {
-        self.spiral_test(16.0 * PI, 0.0, Vector2::new(256.0, 256.0), 0.0, 8.0, Spiral::Hyperbolic, Vector2::new(0.05, 0.05))
+        self.spiral_test(
+            16.0 * PI,
+            0.0,
+            Vector2::new(256.0, 256.0),
+            0.0,
+            8.0,
+            Spiral::Hyperbolic,
+            Vector2::new(0.05, 0.05),
+        )
     }
     fn test_spiral_fermat(&mut self) -> PinnedTestTask {
         self.spiral_test(0.0, 24.0 * PI, Vector2::new(64.0, 64.0), 0.0, 8.0, Spiral::Fermat, Vector2::new(0.05, 0.05))

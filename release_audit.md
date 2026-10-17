@@ -10,6 +10,9 @@ failure logs an explanatory error and is not retried. The installation and Rust 
 **2026-10-14 follow decision:** the follow template intentionally completes on reaching its target, supports continuous following through infinite Restart loops, and chases the last known position
 when the target is freed. The incorrect Rust documentation and missing Godot method descriptions are corrected. See [finding 17](release_audit_round2.md#17-follow-behavior-contradicts-its-public-rust-documentation).
 
+**2026-10-14 runner follow-up:** finding 8's audited false-success, timeout, naming, and stale-cache paths are repaired and covered by 70 real-engine runner regression checks. Complete debug/release
+functional suites pass: 134 native and 152 GDScript cases per profile. Shutdown object/resource warnings in the GDScript aggregate remain a separate diagnostic boundary. See [current runner evidence](release_audit_evidence/test_runners_2026_10_14/README.md).
+
 **Hold the commercial release.** Normal tweening and a Linux release export work, but the current source and local addon binaries have reproducible ownership, binding, sequence, installation, and
 release-packaging defects. This audit examines commit `f518d78` on 2026-10-07. The working tree was clean before the audit.
 

@@ -99,9 +99,9 @@ func test_pause_mode_bound() -> bool:
 	debug("Setting sprite process mode to INHERIT")
 	sprite.process_mode = Node.PROCESS_MODE_INHERIT
 	assert_eq(tween.get_total_elapsed_time(), 0)
-	assert(tween.is_playing())
-	assert(sprite.can_process())
-	assert(tween.is_registered())
+	assert_true(tween.is_playing())
+	assert_true(sprite.can_process())
+	assert_true(tween.is_registered())
 	await wait_finished(tween, 9)
 	assert_eq(sprite.scale, final_value)
 	return true
@@ -158,9 +158,9 @@ func test_pause_mode_bound_process_mode_physics() -> bool:
 	debug("Setting sprite process mode to INHERIT")
 	sprite.process_mode = Node.PROCESS_MODE_INHERIT
 	assert_eq(tween.get_total_elapsed_time(), 0)
-	assert(tween.is_playing())
-	assert(sprite.can_process())
-	assert(tween.is_registered())
+	assert_true(tween.is_playing())
+	assert_true(sprite.can_process())
+	assert_true(tween.is_registered())
 	
 	#await next_frame()
 	await ensure_only_processing_at(sprite, tween, Process.Physics, 9)

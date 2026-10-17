@@ -1,0 +1,1128 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards strict)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Scene: res://examples/tests/delays.tscn
+---------------------------------
+Test Started: test_delay_is_respected
+[000000f, 00.0000s] Waiting 4.9 seconds...
+[000718f, 06.0000s] Finished
+Test Finished: test_delay_is_respected
+TEST_PASS res://examples/tests/delays.tscn::test_delay_is_respected
+---------------------------------
+Test Started: test_extra_loops_dont_have_delay
+[000000f, 00.0000s] Waiting 3.9 seconds...
+[000840f, 07.0083s] Loop completed
+[001200f, 10.0083s] Loop completed
+[001200f, 10.0083s] Finished
+Test Finished: test_extra_loops_dont_have_delay
+TEST_PASS res://examples/tests/delays.tscn::test_extra_loops_dont_have_delay
+---------------------------------
+Test Started: test_sequence_respects_delay
+[000000f, 00.0000s] Waiting 2.9 seconds...
+[000600f, 05.0083s] Tween Grow: Finished
+[000840f, 07.0083s] Tween Shrink: Finished
+[000840f, 07.0083s] Tween Sequence: Loop completed
+[001081f, 09.0166s] Tween Grow: Finished
+[001321f, 11.0166s] Tween Shrink: Finished
+[001321f, 11.0166s] Tween Sequence: Finished
+Test Finished: test_sequence_respects_delay
+TEST_PASS res://examples/tests/delays.tscn::test_sequence_respects_delay
+---------------------------------
+Test Started: test_delayed_call
+[000360f, 03.0083s] Finished
+Test Finished: test_delayed_call
+TEST_PASS res://examples/tests/delays.tscn::test_delayed_call
+Scene: res://examples/tests/error_handling.tscn
+---------------------------------
+Test Started: test_invalid_enum
+EXPECTED_INVALID_ENUM_BEGIN
+ERROR: godot-rust function call failed: SpirePropertyVec2::set_loops()
+    Reason: parameter #1 (LoopMode) conversion
+  Source: invalid LoopMode variant: -1
+   at: godot_core::private::handle_fallible_call (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:539)
+   GDScript backtrace (most recent call first):
+       [0] _attempt_bad_loop_mode (res://examples/tests/error_handling.gd:41)
+       [1] test_invalid_enum (res://examples/tests/error_handling.gd:16)
+       [2] run_test (res://examples/tests/test_base.gd:34)
+       [3] _execute_test (res://examples/tests/test_runner.gd:235)
+       [4] run_test (res://examples/tests/test_runner.gd:213)
+       [5] run_all_tests (res://examples/tests/test_runner.gd:199)
+       [6] run_test (res://examples/tests/test_runner.gd:231)
+SCRIPT ERROR: Bug: Invalid call error code 1337.
+          at: _attempt_bad_loop_mode (res://examples/tests/error_handling.gd:41)
+          GDScript backtrace (most recent call first):
+              [0] _attempt_bad_loop_mode (res://examples/tests/error_handling.gd:41)
+              [1] test_invalid_enum (res://examples/tests/error_handling.gd:16)
+              [2] run_test (res://examples/tests/test_base.gd:34)
+              [3] _execute_test (res://examples/tests/test_runner.gd:235)
+              [4] run_test (res://examples/tests/test_runner.gd:213)
+              [5] run_all_tests (res://examples/tests/test_runner.gd:199)
+              [6] run_test (res://examples/tests/test_runner.gd:231)
+ERROR: godot-rust function call failed: SpirePropertyVec2::set_loops()
+    Reason: parameter #1 (LoopMode) conversion
+  Source: invalid LoopMode variant: -1
+   at: godot_core::private::handle_fallible_call (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:539)
+   GDScript backtrace (most recent call first):
+       [0] _attempt_bad_loop_mode_dynamic (res://examples/tests/error_handling.gd:45)
+       [1] test_invalid_enum (res://examples/tests/error_handling.gd:17)
+       [2] run_test (res://examples/tests/test_base.gd:34)
+       [3] _execute_test (res://examples/tests/test_runner.gd:235)
+       [4] run_test (res://examples/tests/test_runner.gd:213)
+       [5] run_all_tests (res://examples/tests/test_runner.gd:199)
+       [6] run_test (res://examples/tests/test_runner.gd:231)
+SCRIPT ERROR: Bug: Invalid call error code 1337.
+          at: _attempt_bad_loop_mode_dynamic (res://examples/tests/error_handling.gd:45)
+          GDScript backtrace (most recent call first):
+              [0] _attempt_bad_loop_mode_dynamic (res://examples/tests/error_handling.gd:45)
+              [1] test_invalid_enum (res://examples/tests/error_handling.gd:17)
+              [2] run_test (res://examples/tests/test_base.gd:34)
+              [3] _execute_test (res://examples/tests/test_runner.gd:235)
+              [4] run_test (res://examples/tests/test_runner.gd:213)
+              [5] run_all_tests (res://examples/tests/test_runner.gd:199)
+              [6] run_test (res://examples/tests/test_runner.gd:231)
+EXPECTED_INVALID_ENUM_END
+[000599f, 05.0000s] Loop completed
+[001199f, 10.0000s] Finished
+Test Finished: test_invalid_enum
+TEST_PASS res://examples/tests/error_handling.tscn::test_invalid_enum
+---------------------------------
+Test Started: test_invalid_tween
+ERROR: Parameter `tween`: expected Spire type, got `RefCounted`.
+   at: <core::result::Result<spire_tween::tweens::any_tween::AnyTween, godot_core::obj::gd::Gd<godot_core::gen::classes::ref_counted::re_export::RefCounted>> as spire_tween::util::LogBadArg>::log_bad_spire_arg (spire_tween/src/util/mod.rs:103)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_tween (res://examples/tests/error_handling.gd:51)
+       [1] run_test (res://examples/tests/test_base.gd:34)
+       [2] _execute_test (res://examples/tests/test_runner.gd:235)
+       [3] run_test (res://examples/tests/test_runner.gd:213)
+       [4] run_all_tests (res://examples/tests/test_runner.gd:199)
+       [5] run_test (res://examples/tests/test_runner.gd:231)
+ERROR: Parameter `tween`: expected Spire type, got `RefCounted`.
+   at: <core::result::Result<spire_tween::tweens::any_tween::AnyTween, godot_core::obj::gd::Gd<godot_core::gen::classes::ref_counted::re_export::RefCounted>> as spire_tween::util::LogBadArg>::log_bad_spire_arg (spire_tween/src/util/mod.rs:103)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_tween (res://examples/tests/error_handling.gd:52)
+       [1] run_test (res://examples/tests/test_base.gd:34)
+       [2] _execute_test (res://examples/tests/test_runner.gd:235)
+       [3] run_test (res://examples/tests/test_runner.gd:213)
+       [4] run_all_tests (res://examples/tests/test_runner.gd:199)
+       [5] run_test (res://examples/tests/test_runner.gd:231)
+ERROR: Parameter `tween`: expected Spire type, got `RefCounted`.
+   at: <core::result::Result<spire_tween::tweens::any_tween::AnyTween, godot_core::obj::gd::Gd<godot_core::gen::classes::ref_counted::re_export::RefCounted>> as spire_tween::util::LogBadArg>::log_bad_spire_arg (spire_tween/src/util/mod.rs:103)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_tween (res://examples/tests/error_handling.gd:53)
+       [1] run_test (res://examples/tests/test_base.gd:34)
+       [2] _execute_test (res://examples/tests/test_runner.gd:235)
+       [3] run_test (res://examples/tests/test_runner.gd:213)
+       [4] run_all_tests (res://examples/tests/test_runner.gd:199)
+       [5] run_test (res://examples/tests/test_runner.gd:231)
+ERROR: Parameter `tween`: expected Spire type, got `null`.
+   at: <core::option::Option<godot_core::obj::gd::Gd<godot_core::gen::classes::ref_counted::re_export::RefCounted>> as spire_tween::util::LogBadArg>::log_bad_spire_arg (spire_tween/src/util/mod.rs:72)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_tween (res://examples/tests/error_handling.gd:56)
+       [1] run_test (res://examples/tests/test_base.gd:34)
+       [2] _execute_test (res://examples/tests/test_runner.gd:235)
+       [3] run_test (res://examples/tests/test_runner.gd:213)
+       [4] run_all_tests (res://examples/tests/test_runner.gd:199)
+       [5] run_test (res://examples/tests/test_runner.gd:231)
+Test Finished: test_invalid_tween
+TEST_PASS res://examples/tests/error_handling.tscn::test_invalid_tween
+---------------------------------
+Test Started: test_free_while_playing
+[000000f, 00.0000s] Waiting 2.0 seconds...
+[000240f, 02.0083s] Freed!
+Test Finished: test_free_while_playing
+TEST_PASS res://examples/tests/error_handling.tscn::test_free_while_playing
+---------------------------------
+Test Started: test_invalid_sequence_adding
+ERROR: Cannot append a sequence tween to itself.
+   at: spire_tween::tweens::sequence::data::<impl spire_tween::tweens::base::spire_tween::SpireTween<spire_tween::tweens::sequence::data::Sequence>>::is_already_inside (spire_tween/src/tweens/sequence/data.rs:1017)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_sequence_adding (res://examples/tests/error_handling.gd:77)
+       [1] run_test (res://examples/tests/test_base.gd:34)
+       [2] _execute_test (res://examples/tests/test_runner.gd:235)
+       [3] run_test (res://examples/tests/test_runner.gd:213)
+       [4] run_all_tests (res://examples/tests/test_runner.gd:199)
+       [5] run_test (res://examples/tests/test_runner.gd:231)
+ERROR: Cannot add the same tween to the sequence more than once.
+   at: spire_tween::tweens::sequence::data::<impl spire_tween::tweens::base::spire_tween::SpireTween<spire_tween::tweens::sequence::data::Sequence>>::is_already_inside (spire_tween/src/tweens/sequence/data.rs:1025)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_sequence_adding (res://examples/tests/error_handling.gd:80)
+       [1] run_test (res://examples/tests/test_base.gd:34)
+       [2] _execute_test (res://examples/tests/test_runner.gd:235)
+       [3] run_test (res://examples/tests/test_runner.gd:213)
+       [4] run_all_tests (res://examples/tests/test_runner.gd:199)
+       [5] run_test (res://examples/tests/test_runner.gd:231)
+ERROR: Cannot add the same tween to the sequence more than once.
+   at: spire_tween::tweens::sequence::data::<impl spire_tween::tweens::base::spire_tween::SpireTween<spire_tween::tweens::sequence::data::Sequence>>::is_already_inside (spire_tween/src/tweens/sequence/data.rs:1025)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_sequence_adding (res://examples/tests/error_handling.gd:82)
+       [1] run_test (res://examples/tests/test_base.gd:34)
+       [2] _execute_test (res://examples/tests/test_runner.gd:235)
+       [3] run_test (res://examples/tests/test_runner.gd:213)
+       [4] run_all_tests (res://examples/tests/test_runner.gd:199)
+       [5] run_test (res://examples/tests/test_runner.gd:231)
+[000360f, 03.0083s] Tween Child tween: Finished
+Test Finished: test_invalid_sequence_adding
+TEST_PASS res://examples/tests/error_handling.tscn::test_invalid_sequence_adding
+Scene: res://examples/tests/misc.tscn
+---------------------------------
+Test Started: test_force_complete
+[000000f, 00.0000s] Waiting 2.0 seconds...
+[000840f, 07.0083s] Finished
+Test Finished: test_force_complete
+TEST_PASS res://examples/tests/misc.tscn::test_force_complete
+---------------------------------
+Test Started: test_dyn_target
+[000000f, 00.0000s] Waiting 3.0 seconds...
+[000721f, 06.0166s] Finished
+Test Finished: test_dyn_target
+TEST_PASS res://examples/tests/misc.tscn::test_dyn_target
+---------------------------------
+Test Started: test_property_path
+Test Finished: test_property_path
+TEST_PASS res://examples/tests/misc.tscn::test_property_path
+Scene: res://examples/tests/pause_process_modes.tscn
+---------------------------------
+Test Started: test_pause_mode_process
+[000360f, 03.0000s] Finished
+Test Finished: test_pause_mode_process
+TEST_PASS res://examples/tests/pause_process_modes.tscn::test_pause_mode_process
+---------------------------------
+Test Started: test_pause_mode_stop
+[000960f, 03.0083s] Finished
+Test Finished: test_pause_mode_stop
+TEST_PASS res://examples/tests/pause_process_modes.tscn::test_pause_mode_stop
+---------------------------------
+Test Started: test_pause_mode_bound
+[000000f, 00.0000s] Pausing tree for 4.0 seconds...
+[000480f, 04.0000s] Tree unpaused, waiting 2 seconds...
+[000721f, 06.0083s] Setting sprite process mode to INHERIT
+[001082f, 09.0166s] Finished
+Test Finished: test_pause_mode_bound
+TEST_PASS res://examples/tests/pause_process_modes.tscn::test_pause_mode_bound
+---------------------------------
+Test Started: test_process_mode_idle
+Test Finished: test_process_mode_idle
+TEST_PASS res://examples/tests/pause_process_modes.tscn::test_process_mode_idle
+---------------------------------
+Test Started: test_process_mode_physics
+Test Finished: test_process_mode_physics
+TEST_PASS res://examples/tests/pause_process_modes.tscn::test_process_mode_physics
+---------------------------------
+Test Started: test_pause_mode_bound_process_mode_physics
+[000000f, 00.0000s] Tree paused
+[000000f, 00.0000s] Waiting 4.0 seconds...
+[000480f, 04.0000s] Tree unpaused
+[000480f, 04.0000s] Waiting 2.0 seconds...
+[000721f, 06.0083s] Setting sprite process mode to INHERIT
+Test Finished: test_pause_mode_bound_process_mode_physics
+TEST_PASS res://examples/tests/pause_process_modes.tscn::test_pause_mode_bound_process_mode_physics
+Scene: res://examples/tests/play_pause_stop.tscn
+---------------------------------
+Test Started: test_play_works
+[000240f, 02.0083s] Loop completed
+[000240f, 02.0083s] Finished
+Test Finished: test_play_works
+TEST_PASS res://examples/tests/play_pause_stop.tscn::test_play_works
+---------------------------------
+Test Started: test_pause_play_works
+[000000f, 00.0000s] Waiting 3.0 seconds...
+[000601f, 05.0166s] Loop completed
+[000601f, 05.0166s] Finished
+Test Finished: test_pause_play_works
+TEST_PASS res://examples/tests/play_pause_stop.tscn::test_pause_play_works
+---------------------------------
+Test Started: test_play_stop_play_works
+[000240f, 02.0083s] Loop completed
+[000240f, 02.0083s] Finished
+[000240f, 02.0083s] Waiting 3.0 seconds...
+[000841f, 07.0166s] Loop completed
+[000841f, 07.0166s] Finished
+Test Finished: test_play_stop_play_works
+TEST_PASS res://examples/tests/play_pause_stop.tscn::test_play_stop_play_works
+Scene: res://examples/tests/register_unregister.tscn
+---------------------------------
+Test Started: test_unregistered_does_not_affect_game
+[000000f, 00.0000s] Waiting 2.0 seconds...
+[000240f, 02.0083s] Re-Registering
+[000240f, 02.0083s] Is registered
+[000840f, 07.0083s] Loop completed
+[000840f, 07.0083s] Finished
+Test Finished: test_unregistered_does_not_affect_game
+TEST_PASS res://examples/tests/register_unregister.tscn::test_unregistered_does_not_affect_game
+---------------------------------
+Test Started: test_unregistered_can_be_manually_stepped
+Test Finished: test_unregistered_can_be_manually_stepped
+TEST_PASS res://examples/tests/register_unregister.tscn::test_unregistered_can_be_manually_stepped
+Scene: res://examples/tests/sequences.tscn
+---------------------------------
+Test Started: test_proper_ordering
+[000000f, 00.0083s] First call
+[000120f, 01.0083s] Second call
+[000120f, 01.0083s] Same block as second call
+[000360f, 03.0083s] Third call with delay
+[000719f, 06.0000s] Loop completed
+[000719f, 06.0000s] Finished
+Test Finished: test_proper_ordering
+TEST_PASS res://examples/tests/sequences.tscn::test_proper_ordering
+---------------------------------
+Test Started: test_stopped_child_does_not_halt_sequence
+[000240f, 02.0083s] Tween Good child: Finished
+[000360f, 03.0083s] Last block
+[000360f, 03.0083s] Loop completed
+[000360f, 03.0083s] Finished
+Test Finished: test_stopped_child_does_not_halt_sequence
+TEST_PASS res://examples/tests/sequences.tscn::test_stopped_child_does_not_halt_sequence
+---------------------------------
+Test Started: test_append_many
+[000120f, 01.0083s] Tween First: Finished
+[000480f, 04.0083s] Tween Second: Finished
+[000480f, 04.0083s] Waiting 5 seconds...
+[001079f, 09.0000s] 5 seconds waited!
+[001319f, 11.0000s] Tween Third: Finished
+[001439f, 12.0000s] Tween Fourth: Finished
+[001439f, 12.0000s] Waiting 2 seconds...
+[001679f, 13.9999s] 2 seconds waited!
+[001679f, 13.9999s] Tween Sequence: Finished
+Test Finished: test_append_many
+TEST_PASS res://examples/tests/sequences.tscn::test_append_many
+---------------------------------
+Test Started: test_remove
+[000120f, 01.0083s] Tween First: Finished
+[000360f, 03.0083s] Tween Third: Finished
+[000360f, 03.0083s] Tween Sequence: Finished
+Test Finished: test_remove
+TEST_PASS res://examples/tests/sequences.tscn::test_remove
+---------------------------------
+Test Started: test_remove_midway
+[000120f, 01.0083s] Tween First: Finished
+[000120f, 01.0083s] Waiting 1.5 seconds...
+[000541f, 04.5166s] Tween Third: Finished
+[000541f, 04.5166s] Tween Sequence: Finished
+Test Finished: test_remove_midway
+TEST_PASS res://examples/tests/sequences.tscn::test_remove_midway
+---------------------------------
+Test Started: test_remove_call
+[000120f, 01.0083s] Tween First: Finished
+[000360f, 03.0083s] Tween Third: Finished
+[000360f, 03.0083s] Tween Sequence: Finished
+Test Finished: test_remove_call
+TEST_PASS res://examples/tests/sequences.tscn::test_remove_call
+---------------------------------
+Test Started: test_default_children_ease
+[000000f, 00.0000s] Waiting 2.0 seconds...
+[000360f, 03.0083s] Finished
+[000360f, 03.0083s] Waiting 1.0 seconds...
+[000600f, 05.0083s] Finished
+Test Finished: test_default_children_ease
+TEST_PASS res://examples/tests/sequences.tscn::test_default_children_ease
+Scene: res://examples/tests/sequence_ctors.tscn
+---------------------------------
+Test Started: test_bridge_signatures_and_chaining
+Test Finished: test_bridge_signatures_and_chaining
+TEST_PASS res://examples/tests/sequence_ctors.tscn::test_bridge_signatures_and_chaining
+---------------------------------
+Test Started: test_append_is_lazy_and_reads_activation_state
+Test Finished: test_append_is_lazy_and_reads_activation_state
+TEST_PASS res://examples/tests/sequence_ctors.tscn::test_append_is_lazy_and_reads_activation_state
+---------------------------------
+Test Started: test_join_constructs_in_parallel_and_waits
+Test Finished: test_join_constructs_in_parallel_and_waits
+TEST_PASS res://examples/tests/sequence_ctors.tscn::test_join_constructs_in_parallel_and_waits
+---------------------------------
+Test Started: test_join_on_empty_sequence
+Test Finished: test_join_on_empty_sequence
+TEST_PASS res://examples/tests/sequence_ctors.tscn::test_join_on_empty_sequence
+---------------------------------
+Test Started: test_insert_waits_for_offset_plus_delay
+Test Finished: test_insert_waits_for_offset_plus_delay
+TEST_PASS res://examples/tests/sequence_ctors.tscn::test_insert_waits_for_offset_plus_delay
+---------------------------------
+Test Started: test_insert_uses_per_update_delta_and_outlives_queue
+Test Finished: test_insert_uses_per_update_delta_and_outlives_queue
+TEST_PASS res://examples/tests/sequence_ctors.tscn::test_insert_uses_per_update_delta_and_outlives_queue
+---------------------------------
+Test Started: test_factories_run_once_across_loops_and_replay
+Test Finished: test_factories_run_once_across_loops_and_replay
+TEST_PASS res://examples/tests/sequence_ctors.tscn::test_factories_run_once_across_loops_and_replay
+---------------------------------
+Test Started: test_force_complete_constructs_all_pending_children
+Test Finished: test_force_complete_constructs_all_pending_children
+TEST_PASS res://examples/tests/sequence_ctors.tscn::test_force_complete_constructs_all_pending_children
+---------------------------------
+Test Started: test_invalid_results_are_skipped_for_all_operations
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:544)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_results_are_skipped_for_all_operations (res://examples/tests/sequence_ctors.gd:180)
+       [1] run_test (res://examples/tests/test_base.gd:34)
+       [2] _execute_test (res://examples/tests/test_runner.gd:235)
+       [3] run_test (res://examples/tests/test_runner.gd:213)
+       [4] run_all_tests (res://examples/tests/test_runner.gd:199)
+       [5] run_test (res://examples/tests/test_runner.gd:231)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: INT }), value: Some(17) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:544)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_results_are_skipped_for_all_operations (res://examples/tests/sequence_ctors.gd:180)
+       [1] run_test (res://examples/tests/test_base.gd:34)
+       [2] _execute_test (res://examples/tests/test_runner.gd:235)
+       [3] run_test (res://examples/tests/test_runner.gd:213)
+       [4] run_all_tests (res://examples/tests/test_runner.gd:199)
+       [5] run_test (res://examples/tests/test_runner.gd:231)
+ERROR: Expected Tween, got: RefCounted
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:539)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_results_are_skipped_for_all_operations (res://examples/tests/sequence_ctors.gd:180)
+       [1] run_test (res://examples/tests/test_base.gd:34)
+       [2] _execute_test (res://examples/tests/test_runner.gd:235)
+       [3] run_test (res://examples/tests/test_runner.gd:213)
+       [4] run_all_tests (res://examples/tests/test_runner.gd:199)
+       [5] run_test (res://examples/tests/test_runner.gd:231)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:544)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_results_are_skipped_for_all_operations (res://examples/tests/sequence_ctors.gd:180)
+       [1] run_test (res://examples/tests/test_base.gd:34)
+       [2] _execute_test (res://examples/tests/test_runner.gd:235)
+       [3] run_test (res://examples/tests/test_runner.gd:213)
+       [4] run_all_tests (res://examples/tests/test_runner.gd:199)
+       [5] run_test (res://examples/tests/test_runner.gd:231)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: INT }), value: Some(17) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:544)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_results_are_skipped_for_all_operations (res://examples/tests/sequence_ctors.gd:180)
+       [1] run_test (res://examples/tests/test_base.gd:34)
+       [2] _execute_test (res://examples/tests/test_runner.gd:235)
+       [3] run_test (res://examples/tests/test_runner.gd:213)
+       [4] run_all_tests (res://examples/tests/test_runner.gd:199)
+       [5] run_test (res://examples/tests/test_runner.gd:231)
+ERROR: Expected Tween, got: RefCounted
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:539)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_results_are_skipped_for_all_operations (res://examples/tests/sequence_ctors.gd:180)
+       [1] run_test (res://examples/tests/test_base.gd:34)
+       [2] _execute_test (res://examples/tests/test_runner.gd:235)
+       [3] run_test (res://examples/tests/test_runner.gd:213)
+       [4] run_all_tests (res://examples/tests/test_runner.gd:199)
+       [5] run_test (res://examples/tests/test_runner.gd:231)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:544)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_results_are_skipped_for_all_operations (res://examples/tests/sequence_ctors.gd:180)
+       [1] run_test (res://examples/tests/test_base.gd:34)
+       [2] _execute_test (res://examples/tests/test_runner.gd:235)
+       [3] run_test (res://examples/tests/test_runner.gd:213)
+       [4] run_all_tests (res://examples/tests/test_runner.gd:199)
+       [5] run_test (res://examples/tests/test_runner.gd:231)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: INT }), value: Some(17) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:544)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_results_are_skipped_for_all_operations (res://examples/tests/sequence_ctors.gd:180)
+       [1] run_test (res://examples/tests/test_base.gd:34)
+       [2] _execute_test (res://examples/tests/test_runner.gd:235)
+       [3] run_test (res://examples/tests/test_runner.gd:213)
+       [4] run_all_tests (res://examples/tests/test_runner.gd:199)
+       [5] run_test (res://examples/tests/test_runner.gd:231)
+ERROR: Expected Tween, got: RefCounted
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:539)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_results_are_skipped_for_all_operations (res://examples/tests/sequence_ctors.gd:180)
+       [1] run_test (res://examples/tests/test_base.gd:34)
+       [2] _execute_test (res://examples/tests/test_runner.gd:235)
+       [3] run_test (res://examples/tests/test_runner.gd:213)
+       [4] run_all_tests (res://examples/tests/test_runner.gd:199)
+       [5] run_test (res://examples/tests/test_runner.gd:231)
+Test Finished: test_invalid_results_are_skipped_for_all_operations
+TEST_PASS res://examples/tests/sequence_ctors.tscn::test_invalid_results_are_skipped_for_all_operations
+---------------------------------
+Test Started: test_invalid_callables_and_freed_factory_targets
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:544)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_callables_and_freed_factory_targets (res://examples/tests/sequence_ctors.gd:195)
+       [1] run_test (res://examples/tests/test_base.gd:34)
+       [2] _execute_test (res://examples/tests/test_runner.gd:235)
+       [3] run_test (res://examples/tests/test_runner.gd:213)
+       [4] run_all_tests (res://examples/tests/test_runner.gd:199)
+       [5] run_test (res://examples/tests/test_runner.gd:231)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:544)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_callables_and_freed_factory_targets (res://examples/tests/sequence_ctors.gd:195)
+       [1] run_test (res://examples/tests/test_base.gd:34)
+       [2] _execute_test (res://examples/tests/test_runner.gd:235)
+       [3] run_test (res://examples/tests/test_runner.gd:213)
+       [4] run_all_tests (res://examples/tests/test_runner.gd:199)
+       [5] run_test (res://examples/tests/test_runner.gd:231)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:544)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_callables_and_freed_factory_targets (res://examples/tests/sequence_ctors.gd:195)
+       [1] run_test (res://examples/tests/test_base.gd:34)
+       [2] _execute_test (res://examples/tests/test_runner.gd:235)
+       [3] run_test (res://examples/tests/test_runner.gd:213)
+       [4] run_all_tests (res://examples/tests/test_runner.gd:199)
+       [5] run_test (res://examples/tests/test_runner.gd:231)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:544)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_callables_and_freed_factory_targets (res://examples/tests/sequence_ctors.gd:195)
+       [1] run_test (res://examples/tests/test_base.gd:34)
+       [2] _execute_test (res://examples/tests/test_runner.gd:235)
+       [3] run_test (res://examples/tests/test_runner.gd:213)
+       [4] run_all_tests (res://examples/tests/test_runner.gd:199)
+       [5] run_test (res://examples/tests/test_runner.gd:231)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:544)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_callables_and_freed_factory_targets (res://examples/tests/sequence_ctors.gd:195)
+       [1] run_test (res://examples/tests/test_base.gd:34)
+       [2] _execute_test (res://examples/tests/test_runner.gd:235)
+       [3] run_test (res://examples/tests/test_runner.gd:213)
+       [4] run_all_tests (res://examples/tests/test_runner.gd:199)
+       [5] run_test (res://examples/tests/test_runner.gd:231)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:544)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_callables_and_freed_factory_targets (res://examples/tests/sequence_ctors.gd:195)
+       [1] run_test (res://examples/tests/test_base.gd:34)
+       [2] _execute_test (res://examples/tests/test_runner.gd:235)
+       [3] run_test (res://examples/tests/test_runner.gd:213)
+       [4] run_all_tests (res://examples/tests/test_runner.gd:199)
+       [5] run_test (res://examples/tests/test_runner.gd:231)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:544)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_callables_and_freed_factory_targets (res://examples/tests/sequence_ctors.gd:195)
+       [1] run_test (res://examples/tests/test_base.gd:34)
+       [2] _execute_test (res://examples/tests/test_runner.gd:235)
+       [3] run_test (res://examples/tests/test_runner.gd:213)
+       [4] run_all_tests (res://examples/tests/test_runner.gd:199)
+       [5] run_test (res://examples/tests/test_runner.gd:231)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:544)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_callables_and_freed_factory_targets (res://examples/tests/sequence_ctors.gd:195)
+       [1] run_test (res://examples/tests/test_base.gd:34)
+       [2] _execute_test (res://examples/tests/test_runner.gd:235)
+       [3] run_test (res://examples/tests/test_runner.gd:213)
+       [4] run_all_tests (res://examples/tests/test_runner.gd:199)
+       [5] run_test (res://examples/tests/test_runner.gd:231)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:544)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_callables_and_freed_factory_targets (res://examples/tests/sequence_ctors.gd:195)
+       [1] run_test (res://examples/tests/test_base.gd:34)
+       [2] _execute_test (res://examples/tests/test_runner.gd:235)
+       [3] run_test (res://examples/tests/test_runner.gd:213)
+       [4] run_all_tests (res://examples/tests/test_runner.gd:199)
+       [5] run_test (res://examples/tests/test_runner.gd:231)
+Test Finished: test_invalid_callables_and_freed_factory_targets
+TEST_PASS res://examples/tests/sequence_ctors.tscn::test_invalid_callables_and_freed_factory_targets
+---------------------------------
+Test Started: test_forced_invalid_results_do_not_block_valid_factories
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:544)
+   GDScript backtrace (most recent call first):
+       [0] test_forced_invalid_results_do_not_block_valid_factories (res://examples/tests/sequence_ctors.gd:205)
+       [1] run_test (res://examples/tests/test_base.gd:34)
+       [2] _execute_test (res://examples/tests/test_runner.gd:235)
+       [3] run_test (res://examples/tests/test_runner.gd:213)
+       [4] run_all_tests (res://examples/tests/test_runner.gd:199)
+       [5] run_test (res://examples/tests/test_runner.gd:231)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:544)
+   GDScript backtrace (most recent call first):
+       [0] test_forced_invalid_results_do_not_block_valid_factories (res://examples/tests/sequence_ctors.gd:205)
+       [1] run_test (res://examples/tests/test_base.gd:34)
+       [2] _execute_test (res://examples/tests/test_runner.gd:235)
+       [3] run_test (res://examples/tests/test_runner.gd:213)
+       [4] run_all_tests (res://examples/tests/test_runner.gd:199)
+       [5] run_test (res://examples/tests/test_runner.gd:231)
+ERROR: Expected TweenCtor result to be a Tween. Error: ConvertError { kind: FromVariant(BadType { expected: OBJECT, actual: NIL }), value: Some(null) }
+   at: spire_tween::tweens::sequence::data::run_tween_ctor (spire_tween/src/tweens/sequence/data.rs:544)
+   GDScript backtrace (most recent call first):
+       [0] test_forced_invalid_results_do_not_block_valid_factories (res://examples/tests/sequence_ctors.gd:205)
+       [1] run_test (res://examples/tests/test_base.gd:34)
+       [2] _execute_test (res://examples/tests/test_runner.gd:235)
+       [3] run_test (res://examples/tests/test_runner.gd:213)
+       [4] run_all_tests (res://examples/tests/test_runner.gd:199)
+       [5] run_test (res://examples/tests/test_runner.gd:231)
+Test Finished: test_forced_invalid_results_do_not_block_valid_factories
+TEST_PASS res://examples/tests/sequence_ctors.tscn::test_forced_invalid_results_do_not_block_valid_factories
+---------------------------------
+Test Started: test_duplicate_results_are_rejected
+ERROR: Cannot add the same tween to the sequence more than once.
+   at: spire_tween::tweens::sequence::data::<impl spire_tween::tweens::base::spire_tween::SpireTween<spire_tween::tweens::sequence::data::Sequence>>::is_already_inside (spire_tween/src/tweens/sequence/data.rs:1025)
+   GDScript backtrace (most recent call first):
+       [0] test_duplicate_results_are_rejected (res://examples/tests/sequence_ctors.gd:214)
+       [1] run_test (res://examples/tests/test_base.gd:34)
+       [2] _execute_test (res://examples/tests/test_runner.gd:235)
+       [3] run_test (res://examples/tests/test_runner.gd:213)
+       [4] run_all_tests (res://examples/tests/test_runner.gd:199)
+       [5] run_test (res://examples/tests/test_runner.gd:231)
+ERROR: Cannot add the same tween to the sequence more than once.
+   at: spire_tween::tweens::sequence::data::<impl spire_tween::tweens::base::spire_tween::SpireTween<spire_tween::tweens::sequence::data::Sequence>>::is_already_inside (spire_tween/src/tweens/sequence/data.rs:1025)
+   GDScript backtrace (most recent call first):
+       [0] test_duplicate_results_are_rejected (res://examples/tests/sequence_ctors.gd:214)
+       [1] run_test (res://examples/tests/test_base.gd:34)
+       [2] _execute_test (res://examples/tests/test_runner.gd:235)
+       [3] run_test (res://examples/tests/test_runner.gd:213)
+       [4] run_all_tests (res://examples/tests/test_runner.gd:199)
+       [5] run_test (res://examples/tests/test_runner.gd:231)
+ERROR: Cannot add the same tween to the sequence more than once.
+   at: spire_tween::tweens::sequence::data::<impl spire_tween::tweens::base::spire_tween::SpireTween<spire_tween::tweens::sequence::data::Sequence>>::is_already_inside (spire_tween/src/tweens/sequence/data.rs:1025)
+   GDScript backtrace (most recent call first):
+       [0] test_duplicate_results_are_rejected (res://examples/tests/sequence_ctors.gd:214)
+       [1] run_test (res://examples/tests/test_base.gd:34)
+       [2] _execute_test (res://examples/tests/test_runner.gd:235)
+       [3] run_test (res://examples/tests/test_runner.gd:213)
+       [4] run_all_tests (res://examples/tests/test_runner.gd:199)
+       [5] run_test (res://examples/tests/test_runner.gd:231)
+Test Finished: test_duplicate_results_are_rejected
+TEST_PASS res://examples/tests/sequence_ctors.tscn::test_duplicate_results_are_rejected
+---------------------------------
+Test Started: test_self_and_ancestor_results_are_rejected
+Test Finished: test_self_and_ancestor_results_are_rejected
+TEST_PASS res://examples/tests/sequence_ctors.tscn::test_self_and_ancestor_results_are_rejected
+---------------------------------
+Test Started: test_current_default_ease_and_explicit_override
+Test Finished: test_current_default_ease_and_explicit_override
+TEST_PASS res://examples/tests/sequence_ctors.tscn::test_current_default_ease_and_explicit_override
+---------------------------------
+Test Started: test_constructed_child_preserves_binding_and_cancels
+Test Finished: test_constructed_child_preserves_binding_and_cancels
+TEST_PASS res://examples/tests/sequence_ctors.tscn::test_constructed_child_preserves_binding_and_cancels
+---------------------------------
+Test Started: test_bound_arguments_and_child_finished_signals
+Test Finished: test_bound_arguments_and_child_finished_signals
+TEST_PASS res://examples/tests/sequence_ctors.tscn::test_bound_arguments_and_child_finished_signals
+---------------------------------
+Test Started: test_many_callables_remain_callbacks
+Test Finished: test_many_callables_remain_callbacks
+TEST_PASS res://examples/tests/sequence_ctors.tscn::test_many_callables_remain_callbacks
+---------------------------------
+Test Started: test_pending_factory_with_weak_parent_can_be_released
+Test Finished: test_pending_factory_with_weak_parent_can_be_released
+TEST_PASS res://examples/tests/sequence_ctors.tscn::test_pending_factory_with_weak_parent_can_be_released
+Scene: res://examples/tests/sequence_speed.tscn
+---------------------------------
+Test Started: test_excess_uses_parent_time_for_all_tween_types
+Test Finished: test_excess_uses_parent_time_for_all_tween_types
+TEST_PASS res://examples/tests/sequence_speed.tscn::test_excess_uses_parent_time_for_all_tween_types
+---------------------------------
+Test Started: test_join_excess_uses_latest_finisher_in_parent_time
+Test Finished: test_join_excess_uses_latest_finisher_in_parent_time
+TEST_PASS res://examples/tests/sequence_speed.tscn::test_join_excess_uses_latest_finisher_in_parent_time
+---------------------------------
+Test Started: test_inserted_child_excess_crosses_sequence_boundaries
+Test Finished: test_inserted_child_excess_crosses_sequence_boundaries
+TEST_PASS res://examples/tests/sequence_speed.tscn::test_inserted_child_excess_crosses_sequence_boundaries
+---------------------------------
+Test Started: test_nested_sequences_unscale_at_each_level
+Test Finished: test_nested_sequences_unscale_at_each_level
+TEST_PASS res://examples/tests/sequence_speed.tscn::test_nested_sequences_unscale_at_each_level
+---------------------------------
+Test Started: test_scaled_excess_accounts_for_parent_and_child_delays
+Test Finished: test_scaled_excess_accounts_for_parent_and_child_delays
+TEST_PASS res://examples/tests/sequence_speed.tscn::test_scaled_excess_accounts_for_parent_and_child_delays
+---------------------------------
+Test Started: test_only_final_loop_excess_is_unscaled
+Test Finished: test_only_final_loop_excess_is_unscaled
+TEST_PASS res://examples/tests/sequence_speed.tscn::test_only_final_loop_excess_is_unscaled
+---------------------------------
+Test Started: test_near_zero_speed_suppresses_excess_with_strict_cutoff
+Test Finished: test_near_zero_speed_suppresses_excess_with_strict_cutoff
+TEST_PASS res://examples/tests/sequence_speed.tscn::test_near_zero_speed_suppresses_excess_with_strict_cutoff
+---------------------------------
+Test Started: test_zero_speed_blocks_successor
+Test Finished: test_zero_speed_blocks_successor
+TEST_PASS res://examples/tests/sequence_speed.tscn::test_zero_speed_blocks_successor
+---------------------------------
+Test Started: test_lazy_constructor_excess_uses_parent_time
+Test Finished: test_lazy_constructor_excess_uses_parent_time
+TEST_PASS res://examples/tests/sequence_speed.tscn::test_lazy_constructor_excess_uses_parent_time
+Scene: res://examples/tests/lerp_modes.tscn
+---------------------------------
+Test Started: test_relative
+[000000f, 00.0000s] Waiting 1.0 seconds...
+[000240f, 02.0083s] Finished
+Test Finished: test_relative
+TEST_PASS res://examples/tests/lerp_modes.tscn::test_relative
+---------------------------------
+Test Started: test_two_relatives
+[000240f, 02.0083s] Finished
+[000360f, 03.0083s] Finished
+Test Finished: test_two_relatives
+TEST_PASS res://examples/tests/lerp_modes.tscn::test_two_relatives
+---------------------------------
+Test Started: test_speed_based
+[000526f, 04.3916s] Finished
+Test Finished: test_speed_based
+TEST_PASS res://examples/tests/lerp_modes.tscn::test_speed_based
+---------------------------------
+Test Started: test_speed_based_plus_relative
+[000360f, 03.0083s] Tween Relative: Finished
+Test Finished: test_speed_based_plus_relative
+TEST_PASS res://examples/tests/lerp_modes.tscn::test_speed_based_plus_relative
+Scene: res://examples/tests/lerp_callable.tscn
+---------------------------------
+Test Started: test_lerp_call
+[000599f, 05.0000s] Finished
+Test Finished: test_lerp_call
+TEST_PASS res://examples/tests/lerp_callable.tscn::test_lerp_call
+---------------------------------
+Test Started: test_lerp_call_float
+[000599f, 05.0000s] Finished
+Test Finished: test_lerp_call_float
+TEST_PASS res://examples/tests/lerp_callable.tscn::test_lerp_call_float
+---------------------------------
+Test Started: test_lerp_call_with_ease
+Test Finished: test_lerp_call_with_ease
+TEST_PASS res://examples/tests/lerp_callable.tscn::test_lerp_call_with_ease
+---------------------------------
+Test Started: test_lerp_call_with_loop
+[000240f, 02.0083s] Loop completed
+[000480f, 04.0083s] Loop completed
+[000480f, 04.0083s] Finished
+Test Finished: test_lerp_call_with_loop
+TEST_PASS res://examples/tests/lerp_callable.tscn::test_lerp_call_with_loop
+Scene: res://examples/tests/spiral.tscn
+---------------------------------
+Test Started: test_spiral_logarithmic
+[000959f, 08.0000s] Finished
+Test Finished: test_spiral_logarithmic
+TEST_PASS res://examples/tests/spiral.tscn::test_spiral_logarithmic
+---------------------------------
+Test Started: test_spiral_logarithmic_sheared
+[000959f, 08.0000s] Finished
+Test Finished: test_spiral_logarithmic_sheared
+TEST_PASS res://examples/tests/spiral.tscn::test_spiral_logarithmic_sheared
+---------------------------------
+Test Started: test_spiral_logarithmic_inverted
+[000959f, 08.0000s] Finished
+Test Finished: test_spiral_logarithmic_inverted
+TEST_PASS res://examples/tests/spiral.tscn::test_spiral_logarithmic_inverted
+---------------------------------
+Test Started: test_spiral_archimedean
+[000959f, 08.0000s] Finished
+Test Finished: test_spiral_archimedean
+TEST_PASS res://examples/tests/spiral.tscn::test_spiral_archimedean
+---------------------------------
+Test Started: test_spiral_archimedean_sheared
+[000959f, 08.0000s] Finished
+Test Finished: test_spiral_archimedean_sheared
+TEST_PASS res://examples/tests/spiral.tscn::test_spiral_archimedean_sheared
+---------------------------------
+Test Started: test_spiral_archimedean_inverted
+[000959f, 08.0000s] Finished
+Test Finished: test_spiral_archimedean_inverted
+TEST_PASS res://examples/tests/spiral.tscn::test_spiral_archimedean_inverted
+---------------------------------
+Test Started: test_spiral_hyperbolic
+[000959f, 08.0000s] Finished
+Test Finished: test_spiral_hyperbolic
+TEST_PASS res://examples/tests/spiral.tscn::test_spiral_hyperbolic
+---------------------------------
+Test Started: test_spiral_hyperbolic_sheared
+[000959f, 08.0000s] Finished
+Test Finished: test_spiral_hyperbolic_sheared
+TEST_PASS res://examples/tests/spiral.tscn::test_spiral_hyperbolic_sheared
+---------------------------------
+Test Started: test_spiral_hyperbolic_inverted
+[000959f, 08.0000s] Finished
+Test Finished: test_spiral_hyperbolic_inverted
+TEST_PASS res://examples/tests/spiral.tscn::test_spiral_hyperbolic_inverted
+---------------------------------
+Test Started: test_spiral_fermat
+[000959f, 08.0000s] Finished
+Test Finished: test_spiral_fermat
+TEST_PASS res://examples/tests/spiral.tscn::test_spiral_fermat
+---------------------------------
+Test Started: test_spiral_fermat_sheared
+[000959f, 08.0000s] Finished
+Test Finished: test_spiral_fermat_sheared
+TEST_PASS res://examples/tests/spiral.tscn::test_spiral_fermat_sheared
+---------------------------------
+Test Started: test_spiral_fermat_inverted
+[000959f, 08.0000s] Finished
+Test Finished: test_spiral_fermat_inverted
+TEST_PASS res://examples/tests/spiral.tscn::test_spiral_fermat_inverted
+Scene: res://examples/tests/ellipsis.tscn
+---------------------------------
+Test Started: test_circle
+[000480f, 04.0083s] Finished
+Test Finished: test_circle
+TEST_PASS res://examples/tests/ellipsis.tscn::test_circle
+---------------------------------
+Test Started: test_circle_inverted
+[000480f, 04.0083s] Finished
+Test Finished: test_circle_inverted
+TEST_PASS res://examples/tests/ellipsis.tscn::test_circle_inverted
+---------------------------------
+Test Started: test_ellipsis
+[000480f, 04.0083s] Finished
+Test Finished: test_ellipsis
+TEST_PASS res://examples/tests/ellipsis.tscn::test_ellipsis
+---------------------------------
+Test Started: test_ellipsis_varying
+[001440f, 12.0083s] Finished
+Test Finished: test_ellipsis_varying
+TEST_PASS res://examples/tests/ellipsis.tscn::test_ellipsis_varying
+---------------------------------
+Test Started: test_ellipsis_varying_inverted
+[001440f, 12.0083s] Finished
+Test Finished: test_ellipsis_varying_inverted
+TEST_PASS res://examples/tests/ellipsis.tscn::test_ellipsis_varying_inverted
+Scene: res://examples/tests/ellipsis_regressions.tscn
+---------------------------------
+Test Started: test_circle3_stays_planar_with_constant_radius
+Test Finished: test_circle3_stays_planar_with_constant_radius
+TEST_PASS res://examples/tests/ellipsis_regressions.tscn::test_circle3_stays_planar_with_constant_radius
+---------------------------------
+Test Started: test_circle3_full_turns_return_to_start
+Test Finished: test_circle3_full_turns_return_to_start
+TEST_PASS res://examples/tests/ellipsis_regressions.tscn::test_circle3_full_turns_return_to_start
+---------------------------------
+Test Started: test_circle3_uses_global_center_under_transformed_parent
+Test Finished: test_circle3_uses_global_center_under_transformed_parent
+TEST_PASS res://examples/tests/ellipsis_regressions.tscn::test_circle3_uses_global_center_under_transformed_parent
+---------------------------------
+Test Started: test_equal_angle_ellipse2_interpolates_radius
+Test Finished: test_equal_angle_ellipse2_interpolates_radius
+TEST_PASS res://examples/tests/ellipsis_regressions.tscn::test_equal_angle_ellipse2_interpolates_radius
+---------------------------------
+Test Started: test_equal_angle_ellipse3_interpolates_radius
+Test Finished: test_equal_angle_ellipse3_interpolates_radius
+TEST_PASS res://examples/tests/ellipsis_regressions.tscn::test_equal_angle_ellipse3_interpolates_radius
+---------------------------------
+Test Started: test_ellipse3_preserves_requested_helical_displacement
+Test Finished: test_ellipse3_preserves_requested_helical_displacement
+TEST_PASS res://examples/tests/ellipsis_regressions.tscn::test_ellipse3_preserves_requested_helical_displacement
+---------------------------------
+Test Started: test_valid_templates_finish_once_normally_and_when_forced
+Test Finished: test_valid_templates_finish_once_normally_and_when_forced
+TEST_PASS res://examples/tests/ellipsis_regressions.tscn::test_valid_templates_finish_once_normally_and_when_forced
+---------------------------------
+Test Started: test_immediate_receiver_deletion_cancels_registered_templates
+Test Finished: test_immediate_receiver_deletion_cancels_registered_templates
+TEST_PASS res://examples/tests/ellipsis_regressions.tscn::test_immediate_receiver_deletion_cancels_registered_templates
+---------------------------------
+Test Started: test_deferred_receiver_deletion_cancels_registered_templates
+Test Finished: test_deferred_receiver_deletion_cancels_registered_templates
+TEST_PASS res://examples/tests/ellipsis_regressions.tscn::test_deferred_receiver_deletion_cancels_registered_templates
+---------------------------------
+Test Started: test_immediate_receiver_deletion_cancels_sequence_children
+Test Finished: test_immediate_receiver_deletion_cancels_sequence_children
+TEST_PASS res://examples/tests/ellipsis_regressions.tscn::test_immediate_receiver_deletion_cancels_sequence_children
+---------------------------------
+Test Started: test_deferred_receiver_deletion_cancels_sequence_children
+Test Finished: test_deferred_receiver_deletion_cancels_sequence_children
+TEST_PASS res://examples/tests/ellipsis_regressions.tscn::test_deferred_receiver_deletion_cancels_sequence_children
+Scene: res://examples/tests/ownership.tscn
+---------------------------------
+Test Started: test_completed_sequences_are_collected
+OWNERSHIP_BULK live_wrappers=0 object_count_delta=1.0
+Test Finished: test_completed_sequences_are_collected
+TEST_PASS res://examples/tests/ownership.tscn::test_completed_sequences_are_collected
+---------------------------------
+Test Started: test_unretained_handle_delivers_finished
+Test Finished: test_unretained_handle_delivers_finished
+TEST_PASS res://examples/tests/ownership.tscn::test_unretained_handle_delivers_finished
+---------------------------------
+Test Started: test_unregister_then_release_godot_handle
+Test Finished: test_unregister_then_release_godot_handle
+TEST_PASS res://examples/tests/ownership.tscn::test_unregister_then_release_godot_handle
+---------------------------------
+Test Started: test_retained_completed_handle_restarts
+Test Finished: test_retained_completed_handle_restarts
+TEST_PASS res://examples/tests/ownership.tscn::test_retained_completed_handle_restarts
+---------------------------------
+Test Started: test_sequence_children_preserve_signals_across_loops
+Test Finished: test_sequence_children_preserve_signals_across_loops
+TEST_PASS res://examples/tests/ownership.tscn::test_sequence_children_preserve_signals_across_loops
+---------------------------------
+Test Started: test_bound_node_cancellation_collects_handle
+Test Finished: test_bound_node_cancellation_collects_handle
+TEST_PASS res://examples/tests/ownership.tscn::test_bound_node_cancellation_collects_handle
+---------------------------------
+Test Started: test_abandoned_paused_handle_is_collected
+Test Finished: test_abandoned_paused_handle_is_collected
+TEST_PASS res://examples/tests/ownership.tscn::test_abandoned_paused_handle_is_collected
+---------------------------------
+Test Started: test_abandoned_manual_handle_is_collected
+Test Finished: test_abandoned_manual_handle_is_collected
+TEST_PASS res://examples/tests/ownership.tscn::test_abandoned_manual_handle_is_collected
+---------------------------------
+Test Started: test_property_handle_is_collected_after_playback
+Test Finished: test_property_handle_is_collected_after_playback
+TEST_PASS res://examples/tests/ownership.tscn::test_property_handle_is_collected_after_playback
+---------------------------------
+Test Started: test_delayed_call_handle_is_collected
+Test Finished: test_delayed_call_handle_is_collected
+TEST_PASS res://examples/tests/ownership.tscn::test_delayed_call_handle_is_collected
+---------------------------------
+Test Started: test_finished_callback_can_restart_unretained_tween
+Test Finished: test_finished_callback_can_restart_unretained_tween
+TEST_PASS res://examples/tests/ownership.tscn::test_finished_callback_can_restart_unretained_tween
+---------------------------------
+Test Started: test_retained_paused_handle_can_resume
+Test Finished: test_retained_paused_handle_can_resume
+TEST_PASS res://examples/tests/ownership.tscn::test_retained_paused_handle_can_resume
+---------------------------------
+Test Started: test_retained_manual_handle_can_advance
+Test Finished: test_retained_manual_handle_can_advance
+TEST_PASS res://examples/tests/ownership.tscn::test_retained_manual_handle_can_advance
+---------------------------------
+Test Started: test_stopped_handle_is_collected_after_release
+Test Finished: test_stopped_handle_is_collected_after_release
+TEST_PASS res://examples/tests/ownership.tscn::test_stopped_handle_is_collected_after_release
+---------------------------------
+Test Started: test_method_handle_is_collected_after_playback
+Test Finished: test_method_handle_is_collected_after_playback
+TEST_PASS res://examples/tests/ownership.tscn::test_method_handle_is_collected_after_playback
+Scene: res://examples/tests/node_binding.tscn
+---------------------------------
+Test Started: test_clear_removes_all_manager_bindings
+Test Finished: test_clear_removes_all_manager_bindings
+TEST_PASS res://examples/tests/node_binding.tscn::test_clear_removes_all_manager_bindings
+---------------------------------
+Test Started: test_clear_preserves_other_tween_binding
+Test Finished: test_clear_preserves_other_tween_binding
+TEST_PASS res://examples/tests/node_binding.tscn::test_clear_preserves_other_tween_binding
+---------------------------------
+Test Started: test_duplicate_bind_and_unbind_are_idempotent
+Test Finished: test_duplicate_bind_and_unbind_are_idempotent
+TEST_PASS res://examples/tests/node_binding.tscn::test_duplicate_bind_and_unbind_are_idempotent
+---------------------------------
+Test Started: test_unbind_absent_node_preserves_other_tween
+Test Finished: test_unbind_absent_node_preserves_other_tween
+TEST_PASS res://examples/tests/node_binding.tscn::test_unbind_absent_node_preserves_other_tween
+---------------------------------
+Test Started: test_unbind_one_of_two_nodes_preserves_remaining_binding
+Test Finished: test_unbind_one_of_two_nodes_preserves_remaining_binding
+TEST_PASS res://examples/tests/node_binding.tscn::test_unbind_one_of_two_nodes_preserves_remaining_binding
+---------------------------------
+Test Started: test_explicit_binding_survives_unregister_and_register
+Test Finished: test_explicit_binding_survives_unregister_and_register
+TEST_PASS res://examples/tests/node_binding.tscn::test_explicit_binding_survives_unregister_and_register
+---------------------------------
+Test Started: test_completed_bound_tween_registers_and_replays
+Test Finished: test_completed_bound_tween_registers_and_replays
+TEST_PASS res://examples/tests/node_binding.tscn::test_completed_bound_tween_registers_and_replays
+---------------------------------
+Test Started: test_bound_children_append_join_and_insert
+Test Finished: test_bound_children_append_join_and_insert
+TEST_PASS res://examples/tests/node_binding.tscn::test_bound_children_append_join_and_insert
+---------------------------------
+Test Started: test_nested_bound_child_cancels_on_node_free
+Test Finished: test_nested_bound_child_cancels_on_node_free
+TEST_PASS res://examples/tests/node_binding.tscn::test_nested_bound_child_cancels_on_node_free
+---------------------------------
+Test Started: test_clear_after_bound_node_freed
+Test Finished: test_clear_after_bound_node_freed
+TEST_PASS res://examples/tests/node_binding.tscn::test_clear_after_bound_node_freed
+---------------------------------
+Test Started: test_clear_preserves_automatic_property_owner
+Test Finished: test_clear_preserves_automatic_property_owner
+TEST_PASS res://examples/tests/node_binding.tscn::test_clear_preserves_automatic_property_owner
+---------------------------------
+Test Started: test_clear_preserves_automatic_method_owner
+Test Finished: test_clear_preserves_automatic_method_owner
+TEST_PASS res://examples/tests/node_binding.tscn::test_clear_preserves_automatic_method_owner
+---------------------------------
+Test Started: test_dead_bindings_remove_playing_paused_and_stopped_sequence_children
+Test Finished: test_dead_bindings_remove_playing_paused_and_stopped_sequence_children
+TEST_PASS res://examples/tests/node_binding.tscn::test_dead_bindings_remove_playing_paused_and_stopped_sequence_children
+---------------------------------
+Test Started: test_stopped_children_with_unprocessable_live_bindings_do_not_block
+Test Finished: test_stopped_children_with_unprocessable_live_bindings_do_not_block
+TEST_PASS res://examples/tests/node_binding.tscn::test_stopped_children_with_unprocessable_live_bindings_do_not_block
+---------------------------------
+Test Started: test_bound_children_wait_without_advancing_and_resume_after_reentry
+Test Finished: test_bound_children_wait_without_advancing_and_resume_after_reentry
+TEST_PASS res://examples/tests/node_binding.tscn::test_bound_children_wait_without_advancing_and_resume_after_reentry
+---------------------------------
+Test Started: test_process_pause_mode_allows_live_unprocessable_child_bindings
+Test Finished: test_process_pause_mode_allows_live_unprocessable_child_bindings
+TEST_PASS res://examples/tests/node_binding.tscn::test_process_pause_mode_allows_live_unprocessable_child_bindings
+---------------------------------
+Test Started: test_manual_step_treats_stop_mode_sequence_children_as_unpaused
+Test Finished: test_manual_step_treats_stop_mode_sequence_children_as_unpaused
+TEST_PASS res://examples/tests/node_binding.tscn::test_manual_step_treats_stop_mode_sequence_children_as_unpaused
+---------------------------------
+Test Started: test_lazy_children_with_dead_bindings_are_discarded
+Test Finished: test_lazy_children_with_dead_bindings_are_discarded
+TEST_PASS res://examples/tests/node_binding.tscn::test_lazy_children_with_dead_bindings_are_discarded
+---------------------------------
+Test Started: test_custom_step_reports_completion_and_stopped_bindings
+Test Finished: test_custom_step_reports_completion_and_stopped_bindings
+TEST_PASS res://examples/tests/node_binding.tscn::test_custom_step_reports_completion_and_stopped_bindings
+---------------------------------
+Test Started: test_custom_step_keeps_live_paused_and_blocked_tweens
+Test Finished: test_custom_step_keeps_live_paused_and_blocked_tweens
+TEST_PASS res://examples/tests/node_binding.tscn::test_custom_step_keeps_live_paused_and_blocked_tweens
+---------------------------------
+Test Started: test_custom_step_reports_dead_bindings_regardless_of_state
+Test Finished: test_custom_step_reports_dead_bindings_regardless_of_state
+TEST_PASS res://examples/tests/node_binding.tscn::test_custom_step_reports_dead_bindings_regardless_of_state
+---------------------------------
+Test Started: test_custom_step_reports_invalid_callables
+Test Finished: test_custom_step_reports_invalid_callables
+TEST_PASS res://examples/tests/node_binding.tscn::test_custom_step_reports_invalid_callables
+---------------------------------
+Test Started: test_clear_bound_pause_mode_resumes_processing
+Test Finished: test_clear_bound_pause_mode_resumes_processing
+TEST_PASS res://examples/tests/node_binding.tscn::test_clear_bound_pause_mode_resumes_processing
+Scene: res://examples/tests/sequence_cycles.tscn
+---------------------------------
+Test Started: test_two_node_cycles
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:1134)
+     GDScript backtrace (most recent call first):
+         [0] add_tween (res://examples/tests/sequence_cycles.gd:12)
+         [1] test_two_node_cycles (res://examples/tests/sequence_cycles.gd:25)
+         [2] run_test (res://examples/tests/test_base.gd:34)
+         [3] _execute_test (res://examples/tests/test_runner.gd:235)
+         [4] run_test (res://examples/tests/test_runner.gd:213)
+         [5] run_all_tests (res://examples/tests/test_runner.gd:199)
+         [6] run_test (res://examples/tests/test_runner.gd:231)
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:1134)
+     GDScript backtrace (most recent call first):
+         [0] add_tween (res://examples/tests/sequence_cycles.gd:13)
+         [1] test_two_node_cycles (res://examples/tests/sequence_cycles.gd:25)
+         [2] run_test (res://examples/tests/test_base.gd:34)
+         [3] _execute_test (res://examples/tests/test_runner.gd:235)
+         [4] run_test (res://examples/tests/test_runner.gd:213)
+         [5] run_all_tests (res://examples/tests/test_runner.gd:199)
+         [6] run_test (res://examples/tests/test_runner.gd:231)
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:1134)
+     GDScript backtrace (most recent call first):
+         [0] add_tween (res://examples/tests/sequence_cycles.gd:14)
+         [1] test_two_node_cycles (res://examples/tests/sequence_cycles.gd:25)
+         [2] run_test (res://examples/tests/test_base.gd:34)
+         [3] _execute_test (res://examples/tests/test_runner.gd:235)
+         [4] run_test (res://examples/tests/test_runner.gd:213)
+         [5] run_all_tests (res://examples/tests/test_runner.gd:199)
+         [6] run_test (res://examples/tests/test_runner.gd:231)
+Test Finished: test_two_node_cycles
+TEST_PASS res://examples/tests/sequence_cycles.tscn::test_two_node_cycles
+---------------------------------
+Test Started: test_deeper_mixed_cycles
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:1134)
+     GDScript backtrace (most recent call first):
+         [0] add_tween (res://examples/tests/sequence_cycles.gd:12)
+         [1] test_deeper_mixed_cycles (res://examples/tests/sequence_cycles.gd:45)
+         [2] run_test (res://examples/tests/test_base.gd:34)
+         [3] _execute_test (res://examples/tests/test_runner.gd:235)
+         [4] run_test (res://examples/tests/test_runner.gd:213)
+         [5] run_all_tests (res://examples/tests/test_runner.gd:199)
+         [6] run_test (res://examples/tests/test_runner.gd:231)
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:1134)
+     GDScript backtrace (most recent call first):
+         [0] add_tween (res://examples/tests/sequence_cycles.gd:13)
+         [1] test_deeper_mixed_cycles (res://examples/tests/sequence_cycles.gd:45)
+         [2] run_test (res://examples/tests/test_base.gd:34)
+         [3] _execute_test (res://examples/tests/test_runner.gd:235)
+         [4] run_test (res://examples/tests/test_runner.gd:213)
+         [5] run_all_tests (res://examples/tests/test_runner.gd:199)
+         [6] run_test (res://examples/tests/test_runner.gd:231)
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:1134)
+     GDScript backtrace (most recent call first):
+         [0] add_tween (res://examples/tests/sequence_cycles.gd:14)
+         [1] test_deeper_mixed_cycles (res://examples/tests/sequence_cycles.gd:45)
+         [2] run_test (res://examples/tests/test_base.gd:34)
+         [3] _execute_test (res://examples/tests/test_runner.gd:235)
+         [4] run_test (res://examples/tests/test_runner.gd:213)
+         [5] run_all_tests (res://examples/tests/test_runner.gd:199)
+         [6] run_test (res://examples/tests/test_runner.gd:231)
+Test Finished: test_deeper_mixed_cycles
+TEST_PASS res://examples/tests/sequence_cycles.tscn::test_deeper_mixed_cycles
+---------------------------------
+Test Started: test_rejection_preserves_state_binding_and_signals
+WARNING: [SpireTween] Sequence insertion rejected: sequence references a forbidden ancestor (cycle detected).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:1134)
+     GDScript backtrace (most recent call first):
+         [0] test_rejection_preserves_state_binding_and_signals (res://examples/tests/sequence_cycles.gd:64)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] _execute_test (res://examples/tests/test_runner.gd:235)
+         [3] run_test (res://examples/tests/test_runner.gd:213)
+         [4] run_all_tests (res://examples/tests/test_runner.gd:199)
+         [5] run_test (res://examples/tests/test_runner.gd:231)
+Test Finished: test_rejection_preserves_state_binding_and_signals
+TEST_PASS res://examples/tests/sequence_cycles.tscn::test_rejection_preserves_state_binding_and_signals
+---------------------------------
+Test Started: test_repeated_incoming_graph_is_rejected
+WARNING: [SpireTween] Sequence insertion rejected: tween 0x1bee4330 is referenced more than once (cycle or unsupported reuse).
+     at: spire_tween::tweens::sequence::data::SequenceTraversalError::warn (spire_tween/src/tweens/sequence/data.rs:1127)
+     GDScript backtrace (most recent call first):
+         [0] test_repeated_incoming_graph_is_rejected (res://examples/tests/sequence_cycles.gd:87)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] _execute_test (res://examples/tests/test_runner.gd:235)
+         [3] run_test (res://examples/tests/test_runner.gd:213)
+         [4] run_all_tests (res://examples/tests/test_runner.gd:199)
+         [5] run_test (res://examples/tests/test_runner.gd:231)
+Test Finished: test_repeated_incoming_graph_is_rejected
+TEST_PASS res://examples/tests/sequence_cycles.tscn::test_repeated_incoming_graph_is_rejected
+---------------------------------
+Test Started: test_valid_nested_append_join_insert_and_replay
+Test Finished: test_valid_nested_append_join_insert_and_replay
+TEST_PASS res://examples/tests/sequence_cycles.tscn::test_valid_nested_append_join_insert_and_replay
+---------------------------------
+Test Started: test_wide_and_deep_valid_hierarchies
+Test Finished: test_wide_and_deep_valid_hierarchies
+TEST_PASS res://examples/tests/sequence_cycles.tscn::test_wide_and_deep_valid_hierarchies
+Scene: res://examples/tests/delayed_call_validity.tscn
+---------------------------------
+Test Started: test_freed_node_during_delay
+Test Finished: test_freed_node_during_delay
+TEST_PASS res://examples/tests/delayed_call_validity.tscn::test_freed_node_during_delay
+---------------------------------
+Test Started: test_freed_refcounted_during_delay
+Test Finished: test_freed_refcounted_during_delay
+TEST_PASS res://examples/tests/delayed_call_validity.tscn::test_freed_refcounted_during_delay
+---------------------------------
+Test Started: test_initially_invalid_callables
+Test Finished: test_initially_invalid_callables
+TEST_PASS res://examples/tests/delayed_call_validity.tscn::test_initially_invalid_callables
+---------------------------------
+Test Started: test_invalid_force_complete_playing_and_paused
+Test Finished: test_invalid_force_complete_playing_and_paused
+TEST_PASS res://examples/tests/delayed_call_validity.tscn::test_invalid_force_complete_playing_and_paused
+---------------------------------
+Test Started: test_valid_anonymous_call_respects_delay
+Test Finished: test_valid_anonymous_call_respects_delay
+TEST_PASS res://examples/tests/delayed_call_validity.tscn::test_valid_anonymous_call_respects_delay
+---------------------------------
+Test Started: test_valid_refcounted_method
+Test Finished: test_valid_refcounted_method
+TEST_PASS res://examples/tests/delayed_call_validity.tscn::test_valid_refcounted_method
+---------------------------------
+Test Started: test_valid_force_complete_and_replay
+Test Finished: test_valid_force_complete_and_replay
+TEST_PASS res://examples/tests/delayed_call_validity.tscn::test_valid_force_complete_and_replay
+---------------------------------
+Test Started: test_callback_invalidates_its_looping_target
+Test Finished: test_callback_invalidates_its_looping_target
+TEST_PASS res://examples/tests/delayed_call_validity.tscn::test_callback_invalidates_its_looping_target
+---------------------------------
+Test Started: test_invalid_sequence_child_does_not_block_following_call
+Test Finished: test_invalid_sequence_child_does_not_block_following_call
+TEST_PASS res://examples/tests/delayed_call_validity.tscn::test_invalid_sequence_child_does_not_block_following_call
+Scene: res://examples/tests/method_validity.tscn
+TEST_PASS res://examples/tests/method_validity.tscn::test_initially_invalid_callables_across_clocks
+TEST_PASS res://examples/tests/method_validity.tscn::test_freed_node_target_during_processing
+TEST_PASS res://examples/tests/method_validity.tscn::test_invalid_manual_step_keeps_owner_control
+TEST_PASS res://examples/tests/method_validity.tscn::test_invalid_force_complete_playing_and_paused
+TEST_PASS res://examples/tests/method_validity.tscn::test_invalid_custom_method_skips_lerper
+TEST_PASS res://examples/tests/method_validity.tscn::test_valid_completion_force_complete_and_replay
+TEST_PASS res://examples/tests/method_validity.tscn::test_invalid_sequence_child_does_not_block
+GDSCRIPT_TEST_RESULT total=152 failed=0 skipped=0
+WARNING: 12 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 2 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

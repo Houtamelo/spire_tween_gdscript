@@ -1,0 +1,56 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards balanced)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+---------------------------------
+Test Started: test_other_helpers_fail
+ERROR: TEST_ASSERTION_FAILED: 1 == 1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] assert_true (res://examples/tests/test_base.gd:76)
+       [1] assert_ne (res://examples/tests/test_base.gd:80)
+       [2] test_other_helpers_fail (res://examples/tests/runner_failure_fixture.gd:22)
+       [3] run_test (res://examples/tests/test_base.gd:34)
+       [4] _execute_test (res://examples/tests/test_runner.gd:235)
+       [5] run_test (res://examples/tests/test_runner.gd:213)
+       [6] run_test_by_name (res://examples/tests/test_runner.gd:245)
+       [7] _ready (res://examples/tests/test_runner.gd:73)
+       [8] _ready (res://examples/tests/runner_failure_entry.gd:13)
+ERROR: TEST_ASSERTION_FAILED: 2 > 1
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] assert_true (res://examples/tests/test_base.gd:76)
+       [1] assert_le (res://examples/tests/test_base.gd:82)
+       [2] test_other_helpers_fail (res://examples/tests/runner_failure_fixture.gd:23)
+       [3] run_test (res://examples/tests/test_base.gd:34)
+       [4] _execute_test (res://examples/tests/test_runner.gd:235)
+       [5] run_test (res://examples/tests/test_runner.gd:213)
+       [6] run_test_by_name (res://examples/tests/test_runner.gd:245)
+       [7] _ready (res://examples/tests/test_runner.gd:73)
+       [8] _ready (res://examples/tests/runner_failure_entry.gd:13)
+ERROR: TEST_ASSERTION_FAILED: 1 < 2
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] assert_true (res://examples/tests/test_base.gd:76)
+       [1] assert_ge (res://examples/tests/test_base.gd:84)
+       [2] test_other_helpers_fail (res://examples/tests/runner_failure_fixture.gd:24)
+       [3] run_test (res://examples/tests/test_base.gd:34)
+       [4] _execute_test (res://examples/tests/test_runner.gd:235)
+       [5] run_test (res://examples/tests/test_runner.gd:213)
+       [6] run_test_by_name (res://examples/tests/test_runner.gd:245)
+       [7] _ready (res://examples/tests/test_runner.gd:73)
+       [8] _ready (res://examples/tests/runner_failure_entry.gd:13)
+ERROR: TEST_ASSERTION_FAILED: Abs(1.0) is bigger than tolerance `0.017`
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] assert_true (res://examples/tests/test_base.gd:76)
+       [1] _assert_within_tolerance (res://examples/tests/test_base.gd:71)
+       [2] test_other_helpers_fail (res://examples/tests/runner_failure_fixture.gd:25)
+       [3] run_test (res://examples/tests/test_base.gd:34)
+       [4] _execute_test (res://examples/tests/test_runner.gd:235)
+       [5] run_test (res://examples/tests/test_runner.gd:213)
+       [6] run_test_by_name (res://examples/tests/test_runner.gd:245)
+       [7] _ready (res://examples/tests/test_runner.gd:73)
+       [8] _ready (res://examples/tests/runner_failure_entry.gd:13)
+Test Finished: test_other_helpers_fail
+TEST_FAIL res://examples/tests/runner_failure_fixture.tscn::test_other_helpers_fail
+GDSCRIPT_TEST_RESULT total=1 failed=1 skipped=0

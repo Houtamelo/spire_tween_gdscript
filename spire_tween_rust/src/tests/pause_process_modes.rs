@@ -192,14 +192,14 @@ impl INode2D for PauseProcessModesTests {
 impl ITestClass for PauseProcessModesTests {
     const PREFAB_PATH: &'static str = "res://examples/tests/pause_process_modes.tscn";
 
-    fn test_list() -> Vec<fn(&mut Self) -> PinnedTestTask> {
+    fn test_list() -> Vec<NamedTest<Self>> {
         vec![
-            Self::test_pause_mode_process,
-            Self::test_pause_mode_stop,
-            Self::test_pause_mode_bound,
-            Self::test_process_mode_idle,
-            Self::test_process_mode_physics,
-            Self::test_pause_mode_bound_process_mode_physics,
+            ("test_pause_mode_process", Self::test_pause_mode_process),
+            ("test_pause_mode_stop", Self::test_pause_mode_stop),
+            ("test_pause_mode_bound", Self::test_pause_mode_bound),
+            ("test_process_mode_idle", Self::test_process_mode_idle),
+            ("test_process_mode_physics", Self::test_process_mode_physics),
+            ("test_pause_mode_bound_process_mode_physics", Self::test_pause_mode_bound_process_mode_physics),
         ]
     }
 

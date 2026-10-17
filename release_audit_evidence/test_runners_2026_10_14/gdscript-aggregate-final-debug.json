@@ -1,0 +1,21 @@
+{
+  "profile": "debug",
+  "command": [
+    "/home/houtamelo/bin/godot",
+    "--headless",
+    "--path",
+    "/tmp/spire-runner-20261014-59zaxyrt/harness-source-complete/debug-gdscript",
+    "--fixed-fps",
+    "120",
+    "res://examples/tests/test_runner.tscn",
+    "--",
+    "--all-tests",
+    "--no-cache"
+  ],
+  "exit": 0,
+  "seconds": 9.126,
+  "failed": [],
+  "results": [
+    "GDSCRIPT_TEST_RESULT total=152 failed=0 skipped=0"
+  ]
+}

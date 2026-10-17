@@ -1,0 +1,7 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards balanced)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+=== SpireTween Rust Test Runner ===
+ERROR: No test matched: does_not_exist
+   at: <spire_tween_rust::tests::test_runner::TestRunner as godot_core::gen::classes::node::re_export::INode>::ready::{{closure}} (spire_tween_rust/src/tests/test_runner.rs:193)
+NATIVE_TEST_RESULT total=0 failed=1

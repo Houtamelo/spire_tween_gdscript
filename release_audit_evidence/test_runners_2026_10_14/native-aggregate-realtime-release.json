@@ -1,0 +1,25 @@
+{
+  "profile": "release",
+  "command": [
+    "/home/houtamelo/bin/godot",
+    "--headless",
+    "--path",
+    "/tmp/spire-runner-20261014-59zaxyrt/harness-final/release-native",
+    "--max-fps",
+    "120",
+    "res://test_runner.tscn"
+  ],
+  "exit": 0,
+  "seconds": 361.439,
+  "failed": [],
+  "results": [
+    "NATIVE_BOOKKEEPING_RESULT total=11 failed=0",
+    "NATIVE_DELAY_VALIDITY_RESULT total=9 failed=0",
+    "NATIVE_METHOD_VALIDITY_RESULT total=10 failed=0",
+    "NATIVE_API_RESULT total=5 failed=0",
+    "NATIVE_OWNERSHIP_RESULT total=10 failed=0",
+    "NATIVE_BINDING_RESULT total=11 failed=0",
+    "NATIVE_CYCLE_RESULT total=10 failed=0",
+    "NATIVE_TEST_RESULT total=68 failed=0"
+  ]
+}

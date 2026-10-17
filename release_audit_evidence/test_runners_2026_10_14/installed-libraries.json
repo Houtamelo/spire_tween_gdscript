@@ -1,0 +1,26 @@
+[
+  {
+    "kind": "gdscript",
+    "profile": "debug",
+    "sha256": "1340630c539876111a8f100398f11bb71ad1072720347193aca045b66f1b0fdf",
+    "installed_sha256": "1340630c539876111a8f100398f11bb71ad1072720347193aca045b66f1b0fdf"
+  },
+  {
+    "kind": "native",
+    "profile": "debug",
+    "symlink": "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/target/debug/libspire_tween_rust.so",
+    "sha256": "3cf5759845388b73940a1f94ca42e6bfeb0c21f6de9d2ee6b4776a549623efdb"
+  },
+  {
+    "kind": "gdscript",
+    "profile": "release",
+    "sha256": "15a155159e842f3f92b19e83f505fb39df74c8d5043121dbad39fcef168370a7",
+    "installed_sha256": "15a155159e842f3f92b19e83f505fb39df74c8d5043121dbad39fcef168370a7"
+  },
+  {
+    "kind": "native",
+    "profile": "release",
+    "symlink": "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/target/release/libspire_tween_rust.so",
+    "sha256": "d0d53d7793214a3a7966805e6ccb39857577a812172b29dc5753b440aeefacc5"
+  }
+]

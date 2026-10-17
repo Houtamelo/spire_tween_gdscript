@@ -1,0 +1,11 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.7.2.stable.official, safeguards balanced)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+---------------------------------
+Test Started: test_paused_timeout
+ERROR: TEST_TIMEOUT: res://examples/tests/runner_failure_fixture.tscn::test_paused_timeout
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run_test (res://examples/tests/test_runner.gd:219)
+TEST_FAIL res://examples/tests/runner_failure_fixture.tscn::test_paused_timeout
+GDSCRIPT_TEST_RESULT total=1 failed=1 skipped=0
