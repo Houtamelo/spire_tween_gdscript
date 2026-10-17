@@ -499,6 +499,12 @@ fn run_logged(command: &mut Command, log: &Path, seconds: u64, expected: i32, ma
             break status;
         }
         if start.elapsed() > Duration::from_secs(seconds) {
+            // The Windows console launcher starts the actual Godot executable.
+            // Kill the child tree too, otherwise failed fixtures keep running
+            // and hold files open after their launcher has been terminated.
+            #[cfg(target_os = "windows")]
+            output(Command::new("taskkill").args(["/PID", &process.id().to_string(), "/T", "/F"]))?;
+            #[cfg(not(target_os = "windows"))]
             process.kill()?;
             process.wait()?;
             bail!("deadline exceeded: {}", log.display());

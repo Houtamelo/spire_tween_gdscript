@@ -56,6 +56,35 @@ fn verifies_real_artifacts_and_rejects_tampering_missing_files_and_build_debris(
     run(&["verify", "--stage", source.to_str().unwrap()], true);
     let stage = temp();
     clone_stage(&source, &stage);
+    let original_record = fs::read(stage.join("build.json")).unwrap();
+    let mut metadata: Value = serde_json::from_slice(&original_record).unwrap();
+    if metadata["platform"] == "windows" {
+        let name = metadata["files"]
+            .as_object()
+            .unwrap()
+            .keys()
+            .find(|n| n.starts_with("addon/") && n.ends_with(".dll"))
+            .unwrap()
+            .clone();
+        let path = stage.join(&name);
+        let original = fs::read(&path).unwrap();
+        let mut corrupted = original.clone();
+        let dependency = b"bcryptprimitives.dll\0";
+        let mut found = false;
+        while let Some(index) = corrupted.windows(dependency.len()).position(|s| s == dependency) {
+            corrupted[index..index + dependency.len()].fill(0);
+            corrupted[index..index + b"VCRUNTIME140.dll".len()].copy_from_slice(b"VCRUNTIME140.dll");
+            found = true;
+        }
+        assert!(found, "pinned Windows stdlib import changed; update the real-binary failure probe");
+        fs::remove_file(&path).unwrap(); // Break the hard link before changing bytes.
+        fs::write(&path, &corrupted).unwrap();
+        metadata["files"][&name] = Value::String(format!("{:x}", Sha256::digest(&corrupted)));
+        fs::write(stage.join("build.json"), serde_json::to_vec(&metadata).unwrap()).unwrap();
+        assert!(run(&["verify", "--stage", stage.to_str().unwrap()], false).contains("external Visual C++ runtime"));
+        fs::write(&path, original).unwrap();
+        fs::write(stage.join("build.json"), original_record).unwrap();
+    }
     let manifest = stage.join("addon/spire_tween.gdextension");
     let original = fs::read(&manifest).unwrap();
     fs::write(&manifest, b"tampered").unwrap();
