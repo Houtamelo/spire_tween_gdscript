@@ -1,6 +1,6 @@
 {
   "arch": "x86_64",
-  "archive_sha256": "57d0ce28e6e707107064034b4231cefababbb63ceed0497196cabe6065ccae88",
+  "archive_sha256": "99417b5de484d9b2dcf820fc1f89854a0e318ebfaa9581a95a8c1912c557f18e",
   "engine": "4.4.stable.official.4c311cbee",
   "exports": true,
   "passed": true,

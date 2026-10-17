@@ -1,6 +1,6 @@
 {
-  "source_revision": "f87b076bca477cd6db7f44912daccb814b4f1927",
-  "source_sha256": "ed6f679b77c11232ab9ab93d8487ee385ecb98e624ae409671c4d8767078a2c5",
+  "source_revision": "82bed2b88a8ead2c94afc2095f41ee568d21100c",
+  "source_sha256": "c94f87b481cee397c76a1ef90b28be7a432236eff7def86789aff0b17265c778",
   "linux_full_godot": "4.4.stable.official.4c311cbee",
   "native_cases_per_profile": 134,
   "gdscript_cases_per_profile": 152,
@@ -21,9 +21,9 @@
   "native_windows_macos_runtime": "pending remote CI approval",
   "android": "optional experimental build configured; not run or included in archive",
   "archive": {
-    "path": "dist/artifacts/SpireTween-1.4.0-f87b076bca47-candidate-linux-windows.zip",
-    "bytes": 34579425,
-    "sha256": "57d0ce28e6e707107064034b4231cefababbb63ceed0497196cabe6065ccae88",
+    "path": "dist/final-artifacts/SpireTween-1.4.0-82bed2b88a8e-candidate-linux-windows.zip",
+    "bytes": 34579446,
+    "sha256": "99417b5de484d9b2dcf820fc1f89854a0e318ebfaa9581a95a8c1912c557f18e",
     "platforms": [
       "linux",
       "windows"

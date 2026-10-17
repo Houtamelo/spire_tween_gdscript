@@ -2,7 +2,7 @@
 
 The shell/Rust release pipeline is implemented. Native Windows/macOS CI and Apple signing are pending; a push to the existing public GitHub repository was rejected by automatic approval review because the exact source payload/destination had not been explicitly authorized. No remote branch or release was published.
 
-Build source: `f87b076bca477cd6db7f44912daccb814b4f1927`. Pinned toolchain: `nightly-2026-08-11`, rustc `1.99.0-nightly (12c36e253 2026-08-10)`. Godot API: explicit `api-4-4`; ordinary development defaults remain unchanged. CI invokes shell and Rust only.
+Build source: `82bed2b88a8ead2c94afc2095f41ee568d21100c`. Pinned toolchain: `nightly-2026-08-11`, rustc `1.99.0-nightly (12c36e253 2026-08-10)`. Godot API: explicit `api-4-4`; ordinary development defaults remain unchanged. CI invokes shell and Rust only.
 
 | Check | Result |
 |---|---|
@@ -22,7 +22,7 @@ Build source: `f87b076bca477cd6db7f44912daccb814b4f1927`. Pinned toolchain: `nig
 
 The full suite ran before the final tooling-only provenance/licensing/archive refinements. `baseline-linux-build.json` preserves that exact build record; `linux-build.json` preserves final staging. All four tested Linux shared-library hashes match final staging exactly (`summary.json` records the comparison). The final archive was independently extracted, checksum-checked, installed, exported in both profiles, and executed on Linux using both configured endpoint engines. The local full report is not substituted for the clean-revision reports required by commercial packaging.
 
-The local candidate is `dist/artifacts/SpireTween-1.4.0-f87b076bca47-candidate-linux-windows.zip`, 34,579,425 bytes, SHA-256 `57d0ce28e6e707107064034b4231cefababbb63ceed0497196cabe6065ccae88`. It contains Linux/Windows runtime libraries, notices, unmodified MPL sources, Rust library notices, installation/build instructions, checksums and provenance. It excludes macOS (not built here), examples/art, test binaries, PDBs and Rust intermediates. It is a development candidate, not a certified commercial archive. Native Windows execution is still pending.
+The local candidate is `dist/final-artifacts/SpireTween-1.4.0-82bed2b88a8e-candidate-linux-windows.zip`, 34,579,446 bytes, SHA-256 `99417b5de484d9b2dcf820fc1f89854a0e318ebfaa9581a95a8c1912c557f18e`. It contains Linux/Windows runtime libraries, notices, unmodified MPL sources, Rust library notices, installation/build instructions, checksums and provenance. It excludes macOS (not built here), examples/art, test binaries, PDBs and Rust intermediates. It is a development candidate, not a certified commercial archive. Native Windows execution is still pending.
 
 Godot 4.4's extension-free asset importer emitted headless progress/editor-settings diagnostics during the initial full run. Runtime fixtures imported the needed assets successfully and all cases passed. The final tool redirects Linux data/config/cache paths into writable fixtures. No graphical Godot process or cold editor import with the addon loaded was used.
 

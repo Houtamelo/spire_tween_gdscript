@@ -510,7 +510,7 @@
       "release/tools/src/main.rs": "e5ed7b8874df75319c38ccaaf11a30c0f8197c5360f96599507902e49c543360",
       "release/tools/tests/cli.rs": "9ab35421ab6eb5ccadde345ab7f9ca946b2a3473dc7e655eea7f7636dac6cdfe",
       "release/tools/tests/pipeline.rs": "de729edf0e3189000025d5cbc28cde522609a58d433062a8f44221f239b5d5b0",
-      "rust-toolchain.toml": "0052251a8131fb7883a6051cc870c410a35a5294f47118914b43d78201d0de6b",
+      "rust-toolchain.toml": "957ea7ccd503210968cfd719e6728ac595bb4860f4bf484378d7c12bcf5abe36",
       "rustfmt.toml": "56e5221a34ecfbec29d3f22c1fc0bd015ca209186dad36cd627aa333d9732479",
       "scripts/verify_test_runners.py": "26c653c1f8f85e9ab28346e2dd58f6837830641230ddc1e51fd45cf92c1af8a3",
       "spire_tween/Cargo.toml": "4b121e94f35426d2dd81ad621a528ef96b361c9e1f42524a6fc72ddc73527c66",
@@ -1262,7 +1262,7 @@
       "tweenable_properties.json": "ad4e5bc5e14494f86bae43c1a1999ad94adf19cdc21ad9d9e2135ee6cab8ea4b",
       "tweenable_properties_schema.json": "1ad652cd78d2db3345c987d4cd18dd203e465ddc91de0611c1db0db62e0cdfe7"
     },
-    "revision": "f87b076bca477cd6db7f44912daccb814b4f1927",
-    "sha256": "ed6f679b77c11232ab9ab93d8487ee385ecb98e624ae409671c4d8767078a2c5"
+    "revision": "82bed2b88a8ead2c94afc2095f41ee568d21100c",
+    "sha256": "c94f87b481cee397c76a1ef90b28be7a432236eff7def86789aff0b17265c778"
   }
 }
