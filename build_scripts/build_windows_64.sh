@@ -38,5 +38,4 @@ case "$(uname -s)" in
         ;;
 esac
 
-cargo build -p spire_tween --features include_gdext_lib,include_gdscript_bridge --target=x86_64-pc-windows-msvc --artifact-dir="spire_tween_gdscript/addons/spire_tween/lib/x86_64-pc-windows-msvc/debug"
-cargo build -p spire_tween --features include_gdext_lib,include_gdscript_bridge --target=x86_64-pc-windows-msvc --release --artifact-dir="spire_tween_gdscript/addons/spire_tween/lib/x86_64-pc-windows-msvc/release"
+cargo run --locked -p spire_release -- build --platform windows --out "${SPIRE_RELEASE_OUT:-dist/staging/windows}"

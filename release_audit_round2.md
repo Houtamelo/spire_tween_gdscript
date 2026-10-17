@@ -168,6 +168,8 @@ artifact. Passing these functional checks does not certify the remaining distrib
 
 ### 4 and 10. Current source is ahead of the files a buyer would receive
 
+**2026-10-17 release automation follow-up:** the initial release scope is Godot 4.4+, Windows/Linux x86_64, and macOS ARM64/Intel. The shell/Rust workflow, pinned toolchain/lockfile, isolated API 4.4 builds, universal frameworks, signing hooks, checksum/provenance records, full-suite/export jobs, dependency notices/source copies, and allowlisted extracted-archive checks are implemented. Android ARM64/x86_64 is an optional experimental build and is excluded from the desktop archive. Remote platform results, Apple credentials/signing and downloaded-package validation must be recorded before closing this finding. See [release instructions](release/README.md). The observations below describe the pre-pipeline snapshot.
+
 The installed Linux debug library reports an insert-only parent stopped at 0.25 seconds even though its child is scheduled for 0.5 seconds. Fresh source keeps the parent playing. The installed binary
 has `close_current_block`, so the older method-surface test alone cannot detect this newer staleness.
 

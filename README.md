@@ -89,7 +89,7 @@ func _ready() -> void:
 
 ## Building from source
 
-SpireTween is written in Rust against [godot-rust](https://github.com/godot-rust/gdext) and currently requires the **nightly** toolchain. `rust-toolchain.toml` selects that channel automatically inside the repository; it currently selects a floating nightly rather than a dated version.
+SpireTween is written in Rust against [godot-rust](https://github.com/godot-rust/gdext) and requires **nightly** Rust. `rust-toolchain.toml` pins a dated toolchain, and the root `Cargo.lock` records the release dependency snapshot. The [release workflow](release/README.md) builds Windows, Linux and universal macOS libraries with the explicit Godot 4.4 API feature; ordinary development builds retain their default API selection.
 
 The crate uses these unstable features:
 
@@ -109,13 +109,15 @@ Build the addon binary for your host with the per-platform scripts in [`build_sc
 ./build_scripts/build_windows_64.sh
 # Windows cross-compile from Linux: requires an xwin SDK and LLVM tools
 XWIN_DIR="/path/to/xwin" ./build_scripts/build_windows_64.sh
+# macOS: requires a Mac with Xcode command line tools
+./build_scripts/build_macos.sh
 # Android: requires cargo-ndk and a version-specific NDK installation
 ANDROID_NDK_HOME="/path/to/android-ndk/version" ./build_scripts/build_android.sh
 # WebAssembly: activate an Emscripten SDK so emcc is on PATH
 ./build_scripts/build_wasm.sh
 ```
 
-Each script writes the resulting binary directly into `spire_tween_gdscript/addons/spire_tween/lib/<target>/...`, where the `.gdextension` manifest expects it.
+Desktop/Android scripts stage fresh release artifacts in `dist/staging/<platform>`, including provenance and checksums. Copy the staged `addon` directory to your project's `addons/spire_tween` directory for local use. Existing staging output is rejected; choose a fresh path with `SPIRE_RELEASE_OUT`. The experimental Web script retains its development output under `spire_tween_gdscript/addons/spire_tween/lib/` and is excluded from the desktop release workflow. See [release verification and packaging](release/README.md).
 
 To build the host addon library directly, enable both its extension entry point and GDScript bridge:
 
@@ -231,10 +233,11 @@ Binaries for all platforms which I successfully compiled-to are included in the 
 | windows.x86_64     |    ✅    |   ✅   |                                                                     |
 | android.x86_64     |    ✅    |   ❌   |                                                                     |
 | android.arm64      |    ✅    |   ❌   |                                                                     |
-| android.x86        |    ✅    |   ❌   |                                                                     |
+| android.x86        |    —     |   ❌   | Excluded from the release pipeline.                                 |
 | web.wasm32         |    ❌    |   ❌   | There is a temporary issue, will be fixed soon(TM).                 |
 | web.wasm32.threads |    ❌    |   ❌   | There is a temporary issue, will be fixed soon(TM).                 |
-| macos/ios          |    ❌    |   ❌   | Compiling from source *should* be straightforward if you own a Mac. |
+| macos.arm64/x86_64 |    ❌    |   ❌   | Universal framework build/test CI configured; first verified run pending. |
+| ios                |    ❌    |   ❌   | Outside the initial release scope.                                  |
 
 The current Linux x86_64 debug and release libraries require **GLIBC 2.34 or newer**, measured with `readelf --version-info`. An older Linux userspace has not been tested.
 

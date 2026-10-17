@@ -1,0 +1,239 @@
+name: Release candidate
+
+on:
+  pull_request:
+  push:
+    branches: [main, 'ci/release-*']
+  workflow_dispatch:
+    inputs:
+      sign_macos:
+        description: Sign and notarize macOS frameworks using repository secrets
+        type: boolean
+        default: false
+      android:
+        description: Also build experimental Android ARM64/x86_64 artifacts (not sold in desktop archive)
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  CI: 'true'
+  CARGO_TERM_COLOR: always
+  RUSTUP_MAX_RETRIES: '3'
+  GIT_TERMINAL_PROMPT: '0'
+
+jobs:
+  plan:
+    runs-on: ubuntu-22.04
+    outputs:
+      versions: ${{ steps.matrix.outputs.versions }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - id: matrix
+        run: echo "versions=$(jq -c .godot_versions release/config.json)" >> "$GITHUB_OUTPUT"
+      - name: Check Rust release tool and shell startup paths
+        run: |
+          cargo fmt -p spire_release -- --check
+          cargo test --locked -p spire_release
+          for script in build_scripts/*.sh release/*.sh; do bash -n "$script"; done
+      - name: Check workflow syntax
+        run: |
+          curl --fail --location --silent --show-error --output /tmp/actionlint.tar.gz https://github.com/rhysd/actionlint/releases/download/v1.7.12/actionlint_1.7.12_linux_amd64.tar.gz
+          echo '8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8  /tmp/actionlint.tar.gz' | sha256sum --check
+          tar -xzf /tmp/actionlint.tar.gz -C /tmp actionlint
+          /tmp/actionlint
+
+  build:
+    needs: plan
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {platform: linux, runner: ubuntu-22.04}
+          - {platform: windows, runner: windows-2022}
+          - {platform: macos, runner: macos-14}
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Install target standard libraries
+        env:
+          PLATFORM: ${{ matrix.platform }}
+        run: |
+          if [[ "$PLATFORM" == macos ]]; then
+            rustup target add aarch64-apple-darwin x86_64-apple-darwin
+          fi
+      - name: Build addon and native integration libraries
+        env:
+          PLATFORM: ${{ matrix.platform }}
+        run: cargo run --locked -p spire_release -- build --platform "$PLATFORM" --out "dist/staging/$PLATFORM"
+      - name: Sign and notarize macOS frameworks
+        if: matrix.platform == 'macos' && github.event_name == 'workflow_dispatch' && inputs.sign_macos
+        env:
+          APPLE_CERT_BASE64: ${{ secrets.APPLE_CERT_BASE64 }}
+          APPLE_CERT_PASSWORD: ${{ secrets.APPLE_CERT_PASSWORD }}
+          APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          APPLE_APP_PASSWORD: ${{ secrets.APPLE_APP_PASSWORD }}
+        run: ./release/sign_macos.sh dist/staging/macos
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: build-${{ matrix.platform }}
+          path: dist/staging/${{ matrix.platform }}/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 14
+
+  validate:
+    needs: [plan, build]
+    strategy:
+      fail-fast: false
+      matrix:
+        version: ${{ fromJSON(needs.plan.outputs.versions) }}
+        host:
+          - {platform: linux, runner: ubuntu-22.04, arch: x86_64}
+          - {platform: windows, runner: windows-2022, arch: x86_64}
+          - {platform: macos, runner: macos-14, arch: aarch64}
+          - {platform: macos, runner: macos-15-intel, arch: x86_64}
+    runs-on: ${{ matrix.host.runner }}
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: build-${{ matrix.host.platform }}
+          path: dist/stage/
+      - name: Download pinned Godot and templates
+        env:
+          VERSION: ${{ matrix.version }}
+        run: cargo run --locked -p spire_release -- download --version "$VERSION" --out dist/engine --download-templates
+      - name: Run both suites, failing controls, installation and export checks
+        run: |
+          cargo run --locked -p spire_release -- test --stage dist/stage --godot "$(cat dist/engine/godot-path)" --templates "$PWD/dist/engine/export/templates" --out dist/validation
+          SPIRE_RELEASE_STAGE="$PWD/dist/stage" SPIRE_RELEASE_GODOT="$(cat dist/engine/godot-path)" cargo test --locked -p spire_release --test pipeline -- --ignored
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: validation-${{ matrix.host.platform }}-${{ matrix.host.arch }}-${{ matrix.version }}
+          path: |
+            dist/validation/*.json
+            dist/validation/*.log
+            dist/validation/*-prepare/*.log
+          if-no-files-found: error
+          retention-days: 14
+
+  package:
+    needs: [build, validate]
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          pattern: build-*
+          path: dist/builds/
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          pattern: validation-*
+          path: dist/reports/
+      - name: Assemble allowlisted desktop archive
+        env:
+          SIGNED: ${{ github.event_name == 'workflow_dispatch' && inputs.sign_macos }}
+        run: |
+          mkdir -p dist/staging
+          for platform in linux windows macos; do mv "dist/builds/build-$platform" "dist/staging/$platform"; done
+          flags=()
+          if [[ "$SIGNED" != true ]]; then flags+=(--candidate); fi
+          cargo run --locked -p spire_release -- package --staging dist/staging --reports dist/reports --out dist/archive "${flags[@]}"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: assembled-archive
+          path: dist/archive/
+          if-no-files-found: error
+
+  extracted_archive:
+    needs: [plan, package]
+    strategy:
+      fail-fast: false
+      matrix:
+        version: ['4.4', '4.7.2']
+        host:
+          - {platform: linux, runner: ubuntu-22.04, arch: x86_64}
+          - {platform: windows, runner: windows-2022, arch: x86_64}
+          - {platform: macos, runner: macos-14, arch: aarch64}
+          - {platform: macos, runner: macos-15-intel, arch: x86_64}
+    runs-on: ${{ matrix.host.runner }}
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: assembled-archive
+          path: dist/archive/
+      - name: Download pinned Godot and templates
+        env:
+          VERSION: ${{ matrix.version }}
+        run: cargo run --locked -p spire_release -- download --version "$VERSION" --out dist/engine --download-templates
+      - name: Verify checksums, install, export and run the extracted customer archive
+        run: |
+          archive=(dist/archive/*.zip)
+          [[ ${#archive[@]} == 1 ]]
+          cargo run --locked -p spire_release -- test-archive --archive "${archive[0]}" --godot "$(cat dist/engine/godot-path)" --templates "$PWD/dist/engine/export/templates" --out dist/archive-validation
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: archive-validation-${{ matrix.host.platform }}-${{ matrix.host.arch }}-${{ matrix.version }}
+          path: |
+            dist/archive-validation/*.json
+            dist/archive-validation/*.log
+          if-no-files-found: error
+          retention-days: 14
+
+  deliver:
+    needs: extracted_archive
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: assembled-archive
+          path: archive/
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: verified-desktop-package
+          path: archive/
+          if-no-files-found: error
+          retention-days: 30
+
+  android:
+    if: github.event_name == 'workflow_dispatch' && inputs.android
+    needs: plan
+    runs-on: ubuntu-22.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Install pinned NDK and cargo-ndk
+        run: |
+          ndk=$(jq -r .android_ndk release/config.json)
+          cargo_ndk=$(jq -r .cargo_ndk release/config.json)
+          sdkmanager --install "ndk;$ndk"
+          echo "ANDROID_NDK_HOME=$ANDROID_HOME/ndk/$ndk" >> "$GITHUB_ENV"
+          rustup target add aarch64-linux-android x86_64-linux-android
+          cargo install cargo-ndk --version "$cargo_ndk" --locked
+      - run: cargo run --locked -p spire_release -- build --platform android --out dist/staging/android
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: experimental-android-build-not-runtime-validated
+          path: dist/staging/android/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 14

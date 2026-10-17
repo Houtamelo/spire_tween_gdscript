@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "godot_minimum": "4.4",
+  "godot_versions": ["4.4", "4.5.2", "4.6.3", "4.7.2"],
+  "profiles": ["debug", "release"],
+  "platforms": {
+    "linux": ["x86_64-unknown-linux-gnu"],
+    "windows": ["x86_64-pc-windows-msvc"],
+    "macos": ["aarch64-apple-darwin", "x86_64-apple-darwin"],
+    "android": ["aarch64-linux-android", "x86_64-linux-android"]
+  },
+  "expected_results": {"native": 68, "gdscript": 152},
+  "macos_deployment_target": "11.0",
+  "android_ndk": "28.2.13676358",
+  "cargo_ndk": "4.1.2"
+}

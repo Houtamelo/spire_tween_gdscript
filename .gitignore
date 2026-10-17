@@ -20,6 +20,7 @@
 /network-security.data
 /server/
 Cargo.lock
+!/Cargo.lock
 \#*\#
 auto-save-list
 dist/

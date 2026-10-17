@@ -1,0 +1,17 @@
+[package]
+name = "spire_release"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[[bin]]
+name = "spire-release"
+path = "src/main.rs"
+
+[dependencies]
+anyhow = "1.0"
+regex = "1.12"
+serde_json = "1.0"
+sha2 = "0.10"
+toml = "0.9"
+zip = { version = "4", default-features = false, features = ["deflate"] }

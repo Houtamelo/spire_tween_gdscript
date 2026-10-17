@@ -10,9 +10,6 @@ if [[ ! -d "$ANDROID_NDK_HOME/toolchains/llvm/prebuilt" ]]; then
     exit 1
 fi
 
-for target in aarch64-linux-android x86_64-linux-android; do
-    cargo ndk -t "$target" build -p spire_tween --features include_gdext_lib,include_gdscript_bridge --artifact-dir="spire_tween_gdscript/addons/spire_tween/lib/$target/debug"
-    cargo ndk -t "$target" build -p spire_tween --features include_gdext_lib,include_gdscript_bridge --release --artifact-dir="spire_tween_gdscript/addons/spire_tween/lib/$target/release"
-done
+cargo run --locked -p spire_release -- build --platform android --out "${SPIRE_RELEASE_OUT:-dist/staging/android}"
 
 # i686 and armv7 builds remain unverified and are not built by this script.

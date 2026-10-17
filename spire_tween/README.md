@@ -144,10 +144,12 @@ Boolean contract, described in the [addon guide](../README.md#manual-stepping).
 - **godot-rust 0.5.x** (the `0.5` dependency constraint permits updates within that series)
 - **Nightly Rust** required — uses `type_changing_struct_update`, `unboxed_closures`,
   `arbitrary_self_types`, `stmt_expr_attributes`. A `rust-toolchain.toml` in the
-  project root selects a floating `nightly` channel.
+  project root pins `nightly-2026-08-11`; the root `Cargo.lock` records the release dependency snapshot.
 
-Godot 4.4 can be tested by explicitly enabling `api-4-4`, which forwards to
-`godot/api-4-4`. Ordinary builds use godot-rust's default API selection.
+The release pipeline explicitly enables `api-4-4`, which forwards to
+`godot/api-4-4`, for distributed Godot 4.4+ binaries. Ordinary development builds
+use godot-rust's default API selection. See the repository's `release/README.md`
+for the build, native-platform tests and archive verification workflow.
 
 ## The `prelude`
 
