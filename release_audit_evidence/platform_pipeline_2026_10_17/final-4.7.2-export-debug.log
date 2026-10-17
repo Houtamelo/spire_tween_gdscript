@@ -1,0 +1,24 @@
+Initialize godot-rust (API v4.4.stable.official, runtime v4.7.2.stable.official, safeguards strict)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Started Project initialization (5 steps)[39m[0m
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Scanning file structure...[39m[0m
+[  16% ] [90m[1mfirst_scan_filesystem[22m | Loading global class names...[39m[0m
+[  33% ] [90m[1mfirst_scan_filesystem[22m | Verifying GDExtensions...[39m[0m
+[  50% ] [90m[1mfirst_scan_filesystem[22m | Creating autoload scripts...[39m[0m
+[  66% ] [90m[1mfirst_scan_filesystem[22m | Initializing plugins...[39m[0m
+[  83% ] [90m[1mfirst_scan_filesystem[22m | Starting file scan...[39m[0m
+[92m[ DONE ][39m [1mfirst_scan_filesystem[22m
+[0m
+[   0% ] [90m[1msavepack[22m | Started Packing (102 steps)[39m[0m
+[   1% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/spire_tween.gdextension[39m[0m
+[  33% ] [90m[1msavepack[22m | Storing File: res://smoke.gdc[39m[0m
+[  66% ] [90m[1msavepack[22m | Storing File: res://godot/exported/133200997/export-07e53eed4c67b9f8a8c210331b42b5d2-smoke.scn[39m[0m
+[  66% ] [90m[1msavepack[22m | Storing File: res://smoke.gd.remap[39m[0m
+[  66% ] [90m[1msavepack[22m | Storing File: res://smoke.tscn.remap[39m[0m
+[  66% ] [90m[1msavepack[22m | Storing File: res://godot/global_script_class_cache.cfg[39m[0m
+[  66% ] [90m[1msavepack[22m | Storing File: res://godot/extension_list.cfg[39m[0m
+[  66% ] [90m[1msavepack[22m | Storing File: res://godot/uid_cache.bin[39m[0m
+[  66% ] [90m[1msavepack[22m | Storing File: res://project.binary[39m[0m
+[92m[ DONE ][39m [1msavepack[22m
+[0m

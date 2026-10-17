@@ -1,0 +1,39 @@
+{
+  "source_revision": "f87b076bca477cd6db7f44912daccb814b4f1927",
+  "source_sha256": "ed6f679b77c11232ab9ab93d8487ee385ecb98e624ae409671c4d8767078a2c5",
+  "linux_full_godot": "4.4.stable.official.4c311cbee",
+  "native_cases_per_profile": 134,
+  "gdscript_cases_per_profile": 152,
+  "profiles": [
+    "debug",
+    "release"
+  ],
+  "full_suite_binaries_match_final_staging": true,
+  "linux_glibc_minimum": "2.34",
+  "rust_cli_tests": 4,
+  "rust_real_pipeline_tests_linux": 3,
+  "windows_cross_compilation": "passed; static CRT; all four DLLs pass PE import checks",
+  "windows_real_artifact_failure_checks": "passed on Linux; corrupt imports, extra files, missing files, hash changes",
+  "macos_cargo_checks": [
+    "aarch64-apple-darwin",
+    "x86_64-apple-darwin"
+  ],
+  "native_windows_macos_runtime": "pending remote CI approval",
+  "android": "optional experimental build configured; not run or included in archive",
+  "archive": {
+    "path": "dist/artifacts/SpireTween-1.4.0-f87b076bca47-candidate-linux-windows.zip",
+    "bytes": 34579425,
+    "sha256": "57d0ce28e6e707107064034b4231cefababbb63ceed0497196cabe6065ccae88",
+    "platforms": [
+      "linux",
+      "windows"
+    ],
+    "linux_install_and_export_versions": [
+      "4.4",
+      "4.7.2"
+    ]
+  },
+  "remote_push": "automatic approval review rejected repository source egress; no push occurred",
+  "signing": "Apple repository secrets absent; not run",
+  "known_gdscript_shutdown_warnings": "ObjectDB leak warning and 2 resources still in use per full profile; separate existing audit item"
+}

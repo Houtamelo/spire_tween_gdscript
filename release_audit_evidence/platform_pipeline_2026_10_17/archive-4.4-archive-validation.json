@@ -1,0 +1,8 @@
+{
+  "arch": "x86_64",
+  "archive_sha256": "57d0ce28e6e707107064034b4231cefababbb63ceed0497196cabe6065ccae88",
+  "engine": "4.4.stable.official.4c311cbee",
+  "exports": true,
+  "passed": true,
+  "platform": "linux"
+}

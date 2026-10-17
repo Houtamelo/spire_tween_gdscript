@@ -170,6 +170,8 @@ artifact. Passing these functional checks does not certify the remaining distrib
 
 **2026-10-17 release automation follow-up:** the initial release scope is Godot 4.4+, Windows/Linux x86_64, and macOS ARM64/Intel. The shell/Rust workflow, pinned toolchain/lockfile, isolated API 4.4 builds, universal frameworks, signing hooks, checksum/provenance records, full-suite/export jobs, dependency notices/source copies, and allowlisted extracted-archive checks are implemented. Android ARM64/x86_64 is an optional experimental build and is excluded from the desktop archive. Remote platform results, Apple credentials/signing and downloaded-package validation must be recorded before closing this finding. See [release instructions](release/README.md). The observations below describe the pre-pipeline snapshot.
 
+Local verification passes: Linux full Godot 4.4 suites (134 native and 152 GDScript cases per profile), installation and debug/release exports on 4.4 and 4.7.2, real archive failure controls, Windows static-CRT cross-build/import checks, and both Mac architecture compile checks. A Linux/Windows candidate was extracted and run/exported successfully on Linux. Native Windows/macOS execution remains pending because automatic approval review rejected the branch push; no remote write occurred. See [local pipeline evidence](release_audit_evidence/platform_pipeline_2026_10_17/README.md). The separately recorded GDScript shutdown resource warnings persist.
+
 The installed Linux debug library reports an insert-only parent stopped at 0.25 seconds even though its child is scheduled for 0.5 seconds. Fresh source keeps the parent playing. The installed binary
 has `close_current_block`, so the older method-surface test alone cannot detect this newer staleness.
 

@@ -1,0 +1,37 @@
+Initialize godot-rust (API v4.4.stable.official, runtime v4.4.stable.official, safeguards strict)
+Godot Engine v4.4.stable.official.4c311cbee - https://godotengine.org
+
+ERROR: Cannot save file '/home/houtamelo/.config/godot/editor_settings-4.4.tres'.
+   at: save (scene/resources/resource_format_text.cpp:1719)
+ERROR: Error saving editor settings to /home/houtamelo/.config/godot/editor_settings-4.4.tres
+   at: save (editor/editor_settings.cpp:1317)
+ERROR: Cannot create file '/home/houtamelo/.cache/godot/editor_doc_cache-4.4.res'.
+   at: save (core/io/resource_format_binary.cpp:2158)
+ERROR: Cannot save editor help cache (/home/houtamelo/.cache/godot/editor_doc_cache-4.4.res).
+   at: _gen_doc_thread (editor/editor_help.cpp:2981)
+first_scan_filesystem: begin: Project initialization steps: 5
+	first_scan_filesystem: step 0: Scanning file structure...
+	first_scan_filesystem: step 1: Loading global class names...
+	first_scan_filesystem: step 2: Verifying GDExtensions...
+	first_scan_filesystem: step 3: Creating autoload scripts...
+	first_scan_filesystem: step 4: Initializing plugins...
+	first_scan_filesystem: step 5: Starting file scan...
+first_scan_filesystem: end
+savepack: begin: Packing steps: 102
+	savepack: step 2: Storing File: res://addons/spire_tween/spire_tween.gdextension
+	savepack: step 35: Storing File: res://smoke.gdc
+	savepack: step 68: Storing File: res://godot/exported/133200997/export-07e53eed4c67b9f8a8c210331b42b5d2-smoke.scn
+	savepack: step 68: Storing File: res://smoke.gd.remap
+	savepack: step 68: Storing File: res://smoke.tscn.remap
+	savepack: step 68: Storing File: res://godot/global_script_class_cache.cfg
+	savepack: step 68: Storing File: res://godot/uid_cache.bin
+	savepack: step 68: Storing File: res://godot/extension_list.cfg
+	savepack: step 68: Storing File: res://project.binary
+savepack: end
+loading_editor_layout: begin: Loading editor steps: 5
+	loading_editor_layout: step 0: Loading editor layout...
+loading_editor_layout: end
+ERROR: Cannot save file '/home/houtamelo/.config/godot/editor_settings-4.4.tres'.
+   at: save (scene/resources/resource_format_text.cpp:1719)
+ERROR: Error saving editor settings to /home/houtamelo/.config/godot/editor_settings-4.4.tres
+   at: save (editor/editor_settings.cpp:1317)
