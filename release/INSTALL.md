@@ -2,7 +2,9 @@
 
 Copy the archive's `addons/spire_tween` directory into your Godot project's `addons` directory. Open or reopen the project. No plugin switch or autoload is needed.
 
-The desktop release targets Godot 4.4 and newer supported Godot 4.x versions, Windows/Linux x86_64, and macOS Apple Silicon/Intel. A partial development candidate contains only the platforms named in its filename and extension manifest. Both editor/debug and exported release libraries are included for each packaged platform. `release.json` records the configured validation versions, available validation reports, source revision, Linux GLIBC requirement, macOS deployment target, and signing status. An archive with `candidate` in its name is a development candidate; consult its validation evidence before release. macOS candidates use ad-hoc signing and do not establish the normal downloaded-customer experience.
+The desktop release targets Godot 4.4 and newer supported Godot 4.x versions, Windows/Linux x86_64, and macOS Apple Silicon/Intel. A partial development candidate contains only the platforms named in its filename and extension manifest. Both editor/debug and exported release libraries are included for each packaged platform. `release.json` records the configured validation versions, available validation reports, source revision, Linux GLIBC requirement, macOS deployment target, and signing status. An archive with `candidate` in its name is a development candidate; consult its validation evidence before release.
+
+macOS libraries use ad-hoc signatures and are not notarized. The addon requires no Apple developer account. Downloaded libraries may require local approval, quarantine handling or re-signing before Godot loads them; see the [godot-rust distribution guidance](https://godot-rust.github.io/book/toolchain/export-mac-and-ios.html).
 
 Attach this script to a scene Node and run it:
 

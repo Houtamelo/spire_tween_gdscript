@@ -4,26 +4,11 @@ The `Release candidate` GitHub Actions workflow builds Windows x86_64, Linux x86
 
 ## Run the workflow
 
-Push or open a pull request to run an unsigned candidate. The final `verified-desktop-package` artifact appears only after the build, full native/GDScript suites, deliberate failure controls, installation checks, and exported-game checks succeed. Intermediate artifacts are diagnostics, not release approvals. Nothing publishes to itch.io or GitHub Releases automatically.
+Push or open a pull request to build and validate the desktop archive. The final `verified-desktop-package` artifact appears only after the build, full native/GDScript suites, deliberate failure controls, installation checks, and exported-game checks succeed. Intermediate artifacts are diagnostics, not release approvals. Nothing publishes to itch.io or GitHub Releases automatically.
 
-Use **Actions → Release candidate → Run workflow** for a signed desktop archive or optional Android builds. Android output is explicitly experimental and excluded from the desktop archive until device/emulator testing is implemented and passes.
+Use **Actions → Release candidate → Run workflow** for optional Android builds. Android output is explicitly experimental and excluded from the desktop archive until device/emulator testing is implemented and passes.
 
-Unsigned macOS candidates use ad-hoc signatures. They are suitable for development/CI, and do not establish the normal downloaded-customer experience. A commercial desktop archive requires Developer ID signing and accepted notarization of both frameworks.
-
-## Configure Apple signing once
-
-Repository secrets:
-
-| Secret | Value |
-|---|---|
-| `APPLE_CERT_BASE64` | Base64-encoded Developer ID Application PKCS12 certificate and private key |
-| `APPLE_CERT_PASSWORD` | PKCS12 password |
-| `APPLE_SIGNING_IDENTITY` | Full Developer ID Application identity |
-| `APPLE_ID` | Apple ID used for notarization |
-| `APPLE_TEAM_ID` | Developer team ID |
-| `APPLE_APP_PASSWORD` | App-specific password for notarization |
-
-Apple Developer Program enrollment and obtaining the certificate remain account-owner actions. The signing script uses a temporary keychain, checks each signature and accepted notarization response, and removes the certificate/keychain afterward. It fails if a required secret is absent. Frameworks cannot be stapled like app/disk-image/installer bundles; their signed-code notarization tickets are retrieved online. Customer download/quarantine behavior still requires verification on macOS with signed artifacts.
+macOS frameworks use free ad-hoc signatures in all archives. Building, testing and packaging require no Apple developer account, paid membership, certificates or repository secrets. The workflow does not submit software to Apple for notarization. Downloaded libraries may require local approval, quarantine handling or re-signing before Godot loads them; see the [godot-rust distribution guidance](https://godot-rust.github.io/book/toolchain/export-mac-and-ios.html). Downloaded-package behavior still requires verification on macOS.
 
 ## Build locally
 
@@ -69,17 +54,19 @@ The aggregate GDScript suite previously reported shutdown resource warnings desp
 
 ```bash
 cargo run --locked -p spire_release -- package \
-  --staging dist/staging --reports dist/reports --out dist/archive --candidate
+  --staging dist/staging --reports dist/reports --out dist/archive
 cargo run --locked -p spire_release -- test-archive \
-  --archive dist/archive/SpireTween-VERSION-REVISION-candidate.zip \
+  --archive dist/archive/SpireTween-VERSION-REVISION-desktop.zip \
   --godot "$(cat dist/engine/godot-path)" \
   --templates "$PWD/dist/engine/export/templates" --out dist/archive-validation
 ```
 
 The package uses an allowlist: addon runtime binaries/manifest, project license, README/release instructions, dependency notices, unmodified MPL dependency sources, provenance and SHA-256 manifests. It excludes example assets (including Girl Knight), native test libraries, caches, Rust intermediates, PDBs and import libraries. Debug runtime libraries remain included because the editor needs them.
 
-For a local partial candidate, pass `--platforms linux` or `--platforms linux,windows` together with `--candidate`. Its filename and manifest identify only the included platforms. Commercial packaging always requires all three desktop platforms. Rust standard-library copyright/license notices are included alongside the Cargo dependency inventory.
+For a local development candidate without the complete validation matrix, add `--candidate`. Pass `--platforms linux` or `--platforms linux,windows` together with `--candidate` for a partial archive; its filename and manifest identify only the included platforms. Commercial packaging always requires all three desktop platforms. Rust standard-library copyright/license notices are included alongside the Cargo dependency inventory.
 
-Without `--candidate`, packaging additionally requires a clean common source revision, signed/notarized macOS artifacts, and matching successful full-suite/export reports for every configured engine/platform/architecture. Archive extraction verifies every internal checksum and rejects extra files, then installs and runs both library profiles and exported games. The workflow delivers the exact archive that passed those checks. Toolchain/dependency/source pinning records reproducible inputs; bit-identical compilation across different machines is not claimed.
+Without `--candidate`, packaging additionally requires a clean common source revision and matching successful full-suite/export reports for every configured engine/platform/architecture. The package job runs a real-artifact integration test that accepts ad-hoc macOS frameworks and rejects missing Mac validation evidence. Run it locally with `SPIRE_RELEASE_STAGING` and `SPIRE_RELEASE_REPORTS` pointing to the complete build/report directories: `cargo test --locked -p spire_release --test desktop -- --ignored`.
+
+Archive extraction verifies every internal checksum and rejects extra files, then installs and runs both library profiles and exported games. The workflow delivers the exact archive that passed those checks. Toolchain/dependency/source pinning records reproducible inputs; bit-identical compilation across different machines is not claimed.
 
 The storefront URL, commercial version/changelog, and support terms remain separate release decisions.

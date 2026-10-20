@@ -25,6 +25,7 @@ fn fails(args: &[&str], marker: &str) {
 }
 #[test]
 fn rejects_unknown_missing_and_duplicate_arguments() {
+    fails(&["seal-signed-macos", "--stage", "unused"], "unknown command");
     fails(&["build", "--platform", "unknown", "--out", "unused"], "unknown platform");
     fails(&["build", "--platform", "linux"], "missing --out");
     fails(&["build", "--platform", "linux", "--out", "unused", "--typo", "true"], "unknown option");

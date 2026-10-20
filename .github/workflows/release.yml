@@ -6,10 +6,6 @@ on:
     branches: [main, 'ci/release-*']
   workflow_dispatch:
     inputs:
-      sign_macos:
-        description: Sign and notarize macOS frameworks using repository secrets
-        type: boolean
-        default: false
       android:
         description: Also build experimental Android ARM64/x86_64 artifacts (not sold in desktop archive)
         type: boolean
@@ -45,7 +41,7 @@ jobs:
         run: |
           cargo fmt -p spire_release -- --check
           cargo test --locked -p spire_release
-          for script in build_scripts/*.sh release/*.sh; do bash -n "$script"; done
+          for script in build_scripts/*.sh; do bash -n "$script"; done
       - name: Check workflow syntax
         run: |
           curl --fail --location --silent --show-error --output /tmp/actionlint.tar.gz https://github.com/rhysd/actionlint/releases/download/v1.7.12/actionlint_1.7.12_linux_amd64.tar.gz
@@ -77,16 +73,6 @@ jobs:
         env:
           PLATFORM: ${{ matrix.platform }}
         run: cargo run --locked -p spire_release -- build --platform "$PLATFORM" --out "dist/staging/$PLATFORM"
-      - name: Sign and notarize macOS frameworks
-        if: matrix.platform == 'macos' && github.event_name == 'workflow_dispatch' && inputs.sign_macos
-        env:
-          APPLE_CERT_BASE64: ${{ secrets.APPLE_CERT_BASE64 }}
-          APPLE_CERT_PASSWORD: ${{ secrets.APPLE_CERT_PASSWORD }}
-          APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
-          APPLE_ID: ${{ secrets.APPLE_ID }}
-          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
-          APPLE_APP_PASSWORD: ${{ secrets.APPLE_APP_PASSWORD }}
-        run: ./release/sign_macos.sh dist/staging/macos
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: build-${{ matrix.platform }}
@@ -148,13 +134,13 @@ jobs:
           path: dist/reports/
       - name: Assemble allowlisted desktop archive
         env:
-          SIGNED: ${{ github.event_name == 'workflow_dispatch' && inputs.sign_macos }}
+          SPIRE_RELEASE_STAGING: ${{ github.workspace }}/dist/staging
+          SPIRE_RELEASE_REPORTS: ${{ github.workspace }}/dist/reports
         run: |
           mkdir -p dist/staging
           for platform in linux windows macos; do mv "dist/builds/build-$platform" "dist/staging/$platform"; done
-          flags=()
-          if [[ "$SIGNED" != true ]]; then flags+=(--candidate); fi
-          cargo run --locked -p spire_release -- package --staging dist/staging --reports dist/reports --out dist/archive "${flags[@]}"
+          cargo test --locked -p spire_release --test desktop -- --ignored
+          cargo run --locked -p spire_release -- package --staging dist/staging --reports dist/reports --out dist/archive
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: assembled-archive

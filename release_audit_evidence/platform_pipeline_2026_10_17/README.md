@@ -1,6 +1,6 @@
 # Platform release pipeline — local verification, 2026-10-17
 
-The shell/Rust release pipeline is implemented. Native Windows/macOS CI and Apple signing are pending; a push to the existing public GitHub repository was rejected by automatic approval review because the exact source payload/destination had not been explicitly authorized. No remote branch or release was published.
+The shell/Rust release pipeline is implemented. Native Windows/macOS CI is pending; a push to the existing public GitHub repository was rejected by automatic approval review because the exact source payload/destination had not been explicitly authorized. No remote branch or release was published. On 2026-10-20 the owner chose free ad-hoc macOS signatures for distribution; Apple-account signing/notarization support and requirements were removed. The logs and JSON below preserve the original 2026-10-17 run.
 
 Build source: `82bed2b88a8ead2c94afc2095f41ee568d21100c`. Pinned toolchain: `nightly-2026-08-11`, rustc `1.99.0-nightly (12c36e253 2026-08-10)`. Godot API: explicit `api-4-4`; ordinary development defaults remain unchanged. CI invokes shell and Rust only.
 
@@ -28,4 +28,4 @@ Godot 4.4's extension-free asset importer emitted headless progress/editor-setti
 
 The known GDScript aggregate shutdown warnings persist: ObjectDB instances leaked and two resources still in use. The instance count was not enumerated in this run. Expected invalid-enum/invalid-built-in diagnostics also remain in the preserved full logs. These are distinct from functional test outcomes; this work does not resolve the separate shutdown warning investigation.
 
-The GitHub workflow builds on native Windows/Linux/macOS hosts and validates four engine minors, both profiles, and both Mac architectures. Apple certificate enrollment/provisioning remains an owner task; the repository currently has none of the signing secrets listed in [release instructions](../../release/README.md). Optional Android builds remain experimental and unvalidated at runtime. The final assembled desktop archive must pass the native/extracted-archive jobs before `verified-desktop-package` is produced. Nothing auto-publishes to itch.io or GitHub Releases.
+The GitHub workflow builds on native Windows/Linux/macOS hosts and validates four engine minors, both profiles, and both Mac architectures. Current [release instructions](../../release/README.md) require no Apple account or signing secrets. Optional Android builds remain experimental and unvalidated at runtime. The final assembled desktop archive must pass the native/extracted-archive jobs before `verified-desktop-package` is produced. Nothing auto-publishes to itch.io or GitHub Releases.

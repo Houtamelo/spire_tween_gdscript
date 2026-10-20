@@ -953,10 +953,6 @@ fn package(staging: &Path, reports: &Path, out: &Path, candidate: bool, platform
         );
         if !candidate {
             ensure!(source["dirty"] == false, "release artifacts were built from a dirty checkout");
-            ensure!(
-                platform != "macos" || record["signing"] == "developer-id-notarized",
-                "macOS release needs Developer ID signing and notarization"
-            );
             for version in config()["godot_versions"].as_array().unwrap() {
                 for arch in if platform == "macos" { vec!["aarch64", "x86_64"] } else { vec!["x86_64"] } {
                     let mut matched = false;
@@ -1123,7 +1119,7 @@ fn main() -> Result<()> {
         "build" => &["--platform", "--out"],
         "test" => &["--stage", "--godot", "--out", "--templates", "--smoke-only"],
         "test-archive" => &["--archive", "--godot", "--out", "--templates"],
-        "verify" | "seal-signed-macos" => &["--stage"],
+        "verify" => &["--stage"],
         "download" => &["--version", "--out", "--download-templates"],
         "package" => &["--staging", "--reports", "--out", "--candidate", "--platforms"],
         _ => bail!("unknown command {command}"),
@@ -1163,23 +1159,6 @@ fn main() -> Result<()> {
         "verify" => {
             verify(Path::new(get("--stage")?))?;
             Ok(())
-        }
-        "seal-signed-macos" => {
-            ensure!(std::env::consts::OS == "macos", "signing requires macOS");
-            let stage = Path::new(get("--stage")?);
-            let mut record = read_json(&stage.join("build.json"))?;
-            ensure!(record["platform"] == "macos", "not a macOS artifact");
-            for profile in ["debug", "release"] {
-                output(
-                    Command::new("codesign")
-                        .args(["--verify", "--strict"])
-                        .arg(stage.join(format!("addon/lib/universal-apple-darwin/{profile}/spire_tween.framework"))),
-                )?;
-                let accepted = read_json(&stage.join(format!("notarization-{profile}.json")))?;
-                ensure!(accepted["status"] == "Accepted", "framework notarization was not accepted");
-            }
-            record["signing"] = json!("developer-id-notarized");
-            seal(stage, &mut record)
         }
         "download" => download(get("--version")?, Path::new(get("--out")?), flags.contains("--download-templates")),
         "package" => package(
