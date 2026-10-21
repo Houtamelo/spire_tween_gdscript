@@ -204,6 +204,10 @@ for the build, native-platform tests and archive verification workflow.
 
 Per-item docs live on [docs.rs](https://docs.rs/spire_tween).
 
+`SpireDoCanvasItem::do_fade(to: f64, duration: f64)` aliases `do_modulate_a` and is inherited by `Node2D` and its subclasses. It animates `modulate.a`, preserving RGB and `self_modulate`. Like other native property constructors, it returns an unregistered builder: `node.do_fade(0.0, 0.3).register()`. GDScript exposes the same alias as `DoCanvasItem.fade(node, to, duration)`, returning an already registered `SpirePropertyFloat`.
+
+Property helpers are generated with `cargo run --locked -p gdscript_bindgen` from `tweenable_properties.json`. The existing `alias` field also supports individual generated components: `{ "name": "modulate:a", "ty": "f32", "alias": "fade" }` in `CanvasItem` adds `do_fade` and `DoCanvasItem.fade` alongside the existing `do_color_a` / `DoCanvasItem.color_a` aliases. The parent `modulate` entry supplies the property accessors.
+
 ## Two register paths
 
 Pick based on who needs to listen for `stopped` / `finished` / `loop_finished`:

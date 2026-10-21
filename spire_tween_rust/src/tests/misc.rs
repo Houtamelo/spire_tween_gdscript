@@ -1,4 +1,7 @@
-use godot::{classes::CollisionShape2D, prelude::*};
+use godot::{
+    classes::{CanvasItem, CollisionShape2D},
+    prelude::*,
+};
 use spire_tween::prelude::*;
 
 use super::util::*;
@@ -24,6 +27,8 @@ impl ITestClass for MiscTests {
             ("test_force_complete", Self::test_force_complete),
             ("test_dyn_target", Self::test_dyn_target),
             ("test_property_path", Self::test_property_path),
+            ("test_fade_alias", Self::test_fade_alias),
+            ("test_fade_alias_freed_owner", Self::test_fade_alias_freed_owner),
         ]
     }
 
@@ -31,6 +36,47 @@ impl ITestClass for MiscTests {
 }
 
 impl MiscTests {
+    fn test_fade_alias(&mut self) -> PinnedTestTask {
+        let initial = Color::from_rgba(0.125, 0.25, 0.5, 1.0);
+        self.shape.set_modulate(initial);
+        self.base_mut().set_modulate(initial);
+        let self_modulate = self.shape.get_self_modulate();
+
+        // Exercise both Gd<DerivedNode2D> and the native WithBaseField constructor.
+        let candidates = [
+            (self.shape.clone().upcast::<CanvasItem>(), self.shape.do_fade(0.0, 1.0)),
+            (self.to_gd().upcast::<CanvasItem>(), self.do_fade(0.0, 1.0)),
+        ];
+        let canonical_path = self.shape.do_modulate_a(0.0, 1.0).get_property_path();
+        assert_eq!(self.shape.do_color_a(0.0, 1.0).get_property_path(), canonical_path);
+        for (node, tween) in candidates {
+            assert_eq!(tween.get_property_path(), canonical_path);
+            let mut tween = TweenPtr::new(tween);
+            assert!(!tween.is_registered(), "native aliases must preserve builder semantics");
+            tween.set_ease(EaseKind::Basic(Ease::Linear));
+            assert!(matches!(tween.custom_step(0.5, false), TweenStepResult::Stepped(AdvanceTimeResult::Playing)));
+            assert_eq!(node.get_modulate(), Color::from_rgba(initial.r, initial.g, initial.b, 0.5));
+            assert!(matches!(
+                tween.custom_step(0.75, false),
+                TweenStepResult::Stepped(AdvanceTimeResult::Completed { .. })
+            ));
+            assert_eq!(node.get_modulate(), Color::from_rgba(initial.r, initial.g, initial.b, 0.0));
+            assert!(tween.is_stopped());
+        }
+        assert_eq!(self.shape.get_self_modulate(), self_modulate);
+        Box::pin(async {})
+    }
+
+    fn test_fade_alias_freed_owner(&mut self) -> PinnedTestTask {
+        let node = Node2D::new_alloc();
+        self.base_mut().add_child(&node);
+        let mut tween = TweenPtr::new(node.do_fade(0.0, 1.0));
+        node.free();
+        assert!(matches!(tween.custom_step(0.5, false), TweenStepResult::Stepped(AdvanceTimeResult::ShouldDespawn)));
+        assert!(tween.is_stopped());
+        Box::pin(async {})
+    }
+
     fn test_force_complete(&mut self) -> PinnedTestTask {
         let mut shape = self.shape.clone();
         let final_value = Vector2::ONE * 2.5;

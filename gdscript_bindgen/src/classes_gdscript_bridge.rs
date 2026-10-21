@@ -86,7 +86,7 @@ fn tokenize_class_bridge(class: &ClassData) -> TokenStream {
                     }),
                 };
 
-                let alias = alias.as_ref().map(|(alias_bridge, _)| {
+                let alias = alias.iter().map(|(alias_bridge, _)| {
                     let alias_doc_str = format!("Alias for [method {}].", bridge_fn_name.unraw());
                     let alias_doc_lit = Lit::Str(LitStr::new(&alias_doc_str, Span::call_site()));
 
@@ -127,7 +127,7 @@ fn tokenize_class_bridge(class: &ClassData) -> TokenStream {
                         gd_from_native_tween(tween)
                     }
 
-                    #alias
+                    #(#alias)*
                 }
             },
         )

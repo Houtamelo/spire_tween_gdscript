@@ -188,7 +188,7 @@ fn tokenize_trait_definition(class: &ClassData) -> TokenStream {
                     fn #trait_fn_name(&self, end_val: #rust_ty, duration: f64) -> SpireTween<LerpPropertyData<#rust_ty>>;
                 });
 
-                if let Some((_, alias_trait)) = alias {
+                for (_, alias_trait) in alias {
                     items.push(quote! {
                         fn #alias_trait(&self, end_val: #rust_ty, duration: f64) -> SpireTween<LerpPropertyData<#rust_ty>>;
                     });
@@ -228,7 +228,7 @@ fn tokenize_trait_gd_impl(class: &ClassData) -> TokenStream {
                 }
             });
 
-            if let Some((_, alias_trait)) = alias {
+            for (_, alias_trait) in alias {
                 items.push(
                     quote! {
                         fn #alias_trait(&self, end_val: #rust_ty, duration: f64) -> SpireTween<LerpPropertyData<#rust_ty >> {
@@ -278,7 +278,7 @@ fn tokenize_trait_direct_impl(class: &ClassData) -> TokenStream {
                     }
                 });
 
-                if let Some((_, alias_trait)) = alias {
+                for (_, alias_trait) in alias {
                     items.push(quote! {
                         fn #alias_trait(&self, end_val: #rust_ty, duration: f64) -> SpireTween<LerpPropertyData<#rust_ty>> {
                             let owner: Gd<#class_ident> = self.to_gd().upcast();

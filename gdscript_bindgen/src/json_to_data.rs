@@ -49,7 +49,7 @@ pub struct TweensMap {
 #[derive(Clone)]
 pub struct TweenFunc {
     pub property_path: String,
-    pub alias: Option<(Ident, Ident)>,
+    pub alias: Vec<(Ident, Ident)>,
     pub enum_discrim: Ident,
     pub get_expr: TokenStream,
     pub set_expr: TokenStream,
@@ -111,7 +111,9 @@ impl TweenFunc {
 
         let alias = alias
             .as_ref()
-            .map(|s| (Ident::new_raw(s, Span::call_site()), format_ident!("do_{s}")));
+            .map(|s| (Ident::new_raw(s, Span::call_site()), format_ident!("do_{s}")))
+            .into_iter()
+            .collect();
 
         Self {
             property_path,
@@ -222,7 +224,9 @@ impl TweenFunc {
 
         let alias = alias
             .as_ref()
-            .map(|s| (format_ident!("{s}_{inner_field}"), format_ident!("do_{s}_{inner_field}")));
+            .map(|s| (format_ident!("{s}_{inner_field}"), format_ident!("do_{s}_{inner_field}")))
+            .into_iter()
+            .collect();
 
         Self {
             property_path,
@@ -259,7 +263,7 @@ fn gen_class_type_tweens_map(ClassJson { class, tweens, .. }: &ClassJson) -> GdS
         methods: Vec::new(),
     });
 
-    for tween_json in tweens {
+    for tween_json in tweens.iter().filter(|tween| !tween.name.contains(':')) {
         let gd_ty = GdScriptType::from(tween_json.ty);
         type_tweens_map[gd_ty].methods.push(TweenFunc::direct(tween_json));
 
@@ -298,6 +302,28 @@ fn gen_class_type_tweens_map(ClassJson { class, tweens, .. }: &ClassJson) -> GdS
             }
             | TweenType::f32 | TweenType::f64 | TweenType::i32 | TweenType::i64 | TweenType::String => {}
         }
+    }
+
+    // Component entries add aliases to the already-generated constructor,
+    // preserving aliases inherited from the parent property (e.g. color_a).
+    for tween_json in tweens.iter().filter(|tween| tween.name.contains(':')) {
+        assert!(
+            tween_json.func.is_none() && tween_json.get.is_none() && tween_json.set.is_none(),
+            "Indexed entries only configure aliases; configure accessors on the parent property"
+        );
+        let alias = tween_json
+            .alias
+            .as_ref()
+            .expect("An indexed entry must specify an alias");
+        let gd_ty = GdScriptType::from(tween_json.ty);
+        let method = type_tweens_map[gd_ty]
+            .methods
+            .iter_mut()
+            .find(|method| method.property_path == tween_json.name)
+            .unwrap_or_else(|| panic!("No generated {class}.{} constructor with the specified type", tween_json.name));
+        method
+            .alias
+            .push((Ident::new_raw(alias, Span::call_site()), format_ident!("do_{alias}")));
     }
 
     type_tweens_map

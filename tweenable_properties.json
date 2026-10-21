@@ -28,6 +28,7 @@
 	{
 		"class": "CanvasItem", "tweens": [
 		{ "name": "modulate", "ty": "Color", "alias": "color" },
+		{ "name": "modulate:a", "ty": "f32", "alias": "fade" },
 		{ "name": "self_modulate", "ty": "Color", "alias": "self_color" },
 		{ "name": "z_index", "ty": "i32" }
 	]

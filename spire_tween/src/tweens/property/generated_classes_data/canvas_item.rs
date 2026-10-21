@@ -416,6 +416,7 @@ pub trait SpireDoCanvasItem<Marker = ()> {
         end_val: f64,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<f64>>;
+    fn do_fade(&self, end_val: f64, duration: f64) -> SpireTween<LerpPropertyData<f64>>;
     fn do_self_modulate_r(
         &self,
         end_val: f64,
@@ -612,6 +613,18 @@ for Gd<Class> {
         end_val: f64,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<f64>> {
+        let data = CanvasItemFloatData {
+            property: <CanvasItemFloatKind>::ModulateA,
+            owner: self.clone().upcast(),
+            owner_obj_or_node: ObjectOrNode::Node(
+                self.clone().upcast::<CanvasItem>().upcast::<Node>(),
+            ),
+        };
+        SpireTween::<
+            LerpPropertyData<f64>,
+        >::new(data.into(), Evaluator::Static(end_val), duration)
+    }
+    fn do_fade(&self, end_val: f64, duration: f64) -> SpireTween<LerpPropertyData<f64>> {
         let data = CanvasItemFloatData {
             property: <CanvasItemFloatKind>::ModulateA,
             owner: self.clone().upcast(),
@@ -944,6 +957,17 @@ impl<
         end_val: f64,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<f64>> {
+        let owner: Gd<CanvasItem> = self.to_gd().upcast();
+        let data = CanvasItemFloatData {
+            property: <CanvasItemFloatKind>::ModulateA,
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner,
+        };
+        SpireTween::<
+            LerpPropertyData<f64>,
+        >::new(data.into(), Evaluator::Static(end_val), duration)
+    }
+    fn do_fade(&self, end_val: f64, duration: f64) -> SpireTween<LerpPropertyData<f64>> {
         let owner: Gd<CanvasItem> = self.to_gd().upcast();
         let data = CanvasItemFloatData {
             property: <CanvasItemFloatKind>::ModulateA,

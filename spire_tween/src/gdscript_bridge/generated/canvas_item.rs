@@ -83,6 +83,11 @@ impl DoCanvasItem {
     fn color_a(node: Gd<CanvasItem>, to: f64, duration: f64) -> Gd<SpirePropertyFloat> {
         Self::modulate_a(node, to, duration)
     }
+    ///Alias for [method modulate_a].
+    #[func(rename = fade)]
+    fn r#fade(node: Gd<CanvasItem>, to: f64, duration: f64) -> Gd<SpirePropertyFloat> {
+        Self::modulate_a(node, to, duration)
+    }
     /**[b]Behavior: [/b]Tweens the `r` component of the property [member CanvasItem.self_modulate] over [param duration] seconds.
 
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/

@@ -466,6 +466,12 @@ Examples: `DoNode2D.global_position`, `DoCanvasItem.modulate_a`, `DoControl.rota
 
 Since we know the class and property at compile time, the GDScript compiler will yell if you accidentally try to pass bad arguments.
 
+`DoCanvasItem.fade(node: CanvasItem, to: float, duration: float) -> SpirePropertyFloat` is an alias for `DoCanvasItem.modulate_a`: it animates `modulate.a`, preserving the RGB channels and `self_modulate`. Like other `CanvasItem` constructors, it accepts `Node2D` and its subclasses and returns an already registered tween.
+
+```gdscript
+DoCanvasItem.fade(sprite, 0.0, 0.3) # Fade out over 0.3 seconds.
+```
+
 The second approach, which is meant for cases where you want to tween a custom property, is to provide an API similar to Godot's built-in, except that the API is split into multiple methods based on
 the type being tweened.
 

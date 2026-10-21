@@ -26,7 +26,7 @@
 		}, "PropertyItem": {
 			"type": "object", "properties": {
 				"name": {
-					"type": "string", "description": "The name of the property.", "minLength": 1
+					"type": "string", "description": "The property name. An indexed path such as modulate:a adds an alias to that generated component constructor; specify its component type and alias, and configure accessors on the parent property.", "minLength": 1
 				}, "ty": {
 					"$ref": "#/definitions/PropertyType",
 					"description": "The data type of the property."
