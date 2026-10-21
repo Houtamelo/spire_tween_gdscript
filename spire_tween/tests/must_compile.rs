@@ -213,3 +213,21 @@ fn unregister_delegated_any(mut tween: AnyTween) { tween.unregister(); }
 
 fn unregister_delayed_call(mut tween: TweenPtr<Callable>) { tween.unregister(); }
 fn unregister_sequence(mut tween: TweenPtr<Sequence>) { tween.unregister(); }
+
+macro_rules! stop_connection_api {
+    ($name:ident, $ty:ty) => {
+        fn $name(mut tween: $ty) {
+            tween.stopped_connect(|| {}, SpireFlags::ONE_SHOT);
+            let callable = Callable::from_fn("stop", |_| {});
+            tween.stopped_connect_callable(callable.clone(), SpireFlags::DEFERRED);
+            tween.stopped_disconnect_callable(&callable);
+            tween.stopped_clear_connections();
+        }
+    };
+}
+
+stop_connection_api!(stop_concrete, TweenDelayedCall);
+stop_connection_api!(stop_pointer, TweenPtr<Callable>);
+stop_connection_api!(stop_any, AnyTween);
+stop_connection_api!(stop_method, AnyMethodTween);
+stop_connection_api!(stop_property, AnyPropertyTween);

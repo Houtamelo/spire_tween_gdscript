@@ -1,0 +1,172 @@
+4.4 debug native
+NATIVE_BOOKKEEPING_RESULT total=11 failed=0
+NATIVE_DELAY_VALIDITY_RESULT total=9 failed=0
+NATIVE_METHOD_VALIDITY_RESULT total=10 failed=0
+NATIVE_API_RESULT total=5 failed=0
+NATIVE_OWNERSHIP_RESULT total=10 failed=0
+NATIVE_BINDING_RESULT total=11 failed=0
+NATIVE_CYCLE_RESULT total=10 failed=0
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_transitions_and_pause_after_stop
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_completion_order_and_loops
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_forced_completion_and_replay
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_invalid_callable_cancellation
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_manager_completion_and_cancellation
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_dead_bindings_in_all_states
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_failed_property_force_complete
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_erased_connections_disconnect_and_clear
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_deferred_and_one_shot_connections
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_cleanup_before_godot_finished
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_nested_sequence_cancellation_and_replay
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_sequence_adoption_rearms_children
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_unregister_and_drop_do_not_emit
+NATIVE_TEST_RESULT total=81 failed=0
+async_pass
+NATIVE_TEST_RESULT total=1 failed=0
+async_panic
+NATIVE_TEST_RESULT total=1 failed=1
+4.4 debug gdscript
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_transitions_and_pause_after_stop
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_completion_order_and_loops
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_forced_completion_and_replay
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_invalid_callable_cancellation
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_manager_completion_and_cancellation
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_dead_bindings_in_all_states
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_failed_property_force_complete
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_signal_connection_flags
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_nested_sequence_cancellation_and_replay
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_sequence_adoption_rearms_children
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_unregister_and_drop_do_not_emit
+GDSCRIPT_TEST_RESULT total=163 failed=0 skipped=0
+async_pass
+GDSCRIPT_TEST_RESULT total=1 failed=0 skipped=0
+helper_failure
+GDSCRIPT_TEST_RESULT total=1 failed=1 skipped=0
+4.4 release native
+NATIVE_BOOKKEEPING_RESULT total=11 failed=0
+NATIVE_DELAY_VALIDITY_RESULT total=9 failed=0
+NATIVE_METHOD_VALIDITY_RESULT total=10 failed=0
+NATIVE_API_RESULT total=5 failed=0
+NATIVE_OWNERSHIP_RESULT total=10 failed=0
+NATIVE_BINDING_RESULT total=11 failed=0
+NATIVE_CYCLE_RESULT total=10 failed=0
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_transitions_and_pause_after_stop
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_completion_order_and_loops
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_forced_completion_and_replay
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_invalid_callable_cancellation
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_manager_completion_and_cancellation
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_dead_bindings_in_all_states
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_failed_property_force_complete
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_erased_connections_disconnect_and_clear
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_deferred_and_one_shot_connections
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_cleanup_before_godot_finished
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_nested_sequence_cancellation_and_replay
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_sequence_adoption_rearms_children
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_unregister_and_drop_do_not_emit
+NATIVE_TEST_RESULT total=81 failed=0
+async_pass
+NATIVE_TEST_RESULT total=1 failed=0
+async_panic
+NATIVE_TEST_RESULT total=1 failed=1
+4.4 release gdscript
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_transitions_and_pause_after_stop
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_completion_order_and_loops
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_forced_completion_and_replay
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_invalid_callable_cancellation
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_manager_completion_and_cancellation
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_dead_bindings_in_all_states
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_failed_property_force_complete
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_signal_connection_flags
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_nested_sequence_cancellation_and_replay
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_sequence_adoption_rearms_children
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_unregister_and_drop_do_not_emit
+GDSCRIPT_TEST_RESULT total=163 failed=0 skipped=0
+async_pass
+GDSCRIPT_TEST_RESULT total=1 failed=0 skipped=0
+helper_failure
+GDSCRIPT_TEST_RESULT total=1 failed=1 skipped=0
+4.7.2 debug native
+NATIVE_BOOKKEEPING_RESULT total=11 failed=0
+NATIVE_DELAY_VALIDITY_RESULT total=9 failed=0
+NATIVE_METHOD_VALIDITY_RESULT total=10 failed=0
+NATIVE_API_RESULT total=5 failed=0
+NATIVE_OWNERSHIP_RESULT total=10 failed=0
+NATIVE_BINDING_RESULT total=11 failed=0
+NATIVE_CYCLE_RESULT total=10 failed=0
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_transitions_and_pause_after_stop
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_completion_order_and_loops
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_forced_completion_and_replay
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_invalid_callable_cancellation
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_manager_completion_and_cancellation
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_dead_bindings_in_all_states
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_failed_property_force_complete
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_erased_connections_disconnect_and_clear
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_deferred_and_one_shot_connections
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_cleanup_before_godot_finished
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_nested_sequence_cancellation_and_replay
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_sequence_adoption_rearms_children
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_unregister_and_drop_do_not_emit
+NATIVE_TEST_RESULT total=81 failed=0
+async_pass
+NATIVE_TEST_RESULT total=1 failed=0
+async_panic
+NATIVE_TEST_RESULT total=1 failed=1
+4.7.2 debug gdscript
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_transitions_and_pause_after_stop
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_completion_order_and_loops
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_forced_completion_and_replay
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_invalid_callable_cancellation
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_manager_completion_and_cancellation
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_dead_bindings_in_all_states
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_failed_property_force_complete
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_signal_connection_flags
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_nested_sequence_cancellation_and_replay
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_sequence_adoption_rearms_children
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_unregister_and_drop_do_not_emit
+GDSCRIPT_TEST_RESULT total=163 failed=0 skipped=0
+async_pass
+GDSCRIPT_TEST_RESULT total=1 failed=0 skipped=0
+helper_failure
+GDSCRIPT_TEST_RESULT total=1 failed=1 skipped=0
+4.7.2 release native
+NATIVE_BOOKKEEPING_RESULT total=11 failed=0
+NATIVE_DELAY_VALIDITY_RESULT total=9 failed=0
+NATIVE_METHOD_VALIDITY_RESULT total=10 failed=0
+NATIVE_API_RESULT total=5 failed=0
+NATIVE_OWNERSHIP_RESULT total=10 failed=0
+NATIVE_BINDING_RESULT total=11 failed=0
+NATIVE_CYCLE_RESULT total=10 failed=0
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_transitions_and_pause_after_stop
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_completion_order_and_loops
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_forced_completion_and_replay
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_invalid_callable_cancellation
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_manager_completion_and_cancellation
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_dead_bindings_in_all_states
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_failed_property_force_complete
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_erased_connections_disconnect_and_clear
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_deferred_and_one_shot_connections
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_cleanup_before_godot_finished
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_nested_sequence_cancellation_and_replay
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_sequence_adoption_rearms_children
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_unregister_and_drop_do_not_emit
+NATIVE_TEST_RESULT total=81 failed=0
+async_pass
+NATIVE_TEST_RESULT total=1 failed=0
+async_panic
+NATIVE_TEST_RESULT total=1 failed=1
+4.7.2 release gdscript
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_transitions_and_pause_after_stop
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_completion_order_and_loops
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_forced_completion_and_replay
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_invalid_callable_cancellation
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_manager_completion_and_cancellation
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_dead_bindings_in_all_states
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_failed_property_force_complete
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_signal_connection_flags
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_nested_sequence_cancellation_and_replay
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_sequence_adoption_rearms_children
+TEST_PASS res://examples/tests/stop_events.tscn::test_stop_unregister_and_drop_do_not_emit
+GDSCRIPT_TEST_RESULT total=163 failed=0 skipped=0
+async_pass
+GDSCRIPT_TEST_RESULT total=1 failed=0 skipped=0
+helper_failure
+GDSCRIPT_TEST_RESULT total=1 failed=1 skipped=0

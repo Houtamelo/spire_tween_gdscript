@@ -55,7 +55,7 @@ use super::*;
 ///
 /// Each factory runs synchronously on the main thread at most once. Its accepted
 /// result replaces the factory, so loops and replay reuse the child rather than
-/// constructing it again. [`force_complete`](SpireTweener::force_complete) invokes
+/// constructing it again. [`force_complete`](SpireTween::force_complete) invokes
 /// pending factories immediately and completes their children. A failed or rejected
 /// factory is removed without preventing subsequent items from running.
 ///
@@ -123,9 +123,9 @@ pub enum TweenCtor {
 /// One slot inside a [`Sequence`] block: a child tween, lazy constructor, callback,
 /// or interval (delay).
 pub enum BlockItem {
-    Tween(AnyTween),
     /// Replaced by a child tween when this block is first processed or force-completed.
     Ctor(TweenCtor),
+    Tween(AnyTween),
     /// Retained Rust callback invoked once per loop, unlike a consumed constructor.
     RustFn {
         f: Box<dyn FnMut()>,
@@ -186,25 +186,53 @@ impl From<Callable> for BlockItem {
 }
 
 impl SpireTweener for SpireTween<Sequence> {
-    #[inline]
-    fn play(&mut self) {
-        if self.is_stopped() {
-            self.reset_counters();
-            self.restart_inner_tweens();
-        }
-
-        self.state = State::Playing;
-    }
-
-    #[inline]
-    fn pause(&mut self) {
-        if self.state != State::Stopped {
-            self.state = State::Paused;
+    fn play_internal(&mut self) {
+        match self.state {
+            State::Stopped => {
+                self.reset_counters();
+                self.restart_inner_tweens();
+            }
+            State::Paused | State::Playing => {}
         }
     }
 
-    #[inline]
-    fn stop(&mut self) { self.state = State::Stopped; }
+    fn pause_internal(&mut self) {}
+
+    fn stop_internal(&mut self) {
+        for (_, item) in &mut self.t.inserts {
+            match item {
+                InsertItem::Ctor(_) => {}
+                InsertItem::Tween(tween) => tween.stop(),
+                InsertItem::RustFn { f: _, invoked } => {
+                    *invoked = false;
+                }
+                InsertItem::Callable { callable: _, invoked } => {
+                    *invoked = false;
+                }
+            }
+        }
+
+        for block in &mut self.t.queue {
+            for item in block {
+                match item {
+                    BlockItem::Ctor(_) => {}
+                    BlockItem::Tween(tween) => tween.stop(),
+                    BlockItem::RustFn { f: _, invoked } => {
+                        *invoked = false;
+                    }
+                    BlockItem::Callable { callable: _, invoked } => {
+                        *invoked = false;
+                    }
+                    BlockItem::Interval {
+                        interval_time: _,
+                        elapsed_time,
+                    } => {
+                        *elapsed_time = 0.;
+                    }
+                }
+            }
+        }
+    }
 
     fn process_internal(&mut self, delta_time: f64, is_tree_paused: bool) -> AdvanceTimeResult {
         let Some(actual_step) = self.handle_time_step(delta_time) else { return AdvanceTimeResult::Playing };
@@ -239,14 +267,14 @@ impl SpireTweener for SpireTween<Sequence> {
         }
     }
 
-    fn force_complete(&mut self) {
+    fn force_complete_internal(&mut self) -> bool {
         self.force_complete_inserts();
 
         for queue_idx in 0..self.t.queue.len() {
             self.force_complete_block(queue_idx);
         }
 
-        self.handle_finished();
+        true
     }
 }
 
@@ -1059,7 +1087,12 @@ impl SpireTween<Sequence> {
         }
 
         match self.state {
-            State::Playing | State::Paused => tween.pause(),
+            State::Playing | State::Paused => match tween.get_state() {
+                State::Stopped | State::Paused => {
+                    tween.play();
+                }
+                State::Playing => {}
+            },
             State::Stopped => tween.stop(),
         }
 

@@ -20,6 +20,9 @@ pub struct SpireTween<T: ITweenable> {
     pub loop_max: i64,
     pub loop_mode: LoopMode,
     pub loop_counter: i64,
+    /// Native stop-event subscriptions. Prefer [`Self::stopped_connect`] and its
+    /// Callable/disconnect/clear variants to manage them.
+    pub stopped_connections: Vec<Connection>,
     pub loop_finished_connections: Vec<Connection>,
     pub finished_connections: Vec<Connection>,
     #[doc(hidden)]
@@ -35,9 +38,10 @@ impl<T: ITweenable> SpireTween<T> {
     pub fn get_gd_handle(&self) -> Option<T::GdHandle> { self.gd_handle.get() }
 }
 
-/// One callback registered against a tween's `finished` or `loop_finished` event.
+/// One callback registered against a tween's `stopped`, `finished`, or `loop_finished` event.
 ///
-/// Stored inside [`SpireTween::finished_connections`] /
+/// Stored inside [`SpireTween::stopped_connections`] /
+/// [`SpireTween::finished_connections`] /
 /// [`SpireTween::loop_finished_connections`]. Built indirectly by the
 /// `*_connect` / `*_connect_callable` methods.
 pub struct Connection {
@@ -49,14 +53,16 @@ pub struct Connection {
 
 bitflags! {
     /// Dispatch options for closure-event connections registered via
-    /// [`SpireTween::finished_connect`] / [`SpireTween::loop_finished_connect`] (and
+    /// [`SpireTween::stopped_connect`], [`SpireTween::finished_connect`], and
+    /// [`SpireTween::loop_finished_connect`] (and
     /// their `_callable` siblings).
     ///
-    /// Tweens emit two events: `loop_finished` (per loop) and `finished` (after the
-    /// last loop, or after [`SpireTweener::force_complete`]). There are two parallel
+    /// Tweens emit `loop_finished` per completed loop, `stopped` when playback
+    /// transitions to stopped, and `finished` on successful completion, including
+    /// [`SpireTween::force_complete`]. There are two parallel
     /// ways to subscribe:
-    /// - **GDScript / gdext-signal consumers:** connect to the `loop_finished` /
-    ///   `finished` Godot signals on the `Gd<Spire…>` handle returned by
+    /// - **GDScript / gdext-signal consumers:** connect to the `stopped`,
+    ///   `loop_finished`, or `finished` Godot signals on the `Gd<Spire…>` handle returned by
     ///   [`SpireTween::register_with_gd_handle`].
     /// - **Pure Rust consumers:** use the `*_connect` / `*_connect_callable` methods
     ///   on [`SpireTween<T>`]. No `Gd` handle required —
@@ -93,6 +99,7 @@ impl<T: ITweenable> SpireTween<T> {
             process_mode: Default::default(),
             loop_max: 1,
             loop_mode: Default::default(),
+            stopped_connections: Default::default(),
             loop_finished_connections: Default::default(),
             finished_connections: Default::default(),
             gd_handle: Default::default(),
@@ -104,8 +111,8 @@ impl<T: ITweenable> SpireTween<T> {
     #[inline]
     pub fn get_state(&self) -> State { self.state }
 
-    /// Delegates to [`play`](SpireTweener::play), [`pause`](SpireTweener::pause), or
-    /// [`stop`](SpireTweener::stop) based on the given state.
+    /// Delegates to [`play`](Self::play), [`pause`](Self::pause), or
+    /// [`stop`](Self::stop) based on the given state.
     #[inline]
     pub fn set_state(&mut self, state: State)
     where Self: SpireTweener {
@@ -128,7 +135,8 @@ impl<T: ITweenable> SpireTween<T> {
     /// Returns `true` if the state is [`State::Stopped`]; `false` otherwise.
     ///
     /// A tween automatically stops once it finishes playing, but you can forcibly
-    /// stop it with [`SpireTweener::stop`].
+    /// stop it with [`Self::stop`]. Invalidated tweens also enter this state;
+    /// listen for `finished` to distinguish successful completion.
     #[inline]
     pub fn is_stopped(&self) -> bool { self.state == State::Stopped }
 
@@ -252,11 +260,12 @@ impl<T: ITweenable> SpireTween<T> {
     #[inline]
     pub fn get_animation_position(&self) -> f64 { self.loop_time }
     /// Total time the tween has been animating (across all loops, since it started).
-    /// Affected by [`set_speed_scale`](Self::set_speed_scale); reset to 0 by [`SpireTweener::stop`].
+    /// Affected by [`set_speed_scale`](Self::set_speed_scale); reset to 0 when
+    /// [`Self::play`] restarts a stopped tween.
     #[inline]
     pub fn get_total_elapsed_time(&self) -> f64 { self.total_elapsed_time }
-    /// Number of loops completed since this tween began playing. Resets to 0 when the
-    /// tween is stopped.
+    /// Number of loops completed since this tween began playing. Preserved while
+    /// stopped; resets to 0 when [`Self::play`] restarts it.
     #[inline]
     pub fn get_loops_finished(&self) -> i64 { self.loop_counter }
 
@@ -296,9 +305,55 @@ impl<T: ITweenable> SpireTween<T> {
     #[inline]
     pub fn set_loop_mode(&mut self, loop_mode: LoopMode) { self.loop_mode = loop_mode; }
 
-    /// Registers a Rust closure to run after each loop completes (and once more
-    /// after the final loop, just before [`finished_connect`](Self::finished_connect)
-    /// fires).
+    /// Registers a Rust closure for each transition from playing or paused to stopped.
+    ///
+    /// Fires on explicit stop, successful completion, and cancellation caused by an
+    /// invalid owner, callable, or binding. Repeated `stop()` calls while stopped
+    /// are silent. Replay permits another stop event; intermediate loops do not stop.
+    /// Unregistering or dropping a tween does not itself change its playback state.
+    ///
+    /// Synchronous stop callbacks run before `finished` callbacks on successful
+    /// completion. Deferred callbacks run later; use [`SpireFlags::empty`] when
+    /// cleanup must be visible to synchronous completion listeners. A target may
+    /// already be freed when cancellation cleanup runs. Do not re-enter or mutate
+    /// the processing tween from a synchronous callback; see [`SpireFlags::DEFERRED`].
+    ///
+    /// Like [`Self::finished_connect`], this wraps `f` in a Callable. Use
+    /// [`Self::stopped_connect_callable`] for disconnect-by-callable, or
+    /// [`Self::stopped_clear_connections`] to remove all native stop connections.
+    pub fn stopped_connect<F: FnMut() + 'static>(&mut self, mut f: F, flags: SpireFlags) {
+        let callable = Callable::from_fn(type_name::<F>(), move |_| f());
+        self.stopped_connect_callable(callable, flags);
+    }
+
+    /// [`Self::stopped_connect`] with an existing Callable. Retain a clone to
+    /// disconnect it later. Supports [`SpireFlags::DEFERRED`] and [`SpireFlags::ONE_SHOT`].
+    pub fn stopped_connect_callable(&mut self, callable: Callable, flags: SpireFlags) {
+        self.stopped_connections.push(Connection { callable, flags });
+    }
+
+    /// Removes stop connections equal to `callable`. Warns if none match.
+    /// Does not disconnect Godot signal subscribers or cancel callbacks already deferred.
+    pub fn stopped_disconnect_callable(&mut self, callable: &Callable) {
+        let extracted = self
+            .stopped_connections
+            .extract_if(.., |conn| conn.callable == *callable)
+            .count();
+
+        if extracted == 0 {
+            godot_warn!(
+                "[SpireTween::stopped_disconnect_callable] No connections found for the given callable `{callable:?}`."
+            );
+        }
+    }
+
+    /// Clears native stop connections. Godot signal subscribers and callbacks
+    /// already queued for deferred invocation are unaffected.
+    #[inline]
+    pub fn stopped_clear_connections(&mut self) { self.stopped_connections.clear(); }
+
+    /// Registers a Rust closure to run after each loop completes, including the
+    /// final loop before `stopped` and [`finished_connect`](Self::finished_connect).
     ///
     /// `f` is wrapped in a `Callable::from_fn` internally — to disconnect later you'd
     /// need [`loop_finished_clear_connections`](Self::loop_finished_clear_connections)
@@ -359,9 +414,11 @@ impl<T: ITweenable> SpireTween<T> {
     pub fn loop_finished_clear_connections(&mut self) { self.loop_finished_connections.clear(); }
 
     /// Registers a Rust closure to run when this tween completes its last loop, or
-    /// when [`SpireTweener::force_complete`] is called.
+    /// when [`Self::force_complete`] succeeds. Cancellation does not fire this event;
+    /// use [`Self::stopped_connect`] for cleanup on both completion and cancellation.
     ///
-    /// **Never fires** for infinite-loop tweens (`set_loops(-1, _)`). On the last
+    /// Infinite-loop tweens never finish naturally; successful forced completion
+    /// still fires this event. On the last
     /// loop this fires *after* [`loop_finished_connect`](Self::loop_finished_connect)
     /// callbacks for that loop.
     ///
@@ -429,7 +486,9 @@ pub(crate) enum NodesValidityResult {
     SomeNodesDead,
 }
 
-impl<T: ITweenable> SpireTween<T> {
+impl<T: ITweenable> SpireTween<T>
+where SpireTween<T>: SpireTweener
+{
     #[inline]
     pub(crate) fn reset_counters(&mut self) {
         self.total_elapsed_time = 0.;
@@ -488,6 +547,115 @@ impl<T: ITweenable> SpireTween<T> {
         Some(actual_step)
     }
 
+    /// Resumes a paused tween, or starts a stopped one from the beginning.
+    /// No-op on an already-playing tween.
+    ///
+    /// **Inside sequences:** sequences control their children's playback — calling
+    /// this on a child tween of a sequence is not recommended.
+    pub fn play(&mut self) {
+        match self.state {
+            State::Stopped | State::Paused => {
+                // Order is important, implementors of `play_internal` may need to know the previous value of `self.state`
+                self.play_internal();
+                self.state = State::Playing;
+            }
+            State::Playing => {}
+        }
+    }
+
+    /// Pauses a playing tween — it stops processing until [`play`](Self::play)
+    /// resumes it. No-op on an already-paused or stopped tween.
+    pub fn pause(&mut self) {
+        match self.state {
+            State::Playing => {
+                // Order is important, implementors of `pause_internal` may need to know the previous value of `self.state`
+                self.pause_internal();
+                self.state = State::Paused;
+            }
+            State::Stopped | State::Paused => {}
+        }
+    }
+
+    /// Stops a playing or paused tween and emits `stopped` once. Does nothing
+    /// while already stopped. Does not emit `finished` or `loop_finished`.
+    ///
+    /// The next [`play`](Self::play) resets its playback clocks and loop counter.
+    /// Stopping a sequence also stops its current children, resets interval and
+    /// callback bookkeeping, and leaves pending constructors uninvoked.
+    ///
+    /// Connections registered with [`SpireFlags::ONE_SHOT`] that have already fired
+    /// are *not* restored.
+    pub fn stop(&mut self) {
+        match self.state {
+            State::Stopped => {}
+            State::Paused | State::Playing => {
+                // Order is important, implementors of `stop_internal` may need to know the previous value of `self.state`
+                self.stop_internal();
+                self.state = State::Stopped;
+                self.emit_stopped();
+            }
+        }
+    }
+
+    fn emit_stopped(&mut self) {
+        self.gd_handle.get().as_ref().map(Signaler::emit_stopped);
+
+        self.stopped_connections.retain_mut(|conn| {
+            if conn.flags.contains(SpireFlags::DEFERRED) {
+                conn.callable.call_deferred(&[]);
+            } else {
+                conn.callable.call(&[]);
+            }
+
+            !conn.flags.contains(SpireFlags::ONE_SHOT)
+        });
+    }
+
+    /// Internal animation update after the explicit-binding and playback checks
+    /// in [`TweenPtr::custom_step`]. Custom/manual processors must use the [TweenPtr::custom_step] checked
+    /// entry point rather than call [Self::process] or [SpireTweener::process_internal] directly.
+    /// This lower-level path performs no playback-state or explicit-binding guard.
+    /// It translates completion into stop/finish events and cancellation into a stop event.
+    ///
+    /// On completion, `unscaled_excess_time` uses the same time units as the input
+    /// `delta_time`, so parent sequences can pass the remainder to their next block.
+    /// When `abs(speed_scale) < 0.00001`, this remainder is reported as zero;
+    /// a magnitude exactly equal to the cutoff is still divided by `speed_scale`.
+    pub fn process(&mut self, delta_time: f64, is_tree_paused: bool) -> AdvanceTimeResult {
+        let result = self.process_internal(delta_time, is_tree_paused);
+
+        match &result {
+            AdvanceTimeResult::Playing | AdvanceTimeResult::Paused => {}
+            AdvanceTimeResult::Completed { .. } => {
+                self.handle_finished();
+            }
+            AdvanceTimeResult::ShouldDespawn => {
+                self.stop();
+            }
+        }
+
+        result
+    }
+
+    /// Jumps to the final value, transitions to [`State::Stopped`], emits `stopped`,
+    /// then emits `finished` if completion succeeded. An invalid owner or callable
+    /// cancels instead, emitting only `stopped`. Skips any remaining
+    /// loops without firing `loop_finished` for them.
+    ///
+    /// No-op on a stopped tween.
+    pub fn force_complete(&mut self) {
+        match self.state {
+            State::Stopped => {}
+            State::Paused | State::Playing => {
+                if self.force_complete_internal() {
+                    self.handle_finished();
+                } else {
+                    self.stop();
+                }
+            }
+        }
+    }
+
     pub(crate) fn handle_loop_finished(&mut self, excess_time: f64) -> Option<f64>
     where Self: SpireTweener {
         self.loop_counter += 1;
@@ -504,7 +672,6 @@ impl<T: ITweenable> SpireTween<T> {
                     None
                 } else {
                     self.loop_time -= excess_time;
-                    self.handle_finished();
                     Some(excess_time)
                 }
             }
@@ -525,8 +692,7 @@ impl<T: ITweenable> SpireTween<T> {
         });
     }
 
-    #[inline]
-    pub(crate) fn handle_finished(&mut self)
+    fn handle_finished(&mut self)
     where Self: SpireTweener {
         self.stop();
         self.emit_finished();
@@ -567,7 +733,7 @@ pub enum TweenStepResult {
     /// outcome through [`AdvanceTimeResult`].
     Stepped(AdvanceTimeResult),
     /// The tween was paused. No time advanced, even if its live bindings could
-    /// not process. Call [`SpireTweener::play`] before stepping to resume it.
+    /// not process. Call [`SpireTween::play`] before stepping to resume it.
     AlreadyPaused,
     /// The tween was stopped, including after completion. No time advanced,
     /// even if its live bindings could not process. A sequence may retain this
@@ -589,7 +755,7 @@ where T: ITweenable
     ///
     /// Explicit bound-node lifetime checks run before playback-state checks,
     /// including for paused/stopped tweens. A live paused or stopped tween is
-    /// not resumed automatically; call [`SpireTweener::play`] first. For a
+    /// not resumed automatically; call [`SpireTween::play`] first. For a
     /// playing tween, bindings and pause mode must permit processing before
     /// [`SpireTweener::process_internal`] performs type-specific checks and
     /// advances its animation.
@@ -628,7 +794,7 @@ where T: ITweenable
                 State::Paused => TweenStepResult::AlreadyPaused,
                 State::Stopped => TweenStepResult::AlreadyStopped,
                 State::Playing => {
-                    let process_result = self.to_mut().process_internal(delta_time, is_tree_paused);
+                    let process_result = self.to_mut().process(delta_time, is_tree_paused);
                     TweenStepResult::Stepped(process_result)
                 }
             },

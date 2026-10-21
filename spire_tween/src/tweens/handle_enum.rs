@@ -1,11 +1,12 @@
 use super::*;
 
 pub trait Signaler {
+    fn emit_stopped(&self);
     fn emit_finished(&self);
     fn emit_loop_finished(&self);
-    fn instance_id(&self) -> godot::obj::InstanceId;
+    fn instance_id(&self) -> InstanceId;
     fn reference_count(&self) -> usize;
-    fn try_from_instance_id(id: godot::obj::InstanceId) -> Option<Self>
+    fn try_from_instance_id(id: InstanceId) -> Option<Self>
     where Self: Sized;
 }
 
@@ -13,6 +14,10 @@ macro_rules! impl_invoke_signals {
     ($($Ty:ty),* $(,)?) => {
         $(
             impl Signaler for $Ty {
+                fn emit_stopped(&self) {
+                    self.signals().stopped().emit();
+                }
+
                 fn emit_finished(&self) {
                     self.signals().finished().emit();
                 }

@@ -16,16 +16,11 @@ pub enum AnyPropertyTween {
 
 #[delegate_impl]
 impl SpireTweener for AnyPropertyTween {
-    #[inline]
-    fn play(&mut self);
-    #[inline]
-    fn pause(&mut self);
-    #[inline]
-    fn stop(&mut self);
-    #[inline]
+    fn play_internal(&mut self);
+    fn pause_internal(&mut self);
+    fn stop_internal(&mut self);
     fn process_internal(&mut self, delta_time: f64, is_tree_paused: bool) -> AdvanceTimeResult;
-    #[inline]
-    fn force_complete(&mut self);
+    fn force_complete_internal(&mut self) -> bool;
 }
 
 #[delegate_impl]

@@ -32,7 +32,7 @@ macro_rules! define_tween_ptr_methods {
             /// Repeatedly binding the same node is harmless. Explicit bindings persist
             /// across unregister/register and sequence insertion.
             ///
-            /// [b]Note:[/b] Property/Method tweeners also track their animated node's
+            /// **Note:** Property/Method tweeners also track their animated node's
             /// lifetime automatically; explicit binding does not change that behavior.
             #[inline]
             pub fn bind_node(&mut self, obj: Gd<Node>);
@@ -272,6 +272,18 @@ macro_rules! define_base_methods {
             pub fn set_state(&mut self, state: State);
 
             #[inline]
+            pub fn play(&mut self);
+
+            #[inline]
+            pub fn pause(&mut self);
+
+            #[inline]
+            pub fn stop(&mut self);
+
+            #[inline]
+            pub fn force_complete(&mut self);
+
+            #[inline]
             pub fn is_playing(&self) -> bool;
             #[inline]
             pub fn is_paused(&self) -> bool;
@@ -328,6 +340,15 @@ macro_rules! define_base_methods {
             pub fn get_loop_mode(&self) -> LoopMode;
             #[inline]
             pub fn set_loop_mode(&mut self, loop_mode: LoopMode);
+
+            #[inline]
+            pub fn stopped_connect<F: FnMut() + 'static>(&mut self, f: F, flags: SpireFlags);
+            #[inline]
+            pub fn stopped_connect_callable(&mut self, callable: Callable, flags: SpireFlags);
+            #[inline]
+            pub fn stopped_disconnect_callable(&mut self, callable: &Callable);
+            #[inline]
+            pub fn stopped_clear_connections(&mut self);
 
             #[inline]
             pub fn loop_finished_connect<F: FnMut() + 'static>(&mut self, f: F, flags: SpireFlags);
@@ -611,13 +632,9 @@ macro_rules! define_base_gd_methods {
             #[func]
             pub fn get_animation_position(&self) -> f64 { self.to_ref().get_animation_position() }
 
-            /// Works exactly like the built-in's [method Tween.get_total_elapsed_time].
-            ///
-            /// From the built-in's docs:
-            /// "
-            /// Returns the total time in seconds the Tween has been animating (i.e. the time since it started, not counting pauses etc.).
-            /// The time is affected by [method set_speed_scale], and [method stop] will reset it to 0.
-            /// "
+            /// Returns the total animation time in seconds, affected by [method set_speed_scale]
+            /// and excluding paused time. Preserved while stopped; reset to 0 when [method play]
+            /// restarts the tween.
             #[func]
             pub fn get_total_elapsed_time(&self) -> f64 { self.to_ref().get_total_elapsed_time() }
 
@@ -639,7 +656,7 @@ macro_rules! define_base_gd_methods {
 
             /// Returns the number of completed loops since this tween began playing.
             ///
-            /// This resets to 0 when the tween is stopped.
+            /// Preserved while stopped; resets to 0 when [method play] restarts the tween.
             #[func]
             pub fn get_loops_finished(&self) -> i64 { self.to_ref().get_loops_finished() }
 
@@ -739,16 +756,15 @@ macro_rules! define_base_gd_methods {
             #[func]
             pub fn is_paused(&self) -> bool { self.to_ref().is_paused() }
 
-            /// [b]Behavior:[/b] Stops tweening and resets its internal timers and counters
-            /// Notably, these are reset:
-            /// - `total_elapsed_time`
-            /// - `loop_time` (AKA `animation_position`)
-            /// - `loop_counter` (AKA `loops_completed`)
+            /// [b]Behavior:[/b] Stops a playing or paused tween and emits [signal stopped].
+            /// Calling this while already stopped does nothing. Does not emit [signal finished]
+            /// or [signal loop_finished]. Playback timers and loop counters are reset by the next [method play].
             ///
             /// [b]Note:[/b] Connections established with the flag [constant Spire.FLAGS_CONNECT_ONE_SHOT] are NOT "restored".
             ///
             /// [b]Note:[/b] If this tween is a [SpireSequence], this method will also call `stop` on all the
-            /// sequence's child tweens.
+            /// sequence's current child tweens, resets interval/callback bookkeeping, and leaves
+            /// pending constructors uninvoked.
             ///
             /// [b]Inside sequences:[/b] Calling this on a tween that's a child of a [SpireSequence] will simply
             /// make the sequence skip it, the sequence will not stop.
@@ -768,11 +784,11 @@ macro_rules! define_base_gd_methods {
             /// Forces a tween to finish immediately, applying its end values right away.
             ///
             /// - This does nothing if the tween is stopped.
-            /// - This will emit the `finished` signal if the tween was paused/playing.
+            /// - Successful completion emits [signal stopped], then [signal finished].
             /// - This ignores any remaining loops and will not emit `loop_finished` for them.
             ///
-            /// Method and delayed-call tweens with an invalid Callable cancel instead:
-            /// they stop without invoking the callable or emitting completion signals.
+            /// Invalid property owners and method/delayed-call Callables cancel instead:
+            /// they stop, emit [signal stopped], and do not emit completion signals.
             /// Registration is preserved while external owners retain the stopped tween;
             /// release the handle or call [method unregister] when it is no longer wanted.
             ///

@@ -93,37 +93,36 @@ where LerpMethodData<T>: ITweenable
 impl<T: ILerpable + ToGodot> SpireTweener for SpireTween<LerpMethodData<T>>
 where LerpMethodData<T>: ITweenable
 {
-    #[inline]
-    fn play(&mut self) {
-        if self.is_stopped() {
-            self.reset_counters();
-        }
-
-        self.state = State::Playing;
-    }
-
-    #[inline]
-    fn pause(&mut self) {
-        if !self.is_stopped() {
-            self.state = State::Paused;
-        }
-    }
-
-    #[inline]
-    fn stop(&mut self) { self.state = State::Stopped; }
-
-    #[inline]
-    fn force_complete(&mut self) {
+    fn play_internal(&mut self) {
         match self.state {
-            | State::Playing | State::Paused => {
-                self.seek_end();
+            State::Stopped => {
+                self.reset_counters();
             }
-            State::Stopped => {}
+            State::Paused | State::Playing => {}
         }
+    }
+
+    fn pause_internal(&mut self) {}
+
+    fn stop_internal(&mut self) {}
+
+    #[inline]
+    fn force_complete_internal(&mut self) -> bool {
+        let is_valid = self.t.callable.is_valid();
+        if is_valid {
+            let target_value = {
+                let eased_ratio = self.t.ease.sample(1.);
+                self.t.lerper.spire_lerp(&self.t.from, &self.t.to, eased_ratio)
+            };
+
+            self.t.callable.call(&[target_value.to_variant()]);
+        }
+
+        is_valid
     }
 
     fn process_internal(&mut self, delta_time: f64, _is_tree_paused: bool) -> AdvanceTimeResult {
-        if !self.check_callable_validity() {
+        if !self.t.callable.is_valid() {
             return AdvanceTimeResult::ShouldDespawn;
         }
 
@@ -132,7 +131,6 @@ where LerpMethodData<T>: ITweenable
                 NodesValidityResult::CanProcess => {}
                 NodesValidityResult::DontProcess => return AdvanceTimeResult::Paused,
                 NodesValidityResult::SomeNodesDead => {
-                    self.stop();
                     return AdvanceTimeResult::ShouldDespawn;
                 }
             }
@@ -158,35 +156,6 @@ where LerpMethodData<T>: ITweenable
         } else {
             AdvanceTimeResult::Playing
         }
-    }
-}
-
-impl<T: ILerpable> SpireTween<LerpMethodData<T>>
-where
-    T: ToGodot,
-    LerpMethodData<T>: ITweenable,
-{
-    fn check_callable_validity(&mut self) -> bool {
-        if self.t.callable.is_valid() {
-            return true;
-        }
-
-        self.stop();
-        false
-    }
-
-    fn seek_end(&mut self) {
-        if !self.check_callable_validity() {
-            return;
-        }
-
-        let target_value = {
-            let eased_ratio = self.t.ease.sample(1.);
-            self.t.lerper.spire_lerp(&self.t.from, &self.t.to, eased_ratio)
-        };
-
-        self.t.callable.call(&[target_value.to_variant()]);
-        self.handle_finished();
     }
 }
 

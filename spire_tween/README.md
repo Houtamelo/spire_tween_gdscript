@@ -8,7 +8,7 @@ inspired by Unity's [DOTween](https://dotween.demigiant.com/).
 - Templates for higher-level patterns: `do_shake`, `do_follow`, `do_spiral`, `do_ellipsis` (2D/3D), `do_contour_shape`, `do_bone`.
 - Three lerp modes per property tween — absolute, relative (blends with external forces), speed-based (fixed units/second).
 - Pluggable custom lerpers via the `BasicLerp` / `SpireLerp` traits for non-built-in types.
-- Two paths to listen for `finished` / `loop_finished`: pure-Rust closures (`finished_connect`) or Godot signals (when you opt into a `Gd<Spire…>` handle via `register_with_gd_handle`).
+- Listen for `stopped`, `finished`, and `loop_finished` through pure-Rust closures (`*_connect`) or Godot signals (with a handle from `register_with_gd_handle`).
 
 This crate is the Rust core. There's also a [GDScript-facing addon] built on top of it for non-Rust Godot users.
 
@@ -46,6 +46,40 @@ seq.join(my_node.do_color(Color::RED, 1.0));   // parallel with the above
 seq.append(my_node.do_position(target_b, 1.0));
 seq.register();
 ```
+
+## Lifecycle events
+
+| Event | When it fires |
+|---|---|
+| `stopped` | A playing or paused tween enters stopped state, through completion, explicit stop, or invalidation. |
+| `finished` | Successful natural or forced completion. Cancellation does not fire it. |
+| `loop_finished` | Each naturally completed loop, including the last. Forced completion skips remaining loop events. |
+
+Natural completion emits `loop_finished` → `stopped` → `finished`; successful
+`force_complete()` emits `stopped` → `finished`. Synchronous stop callbacks observe
+stopped state and run before finish callbacks; deferred callbacks execute later.
+Use a synchronous callback when completion listeners need to observe cleanup:
+
+```rust
+handle.to_mut().stopped_connect(
+    || godot_print!("clean up after completion or cancellation"),
+    SpireFlags::empty(),
+);
+```
+
+Do not mutate or re-enter the processing tween from a synchronous callback. Use
+`SpireFlags::DEFERRED` for such work and `ONE_SHOT` to remove a connection after
+its first invocation. `stopped_connect_callable`, `stopped_disconnect_callable`,
+and `stopped_clear_connections` manage native Callable connections. These APIs
+also work on `AnyTween`, `AnyMethodTween`, and `AnyPropertyTween`. Clearing native
+connections does not disconnect Godot signals or cancel already-deferred calls.
+
+Repeated `stop()` calls while stopped are silent, and `pause()` leaves stopped
+tweens stopped. `play()` resets clocks and loop counters when restarting; the next
+stop transition fires again. Intermediate loops, unregistration, and pointer
+destruction do not themselves emit `stopped`. Sequence stopping stops existing
+descendants, resets interval/callback bookkeeping, and leaves pending constructors
+uninvoked. A cancellation target may already be freed when cleanup runs.
 
 ## Following a node
 
@@ -93,7 +127,9 @@ Factories retain captures until invocation. Use a `WeakTweenPtr` when capturing 
 
 Use `TweenPtr::custom_step(delta_time, is_tree_paused)` for a custom processing loop.
 The manager and sequences use this same checked path; do not call
-`SpireTweener::process_internal` directly. Set `ProcessMode::Manual` on a registered
+`SpireTween::process` or `SpireTweener::process_internal` directly. The shared
+`process` wrapper applies terminal events, but does not perform state/binding guards.
+Set `ProcessMode::Manual` on a registered
 tween to disable automatic updates, or use `TweenPtr::new(builder)` without registering.
 
 ```rust
@@ -170,10 +206,10 @@ Per-item docs live on [docs.rs](https://docs.rs/spire_tween).
 
 ## Two register paths
 
-Pick based on who needs to listen for `finished` / `loop_finished`:
+Pick based on who needs to listen for `stopped` / `finished` / `loop_finished`:
 
-- `SpireTween::register` — pure-Rust path. Returns a `TweenPtr` handle. Subscribe to events via `SpireTween::finished_connect` / `loop_finished_connect` (closure-based).
-- `SpireTween::register_with_gd_handle` — also attaches a `Gd<Spire…>` wrapper so GDScript code (or any consumer of Godot signals) can connect to the `finished` / `loop_finished` Godot signals on that handle.
+- `SpireTween::register` — pure-Rust path. Returns a `TweenPtr` handle. Subscribe through the corresponding `*_connect` methods.
+- `SpireTween::register_with_gd_handle` — also attaches a `Gd<Spire…>` wrapper for Godot signal consumers. Native `*_connect` methods remain available.
 
 ## Threading
 

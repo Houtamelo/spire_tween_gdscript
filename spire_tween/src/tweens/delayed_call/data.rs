@@ -1,37 +1,31 @@
 use super::*;
 
 impl SpireTweener for SpireTween<Callable> {
-    #[inline]
-    fn play(&mut self) {
-        if self.is_stopped() {
-            self.reset_counters();
-        }
-
-        self.state = State::Playing;
-    }
-
-    #[inline]
-    fn pause(&mut self) {
-        if !self.is_stopped() {
-            self.state = State::Paused;
-        }
-    }
-
-    #[inline]
-    fn stop(&mut self) { self.state = State::Stopped; }
-
-    #[inline]
-    fn force_complete(&mut self) {
+    fn play_internal(&mut self) {
         match self.state {
-            | State::Playing | State::Paused => {
-                self.seek_end();
+            State::Stopped => {
+                self.reset_counters();
             }
-            State::Stopped => {}
+            State::Paused | State::Playing => {}
         }
+    }
+
+    fn pause_internal(&mut self) {}
+
+    fn stop_internal(&mut self) {}
+
+    fn force_complete_internal(&mut self) -> bool {
+        let is_valid = self.t.is_valid();
+        if is_valid {
+            self.loop_time = self.delay;
+            self.t.call(&[]);
+        }
+
+        is_valid
     }
 
     fn process_internal(&mut self, delta_time: f64, _is_tree_paused: bool) -> AdvanceTimeResult {
-        if !self.check_callable_validity() {
+        if !self.t.is_valid() {
             return AdvanceTimeResult::ShouldDespawn;
         }
 
@@ -47,27 +41,6 @@ impl SpireTweener for SpireTween<Callable> {
         } else {
             AdvanceTimeResult::Playing
         }
-    }
-}
-
-impl SpireTween<Callable> {
-    fn check_callable_validity(&mut self) -> bool {
-        if self.t.is_valid() {
-            return true;
-        }
-
-        self.stop();
-        false
-    }
-
-    fn seek_end(&mut self) {
-        if !self.check_callable_validity() {
-            return;
-        }
-
-        self.loop_time = self.delay;
-        self.t.call(&[]);
-        self.handle_finished();
     }
 }
 

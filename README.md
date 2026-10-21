@@ -358,11 +358,33 @@ for more details.
 | Emission Condition                    | Godot Class(es) |          Godot Signal          | Spire Class(es) |               Spire Signal               |
 |---------------------------------------|:---------------:|:------------------------------:|:---------------:|:----------------------------------------:|
 | Completed (Entire tween)              |      Tween      |           finished()           |       All       |                finished()                |
+| Entered stopped state (completion or cancellation) | ❌ | ❌ | All | stopped() |
 | Completed (Single loop)               |      Tween      | loop_finished(loop_count: int) |       All       | loop_finished()[note1](#note-loop-count) |
 | Sequencing - Parallel Group completed |      Tween      |       step_finished(int)       | ~SpireSequence  |  Use the children's "finished" signals.  |
 
 <a name="note-loop-count"></a>
 **Note 1**: `loop_count` isn't provided with the signal but can be retrieved with `get_loops_finished()`.
+
+`stopped` fires once whenever a playing or paused tween enters the stopped state:
+successful completion, explicit `stop()`, or invalidation of its owner, callable,
+or bindings. `finished` is reserved for successful completion, including a valid
+`force_complete()`. Natural completion emits `loop_finished` → `stopped` → `finished`;
+forced completion emits `stopped` → `finished` without inventing loop events.
+
+Use `stopped` for cleanup that must also run on cancellation:
+
+```gdscript
+tween.stopped.connect(cleanup)
+tween.finished.connect(start_next_animation)
+```
+
+Listeners observe the stopped state. Synchronous stop handlers run before finish
+handlers; deferred handlers run later. A cancelled tween's target may already be
+freed, so cleanup must account for that. Repeated `stop()` and `pause()` calls on a
+stopped tween are silent; `play()` restarts it and permits another stop event.
+Intermediate loops, unregistration, and releasing a handle do not themselves emit
+`stopped`. Stopping a sequence stops its current children first and leaves pending
+child constructors uninvoked.
 
 ---
 

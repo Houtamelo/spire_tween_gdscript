@@ -17,6 +17,7 @@ mod register_unregister;
 mod sequence_cycles;
 mod sequences;
 mod spiral_test;
+mod stop_events;
 mod templates_3d_test;
 mod templates_test;
 mod test_runner;

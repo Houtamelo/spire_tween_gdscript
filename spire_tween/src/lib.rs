@@ -55,18 +55,26 @@
 //!
 //! # Two register paths
 //!
-//! Pick based on who needs to listen for `finished` / `loop_finished`:
+//! Pick based on who needs to listen for `stopped` / `finished` / `loop_finished`:
 //! - [`SpireTween::register`] — pure-Rust path. Returns a [`TweenPtr`] handle.
-//!   Subscribe to events via [`SpireTween::finished_connect`] etc. (closure-based).
+//!   Subscribe via [`SpireTween::stopped_connect`], [`SpireTween::finished_connect`],
+//!   and [`SpireTween::loop_finished_connect`] (closure-based).
 //! - [`SpireTween::register_with_gd_handle`] — also attaches a `Gd<Spire…>` wrapper
 //!   so GDScript code (or any consumer of Godot signals) can connect to the
-//!   `finished` / `loop_finished` Godot signals on that handle.
+//!   `stopped` / `finished` / `loop_finished` Godot signals on that handle.
+//!
+//! `stopped` fires once per transition from playing or paused to stopped, including
+//! cancellation. `finished` is reserved for successful completion. Natural
+//! completion emits `loop_finished`, then `stopped`, then `finished`; forced
+//! completion skips loop events. Synchronous cleanup runs before finish listeners,
+//! while deferred callbacks execute later. Repeated stops, unregistration, and
+//! dropping a pointer do not themselves emit another stop event.
 //!
 //! # Manual stepping
 //!
 //! [`TweenPtr::custom_step`] is the canonical checked path used by the manager
 //! and sequences. It validates explicit bindings even when paused/stopped and
-//! returns [`TweenStepResult`]. Resume a paused tween with [`SpireTweener::play`]
+//! returns [`TweenStepResult`]. Resume a paused tween with [`SpireTween::play`]
 //! before stepping. Choose [`ProcessMode::Manual`] to disable automatic updates;
 //! the supplied delta selects the clock, and the tween applies its speed scale.
 //! A completed [`AdvanceTimeResult`] carries excess in the input delta's units.
@@ -211,9 +219,9 @@ pub mod prelude {
 
 #[doc(hidden)]
 pub mod unversioned_api {
-    pub use crate::global::{NodeStatus, TM, TweensMap};
     #[cfg(feature = "integration-tests")]
     pub use crate::global::BookkeepingSnapshot;
+    pub use crate::global::{NodeStatus, TM, TweensMap};
 }
 
 #[allow(unused_imports)]

@@ -1,51 +1,53 @@
 #[allow(unused_imports)]
 use super::*;
 
-/// Uniform playback interface implemented by every concrete tween type
+/// Type-specific hooks used by the common [`SpireTween`] playback pipeline.
+/// Implemented by every concrete tween type
 /// (`SpireTween<LerpPropertyData<T>>`, `SpireTween<LerpMethodData<T>>`,
 /// `SpireTween<Sequence>`, `SpireTween<Callable>`).
 ///
-/// Routed through [`AnyTween`] so playback controls work without knowing the
-/// concrete type. Use [`TweenPtr::custom_step`] for checked native stepping;
-/// the manager and sequences use that same path. GDScript wrapper methods
-/// delegate playback controls here and expose their own `custom_step` result.
+/// Call [`SpireTween::play`], [`SpireTween::pause`], [`SpireTween::stop`], and
+/// [`SpireTween::force_complete`] (also delegated by [`AnyTween`]) for state guards
+/// and lifecycle events. These hooks do not update state or emit terminal events.
+/// Use [`TweenPtr::custom_step`] for checked stepping in managers, sequences, and
+/// manual processors. [`SpireTween::process`] handles the internal result uniformly.
 pub trait SpireTweener {
-    /// Resumes a paused tween, or starts a stopped one from the beginning.
-    /// No-op on an already-playing tween.
+    /// Internal polymorphic callback for [SpireTween::play].
     ///
-    /// **Inside sequences:** sequences control their children's playback — calling
-    /// this on a child tween of a sequence is not recommended.
-    fn play(&mut self);
+    /// Called before the state changes. Restarts clocks and type-specific state
+    /// when previously stopped; resuming from paused preserves animation position.
+    #[doc(hidden)]
+    fn play_internal(&mut self);
 
-    /// Pauses a playing tween — it stops processing until [`play`](Self::play)
-    /// resumes it. No-op on an already-paused or stopped tween.
-    fn pause(&mut self);
-
-    /// Stops a tween and resets its counters (`total_elapsed_time`, `loop_time`,
-    /// `loop_counter`). The next [`play`](Self::play) will restart from frame 0.
+    /// Internal polymorphic callback for [SpireTween::pause].
     ///
-    /// Connections registered with [`SpireFlags::ONE_SHOT`] that have already fired
-    /// are *not* restored.
-    fn stop(&mut self);
+    /// Called only from playing, before the state changes.
+    #[doc(hidden)]
+    fn pause_internal(&mut self);
 
-    /// Internal animation update after the explicit-binding and playback checks
-    /// in [`TweenPtr::custom_step`]. Custom/manual processors must use that checked
-    /// entry point rather than call this method directly. Implementations still
-    /// perform their type-specific owner and callable validation here.
+    /// Internal polymorphic callback for [SpireTween::stop].
     ///
-    /// On completion, `unscaled_excess_time` uses the same time units as the input
-    /// `delta_time`, so parent sequences can pass the remainder to their next block.
-    /// When `abs(speed_scale) < 0.00001`, this remainder is reported as zero;
-    /// a magnitude exactly equal to the cutoff is still divided by `speed_scale`.
+    /// Called only from playing or paused, before state change and stop events.
+    /// Performs type-specific cleanup, including stopping sequence descendants.
+    #[doc(hidden)]
+    fn stop_internal(&mut self);
+
+    /// Internal polymorphic callback for [SpireTween::process].
+    ///
+    /// Reports animation advancement or invalidation. [`SpireTween::process`]
+    /// translates terminal results into lifecycle events; this hook does not.
     #[doc(hidden)]
     fn process_internal(&mut self, delta_time: f64, is_tree_paused: bool) -> AdvanceTimeResult;
 
-    /// Jumps to the final state — sets the property to its end value, fires the
-    /// `finished` event, transitions to [`State::Stopped`]. Skips any remaining
-    /// loops without firing `loop_finished` for them.
+    /// Internal polymorphic callback for [SpireTween::force_complete].
     ///
-    /// No-op on a stopped tween.
-    fn force_complete(&mut self);
+    /// Applies the final value or completes sequence contents without emitting
+    /// this tween's terminal events. Called only while playing or paused.
+    ///
+    /// Returns `true` if completion was successful; `false` otherwise.
+    #[doc(hidden)]
+    #[must_use]
+    fn force_complete_internal(&mut self) -> bool;
 }
 
 /// Glue between a native [`TweenPtr<T>`] and its `Gd<Spire…>` wrapper. An
@@ -84,7 +86,7 @@ pub enum AdvanceTimeResult {
     /// The tween completed its final loop.
     Completed {
         /// Leftover time in the units of the `delta_time` supplied to
-        /// [`SpireTweener::process_internal`], with this tween's `speed_scale` removed.
+        /// [`SpireTween::process`], with this tween's `speed_scale` removed.
         /// Parent sequences can pass it to the next block without conversion.
         /// Internal animation and loop counters still use scaled time.
         ///

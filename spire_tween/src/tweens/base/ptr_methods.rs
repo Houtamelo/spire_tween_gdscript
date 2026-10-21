@@ -13,7 +13,7 @@ impl<T: ITweenable> TweenPtr<T> {
     /// Repeatedly binding the same node is harmless. Explicit bindings persist
     /// across unregister/register and sequence insertion.
     ///
-    /// [b]Note:[/b] Property/Method tweeners also track their animated node's
+    /// **Note:** Property/Method tweeners also track their animated node's
     /// lifetime automatically; explicit binding does not change that behavior.
     pub fn bind_node(&mut self, obj: Gd<Node>)
     where WeakAnyTween: From<WeakTweenPtr<T>> {

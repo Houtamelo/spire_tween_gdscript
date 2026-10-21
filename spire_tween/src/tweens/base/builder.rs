@@ -48,9 +48,11 @@ impl<T: ITweenable> SpireTween<T> {
     }
 
     /// Registers a Rust closure to run when this tween completes its last loop, or
-    /// when [`SpireTweener::force_complete`] is called.
+    /// when [`SpireTween::force_complete`] succeeds. Use
+    /// [`SpireTween::stopped_connect`] for cleanup that must also run on cancellation.
     ///
-    /// **Never fires** for infinite-loop tweens (`set_loops(-1, _)`). On the last
+    /// Infinite-loop tweens never finish naturally; successful forced completion
+    /// still fires this event. On the last
     /// loop this fires *after* [`loop_finished_connect`](Self::loop_finished_connect)
     /// callbacks for that loop.
     ///
@@ -67,9 +69,8 @@ impl<T: ITweenable> SpireTween<T> {
         self
     }
 
-    /// Registers a Rust closure to run after each loop completes (and once more
-    /// after the final loop, just before [`finished_connect`](Self::finished_connect)
-    /// fires).
+    /// Registers a Rust closure to run after each loop completes, including the
+    /// final loop before `stopped` and [`finished_connect`](Self::finished_connect).
     ///
     /// `f` is wrapped in a `Callable::from_fn` internally — to disconnect later you'd
     /// need [`loop_finished_clear_connections`](Self::loop_finished_clear_connections)
@@ -91,7 +92,7 @@ where AnyTween: From<TweenPtr<T>>
     /// Submits this tween to the global `TweenManager` and returns a `TweenPtr` handle.
     ///
     /// Pure Rust path: no GDScript-facing `Gd` handle is attached. Connect to
-    /// `finished`/`loop_finished` events via `finished_connect`/`loop_finished_connect`
+    /// `stopped`/`finished`/`loop_finished` events via the corresponding `*_connect` methods
     /// (closure-based). Use this when no GDScript code needs to listen for the events.
     pub fn register(self) -> TweenPtr<T> {
         let tween = TweenPtr::new(self);
@@ -103,8 +104,8 @@ where AnyTween: From<TweenPtr<T>>
     /// also attaching a GDScript-facing `Gd` handle.
     ///
     /// Use this when GDScript code (or any consumer of Godot signals) needs to listen
-    /// for `finished`/`loop_finished`. Pure Rust users should prefer `register` plus
-    /// `finished_connect`/`loop_finished_connect`.
+    /// for `stopped`/`finished`/`loop_finished`. Pure Rust users should prefer `register`
+    /// plus the corresponding `*_connect` methods.
     pub fn register_with_gd_handle(self) -> (TweenPtr<T>, T::GdHandle) {
         let tween = TweenPtr::new(self);
         let handle = tween.gd_handle.get().unwrap_or_else(|| T::attach_gd_handle(&tween));

@@ -1,0 +1,10 @@
+{
+  "arch": "x86_64",
+  "build_sha256": "c82c8b0a5c0d31ce0fdf8e9c60faf0e4dfeac98d9aaa336456e5f36557675bac",
+  "engine": "4.4.stable.official.4c311cbee",
+  "exports": false,
+  "full_suites": true,
+  "passed": true,
+  "platform": "linux",
+  "schema": 1
+}

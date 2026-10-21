@@ -4,7 +4,7 @@ use super::*;
 ///
 /// Each affected tween jumps to its final value, fires its `finished` event, and
 /// transitions to [`State::Stopped`]. Equivalent to calling
-/// [`SpireTweener::force_complete`] on each one individually.
+/// [`SpireTween::force_complete`] on each one individually.
 ///
 /// Useful when a node is about to enter a different state (e.g. transition out of
 /// a menu) and you want any pending animations to settle synchronously.
@@ -15,9 +15,7 @@ pub trait CompleteBoundTweens {
 }
 
 impl<T: Inherits<Node>> CompleteBoundTweens for Gd<T> {
-    fn complete_bound_tweens(&mut self) {
-        TM.node_bound_tweens_force_complete(self.clone().upcast());
-    }
+    fn complete_bound_tweens(&mut self) { TM.node_bound_tweens_force_complete(self.clone().upcast()); }
 }
 
 /// Unregisters every tween currently bound to this node — they stop ticking

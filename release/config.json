@@ -9,7 +9,7 @@
     "macos": ["aarch64-apple-darwin", "x86_64-apple-darwin"],
     "android": ["aarch64-linux-android", "x86_64-linux-android"]
   },
-  "expected_results": {"native": 68, "gdscript": 152},
+  "expected_results": {"native": 81, "gdscript": 163},
   "macos_deployment_target": "11.0",
   "android_ndk": "28.2.13676358",
   "cargo_ndk": "4.1.2"

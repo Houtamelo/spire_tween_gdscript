@@ -47,17 +47,28 @@ macro_rules! gd_property_tween {
 
         #[godot_api]
         impl $GdName {
+            /// Emitted once when playback changes from playing or paused to stopped,
+            /// including successful completion, explicit [method stop], and cancellation
+            /// caused by an invalid owner or binding. State is already stopped.
+            /// Repeated stops and intermediate loops do not emit it; replay permits another emission.
+            /// Unregistering or dropping a handle does not itself stop the tween.
+            ///
+            /// Successful completion emits [signal stopped] before [signal finished].
+            /// Deferred handlers execute later. Cancellation emits no completion signals.
+            #[signal]
+            pub fn stopped();
+
             /// Emitted when this tween completes a loop.
             ///
             /// [b]Note:[/b] On the last loop of a tween, this is emitted before [signal finished].
             #[signal]
             pub fn loop_finished();
 
-            /// Emitted when this tween finishes playing.
+            /// Emitted when this tween successfully finishes playing, after [signal stopped].
             /// This happens when the tween completes all its loops, or when [method force_complete] is called.
             ///
-            /// [b]Note:[/b] This will never be emitted if the tween is set to loop infinitely
-            /// (e.g. calling [method set_loops] with `-1`).
+            /// Infinite looping prevents natural completion; a successful [method force_complete]
+            /// still emits this signal.
             #[signal]
             pub fn finished();
 

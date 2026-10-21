@@ -276,84 +276,56 @@ where
     }
 }
 
-impl<T: PropertyType> SpireTween<LerpPropertyData<T>>
-where LerpPropertyData<T>: ITweenable
-{
-    fn try_seek_end(&mut self) -> anyhow::Result<()>
-    where T: Clone + Default + FromGodot {
-        if self.t.data.get_owner().is_some_and(|obj| !obj.is_instance_valid()) {
-            let prop_name = &self.t.data.get_property_path();
-            bail!("Cannot set property `{prop_name}` on Object, owner is no longer a valid instance.");
-        }
-
-        let target_value = match &mut self.t.lerp_mode {
-            LerpMode::Absolute { .. } => self.t.to.eval(),
-            LerpMode::SpeedBased { step_sum, .. } => {
-                *step_sum = 0.;
-                self.t.to.eval()
-            }
-            LerpMode::Relative {
-                duration: _,
-                relative_to,
-                previous_anim_pos,
-            } => {
-                let val_at_obj = self.t.data.get_property_value();
-                let end = self.t.to.eval();
-                let previous_relative = self.t.lerper.spire_lerp(relative_to, &end, *previous_anim_pos);
-                self.t.lerper.add_relative(&val_at_obj, &previous_relative, &end)
-            }
-        };
-
-        self.t.data.set_property_value(target_value);
-        Ok(())
-    }
-}
-
 impl<T> SpireTweener for SpireTween<LerpPropertyData<T>>
 where
     T: PropertyType + FromGodot + ToGodot + Clone + Default + Debug,
     LerpPropertyData<T>: ITweenable,
 {
-    #[inline]
-    fn play(&mut self) {
-        if self.is_stopped() {
-            self.reset_counters();
-
-            if let LoopMode::Restart = self.loop_mode {
-                self.t.lerp_mode.reset_state();
-            }
-        }
-
-        self.state = State::Playing;
-    }
-
-    #[inline]
-    fn pause(&mut self) {
-        if !self.is_stopped() {
-            self.state = State::Paused;
-        }
-    }
-
-    #[inline]
-    fn stop(&mut self) {
-        self.t.lerp_mode.reset_state();
-        self.state = State::Stopped;
-    }
-
-    fn force_complete(&mut self) {
+    fn play_internal(&mut self) {
         match self.state {
-            | State::Playing | State::Paused => {
-                match self.try_seek_end() {
-                    Ok(_) => {}
-                    Err(err) => {
-                        godot_error!("{err}");
-                    }
-                }
+            State::Stopped => {
+                self.reset_counters();
 
-                self.handle_finished();
+                if let LoopMode::Restart = self.loop_mode {
+                    self.t.lerp_mode.reset_state();
+                }
             }
-            State::Stopped => {}
+            State::Paused | State::Playing => {}
         }
+    }
+
+    fn pause_internal(&mut self) {}
+
+    fn stop_internal(&mut self) { self.t.lerp_mode.reset_state(); }
+
+    fn force_complete_internal(&mut self) -> bool {
+        let is_valid = self.t.data.get_owner().is_none_or(|obj| obj.is_instance_valid());
+        if is_valid {
+            let target_value = match &mut self.t.lerp_mode {
+                LerpMode::Absolute { .. } => self.t.to.eval(),
+                LerpMode::SpeedBased { step_sum, .. } => {
+                    *step_sum = 0.;
+                    self.t.to.eval()
+                }
+                LerpMode::Relative {
+                    duration: _,
+                    relative_to,
+                    previous_anim_pos,
+                } => {
+                    let val_at_obj = self.t.data.get_property_value();
+                    let end = self.t.to.eval();
+                    let previous_relative = self.t.lerper.spire_lerp(relative_to, &end, *previous_anim_pos);
+                    self.t.lerper.add_relative(&val_at_obj, &previous_relative, &end)
+                }
+            };
+
+            self.t.data.set_property_value(target_value);
+        } else {
+            let prop_name = &self.t.data.get_property_path();
+            godot_error!("Cannot set property `{prop_name}` on Object, owner is no longer a valid instance.");
+        }
+
+        is_valid
     }
 
     fn process_internal(&mut self, delta_time: f64, _is_tree_paused: bool) -> AdvanceTimeResult {
@@ -362,7 +334,6 @@ where
                 NodesValidityResult::CanProcess => {}
                 NodesValidityResult::DontProcess => return AdvanceTimeResult::Paused,
                 NodesValidityResult::SomeNodesDead => {
-                    self.stop();
                     return AdvanceTimeResult::ShouldDespawn;
                 }
             }

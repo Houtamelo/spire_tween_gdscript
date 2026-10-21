@@ -5,6 +5,7 @@ const CACHE_PATH := "res://examples/tests/results.json"
 const CACHE_SCHEMA := 2
 
 const TESTS: Array[PackedScene] = [
+	preload("res://examples/tests/stop_events.tscn"),
 	preload("res://examples/tests/delays.tscn"),
 	preload("res://examples/tests/error_handling.tscn"),
 	preload("res://examples/tests/misc.tscn"),

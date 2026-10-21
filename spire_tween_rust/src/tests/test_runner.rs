@@ -18,12 +18,14 @@ use super::{
     register_unregister::RegisterUnregisterTests,
     sequences::SequencesTests,
     spiral_test::SpiralTests,
+    stop_events::StopEventsTests,
     templates_3d_test::Templates3DTests,
     templates_test::TemplatesTests,
     util::*,
 };
 
 enum TestClass {
+    StopEvents,
     PlayPauseStop,
     Delays,
     Misc,
@@ -41,6 +43,7 @@ enum TestClass {
 }
 
 const ALL_TESTS: &[TestClass] = &[
+    TestClass::StopEvents,
     TestClass::PlayPauseStop,
     TestClass::Delays,
     TestClass::Misc,
@@ -156,6 +159,7 @@ impl INode for TestRunner {
             let mut failed = 0;
             for test_class in ALL_TESTS {
                 let result = match test_class {
+                    TestClass::StopEvents => run_tests_from_class::<StopEventsTests>(&mut base, &filter, timeout).await,
                     TestClass::PlayPauseStop => {
                         run_tests_from_class::<PlayPauseStopTests>(&mut base, &filter, timeout).await
                     }
