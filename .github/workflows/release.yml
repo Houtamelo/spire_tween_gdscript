@@ -72,7 +72,21 @@ jobs:
       - name: Build addon and native integration libraries
         env:
           PLATFORM: ${{ matrix.platform }}
-        run: cargo run --locked -p spire_release -- build --platform "$PLATFORM" --out "dist/staging/$PLATFORM"
+        run: |
+          if [[ "$PLATFORM" == macos ]]; then
+            cargo test --locked -p spire_release --bin spire-release
+          elif [[ "$PLATFORM" == windows ]]; then
+            export RUSTC_LOG=rustc_codegen_ssa::back::link=info
+          fi
+          cargo run --locked -p spire_release -- build --platform "$PLATFORM" --out "dist/staging/$PLATFORM"
+      - name: Preserve failed build diagnostics
+        if: failure()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: failed-build-${{ matrix.platform }}
+          path: dist/staging/${{ matrix.platform }}/logs/
+          if-no-files-found: warn
+          retention-days: 14
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: build-${{ matrix.platform }}

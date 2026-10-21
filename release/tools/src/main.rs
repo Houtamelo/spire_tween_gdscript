@@ -125,6 +125,60 @@ reloadable=false
     }
     text
 }
+fn verify_macos_architectures(binary: &Path) -> Result<()> {
+    // Apple's lipo consumes every argument after -verify_arch as an architecture.
+    output(
+        Command::new("lipo")
+            .arg(binary)
+            .args(["-verify_arch", "arm64", "x86_64"]),
+    )?;
+    Ok(())
+}
+
+#[cfg(all(test, target_os = "macos"))]
+mod macos_integration_tests {
+    use std::time::{SystemTime, UNIX_EPOCH};
+
+    use super::*;
+
+    #[test]
+    fn universal_verification_accepts_both_architectures_and_rejects_thin_objects() {
+        let directory = std::env::temp_dir().join(format!(
+            "spire macos tooling {}-{}",
+            std::process::id(),
+            SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_nanos()
+        ));
+        fs::create_dir_all(&directory).unwrap();
+        let source = directory.join("probe.c");
+        fs::write(&source, "int spire_tooling_probe(void) { return 0; }\n").unwrap();
+        let arm = directory.join("arm64.o");
+        let intel = directory.join("x86_64.o");
+        for (target, object) in [("arm64-apple-macos11", &arm), ("x86_64-apple-macos11", &intel)] {
+            output(
+                Command::new("clang")
+                    .args(["-target", target, "-c"])
+                    .arg(&source)
+                    .arg("-o")
+                    .arg(object),
+            )
+            .unwrap();
+        }
+        let universal = directory.join("universal.o");
+        output(
+            Command::new("lipo")
+                .args(["-create", "-output"])
+                .arg(&universal)
+                .arg(&arm)
+                .arg(&intel),
+        )
+        .unwrap();
+        verify_macos_architectures(&universal).unwrap();
+        assert!(verify_macos_architectures(&arm).is_err());
+        assert!(verify_macos_architectures(&intel).is_err());
+        fs::remove_dir_all(directory).unwrap();
+    }
+}
+
 fn cargo_build(
     target: &str,
     profile: &str,
@@ -328,11 +382,7 @@ fn build(platform: &str, stage: &Path) -> Result<()> {
                     .arg(stage.join(format!("addon/lib/aarch64-apple-darwin/{profile}/libspire_tween.dylib")))
                     .arg(stage.join(format!("addon/lib/x86_64-apple-darwin/{profile}/libspire_tween.dylib"))),
             )?;
-            output(
-                Command::new("lipo")
-                    .args(["-verify_arch", "arm64", "x86_64"])
-                    .arg(framework.join("spire_tween")),
-            )?;
+            verify_macos_architectures(&framework.join("spire_tween"))?;
             let plist = format!(
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?><plist \
                  version=\"1.0\"><dict><key>CFBundleExecutable</key><string>spire_tween</\
