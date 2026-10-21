@@ -84,6 +84,22 @@ fn rejects_corrupted_cached_engine_before_extraction() {
 }
 
 #[test]
+fn refuses_empty_build_directory_before_creating_output() {
+    let directory = temp();
+    let stage = directory.join("stage");
+    let output = Command::new(env!("CARGO_BIN_EXE_spire-release"))
+        .args(["build", "--platform", "linux", "--out"])
+        .arg(&stage)
+        .env("SPIRE_RELEASE_TARGET_DIR", "")
+        .output()
+        .unwrap();
+    assert!(!output.status.success());
+    assert!(String::from_utf8_lossy(&output.stderr).contains("SPIRE_RELEASE_TARGET_DIR must not be empty"));
+    assert!(!stage.exists());
+    fs::remove_dir_all(directory).unwrap();
+}
+
+#[test]
 fn shell_wrappers_parse_and_fail_before_building_without_required_sdks() {
     let repo = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../..");
     for name in [

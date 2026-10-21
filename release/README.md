@@ -12,7 +12,7 @@ macOS frameworks use free ad-hoc signatures in all archives. Building, testing a
 
 ## Build locally
 
-The dated toolchain in `rust-toolchain.toml` and root `Cargo.lock` are the release snapshot. Development Cargo builds retain their existing default Godot API; the release tool explicitly selects `api-4-4`. Release builds use `target/release-pipeline`, keeping ordinary development binaries separate.
+The dated toolchain in `rust-toolchain.toml` and root `Cargo.lock` are the release snapshot. Development Cargo builds retain their existing default Godot API; the release tool explicitly selects `api-4-4`. Release builds use `target/release-pipeline`, keeping ordinary development binaries separate. Set `SPIRE_RELEASE_TARGET_DIR` to override that directory (relative paths resolve against the repository root). Windows CI uses the short `$RUNNER_TEMP/st` path to keep generated ThinLTO object paths below MSVC's legacy path limit; use a similarly short absolute directory for local Windows builds in a deep checkout.
 
 ```bash
 # Install target standard libraries first when cross-compiling.

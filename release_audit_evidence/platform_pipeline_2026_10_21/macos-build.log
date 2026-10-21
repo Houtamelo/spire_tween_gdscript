@@ -1,0 +1,292 @@
+﻿2026-10-21T07:59:43.4151770Z Current runner version: '2.338.0'
+2026-10-21T07:59:43.4165540Z ##[group]Runner Image Provisioner
+2026-10-21T07:59:43.4166030Z Hosted Compute Agent
+2026-10-21T07:59:43.4166410Z Version: 20260828.587
+2026-10-21T07:59:43.4166810Z Commit: abac92662cab4cc7352de4f9f9d2e2419aad9c29
+2026-10-21T07:59:43.4167280Z Build Date: 2026-08-28T16:44:25Z
+2026-10-21T07:59:43.4167710Z Worker ID: {af18c013-73df-4b7a-8378-d54ec32c433b}
+2026-10-21T07:59:43.4168160Z Azure Region: westus
+2026-10-21T07:59:43.4168520Z ##[endgroup]
+2026-10-21T07:59:43.4169340Z ##[group]Operating System
+2026-10-21T07:59:43.4169720Z macOS
+2026-10-21T07:59:43.4170040Z 14.8.9
+2026-10-21T07:59:43.4170360Z 23J631
+2026-10-21T07:59:43.4170690Z ##[endgroup]
+2026-10-21T07:59:43.4171040Z ##[group]Runner Image
+2026-10-21T07:59:43.4171420Z Image: macos-14-arm64
+2026-10-21T07:59:43.4171790Z Version: 20260831.0302.1
+2026-10-21T07:59:43.4172590Z Included Software: https://github.com/actions/runner-images/blob/macos-14-arm64/20260831.0302/images/macos/macos-14-arm64-Readme.md
+2026-10-21T07:59:43.4173620Z Image Release: https://github.com/actions/runner-images/releases/tag/macos-14-arm64%2F20260831.0302
+2026-10-21T07:59:43.4174280Z ##[endgroup]
+2026-10-21T07:59:43.4174980Z ##[group]GITHUB_TOKEN Permissions
+2026-10-21T07:59:43.4175960Z Contents: read
+2026-10-21T07:59:43.4176320Z Metadata: read
+2026-10-21T07:59:43.4176680Z ##[endgroup]
+2026-10-21T07:59:43.4177930Z Secret source: Actions
+2026-10-21T07:59:43.4178490Z Cache mode: write
+2026-10-21T07:59:43.4178920Z Prepare workflow directory
+2026-10-21T07:59:43.4450860Z Prepare all required actions
+2026-10-21T07:59:43.4486640Z Getting action download info
+2026-10-21T07:59:43.5900310Z Download action repository 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-21T07:59:43.8000090Z Download action repository 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-10-21T07:59:43.9532050Z Complete job name: build (macos, macos-14)
+2026-10-21T07:59:43.9929230Z ##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+2026-10-21T07:59:43.9929840Z with:
+2026-10-21T07:59:43.9930160Z   repository: Houtamelo/spire_tween_gdscript
+2026-10-21T07:59:43.9932940Z   token: ***
+2026-10-21T07:59:43.9933250Z   ssh-strict: true
+2026-10-21T07:59:43.9933550Z   ssh-user: git
+2026-10-21T07:59:43.9933860Z   persist-credentials: true
+2026-10-21T07:59:43.9934190Z   clean: true
+2026-10-21T07:59:43.9934500Z   sparse-checkout-cone-mode: true
+2026-10-21T07:59:43.9934850Z   fetch-depth: 1
+2026-10-21T07:59:43.9935250Z   fetch-tags: false
+2026-10-21T07:59:43.9935570Z   show-progress: true
+2026-10-21T07:59:43.9935880Z   lfs: false
+2026-10-21T07:59:43.9936160Z   submodules: false
+2026-10-21T07:59:43.9936470Z   set-safe-directory: true
+2026-10-21T07:59:43.9936820Z   allow-unsafe-pr-checkout: false
+2026-10-21T07:59:43.9937250Z env:
+2026-10-21T07:59:43.9937550Z   CI: true
+2026-10-21T07:59:43.9937850Z   CARGO_TERM_COLOR: always
+2026-10-21T07:59:43.9938220Z   RUSTUP_MAX_RETRIES: 3
+2026-10-21T07:59:43.9938540Z   GIT_TERMINAL_PROMPT: 0
+2026-10-21T07:59:43.9938860Z ##[endgroup]
+2026-10-21T07:59:44.3356860Z Syncing repository: Houtamelo/spire_tween_gdscript
+2026-10-21T07:59:44.3374880Z ##[group]Getting Git version info
+2026-10-21T07:59:44.3376000Z Working directory is '/Users/runner/work/spire_tween_gdscript/spire_tween_gdscript'
+2026-10-21T07:59:44.3377440Z [command]/opt/homebrew/bin/git version
+2026-10-21T07:59:44.3558020Z git version 2.55.0
+2026-10-21T07:59:44.3573800Z ##[endgroup]
+2026-10-21T07:59:44.3579630Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/3061b139-64dc-48a0-a372-a4ae568b932a/.gitconfig'
+2026-10-21T07:59:44.3585330Z Temporarily overriding HOME='/Users/runner/work/_temp/3061b139-64dc-48a0-a372-a4ae568b932a' before making global git config changes
+2026-10-21T07:59:44.3587470Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-21T07:59:44.3589300Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/spire_tween_gdscript/spire_tween_gdscript
+2026-10-21T07:59:44.3668500Z Deleting the contents of '/Users/runner/work/spire_tween_gdscript/spire_tween_gdscript'
+2026-10-21T07:59:44.3671060Z ##[group]Initializing the repository
+2026-10-21T07:59:44.3673850Z [command]/opt/homebrew/bin/git init /Users/runner/work/spire_tween_gdscript/spire_tween_gdscript
+2026-10-21T07:59:44.3835600Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-21T07:59:44.3837800Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-21T07:59:44.3839790Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-21T07:59:44.3841310Z hint: call:
+2026-10-21T07:59:44.3842070Z hint:
+2026-10-21T07:59:44.3842900Z hint: 	git config --global init.defaultBranch <name>
+2026-10-21T07:59:44.3844110Z hint:
+2026-10-21T07:59:44.3845060Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-21T07:59:44.3847000Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-21T07:59:44.3848300Z hint:
+2026-10-21T07:59:44.3848970Z hint: 	git branch -m <name>
+2026-10-21T07:59:44.3849750Z hint:
+2026-10-21T07:59:44.3850800Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-21T07:59:44.3852880Z Initialized empty Git repository in /Users/runner/work/spire_tween_gdscript/spire_tween_gdscript/.git/
+2026-10-21T07:59:44.3856700Z [command]/opt/homebrew/bin/git remote add origin https://github.com/Houtamelo/spire_tween_gdscript
+2026-10-21T07:59:44.3896760Z ##[endgroup]
+2026-10-21T07:59:44.3897990Z ##[group]Disabling automatic garbage collection
+2026-10-21T07:59:44.3899230Z [command]/opt/homebrew/bin/git config --local gc.auto 0
+2026-10-21T07:59:44.3937980Z ##[endgroup]
+2026-10-21T07:59:44.3939990Z ##[group]Setting up auth
+2026-10-21T07:59:44.3944300Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-21T07:59:44.3988170Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-21T07:59:44.4601070Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-21T07:59:44.4646250Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-21T07:59:44.5168890Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-21T07:59:44.5211840Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-21T07:59:44.5743770Z [command]/opt/homebrew/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-21T07:59:44.5789180Z ##[endgroup]
+2026-10-21T07:59:44.5790430Z ##[group]Fetching the repository
+2026-10-21T07:59:44.5795230Z [command]/opt/homebrew/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +55173dc278f1d55fc82980b06df0af3a7d508f20:refs/remotes/origin/ci/release-pipeline-20261017
+2026-10-21T07:59:45.8795520Z From https://github.com/Houtamelo/spire_tween_gdscript
+2026-10-21T07:59:45.8797760Z  * [new ref]         55173dc278f1d55fc82980b06df0af3a7d508f20 -> origin/ci/release-pipeline-20261017
+2026-10-21T07:59:45.8800280Z ##[endgroup]
+2026-10-21T07:59:45.8801610Z ##[group]Determining the checkout info
+2026-10-21T07:59:45.8802320Z ##[endgroup]
+2026-10-21T07:59:45.8804790Z [command]/opt/homebrew/bin/git sparse-checkout disable
+2026-10-21T07:59:45.8866950Z [command]/opt/homebrew/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-21T07:59:45.8917640Z ##[group]Checking out the ref
+2026-10-21T07:59:45.8925330Z [command]/opt/homebrew/bin/git checkout --progress --force -B ci/release-pipeline-20261017 refs/remotes/origin/ci/release-pipeline-20261017
+2026-10-21T07:59:46.1127350Z Switched to a new branch 'ci/release-pipeline-20261017'
+2026-10-21T07:59:46.1132140Z branch 'ci/release-pipeline-20261017' set up to track 'origin/ci/release-pipeline-20261017'.
+2026-10-21T07:59:46.1139780Z ##[endgroup]
+2026-10-21T07:59:46.1203490Z [command]/opt/homebrew/bin/git log -1 --format=%H
+2026-10-21T07:59:46.1255840Z 55173dc278f1d55fc82980b06df0af3a7d508f20
+2026-10-21T07:59:46.1444400Z ##[group]Run if [[ "$PLATFORM" == macos ]]; then
+2026-10-21T07:59:46.1445290Z if [[ "$PLATFORM" == macos ]]; then
+2026-10-21T07:59:46.1445800Z   rustup target add aarch64-apple-darwin x86_64-apple-darwin
+2026-10-21T07:59:46.1446340Z fi
+2026-10-21T07:59:46.1511750Z shell: /bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-21T07:59:46.1512230Z env:
+2026-10-21T07:59:46.1512550Z   CI: true
+2026-10-21T07:59:46.1512930Z   CARGO_TERM_COLOR: always
+2026-10-21T07:59:46.1513280Z   RUSTUP_MAX_RETRIES: 3
+2026-10-21T07:59:46.1513690Z   GIT_TERMINAL_PROMPT: 0
+2026-10-21T07:59:46.1514070Z   PLATFORM: macos
+2026-10-21T07:59:46.1514390Z ##[endgroup]
+2026-10-21T07:59:46.2237480Z info: syncing channel updates for nightly-2026-08-11-aarch64-apple-darwin
+2026-10-21T07:59:46.3427840Z info: latest update on 2026-08-11 for version 1.99.0-nightly (12c36e253 2026-08-10)
+2026-10-21T07:59:46.3437470Z info: downloading 4 components
+2026-10-21T07:59:55.0905730Z info: component rust-std is up to date
+2026-10-21T07:59:55.1107180Z info: downloading component rust-std
+2026-10-21T08:00:00.1091630Z ##[group]Run if [[ "$PLATFORM" == macos ]]; then
+2026-10-21T08:00:00.1091960Z if [[ "$PLATFORM" == macos ]]; then
+2026-10-21T08:00:00.1092350Z   cargo test --locked -p spire_release --bin spire-release
+2026-10-21T08:00:00.1092720Z elif [[ "$PLATFORM" == windows ]]; then
+2026-10-21T08:00:00.1093030Z   export RUSTC_LOG=rustc_codegen_ssa::back::link=info
+2026-10-21T08:00:00.1093390Z fi
+2026-10-21T08:00:00.1093800Z cargo run --locked -p spire_release -- build --platform "$PLATFORM" --out "dist/staging/$PLATFORM"
+2026-10-21T08:00:00.1147140Z shell: /bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-21T08:00:00.1147470Z env:
+2026-10-21T08:00:00.1147750Z   CI: true
+2026-10-21T08:00:00.1147930Z   CARGO_TERM_COLOR: always
+2026-10-21T08:00:00.1148150Z   RUSTUP_MAX_RETRIES: 3
+2026-10-21T08:00:00.1148360Z   GIT_TERMINAL_PROMPT: 0
+2026-10-21T08:00:00.1148520Z   PLATFORM: macos
+2026-10-21T08:00:00.1148670Z ##[endgroup]
+2026-10-21T08:00:00.3903120Z     Updating crates.io index
+2026-10-21T08:00:01.6158310Z  Downloading crates ...
+2026-10-21T08:00:01.6550940Z   Downloaded equivalent v1.0.2
+2026-10-21T08:00:01.6586170Z   Downloaded simd-adler32 v0.3.10
+2026-10-21T08:00:01.6616850Z   Downloaded block-buffer v0.10.4
+2026-10-21T08:00:01.6633380Z   Downloaded toml_datetime v0.7.5+spec-1.1.0
+2026-10-21T08:00:01.6663420Z   Downloaded cpufeatures v0.2.17
+2026-10-21T08:00:01.6685590Z   Downloaded itoa v1.0.18
+2026-10-21T08:00:01.6706070Z   Downloaded generic-array v0.14.7
+2026-10-21T08:00:01.6733260Z   Downloaded version_check v0.9.5
+2026-10-21T08:00:01.6758310Z   Downloaded flate2 v1.1.10
+2026-10-21T08:00:01.6896690Z   Downloaded serde_spanned v1.1.2
+2026-10-21T08:00:01.6921470Z   Downloaded crypto-common v0.1.7
+2026-10-21T08:00:01.6936090Z   Downloaded digest v0.10.7
+2026-10-21T08:00:01.6964970Z   Downloaded sha2 v0.10.9
+2026-10-21T08:00:01.7005420Z   Downloaded toml_writer v1.1.3+spec-1.1.0
+2026-10-21T08:00:01.7024250Z   Downloaded zmij v1.0.23
+2026-10-21T08:00:01.7050100Z   Downloaded anyhow v1.0.104
+2026-10-21T08:00:01.7121050Z   Downloaded cfg-if v1.0.4
+2026-10-21T08:00:01.7145510Z   Downloaded crc32fast v1.5.2
+2026-10-21T08:00:01.7173380Z   Downloaded toml_parser v1.1.5+spec-1.1.0
+2026-10-21T08:00:01.7207430Z   Downloaded zopfli v0.8.4
+2026-10-21T08:00:01.7247040Z   Downloaded log v0.4.34
+2026-10-21T08:00:01.7283510Z   Downloaded toml v0.9.12+spec-1.1.0
+2026-10-21T08:00:01.7346190Z   Downloaded serde_core v1.0.229
+2026-10-21T08:00:01.7391650Z   Downloaded bumpalo v3.20.3
+2026-10-21T08:00:01.7434080Z   Downloaded memchr v2.8.3
+2026-10-21T08:00:01.7517120Z   Downloaded indexmap v2.14.0
+2026-10-21T08:00:01.7593080Z   Downloaded typenum v1.20.1
+2026-10-21T08:00:01.7641370Z   Downloaded zip v4.6.1
+2026-10-21T08:00:01.7705810Z   Downloaded aho-corasick v1.1.5
+2026-10-21T08:00:01.7778420Z   Downloaded serde_json v1.0.151
+2026-10-21T08:00:01.7882840Z   Downloaded regex v1.13.1
+2026-10-21T08:00:01.7964400Z   Downloaded hashbrown v0.17.1
+2026-10-21T08:00:01.8031050Z   Downloaded winnow v0.7.15
+2026-10-21T08:00:01.8164270Z   Downloaded winnow v1.0.4
+2026-10-21T08:00:01.8303680Z   Downloaded zlib-rs v0.6.8
+2026-10-21T08:00:01.8375980Z   Downloaded regex-syntax v0.8.11
+2026-10-21T08:00:01.8465760Z   Downloaded regex-automata v0.4.18
+2026-10-21T08:00:01.8644960Z   Downloaded libc v0.2.189
+2026-10-21T08:00:01.9666140Z    Compiling version_check v0.9.5
+2026-10-21T08:00:01.9706120Z    Compiling serde_core v1.0.229
+2026-10-21T08:00:01.9808020Z    Compiling typenum v1.20.1
+2026-10-21T08:00:02.3923960Z    Compiling generic-array v0.14.7
+2026-10-21T08:00:02.5290820Z    Compiling memchr v2.8.3
+2026-10-21T08:00:03.1647890Z    Compiling libc v0.2.189
+2026-10-21T08:00:04.2146600Z    Compiling cfg-if v1.0.4
+2026-10-21T08:00:04.2679240Z    Compiling crc32fast v1.5.2
+2026-10-21T08:00:04.4914960Z    Compiling zmij v1.0.23
+2026-10-21T08:00:04.6472700Z    Compiling crypto-common v0.1.7
+2026-10-21T08:00:04.6781650Z    Compiling block-buffer v0.10.4
+2026-10-21T08:00:04.9999500Z    Compiling aho-corasick v1.1.5
+2026-10-21T08:00:05.1370750Z    Compiling serde_json v1.0.151
+2026-10-21T08:00:05.2679220Z    Compiling zlib-rs v0.6.8
+2026-10-21T08:00:06.0003800Z    Compiling anyhow v1.0.104
+2026-10-21T08:00:06.1775060Z    Compiling regex-syntax v0.8.11
+2026-10-21T08:00:09.4842660Z    Compiling equivalent v1.0.2
+2026-10-21T08:00:09.5266730Z    Compiling hashbrown v0.17.1
+2026-10-21T08:00:09.8792600Z    Compiling winnow v1.0.4
+2026-10-21T08:00:09.9330490Z    Compiling simd-adler32 v0.3.10
+2026-10-21T08:00:10.1522290Z    Compiling log v0.4.34
+2026-10-21T08:00:10.2782260Z    Compiling bumpalo v3.20.3
+2026-10-21T08:00:10.4617220Z    Compiling zopfli v0.8.4
+2026-10-21T08:00:10.8789350Z    Compiling toml_parser v1.1.5+spec-1.1.0
+2026-10-21T08:00:12.0590100Z    Compiling indexmap v2.14.0
+2026-10-21T08:00:12.2970090Z    Compiling flate2 v1.1.10
+2026-10-21T08:00:12.5404820Z    Compiling regex-automata v0.4.18
+2026-10-21T08:00:12.7319370Z    Compiling toml_datetime v0.7.5+spec-1.1.0
+2026-10-21T08:00:13.0233830Z    Compiling serde_spanned v1.1.2
+2026-10-21T08:00:13.0983380Z    Compiling cpufeatures v0.2.17
+2026-10-21T08:00:13.1707010Z    Compiling digest v0.10.7
+2026-10-21T08:00:13.2813450Z    Compiling itoa v1.0.18
+2026-10-21T08:00:13.4514930Z    Compiling winnow v0.7.15
+2026-10-21T08:00:13.5383030Z    Compiling toml_writer v1.1.3+spec-1.1.0
+2026-10-21T08:00:14.6252590Z    Compiling toml v0.9.12+spec-1.1.0
+2026-10-21T08:00:15.9856110Z    Compiling regex v1.13.1
+2026-10-21T08:00:17.1985960Z    Compiling sha2 v0.10.9
+2026-10-21T08:00:18.9342850Z    Compiling zip v4.6.1
+2026-10-21T08:00:21.4200910Z    Compiling spire_release v0.1.0 (/Users/runner/work/spire_tween_gdscript/spire_tween_gdscript/release/tools)
+2026-10-21T08:00:21.9548220Z     Finished `test` profile [optimized + debuginfo] target(s) in 21.75s
+2026-10-21T08:00:21.9647280Z      Running unittests src/main.rs (target/debug/build/spire_release/19fa7aa679942d0e/out/spire_release-19fa7aa679942d0e)
+2026-10-21T08:00:21.9671840Z
+2026-10-21T08:00:21.9672100Z running 1 test
+2026-10-21T08:00:22.8453270Z test macos_integration_tests::universal_verification_accepts_both_architectures_and_rejects_thin_objects ... ok
+2026-10-21T08:00:22.8453720Z
+2026-10-21T08:00:22.8453950Z test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.88s
+2026-10-21T08:00:22.8454250Z
+2026-10-21T08:00:22.9516240Z    Compiling spire_release v0.1.0 (/Users/runner/work/spire_tween_gdscript/spire_tween_gdscript/release/tools)
+2026-10-21T08:00:27.2846930Z     Finished `dev` profile [optimized + debuginfo] target(s) in 4.40s
+2026-10-21T08:00:27.2863630Z      Running `target/debug/spire-release build --platform macos --out dist/staging/macos`
+2026-10-21T08:00:27.4395490Z Building addon aarch64-apple-darwin debug
+2026-10-21T08:04:48.9026390Z Building native tests aarch64-apple-darwin debug
+2026-10-21T08:06:16.8077900Z Building addon aarch64-apple-darwin release
+2026-10-21T08:09:47.6148250Z Building native tests aarch64-apple-darwin release
+2026-10-21T08:13:05.6596890Z Building addon x86_64-apple-darwin debug
+2026-10-21T08:15:50.6889740Z Building native tests x86_64-apple-darwin debug
+2026-10-21T08:17:14.8504660Z Building addon x86_64-apple-darwin release
+2026-10-21T08:18:58.3097610Z Building native tests x86_64-apple-darwin release
+2026-10-21T08:20:24.7046350Z Build staged at /Users/runner/work/spire_tween_gdscript/spire_tween_gdscript/dist/staging/macos
+2026-10-21T08:20:24.7576920Z ##[group]Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+2026-10-21T08:20:24.7577600Z with:
+2026-10-21T08:20:24.7577930Z   name: build-macos
+2026-10-21T08:20:24.7579060Z   path: dist/staging/macos/
+2026-10-21T08:20:24.7579750Z   include-hidden-files: true
+2026-10-21T08:20:24.7580110Z   if-no-files-found: error
+2026-10-21T08:20:24.7581160Z   retention-days: 14
+2026-10-21T08:20:24.7581430Z   compression-level: 6
+2026-10-21T08:20:24.7581990Z   overwrite: false
+2026-10-21T08:20:24.7582220Z env:
+2026-10-21T08:20:24.7582730Z   CI: true
+2026-10-21T08:20:24.7583010Z   CARGO_TERM_COLOR: always
+2026-10-21T08:20:24.7583630Z   RUSTUP_MAX_RETRIES: 3
+2026-10-21T08:20:24.7584560Z   GIT_TERMINAL_PROMPT: 0
+2026-10-21T08:20:24.7585270Z ##[endgroup]
+2026-10-21T08:20:25.2060780Z (node:22459) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-21T08:20:25.2062110Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-21T08:20:25.3163760Z With the provided path, there will be 458 files uploaded
+2026-10-21T08:20:25.3164610Z Artifact name is valid!
+2026-10-21T08:20:25.3165000Z Root directory input is valid!
+2026-10-21T08:20:25.4920920Z Beginning upload of artifact content to blob storage
+2026-10-21T08:20:26.1580240Z (node:22459) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-21T08:20:26.5047940Z Uploaded bytes 8388608
+2026-10-21T08:20:27.0691510Z Uploaded bytes 16777216
+2026-10-21T08:20:27.8259140Z Uploaded bytes 25165824
+2026-10-21T08:20:28.4300250Z Uploaded bytes 33554432
+2026-10-21T08:20:29.1326950Z Uploaded bytes 41120111
+2026-10-21T08:20:29.1482010Z Finished uploading artifact content to blob storage!
+2026-10-21T08:20:29.1484530Z SHA256 digest of uploaded artifact zip is e6758fd3ce26d3b98cddd95379d008c3b90d0637c9d0f742e4c5b900debcce24
+2026-10-21T08:20:29.1485790Z Finalizing artifact upload
+2026-10-21T08:20:29.3412690Z Artifact build-macos.zip successfully finalized. Artifact ID 12329994103
+2026-10-21T08:20:29.3413320Z Artifact build-macos has been successfully uploaded! Final size is 41120111 bytes. Artifact ID is 12329994103
+2026-10-21T08:20:29.3420550Z Artifact download URL: https://github.com/Houtamelo/spire_tween_gdscript/actions/runs/39565814673/artifacts/12329994103
+2026-10-21T08:20:29.3586120Z Post job cleanup.
+2026-10-21T08:20:29.4448730Z [command]/opt/homebrew/bin/git version
+2026-10-21T08:20:29.4494440Z git version 2.55.0
+2026-10-21T08:20:29.4511190Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/4123baab-fb71-488a-bc6a-d697726a4a5a/.gitconfig'
+2026-10-21T08:20:29.4517910Z Temporarily overriding HOME='/Users/runner/work/_temp/4123baab-fb71-488a-bc6a-d697726a4a5a' before making global git config changes
+2026-10-21T08:20:29.4518690Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-21T08:20:29.4520480Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/spire_tween_gdscript/spire_tween_gdscript
+2026-10-21T08:20:29.4566690Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-21T08:20:29.4606310Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-21T08:20:29.5196000Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-21T08:20:29.5233030Z http.https://github.com/.extraheader
+2026-10-21T08:20:29.5238880Z [command]/opt/homebrew/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-21T08:20:29.5291790Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-21T08:20:29.5843510Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-21T08:20:29.5900750Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-21T08:20:29.6502150Z Cleaning up orphan processes
+2026-10-21T08:20:30.6825670Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11d5960a326750d5838078e36cf38b85af677262, actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

@@ -77,6 +77,7 @@ jobs:
             cargo test --locked -p spire_release --bin spire-release
           elif [[ "$PLATFORM" == windows ]]; then
             export RUSTC_LOG=rustc_codegen_ssa::back::link=info
+            export SPIRE_RELEASE_TARGET_DIR="$RUNNER_TEMP/st"
           fi
           cargo run --locked -p spire_release -- build --platform "$PLATFORM" --out "dist/staging/$PLATFORM"
       - name: Preserve failed build diagnostics

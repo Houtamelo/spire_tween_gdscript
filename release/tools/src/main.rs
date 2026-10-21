@@ -317,9 +317,11 @@ fn build(platform: &str, stage: &Path) -> Result<()> {
             "cargo-ndk version differs from release/config.json"
         );
     }
+    let target_path = std::env::var_os("SPIRE_RELEASE_TARGET_DIR").unwrap_or_else(|| "target/release-pipeline".into());
+    ensure!(!target_path.is_empty(), "SPIRE_RELEASE_TARGET_DIR must not be empty");
+    let target_dir = root().join(target_path);
     fs::create_dir_all(stage)?;
     let source = source_identity()?;
-    let target_dir = root().join("target/release-pipeline");
     let mut packages = BTreeSet::new();
     for target in targets {
         let target = target.as_str().unwrap();
