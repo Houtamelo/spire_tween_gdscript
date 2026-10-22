@@ -49,6 +49,9 @@ pub struct PropertyDataViaCallable<T> {
     pub getter: Callable,
     /// Invoked each tick with the new value. Must accept a single `T` argument.
     pub setter: Callable,
+    /// Optional zero-argument predicate for adapters whose target can disappear
+    /// independently of its object, such as a named audio bus.
+    pub validation: Option<Callable>,
     /// Type-binding marker — the type tweened is determined by `T`, not by anything
     /// the callables encode at the type level.
     pub _pd: PhantomData<T>,
@@ -64,6 +67,7 @@ impl<T> PropertyDataViaCallable<T> {
             owner: getter.object().map(ObjectOrNode::from_unchecked_object),
             getter,
             setter,
+            validation: None,
             _pd: PhantomData,
         }
     }
@@ -87,6 +91,14 @@ impl<T> IPropertyData for PropertyDataViaCallable<T> {
     fn get_property_path(&self) -> NodePath { self.getter.method_name().as_ref().map(NodePath::from).unwrap_or_default() }
 
     fn get_owner(&self) -> Option<&ObjectOrNode> { self.owner.as_ref() }
+
+    fn accessors_are_valid(&self) -> bool {
+        self.getter.is_valid()
+            && self.setter.is_valid()
+            && self.validation.as_ref().is_none_or(|check| {
+                check.is_valid() && check.call(&[]).try_to::<bool>().unwrap_or(false)
+            })
+    }
 }
 
 impl<T> TryFromPathAndObject for PropertyDataViaCallable<T> {}

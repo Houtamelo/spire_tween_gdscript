@@ -20,6 +20,8 @@ impl TyToPropertyTween for Color {
 
 #[delegate_impl]
 impl IPropertyData for PropertyDataColor {
+    fn accessors_are_valid(&self) -> bool;
+
     type Target = Object;
 
     fn get_property_path(&self) -> NodePath;

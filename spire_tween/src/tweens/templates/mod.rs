@@ -1,4 +1,9 @@
 use super::*;
+mod adapters;
+mod motion;
+mod color;
+mod counter;
+pub use self::{adapters::*, motion::*, color::*, counter::*};
 // TODO: Check if integration tests cover all these.
 
 #[allow(dead_code)]

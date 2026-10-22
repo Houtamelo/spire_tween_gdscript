@@ -105,7 +105,7 @@ fn tokenize_data_enum(class: &ClassData) -> TokenStream {
                     #property_path => {
                         Some(Self {
                             property: <#enum_ty>::#enum_discrim,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(owner.clone().upcast::<Object>()),
                             owner,
                         })
                     }
@@ -222,7 +222,7 @@ fn tokenize_trait_gd_impl(class: &ClassData) -> TokenStream {
                     let data = #data_ty {
                         property: <#enum_ty>::#enum_discrim,
                         owner: self.clone().upcast(),
-                        owner_obj_or_node: ObjectOrNode::Node(self.clone().upcast::<#class_ident>().upcast::<Node>()),
+                        owner_obj_or_node: ObjectOrNode::from_unchecked_object(self.clone().upcast::<Object>()),
                     };
                     SpireTween::<LerpPropertyData<#rust_ty >>::new(data.into(), Evaluator::Static(end_val), duration)
                 }
@@ -235,7 +235,7 @@ fn tokenize_trait_gd_impl(class: &ClassData) -> TokenStream {
                             let data = #data_ty {
                                 property: <#enum_ty>::#enum_discrim,
                                 owner: self.clone().upcast(),
-                                owner_obj_or_node: ObjectOrNode::Node(self.clone().upcast::<#class_ident>().upcast::<Node>()),
+                                owner_obj_or_node: ObjectOrNode::from_unchecked_object(self.clone().upcast::<Object>()),
                             };
                             
                             SpireTween::<LerpPropertyData<#rust_ty >>::new(data.into(), Evaluator::Static(end_val), duration)
@@ -270,7 +270,7 @@ fn tokenize_trait_direct_impl(class: &ClassData) -> TokenStream {
                         let owner: Gd<#class_ident> = self.to_gd().upcast();
                         let data = #data_ty {
                             property: <#enum_ty>::#enum_discrim,
-                            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(owner.clone().upcast::<Object>()),
                             owner,
                         };
 
@@ -284,7 +284,7 @@ fn tokenize_trait_direct_impl(class: &ClassData) -> TokenStream {
                             let owner: Gd<#class_ident> = self.to_gd().upcast();
                             let data = #data_ty {
                                 property: <#enum_ty>::#enum_discrim,
-                                owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+                                owner_obj_or_node: ObjectOrNode::from_unchecked_object(owner.clone().upcast::<Object>()),
                                 owner,
                             };
                             

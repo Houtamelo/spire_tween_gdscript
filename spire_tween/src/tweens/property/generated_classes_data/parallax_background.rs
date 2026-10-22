@@ -132,8 +132,8 @@ impl TryFromPathAndObject for ParallaxBackgroundFloatData {
                     "scroll_base_offset:x" => {
                         Some(Self {
                             property: <ParallaxBackgroundFloatKind>::ScrollBaseOffsetX,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -141,8 +141,8 @@ impl TryFromPathAndObject for ParallaxBackgroundFloatData {
                     "scroll_base_offset:y" => {
                         Some(Self {
                             property: <ParallaxBackgroundFloatKind>::ScrollBaseOffsetY,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -150,8 +150,8 @@ impl TryFromPathAndObject for ParallaxBackgroundFloatData {
                     "scroll_base_scale:x" => {
                         Some(Self {
                             property: <ParallaxBackgroundFloatKind>::ScrollBaseScaleX,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -159,8 +159,8 @@ impl TryFromPathAndObject for ParallaxBackgroundFloatData {
                     "scroll_base_scale:y" => {
                         Some(Self {
                             property: <ParallaxBackgroundFloatKind>::ScrollBaseScaleY,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -168,8 +168,8 @@ impl TryFromPathAndObject for ParallaxBackgroundFloatData {
                     "scroll_offset:x" => {
                         Some(Self {
                             property: <ParallaxBackgroundFloatKind>::ScrollOffsetX,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -177,8 +177,8 @@ impl TryFromPathAndObject for ParallaxBackgroundFloatData {
                     "scroll_offset:y" => {
                         Some(Self {
                             property: <ParallaxBackgroundFloatKind>::ScrollOffsetY,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -268,8 +268,8 @@ impl TryFromPathAndObject for ParallaxBackgroundVec2Data {
                     "scroll_base_offset" => {
                         Some(Self {
                             property: <ParallaxBackgroundVec2Kind>::ScrollBaseOffset,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -277,8 +277,8 @@ impl TryFromPathAndObject for ParallaxBackgroundVec2Data {
                     "scroll_base_scale" => {
                         Some(Self {
                             property: <ParallaxBackgroundVec2Kind>::ScrollBaseScale,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -286,8 +286,8 @@ impl TryFromPathAndObject for ParallaxBackgroundVec2Data {
                     "scroll_offset" => {
                         Some(Self {
                             property: <ParallaxBackgroundVec2Kind>::ScrollOffset,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -355,8 +355,8 @@ impl<
         let data = ParallaxBackgroundFloatData {
             property: <ParallaxBackgroundFloatKind>::ScrollBaseOffsetX,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<ParallaxBackground>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -371,8 +371,8 @@ impl<
         let data = ParallaxBackgroundFloatData {
             property: <ParallaxBackgroundFloatKind>::ScrollBaseOffsetY,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<ParallaxBackground>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -387,8 +387,8 @@ impl<
         let data = ParallaxBackgroundFloatData {
             property: <ParallaxBackgroundFloatKind>::ScrollBaseScaleX,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<ParallaxBackground>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -403,8 +403,8 @@ impl<
         let data = ParallaxBackgroundFloatData {
             property: <ParallaxBackgroundFloatKind>::ScrollBaseScaleY,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<ParallaxBackground>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -419,8 +419,8 @@ impl<
         let data = ParallaxBackgroundFloatData {
             property: <ParallaxBackgroundFloatKind>::ScrollOffsetX,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<ParallaxBackground>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -435,8 +435,8 @@ impl<
         let data = ParallaxBackgroundFloatData {
             property: <ParallaxBackgroundFloatKind>::ScrollOffsetY,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<ParallaxBackground>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -451,8 +451,8 @@ impl<
         let data = ParallaxBackgroundVec2Data {
             property: <ParallaxBackgroundVec2Kind>::ScrollBaseOffset,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<ParallaxBackground>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -467,8 +467,8 @@ impl<
         let data = ParallaxBackgroundVec2Data {
             property: <ParallaxBackgroundVec2Kind>::ScrollBaseScale,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<ParallaxBackground>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -483,8 +483,8 @@ impl<
         let data = ParallaxBackgroundVec2Data {
             property: <ParallaxBackgroundVec2Kind>::ScrollOffset,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<ParallaxBackground>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -503,7 +503,9 @@ impl<
         let owner: Gd<ParallaxBackground> = self.to_gd().upcast();
         let data = ParallaxBackgroundFloatData {
             property: <ParallaxBackgroundFloatKind>::ScrollBaseOffsetX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -518,7 +520,9 @@ impl<
         let owner: Gd<ParallaxBackground> = self.to_gd().upcast();
         let data = ParallaxBackgroundFloatData {
             property: <ParallaxBackgroundFloatKind>::ScrollBaseOffsetY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -533,7 +537,9 @@ impl<
         let owner: Gd<ParallaxBackground> = self.to_gd().upcast();
         let data = ParallaxBackgroundFloatData {
             property: <ParallaxBackgroundFloatKind>::ScrollBaseScaleX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -548,7 +554,9 @@ impl<
         let owner: Gd<ParallaxBackground> = self.to_gd().upcast();
         let data = ParallaxBackgroundFloatData {
             property: <ParallaxBackgroundFloatKind>::ScrollBaseScaleY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -563,7 +571,9 @@ impl<
         let owner: Gd<ParallaxBackground> = self.to_gd().upcast();
         let data = ParallaxBackgroundFloatData {
             property: <ParallaxBackgroundFloatKind>::ScrollOffsetX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -578,7 +588,9 @@ impl<
         let owner: Gd<ParallaxBackground> = self.to_gd().upcast();
         let data = ParallaxBackgroundFloatData {
             property: <ParallaxBackgroundFloatKind>::ScrollOffsetY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -593,7 +605,9 @@ impl<
         let owner: Gd<ParallaxBackground> = self.to_gd().upcast();
         let data = ParallaxBackgroundVec2Data {
             property: <ParallaxBackgroundVec2Kind>::ScrollBaseOffset,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -608,7 +622,9 @@ impl<
         let owner: Gd<ParallaxBackground> = self.to_gd().upcast();
         let data = ParallaxBackgroundVec2Data {
             property: <ParallaxBackgroundVec2Kind>::ScrollBaseScale,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -623,7 +639,9 @@ impl<
         let owner: Gd<ParallaxBackground> = self.to_gd().upcast();
         let data = ParallaxBackgroundVec2Data {
             property: <ParallaxBackgroundVec2Kind>::ScrollOffset,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<

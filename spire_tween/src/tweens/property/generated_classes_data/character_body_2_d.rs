@@ -68,8 +68,8 @@ impl TryFromPathAndObject for CharacterBody2DFloatData {
                     "velocity:x" => {
                         Some(Self {
                             property: <CharacterBody2DFloatKind>::VelocityX,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -77,8 +77,8 @@ impl TryFromPathAndObject for CharacterBody2DFloatData {
                     "velocity:y" => {
                         Some(Self {
                             property: <CharacterBody2DFloatKind>::VelocityY,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -142,8 +142,8 @@ impl TryFromPathAndObject for CharacterBody2DVec2Data {
                     "velocity" => {
                         Some(Self {
                             property: <CharacterBody2DVec2Kind>::Velocity,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -180,8 +180,8 @@ for Gd<Class> {
         let data = CharacterBody2DFloatData {
             property: <CharacterBody2DFloatKind>::VelocityX,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<CharacterBody2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -196,8 +196,8 @@ for Gd<Class> {
         let data = CharacterBody2DFloatData {
             property: <CharacterBody2DFloatKind>::VelocityY,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<CharacterBody2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -212,8 +212,8 @@ for Gd<Class> {
         let data = CharacterBody2DVec2Data {
             property: <CharacterBody2DVec2Kind>::Velocity,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<CharacterBody2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -232,7 +232,9 @@ impl<
         let owner: Gd<CharacterBody2D> = self.to_gd().upcast();
         let data = CharacterBody2DFloatData {
             property: <CharacterBody2DFloatKind>::VelocityX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -247,7 +249,9 @@ impl<
         let owner: Gd<CharacterBody2D> = self.to_gd().upcast();
         let data = CharacterBody2DFloatData {
             property: <CharacterBody2DFloatKind>::VelocityY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -262,7 +266,9 @@ impl<
         let owner: Gd<CharacterBody2D> = self.to_gd().upcast();
         let data = CharacterBody2DVec2Data {
             property: <CharacterBody2DVec2Kind>::Velocity,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<

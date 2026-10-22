@@ -53,8 +53,8 @@ impl TryFromPathAndObject for ViewportFloatData {
                     "scaling_3d_scale" => {
                         Some(Self {
                             property: <ViewportFloatKind>::Scaling3DScale,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -80,8 +80,8 @@ impl<Class: Inherits<Viewport> + Inherits<Object>> SpireDoViewport<()> for Gd<Cl
         let data = ViewportFloatData {
             property: <ViewportFloatKind>::Scaling3DScale,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Viewport>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -100,7 +100,9 @@ impl<
         let owner: Gd<Viewport> = self.to_gd().upcast();
         let data = ViewportFloatData {
             property: <ViewportFloatKind>::Scaling3DScale,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<

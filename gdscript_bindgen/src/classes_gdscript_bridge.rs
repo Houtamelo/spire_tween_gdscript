@@ -53,9 +53,12 @@ fn tokenize_class_bridge(class: &ClassData) -> TokenStream {
                       alias,
                       bridge_fn_name,
                       trait_fn_name,
+                      doc,
                       ..
                   }| {
-                let doc1 = if let Some((left, right)) = property_path.split_once(':') {
+                let doc1 = if let Some(doc) = doc {
+                    doc.clone()
+                } else if let Some((left, right)) = property_path.split_once(':') {
                     format!(
                         "[b]Behavior: [/b]Tweens the `{right}` component of the property [member \
                          {class_ident}.{left}] over [param duration] seconds."
@@ -141,6 +144,7 @@ fn tokenize_class_bridge(class: &ClassData) -> TokenStream {
 
     let gd_bridge = &class.gdscript_bridge;
     let template_funcs = template_bridge_methods(class_ident);
+    let adapter_funcs = crate::template_adapters::methods(class_ident);
 
     quote! {
         use super::*;
@@ -154,6 +158,7 @@ fn tokenize_class_bridge(class: &ClassData) -> TokenStream {
         impl #gd_bridge {
             #(#funcs)*
             #template_funcs
+            #adapter_funcs
         }
     }
 }

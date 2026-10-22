@@ -108,7 +108,8 @@ where LerpMethodData<T>: ITweenable
 
     #[inline]
     fn force_complete_internal(&mut self) -> bool {
-        let is_valid = self.t.callable.is_valid();
+        let is_valid = self.t.callable.is_valid()
+            && self.t.owner.as_ref().is_none_or(|owner| owner.is_instance_valid());
         if is_valid {
             let target_value = {
                 let eased_ratio = self.t.ease.sample(1.);

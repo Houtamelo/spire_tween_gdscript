@@ -53,8 +53,8 @@ impl TryFromPathAndObject for LineEditIntData {
                     "max_length" => {
                         Some(Self {
                             property: <LineEditIntKind>::MaxLength,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -129,8 +129,8 @@ impl TryFromPathAndObject for LineEditStringData {
                     "text" => {
                         Some(Self {
                             property: <LineEditStringKind>::Text,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -138,8 +138,8 @@ impl TryFromPathAndObject for LineEditStringData {
                     "placeholder_text" => {
                         Some(Self {
                             property: <LineEditStringKind>::PlaceholderText,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -175,8 +175,8 @@ impl<Class: Inherits<LineEdit> + Inherits<Object>> SpireDoLineEdit<()> for Gd<Cl
         let data = LineEditIntData {
             property: <LineEditIntKind>::MaxLength,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<LineEdit>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -191,8 +191,8 @@ impl<Class: Inherits<LineEdit> + Inherits<Object>> SpireDoLineEdit<()> for Gd<Cl
         let data = LineEditStringData {
             property: <LineEditStringKind>::Text,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<LineEdit>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -207,8 +207,8 @@ impl<Class: Inherits<LineEdit> + Inherits<Object>> SpireDoLineEdit<()> for Gd<Cl
         let data = LineEditStringData {
             property: <LineEditStringKind>::PlaceholderText,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<LineEdit>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -227,7 +227,9 @@ impl<
         let owner: Gd<LineEdit> = self.to_gd().upcast();
         let data = LineEditIntData {
             property: <LineEditIntKind>::MaxLength,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -242,7 +244,9 @@ impl<
         let owner: Gd<LineEdit> = self.to_gd().upcast();
         let data = LineEditStringData {
             property: <LineEditStringKind>::Text,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -257,7 +261,9 @@ impl<
         let owner: Gd<LineEdit> = self.to_gd().upcast();
         let data = LineEditStringData {
             property: <LineEditStringKind>::PlaceholderText,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<

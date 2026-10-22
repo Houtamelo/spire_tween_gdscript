@@ -86,8 +86,8 @@ impl TryFromPathAndObject for PathFollow2DFloatData {
                     "h_offset" => {
                         Some(Self {
                             property: <PathFollow2DFloatKind>::HOffset,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -95,8 +95,8 @@ impl TryFromPathAndObject for PathFollow2DFloatData {
                     "v_offset" => {
                         Some(Self {
                             property: <PathFollow2DFloatKind>::VOffset,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -104,8 +104,8 @@ impl TryFromPathAndObject for PathFollow2DFloatData {
                     "progress" => {
                         Some(Self {
                             property: <PathFollow2DFloatKind>::Progress,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -113,8 +113,8 @@ impl TryFromPathAndObject for PathFollow2DFloatData {
                     "progress_ratio" => {
                         Some(Self {
                             property: <PathFollow2DFloatKind>::ProgressRatio,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -156,8 +156,8 @@ for Gd<Class> {
         let data = PathFollow2DFloatData {
             property: <PathFollow2DFloatKind>::HOffset,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<PathFollow2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -172,8 +172,8 @@ for Gd<Class> {
         let data = PathFollow2DFloatData {
             property: <PathFollow2DFloatKind>::VOffset,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<PathFollow2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -188,8 +188,8 @@ for Gd<Class> {
         let data = PathFollow2DFloatData {
             property: <PathFollow2DFloatKind>::Progress,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<PathFollow2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -204,8 +204,8 @@ for Gd<Class> {
         let data = PathFollow2DFloatData {
             property: <PathFollow2DFloatKind>::ProgressRatio,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<PathFollow2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -224,7 +224,9 @@ impl<
         let owner: Gd<PathFollow2D> = self.to_gd().upcast();
         let data = PathFollow2DFloatData {
             property: <PathFollow2DFloatKind>::HOffset,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -239,7 +241,9 @@ impl<
         let owner: Gd<PathFollow2D> = self.to_gd().upcast();
         let data = PathFollow2DFloatData {
             property: <PathFollow2DFloatKind>::VOffset,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -254,7 +258,9 @@ impl<
         let owner: Gd<PathFollow2D> = self.to_gd().upcast();
         let data = PathFollow2DFloatData {
             property: <PathFollow2DFloatKind>::Progress,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -269,7 +275,9 @@ impl<
         let owner: Gd<PathFollow2D> = self.to_gd().upcast();
         let data = PathFollow2DFloatData {
             property: <PathFollow2DFloatKind>::ProgressRatio,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<

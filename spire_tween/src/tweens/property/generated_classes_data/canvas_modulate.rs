@@ -94,8 +94,8 @@ impl TryFromPathAndObject for CanvasModulateFloatData {
                     "color:r" => {
                         Some(Self {
                             property: <CanvasModulateFloatKind>::ColorR,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -103,8 +103,8 @@ impl TryFromPathAndObject for CanvasModulateFloatData {
                     "color:g" => {
                         Some(Self {
                             property: <CanvasModulateFloatKind>::ColorG,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -112,8 +112,8 @@ impl TryFromPathAndObject for CanvasModulateFloatData {
                     "color:b" => {
                         Some(Self {
                             property: <CanvasModulateFloatKind>::ColorB,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -121,8 +121,8 @@ impl TryFromPathAndObject for CanvasModulateFloatData {
                     "color:a" => {
                         Some(Self {
                             property: <CanvasModulateFloatKind>::ColorA,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -186,8 +186,8 @@ impl TryFromPathAndObject for CanvasModulateColorData {
                     "color" => {
                         Some(Self {
                             property: <CanvasModulateColorKind>::Color,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -234,8 +234,8 @@ for Gd<Class> {
         let data = CanvasModulateFloatData {
             property: <CanvasModulateFloatKind>::ColorR,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<CanvasModulate>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -250,8 +250,8 @@ for Gd<Class> {
         let data = CanvasModulateFloatData {
             property: <CanvasModulateFloatKind>::ColorG,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<CanvasModulate>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -266,8 +266,8 @@ for Gd<Class> {
         let data = CanvasModulateFloatData {
             property: <CanvasModulateFloatKind>::ColorB,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<CanvasModulate>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -282,8 +282,8 @@ for Gd<Class> {
         let data = CanvasModulateFloatData {
             property: <CanvasModulateFloatKind>::ColorA,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<CanvasModulate>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -298,8 +298,8 @@ for Gd<Class> {
         let data = CanvasModulateColorData {
             property: <CanvasModulateColorKind>::Color,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<CanvasModulate>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -318,7 +318,9 @@ impl<
         let owner: Gd<CanvasModulate> = self.to_gd().upcast();
         let data = CanvasModulateFloatData {
             property: <CanvasModulateFloatKind>::ColorR,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -333,7 +335,9 @@ impl<
         let owner: Gd<CanvasModulate> = self.to_gd().upcast();
         let data = CanvasModulateFloatData {
             property: <CanvasModulateFloatKind>::ColorG,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -348,7 +352,9 @@ impl<
         let owner: Gd<CanvasModulate> = self.to_gd().upcast();
         let data = CanvasModulateFloatData {
             property: <CanvasModulateFloatKind>::ColorB,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -363,7 +369,9 @@ impl<
         let owner: Gd<CanvasModulate> = self.to_gd().upcast();
         let data = CanvasModulateFloatData {
             property: <CanvasModulateFloatKind>::ColorA,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -378,7 +386,9 @@ impl<
         let owner: Gd<CanvasModulate> = self.to_gd().upcast();
         let data = CanvasModulateColorData {
             property: <CanvasModulateColorKind>::Color,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<

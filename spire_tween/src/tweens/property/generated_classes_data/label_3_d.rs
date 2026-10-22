@@ -64,8 +64,8 @@ impl TryFromPathAndObject for Label3DIntData {
                     "font_size" => {
                         Some(Self {
                             property: <Label3DIntKind>::FontSize,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -73,8 +73,8 @@ impl TryFromPathAndObject for Label3DIntData {
                     "outline_size" => {
                         Some(Self {
                             property: <Label3DIntKind>::OutlineSize,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -279,8 +279,8 @@ impl TryFromPathAndObject for Label3DFloatData {
                     "line_spacing" => {
                         Some(Self {
                             property: <Label3DFloatKind>::LineSpacing,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -288,8 +288,8 @@ impl TryFromPathAndObject for Label3DFloatData {
                     "modulate:r" => {
                         Some(Self {
                             property: <Label3DFloatKind>::ModulateR,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -297,8 +297,8 @@ impl TryFromPathAndObject for Label3DFloatData {
                     "modulate:g" => {
                         Some(Self {
                             property: <Label3DFloatKind>::ModulateG,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -306,8 +306,8 @@ impl TryFromPathAndObject for Label3DFloatData {
                     "modulate:b" => {
                         Some(Self {
                             property: <Label3DFloatKind>::ModulateB,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -315,8 +315,8 @@ impl TryFromPathAndObject for Label3DFloatData {
                     "modulate:a" => {
                         Some(Self {
                             property: <Label3DFloatKind>::ModulateA,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -324,8 +324,8 @@ impl TryFromPathAndObject for Label3DFloatData {
                     "offset:x" => {
                         Some(Self {
                             property: <Label3DFloatKind>::OffsetX,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -333,8 +333,8 @@ impl TryFromPathAndObject for Label3DFloatData {
                     "offset:y" => {
                         Some(Self {
                             property: <Label3DFloatKind>::OffsetY,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -342,8 +342,8 @@ impl TryFromPathAndObject for Label3DFloatData {
                     "outline_modulate:r" => {
                         Some(Self {
                             property: <Label3DFloatKind>::OutlineModulateR,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -351,8 +351,8 @@ impl TryFromPathAndObject for Label3DFloatData {
                     "outline_modulate:g" => {
                         Some(Self {
                             property: <Label3DFloatKind>::OutlineModulateG,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -360,8 +360,8 @@ impl TryFromPathAndObject for Label3DFloatData {
                     "outline_modulate:b" => {
                         Some(Self {
                             property: <Label3DFloatKind>::OutlineModulateB,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -369,8 +369,8 @@ impl TryFromPathAndObject for Label3DFloatData {
                     "outline_modulate:a" => {
                         Some(Self {
                             property: <Label3DFloatKind>::OutlineModulateA,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -378,8 +378,8 @@ impl TryFromPathAndObject for Label3DFloatData {
                     "pixel_size" => {
                         Some(Self {
                             property: <Label3DFloatKind>::PixelSize,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -443,8 +443,8 @@ impl TryFromPathAndObject for Label3DVec2Data {
                     "offset" => {
                         Some(Self {
                             property: <Label3DVec2Kind>::Offset,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -519,8 +519,8 @@ impl TryFromPathAndObject for Label3DColorData {
                     "modulate" => {
                         Some(Self {
                             property: <Label3DColorKind>::Modulate,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -528,8 +528,8 @@ impl TryFromPathAndObject for Label3DColorData {
                     "outline_modulate" => {
                         Some(Self {
                             property: <Label3DColorKind>::OutlineModulate,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -593,8 +593,8 @@ impl TryFromPathAndObject for Label3DStringData {
                     "text" => {
                         Some(Self {
                             property: <Label3DStringKind>::Text,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -756,8 +756,8 @@ impl<Class: Inherits<Label3D> + Inherits<Object>> SpireDoLabel3D<()> for Gd<Clas
         let data = Label3DIntData {
             property: <Label3DIntKind>::FontSize,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Label3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -772,8 +772,8 @@ impl<Class: Inherits<Label3D> + Inherits<Object>> SpireDoLabel3D<()> for Gd<Clas
         let data = Label3DIntData {
             property: <Label3DIntKind>::OutlineSize,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Label3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -788,8 +788,8 @@ impl<Class: Inherits<Label3D> + Inherits<Object>> SpireDoLabel3D<()> for Gd<Clas
         let data = Label3DFloatData {
             property: <Label3DFloatKind>::LineSpacing,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Label3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -804,8 +804,8 @@ impl<Class: Inherits<Label3D> + Inherits<Object>> SpireDoLabel3D<()> for Gd<Clas
         let data = Label3DFloatData {
             property: <Label3DFloatKind>::ModulateR,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Label3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -820,8 +820,8 @@ impl<Class: Inherits<Label3D> + Inherits<Object>> SpireDoLabel3D<()> for Gd<Clas
         let data = Label3DFloatData {
             property: <Label3DFloatKind>::ModulateR,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Label3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -836,8 +836,8 @@ impl<Class: Inherits<Label3D> + Inherits<Object>> SpireDoLabel3D<()> for Gd<Clas
         let data = Label3DFloatData {
             property: <Label3DFloatKind>::ModulateG,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Label3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -852,8 +852,8 @@ impl<Class: Inherits<Label3D> + Inherits<Object>> SpireDoLabel3D<()> for Gd<Clas
         let data = Label3DFloatData {
             property: <Label3DFloatKind>::ModulateG,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Label3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -868,8 +868,8 @@ impl<Class: Inherits<Label3D> + Inherits<Object>> SpireDoLabel3D<()> for Gd<Clas
         let data = Label3DFloatData {
             property: <Label3DFloatKind>::ModulateB,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Label3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -884,8 +884,8 @@ impl<Class: Inherits<Label3D> + Inherits<Object>> SpireDoLabel3D<()> for Gd<Clas
         let data = Label3DFloatData {
             property: <Label3DFloatKind>::ModulateB,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Label3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -900,8 +900,8 @@ impl<Class: Inherits<Label3D> + Inherits<Object>> SpireDoLabel3D<()> for Gd<Clas
         let data = Label3DFloatData {
             property: <Label3DFloatKind>::ModulateA,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Label3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -916,8 +916,8 @@ impl<Class: Inherits<Label3D> + Inherits<Object>> SpireDoLabel3D<()> for Gd<Clas
         let data = Label3DFloatData {
             property: <Label3DFloatKind>::ModulateA,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Label3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -928,8 +928,8 @@ impl<Class: Inherits<Label3D> + Inherits<Object>> SpireDoLabel3D<()> for Gd<Clas
         let data = Label3DFloatData {
             property: <Label3DFloatKind>::ModulateA,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Label3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -944,8 +944,8 @@ impl<Class: Inherits<Label3D> + Inherits<Object>> SpireDoLabel3D<()> for Gd<Clas
         let data = Label3DFloatData {
             property: <Label3DFloatKind>::OffsetX,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Label3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -960,8 +960,8 @@ impl<Class: Inherits<Label3D> + Inherits<Object>> SpireDoLabel3D<()> for Gd<Clas
         let data = Label3DFloatData {
             property: <Label3DFloatKind>::OffsetY,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Label3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -976,8 +976,8 @@ impl<Class: Inherits<Label3D> + Inherits<Object>> SpireDoLabel3D<()> for Gd<Clas
         let data = Label3DFloatData {
             property: <Label3DFloatKind>::OutlineModulateR,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Label3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -992,8 +992,8 @@ impl<Class: Inherits<Label3D> + Inherits<Object>> SpireDoLabel3D<()> for Gd<Clas
         let data = Label3DFloatData {
             property: <Label3DFloatKind>::OutlineModulateR,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Label3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -1008,8 +1008,8 @@ impl<Class: Inherits<Label3D> + Inherits<Object>> SpireDoLabel3D<()> for Gd<Clas
         let data = Label3DFloatData {
             property: <Label3DFloatKind>::OutlineModulateG,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Label3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -1024,8 +1024,8 @@ impl<Class: Inherits<Label3D> + Inherits<Object>> SpireDoLabel3D<()> for Gd<Clas
         let data = Label3DFloatData {
             property: <Label3DFloatKind>::OutlineModulateG,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Label3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -1040,8 +1040,8 @@ impl<Class: Inherits<Label3D> + Inherits<Object>> SpireDoLabel3D<()> for Gd<Clas
         let data = Label3DFloatData {
             property: <Label3DFloatKind>::OutlineModulateB,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Label3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -1056,8 +1056,8 @@ impl<Class: Inherits<Label3D> + Inherits<Object>> SpireDoLabel3D<()> for Gd<Clas
         let data = Label3DFloatData {
             property: <Label3DFloatKind>::OutlineModulateB,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Label3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -1072,8 +1072,8 @@ impl<Class: Inherits<Label3D> + Inherits<Object>> SpireDoLabel3D<()> for Gd<Clas
         let data = Label3DFloatData {
             property: <Label3DFloatKind>::OutlineModulateA,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Label3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -1088,8 +1088,8 @@ impl<Class: Inherits<Label3D> + Inherits<Object>> SpireDoLabel3D<()> for Gd<Clas
         let data = Label3DFloatData {
             property: <Label3DFloatKind>::OutlineModulateA,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Label3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -1104,8 +1104,8 @@ impl<Class: Inherits<Label3D> + Inherits<Object>> SpireDoLabel3D<()> for Gd<Clas
         let data = Label3DFloatData {
             property: <Label3DFloatKind>::PixelSize,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Label3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -1120,8 +1120,8 @@ impl<Class: Inherits<Label3D> + Inherits<Object>> SpireDoLabel3D<()> for Gd<Clas
         let data = Label3DVec2Data {
             property: <Label3DVec2Kind>::Offset,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Label3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -1136,8 +1136,8 @@ impl<Class: Inherits<Label3D> + Inherits<Object>> SpireDoLabel3D<()> for Gd<Clas
         let data = Label3DColorData {
             property: <Label3DColorKind>::Modulate,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Label3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -1152,8 +1152,8 @@ impl<Class: Inherits<Label3D> + Inherits<Object>> SpireDoLabel3D<()> for Gd<Clas
         let data = Label3DColorData {
             property: <Label3DColorKind>::Modulate,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Label3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -1168,8 +1168,8 @@ impl<Class: Inherits<Label3D> + Inherits<Object>> SpireDoLabel3D<()> for Gd<Clas
         let data = Label3DColorData {
             property: <Label3DColorKind>::OutlineModulate,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Label3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -1184,8 +1184,8 @@ impl<Class: Inherits<Label3D> + Inherits<Object>> SpireDoLabel3D<()> for Gd<Clas
         let data = Label3DColorData {
             property: <Label3DColorKind>::OutlineModulate,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Label3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -1200,8 +1200,8 @@ impl<Class: Inherits<Label3D> + Inherits<Object>> SpireDoLabel3D<()> for Gd<Clas
         let data = Label3DStringData {
             property: <Label3DStringKind>::Text,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Label3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -1219,7 +1219,9 @@ for T {
         let owner: Gd<Label3D> = self.to_gd().upcast();
         let data = Label3DIntData {
             property: <Label3DIntKind>::FontSize,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1234,7 +1236,9 @@ for T {
         let owner: Gd<Label3D> = self.to_gd().upcast();
         let data = Label3DIntData {
             property: <Label3DIntKind>::OutlineSize,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1249,7 +1253,9 @@ for T {
         let owner: Gd<Label3D> = self.to_gd().upcast();
         let data = Label3DFloatData {
             property: <Label3DFloatKind>::LineSpacing,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1264,7 +1270,9 @@ for T {
         let owner: Gd<Label3D> = self.to_gd().upcast();
         let data = Label3DFloatData {
             property: <Label3DFloatKind>::ModulateR,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1279,7 +1287,9 @@ for T {
         let owner: Gd<Label3D> = self.to_gd().upcast();
         let data = Label3DFloatData {
             property: <Label3DFloatKind>::ModulateR,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1294,7 +1304,9 @@ for T {
         let owner: Gd<Label3D> = self.to_gd().upcast();
         let data = Label3DFloatData {
             property: <Label3DFloatKind>::ModulateG,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1309,7 +1321,9 @@ for T {
         let owner: Gd<Label3D> = self.to_gd().upcast();
         let data = Label3DFloatData {
             property: <Label3DFloatKind>::ModulateG,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1324,7 +1338,9 @@ for T {
         let owner: Gd<Label3D> = self.to_gd().upcast();
         let data = Label3DFloatData {
             property: <Label3DFloatKind>::ModulateB,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1339,7 +1355,9 @@ for T {
         let owner: Gd<Label3D> = self.to_gd().upcast();
         let data = Label3DFloatData {
             property: <Label3DFloatKind>::ModulateB,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1354,7 +1372,9 @@ for T {
         let owner: Gd<Label3D> = self.to_gd().upcast();
         let data = Label3DFloatData {
             property: <Label3DFloatKind>::ModulateA,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1369,7 +1389,9 @@ for T {
         let owner: Gd<Label3D> = self.to_gd().upcast();
         let data = Label3DFloatData {
             property: <Label3DFloatKind>::ModulateA,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1380,7 +1402,9 @@ for T {
         let owner: Gd<Label3D> = self.to_gd().upcast();
         let data = Label3DFloatData {
             property: <Label3DFloatKind>::ModulateA,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1395,7 +1419,9 @@ for T {
         let owner: Gd<Label3D> = self.to_gd().upcast();
         let data = Label3DFloatData {
             property: <Label3DFloatKind>::OffsetX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1410,7 +1436,9 @@ for T {
         let owner: Gd<Label3D> = self.to_gd().upcast();
         let data = Label3DFloatData {
             property: <Label3DFloatKind>::OffsetY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1425,7 +1453,9 @@ for T {
         let owner: Gd<Label3D> = self.to_gd().upcast();
         let data = Label3DFloatData {
             property: <Label3DFloatKind>::OutlineModulateR,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1440,7 +1470,9 @@ for T {
         let owner: Gd<Label3D> = self.to_gd().upcast();
         let data = Label3DFloatData {
             property: <Label3DFloatKind>::OutlineModulateR,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1455,7 +1487,9 @@ for T {
         let owner: Gd<Label3D> = self.to_gd().upcast();
         let data = Label3DFloatData {
             property: <Label3DFloatKind>::OutlineModulateG,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1470,7 +1504,9 @@ for T {
         let owner: Gd<Label3D> = self.to_gd().upcast();
         let data = Label3DFloatData {
             property: <Label3DFloatKind>::OutlineModulateG,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1485,7 +1521,9 @@ for T {
         let owner: Gd<Label3D> = self.to_gd().upcast();
         let data = Label3DFloatData {
             property: <Label3DFloatKind>::OutlineModulateB,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1500,7 +1538,9 @@ for T {
         let owner: Gd<Label3D> = self.to_gd().upcast();
         let data = Label3DFloatData {
             property: <Label3DFloatKind>::OutlineModulateB,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1515,7 +1555,9 @@ for T {
         let owner: Gd<Label3D> = self.to_gd().upcast();
         let data = Label3DFloatData {
             property: <Label3DFloatKind>::OutlineModulateA,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1530,7 +1572,9 @@ for T {
         let owner: Gd<Label3D> = self.to_gd().upcast();
         let data = Label3DFloatData {
             property: <Label3DFloatKind>::OutlineModulateA,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1545,7 +1589,9 @@ for T {
         let owner: Gd<Label3D> = self.to_gd().upcast();
         let data = Label3DFloatData {
             property: <Label3DFloatKind>::PixelSize,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1560,7 +1606,9 @@ for T {
         let owner: Gd<Label3D> = self.to_gd().upcast();
         let data = Label3DVec2Data {
             property: <Label3DVec2Kind>::Offset,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1575,7 +1623,9 @@ for T {
         let owner: Gd<Label3D> = self.to_gd().upcast();
         let data = Label3DColorData {
             property: <Label3DColorKind>::Modulate,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1590,7 +1640,9 @@ for T {
         let owner: Gd<Label3D> = self.to_gd().upcast();
         let data = Label3DColorData {
             property: <Label3DColorKind>::Modulate,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1605,7 +1657,9 @@ for T {
         let owner: Gd<Label3D> = self.to_gd().upcast();
         let data = Label3DColorData {
             property: <Label3DColorKind>::OutlineModulate,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1620,7 +1674,9 @@ for T {
         let owner: Gd<Label3D> = self.to_gd().upcast();
         let data = Label3DColorData {
             property: <Label3DColorKind>::OutlineModulate,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1635,7 +1691,9 @@ for T {
         let owner: Gd<Label3D> = self.to_gd().upcast();
         let data = Label3DStringData {
             property: <Label3DStringKind>::Text,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<

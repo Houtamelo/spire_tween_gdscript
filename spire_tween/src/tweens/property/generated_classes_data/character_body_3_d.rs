@@ -81,8 +81,8 @@ impl TryFromPathAndObject for CharacterBody3DFloatData {
                     "velocity:x" => {
                         Some(Self {
                             property: <CharacterBody3DFloatKind>::VelocityX,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -90,8 +90,8 @@ impl TryFromPathAndObject for CharacterBody3DFloatData {
                     "velocity:y" => {
                         Some(Self {
                             property: <CharacterBody3DFloatKind>::VelocityY,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -99,8 +99,8 @@ impl TryFromPathAndObject for CharacterBody3DFloatData {
                     "velocity:z" => {
                         Some(Self {
                             property: <CharacterBody3DFloatKind>::VelocityZ,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -164,8 +164,8 @@ impl TryFromPathAndObject for CharacterBody3DVec3Data {
                     "velocity" => {
                         Some(Self {
                             property: <CharacterBody3DVec3Kind>::Velocity,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -207,8 +207,8 @@ for Gd<Class> {
         let data = CharacterBody3DFloatData {
             property: <CharacterBody3DFloatKind>::VelocityX,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<CharacterBody3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -223,8 +223,8 @@ for Gd<Class> {
         let data = CharacterBody3DFloatData {
             property: <CharacterBody3DFloatKind>::VelocityY,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<CharacterBody3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -239,8 +239,8 @@ for Gd<Class> {
         let data = CharacterBody3DFloatData {
             property: <CharacterBody3DFloatKind>::VelocityZ,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<CharacterBody3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -255,8 +255,8 @@ for Gd<Class> {
         let data = CharacterBody3DVec3Data {
             property: <CharacterBody3DVec3Kind>::Velocity,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<CharacterBody3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -275,7 +275,9 @@ impl<
         let owner: Gd<CharacterBody3D> = self.to_gd().upcast();
         let data = CharacterBody3DFloatData {
             property: <CharacterBody3DFloatKind>::VelocityX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -290,7 +292,9 @@ impl<
         let owner: Gd<CharacterBody3D> = self.to_gd().upcast();
         let data = CharacterBody3DFloatData {
             property: <CharacterBody3DFloatKind>::VelocityY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -305,7 +309,9 @@ impl<
         let owner: Gd<CharacterBody3D> = self.to_gd().upcast();
         let data = CharacterBody3DFloatData {
             property: <CharacterBody3DFloatKind>::VelocityZ,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -320,7 +326,9 @@ impl<
         let owner: Gd<CharacterBody3D> = self.to_gd().upcast();
         let data = CharacterBody3DVec3Data {
             property: <CharacterBody3DVec3Kind>::Velocity,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<

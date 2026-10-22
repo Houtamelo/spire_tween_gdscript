@@ -64,8 +64,8 @@ impl TryFromPathAndObject for VideoStreamPlayerFloatData {
                     "volume_db" => {
                         Some(Self {
                             property: <VideoStreamPlayerFloatKind>::VolumeDb,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -73,8 +73,8 @@ impl TryFromPathAndObject for VideoStreamPlayerFloatData {
                     "volume" => {
                         Some(Self {
                             property: <VideoStreamPlayerFloatKind>::Volume,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -106,8 +106,8 @@ for Gd<Class> {
         let data = VideoStreamPlayerFloatData {
             property: <VideoStreamPlayerFloatKind>::VolumeDb,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<VideoStreamPlayer>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -122,8 +122,8 @@ for Gd<Class> {
         let data = VideoStreamPlayerFloatData {
             property: <VideoStreamPlayerFloatKind>::Volume,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<VideoStreamPlayer>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -142,7 +142,9 @@ impl<
         let owner: Gd<VideoStreamPlayer> = self.to_gd().upcast();
         let data = VideoStreamPlayerFloatData {
             property: <VideoStreamPlayerFloatKind>::VolumeDb,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -157,7 +159,9 @@ impl<
         let owner: Gd<VideoStreamPlayer> = self.to_gd().upcast();
         let data = VideoStreamPlayerFloatData {
             property: <VideoStreamPlayerFloatKind>::Volume,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<

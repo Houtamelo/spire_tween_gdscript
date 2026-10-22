@@ -85,8 +85,8 @@ impl TryFromPathAndObject for StaticBody2DFloatData {
                     "constant_angular_velocity" => {
                         Some(Self {
                             property: <StaticBody2DFloatKind>::ConstantAngularVelocity,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -94,8 +94,8 @@ impl TryFromPathAndObject for StaticBody2DFloatData {
                     "constant_linear_velocity:x" => {
                         Some(Self {
                             property: <StaticBody2DFloatKind>::ConstantLinearVelocityX,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -103,8 +103,8 @@ impl TryFromPathAndObject for StaticBody2DFloatData {
                     "constant_linear_velocity:y" => {
                         Some(Self {
                             property: <StaticBody2DFloatKind>::ConstantLinearVelocityY,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -170,8 +170,8 @@ impl TryFromPathAndObject for StaticBody2DVec2Data {
                     "constant_linear_velocity" => {
                         Some(Self {
                             property: <StaticBody2DVec2Kind>::ConstantLinearVelocity,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -213,8 +213,8 @@ for Gd<Class> {
         let data = StaticBody2DFloatData {
             property: <StaticBody2DFloatKind>::ConstantAngularVelocity,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<StaticBody2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -229,8 +229,8 @@ for Gd<Class> {
         let data = StaticBody2DFloatData {
             property: <StaticBody2DFloatKind>::ConstantLinearVelocityX,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<StaticBody2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -245,8 +245,8 @@ for Gd<Class> {
         let data = StaticBody2DFloatData {
             property: <StaticBody2DFloatKind>::ConstantLinearVelocityY,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<StaticBody2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -261,8 +261,8 @@ for Gd<Class> {
         let data = StaticBody2DVec2Data {
             property: <StaticBody2DVec2Kind>::ConstantLinearVelocity,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<StaticBody2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -281,7 +281,9 @@ impl<
         let owner: Gd<StaticBody2D> = self.to_gd().upcast();
         let data = StaticBody2DFloatData {
             property: <StaticBody2DFloatKind>::ConstantAngularVelocity,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -296,7 +298,9 @@ impl<
         let owner: Gd<StaticBody2D> = self.to_gd().upcast();
         let data = StaticBody2DFloatData {
             property: <StaticBody2DFloatKind>::ConstantLinearVelocityX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -311,7 +315,9 @@ impl<
         let owner: Gd<StaticBody2D> = self.to_gd().upcast();
         let data = StaticBody2DFloatData {
             property: <StaticBody2DFloatKind>::ConstantLinearVelocityY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -326,7 +332,9 @@ impl<
         let owner: Gd<StaticBody2D> = self.to_gd().upcast();
         let data = StaticBody2DVec2Data {
             property: <StaticBody2DVec2Kind>::ConstantLinearVelocity,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<

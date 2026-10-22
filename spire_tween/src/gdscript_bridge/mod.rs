@@ -5,6 +5,7 @@ mod do_delayed_call;
 mod do_property;
 mod generated;
 mod sequence;
+mod adapters;
 
 #[allow(unused_imports)]
 pub use self::{do_call::*, do_delayed_call::*, do_property::*, generated::*, sequence::*};

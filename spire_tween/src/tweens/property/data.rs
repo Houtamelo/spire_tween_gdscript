@@ -35,6 +35,8 @@ where
 {
     /// Returns the property path this tween animates, relative to
     /// [`get_owner`](Self::get_owner).
+    /// Style adapters return the name accepted by generic property-tween lookup,
+    /// such as `"font_size"`, even when it is not a reflectable Godot property.
     #[inline]
     pub fn get_property_path(&self) -> NodePath { self.t.data.get_property_path() }
 
@@ -299,7 +301,8 @@ where
     fn stop_internal(&mut self) { self.t.lerp_mode.reset_state(); }
 
     fn force_complete_internal(&mut self) -> bool {
-        let is_valid = self.t.data.get_owner().is_none_or(|obj| obj.is_instance_valid());
+        let is_valid = self.t.data.accessors_are_valid()
+            && self.t.data.get_owner().is_none_or(|obj| obj.is_instance_valid());
         if is_valid {
             let target_value = match &mut self.t.lerp_mode {
                 LerpMode::Absolute { .. } => self.t.to.eval(),
@@ -322,13 +325,16 @@ where
             self.t.data.set_property_value(target_value);
         } else {
             let prop_name = &self.t.data.get_property_path();
-            godot_error!("Cannot set property `{prop_name}` on Object, owner is no longer a valid instance.");
+            godot_error!("Cannot set property `{prop_name}`: owner or accessors are no longer valid.");
         }
 
         is_valid
     }
 
     fn process_internal(&mut self, delta_time: f64, _is_tree_paused: bool) -> AdvanceTimeResult {
+        if !self.t.data.accessors_are_valid() {
+            return AdvanceTimeResult::ShouldDespawn;
+        }
         if let Some(owner) = self.t.data.get_owner() {
             match self.check_owner_validity_and_pause_mode(owner) {
                 NodesValidityResult::CanProcess => {}

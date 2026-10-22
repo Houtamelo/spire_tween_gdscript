@@ -222,8 +222,8 @@ impl TryFromPathAndObject for Area3DFloatData {
                     "angular_damp" => {
                         Some(Self {
                             property: <Area3DFloatKind>::AngularDamp,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -231,8 +231,8 @@ impl TryFromPathAndObject for Area3DFloatData {
                     "gravity" => {
                         Some(Self {
                             property: <Area3DFloatKind>::Gravity,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -240,8 +240,8 @@ impl TryFromPathAndObject for Area3DFloatData {
                     "gravity_direction:x" => {
                         Some(Self {
                             property: <Area3DFloatKind>::GravityDirectionX,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -249,8 +249,8 @@ impl TryFromPathAndObject for Area3DFloatData {
                     "gravity_direction:y" => {
                         Some(Self {
                             property: <Area3DFloatKind>::GravityDirectionY,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -258,8 +258,8 @@ impl TryFromPathAndObject for Area3DFloatData {
                     "gravity_direction:z" => {
                         Some(Self {
                             property: <Area3DFloatKind>::GravityDirectionZ,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -267,8 +267,8 @@ impl TryFromPathAndObject for Area3DFloatData {
                     "gravity_point_center:x" => {
                         Some(Self {
                             property: <Area3DFloatKind>::GravityPointCenterX,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -276,8 +276,8 @@ impl TryFromPathAndObject for Area3DFloatData {
                     "gravity_point_center:y" => {
                         Some(Self {
                             property: <Area3DFloatKind>::GravityPointCenterY,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -285,8 +285,8 @@ impl TryFromPathAndObject for Area3DFloatData {
                     "gravity_point_center:z" => {
                         Some(Self {
                             property: <Area3DFloatKind>::GravityPointCenterZ,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -294,8 +294,8 @@ impl TryFromPathAndObject for Area3DFloatData {
                     "gravity_point_unit_distance" => {
                         Some(Self {
                             property: <Area3DFloatKind>::GravityPointUnitDistance,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -303,8 +303,8 @@ impl TryFromPathAndObject for Area3DFloatData {
                     "linear_damp" => {
                         Some(Self {
                             property: <Area3DFloatKind>::LinearDamp,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -312,8 +312,8 @@ impl TryFromPathAndObject for Area3DFloatData {
                     "reverb_bus_amount" => {
                         Some(Self {
                             property: <Area3DFloatKind>::ReverbBusAmount,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -321,8 +321,8 @@ impl TryFromPathAndObject for Area3DFloatData {
                     "reverb_bus_uniformity" => {
                         Some(Self {
                             property: <Area3DFloatKind>::ReverbBusUniformity,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -330,8 +330,8 @@ impl TryFromPathAndObject for Area3DFloatData {
                     "wind_attenuation_factor" => {
                         Some(Self {
                             property: <Area3DFloatKind>::WindAttenuationFactor,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -339,8 +339,8 @@ impl TryFromPathAndObject for Area3DFloatData {
                     "wind_force_magnitude" => {
                         Some(Self {
                             property: <Area3DFloatKind>::WindForceMagnitude,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -417,8 +417,8 @@ impl TryFromPathAndObject for Area3DVec3Data {
                     "gravity_direction" => {
                         Some(Self {
                             property: <Area3DVec3Kind>::GravityDirection,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -426,8 +426,8 @@ impl TryFromPathAndObject for Area3DVec3Data {
                     "gravity_point_center" => {
                         Some(Self {
                             property: <Area3DVec3Kind>::GravityPointCenter,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -528,8 +528,8 @@ impl<Class: Inherits<Area3D> + Inherits<Object>> SpireDoArea3D<()> for Gd<Class>
         let data = Area3DFloatData {
             property: <Area3DFloatKind>::AngularDamp,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Area3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -544,8 +544,8 @@ impl<Class: Inherits<Area3D> + Inherits<Object>> SpireDoArea3D<()> for Gd<Class>
         let data = Area3DFloatData {
             property: <Area3DFloatKind>::Gravity,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Area3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -560,8 +560,8 @@ impl<Class: Inherits<Area3D> + Inherits<Object>> SpireDoArea3D<()> for Gd<Class>
         let data = Area3DFloatData {
             property: <Area3DFloatKind>::GravityDirectionX,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Area3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -576,8 +576,8 @@ impl<Class: Inherits<Area3D> + Inherits<Object>> SpireDoArea3D<()> for Gd<Class>
         let data = Area3DFloatData {
             property: <Area3DFloatKind>::GravityDirectionY,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Area3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -592,8 +592,8 @@ impl<Class: Inherits<Area3D> + Inherits<Object>> SpireDoArea3D<()> for Gd<Class>
         let data = Area3DFloatData {
             property: <Area3DFloatKind>::GravityDirectionZ,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Area3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -608,8 +608,8 @@ impl<Class: Inherits<Area3D> + Inherits<Object>> SpireDoArea3D<()> for Gd<Class>
         let data = Area3DFloatData {
             property: <Area3DFloatKind>::GravityPointCenterX,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Area3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -624,8 +624,8 @@ impl<Class: Inherits<Area3D> + Inherits<Object>> SpireDoArea3D<()> for Gd<Class>
         let data = Area3DFloatData {
             property: <Area3DFloatKind>::GravityPointCenterY,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Area3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -640,8 +640,8 @@ impl<Class: Inherits<Area3D> + Inherits<Object>> SpireDoArea3D<()> for Gd<Class>
         let data = Area3DFloatData {
             property: <Area3DFloatKind>::GravityPointCenterZ,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Area3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -656,8 +656,8 @@ impl<Class: Inherits<Area3D> + Inherits<Object>> SpireDoArea3D<()> for Gd<Class>
         let data = Area3DFloatData {
             property: <Area3DFloatKind>::GravityPointUnitDistance,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Area3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -672,8 +672,8 @@ impl<Class: Inherits<Area3D> + Inherits<Object>> SpireDoArea3D<()> for Gd<Class>
         let data = Area3DFloatData {
             property: <Area3DFloatKind>::LinearDamp,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Area3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -688,8 +688,8 @@ impl<Class: Inherits<Area3D> + Inherits<Object>> SpireDoArea3D<()> for Gd<Class>
         let data = Area3DFloatData {
             property: <Area3DFloatKind>::ReverbBusAmount,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Area3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -704,8 +704,8 @@ impl<Class: Inherits<Area3D> + Inherits<Object>> SpireDoArea3D<()> for Gd<Class>
         let data = Area3DFloatData {
             property: <Area3DFloatKind>::ReverbBusUniformity,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Area3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -720,8 +720,8 @@ impl<Class: Inherits<Area3D> + Inherits<Object>> SpireDoArea3D<()> for Gd<Class>
         let data = Area3DFloatData {
             property: <Area3DFloatKind>::WindAttenuationFactor,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Area3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -736,8 +736,8 @@ impl<Class: Inherits<Area3D> + Inherits<Object>> SpireDoArea3D<()> for Gd<Class>
         let data = Area3DFloatData {
             property: <Area3DFloatKind>::WindForceMagnitude,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Area3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -752,8 +752,8 @@ impl<Class: Inherits<Area3D> + Inherits<Object>> SpireDoArea3D<()> for Gd<Class>
         let data = Area3DVec3Data {
             property: <Area3DVec3Kind>::GravityDirection,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Area3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -768,8 +768,8 @@ impl<Class: Inherits<Area3D> + Inherits<Object>> SpireDoArea3D<()> for Gd<Class>
         let data = Area3DVec3Data {
             property: <Area3DVec3Kind>::GravityPointCenter,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Area3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -787,7 +787,9 @@ for T {
         let owner: Gd<Area3D> = self.to_gd().upcast();
         let data = Area3DFloatData {
             property: <Area3DFloatKind>::AngularDamp,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -802,7 +804,9 @@ for T {
         let owner: Gd<Area3D> = self.to_gd().upcast();
         let data = Area3DFloatData {
             property: <Area3DFloatKind>::Gravity,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -817,7 +821,9 @@ for T {
         let owner: Gd<Area3D> = self.to_gd().upcast();
         let data = Area3DFloatData {
             property: <Area3DFloatKind>::GravityDirectionX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -832,7 +838,9 @@ for T {
         let owner: Gd<Area3D> = self.to_gd().upcast();
         let data = Area3DFloatData {
             property: <Area3DFloatKind>::GravityDirectionY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -847,7 +855,9 @@ for T {
         let owner: Gd<Area3D> = self.to_gd().upcast();
         let data = Area3DFloatData {
             property: <Area3DFloatKind>::GravityDirectionZ,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -862,7 +872,9 @@ for T {
         let owner: Gd<Area3D> = self.to_gd().upcast();
         let data = Area3DFloatData {
             property: <Area3DFloatKind>::GravityPointCenterX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -877,7 +889,9 @@ for T {
         let owner: Gd<Area3D> = self.to_gd().upcast();
         let data = Area3DFloatData {
             property: <Area3DFloatKind>::GravityPointCenterY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -892,7 +906,9 @@ for T {
         let owner: Gd<Area3D> = self.to_gd().upcast();
         let data = Area3DFloatData {
             property: <Area3DFloatKind>::GravityPointCenterZ,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -907,7 +923,9 @@ for T {
         let owner: Gd<Area3D> = self.to_gd().upcast();
         let data = Area3DFloatData {
             property: <Area3DFloatKind>::GravityPointUnitDistance,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -922,7 +940,9 @@ for T {
         let owner: Gd<Area3D> = self.to_gd().upcast();
         let data = Area3DFloatData {
             property: <Area3DFloatKind>::LinearDamp,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -937,7 +957,9 @@ for T {
         let owner: Gd<Area3D> = self.to_gd().upcast();
         let data = Area3DFloatData {
             property: <Area3DFloatKind>::ReverbBusAmount,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -952,7 +974,9 @@ for T {
         let owner: Gd<Area3D> = self.to_gd().upcast();
         let data = Area3DFloatData {
             property: <Area3DFloatKind>::ReverbBusUniformity,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -967,7 +991,9 @@ for T {
         let owner: Gd<Area3D> = self.to_gd().upcast();
         let data = Area3DFloatData {
             property: <Area3DFloatKind>::WindAttenuationFactor,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -982,7 +1008,9 @@ for T {
         let owner: Gd<Area3D> = self.to_gd().upcast();
         let data = Area3DFloatData {
             property: <Area3DFloatKind>::WindForceMagnitude,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -997,7 +1025,9 @@ for T {
         let owner: Gd<Area3D> = self.to_gd().upcast();
         let data = Area3DVec3Data {
             property: <Area3DVec3Kind>::GravityDirection,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1012,7 +1042,9 @@ for T {
         let owner: Gd<Area3D> = self.to_gd().upcast();
         let data = Area3DVec3Data {
             property: <Area3DVec3Kind>::GravityPointCenter,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<

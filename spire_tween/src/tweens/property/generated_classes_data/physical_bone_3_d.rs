@@ -243,8 +243,8 @@ impl TryFromPathAndObject for PhysicalBone3DFloatData {
                     "angular_damp" => {
                         Some(Self {
                             property: <PhysicalBone3DFloatKind>::AngularDamp,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -252,8 +252,8 @@ impl TryFromPathAndObject for PhysicalBone3DFloatData {
                     "angular_velocity:x" => {
                         Some(Self {
                             property: <PhysicalBone3DFloatKind>::AngularVelocityX,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -261,8 +261,8 @@ impl TryFromPathAndObject for PhysicalBone3DFloatData {
                     "angular_velocity:y" => {
                         Some(Self {
                             property: <PhysicalBone3DFloatKind>::AngularVelocityY,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -270,8 +270,8 @@ impl TryFromPathAndObject for PhysicalBone3DFloatData {
                     "angular_velocity:z" => {
                         Some(Self {
                             property: <PhysicalBone3DFloatKind>::AngularVelocityZ,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -279,8 +279,8 @@ impl TryFromPathAndObject for PhysicalBone3DFloatData {
                     "bounce" => {
                         Some(Self {
                             property: <PhysicalBone3DFloatKind>::Bounce,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -288,8 +288,8 @@ impl TryFromPathAndObject for PhysicalBone3DFloatData {
                     "friction" => {
                         Some(Self {
                             property: <PhysicalBone3DFloatKind>::Friction,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -297,8 +297,8 @@ impl TryFromPathAndObject for PhysicalBone3DFloatData {
                     "gravity_scale" => {
                         Some(Self {
                             property: <PhysicalBone3DFloatKind>::GravityScale,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -306,8 +306,8 @@ impl TryFromPathAndObject for PhysicalBone3DFloatData {
                     "joint_rotation:x" => {
                         Some(Self {
                             property: <PhysicalBone3DFloatKind>::JointRotationX,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -315,8 +315,8 @@ impl TryFromPathAndObject for PhysicalBone3DFloatData {
                     "joint_rotation:y" => {
                         Some(Self {
                             property: <PhysicalBone3DFloatKind>::JointRotationY,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -324,8 +324,8 @@ impl TryFromPathAndObject for PhysicalBone3DFloatData {
                     "joint_rotation:z" => {
                         Some(Self {
                             property: <PhysicalBone3DFloatKind>::JointRotationZ,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -333,8 +333,8 @@ impl TryFromPathAndObject for PhysicalBone3DFloatData {
                     "linear_damp" => {
                         Some(Self {
                             property: <PhysicalBone3DFloatKind>::LinearDamp,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -342,8 +342,8 @@ impl TryFromPathAndObject for PhysicalBone3DFloatData {
                     "linear_velocity:x" => {
                         Some(Self {
                             property: <PhysicalBone3DFloatKind>::LinearVelocityX,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -351,8 +351,8 @@ impl TryFromPathAndObject for PhysicalBone3DFloatData {
                     "linear_velocity:y" => {
                         Some(Self {
                             property: <PhysicalBone3DFloatKind>::LinearVelocityY,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -360,8 +360,8 @@ impl TryFromPathAndObject for PhysicalBone3DFloatData {
                     "linear_velocity:z" => {
                         Some(Self {
                             property: <PhysicalBone3DFloatKind>::LinearVelocityZ,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -369,8 +369,8 @@ impl TryFromPathAndObject for PhysicalBone3DFloatData {
                     "mass" => {
                         Some(Self {
                             property: <PhysicalBone3DFloatKind>::Mass,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -458,8 +458,8 @@ impl TryFromPathAndObject for PhysicalBone3DVec3Data {
                     "angular_velocity" => {
                         Some(Self {
                             property: <PhysicalBone3DVec3Kind>::AngularVelocity,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -467,8 +467,8 @@ impl TryFromPathAndObject for PhysicalBone3DVec3Data {
                     "joint_rotation" => {
                         Some(Self {
                             property: <PhysicalBone3DVec3Kind>::JointRotation,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -476,8 +476,8 @@ impl TryFromPathAndObject for PhysicalBone3DVec3Data {
                     "linear_velocity" => {
                         Some(Self {
                             property: <PhysicalBone3DVec3Kind>::LinearVelocity,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -585,8 +585,8 @@ for Gd<Class> {
         let data = PhysicalBone3DFloatData {
             property: <PhysicalBone3DFloatKind>::AngularDamp,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<PhysicalBone3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -601,8 +601,8 @@ for Gd<Class> {
         let data = PhysicalBone3DFloatData {
             property: <PhysicalBone3DFloatKind>::AngularVelocityX,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<PhysicalBone3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -617,8 +617,8 @@ for Gd<Class> {
         let data = PhysicalBone3DFloatData {
             property: <PhysicalBone3DFloatKind>::AngularVelocityY,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<PhysicalBone3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -633,8 +633,8 @@ for Gd<Class> {
         let data = PhysicalBone3DFloatData {
             property: <PhysicalBone3DFloatKind>::AngularVelocityZ,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<PhysicalBone3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -649,8 +649,8 @@ for Gd<Class> {
         let data = PhysicalBone3DFloatData {
             property: <PhysicalBone3DFloatKind>::Bounce,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<PhysicalBone3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -665,8 +665,8 @@ for Gd<Class> {
         let data = PhysicalBone3DFloatData {
             property: <PhysicalBone3DFloatKind>::Friction,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<PhysicalBone3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -681,8 +681,8 @@ for Gd<Class> {
         let data = PhysicalBone3DFloatData {
             property: <PhysicalBone3DFloatKind>::GravityScale,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<PhysicalBone3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -697,8 +697,8 @@ for Gd<Class> {
         let data = PhysicalBone3DFloatData {
             property: <PhysicalBone3DFloatKind>::JointRotationX,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<PhysicalBone3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -713,8 +713,8 @@ for Gd<Class> {
         let data = PhysicalBone3DFloatData {
             property: <PhysicalBone3DFloatKind>::JointRotationY,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<PhysicalBone3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -729,8 +729,8 @@ for Gd<Class> {
         let data = PhysicalBone3DFloatData {
             property: <PhysicalBone3DFloatKind>::JointRotationZ,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<PhysicalBone3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -745,8 +745,8 @@ for Gd<Class> {
         let data = PhysicalBone3DFloatData {
             property: <PhysicalBone3DFloatKind>::LinearDamp,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<PhysicalBone3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -761,8 +761,8 @@ for Gd<Class> {
         let data = PhysicalBone3DFloatData {
             property: <PhysicalBone3DFloatKind>::LinearVelocityX,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<PhysicalBone3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -777,8 +777,8 @@ for Gd<Class> {
         let data = PhysicalBone3DFloatData {
             property: <PhysicalBone3DFloatKind>::LinearVelocityY,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<PhysicalBone3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -793,8 +793,8 @@ for Gd<Class> {
         let data = PhysicalBone3DFloatData {
             property: <PhysicalBone3DFloatKind>::LinearVelocityZ,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<PhysicalBone3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -805,8 +805,8 @@ for Gd<Class> {
         let data = PhysicalBone3DFloatData {
             property: <PhysicalBone3DFloatKind>::Mass,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<PhysicalBone3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -821,8 +821,8 @@ for Gd<Class> {
         let data = PhysicalBone3DVec3Data {
             property: <PhysicalBone3DVec3Kind>::AngularVelocity,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<PhysicalBone3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -837,8 +837,8 @@ for Gd<Class> {
         let data = PhysicalBone3DVec3Data {
             property: <PhysicalBone3DVec3Kind>::JointRotation,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<PhysicalBone3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -853,8 +853,8 @@ for Gd<Class> {
         let data = PhysicalBone3DVec3Data {
             property: <PhysicalBone3DVec3Kind>::LinearVelocity,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<PhysicalBone3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -873,7 +873,9 @@ impl<
         let owner: Gd<PhysicalBone3D> = self.to_gd().upcast();
         let data = PhysicalBone3DFloatData {
             property: <PhysicalBone3DFloatKind>::AngularDamp,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -888,7 +890,9 @@ impl<
         let owner: Gd<PhysicalBone3D> = self.to_gd().upcast();
         let data = PhysicalBone3DFloatData {
             property: <PhysicalBone3DFloatKind>::AngularVelocityX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -903,7 +907,9 @@ impl<
         let owner: Gd<PhysicalBone3D> = self.to_gd().upcast();
         let data = PhysicalBone3DFloatData {
             property: <PhysicalBone3DFloatKind>::AngularVelocityY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -918,7 +924,9 @@ impl<
         let owner: Gd<PhysicalBone3D> = self.to_gd().upcast();
         let data = PhysicalBone3DFloatData {
             property: <PhysicalBone3DFloatKind>::AngularVelocityZ,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -933,7 +941,9 @@ impl<
         let owner: Gd<PhysicalBone3D> = self.to_gd().upcast();
         let data = PhysicalBone3DFloatData {
             property: <PhysicalBone3DFloatKind>::Bounce,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -948,7 +958,9 @@ impl<
         let owner: Gd<PhysicalBone3D> = self.to_gd().upcast();
         let data = PhysicalBone3DFloatData {
             property: <PhysicalBone3DFloatKind>::Friction,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -963,7 +975,9 @@ impl<
         let owner: Gd<PhysicalBone3D> = self.to_gd().upcast();
         let data = PhysicalBone3DFloatData {
             property: <PhysicalBone3DFloatKind>::GravityScale,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -978,7 +992,9 @@ impl<
         let owner: Gd<PhysicalBone3D> = self.to_gd().upcast();
         let data = PhysicalBone3DFloatData {
             property: <PhysicalBone3DFloatKind>::JointRotationX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -993,7 +1009,9 @@ impl<
         let owner: Gd<PhysicalBone3D> = self.to_gd().upcast();
         let data = PhysicalBone3DFloatData {
             property: <PhysicalBone3DFloatKind>::JointRotationY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1008,7 +1026,9 @@ impl<
         let owner: Gd<PhysicalBone3D> = self.to_gd().upcast();
         let data = PhysicalBone3DFloatData {
             property: <PhysicalBone3DFloatKind>::JointRotationZ,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1023,7 +1043,9 @@ impl<
         let owner: Gd<PhysicalBone3D> = self.to_gd().upcast();
         let data = PhysicalBone3DFloatData {
             property: <PhysicalBone3DFloatKind>::LinearDamp,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1038,7 +1060,9 @@ impl<
         let owner: Gd<PhysicalBone3D> = self.to_gd().upcast();
         let data = PhysicalBone3DFloatData {
             property: <PhysicalBone3DFloatKind>::LinearVelocityX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1053,7 +1077,9 @@ impl<
         let owner: Gd<PhysicalBone3D> = self.to_gd().upcast();
         let data = PhysicalBone3DFloatData {
             property: <PhysicalBone3DFloatKind>::LinearVelocityY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1068,7 +1094,9 @@ impl<
         let owner: Gd<PhysicalBone3D> = self.to_gd().upcast();
         let data = PhysicalBone3DFloatData {
             property: <PhysicalBone3DFloatKind>::LinearVelocityZ,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1079,7 +1107,9 @@ impl<
         let owner: Gd<PhysicalBone3D> = self.to_gd().upcast();
         let data = PhysicalBone3DFloatData {
             property: <PhysicalBone3DFloatKind>::Mass,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1094,7 +1124,9 @@ impl<
         let owner: Gd<PhysicalBone3D> = self.to_gd().upcast();
         let data = PhysicalBone3DVec3Data {
             property: <PhysicalBone3DVec3Kind>::AngularVelocity,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1109,7 +1141,9 @@ impl<
         let owner: Gd<PhysicalBone3D> = self.to_gd().upcast();
         let data = PhysicalBone3DVec3Data {
             property: <PhysicalBone3DVec3Kind>::JointRotation,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1124,7 +1158,9 @@ impl<
         let owner: Gd<PhysicalBone3D> = self.to_gd().upcast();
         let data = PhysicalBone3DVec3Data {
             property: <PhysicalBone3DVec3Kind>::LinearVelocity,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<

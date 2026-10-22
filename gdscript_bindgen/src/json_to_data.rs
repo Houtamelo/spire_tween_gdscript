@@ -15,6 +15,7 @@ pub struct TweenJson {
     alias: Option<String>,
     get: Option<String>,
     set: Option<String>,
+    doc: Option<String>,
 }
 
 #[spire_enum::prelude::discriminant_generic_table]
@@ -55,6 +56,7 @@ pub struct TweenFunc {
     pub set_expr: TokenStream,
     pub bridge_fn_name: Ident,
     pub trait_fn_name: Ident,
+    pub doc: Option<String>,
 }
 
 impl TweenFunc {
@@ -66,6 +68,7 @@ impl TweenFunc {
             ty,
             get,
             set,
+            doc,
         }: &TweenJson,
     ) -> Self {
         let property_path = name.clone();
@@ -116,6 +119,7 @@ impl TweenFunc {
             .collect();
 
         Self {
+            doc: doc.clone(),
             property_path,
             enum_discrim,
             get_expr,
@@ -135,6 +139,7 @@ impl TweenFunc {
             alias,
             get,
             set,
+            doc,
         }: &TweenJson,
     ) -> Self {
         let property_path = format!("{name}:{inner_field}");
@@ -229,6 +234,9 @@ impl TweenFunc {
             .collect();
 
         Self {
+            doc: doc
+                .as_ref()
+                .map(|doc| format!("Tweens component `{inner_field}`. {doc}")),
             property_path,
             enum_discrim,
             get_expr,

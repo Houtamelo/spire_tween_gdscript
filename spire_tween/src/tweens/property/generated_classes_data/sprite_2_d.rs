@@ -53,8 +53,8 @@ impl TryFromPathAndObject for Sprite2DIntData {
                     "frame" => {
                         Some(Self {
                             property: <Sprite2DIntKind>::Frame,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -76,8 +76,8 @@ impl<Class: Inherits<Sprite2D> + Inherits<Object>> SpireDoSprite2D<()> for Gd<Cl
         let data = Sprite2DIntData {
             property: <Sprite2DIntKind>::Frame,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Sprite2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -96,7 +96,9 @@ impl<
         let owner: Gd<Sprite2D> = self.to_gd().upcast();
         let data = Sprite2DIntData {
             property: <Sprite2DIntKind>::Frame,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<

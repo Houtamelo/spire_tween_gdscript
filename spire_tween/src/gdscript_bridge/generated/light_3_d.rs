@@ -128,4 +128,34 @@ impl DoLight3D {
     fn r#color(node: Gd<Light3D>, to: Color, duration: f64) -> Gd<SpirePropertyColor> {
         Self::r#light_color(node, to, duration)
     }
+    /// Captures the current color at construction, then adds [param to] minus
+    /// that baseline over time. Equivalent to a relative color property tween.
+    #[func]
+    fn blendable_light_color(
+        node: Gd<Light3D>,
+        to: Color,
+        duration: f64,
+    ) -> Gd<SpirePropertyColor> {
+        gd_from_native_tween(node.do_blendable_light_color(to, duration).register())
+    }
+    /// Samples the supplied Gradient with eased progress. Includes alpha by
+    /// default; disabling it preserves the target's current alpha on each write.
+    /// Uses the Gradient's interpolation mode/color space and samples it live.
+    #[func]
+    fn gradient_light_color(
+        node: Gd<Light3D>,
+        gradient: Option<Gd<Gradient>>,
+        duration: f64,
+        #[opt(default = true)]
+        include_alpha: bool,
+    ) -> Option<Gd<SpireMethodFloat>> {
+        let gradient = gradient.log_null_arg(|| "gradient")?;
+        Some(
+            gd_from_native_tween(
+                node
+                    .do_gradient_light_color(gradient, duration, include_alpha)
+                    .register(),
+            ),
+        )
+    }
 }

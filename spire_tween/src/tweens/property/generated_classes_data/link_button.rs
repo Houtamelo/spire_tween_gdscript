@@ -53,8 +53,8 @@ impl TryFromPathAndObject for LinkButtonStringData {
                     "text" => {
                         Some(Self {
                             property: <LinkButtonStringKind>::Text,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -81,8 +81,8 @@ for Gd<Class> {
         let data = LinkButtonStringData {
             property: <LinkButtonStringKind>::Text,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<LinkButton>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -101,7 +101,9 @@ impl<
         let owner: Gd<LinkButton> = self.to_gd().upcast();
         let data = LinkButtonStringData {
             property: <LinkButtonStringKind>::Text,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<

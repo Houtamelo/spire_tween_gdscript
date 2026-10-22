@@ -133,6 +133,34 @@
 	},
 	{
 		"class": "Label", "tweens": [
+		{
+			"name": "font_size",
+			"ty": "i32",
+			"get": "obj.get_label_settings().map(|settings| settings.get_font_size()).unwrap_or_else(|| obj.get_theme_font_size(\"font_size\"))",
+			"set": "if let Some(mut settings) = obj.get_label_settings() { settings.set_font_size(val as i32); } else { obj.add_theme_font_size_override(\"font_size\", val as i32); }",
+			"doc": "Tweens the effective Label style. Uses LabelSettings when assigned (shared settings affect every user); otherwise reads the effective theme value and writes a local theme override. Does not change modulate."
+		},
+		{
+			"name": "font_color",
+			"ty": "Color",
+			"get": "obj.get_label_settings().map(|settings| settings.get_font_color()).unwrap_or_else(|| obj.get_theme_color(\"font_color\"))",
+			"set": "if let Some(mut settings) = obj.get_label_settings() { settings.set_font_color(val); } else { obj.add_theme_color_override(\"font_color\", val); }",
+			"doc": "Tweens the effective Label style. Uses LabelSettings when assigned (shared settings affect every user); otherwise reads the effective theme value and writes a local theme override. Does not change modulate."
+		},
+		{
+			"name": "outline_size",
+			"ty": "i32",
+			"get": "obj.get_label_settings().map(|settings| settings.get_outline_size()).unwrap_or_else(|| obj.get_theme_constant(\"outline_size\"))",
+			"set": "if let Some(mut settings) = obj.get_label_settings() { settings.set_outline_size(val as i32); } else { obj.add_theme_constant_override(\"outline_size\", val as i32); }",
+			"doc": "Tweens the effective Label style. Uses LabelSettings when assigned (shared settings affect every user); otherwise reads the effective theme value and writes a local theme override. Does not change modulate."
+		},
+		{
+			"name": "outline_color",
+			"ty": "Color",
+			"get": "obj.get_label_settings().map(|settings| settings.get_outline_color()).unwrap_or_else(|| obj.get_theme_color(\"font_outline_color\"))",
+			"set": "if let Some(mut settings) = obj.get_label_settings() { settings.set_outline_color(val); } else { obj.add_theme_color_override(\"font_outline_color\", val); }",
+			"doc": "Tweens the effective Label style. Uses LabelSettings when assigned (shared settings affect every user); otherwise reads the effective theme value and writes a local theme override. Does not change modulate."
+		},
 		{ "name": "visible_ratio", "ty": "f32" },
 		{ "name": "max_lines_visible", "ty": "i32" },
 		{ "name": "visible_characters", "ty": "i32" },
@@ -153,6 +181,62 @@
 	},
 	{
 		"class": "RichTextLabel", "tweens": [
+		{
+			"name": "normal_font_size",
+			"ty": "i32",
+			"get": "obj.get_theme_font_size(\"normal_font_size\")",
+			"set": "obj.add_theme_font_size_override(\"normal_font_size\", val as i32);",
+			"doc": "Tweens a RichTextLabel theme style, reading the effective theme value on first processing and writing a local override. Explicit BBCode formatting takes precedence."
+		},
+		{
+			"name": "bold_font_size",
+			"ty": "i32",
+			"get": "obj.get_theme_font_size(\"bold_font_size\")",
+			"set": "obj.add_theme_font_size_override(\"bold_font_size\", val as i32);",
+			"doc": "Tweens a RichTextLabel theme style, reading the effective theme value on first processing and writing a local override. Explicit BBCode formatting takes precedence."
+		},
+		{
+			"name": "italics_font_size",
+			"ty": "i32",
+			"get": "obj.get_theme_font_size(\"italics_font_size\")",
+			"set": "obj.add_theme_font_size_override(\"italics_font_size\", val as i32);",
+			"doc": "Tweens a RichTextLabel theme style, reading the effective theme value on first processing and writing a local override. Explicit BBCode formatting takes precedence."
+		},
+		{
+			"name": "bold_italics_font_size",
+			"ty": "i32",
+			"get": "obj.get_theme_font_size(\"bold_italics_font_size\")",
+			"set": "obj.add_theme_font_size_override(\"bold_italics_font_size\", val as i32);",
+			"doc": "Tweens a RichTextLabel theme style, reading the effective theme value on first processing and writing a local override. Explicit BBCode formatting takes precedence."
+		},
+		{
+			"name": "mono_font_size",
+			"ty": "i32",
+			"get": "obj.get_theme_font_size(\"mono_font_size\")",
+			"set": "obj.add_theme_font_size_override(\"mono_font_size\", val as i32);",
+			"doc": "Tweens a RichTextLabel theme style, reading the effective theme value on first processing and writing a local override. Explicit BBCode formatting takes precedence."
+		},
+		{
+			"name": "default_color",
+			"ty": "Color",
+			"get": "obj.get_theme_color(\"default_color\")",
+			"set": "obj.add_theme_color_override(\"default_color\", val);",
+			"doc": "Tweens a RichTextLabel theme style, reading the effective theme value on first processing and writing a local override. Explicit BBCode formatting takes precedence."
+		},
+		{
+			"name": "outline_color",
+			"ty": "Color",
+			"get": "obj.get_theme_color(\"font_outline_color\")",
+			"set": "obj.add_theme_color_override(\"font_outline_color\", val);",
+			"doc": "Tweens a RichTextLabel theme style, reading the effective theme value on first processing and writing a local override. Explicit BBCode formatting takes precedence."
+		},
+		{
+			"name": "outline_size",
+			"ty": "i32",
+			"get": "obj.get_theme_constant(\"outline_size\")",
+			"set": "obj.add_theme_constant_override(\"outline_size\", val as i32);",
+			"doc": "Tweens a RichTextLabel theme style, reading the effective theme value on first processing and writing a local override. Explicit BBCode formatting takes precedence."
+		},
 		{ "name": "visible_ratio", "ty": "f32" },
 		{ "name": "visible_characters", "ty": "i32" },
 		{ "name": "text", "ty": "String" }
@@ -548,5 +632,91 @@
 		{ "name": "origin_offset", "ty": "Vector3" },
 		{ "name": "size", "ty": "Vector3" }
 	]
+	},
+	{
+		"class": "Environment",
+		"tweens": [
+			{
+				"name": "background_color",
+				"ty": "Color",
+				"get": "obj.get_bg_color()",
+				"set": "obj.set_bg_color(val);"
+			}
+		]
+	},
+	{
+		"class": "BaseMaterial3D",
+		"tweens": [
+			{
+				"name": "albedo_color",
+				"ty": "Color",
+				"get": "obj.get_albedo()",
+				"set": "obj.set_albedo(val);"
+			},
+			{
+				"name": "albedo_color:a",
+				"ty": "f32",
+				"alias": "fade"
+			},
+			{
+				"name": "uv1_offset",
+				"ty": "Vector3"
+			},
+			{
+				"name": "uv1_scale",
+				"ty": "Vector3"
+			},
+			{
+				"name": "uv2_offset",
+				"ty": "Vector3"
+			},
+			{
+				"name": "uv2_scale",
+				"ty": "Vector3"
+			}
+		]
+	},
+	{
+		"class": "LabelSettings",
+		"tweens": [
+			{
+				"name": "font_size",
+				"ty": "i32"
+			},
+			{
+				"name": "font_color",
+				"ty": "Color"
+			},
+			{
+				"name": "outline_size",
+				"ty": "i32"
+			},
+			{
+				"name": "outline_color",
+				"ty": "Color"
+			}
+		]
+	},
+	{
+		"class": "ShaderMaterial",
+		"tweens": []
+	},
+	{
+		"class": "AudioServer",
+		"tweens": []
+	},
+	{
+		"class": "Line2D",
+		"group": "2D",
+		"tweens": [
+			{
+				"name": "default_color",
+				"ty": "Color"
+			},
+			{
+				"name": "width",
+				"ty": "f32"
+			}
+		]
 	}
 ]

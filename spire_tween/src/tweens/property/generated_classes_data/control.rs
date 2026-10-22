@@ -268,8 +268,8 @@ impl TryFromPathAndObject for ControlFloatData {
                     "anchor_bottom" => {
                         Some(Self {
                             property: <ControlFloatKind>::AnchorBottom,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -277,8 +277,8 @@ impl TryFromPathAndObject for ControlFloatData {
                     "anchor_left" => {
                         Some(Self {
                             property: <ControlFloatKind>::AnchorLeft,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -286,8 +286,8 @@ impl TryFromPathAndObject for ControlFloatData {
                     "anchor_right" => {
                         Some(Self {
                             property: <ControlFloatKind>::AnchorRight,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -295,8 +295,8 @@ impl TryFromPathAndObject for ControlFloatData {
                     "anchor_top" => {
                         Some(Self {
                             property: <ControlFloatKind>::AnchorTop,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -304,8 +304,8 @@ impl TryFromPathAndObject for ControlFloatData {
                     "rotation" => {
                         Some(Self {
                             property: <ControlFloatKind>::Rotation,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -313,8 +313,8 @@ impl TryFromPathAndObject for ControlFloatData {
                     "rotation_degrees" => {
                         Some(Self {
                             property: <ControlFloatKind>::RotationDegrees,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -322,8 +322,8 @@ impl TryFromPathAndObject for ControlFloatData {
                     "custom_minimum_size:x" => {
                         Some(Self {
                             property: <ControlFloatKind>::CustomMinimumSizeX,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -331,8 +331,8 @@ impl TryFromPathAndObject for ControlFloatData {
                     "custom_minimum_size:y" => {
                         Some(Self {
                             property: <ControlFloatKind>::CustomMinimumSizeY,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -340,8 +340,8 @@ impl TryFromPathAndObject for ControlFloatData {
                     "position:x" => {
                         Some(Self {
                             property: <ControlFloatKind>::PositionX,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -349,8 +349,8 @@ impl TryFromPathAndObject for ControlFloatData {
                     "position:y" => {
                         Some(Self {
                             property: <ControlFloatKind>::PositionY,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -358,8 +358,8 @@ impl TryFromPathAndObject for ControlFloatData {
                     "global_position:x" => {
                         Some(Self {
                             property: <ControlFloatKind>::GlobalPositionX,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -367,8 +367,8 @@ impl TryFromPathAndObject for ControlFloatData {
                     "global_position:y" => {
                         Some(Self {
                             property: <ControlFloatKind>::GlobalPositionY,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -376,8 +376,8 @@ impl TryFromPathAndObject for ControlFloatData {
                     "pivot_offset:x" => {
                         Some(Self {
                             property: <ControlFloatKind>::PivotOffsetX,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -385,8 +385,8 @@ impl TryFromPathAndObject for ControlFloatData {
                     "pivot_offset:y" => {
                         Some(Self {
                             property: <ControlFloatKind>::PivotOffsetY,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -394,8 +394,8 @@ impl TryFromPathAndObject for ControlFloatData {
                     "scale:x" => {
                         Some(Self {
                             property: <ControlFloatKind>::ScaleX,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -403,8 +403,8 @@ impl TryFromPathAndObject for ControlFloatData {
                     "scale:y" => {
                         Some(Self {
                             property: <ControlFloatKind>::ScaleY,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -412,8 +412,8 @@ impl TryFromPathAndObject for ControlFloatData {
                     "size:x" => {
                         Some(Self {
                             property: <ControlFloatKind>::SizeX,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -421,8 +421,8 @@ impl TryFromPathAndObject for ControlFloatData {
                     "size:y" => {
                         Some(Self {
                             property: <ControlFloatKind>::SizeY,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -541,8 +541,8 @@ impl TryFromPathAndObject for ControlVec2Data {
                     "custom_minimum_size" => {
                         Some(Self {
                             property: <ControlVec2Kind>::CustomMinimumSize,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -550,8 +550,8 @@ impl TryFromPathAndObject for ControlVec2Data {
                     "position" => {
                         Some(Self {
                             property: <ControlVec2Kind>::Position,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -559,8 +559,8 @@ impl TryFromPathAndObject for ControlVec2Data {
                     "global_position" => {
                         Some(Self {
                             property: <ControlVec2Kind>::GlobalPosition,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -568,8 +568,8 @@ impl TryFromPathAndObject for ControlVec2Data {
                     "pivot_offset" => {
                         Some(Self {
                             property: <ControlVec2Kind>::PivotOffset,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -577,8 +577,8 @@ impl TryFromPathAndObject for ControlVec2Data {
                     "scale" => {
                         Some(Self {
                             property: <ControlVec2Kind>::Scale,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -586,8 +586,8 @@ impl TryFromPathAndObject for ControlVec2Data {
                     "size" => {
                         Some(Self {
                             property: <ControlVec2Kind>::Size,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -758,8 +758,8 @@ impl<Class: Inherits<Control> + Inherits<Object>> SpireDoControl<()> for Gd<Clas
         let data = ControlFloatData {
             property: <ControlFloatKind>::AnchorBottom,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Control>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -774,8 +774,8 @@ impl<Class: Inherits<Control> + Inherits<Object>> SpireDoControl<()> for Gd<Clas
         let data = ControlFloatData {
             property: <ControlFloatKind>::AnchorLeft,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Control>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -790,8 +790,8 @@ impl<Class: Inherits<Control> + Inherits<Object>> SpireDoControl<()> for Gd<Clas
         let data = ControlFloatData {
             property: <ControlFloatKind>::AnchorRight,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Control>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -806,8 +806,8 @@ impl<Class: Inherits<Control> + Inherits<Object>> SpireDoControl<()> for Gd<Clas
         let data = ControlFloatData {
             property: <ControlFloatKind>::AnchorTop,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Control>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -822,8 +822,8 @@ impl<Class: Inherits<Control> + Inherits<Object>> SpireDoControl<()> for Gd<Clas
         let data = ControlFloatData {
             property: <ControlFloatKind>::Rotation,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Control>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -838,8 +838,8 @@ impl<Class: Inherits<Control> + Inherits<Object>> SpireDoControl<()> for Gd<Clas
         let data = ControlFloatData {
             property: <ControlFloatKind>::RotationDegrees,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Control>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -854,8 +854,8 @@ impl<Class: Inherits<Control> + Inherits<Object>> SpireDoControl<()> for Gd<Clas
         let data = ControlFloatData {
             property: <ControlFloatKind>::CustomMinimumSizeX,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Control>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -870,8 +870,8 @@ impl<Class: Inherits<Control> + Inherits<Object>> SpireDoControl<()> for Gd<Clas
         let data = ControlFloatData {
             property: <ControlFloatKind>::CustomMinimumSizeY,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Control>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -886,8 +886,8 @@ impl<Class: Inherits<Control> + Inherits<Object>> SpireDoControl<()> for Gd<Clas
         let data = ControlFloatData {
             property: <ControlFloatKind>::PositionX,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Control>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -902,8 +902,8 @@ impl<Class: Inherits<Control> + Inherits<Object>> SpireDoControl<()> for Gd<Clas
         let data = ControlFloatData {
             property: <ControlFloatKind>::PositionX,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Control>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -918,8 +918,8 @@ impl<Class: Inherits<Control> + Inherits<Object>> SpireDoControl<()> for Gd<Clas
         let data = ControlFloatData {
             property: <ControlFloatKind>::PositionY,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Control>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -934,8 +934,8 @@ impl<Class: Inherits<Control> + Inherits<Object>> SpireDoControl<()> for Gd<Clas
         let data = ControlFloatData {
             property: <ControlFloatKind>::PositionY,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Control>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -950,8 +950,8 @@ impl<Class: Inherits<Control> + Inherits<Object>> SpireDoControl<()> for Gd<Clas
         let data = ControlFloatData {
             property: <ControlFloatKind>::GlobalPositionX,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Control>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -966,8 +966,8 @@ impl<Class: Inherits<Control> + Inherits<Object>> SpireDoControl<()> for Gd<Clas
         let data = ControlFloatData {
             property: <ControlFloatKind>::GlobalPositionX,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Control>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -982,8 +982,8 @@ impl<Class: Inherits<Control> + Inherits<Object>> SpireDoControl<()> for Gd<Clas
         let data = ControlFloatData {
             property: <ControlFloatKind>::GlobalPositionY,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Control>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -998,8 +998,8 @@ impl<Class: Inherits<Control> + Inherits<Object>> SpireDoControl<()> for Gd<Clas
         let data = ControlFloatData {
             property: <ControlFloatKind>::GlobalPositionY,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Control>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -1014,8 +1014,8 @@ impl<Class: Inherits<Control> + Inherits<Object>> SpireDoControl<()> for Gd<Clas
         let data = ControlFloatData {
             property: <ControlFloatKind>::PivotOffsetX,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Control>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -1030,8 +1030,8 @@ impl<Class: Inherits<Control> + Inherits<Object>> SpireDoControl<()> for Gd<Clas
         let data = ControlFloatData {
             property: <ControlFloatKind>::PivotOffsetY,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Control>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -1046,8 +1046,8 @@ impl<Class: Inherits<Control> + Inherits<Object>> SpireDoControl<()> for Gd<Clas
         let data = ControlFloatData {
             property: <ControlFloatKind>::ScaleX,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Control>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -1062,8 +1062,8 @@ impl<Class: Inherits<Control> + Inherits<Object>> SpireDoControl<()> for Gd<Clas
         let data = ControlFloatData {
             property: <ControlFloatKind>::ScaleY,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Control>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -1078,8 +1078,8 @@ impl<Class: Inherits<Control> + Inherits<Object>> SpireDoControl<()> for Gd<Clas
         let data = ControlFloatData {
             property: <ControlFloatKind>::SizeX,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Control>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -1094,8 +1094,8 @@ impl<Class: Inherits<Control> + Inherits<Object>> SpireDoControl<()> for Gd<Clas
         let data = ControlFloatData {
             property: <ControlFloatKind>::SizeY,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Control>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -1110,8 +1110,8 @@ impl<Class: Inherits<Control> + Inherits<Object>> SpireDoControl<()> for Gd<Clas
         let data = ControlVec2Data {
             property: <ControlVec2Kind>::CustomMinimumSize,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Control>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -1126,8 +1126,8 @@ impl<Class: Inherits<Control> + Inherits<Object>> SpireDoControl<()> for Gd<Clas
         let data = ControlVec2Data {
             property: <ControlVec2Kind>::Position,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Control>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -1142,8 +1142,8 @@ impl<Class: Inherits<Control> + Inherits<Object>> SpireDoControl<()> for Gd<Clas
         let data = ControlVec2Data {
             property: <ControlVec2Kind>::Position,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Control>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -1158,8 +1158,8 @@ impl<Class: Inherits<Control> + Inherits<Object>> SpireDoControl<()> for Gd<Clas
         let data = ControlVec2Data {
             property: <ControlVec2Kind>::GlobalPosition,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Control>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -1174,8 +1174,8 @@ impl<Class: Inherits<Control> + Inherits<Object>> SpireDoControl<()> for Gd<Clas
         let data = ControlVec2Data {
             property: <ControlVec2Kind>::GlobalPosition,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Control>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -1190,8 +1190,8 @@ impl<Class: Inherits<Control> + Inherits<Object>> SpireDoControl<()> for Gd<Clas
         let data = ControlVec2Data {
             property: <ControlVec2Kind>::PivotOffset,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Control>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -1206,8 +1206,8 @@ impl<Class: Inherits<Control> + Inherits<Object>> SpireDoControl<()> for Gd<Clas
         let data = ControlVec2Data {
             property: <ControlVec2Kind>::Scale,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Control>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -1222,8 +1222,8 @@ impl<Class: Inherits<Control> + Inherits<Object>> SpireDoControl<()> for Gd<Clas
         let data = ControlVec2Data {
             property: <ControlVec2Kind>::Size,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Control>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -1241,7 +1241,9 @@ for T {
         let owner: Gd<Control> = self.to_gd().upcast();
         let data = ControlFloatData {
             property: <ControlFloatKind>::AnchorBottom,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1256,7 +1258,9 @@ for T {
         let owner: Gd<Control> = self.to_gd().upcast();
         let data = ControlFloatData {
             property: <ControlFloatKind>::AnchorLeft,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1271,7 +1275,9 @@ for T {
         let owner: Gd<Control> = self.to_gd().upcast();
         let data = ControlFloatData {
             property: <ControlFloatKind>::AnchorRight,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1286,7 +1292,9 @@ for T {
         let owner: Gd<Control> = self.to_gd().upcast();
         let data = ControlFloatData {
             property: <ControlFloatKind>::AnchorTop,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1301,7 +1309,9 @@ for T {
         let owner: Gd<Control> = self.to_gd().upcast();
         let data = ControlFloatData {
             property: <ControlFloatKind>::Rotation,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1316,7 +1326,9 @@ for T {
         let owner: Gd<Control> = self.to_gd().upcast();
         let data = ControlFloatData {
             property: <ControlFloatKind>::RotationDegrees,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1331,7 +1343,9 @@ for T {
         let owner: Gd<Control> = self.to_gd().upcast();
         let data = ControlFloatData {
             property: <ControlFloatKind>::CustomMinimumSizeX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1346,7 +1360,9 @@ for T {
         let owner: Gd<Control> = self.to_gd().upcast();
         let data = ControlFloatData {
             property: <ControlFloatKind>::CustomMinimumSizeY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1361,7 +1377,9 @@ for T {
         let owner: Gd<Control> = self.to_gd().upcast();
         let data = ControlFloatData {
             property: <ControlFloatKind>::PositionX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1376,7 +1394,9 @@ for T {
         let owner: Gd<Control> = self.to_gd().upcast();
         let data = ControlFloatData {
             property: <ControlFloatKind>::PositionX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1391,7 +1411,9 @@ for T {
         let owner: Gd<Control> = self.to_gd().upcast();
         let data = ControlFloatData {
             property: <ControlFloatKind>::PositionY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1406,7 +1428,9 @@ for T {
         let owner: Gd<Control> = self.to_gd().upcast();
         let data = ControlFloatData {
             property: <ControlFloatKind>::PositionY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1421,7 +1445,9 @@ for T {
         let owner: Gd<Control> = self.to_gd().upcast();
         let data = ControlFloatData {
             property: <ControlFloatKind>::GlobalPositionX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1436,7 +1462,9 @@ for T {
         let owner: Gd<Control> = self.to_gd().upcast();
         let data = ControlFloatData {
             property: <ControlFloatKind>::GlobalPositionX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1451,7 +1479,9 @@ for T {
         let owner: Gd<Control> = self.to_gd().upcast();
         let data = ControlFloatData {
             property: <ControlFloatKind>::GlobalPositionY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1466,7 +1496,9 @@ for T {
         let owner: Gd<Control> = self.to_gd().upcast();
         let data = ControlFloatData {
             property: <ControlFloatKind>::GlobalPositionY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1481,7 +1513,9 @@ for T {
         let owner: Gd<Control> = self.to_gd().upcast();
         let data = ControlFloatData {
             property: <ControlFloatKind>::PivotOffsetX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1496,7 +1530,9 @@ for T {
         let owner: Gd<Control> = self.to_gd().upcast();
         let data = ControlFloatData {
             property: <ControlFloatKind>::PivotOffsetY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1511,7 +1547,9 @@ for T {
         let owner: Gd<Control> = self.to_gd().upcast();
         let data = ControlFloatData {
             property: <ControlFloatKind>::ScaleX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1526,7 +1564,9 @@ for T {
         let owner: Gd<Control> = self.to_gd().upcast();
         let data = ControlFloatData {
             property: <ControlFloatKind>::ScaleY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1541,7 +1581,9 @@ for T {
         let owner: Gd<Control> = self.to_gd().upcast();
         let data = ControlFloatData {
             property: <ControlFloatKind>::SizeX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1556,7 +1598,9 @@ for T {
         let owner: Gd<Control> = self.to_gd().upcast();
         let data = ControlFloatData {
             property: <ControlFloatKind>::SizeY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1571,7 +1615,9 @@ for T {
         let owner: Gd<Control> = self.to_gd().upcast();
         let data = ControlVec2Data {
             property: <ControlVec2Kind>::CustomMinimumSize,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1586,7 +1632,9 @@ for T {
         let owner: Gd<Control> = self.to_gd().upcast();
         let data = ControlVec2Data {
             property: <ControlVec2Kind>::Position,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1601,7 +1649,9 @@ for T {
         let owner: Gd<Control> = self.to_gd().upcast();
         let data = ControlVec2Data {
             property: <ControlVec2Kind>::Position,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1616,7 +1666,9 @@ for T {
         let owner: Gd<Control> = self.to_gd().upcast();
         let data = ControlVec2Data {
             property: <ControlVec2Kind>::GlobalPosition,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1631,7 +1683,9 @@ for T {
         let owner: Gd<Control> = self.to_gd().upcast();
         let data = ControlVec2Data {
             property: <ControlVec2Kind>::GlobalPosition,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1646,7 +1700,9 @@ for T {
         let owner: Gd<Control> = self.to_gd().upcast();
         let data = ControlVec2Data {
             property: <ControlVec2Kind>::PivotOffset,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1661,7 +1717,9 @@ for T {
         let owner: Gd<Control> = self.to_gd().upcast();
         let data = ControlVec2Data {
             property: <ControlVec2Kind>::Scale,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1676,7 +1734,9 @@ for T {
         let owner: Gd<Control> = self.to_gd().upcast();
         let data = ControlVec2Data {
             property: <ControlVec2Kind>::Size,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<

@@ -42,7 +42,10 @@ impl<T: Inherits<Skeleton3D> + Inherits<Object>> DoBone<()> for Gd<T> {
             Variant::nil()
         });
 
-        let data_via_callable: PropertyDataVec3 = PropertyDataViaCallable::new(getter, setter).into();
+        let mut data = PropertyDataViaCallable::new(getter, setter);
+        // Closure callables do not expose captured Nodes for lifetime checks.
+        data.owner = Some(ObjectOrNode::Node(node.upcast()));
+        let data_via_callable: PropertyDataVec3 = data.into();
 
         SpireTween::<LerpPropertyData<Vector3>>::new(data_via_callable, Evaluator::Static(to), duration)
     }
@@ -64,7 +67,10 @@ impl<T: Inherits<Skeleton3D> + Inherits<Object>> DoBone<()> for Gd<T> {
             Variant::nil()
         });
 
-        let data_via_callable: PropertyDataVec3 = PropertyDataViaCallable::new(getter, setter).into();
+        let mut data = PropertyDataViaCallable::new(getter, setter);
+        // Closure callables do not expose captured Nodes for lifetime checks.
+        data.owner = Some(ObjectOrNode::Node(node.upcast()));
+        let data_via_callable: PropertyDataVec3 = data.into();
 
         SpireTween::<LerpPropertyData<Vector3>>::new(data_via_callable, Evaluator::Static(to), duration)
     }

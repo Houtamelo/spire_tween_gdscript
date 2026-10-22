@@ -189,6 +189,12 @@ for the build, native-platform tests and archive verification workflow.
 
 ## The `prelude`
 
+See the [adapter and template API guide](../docs/adapter_templates.md) for typed
+Rust accessors, jump and blendable motion/color, gradients, counters, resource and
+shader adapters, named audio buses, paired anchors, Control circles, and arrays of
+destinations. Native constructors return unregistered builders; GDScript helpers
+register automatically.
+
 `use spire_tween::prelude::*` brings in:
 
 - **Core** — `SpireTween`, `AnyTween`, `Sequence`, `SpireFlags`.

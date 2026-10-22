@@ -449,6 +449,11 @@ the richer [TweenStepResult contract](spire_tween/README.md#manual-stepping).
 
 ## Tweening Properties
 
+Jump, blendable motion/color, gradients, counters, resource/material/shader
+properties, audio buses, paired anchors, Control circles, and arrays of destinations
+are documented in the [adapter and template API guide](docs/adapter_templates.md).
+Generic getter/setter constructors are available only in Rust.
+
 ### Common properties of built-in classes
 
 Godot's built-in system provides a single method to create all property tweeners: [Tween.tween_property]

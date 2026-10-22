@@ -20,6 +20,8 @@ impl TyToPropertyTween for Vector3i {
 
 #[delegate_impl]
 impl IPropertyData for PropertyDataVec3i {
+    fn accessors_are_valid(&self) -> bool;
+
     type Target = Object;
     fn get_property_path(&self) -> NodePath;
     fn get_owner(&self) -> Option<&ObjectOrNode>;

@@ -79,8 +79,8 @@ impl TryFromPathAndObject for GpuParticlesAttractor3DFloatData {
                     "attenuation" => {
                         Some(Self {
                             property: <GpuParticlesAttractor3DFloatKind>::Attenuation,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -88,8 +88,8 @@ impl TryFromPathAndObject for GpuParticlesAttractor3DFloatData {
                     "directionality" => {
                         Some(Self {
                             property: <GpuParticlesAttractor3DFloatKind>::Directionality,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -97,8 +97,8 @@ impl TryFromPathAndObject for GpuParticlesAttractor3DFloatData {
                     "strength" => {
                         Some(Self {
                             property: <GpuParticlesAttractor3DFloatKind>::Strength,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -136,8 +136,8 @@ impl<
         let data = GpuParticlesAttractor3DFloatData {
             property: <GpuParticlesAttractor3DFloatKind>::Attenuation,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<GpuParticlesAttractor3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -152,8 +152,8 @@ impl<
         let data = GpuParticlesAttractor3DFloatData {
             property: <GpuParticlesAttractor3DFloatKind>::Directionality,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<GpuParticlesAttractor3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -168,8 +168,8 @@ impl<
         let data = GpuParticlesAttractor3DFloatData {
             property: <GpuParticlesAttractor3DFloatKind>::Strength,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<GpuParticlesAttractor3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -188,7 +188,9 @@ impl<
         let owner: Gd<GpuParticlesAttractor3D> = self.to_gd().upcast();
         let data = GpuParticlesAttractor3DFloatData {
             property: <GpuParticlesAttractor3DFloatKind>::Attenuation,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -203,7 +205,9 @@ impl<
         let owner: Gd<GpuParticlesAttractor3D> = self.to_gd().upcast();
         let data = GpuParticlesAttractor3DFloatData {
             property: <GpuParticlesAttractor3DFloatKind>::Directionality,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -218,7 +222,9 @@ impl<
         let owner: Gd<GpuParticlesAttractor3D> = self.to_gd().upcast();
         let data = GpuParticlesAttractor3DFloatData {
             property: <GpuParticlesAttractor3DFloatKind>::Strength,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<

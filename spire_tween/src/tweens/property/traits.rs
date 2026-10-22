@@ -29,11 +29,15 @@ pub trait IPropertyData {
 
     /// Path of the property relative to [`get_owner`](Self::get_owner). For built-in
     /// properties this is the bare property name (e.g. `"position"`); for custom
-    /// adapters returned via callables it can be empty.
+    /// adapters returned via callables it can be empty. Style adapters use their
+    /// generated lookup names, which may not be reflectable Godot property paths.
     fn get_property_path(&self) -> NodePath;
     /// Owner object, used for liveness checks (auto-stop on free) and pause-mode
     /// gating. `None` means the tween has no owner-based lifetime.
     fn get_owner(&self) -> Option<&ObjectOrNode>;
+    /// Whether the adapter's accessors are still usable. Checked before reading or
+    /// writing, including forced completion. Owner lifetime is checked separately.
+    fn accessors_are_valid(&self) -> bool { true }
 }
 
 /// Constructor used by [`DoProperty::do_property`] to look up the right specialized

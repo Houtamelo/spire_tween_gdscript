@@ -53,8 +53,8 @@ impl TryFromPathAndObject for ButtonStringData {
                     "text" => {
                         Some(Self {
                             property: <ButtonStringKind>::Text,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -80,8 +80,8 @@ impl<Class: Inherits<Button> + Inherits<Object>> SpireDoButton<()> for Gd<Class>
         let data = ButtonStringData {
             property: <ButtonStringKind>::Text,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Button>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -99,7 +99,9 @@ for T {
         let owner: Gd<Button> = self.to_gd().upcast();
         let data = ButtonStringData {
             property: <ButtonStringKind>::Text,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<

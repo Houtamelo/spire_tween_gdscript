@@ -133,8 +133,8 @@ impl TryFromPathAndObject for Area2DFloatData {
                     "gravity" => {
                         Some(Self {
                             property: <Area2DFloatKind>::Gravity,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -142,8 +142,8 @@ impl TryFromPathAndObject for Area2DFloatData {
                     "gravity_point_unit_distance" => {
                         Some(Self {
                             property: <Area2DFloatKind>::GravityPointUnitDistance,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -151,8 +151,8 @@ impl TryFromPathAndObject for Area2DFloatData {
                     "gravity_direction:x" => {
                         Some(Self {
                             property: <Area2DFloatKind>::GravityDirectionX,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -160,8 +160,8 @@ impl TryFromPathAndObject for Area2DFloatData {
                     "gravity_direction:y" => {
                         Some(Self {
                             property: <Area2DFloatKind>::GravityDirectionY,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -169,8 +169,8 @@ impl TryFromPathAndObject for Area2DFloatData {
                     "gravity_point_center:x" => {
                         Some(Self {
                             property: <Area2DFloatKind>::GravityPointCenterX,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -178,8 +178,8 @@ impl TryFromPathAndObject for Area2DFloatData {
                     "gravity_point_center:y" => {
                         Some(Self {
                             property: <Area2DFloatKind>::GravityPointCenterY,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -187,8 +187,8 @@ impl TryFromPathAndObject for Area2DFloatData {
                     "linear_damp" => {
                         Some(Self {
                             property: <Area2DFloatKind>::LinearDamp,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -265,8 +265,8 @@ impl TryFromPathAndObject for Area2DVec2Data {
                     "gravity_direction" => {
                         Some(Self {
                             property: <Area2DVec2Kind>::GravityDirection,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -274,8 +274,8 @@ impl TryFromPathAndObject for Area2DVec2Data {
                     "gravity_point_center" => {
                         Some(Self {
                             property: <Area2DVec2Kind>::GravityPointCenter,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -341,8 +341,8 @@ impl<Class: Inherits<Area2D> + Inherits<Object>> SpireDoArea2D<()> for Gd<Class>
         let data = Area2DFloatData {
             property: <Area2DFloatKind>::Gravity,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Area2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -357,8 +357,8 @@ impl<Class: Inherits<Area2D> + Inherits<Object>> SpireDoArea2D<()> for Gd<Class>
         let data = Area2DFloatData {
             property: <Area2DFloatKind>::GravityPointUnitDistance,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Area2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -373,8 +373,8 @@ impl<Class: Inherits<Area2D> + Inherits<Object>> SpireDoArea2D<()> for Gd<Class>
         let data = Area2DFloatData {
             property: <Area2DFloatKind>::GravityDirectionX,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Area2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -389,8 +389,8 @@ impl<Class: Inherits<Area2D> + Inherits<Object>> SpireDoArea2D<()> for Gd<Class>
         let data = Area2DFloatData {
             property: <Area2DFloatKind>::GravityDirectionY,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Area2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -405,8 +405,8 @@ impl<Class: Inherits<Area2D> + Inherits<Object>> SpireDoArea2D<()> for Gd<Class>
         let data = Area2DFloatData {
             property: <Area2DFloatKind>::GravityPointCenterX,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Area2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -421,8 +421,8 @@ impl<Class: Inherits<Area2D> + Inherits<Object>> SpireDoArea2D<()> for Gd<Class>
         let data = Area2DFloatData {
             property: <Area2DFloatKind>::GravityPointCenterY,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Area2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -437,8 +437,8 @@ impl<Class: Inherits<Area2D> + Inherits<Object>> SpireDoArea2D<()> for Gd<Class>
         let data = Area2DFloatData {
             property: <Area2DFloatKind>::LinearDamp,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Area2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -453,8 +453,8 @@ impl<Class: Inherits<Area2D> + Inherits<Object>> SpireDoArea2D<()> for Gd<Class>
         let data = Area2DVec2Data {
             property: <Area2DVec2Kind>::GravityDirection,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Area2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -469,8 +469,8 @@ impl<Class: Inherits<Area2D> + Inherits<Object>> SpireDoArea2D<()> for Gd<Class>
         let data = Area2DVec2Data {
             property: <Area2DVec2Kind>::GravityPointCenter,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Area2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -488,7 +488,9 @@ for T {
         let owner: Gd<Area2D> = self.to_gd().upcast();
         let data = Area2DFloatData {
             property: <Area2DFloatKind>::Gravity,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -503,7 +505,9 @@ for T {
         let owner: Gd<Area2D> = self.to_gd().upcast();
         let data = Area2DFloatData {
             property: <Area2DFloatKind>::GravityPointUnitDistance,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -518,7 +522,9 @@ for T {
         let owner: Gd<Area2D> = self.to_gd().upcast();
         let data = Area2DFloatData {
             property: <Area2DFloatKind>::GravityDirectionX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -533,7 +539,9 @@ for T {
         let owner: Gd<Area2D> = self.to_gd().upcast();
         let data = Area2DFloatData {
             property: <Area2DFloatKind>::GravityDirectionY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -548,7 +556,9 @@ for T {
         let owner: Gd<Area2D> = self.to_gd().upcast();
         let data = Area2DFloatData {
             property: <Area2DFloatKind>::GravityPointCenterX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -563,7 +573,9 @@ for T {
         let owner: Gd<Area2D> = self.to_gd().upcast();
         let data = Area2DFloatData {
             property: <Area2DFloatKind>::GravityPointCenterY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -578,7 +590,9 @@ for T {
         let owner: Gd<Area2D> = self.to_gd().upcast();
         let data = Area2DFloatData {
             property: <Area2DFloatKind>::LinearDamp,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -593,7 +607,9 @@ for T {
         let owner: Gd<Area2D> = self.to_gd().upcast();
         let data = Area2DVec2Data {
             property: <Area2DVec2Kind>::GravityDirection,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -608,7 +624,9 @@ for T {
         let owner: Gd<Area2D> = self.to_gd().upcast();
         let data = Area2DVec2Data {
             property: <Area2DVec2Kind>::GravityPointCenter,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<

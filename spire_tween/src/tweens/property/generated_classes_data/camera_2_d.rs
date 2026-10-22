@@ -164,8 +164,8 @@ impl TryFromPathAndObject for Camera2DFloatData {
                     "drag_horizontal_offset" => {
                         Some(Self {
                             property: <Camera2DFloatKind>::DragHorizontalOffset,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -173,8 +173,8 @@ impl TryFromPathAndObject for Camera2DFloatData {
                     "drag_vertical_offset" => {
                         Some(Self {
                             property: <Camera2DFloatKind>::DragVerticalOffset,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -182,8 +182,8 @@ impl TryFromPathAndObject for Camera2DFloatData {
                     "drag_left_margin" => {
                         Some(Self {
                             property: <Camera2DFloatKind>::DragLeftMargin,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -191,8 +191,8 @@ impl TryFromPathAndObject for Camera2DFloatData {
                     "drag_right_margin" => {
                         Some(Self {
                             property: <Camera2DFloatKind>::DragRightMargin,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -200,8 +200,8 @@ impl TryFromPathAndObject for Camera2DFloatData {
                     "drag_top_margin" => {
                         Some(Self {
                             property: <Camera2DFloatKind>::DragTopMargin,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -209,8 +209,8 @@ impl TryFromPathAndObject for Camera2DFloatData {
                     "drag_bottom_margin" => {
                         Some(Self {
                             property: <Camera2DFloatKind>::DragBottomMargin,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -218,8 +218,8 @@ impl TryFromPathAndObject for Camera2DFloatData {
                     "zoom:x" => {
                         Some(Self {
                             property: <Camera2DFloatKind>::ZoomX,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -227,8 +227,8 @@ impl TryFromPathAndObject for Camera2DFloatData {
                     "zoom:y" => {
                         Some(Self {
                             property: <Camera2DFloatKind>::ZoomY,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -236,8 +236,8 @@ impl TryFromPathAndObject for Camera2DFloatData {
                     "offset:x" => {
                         Some(Self {
                             property: <Camera2DFloatKind>::OffsetX,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -245,8 +245,8 @@ impl TryFromPathAndObject for Camera2DFloatData {
                     "offset:y" => {
                         Some(Self {
                             property: <Camera2DFloatKind>::OffsetY,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -321,8 +321,8 @@ impl TryFromPathAndObject for Camera2DVec2Data {
                     "zoom" => {
                         Some(Self {
                             property: <Camera2DVec2Kind>::Zoom,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -330,8 +330,8 @@ impl TryFromPathAndObject for Camera2DVec2Data {
                     "offset" => {
                         Some(Self {
                             property: <Camera2DVec2Kind>::Offset,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -412,8 +412,8 @@ impl<Class: Inherits<Camera2D> + Inherits<Object>> SpireDoCamera2D<()> for Gd<Cl
         let data = Camera2DFloatData {
             property: <Camera2DFloatKind>::DragHorizontalOffset,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Camera2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -428,8 +428,8 @@ impl<Class: Inherits<Camera2D> + Inherits<Object>> SpireDoCamera2D<()> for Gd<Cl
         let data = Camera2DFloatData {
             property: <Camera2DFloatKind>::DragVerticalOffset,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Camera2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -444,8 +444,8 @@ impl<Class: Inherits<Camera2D> + Inherits<Object>> SpireDoCamera2D<()> for Gd<Cl
         let data = Camera2DFloatData {
             property: <Camera2DFloatKind>::DragLeftMargin,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Camera2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -460,8 +460,8 @@ impl<Class: Inherits<Camera2D> + Inherits<Object>> SpireDoCamera2D<()> for Gd<Cl
         let data = Camera2DFloatData {
             property: <Camera2DFloatKind>::DragRightMargin,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Camera2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -476,8 +476,8 @@ impl<Class: Inherits<Camera2D> + Inherits<Object>> SpireDoCamera2D<()> for Gd<Cl
         let data = Camera2DFloatData {
             property: <Camera2DFloatKind>::DragTopMargin,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Camera2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -492,8 +492,8 @@ impl<Class: Inherits<Camera2D> + Inherits<Object>> SpireDoCamera2D<()> for Gd<Cl
         let data = Camera2DFloatData {
             property: <Camera2DFloatKind>::DragBottomMargin,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Camera2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -508,8 +508,8 @@ impl<Class: Inherits<Camera2D> + Inherits<Object>> SpireDoCamera2D<()> for Gd<Cl
         let data = Camera2DFloatData {
             property: <Camera2DFloatKind>::ZoomX,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Camera2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -524,8 +524,8 @@ impl<Class: Inherits<Camera2D> + Inherits<Object>> SpireDoCamera2D<()> for Gd<Cl
         let data = Camera2DFloatData {
             property: <Camera2DFloatKind>::ZoomY,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Camera2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -540,8 +540,8 @@ impl<Class: Inherits<Camera2D> + Inherits<Object>> SpireDoCamera2D<()> for Gd<Cl
         let data = Camera2DFloatData {
             property: <Camera2DFloatKind>::OffsetX,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Camera2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -556,8 +556,8 @@ impl<Class: Inherits<Camera2D> + Inherits<Object>> SpireDoCamera2D<()> for Gd<Cl
         let data = Camera2DFloatData {
             property: <Camera2DFloatKind>::OffsetY,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Camera2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -572,8 +572,8 @@ impl<Class: Inherits<Camera2D> + Inherits<Object>> SpireDoCamera2D<()> for Gd<Cl
         let data = Camera2DVec2Data {
             property: <Camera2DVec2Kind>::Zoom,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Camera2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -588,8 +588,8 @@ impl<Class: Inherits<Camera2D> + Inherits<Object>> SpireDoCamera2D<()> for Gd<Cl
         let data = Camera2DVec2Data {
             property: <Camera2DVec2Kind>::Offset,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Camera2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -608,7 +608,9 @@ impl<
         let owner: Gd<Camera2D> = self.to_gd().upcast();
         let data = Camera2DFloatData {
             property: <Camera2DFloatKind>::DragHorizontalOffset,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -623,7 +625,9 @@ impl<
         let owner: Gd<Camera2D> = self.to_gd().upcast();
         let data = Camera2DFloatData {
             property: <Camera2DFloatKind>::DragVerticalOffset,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -638,7 +642,9 @@ impl<
         let owner: Gd<Camera2D> = self.to_gd().upcast();
         let data = Camera2DFloatData {
             property: <Camera2DFloatKind>::DragLeftMargin,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -653,7 +659,9 @@ impl<
         let owner: Gd<Camera2D> = self.to_gd().upcast();
         let data = Camera2DFloatData {
             property: <Camera2DFloatKind>::DragRightMargin,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -668,7 +676,9 @@ impl<
         let owner: Gd<Camera2D> = self.to_gd().upcast();
         let data = Camera2DFloatData {
             property: <Camera2DFloatKind>::DragTopMargin,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -683,7 +693,9 @@ impl<
         let owner: Gd<Camera2D> = self.to_gd().upcast();
         let data = Camera2DFloatData {
             property: <Camera2DFloatKind>::DragBottomMargin,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -698,7 +710,9 @@ impl<
         let owner: Gd<Camera2D> = self.to_gd().upcast();
         let data = Camera2DFloatData {
             property: <Camera2DFloatKind>::ZoomX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -713,7 +727,9 @@ impl<
         let owner: Gd<Camera2D> = self.to_gd().upcast();
         let data = Camera2DFloatData {
             property: <Camera2DFloatKind>::ZoomY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -728,7 +744,9 @@ impl<
         let owner: Gd<Camera2D> = self.to_gd().upcast();
         let data = Camera2DFloatData {
             property: <Camera2DFloatKind>::OffsetX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -743,7 +761,9 @@ impl<
         let owner: Gd<Camera2D> = self.to_gd().upcast();
         let data = Camera2DFloatData {
             property: <Camera2DFloatKind>::OffsetY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -758,7 +778,9 @@ impl<
         let owner: Gd<Camera2D> = self.to_gd().upcast();
         let data = Camera2DVec2Data {
             property: <Camera2DVec2Kind>::Zoom,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -773,7 +795,9 @@ impl<
         let owner: Gd<Camera2D> = self.to_gd().upcast();
         let data = Camera2DVec2Data {
             property: <Camera2DVec2Kind>::Offset,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<

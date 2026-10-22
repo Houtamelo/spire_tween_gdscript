@@ -94,8 +94,8 @@ impl TryFromPathAndObject for WindowIntData {
                     "position:x" => {
                         Some(Self {
                             property: <WindowIntKind>::PositionX,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -103,8 +103,8 @@ impl TryFromPathAndObject for WindowIntData {
                     "position:y" => {
                         Some(Self {
                             property: <WindowIntKind>::PositionY,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -112,8 +112,8 @@ impl TryFromPathAndObject for WindowIntData {
                     "size:x" => {
                         Some(Self {
                             property: <WindowIntKind>::SizeX,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -121,8 +121,8 @@ impl TryFromPathAndObject for WindowIntData {
                     "size:y" => {
                         Some(Self {
                             property: <WindowIntKind>::SizeY,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -197,8 +197,8 @@ impl TryFromPathAndObject for WindowVec2iData {
                     "position" => {
                         Some(Self {
                             property: <WindowVec2iKind>::Position,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -206,8 +206,8 @@ impl TryFromPathAndObject for WindowVec2iData {
                     "size" => {
                         Some(Self {
                             property: <WindowVec2iKind>::Size,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -258,8 +258,8 @@ impl<Class: Inherits<Window> + Inherits<Object>> SpireDoWindow<()> for Gd<Class>
         let data = WindowIntData {
             property: <WindowIntKind>::PositionX,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Window>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -274,8 +274,8 @@ impl<Class: Inherits<Window> + Inherits<Object>> SpireDoWindow<()> for Gd<Class>
         let data = WindowIntData {
             property: <WindowIntKind>::PositionY,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Window>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -290,8 +290,8 @@ impl<Class: Inherits<Window> + Inherits<Object>> SpireDoWindow<()> for Gd<Class>
         let data = WindowIntData {
             property: <WindowIntKind>::SizeX,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Window>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -306,8 +306,8 @@ impl<Class: Inherits<Window> + Inherits<Object>> SpireDoWindow<()> for Gd<Class>
         let data = WindowIntData {
             property: <WindowIntKind>::SizeY,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Window>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -322,8 +322,8 @@ impl<Class: Inherits<Window> + Inherits<Object>> SpireDoWindow<()> for Gd<Class>
         let data = WindowVec2iData {
             property: <WindowVec2iKind>::Position,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Window>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -338,8 +338,8 @@ impl<Class: Inherits<Window> + Inherits<Object>> SpireDoWindow<()> for Gd<Class>
         let data = WindowVec2iData {
             property: <WindowVec2iKind>::Size,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Window>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -357,7 +357,9 @@ for T {
         let owner: Gd<Window> = self.to_gd().upcast();
         let data = WindowIntData {
             property: <WindowIntKind>::PositionX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -372,7 +374,9 @@ for T {
         let owner: Gd<Window> = self.to_gd().upcast();
         let data = WindowIntData {
             property: <WindowIntKind>::PositionY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -387,7 +391,9 @@ for T {
         let owner: Gd<Window> = self.to_gd().upcast();
         let data = WindowIntData {
             property: <WindowIntKind>::SizeX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -402,7 +408,9 @@ for T {
         let owner: Gd<Window> = self.to_gd().upcast();
         let data = WindowIntData {
             property: <WindowIntKind>::SizeY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -417,7 +425,9 @@ for T {
         let owner: Gd<Window> = self.to_gd().upcast();
         let data = WindowVec2iData {
             property: <WindowVec2iKind>::Position,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -432,7 +442,9 @@ for T {
         let owner: Gd<Window> = self.to_gd().upcast();
         let data = WindowVec2iData {
             property: <WindowVec2iKind>::Size,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<

@@ -201,8 +201,8 @@ impl TryFromPathAndObject for RigidBody2DFloatData {
                     "angular_damp" => {
                         Some(Self {
                             property: <RigidBody2DFloatKind>::AngularDamp,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -210,8 +210,8 @@ impl TryFromPathAndObject for RigidBody2DFloatData {
                     "angular_velocity" => {
                         Some(Self {
                             property: <RigidBody2DFloatKind>::AngularVelocity,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -219,8 +219,8 @@ impl TryFromPathAndObject for RigidBody2DFloatData {
                     "center_of_mass:x" => {
                         Some(Self {
                             property: <RigidBody2DFloatKind>::CenterOfMassX,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -228,8 +228,8 @@ impl TryFromPathAndObject for RigidBody2DFloatData {
                     "center_of_mass:y" => {
                         Some(Self {
                             property: <RigidBody2DFloatKind>::CenterOfMassY,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -237,8 +237,8 @@ impl TryFromPathAndObject for RigidBody2DFloatData {
                     "constant_force:x" => {
                         Some(Self {
                             property: <RigidBody2DFloatKind>::ConstantForceX,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -246,8 +246,8 @@ impl TryFromPathAndObject for RigidBody2DFloatData {
                     "constant_force:y" => {
                         Some(Self {
                             property: <RigidBody2DFloatKind>::ConstantForceY,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -255,8 +255,8 @@ impl TryFromPathAndObject for RigidBody2DFloatData {
                     "constant_torque" => {
                         Some(Self {
                             property: <RigidBody2DFloatKind>::ConstantTorque,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -264,8 +264,8 @@ impl TryFromPathAndObject for RigidBody2DFloatData {
                     "gravity_scale" => {
                         Some(Self {
                             property: <RigidBody2DFloatKind>::GravityScale,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -273,8 +273,8 @@ impl TryFromPathAndObject for RigidBody2DFloatData {
                     "inertia" => {
                         Some(Self {
                             property: <RigidBody2DFloatKind>::Inertia,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -282,8 +282,8 @@ impl TryFromPathAndObject for RigidBody2DFloatData {
                     "linear_damp" => {
                         Some(Self {
                             property: <RigidBody2DFloatKind>::LinearDamp,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -291,8 +291,8 @@ impl TryFromPathAndObject for RigidBody2DFloatData {
                     "linear_velocity:x" => {
                         Some(Self {
                             property: <RigidBody2DFloatKind>::LinearVelocityX,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -300,8 +300,8 @@ impl TryFromPathAndObject for RigidBody2DFloatData {
                     "linear_velocity:y" => {
                         Some(Self {
                             property: <RigidBody2DFloatKind>::LinearVelocityY,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -309,8 +309,8 @@ impl TryFromPathAndObject for RigidBody2DFloatData {
                     "mass" => {
                         Some(Self {
                             property: <RigidBody2DFloatKind>::Mass,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -396,8 +396,8 @@ impl TryFromPathAndObject for RigidBody2DVec2Data {
                     "center_of_mass" => {
                         Some(Self {
                             property: <RigidBody2DVec2Kind>::CenterOfMass,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -405,8 +405,8 @@ impl TryFromPathAndObject for RigidBody2DVec2Data {
                     "constant_force" => {
                         Some(Self {
                             property: <RigidBody2DVec2Kind>::ConstantForce,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -414,8 +414,8 @@ impl TryFromPathAndObject for RigidBody2DVec2Data {
                     "linear_velocity" => {
                         Some(Self {
                             property: <RigidBody2DVec2Kind>::LinearVelocity,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -528,8 +528,8 @@ for Gd<Class> {
         let data = RigidBody2DFloatData {
             property: <RigidBody2DFloatKind>::AngularDamp,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<RigidBody2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -544,8 +544,8 @@ for Gd<Class> {
         let data = RigidBody2DFloatData {
             property: <RigidBody2DFloatKind>::AngularVelocity,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<RigidBody2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -560,8 +560,8 @@ for Gd<Class> {
         let data = RigidBody2DFloatData {
             property: <RigidBody2DFloatKind>::CenterOfMassX,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<RigidBody2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -576,8 +576,8 @@ for Gd<Class> {
         let data = RigidBody2DFloatData {
             property: <RigidBody2DFloatKind>::CenterOfMassY,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<RigidBody2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -592,8 +592,8 @@ for Gd<Class> {
         let data = RigidBody2DFloatData {
             property: <RigidBody2DFloatKind>::ConstantForceX,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<RigidBody2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -608,8 +608,8 @@ for Gd<Class> {
         let data = RigidBody2DFloatData {
             property: <RigidBody2DFloatKind>::ConstantForceY,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<RigidBody2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -624,8 +624,8 @@ for Gd<Class> {
         let data = RigidBody2DFloatData {
             property: <RigidBody2DFloatKind>::ConstantTorque,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<RigidBody2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -640,8 +640,8 @@ for Gd<Class> {
         let data = RigidBody2DFloatData {
             property: <RigidBody2DFloatKind>::GravityScale,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<RigidBody2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -656,8 +656,8 @@ for Gd<Class> {
         let data = RigidBody2DFloatData {
             property: <RigidBody2DFloatKind>::Inertia,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<RigidBody2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -672,8 +672,8 @@ for Gd<Class> {
         let data = RigidBody2DFloatData {
             property: <RigidBody2DFloatKind>::LinearDamp,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<RigidBody2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -688,8 +688,8 @@ for Gd<Class> {
         let data = RigidBody2DFloatData {
             property: <RigidBody2DFloatKind>::LinearVelocityX,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<RigidBody2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -704,8 +704,8 @@ for Gd<Class> {
         let data = RigidBody2DFloatData {
             property: <RigidBody2DFloatKind>::LinearVelocityX,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<RigidBody2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -720,8 +720,8 @@ for Gd<Class> {
         let data = RigidBody2DFloatData {
             property: <RigidBody2DFloatKind>::LinearVelocityY,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<RigidBody2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -736,8 +736,8 @@ for Gd<Class> {
         let data = RigidBody2DFloatData {
             property: <RigidBody2DFloatKind>::LinearVelocityY,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<RigidBody2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -748,8 +748,8 @@ for Gd<Class> {
         let data = RigidBody2DFloatData {
             property: <RigidBody2DFloatKind>::Mass,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<RigidBody2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -764,8 +764,8 @@ for Gd<Class> {
         let data = RigidBody2DVec2Data {
             property: <RigidBody2DVec2Kind>::CenterOfMass,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<RigidBody2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -780,8 +780,8 @@ for Gd<Class> {
         let data = RigidBody2DVec2Data {
             property: <RigidBody2DVec2Kind>::ConstantForce,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<RigidBody2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -796,8 +796,8 @@ for Gd<Class> {
         let data = RigidBody2DVec2Data {
             property: <RigidBody2DVec2Kind>::LinearVelocity,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<RigidBody2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -812,8 +812,8 @@ for Gd<Class> {
         let data = RigidBody2DVec2Data {
             property: <RigidBody2DVec2Kind>::LinearVelocity,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<RigidBody2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -832,7 +832,9 @@ impl<
         let owner: Gd<RigidBody2D> = self.to_gd().upcast();
         let data = RigidBody2DFloatData {
             property: <RigidBody2DFloatKind>::AngularDamp,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -847,7 +849,9 @@ impl<
         let owner: Gd<RigidBody2D> = self.to_gd().upcast();
         let data = RigidBody2DFloatData {
             property: <RigidBody2DFloatKind>::AngularVelocity,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -862,7 +866,9 @@ impl<
         let owner: Gd<RigidBody2D> = self.to_gd().upcast();
         let data = RigidBody2DFloatData {
             property: <RigidBody2DFloatKind>::CenterOfMassX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -877,7 +883,9 @@ impl<
         let owner: Gd<RigidBody2D> = self.to_gd().upcast();
         let data = RigidBody2DFloatData {
             property: <RigidBody2DFloatKind>::CenterOfMassY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -892,7 +900,9 @@ impl<
         let owner: Gd<RigidBody2D> = self.to_gd().upcast();
         let data = RigidBody2DFloatData {
             property: <RigidBody2DFloatKind>::ConstantForceX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -907,7 +917,9 @@ impl<
         let owner: Gd<RigidBody2D> = self.to_gd().upcast();
         let data = RigidBody2DFloatData {
             property: <RigidBody2DFloatKind>::ConstantForceY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -922,7 +934,9 @@ impl<
         let owner: Gd<RigidBody2D> = self.to_gd().upcast();
         let data = RigidBody2DFloatData {
             property: <RigidBody2DFloatKind>::ConstantTorque,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -937,7 +951,9 @@ impl<
         let owner: Gd<RigidBody2D> = self.to_gd().upcast();
         let data = RigidBody2DFloatData {
             property: <RigidBody2DFloatKind>::GravityScale,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -952,7 +968,9 @@ impl<
         let owner: Gd<RigidBody2D> = self.to_gd().upcast();
         let data = RigidBody2DFloatData {
             property: <RigidBody2DFloatKind>::Inertia,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -967,7 +985,9 @@ impl<
         let owner: Gd<RigidBody2D> = self.to_gd().upcast();
         let data = RigidBody2DFloatData {
             property: <RigidBody2DFloatKind>::LinearDamp,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -982,7 +1002,9 @@ impl<
         let owner: Gd<RigidBody2D> = self.to_gd().upcast();
         let data = RigidBody2DFloatData {
             property: <RigidBody2DFloatKind>::LinearVelocityX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -997,7 +1019,9 @@ impl<
         let owner: Gd<RigidBody2D> = self.to_gd().upcast();
         let data = RigidBody2DFloatData {
             property: <RigidBody2DFloatKind>::LinearVelocityX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1012,7 +1036,9 @@ impl<
         let owner: Gd<RigidBody2D> = self.to_gd().upcast();
         let data = RigidBody2DFloatData {
             property: <RigidBody2DFloatKind>::LinearVelocityY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1027,7 +1053,9 @@ impl<
         let owner: Gd<RigidBody2D> = self.to_gd().upcast();
         let data = RigidBody2DFloatData {
             property: <RigidBody2DFloatKind>::LinearVelocityY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1038,7 +1066,9 @@ impl<
         let owner: Gd<RigidBody2D> = self.to_gd().upcast();
         let data = RigidBody2DFloatData {
             property: <RigidBody2DFloatKind>::Mass,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1053,7 +1083,9 @@ impl<
         let owner: Gd<RigidBody2D> = self.to_gd().upcast();
         let data = RigidBody2DVec2Data {
             property: <RigidBody2DVec2Kind>::CenterOfMass,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1068,7 +1100,9 @@ impl<
         let owner: Gd<RigidBody2D> = self.to_gd().upcast();
         let data = RigidBody2DVec2Data {
             property: <RigidBody2DVec2Kind>::ConstantForce,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1083,7 +1117,9 @@ impl<
         let owner: Gd<RigidBody2D> = self.to_gd().upcast();
         let data = RigidBody2DVec2Data {
             property: <RigidBody2DVec2Kind>::LinearVelocity,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1098,7 +1134,9 @@ impl<
         let owner: Gd<RigidBody2D> = self.to_gd().upcast();
         let data = RigidBody2DVec2Data {
             property: <RigidBody2DVec2Kind>::LinearVelocity,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<

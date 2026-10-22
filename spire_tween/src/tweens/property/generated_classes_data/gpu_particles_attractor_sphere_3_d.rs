@@ -53,8 +53,8 @@ impl TryFromPathAndObject for GpuParticlesAttractorSphere3DFloatData {
                     "radius" => {
                         Some(Self {
                             property: <GpuParticlesAttractorSphere3DFloatKind>::Radius,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -82,8 +82,8 @@ impl<
         let data = GpuParticlesAttractorSphere3DFloatData {
             property: <GpuParticlesAttractorSphere3DFloatKind>::Radius,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<GpuParticlesAttractorSphere3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -102,7 +102,9 @@ impl<
         let owner: Gd<GpuParticlesAttractorSphere3D> = self.to_gd().upcast();
         let data = GpuParticlesAttractorSphere3DFloatData {
             property: <GpuParticlesAttractorSphere3DFloatKind>::Radius,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<

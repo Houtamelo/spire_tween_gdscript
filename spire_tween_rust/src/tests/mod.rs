@@ -9,6 +9,7 @@ mod lerp_callable;
 mod lerp_modes;
 mod method_validity;
 mod misc;
+mod group2;
 mod node_binding;
 mod ownership;
 mod pause_process_modes;

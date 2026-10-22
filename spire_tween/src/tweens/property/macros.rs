@@ -77,6 +77,7 @@ macro_rules! gd_property_tween {
             pub fn get_owner(&self) -> Option<Gd<Object>> { self.to_ref().get_owner().map(ObjectOrNode::to_object) }
 
             /// [b]Returns:[/b] The path of the property that this tween is animating, relative to [method get_owner].
+            /// Style adapters return their generated property lookup name, such as `font_size`.
             #[func]
             pub fn get_property_path(&self) -> NodePath { self.to_ref().get_property_path().clone() }
 

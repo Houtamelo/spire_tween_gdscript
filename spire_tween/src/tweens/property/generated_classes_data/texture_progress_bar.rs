@@ -262,8 +262,8 @@ impl TryFromPathAndObject for TextureProgressBarFloatData {
                     "radial_initial_angle" => {
                         Some(Self {
                             property: <TextureProgressBarFloatKind>::RadialInitialAngle,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -271,8 +271,8 @@ impl TryFromPathAndObject for TextureProgressBarFloatData {
                     "radial_fill_degrees" => {
                         Some(Self {
                             property: <TextureProgressBarFloatKind>::RadialFillDegrees,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -280,8 +280,8 @@ impl TryFromPathAndObject for TextureProgressBarFloatData {
                     "tint_under:r" => {
                         Some(Self {
                             property: <TextureProgressBarFloatKind>::TintUnderR,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -289,8 +289,8 @@ impl TryFromPathAndObject for TextureProgressBarFloatData {
                     "tint_under:g" => {
                         Some(Self {
                             property: <TextureProgressBarFloatKind>::TintUnderG,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -298,8 +298,8 @@ impl TryFromPathAndObject for TextureProgressBarFloatData {
                     "tint_under:b" => {
                         Some(Self {
                             property: <TextureProgressBarFloatKind>::TintUnderB,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -307,8 +307,8 @@ impl TryFromPathAndObject for TextureProgressBarFloatData {
                     "tint_under:a" => {
                         Some(Self {
                             property: <TextureProgressBarFloatKind>::TintUnderA,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -316,8 +316,8 @@ impl TryFromPathAndObject for TextureProgressBarFloatData {
                     "tint_over:r" => {
                         Some(Self {
                             property: <TextureProgressBarFloatKind>::TintOverR,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -325,8 +325,8 @@ impl TryFromPathAndObject for TextureProgressBarFloatData {
                     "tint_over:g" => {
                         Some(Self {
                             property: <TextureProgressBarFloatKind>::TintOverG,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -334,8 +334,8 @@ impl TryFromPathAndObject for TextureProgressBarFloatData {
                     "tint_over:b" => {
                         Some(Self {
                             property: <TextureProgressBarFloatKind>::TintOverB,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -343,8 +343,8 @@ impl TryFromPathAndObject for TextureProgressBarFloatData {
                     "tint_over:a" => {
                         Some(Self {
                             property: <TextureProgressBarFloatKind>::TintOverA,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -352,8 +352,8 @@ impl TryFromPathAndObject for TextureProgressBarFloatData {
                     "tint_progress:r" => {
                         Some(Self {
                             property: <TextureProgressBarFloatKind>::TintProgressR,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -361,8 +361,8 @@ impl TryFromPathAndObject for TextureProgressBarFloatData {
                     "tint_progress:g" => {
                         Some(Self {
                             property: <TextureProgressBarFloatKind>::TintProgressG,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -370,8 +370,8 @@ impl TryFromPathAndObject for TextureProgressBarFloatData {
                     "tint_progress:b" => {
                         Some(Self {
                             property: <TextureProgressBarFloatKind>::TintProgressB,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -379,8 +379,8 @@ impl TryFromPathAndObject for TextureProgressBarFloatData {
                     "tint_progress:a" => {
                         Some(Self {
                             property: <TextureProgressBarFloatKind>::TintProgressA,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -388,8 +388,8 @@ impl TryFromPathAndObject for TextureProgressBarFloatData {
                     "radial_center_offset:x" => {
                         Some(Self {
                             property: <TextureProgressBarFloatKind>::RadialCenterOffsetX,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -397,8 +397,8 @@ impl TryFromPathAndObject for TextureProgressBarFloatData {
                     "radial_center_offset:y" => {
                         Some(Self {
                             property: <TextureProgressBarFloatKind>::RadialCenterOffsetY,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -464,8 +464,8 @@ impl TryFromPathAndObject for TextureProgressBarVec2Data {
                     "radial_center_offset" => {
                         Some(Self {
                             property: <TextureProgressBarVec2Kind>::RadialCenterOffset,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -553,8 +553,8 @@ impl TryFromPathAndObject for TextureProgressBarColorData {
                     "tint_under" => {
                         Some(Self {
                             property: <TextureProgressBarColorKind>::TintUnder,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -562,8 +562,8 @@ impl TryFromPathAndObject for TextureProgressBarColorData {
                     "tint_over" => {
                         Some(Self {
                             property: <TextureProgressBarColorKind>::TintOver,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -571,8 +571,8 @@ impl TryFromPathAndObject for TextureProgressBarColorData {
                     "tint_progress" => {
                         Some(Self {
                             property: <TextureProgressBarColorKind>::TintProgress,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -695,8 +695,8 @@ impl<
         let data = TextureProgressBarFloatData {
             property: <TextureProgressBarFloatKind>::RadialInitialAngle,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<TextureProgressBar>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -711,8 +711,8 @@ impl<
         let data = TextureProgressBarFloatData {
             property: <TextureProgressBarFloatKind>::RadialFillDegrees,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<TextureProgressBar>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -727,8 +727,8 @@ impl<
         let data = TextureProgressBarFloatData {
             property: <TextureProgressBarFloatKind>::TintUnderR,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<TextureProgressBar>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -743,8 +743,8 @@ impl<
         let data = TextureProgressBarFloatData {
             property: <TextureProgressBarFloatKind>::TintUnderG,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<TextureProgressBar>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -759,8 +759,8 @@ impl<
         let data = TextureProgressBarFloatData {
             property: <TextureProgressBarFloatKind>::TintUnderB,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<TextureProgressBar>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -775,8 +775,8 @@ impl<
         let data = TextureProgressBarFloatData {
             property: <TextureProgressBarFloatKind>::TintUnderA,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<TextureProgressBar>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -791,8 +791,8 @@ impl<
         let data = TextureProgressBarFloatData {
             property: <TextureProgressBarFloatKind>::TintOverR,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<TextureProgressBar>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -807,8 +807,8 @@ impl<
         let data = TextureProgressBarFloatData {
             property: <TextureProgressBarFloatKind>::TintOverG,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<TextureProgressBar>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -823,8 +823,8 @@ impl<
         let data = TextureProgressBarFloatData {
             property: <TextureProgressBarFloatKind>::TintOverB,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<TextureProgressBar>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -839,8 +839,8 @@ impl<
         let data = TextureProgressBarFloatData {
             property: <TextureProgressBarFloatKind>::TintOverA,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<TextureProgressBar>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -855,8 +855,8 @@ impl<
         let data = TextureProgressBarFloatData {
             property: <TextureProgressBarFloatKind>::TintProgressR,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<TextureProgressBar>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -871,8 +871,8 @@ impl<
         let data = TextureProgressBarFloatData {
             property: <TextureProgressBarFloatKind>::TintProgressG,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<TextureProgressBar>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -887,8 +887,8 @@ impl<
         let data = TextureProgressBarFloatData {
             property: <TextureProgressBarFloatKind>::TintProgressB,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<TextureProgressBar>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -903,8 +903,8 @@ impl<
         let data = TextureProgressBarFloatData {
             property: <TextureProgressBarFloatKind>::TintProgressA,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<TextureProgressBar>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -919,8 +919,8 @@ impl<
         let data = TextureProgressBarFloatData {
             property: <TextureProgressBarFloatKind>::RadialCenterOffsetX,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<TextureProgressBar>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -935,8 +935,8 @@ impl<
         let data = TextureProgressBarFloatData {
             property: <TextureProgressBarFloatKind>::RadialCenterOffsetY,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<TextureProgressBar>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -951,8 +951,8 @@ impl<
         let data = TextureProgressBarVec2Data {
             property: <TextureProgressBarVec2Kind>::RadialCenterOffset,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<TextureProgressBar>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -967,8 +967,8 @@ impl<
         let data = TextureProgressBarColorData {
             property: <TextureProgressBarColorKind>::TintUnder,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<TextureProgressBar>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -983,8 +983,8 @@ impl<
         let data = TextureProgressBarColorData {
             property: <TextureProgressBarColorKind>::TintOver,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<TextureProgressBar>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -999,8 +999,8 @@ impl<
         let data = TextureProgressBarColorData {
             property: <TextureProgressBarColorKind>::TintProgress,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<TextureProgressBar>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -1019,7 +1019,9 @@ impl<
         let owner: Gd<TextureProgressBar> = self.to_gd().upcast();
         let data = TextureProgressBarFloatData {
             property: <TextureProgressBarFloatKind>::RadialInitialAngle,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1034,7 +1036,9 @@ impl<
         let owner: Gd<TextureProgressBar> = self.to_gd().upcast();
         let data = TextureProgressBarFloatData {
             property: <TextureProgressBarFloatKind>::RadialFillDegrees,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1049,7 +1053,9 @@ impl<
         let owner: Gd<TextureProgressBar> = self.to_gd().upcast();
         let data = TextureProgressBarFloatData {
             property: <TextureProgressBarFloatKind>::TintUnderR,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1064,7 +1070,9 @@ impl<
         let owner: Gd<TextureProgressBar> = self.to_gd().upcast();
         let data = TextureProgressBarFloatData {
             property: <TextureProgressBarFloatKind>::TintUnderG,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1079,7 +1087,9 @@ impl<
         let owner: Gd<TextureProgressBar> = self.to_gd().upcast();
         let data = TextureProgressBarFloatData {
             property: <TextureProgressBarFloatKind>::TintUnderB,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1094,7 +1104,9 @@ impl<
         let owner: Gd<TextureProgressBar> = self.to_gd().upcast();
         let data = TextureProgressBarFloatData {
             property: <TextureProgressBarFloatKind>::TintUnderA,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1109,7 +1121,9 @@ impl<
         let owner: Gd<TextureProgressBar> = self.to_gd().upcast();
         let data = TextureProgressBarFloatData {
             property: <TextureProgressBarFloatKind>::TintOverR,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1124,7 +1138,9 @@ impl<
         let owner: Gd<TextureProgressBar> = self.to_gd().upcast();
         let data = TextureProgressBarFloatData {
             property: <TextureProgressBarFloatKind>::TintOverG,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1139,7 +1155,9 @@ impl<
         let owner: Gd<TextureProgressBar> = self.to_gd().upcast();
         let data = TextureProgressBarFloatData {
             property: <TextureProgressBarFloatKind>::TintOverB,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1154,7 +1172,9 @@ impl<
         let owner: Gd<TextureProgressBar> = self.to_gd().upcast();
         let data = TextureProgressBarFloatData {
             property: <TextureProgressBarFloatKind>::TintOverA,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1169,7 +1189,9 @@ impl<
         let owner: Gd<TextureProgressBar> = self.to_gd().upcast();
         let data = TextureProgressBarFloatData {
             property: <TextureProgressBarFloatKind>::TintProgressR,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1184,7 +1206,9 @@ impl<
         let owner: Gd<TextureProgressBar> = self.to_gd().upcast();
         let data = TextureProgressBarFloatData {
             property: <TextureProgressBarFloatKind>::TintProgressG,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1199,7 +1223,9 @@ impl<
         let owner: Gd<TextureProgressBar> = self.to_gd().upcast();
         let data = TextureProgressBarFloatData {
             property: <TextureProgressBarFloatKind>::TintProgressB,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1214,7 +1240,9 @@ impl<
         let owner: Gd<TextureProgressBar> = self.to_gd().upcast();
         let data = TextureProgressBarFloatData {
             property: <TextureProgressBarFloatKind>::TintProgressA,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1229,7 +1257,9 @@ impl<
         let owner: Gd<TextureProgressBar> = self.to_gd().upcast();
         let data = TextureProgressBarFloatData {
             property: <TextureProgressBarFloatKind>::RadialCenterOffsetX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1244,7 +1274,9 @@ impl<
         let owner: Gd<TextureProgressBar> = self.to_gd().upcast();
         let data = TextureProgressBarFloatData {
             property: <TextureProgressBarFloatKind>::RadialCenterOffsetY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1259,7 +1291,9 @@ impl<
         let owner: Gd<TextureProgressBar> = self.to_gd().upcast();
         let data = TextureProgressBarVec2Data {
             property: <TextureProgressBarVec2Kind>::RadialCenterOffset,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1274,7 +1308,9 @@ impl<
         let owner: Gd<TextureProgressBar> = self.to_gd().upcast();
         let data = TextureProgressBarColorData {
             property: <TextureProgressBarColorKind>::TintUnder,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1289,7 +1325,9 @@ impl<
         let owner: Gd<TextureProgressBar> = self.to_gd().upcast();
         let data = TextureProgressBarColorData {
             property: <TextureProgressBarColorKind>::TintOver,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1304,7 +1342,9 @@ impl<
         let owner: Gd<TextureProgressBar> = self.to_gd().upcast();
         let data = TextureProgressBarColorData {
             property: <TextureProgressBarColorKind>::TintProgress,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<

@@ -232,8 +232,8 @@ impl TryFromPathAndObject for ReflectionProbeFloatData {
                     "ambient_color:r" => {
                         Some(Self {
                             property: <ReflectionProbeFloatKind>::AmbientColorR,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -241,8 +241,8 @@ impl TryFromPathAndObject for ReflectionProbeFloatData {
                     "ambient_color:g" => {
                         Some(Self {
                             property: <ReflectionProbeFloatKind>::AmbientColorG,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -250,8 +250,8 @@ impl TryFromPathAndObject for ReflectionProbeFloatData {
                     "ambient_color:b" => {
                         Some(Self {
                             property: <ReflectionProbeFloatKind>::AmbientColorB,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -259,8 +259,8 @@ impl TryFromPathAndObject for ReflectionProbeFloatData {
                     "ambient_color:a" => {
                         Some(Self {
                             property: <ReflectionProbeFloatKind>::AmbientColorA,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -268,8 +268,8 @@ impl TryFromPathAndObject for ReflectionProbeFloatData {
                     "ambient_color_energy" => {
                         Some(Self {
                             property: <ReflectionProbeFloatKind>::AmbientColorEnergy,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -277,8 +277,8 @@ impl TryFromPathAndObject for ReflectionProbeFloatData {
                     "blend_distance" => {
                         Some(Self {
                             property: <ReflectionProbeFloatKind>::BlendDistance,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -286,8 +286,8 @@ impl TryFromPathAndObject for ReflectionProbeFloatData {
                     "intensity" => {
                         Some(Self {
                             property: <ReflectionProbeFloatKind>::Intensity,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -295,8 +295,8 @@ impl TryFromPathAndObject for ReflectionProbeFloatData {
                     "max_distance" => {
                         Some(Self {
                             property: <ReflectionProbeFloatKind>::MaxDistance,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -304,8 +304,8 @@ impl TryFromPathAndObject for ReflectionProbeFloatData {
                     "origin_offset:x" => {
                         Some(Self {
                             property: <ReflectionProbeFloatKind>::OriginOffsetX,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -313,8 +313,8 @@ impl TryFromPathAndObject for ReflectionProbeFloatData {
                     "origin_offset:y" => {
                         Some(Self {
                             property: <ReflectionProbeFloatKind>::OriginOffsetY,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -322,8 +322,8 @@ impl TryFromPathAndObject for ReflectionProbeFloatData {
                     "origin_offset:z" => {
                         Some(Self {
                             property: <ReflectionProbeFloatKind>::OriginOffsetZ,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -331,8 +331,8 @@ impl TryFromPathAndObject for ReflectionProbeFloatData {
                     "size:x" => {
                         Some(Self {
                             property: <ReflectionProbeFloatKind>::SizeX,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -340,8 +340,8 @@ impl TryFromPathAndObject for ReflectionProbeFloatData {
                     "size:y" => {
                         Some(Self {
                             property: <ReflectionProbeFloatKind>::SizeY,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -349,8 +349,8 @@ impl TryFromPathAndObject for ReflectionProbeFloatData {
                     "size:z" => {
                         Some(Self {
                             property: <ReflectionProbeFloatKind>::SizeZ,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -425,8 +425,8 @@ impl TryFromPathAndObject for ReflectionProbeVec3Data {
                     "origin_offset" => {
                         Some(Self {
                             property: <ReflectionProbeVec3Kind>::OriginOffset,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -434,8 +434,8 @@ impl TryFromPathAndObject for ReflectionProbeVec3Data {
                     "size" => {
                         Some(Self {
                             property: <ReflectionProbeVec3Kind>::Size,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -499,8 +499,8 @@ impl TryFromPathAndObject for ReflectionProbeColorData {
                     "ambient_color" => {
                         Some(Self {
                             property: <ReflectionProbeColorKind>::AmbientColor,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -607,8 +607,8 @@ for Gd<Class> {
         let data = ReflectionProbeFloatData {
             property: <ReflectionProbeFloatKind>::AmbientColorR,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<ReflectionProbe>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -623,8 +623,8 @@ for Gd<Class> {
         let data = ReflectionProbeFloatData {
             property: <ReflectionProbeFloatKind>::AmbientColorG,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<ReflectionProbe>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -639,8 +639,8 @@ for Gd<Class> {
         let data = ReflectionProbeFloatData {
             property: <ReflectionProbeFloatKind>::AmbientColorB,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<ReflectionProbe>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -655,8 +655,8 @@ for Gd<Class> {
         let data = ReflectionProbeFloatData {
             property: <ReflectionProbeFloatKind>::AmbientColorA,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<ReflectionProbe>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -671,8 +671,8 @@ for Gd<Class> {
         let data = ReflectionProbeFloatData {
             property: <ReflectionProbeFloatKind>::AmbientColorEnergy,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<ReflectionProbe>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -687,8 +687,8 @@ for Gd<Class> {
         let data = ReflectionProbeFloatData {
             property: <ReflectionProbeFloatKind>::BlendDistance,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<ReflectionProbe>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -703,8 +703,8 @@ for Gd<Class> {
         let data = ReflectionProbeFloatData {
             property: <ReflectionProbeFloatKind>::Intensity,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<ReflectionProbe>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -719,8 +719,8 @@ for Gd<Class> {
         let data = ReflectionProbeFloatData {
             property: <ReflectionProbeFloatKind>::MaxDistance,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<ReflectionProbe>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -735,8 +735,8 @@ for Gd<Class> {
         let data = ReflectionProbeFloatData {
             property: <ReflectionProbeFloatKind>::OriginOffsetX,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<ReflectionProbe>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -751,8 +751,8 @@ for Gd<Class> {
         let data = ReflectionProbeFloatData {
             property: <ReflectionProbeFloatKind>::OriginOffsetY,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<ReflectionProbe>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -767,8 +767,8 @@ for Gd<Class> {
         let data = ReflectionProbeFloatData {
             property: <ReflectionProbeFloatKind>::OriginOffsetZ,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<ReflectionProbe>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -783,8 +783,8 @@ for Gd<Class> {
         let data = ReflectionProbeFloatData {
             property: <ReflectionProbeFloatKind>::SizeX,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<ReflectionProbe>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -799,8 +799,8 @@ for Gd<Class> {
         let data = ReflectionProbeFloatData {
             property: <ReflectionProbeFloatKind>::SizeY,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<ReflectionProbe>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -815,8 +815,8 @@ for Gd<Class> {
         let data = ReflectionProbeFloatData {
             property: <ReflectionProbeFloatKind>::SizeZ,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<ReflectionProbe>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -831,8 +831,8 @@ for Gd<Class> {
         let data = ReflectionProbeVec3Data {
             property: <ReflectionProbeVec3Kind>::OriginOffset,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<ReflectionProbe>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -847,8 +847,8 @@ for Gd<Class> {
         let data = ReflectionProbeVec3Data {
             property: <ReflectionProbeVec3Kind>::Size,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<ReflectionProbe>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -863,8 +863,8 @@ for Gd<Class> {
         let data = ReflectionProbeColorData {
             property: <ReflectionProbeColorKind>::AmbientColor,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<ReflectionProbe>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -883,7 +883,9 @@ impl<
         let owner: Gd<ReflectionProbe> = self.to_gd().upcast();
         let data = ReflectionProbeFloatData {
             property: <ReflectionProbeFloatKind>::AmbientColorR,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -898,7 +900,9 @@ impl<
         let owner: Gd<ReflectionProbe> = self.to_gd().upcast();
         let data = ReflectionProbeFloatData {
             property: <ReflectionProbeFloatKind>::AmbientColorG,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -913,7 +917,9 @@ impl<
         let owner: Gd<ReflectionProbe> = self.to_gd().upcast();
         let data = ReflectionProbeFloatData {
             property: <ReflectionProbeFloatKind>::AmbientColorB,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -928,7 +934,9 @@ impl<
         let owner: Gd<ReflectionProbe> = self.to_gd().upcast();
         let data = ReflectionProbeFloatData {
             property: <ReflectionProbeFloatKind>::AmbientColorA,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -943,7 +951,9 @@ impl<
         let owner: Gd<ReflectionProbe> = self.to_gd().upcast();
         let data = ReflectionProbeFloatData {
             property: <ReflectionProbeFloatKind>::AmbientColorEnergy,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -958,7 +968,9 @@ impl<
         let owner: Gd<ReflectionProbe> = self.to_gd().upcast();
         let data = ReflectionProbeFloatData {
             property: <ReflectionProbeFloatKind>::BlendDistance,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -973,7 +985,9 @@ impl<
         let owner: Gd<ReflectionProbe> = self.to_gd().upcast();
         let data = ReflectionProbeFloatData {
             property: <ReflectionProbeFloatKind>::Intensity,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -988,7 +1002,9 @@ impl<
         let owner: Gd<ReflectionProbe> = self.to_gd().upcast();
         let data = ReflectionProbeFloatData {
             property: <ReflectionProbeFloatKind>::MaxDistance,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1003,7 +1019,9 @@ impl<
         let owner: Gd<ReflectionProbe> = self.to_gd().upcast();
         let data = ReflectionProbeFloatData {
             property: <ReflectionProbeFloatKind>::OriginOffsetX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1018,7 +1036,9 @@ impl<
         let owner: Gd<ReflectionProbe> = self.to_gd().upcast();
         let data = ReflectionProbeFloatData {
             property: <ReflectionProbeFloatKind>::OriginOffsetY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1033,7 +1053,9 @@ impl<
         let owner: Gd<ReflectionProbe> = self.to_gd().upcast();
         let data = ReflectionProbeFloatData {
             property: <ReflectionProbeFloatKind>::OriginOffsetZ,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1048,7 +1070,9 @@ impl<
         let owner: Gd<ReflectionProbe> = self.to_gd().upcast();
         let data = ReflectionProbeFloatData {
             property: <ReflectionProbeFloatKind>::SizeX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1063,7 +1087,9 @@ impl<
         let owner: Gd<ReflectionProbe> = self.to_gd().upcast();
         let data = ReflectionProbeFloatData {
             property: <ReflectionProbeFloatKind>::SizeY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1078,7 +1104,9 @@ impl<
         let owner: Gd<ReflectionProbe> = self.to_gd().upcast();
         let data = ReflectionProbeFloatData {
             property: <ReflectionProbeFloatKind>::SizeZ,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1093,7 +1121,9 @@ impl<
         let owner: Gd<ReflectionProbe> = self.to_gd().upcast();
         let data = ReflectionProbeVec3Data {
             property: <ReflectionProbeVec3Kind>::OriginOffset,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1108,7 +1138,9 @@ impl<
         let owner: Gd<ReflectionProbe> = self.to_gd().upcast();
         let data = ReflectionProbeVec3Data {
             property: <ReflectionProbeVec3Kind>::Size,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -1123,7 +1155,9 @@ impl<
         let owner: Gd<ReflectionProbe> = self.to_gd().upcast();
         let data = ReflectionProbeColorData {
             property: <ReflectionProbeColorKind>::AmbientColor,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<

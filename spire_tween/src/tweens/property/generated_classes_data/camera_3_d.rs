@@ -134,8 +134,8 @@ impl TryFromPathAndObject for Camera3DFloatData {
                     "near" => {
                         Some(Self {
                             property: <Camera3DFloatKind>::Near,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -143,8 +143,8 @@ impl TryFromPathAndObject for Camera3DFloatData {
                     "far" => {
                         Some(Self {
                             property: <Camera3DFloatKind>::Far,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -152,8 +152,8 @@ impl TryFromPathAndObject for Camera3DFloatData {
                     "fov" => {
                         Some(Self {
                             property: <Camera3DFloatKind>::Fov,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -161,8 +161,8 @@ impl TryFromPathAndObject for Camera3DFloatData {
                     "size" => {
                         Some(Self {
                             property: <Camera3DFloatKind>::Size,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -170,8 +170,8 @@ impl TryFromPathAndObject for Camera3DFloatData {
                     "frustum_offset:x" => {
                         Some(Self {
                             property: <Camera3DFloatKind>::FrustumOffsetX,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -179,8 +179,8 @@ impl TryFromPathAndObject for Camera3DFloatData {
                     "frustum_offset:y" => {
                         Some(Self {
                             property: <Camera3DFloatKind>::FrustumOffsetY,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -188,8 +188,8 @@ impl TryFromPathAndObject for Camera3DFloatData {
                     "h_offset" => {
                         Some(Self {
                             property: <Camera3DFloatKind>::HOffset,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -197,8 +197,8 @@ impl TryFromPathAndObject for Camera3DFloatData {
                     "v_offset" => {
                         Some(Self {
                             property: <Camera3DFloatKind>::VOffset,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -262,8 +262,8 @@ impl TryFromPathAndObject for Camera3DVec2Data {
                     "frustum_offset" => {
                         Some(Self {
                             property: <Camera3DVec2Kind>::FrustumOffset,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -309,8 +309,8 @@ impl<Class: Inherits<Camera3D> + Inherits<Object>> SpireDoCamera3D<()> for Gd<Cl
         let data = Camera3DFloatData {
             property: <Camera3DFloatKind>::Near,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Camera3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -321,8 +321,8 @@ impl<Class: Inherits<Camera3D> + Inherits<Object>> SpireDoCamera3D<()> for Gd<Cl
         let data = Camera3DFloatData {
             property: <Camera3DFloatKind>::Far,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Camera3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -333,8 +333,8 @@ impl<Class: Inherits<Camera3D> + Inherits<Object>> SpireDoCamera3D<()> for Gd<Cl
         let data = Camera3DFloatData {
             property: <Camera3DFloatKind>::Fov,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Camera3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -345,8 +345,8 @@ impl<Class: Inherits<Camera3D> + Inherits<Object>> SpireDoCamera3D<()> for Gd<Cl
         let data = Camera3DFloatData {
             property: <Camera3DFloatKind>::Size,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Camera3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -361,8 +361,8 @@ impl<Class: Inherits<Camera3D> + Inherits<Object>> SpireDoCamera3D<()> for Gd<Cl
         let data = Camera3DFloatData {
             property: <Camera3DFloatKind>::FrustumOffsetX,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Camera3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -377,8 +377,8 @@ impl<Class: Inherits<Camera3D> + Inherits<Object>> SpireDoCamera3D<()> for Gd<Cl
         let data = Camera3DFloatData {
             property: <Camera3DFloatKind>::FrustumOffsetY,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Camera3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -393,8 +393,8 @@ impl<Class: Inherits<Camera3D> + Inherits<Object>> SpireDoCamera3D<()> for Gd<Cl
         let data = Camera3DFloatData {
             property: <Camera3DFloatKind>::HOffset,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Camera3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -409,8 +409,8 @@ impl<Class: Inherits<Camera3D> + Inherits<Object>> SpireDoCamera3D<()> for Gd<Cl
         let data = Camera3DFloatData {
             property: <Camera3DFloatKind>::VOffset,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Camera3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -425,8 +425,8 @@ impl<Class: Inherits<Camera3D> + Inherits<Object>> SpireDoCamera3D<()> for Gd<Cl
         let data = Camera3DVec2Data {
             property: <Camera3DVec2Kind>::FrustumOffset,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Camera3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -441,7 +441,9 @@ impl<
         let owner: Gd<Camera3D> = self.to_gd().upcast();
         let data = Camera3DFloatData {
             property: <Camera3DFloatKind>::Near,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -452,7 +454,9 @@ impl<
         let owner: Gd<Camera3D> = self.to_gd().upcast();
         let data = Camera3DFloatData {
             property: <Camera3DFloatKind>::Far,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -463,7 +467,9 @@ impl<
         let owner: Gd<Camera3D> = self.to_gd().upcast();
         let data = Camera3DFloatData {
             property: <Camera3DFloatKind>::Fov,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -474,7 +480,9 @@ impl<
         let owner: Gd<Camera3D> = self.to_gd().upcast();
         let data = Camera3DFloatData {
             property: <Camera3DFloatKind>::Size,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -489,7 +497,9 @@ impl<
         let owner: Gd<Camera3D> = self.to_gd().upcast();
         let data = Camera3DFloatData {
             property: <Camera3DFloatKind>::FrustumOffsetX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -504,7 +514,9 @@ impl<
         let owner: Gd<Camera3D> = self.to_gd().upcast();
         let data = Camera3DFloatData {
             property: <Camera3DFloatKind>::FrustumOffsetY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -519,7 +531,9 @@ impl<
         let owner: Gd<Camera3D> = self.to_gd().upcast();
         let data = Camera3DFloatData {
             property: <Camera3DFloatKind>::HOffset,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -534,7 +548,9 @@ impl<
         let owner: Gd<Camera3D> = self.to_gd().upcast();
         let data = Camera3DFloatData {
             property: <Camera3DFloatKind>::VOffset,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -549,7 +565,9 @@ impl<
         let owner: Gd<Camera3D> = self.to_gd().upcast();
         let data = Camera3DVec2Data {
             property: <Camera3DVec2Kind>::FrustumOffset,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<

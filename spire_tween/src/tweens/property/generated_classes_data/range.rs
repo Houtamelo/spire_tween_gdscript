@@ -86,8 +86,8 @@ impl TryFromPathAndObject for RangeFloatData {
                     "value" => {
                         Some(Self {
                             property: <RangeFloatKind>::Value,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -95,8 +95,8 @@ impl TryFromPathAndObject for RangeFloatData {
                     "ratio" => {
                         Some(Self {
                             property: <RangeFloatKind>::Ratio,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -104,8 +104,8 @@ impl TryFromPathAndObject for RangeFloatData {
                     "min_value" => {
                         Some(Self {
                             property: <RangeFloatKind>::MinValue,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -113,8 +113,8 @@ impl TryFromPathAndObject for RangeFloatData {
                     "max_value" => {
                         Some(Self {
                             property: <RangeFloatKind>::MaxValue,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -147,8 +147,8 @@ impl<Class: Inherits<Range> + Inherits<Object>> SpireDoRange<()> for Gd<Class> {
         let data = RangeFloatData {
             property: <RangeFloatKind>::Value,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Range>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -163,8 +163,8 @@ impl<Class: Inherits<Range> + Inherits<Object>> SpireDoRange<()> for Gd<Class> {
         let data = RangeFloatData {
             property: <RangeFloatKind>::Ratio,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Range>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -179,8 +179,8 @@ impl<Class: Inherits<Range> + Inherits<Object>> SpireDoRange<()> for Gd<Class> {
         let data = RangeFloatData {
             property: <RangeFloatKind>::MinValue,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Range>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -195,8 +195,8 @@ impl<Class: Inherits<Range> + Inherits<Object>> SpireDoRange<()> for Gd<Class> {
         let data = RangeFloatData {
             property: <RangeFloatKind>::MaxValue,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Range>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -214,7 +214,9 @@ for T {
         let owner: Gd<Range> = self.to_gd().upcast();
         let data = RangeFloatData {
             property: <RangeFloatKind>::Value,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -229,7 +231,9 @@ for T {
         let owner: Gd<Range> = self.to_gd().upcast();
         let data = RangeFloatData {
             property: <RangeFloatKind>::Ratio,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -244,7 +248,9 @@ for T {
         let owner: Gd<Range> = self.to_gd().upcast();
         let data = RangeFloatData {
             property: <RangeFloatKind>::MinValue,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -259,7 +265,9 @@ for T {
         let owner: Gd<Range> = self.to_gd().upcast();
         let data = RangeFloatData {
             property: <RangeFloatKind>::MaxValue,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<

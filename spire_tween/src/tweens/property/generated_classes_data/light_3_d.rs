@@ -134,8 +134,8 @@ impl TryFromPathAndObject for Light3DFloatData {
                     "light_energy" => {
                         Some(Self {
                             property: <Light3DFloatKind>::LightEnergy,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -143,8 +143,8 @@ impl TryFromPathAndObject for Light3DFloatData {
                     "shadow_opacity" => {
                         Some(Self {
                             property: <Light3DFloatKind>::ShadowOpacity,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -152,8 +152,8 @@ impl TryFromPathAndObject for Light3DFloatData {
                     "light_color:r" => {
                         Some(Self {
                             property: <Light3DFloatKind>::LightColorR,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -161,8 +161,8 @@ impl TryFromPathAndObject for Light3DFloatData {
                     "light_color:g" => {
                         Some(Self {
                             property: <Light3DFloatKind>::LightColorG,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -170,8 +170,8 @@ impl TryFromPathAndObject for Light3DFloatData {
                     "light_color:b" => {
                         Some(Self {
                             property: <Light3DFloatKind>::LightColorB,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -179,8 +179,8 @@ impl TryFromPathAndObject for Light3DFloatData {
                     "light_color:a" => {
                         Some(Self {
                             property: <Light3DFloatKind>::LightColorA,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -188,8 +188,8 @@ impl TryFromPathAndObject for Light3DFloatData {
                     "light_temperature" => {
                         Some(Self {
                             property: <Light3DFloatKind>::LightTemperature,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -253,8 +253,8 @@ impl TryFromPathAndObject for Light3DColorData {
                     "light_color" => {
                         Some(Self {
                             property: <Light3DColorKind>::LightColor,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -340,8 +340,8 @@ impl<Class: Inherits<Light3D> + Inherits<Object>> SpireDoLight3D<()> for Gd<Clas
         let data = Light3DFloatData {
             property: <Light3DFloatKind>::LightEnergy,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Light3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -356,8 +356,8 @@ impl<Class: Inherits<Light3D> + Inherits<Object>> SpireDoLight3D<()> for Gd<Clas
         let data = Light3DFloatData {
             property: <Light3DFloatKind>::ShadowOpacity,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Light3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -372,8 +372,8 @@ impl<Class: Inherits<Light3D> + Inherits<Object>> SpireDoLight3D<()> for Gd<Clas
         let data = Light3DFloatData {
             property: <Light3DFloatKind>::LightColorR,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Light3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -388,8 +388,8 @@ impl<Class: Inherits<Light3D> + Inherits<Object>> SpireDoLight3D<()> for Gd<Clas
         let data = Light3DFloatData {
             property: <Light3DFloatKind>::LightColorR,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Light3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -404,8 +404,8 @@ impl<Class: Inherits<Light3D> + Inherits<Object>> SpireDoLight3D<()> for Gd<Clas
         let data = Light3DFloatData {
             property: <Light3DFloatKind>::LightColorG,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Light3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -420,8 +420,8 @@ impl<Class: Inherits<Light3D> + Inherits<Object>> SpireDoLight3D<()> for Gd<Clas
         let data = Light3DFloatData {
             property: <Light3DFloatKind>::LightColorG,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Light3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -436,8 +436,8 @@ impl<Class: Inherits<Light3D> + Inherits<Object>> SpireDoLight3D<()> for Gd<Clas
         let data = Light3DFloatData {
             property: <Light3DFloatKind>::LightColorB,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Light3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -452,8 +452,8 @@ impl<Class: Inherits<Light3D> + Inherits<Object>> SpireDoLight3D<()> for Gd<Clas
         let data = Light3DFloatData {
             property: <Light3DFloatKind>::LightColorB,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Light3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -468,8 +468,8 @@ impl<Class: Inherits<Light3D> + Inherits<Object>> SpireDoLight3D<()> for Gd<Clas
         let data = Light3DFloatData {
             property: <Light3DFloatKind>::LightColorA,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Light3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -484,8 +484,8 @@ impl<Class: Inherits<Light3D> + Inherits<Object>> SpireDoLight3D<()> for Gd<Clas
         let data = Light3DFloatData {
             property: <Light3DFloatKind>::LightColorA,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Light3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -500,8 +500,8 @@ impl<Class: Inherits<Light3D> + Inherits<Object>> SpireDoLight3D<()> for Gd<Clas
         let data = Light3DFloatData {
             property: <Light3DFloatKind>::LightTemperature,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Light3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -516,8 +516,8 @@ impl<Class: Inherits<Light3D> + Inherits<Object>> SpireDoLight3D<()> for Gd<Clas
         let data = Light3DColorData {
             property: <Light3DColorKind>::LightColor,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Light3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -532,8 +532,8 @@ impl<Class: Inherits<Light3D> + Inherits<Object>> SpireDoLight3D<()> for Gd<Clas
         let data = Light3DColorData {
             property: <Light3DColorKind>::LightColor,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<Light3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -551,7 +551,9 @@ for T {
         let owner: Gd<Light3D> = self.to_gd().upcast();
         let data = Light3DFloatData {
             property: <Light3DFloatKind>::LightEnergy,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -566,7 +568,9 @@ for T {
         let owner: Gd<Light3D> = self.to_gd().upcast();
         let data = Light3DFloatData {
             property: <Light3DFloatKind>::ShadowOpacity,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -581,7 +585,9 @@ for T {
         let owner: Gd<Light3D> = self.to_gd().upcast();
         let data = Light3DFloatData {
             property: <Light3DFloatKind>::LightColorR,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -596,7 +602,9 @@ for T {
         let owner: Gd<Light3D> = self.to_gd().upcast();
         let data = Light3DFloatData {
             property: <Light3DFloatKind>::LightColorR,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -611,7 +619,9 @@ for T {
         let owner: Gd<Light3D> = self.to_gd().upcast();
         let data = Light3DFloatData {
             property: <Light3DFloatKind>::LightColorG,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -626,7 +636,9 @@ for T {
         let owner: Gd<Light3D> = self.to_gd().upcast();
         let data = Light3DFloatData {
             property: <Light3DFloatKind>::LightColorG,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -641,7 +653,9 @@ for T {
         let owner: Gd<Light3D> = self.to_gd().upcast();
         let data = Light3DFloatData {
             property: <Light3DFloatKind>::LightColorB,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -656,7 +670,9 @@ for T {
         let owner: Gd<Light3D> = self.to_gd().upcast();
         let data = Light3DFloatData {
             property: <Light3DFloatKind>::LightColorB,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -671,7 +687,9 @@ for T {
         let owner: Gd<Light3D> = self.to_gd().upcast();
         let data = Light3DFloatData {
             property: <Light3DFloatKind>::LightColorA,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -686,7 +704,9 @@ for T {
         let owner: Gd<Light3D> = self.to_gd().upcast();
         let data = Light3DFloatData {
             property: <Light3DFloatKind>::LightColorA,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -701,7 +721,9 @@ for T {
         let owner: Gd<Light3D> = self.to_gd().upcast();
         let data = Light3DFloatData {
             property: <Light3DFloatKind>::LightTemperature,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -716,7 +738,9 @@ for T {
         let owner: Gd<Light3D> = self.to_gd().upcast();
         let data = Light3DColorData {
             property: <Light3DColorKind>::LightColor,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -731,7 +755,9 @@ for T {
         let owner: Gd<Light3D> = self.to_gd().upcast();
         let data = Light3DColorData {
             property: <Light3DColorKind>::LightColor,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<

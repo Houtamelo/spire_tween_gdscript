@@ -53,8 +53,8 @@ impl TryFromPathAndObject for AnimatedSprite2DIntData {
                     "frame" => {
                         Some(Self {
                             property: <AnimatedSprite2DIntKind>::Frame,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -118,8 +118,8 @@ impl TryFromPathAndObject for AnimatedSprite2DFloatData {
                     "speed_scale" => {
                         Some(Self {
                             property: <AnimatedSprite2DFloatKind>::SpeedScale,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -147,8 +147,8 @@ for Gd<Class> {
         let data = AnimatedSprite2DIntData {
             property: <AnimatedSprite2DIntKind>::Frame,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<AnimatedSprite2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -163,8 +163,8 @@ for Gd<Class> {
         let data = AnimatedSprite2DFloatData {
             property: <AnimatedSprite2DFloatKind>::SpeedScale,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<AnimatedSprite2D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -183,7 +183,9 @@ impl<
         let owner: Gd<AnimatedSprite2D> = self.to_gd().upcast();
         let data = AnimatedSprite2DIntData {
             property: <AnimatedSprite2DIntKind>::Frame,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -198,7 +200,9 @@ impl<
         let owner: Gd<AnimatedSprite2D> = self.to_gd().upcast();
         let data = AnimatedSprite2DFloatData {
             property: <AnimatedSprite2DFloatKind>::SpeedScale,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<

@@ -81,8 +81,8 @@ impl TryFromPathAndObject for FogVolumeFloatData {
                     "size:x" => {
                         Some(Self {
                             property: <FogVolumeFloatKind>::SizeX,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -90,8 +90,8 @@ impl TryFromPathAndObject for FogVolumeFloatData {
                     "size:y" => {
                         Some(Self {
                             property: <FogVolumeFloatKind>::SizeY,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -99,8 +99,8 @@ impl TryFromPathAndObject for FogVolumeFloatData {
                     "size:z" => {
                         Some(Self {
                             property: <FogVolumeFloatKind>::SizeZ,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -164,8 +164,8 @@ impl TryFromPathAndObject for FogVolumeVec3Data {
                     "size" => {
                         Some(Self {
                             property: <FogVolumeVec3Kind>::Size,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -206,8 +206,8 @@ impl<Class: Inherits<FogVolume> + Inherits<Object>> SpireDoFogVolume<()> for Gd<
         let data = FogVolumeFloatData {
             property: <FogVolumeFloatKind>::SizeX,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<FogVolume>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -222,8 +222,8 @@ impl<Class: Inherits<FogVolume> + Inherits<Object>> SpireDoFogVolume<()> for Gd<
         let data = FogVolumeFloatData {
             property: <FogVolumeFloatKind>::SizeY,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<FogVolume>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -238,8 +238,8 @@ impl<Class: Inherits<FogVolume> + Inherits<Object>> SpireDoFogVolume<()> for Gd<
         let data = FogVolumeFloatData {
             property: <FogVolumeFloatKind>::SizeZ,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<FogVolume>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -254,8 +254,8 @@ impl<Class: Inherits<FogVolume> + Inherits<Object>> SpireDoFogVolume<()> for Gd<
         let data = FogVolumeVec3Data {
             property: <FogVolumeVec3Kind>::Size,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<FogVolume>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -274,7 +274,9 @@ impl<
         let owner: Gd<FogVolume> = self.to_gd().upcast();
         let data = FogVolumeFloatData {
             property: <FogVolumeFloatKind>::SizeX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -289,7 +291,9 @@ impl<
         let owner: Gd<FogVolume> = self.to_gd().upcast();
         let data = FogVolumeFloatData {
             property: <FogVolumeFloatKind>::SizeY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -304,7 +308,9 @@ impl<
         let owner: Gd<FogVolume> = self.to_gd().upcast();
         let data = FogVolumeFloatData {
             property: <FogVolumeFloatKind>::SizeZ,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -319,7 +325,9 @@ impl<
         let owner: Gd<FogVolume> = self.to_gd().upcast();
         let data = FogVolumeVec3Data {
             property: <FogVolumeVec3Kind>::Size,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<

@@ -53,8 +53,8 @@ impl TryFromPathAndObject for GeometryInstance3DFloatData {
                     "transparency" => {
                         Some(Self {
                             property: <GeometryInstance3DFloatKind>::Transparency,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -82,8 +82,8 @@ impl<
         let data = GeometryInstance3DFloatData {
             property: <GeometryInstance3DFloatKind>::Transparency,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<GeometryInstance3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -102,7 +102,9 @@ impl<
         let owner: Gd<GeometryInstance3D> = self.to_gd().upcast();
         let data = GeometryInstance3DFloatData {
             property: <GeometryInstance3DFloatKind>::Transparency,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<

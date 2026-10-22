@@ -8,6 +8,7 @@ pub enum PropertyDataInt {
     CanvasItem(CanvasItemIntData),
     Label(LabelIntData),
     Label3D(Label3DIntData),
+    LabelSettings(LabelSettingsIntData),
     LineEdit(LineEditIntData),
     RichTextLabel(RichTextLabelIntData),
     Sprite2D(Sprite2DIntData),
@@ -21,9 +22,9 @@ impl IGeneralPropertyData for PropertyDataInt {
     fn from_path_and_owner(_path_str: &str, path: NodePath, owner: Gd<Object>) -> Self {
         nested_try_from_path_and_object! {
             _path_str, owner, AnimatedSprite2DIntData, AnimatedSprite3DIntData,
-            CanvasItemIntData, LabelIntData, Label3DIntData, LineEditIntData,
-            RichTextLabelIntData, Sprite2DIntData, SubViewportIntData, TextEditIntData,
-            WindowIntData, PropertyDataViaCallable < i64 >
+            CanvasItemIntData, LabelIntData, Label3DIntData, LabelSettingsIntData,
+            LineEditIntData, RichTextLabelIntData, Sprite2DIntData, SubViewportIntData,
+            TextEditIntData, WindowIntData, PropertyDataViaCallable < i64 >
         }
         Self::Custom(PropertyDataCustom::from_path_and_owner(_path_str, path, owner))
     }
@@ -41,6 +42,7 @@ pub enum PropertyDataFloat {
     AudioStreamPlayer(AudioStreamPlayerFloatData),
     AudioStreamPlayer2D(AudioStreamPlayer2DFloatData),
     AudioStreamPlayer3D(AudioStreamPlayer3DFloatData),
+    BaseMaterial3D(BaseMaterial3DFloatData),
     Camera2D(Camera2DFloatData),
     Camera3D(Camera3DFloatData),
     CanvasItem(CanvasItemFloatData),
@@ -51,6 +53,7 @@ pub enum PropertyDataFloat {
     ColorRect(ColorRectFloatData),
     Control(ControlFloatData),
     Decal(DecalFloatData),
+    Environment(EnvironmentFloatData),
     FogVolume(FogVolumeFloatData),
     GeometryInstance3D(GeometryInstance3DFloatData),
     GpuParticlesAttractor3D(GpuParticlesAttractor3DFloatData),
@@ -59,7 +62,9 @@ pub enum PropertyDataFloat {
     GpuParticlesAttractorVectorField3D(GpuParticlesAttractorVectorField3DFloatData),
     Label(LabelFloatData),
     Label3D(Label3DFloatData),
+    LabelSettings(LabelSettingsFloatData),
     Light3D(Light3DFloatData),
+    Line2D(Line2DFloatData),
     Node2D(Node2DFloatData),
     Node3D(Node3DFloatData),
     ParallaxBackground(ParallaxBackgroundFloatData),
@@ -89,21 +94,21 @@ impl IGeneralPropertyData for PropertyDataFloat {
             AnimationPlayerFloatData, Area2DFloatData, Area3DFloatData,
             AspectRatioContainerFloatData, AudioStreamPlayerFloatData,
             AudioStreamPlayer2DFloatData, AudioStreamPlayer3DFloatData,
-            Camera2DFloatData, Camera3DFloatData, CanvasItemFloatData,
-            CanvasLayerFloatData, CanvasModulateFloatData, CharacterBody2DFloatData,
-            CharacterBody3DFloatData, ColorRectFloatData, ControlFloatData,
-            DecalFloatData, FogVolumeFloatData, GeometryInstance3DFloatData,
-            GpuParticlesAttractor3DFloatData, GpuParticlesAttractorBox3DFloatData,
-            GpuParticlesAttractorSphere3DFloatData,
+            BaseMaterial3DFloatData, Camera2DFloatData, Camera3DFloatData,
+            CanvasItemFloatData, CanvasLayerFloatData, CanvasModulateFloatData,
+            CharacterBody2DFloatData, CharacterBody3DFloatData, ColorRectFloatData,
+            ControlFloatData, DecalFloatData, EnvironmentFloatData, FogVolumeFloatData,
+            GeometryInstance3DFloatData, GpuParticlesAttractor3DFloatData,
+            GpuParticlesAttractorBox3DFloatData, GpuParticlesAttractorSphere3DFloatData,
             GpuParticlesAttractorVectorField3DFloatData, LabelFloatData,
-            Label3DFloatData, Light3DFloatData, Node2DFloatData, Node3DFloatData,
-            ParallaxBackgroundFloatData, PathFollow2DFloatData, PathFollow3DFloatData,
-            PhysicalBone3DFloatData, RangeFloatData, ReflectionProbeFloatData,
-            RichTextLabelFloatData, RigidBody2DFloatData, RigidBody3DFloatData,
-            Skeleton3DFloatData, SpriteBase3DFloatData, StaticBody2DFloatData,
-            StaticBody3DFloatData, TextEditFloatData, TextureProgressBarFloatData,
-            VideoStreamPlayerFloatData, ViewportFloatData, PropertyDataViaCallable < f64
-            >
+            Label3DFloatData, LabelSettingsFloatData, Light3DFloatData, Line2DFloatData,
+            Node2DFloatData, Node3DFloatData, ParallaxBackgroundFloatData,
+            PathFollow2DFloatData, PathFollow3DFloatData, PhysicalBone3DFloatData,
+            RangeFloatData, ReflectionProbeFloatData, RichTextLabelFloatData,
+            RigidBody2DFloatData, RigidBody3DFloatData, Skeleton3DFloatData,
+            SpriteBase3DFloatData, StaticBody2DFloatData, StaticBody3DFloatData,
+            TextEditFloatData, TextureProgressBarFloatData, VideoStreamPlayerFloatData,
+            ViewportFloatData, PropertyDataViaCallable < f64 >
         }
         Self::Custom(PropertyDataCustom::from_path_and_owner(_path_str, path, owner))
     }
@@ -165,6 +170,7 @@ impl IGeneralPropertyData for PropertyDataVec2i {
 #[delegated_enum(impl_conversions)]
 pub enum PropertyDataVec3 {
     Area3D(Area3DVec3Data),
+    BaseMaterial3D(BaseMaterial3DVec3Data),
     CharacterBody3D(CharacterBody3DVec3Data),
     Decal(DecalVec3Data),
     FogVolume(FogVolumeVec3Data),
@@ -182,8 +188,9 @@ pub enum PropertyDataVec3 {
 impl IGeneralPropertyData for PropertyDataVec3 {
     fn from_path_and_owner(_path_str: &str, path: NodePath, owner: Gd<Object>) -> Self {
         nested_try_from_path_and_object! {
-            _path_str, owner, Area3DVec3Data, CharacterBody3DVec3Data, DecalVec3Data,
-            FogVolumeVec3Data, GpuParticlesAttractorBox3DVec3Data,
+            _path_str, owner, Area3DVec3Data, BaseMaterial3DVec3Data,
+            CharacterBody3DVec3Data, DecalVec3Data, FogVolumeVec3Data,
+            GpuParticlesAttractorBox3DVec3Data,
             GpuParticlesAttractorVectorField3DVec3Data, Node3DVec3Data,
             PhysicalBone3DVec3Data, ReflectionProbeVec3Data, RigidBody3DVec3Data,
             StaticBody3DVec3Data, PropertyDataViaCallable < Vector3 >,
@@ -211,13 +218,19 @@ impl IGeneralPropertyData for PropertyDataVec3i {
 #[allow(unused)]
 #[delegated_enum(impl_conversions)]
 pub enum PropertyDataColor {
+    BaseMaterial3D(BaseMaterial3DColorData),
     CanvasItem(CanvasItemColorData),
     CanvasModulate(CanvasModulateColorData),
     ColorRect(ColorRectColorData),
     Decal(DecalColorData),
+    Environment(EnvironmentColorData),
+    Label(LabelColorData),
     Label3D(Label3DColorData),
+    LabelSettings(LabelSettingsColorData),
     Light3D(Light3DColorData),
+    Line2D(Line2DColorData),
     ReflectionProbe(ReflectionProbeColorData),
+    RichTextLabel(RichTextLabelColorData),
     SpriteBase3D(SpriteBase3DColorData),
     TextureProgressBar(TextureProgressBarColorData),
     ViaCallable(PropertyDataViaCallable<Color>),
@@ -226,10 +239,12 @@ pub enum PropertyDataColor {
 impl IGeneralPropertyData for PropertyDataColor {
     fn from_path_and_owner(_path_str: &str, path: NodePath, owner: Gd<Object>) -> Self {
         nested_try_from_path_and_object! {
-            _path_str, owner, CanvasItemColorData, CanvasModulateColorData,
-            ColorRectColorData, DecalColorData, Label3DColorData, Light3DColorData,
-            ReflectionProbeColorData, SpriteBase3DColorData, TextureProgressBarColorData,
-            PropertyDataViaCallable < Color >
+            _path_str, owner, BaseMaterial3DColorData, CanvasItemColorData,
+            CanvasModulateColorData, ColorRectColorData, DecalColorData,
+            EnvironmentColorData, LabelColorData, Label3DColorData,
+            LabelSettingsColorData, Light3DColorData, Line2DColorData,
+            ReflectionProbeColorData, RichTextLabelColorData, SpriteBase3DColorData,
+            TextureProgressBarColorData, PropertyDataViaCallable < Color >
         }
         Self::Custom(PropertyDataCustom::from_path_and_owner(_path_str, path, owner))
     }

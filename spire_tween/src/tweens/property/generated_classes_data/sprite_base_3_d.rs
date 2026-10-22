@@ -131,8 +131,8 @@ impl TryFromPathAndObject for SpriteBase3DFloatData {
                     "modulate:r" => {
                         Some(Self {
                             property: <SpriteBase3DFloatKind>::ModulateR,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -140,8 +140,8 @@ impl TryFromPathAndObject for SpriteBase3DFloatData {
                     "modulate:g" => {
                         Some(Self {
                             property: <SpriteBase3DFloatKind>::ModulateG,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -149,8 +149,8 @@ impl TryFromPathAndObject for SpriteBase3DFloatData {
                     "modulate:b" => {
                         Some(Self {
                             property: <SpriteBase3DFloatKind>::ModulateB,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -158,8 +158,8 @@ impl TryFromPathAndObject for SpriteBase3DFloatData {
                     "modulate:a" => {
                         Some(Self {
                             property: <SpriteBase3DFloatKind>::ModulateA,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -167,8 +167,8 @@ impl TryFromPathAndObject for SpriteBase3DFloatData {
                     "offset:x" => {
                         Some(Self {
                             property: <SpriteBase3DFloatKind>::OffsetX,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -176,8 +176,8 @@ impl TryFromPathAndObject for SpriteBase3DFloatData {
                     "offset:y" => {
                         Some(Self {
                             property: <SpriteBase3DFloatKind>::OffsetY,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -185,8 +185,8 @@ impl TryFromPathAndObject for SpriteBase3DFloatData {
                     "pixel_size" => {
                         Some(Self {
                             property: <SpriteBase3DFloatKind>::PixelSize,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -250,8 +250,8 @@ impl TryFromPathAndObject for SpriteBase3DVec2Data {
                     "offset" => {
                         Some(Self {
                             property: <SpriteBase3DVec2Kind>::Offset,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -315,8 +315,8 @@ impl TryFromPathAndObject for SpriteBase3DColorData {
                     "modulate" => {
                         Some(Self {
                             property: <SpriteBase3DColorKind>::Modulate,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -409,8 +409,8 @@ for Gd<Class> {
         let data = SpriteBase3DFloatData {
             property: <SpriteBase3DFloatKind>::ModulateR,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<SpriteBase3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -425,8 +425,8 @@ for Gd<Class> {
         let data = SpriteBase3DFloatData {
             property: <SpriteBase3DFloatKind>::ModulateR,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<SpriteBase3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -441,8 +441,8 @@ for Gd<Class> {
         let data = SpriteBase3DFloatData {
             property: <SpriteBase3DFloatKind>::ModulateG,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<SpriteBase3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -457,8 +457,8 @@ for Gd<Class> {
         let data = SpriteBase3DFloatData {
             property: <SpriteBase3DFloatKind>::ModulateG,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<SpriteBase3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -473,8 +473,8 @@ for Gd<Class> {
         let data = SpriteBase3DFloatData {
             property: <SpriteBase3DFloatKind>::ModulateB,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<SpriteBase3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -489,8 +489,8 @@ for Gd<Class> {
         let data = SpriteBase3DFloatData {
             property: <SpriteBase3DFloatKind>::ModulateB,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<SpriteBase3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -505,8 +505,8 @@ for Gd<Class> {
         let data = SpriteBase3DFloatData {
             property: <SpriteBase3DFloatKind>::ModulateA,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<SpriteBase3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -521,8 +521,8 @@ for Gd<Class> {
         let data = SpriteBase3DFloatData {
             property: <SpriteBase3DFloatKind>::ModulateA,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<SpriteBase3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -533,8 +533,8 @@ for Gd<Class> {
         let data = SpriteBase3DFloatData {
             property: <SpriteBase3DFloatKind>::ModulateA,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<SpriteBase3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -549,8 +549,8 @@ for Gd<Class> {
         let data = SpriteBase3DFloatData {
             property: <SpriteBase3DFloatKind>::OffsetX,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<SpriteBase3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -565,8 +565,8 @@ for Gd<Class> {
         let data = SpriteBase3DFloatData {
             property: <SpriteBase3DFloatKind>::OffsetY,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<SpriteBase3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -581,8 +581,8 @@ for Gd<Class> {
         let data = SpriteBase3DFloatData {
             property: <SpriteBase3DFloatKind>::PixelSize,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<SpriteBase3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -597,8 +597,8 @@ for Gd<Class> {
         let data = SpriteBase3DVec2Data {
             property: <SpriteBase3DVec2Kind>::Offset,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<SpriteBase3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -613,8 +613,8 @@ for Gd<Class> {
         let data = SpriteBase3DColorData {
             property: <SpriteBase3DColorKind>::Modulate,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<SpriteBase3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -629,8 +629,8 @@ for Gd<Class> {
         let data = SpriteBase3DColorData {
             property: <SpriteBase3DColorKind>::Modulate,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<SpriteBase3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -649,7 +649,9 @@ impl<
         let owner: Gd<SpriteBase3D> = self.to_gd().upcast();
         let data = SpriteBase3DFloatData {
             property: <SpriteBase3DFloatKind>::ModulateR,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -664,7 +666,9 @@ impl<
         let owner: Gd<SpriteBase3D> = self.to_gd().upcast();
         let data = SpriteBase3DFloatData {
             property: <SpriteBase3DFloatKind>::ModulateR,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -679,7 +683,9 @@ impl<
         let owner: Gd<SpriteBase3D> = self.to_gd().upcast();
         let data = SpriteBase3DFloatData {
             property: <SpriteBase3DFloatKind>::ModulateG,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -694,7 +700,9 @@ impl<
         let owner: Gd<SpriteBase3D> = self.to_gd().upcast();
         let data = SpriteBase3DFloatData {
             property: <SpriteBase3DFloatKind>::ModulateG,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -709,7 +717,9 @@ impl<
         let owner: Gd<SpriteBase3D> = self.to_gd().upcast();
         let data = SpriteBase3DFloatData {
             property: <SpriteBase3DFloatKind>::ModulateB,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -724,7 +734,9 @@ impl<
         let owner: Gd<SpriteBase3D> = self.to_gd().upcast();
         let data = SpriteBase3DFloatData {
             property: <SpriteBase3DFloatKind>::ModulateB,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -739,7 +751,9 @@ impl<
         let owner: Gd<SpriteBase3D> = self.to_gd().upcast();
         let data = SpriteBase3DFloatData {
             property: <SpriteBase3DFloatKind>::ModulateA,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -754,7 +768,9 @@ impl<
         let owner: Gd<SpriteBase3D> = self.to_gd().upcast();
         let data = SpriteBase3DFloatData {
             property: <SpriteBase3DFloatKind>::ModulateA,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -765,7 +781,9 @@ impl<
         let owner: Gd<SpriteBase3D> = self.to_gd().upcast();
         let data = SpriteBase3DFloatData {
             property: <SpriteBase3DFloatKind>::ModulateA,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -780,7 +798,9 @@ impl<
         let owner: Gd<SpriteBase3D> = self.to_gd().upcast();
         let data = SpriteBase3DFloatData {
             property: <SpriteBase3DFloatKind>::OffsetX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -795,7 +815,9 @@ impl<
         let owner: Gd<SpriteBase3D> = self.to_gd().upcast();
         let data = SpriteBase3DFloatData {
             property: <SpriteBase3DFloatKind>::OffsetY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -810,7 +832,9 @@ impl<
         let owner: Gd<SpriteBase3D> = self.to_gd().upcast();
         let data = SpriteBase3DFloatData {
             property: <SpriteBase3DFloatKind>::PixelSize,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -825,7 +849,9 @@ impl<
         let owner: Gd<SpriteBase3D> = self.to_gd().upcast();
         let data = SpriteBase3DVec2Data {
             property: <SpriteBase3DVec2Kind>::Offset,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -840,7 +866,9 @@ impl<
         let owner: Gd<SpriteBase3D> = self.to_gd().upcast();
         let data = SpriteBase3DColorData {
             property: <SpriteBase3DColorKind>::Modulate,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -855,7 +883,9 @@ impl<
         let owner: Gd<SpriteBase3D> = self.to_gd().upcast();
         let data = SpriteBase3DColorData {
             property: <SpriteBase3DColorKind>::Modulate,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<

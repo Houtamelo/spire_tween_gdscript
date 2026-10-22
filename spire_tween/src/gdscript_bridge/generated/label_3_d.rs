@@ -262,4 +262,48 @@ impl DoLabel3D {
         let tween = node.do_label3d_do_text(to, duration).register();
         gd_from_native_tween(tween)
     }
+    /// Captures the current color at construction, then adds [param to] minus
+    /// that baseline over time. Equivalent to a relative color property tween.
+    #[func]
+    fn blendable_modulate(
+        node: Gd<Label3D>,
+        to: Color,
+        duration: f64,
+    ) -> Gd<SpirePropertyColor> {
+        gd_from_native_tween(node.do_blendable_modulate(to, duration).register())
+    }
+    /// Samples the supplied Gradient with eased progress. Includes alpha by
+    /// default; disabling it preserves the target's current alpha on each write.
+    /// Uses the Gradient's interpolation mode/color space and samples it live.
+    #[func]
+    fn gradient_modulate(
+        node: Gd<Label3D>,
+        gradient: Option<Gd<Gradient>>,
+        duration: f64,
+        #[opt(default = true)]
+        include_alpha: bool,
+    ) -> Option<Gd<SpireMethodFloat>> {
+        let gradient = gradient.log_null_arg(|| "gradient")?;
+        Some(
+            gd_from_native_tween(
+                node.do_gradient_modulate(gradient, duration, include_alpha).register(),
+            ),
+        )
+    }
+    /// Replaces text with an interpolated integer. Does not parse existing text.
+    /// Groups every three digits; an empty separator disables grouping. Replaces
+    /// BBCode on RichTextLabel. Returns an already registered method tween.
+    #[func]
+    fn counter(
+        node: Gd<Label3D>,
+        from: i64,
+        to: i64,
+        duration: f64,
+        #[opt(default = ",")]
+        thousands_separator: GString,
+    ) -> Gd<SpireMethodInt> {
+        gd_from_native_tween(
+            node.do_counter(from, to, duration, thousands_separator).register(),
+        )
+    }
 }

@@ -38,6 +38,16 @@ impl ITestClass for MiscTests {
 
     fn test_list() -> Vec<NamedTest<Self>> {
         vec![
+            ("test_group2_typed_accessors", Self::test_group2_typed_accessors),
+            ("test_group2_callable_validity", Self::test_group2_callable_validity),
+            ("test_group2_motion", Self::test_group2_motion),
+            ("test_group2_blendables", Self::test_group2_blendables),
+            ("test_group2_resources", Self::test_group2_resources),
+            ("test_group2_styles_counter", Self::test_group2_styles_counter),
+            ("test_group2_arrays", Self::test_group2_arrays),
+            ("test_group2_gradients_lines", Self::test_group2_gradients_lines),
+            ("test_group2_shader_bus", Self::test_group2_shader_bus),
+            ("test_group2_template_lifetimes", Self::test_group2_template_lifetimes),
             ("test_force_complete", Self::test_force_complete),
             ("test_dyn_target", Self::test_dyn_target),
             ("test_property_path", Self::test_property_path),

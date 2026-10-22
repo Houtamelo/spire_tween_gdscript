@@ -64,8 +64,8 @@ impl TryFromPathAndObject for TextEditIntData {
                     "minimap_width" => {
                         Some(Self {
                             property: <TextEditIntKind>::MinimapWidth,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -73,8 +73,8 @@ impl TryFromPathAndObject for TextEditIntData {
                     "scroll_horizontal" => {
                         Some(Self {
                             property: <TextEditIntKind>::ScrollHorizontal,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -138,8 +138,8 @@ impl TryFromPathAndObject for TextEditFloatData {
                     "scroll_vertical" => {
                         Some(Self {
                             property: <TextEditFloatKind>::ScrollVertical,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -214,8 +214,8 @@ impl TryFromPathAndObject for TextEditStringData {
                     "text" => {
                         Some(Self {
                             property: <TextEditStringKind>::Text,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -223,8 +223,8 @@ impl TryFromPathAndObject for TextEditStringData {
                     "placeholder_text" => {
                         Some(Self {
                             property: <TextEditStringKind>::PlaceholderText,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -270,8 +270,8 @@ impl<Class: Inherits<TextEdit> + Inherits<Object>> SpireDoTextEdit<()> for Gd<Cl
         let data = TextEditIntData {
             property: <TextEditIntKind>::MinimapWidth,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<TextEdit>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -286,8 +286,8 @@ impl<Class: Inherits<TextEdit> + Inherits<Object>> SpireDoTextEdit<()> for Gd<Cl
         let data = TextEditIntData {
             property: <TextEditIntKind>::ScrollHorizontal,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<TextEdit>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -302,8 +302,8 @@ impl<Class: Inherits<TextEdit> + Inherits<Object>> SpireDoTextEdit<()> for Gd<Cl
         let data = TextEditFloatData {
             property: <TextEditFloatKind>::ScrollVertical,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<TextEdit>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -318,8 +318,8 @@ impl<Class: Inherits<TextEdit> + Inherits<Object>> SpireDoTextEdit<()> for Gd<Cl
         let data = TextEditStringData {
             property: <TextEditStringKind>::Text,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<TextEdit>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -334,8 +334,8 @@ impl<Class: Inherits<TextEdit> + Inherits<Object>> SpireDoTextEdit<()> for Gd<Cl
         let data = TextEditStringData {
             property: <TextEditStringKind>::PlaceholderText,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<TextEdit>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -354,7 +354,9 @@ impl<
         let owner: Gd<TextEdit> = self.to_gd().upcast();
         let data = TextEditIntData {
             property: <TextEditIntKind>::MinimapWidth,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -369,7 +371,9 @@ impl<
         let owner: Gd<TextEdit> = self.to_gd().upcast();
         let data = TextEditIntData {
             property: <TextEditIntKind>::ScrollHorizontal,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -384,7 +388,9 @@ impl<
         let owner: Gd<TextEdit> = self.to_gd().upcast();
         let data = TextEditFloatData {
             property: <TextEditFloatKind>::ScrollVertical,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -399,7 +405,9 @@ impl<
         let owner: Gd<TextEdit> = self.to_gd().upcast();
         let data = TextEditStringData {
             property: <TextEditStringKind>::Text,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -414,7 +422,9 @@ impl<
         let owner: Gd<TextEdit> = self.to_gd().upcast();
         let data = TextEditStringData {
             property: <TextEditStringKind>::PlaceholderText,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<

@@ -64,8 +64,8 @@ impl TryFromPathAndObject for AcceptDialogStringData {
                     "dialog_text" => {
                         Some(Self {
                             property: <AcceptDialogStringKind>::DialogText,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -73,8 +73,8 @@ impl TryFromPathAndObject for AcceptDialogStringData {
                     "ok_button_text" => {
                         Some(Self {
                             property: <AcceptDialogStringKind>::OkButtonText,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -106,8 +106,8 @@ for Gd<Class> {
         let data = AcceptDialogStringData {
             property: <AcceptDialogStringKind>::DialogText,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<AcceptDialog>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -122,8 +122,8 @@ for Gd<Class> {
         let data = AcceptDialogStringData {
             property: <AcceptDialogStringKind>::OkButtonText,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<AcceptDialog>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -142,7 +142,9 @@ impl<
         let owner: Gd<AcceptDialog> = self.to_gd().upcast();
         let data = AcceptDialogStringData {
             property: <AcceptDialogStringKind>::DialogText,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -157,7 +159,9 @@ impl<
         let owner: Gd<AcceptDialog> = self.to_gd().upcast();
         let data = AcceptDialogStringData {
             property: <AcceptDialogStringKind>::OkButtonText,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<

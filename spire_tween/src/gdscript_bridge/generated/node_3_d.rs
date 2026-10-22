@@ -406,4 +406,72 @@ impl DoNode3D {
         let radii = Vector3::new(radius, radius, 0.0);
         Self::ellipsis(node, center, from_angle, to_angle, radii, radii, axis, duration)
     }
+    /// Expands [param to] to a uniform absolute scale. Already registered.
+    #[func]
+    fn uniform_scale(
+        node: Gd<Node3D>,
+        to: real,
+        duration: f64,
+    ) -> Gd<SpirePropertyVec3> {
+        gd_from_native_tween(node.do_uniform_scale(to, duration).register())
+    }
+    ///Adds a local-position delta, blending with other relative tweens.
+    #[func]
+    fn blendable_position(
+        node: Gd<Node3D>,
+        by: Vector3,
+        duration: f64,
+    ) -> Gd<SpirePropertyVec3> {
+        gd_from_native_tween(node.do_blendable_position(by, duration).register())
+    }
+    ///Adds a global-position delta, blending with other relative tweens.
+    #[func]
+    fn blendable_global_position(
+        node: Gd<Node3D>,
+        by: Vector3,
+        duration: f64,
+    ) -> Gd<SpirePropertyVec3> {
+        gd_from_native_tween(node.do_blendable_global_position(by, duration).register())
+    }
+    ///Adds a scale delta; this is additive, not multiplicative.
+    #[func]
+    fn blendable_scale(
+        node: Gd<Node3D>,
+        by: Vector3,
+        duration: f64,
+    ) -> Gd<SpirePropertyVec3> {
+        gd_from_native_tween(node.do_blendable_scale(by, duration).register())
+    }
+    /// Jumps to a local position ([method global_jump] uses global coordinates).
+    /// Captures the start on first processing. Horizontal motion is linear;
+    /// vertical displacement uses OutQuad with repeated OutQuad/Yoyo hops.
+    /// Positive height is upward: -Y in 2D/UI, +Y in 3D. Jump counts below
+    /// one become one. Easing remaps overall progress. Supports Restart/Yoyo,
+    /// not Incremental. Directly sets position; does not perform physics movement.
+    #[func]
+    fn jump(
+        node: Gd<Node3D>,
+        to: Vector3,
+        height: f64,
+        jumps: i32,
+        duration: f64,
+    ) -> Gd<SpireMethodFloat> {
+        gd_from_native_tween(node.do_jump(to, height, jumps, duration).register())
+    }
+    /// Jumps to a local position ([method global_jump] uses global coordinates).
+    /// Captures the start on first processing. Horizontal motion is linear;
+    /// vertical displacement uses OutQuad with repeated OutQuad/Yoyo hops.
+    /// Positive height is upward: -Y in 2D/UI, +Y in 3D. Jump counts below
+    /// one become one. Easing remaps overall progress. Supports Restart/Yoyo,
+    /// not Incremental. Directly sets position; does not perform physics movement.
+    #[func]
+    fn global_jump(
+        node: Gd<Node3D>,
+        to: Vector3,
+        height: f64,
+        jumps: i32,
+        duration: f64,
+    ) -> Gd<SpireMethodFloat> {
+        gd_from_native_tween(node.do_global_jump(to, height, jumps, duration).register())
+    }
 }

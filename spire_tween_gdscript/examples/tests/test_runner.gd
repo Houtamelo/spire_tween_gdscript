@@ -5,6 +5,7 @@ const CACHE_PATH := "res://examples/tests/results.json"
 const CACHE_SCHEMA := 2
 
 const TESTS: Array[PackedScene] = [
+	preload("res://examples/tests/group2.tscn"),
 	preload("res://examples/tests/stop_events.tscn"),
 	preload("res://examples/tests/delays.tscn"),
 	preload("res://examples/tests/error_handling.tscn"),
@@ -249,8 +250,13 @@ func run_test_by_name(method_name: String):
 		push_error("No test matched: " + method_name)
 
 
-static func get_prefab_test_names(prefab: PackedScene) -> Array:
+func get_prefab_test_names(prefab: PackedScene) -> Array:
 	var node: Node = prefab.instantiate()
+	if node.get_script() == null or not node.has_method("run_test"):
+		failed += 1
+		push_error("TEST_DISCOVERY_FAILED: " + prefab.resource_path)
+		node.free()
+		return []
 	var methods := node.get_method_list()
 	node.queue_free()
 
@@ -262,6 +268,9 @@ static func get_prefab_test_names(prefab: PackedScene) -> Array:
 func get_prefab_hash(prefab: PackedScene) -> int:
 	var node := prefab.instantiate()
 	var script: GDScript = node.get_script()
+	if script == null:
+		node.free()
+		return 0 # Discovery records the failure; caching must not abort first.
 	var source_code := script.source_code
 	node.free()
 	return hash(source_code)

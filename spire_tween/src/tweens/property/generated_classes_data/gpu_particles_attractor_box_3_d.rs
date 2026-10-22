@@ -81,8 +81,8 @@ impl TryFromPathAndObject for GpuParticlesAttractorBox3DFloatData {
                     "size:x" => {
                         Some(Self {
                             property: <GpuParticlesAttractorBox3DFloatKind>::SizeX,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -90,8 +90,8 @@ impl TryFromPathAndObject for GpuParticlesAttractorBox3DFloatData {
                     "size:y" => {
                         Some(Self {
                             property: <GpuParticlesAttractorBox3DFloatKind>::SizeY,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -99,8 +99,8 @@ impl TryFromPathAndObject for GpuParticlesAttractorBox3DFloatData {
                     "size:z" => {
                         Some(Self {
                             property: <GpuParticlesAttractorBox3DFloatKind>::SizeZ,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -164,8 +164,8 @@ impl TryFromPathAndObject for GpuParticlesAttractorBox3DVec3Data {
                     "size" => {
                         Some(Self {
                             property: <GpuParticlesAttractorBox3DVec3Kind>::Size,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -208,8 +208,8 @@ impl<
         let data = GpuParticlesAttractorBox3DFloatData {
             property: <GpuParticlesAttractorBox3DFloatKind>::SizeX,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<GpuParticlesAttractorBox3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -224,8 +224,8 @@ impl<
         let data = GpuParticlesAttractorBox3DFloatData {
             property: <GpuParticlesAttractorBox3DFloatKind>::SizeY,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<GpuParticlesAttractorBox3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -240,8 +240,8 @@ impl<
         let data = GpuParticlesAttractorBox3DFloatData {
             property: <GpuParticlesAttractorBox3DFloatKind>::SizeZ,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<GpuParticlesAttractorBox3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -256,8 +256,8 @@ impl<
         let data = GpuParticlesAttractorBox3DVec3Data {
             property: <GpuParticlesAttractorBox3DVec3Kind>::Size,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<GpuParticlesAttractorBox3D>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -276,7 +276,9 @@ impl<
         let owner: Gd<GpuParticlesAttractorBox3D> = self.to_gd().upcast();
         let data = GpuParticlesAttractorBox3DFloatData {
             property: <GpuParticlesAttractorBox3DFloatKind>::SizeX,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -291,7 +293,9 @@ impl<
         let owner: Gd<GpuParticlesAttractorBox3D> = self.to_gd().upcast();
         let data = GpuParticlesAttractorBox3DFloatData {
             property: <GpuParticlesAttractorBox3DFloatKind>::SizeY,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -306,7 +310,9 @@ impl<
         let owner: Gd<GpuParticlesAttractorBox3D> = self.to_gd().upcast();
         let data = GpuParticlesAttractorBox3DFloatData {
             property: <GpuParticlesAttractorBox3DFloatKind>::SizeZ,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -321,7 +327,9 @@ impl<
         let owner: Gd<GpuParticlesAttractorBox3D> = self.to_gd().upcast();
         let data = GpuParticlesAttractorBox3DVec3Data {
             property: <GpuParticlesAttractorBox3DVec3Kind>::Size,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<

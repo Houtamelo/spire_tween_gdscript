@@ -53,8 +53,8 @@ impl TryFromPathAndObject for AspectRatioContainerFloatData {
                     "ratio" => {
                         Some(Self {
                             property: <AspectRatioContainerFloatKind>::Ratio,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -82,8 +82,8 @@ impl<
         let data = AspectRatioContainerFloatData {
             property: <AspectRatioContainerFloatKind>::Ratio,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<AspectRatioContainer>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -102,7 +102,9 @@ impl<
         let owner: Gd<AspectRatioContainer> = self.to_gd().upcast();
         let data = AspectRatioContainerFloatData {
             property: <AspectRatioContainerFloatKind>::Ratio,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<

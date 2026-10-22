@@ -5,6 +5,7 @@ mod classes_property_data;
 mod json_to_data;
 mod tween_ty;
 mod types_property_data;
+mod template_adapters;
 
 use std::str::FromStr;
 

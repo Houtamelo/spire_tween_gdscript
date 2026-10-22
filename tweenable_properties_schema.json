@@ -44,6 +44,9 @@
 				}, "set": {
 					"type": "string",
 					"description": "If present, overrides the auto-generated setter expression."
+				}, "doc": {
+					"type": "string",
+					"description": "If present, overrides the auto-generated GDScript method behavior documentation. Supports Godot BBCode."
 				}
 			}, "required": [
 				"name",

@@ -4,6 +4,7 @@ mod data;
 mod data_enum;
 mod data_impls;
 mod do_property;
+mod do_get_set;
 pub(crate) mod generated_types_data;
 mod macros;
 mod traits;
@@ -17,6 +18,7 @@ pub use self::{
     data_enum::*,
     data_impls::*,
     do_property::*,
+    do_get_set::*,
     generated_classes_data::*,
     generated_types_data::*,
     macros::*,

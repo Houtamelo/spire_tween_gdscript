@@ -55,8 +55,8 @@ impl TryFromPathAndObject for ConfirmationDialogStringData {
                     "cancel_button_text" => {
                         Some(Self {
                             property: <ConfirmationDialogStringKind>::CancelButtonText,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -84,8 +84,8 @@ impl<
         let data = ConfirmationDialogStringData {
             property: <ConfirmationDialogStringKind>::CancelButtonText,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<ConfirmationDialog>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -104,7 +104,9 @@ impl<
         let owner: Gd<ConfirmationDialog> = self.to_gd().upcast();
         let data = ConfirmationDialogStringData {
             property: <ConfirmationDialogStringKind>::CancelButtonText,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<

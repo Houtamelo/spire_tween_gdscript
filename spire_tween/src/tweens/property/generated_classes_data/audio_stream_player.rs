@@ -75,8 +75,8 @@ impl TryFromPathAndObject for AudioStreamPlayerFloatData {
                     "volume_db" => {
                         Some(Self {
                             property: <AudioStreamPlayerFloatKind>::VolumeDb,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -84,8 +84,8 @@ impl TryFromPathAndObject for AudioStreamPlayerFloatData {
                     "volume_linear" => {
                         Some(Self {
                             property: <AudioStreamPlayerFloatKind>::VolumeLinear,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -93,8 +93,8 @@ impl TryFromPathAndObject for AudioStreamPlayerFloatData {
                     "pitch_scale" => {
                         Some(Self {
                             property: <AudioStreamPlayerFloatKind>::PitchScale,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -131,8 +131,8 @@ for Gd<Class> {
         let data = AudioStreamPlayerFloatData {
             property: <AudioStreamPlayerFloatKind>::VolumeDb,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<AudioStreamPlayer>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -147,8 +147,8 @@ for Gd<Class> {
         let data = AudioStreamPlayerFloatData {
             property: <AudioStreamPlayerFloatKind>::VolumeLinear,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<AudioStreamPlayer>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -163,8 +163,8 @@ for Gd<Class> {
         let data = AudioStreamPlayerFloatData {
             property: <AudioStreamPlayerFloatKind>::PitchScale,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<AudioStreamPlayer>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -183,7 +183,9 @@ impl<
         let owner: Gd<AudioStreamPlayer> = self.to_gd().upcast();
         let data = AudioStreamPlayerFloatData {
             property: <AudioStreamPlayerFloatKind>::VolumeDb,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -198,7 +200,9 @@ impl<
         let owner: Gd<AudioStreamPlayer> = self.to_gd().upcast();
         let data = AudioStreamPlayerFloatData {
             property: <AudioStreamPlayerFloatKind>::VolumeLinear,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
@@ -213,7 +217,9 @@ impl<
         let owner: Gd<AudioStreamPlayer> = self.to_gd().upcast();
         let data = AudioStreamPlayerFloatData {
             property: <AudioStreamPlayerFloatKind>::PitchScale,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<

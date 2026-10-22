@@ -53,8 +53,8 @@ impl TryFromPathAndObject for AnimationPlayerFloatData {
                     "speed_scale" => {
                         Some(Self {
                             property: <AnimationPlayerFloatKind>::SpeedScale,
-                            owner_obj_or_node: ObjectOrNode::Node(
-                                owner.clone().upcast(),
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
                             ),
                             owner,
                         })
@@ -81,8 +81,8 @@ for Gd<Class> {
         let data = AnimationPlayerFloatData {
             property: <AnimationPlayerFloatKind>::SpeedScale,
             owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<AnimationPlayer>().upcast::<Node>(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
             ),
         };
         SpireTween::<
@@ -101,7 +101,9 @@ impl<
         let owner: Gd<AnimationPlayer> = self.to_gd().upcast();
         let data = AnimationPlayerFloatData {
             property: <AnimationPlayerFloatKind>::SpeedScale,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
             owner,
         };
         SpireTween::<
