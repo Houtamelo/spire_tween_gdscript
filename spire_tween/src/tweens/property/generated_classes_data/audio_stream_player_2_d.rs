@@ -117,7 +117,6 @@ pub trait SpireDoAudioStreamPlayer2D<Marker = ()> {
         end_val: f64,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<f64>>;
-    fn do_fade(&self, end_val: f64, duration: f64) -> SpireTween<LerpPropertyData<f64>>;
     fn do_pitch_scale(
         &self,
         end_val: f64,
@@ -148,18 +147,6 @@ impl<
         end_val: f64,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<f64>> {
-        let data = AudioStreamPlayer2DFloatData {
-            property: <AudioStreamPlayer2DFloatKind>::VolumeLinear,
-            owner: self.clone().upcast(),
-            owner_obj_or_node: ObjectOrNode::Node(
-                self.clone().upcast::<AudioStreamPlayer2D>().upcast::<Node>(),
-            ),
-        };
-        SpireTween::<
-            LerpPropertyData<f64>,
-        >::new(data.into(), Evaluator::Static(end_val), duration)
-    }
-    fn do_fade(&self, end_val: f64, duration: f64) -> SpireTween<LerpPropertyData<f64>> {
         let data = AudioStreamPlayer2DFloatData {
             property: <AudioStreamPlayer2DFloatKind>::VolumeLinear,
             owner: self.clone().upcast(),
@@ -211,17 +198,6 @@ impl<
         end_val: f64,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<f64>> {
-        let owner: Gd<AudioStreamPlayer2D> = self.to_gd().upcast();
-        let data = AudioStreamPlayer2DFloatData {
-            property: <AudioStreamPlayer2DFloatKind>::VolumeLinear,
-            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
-            owner,
-        };
-        SpireTween::<
-            LerpPropertyData<f64>,
-        >::new(data.into(), Evaluator::Static(end_val), duration)
-    }
-    fn do_fade(&self, end_val: f64, duration: f64) -> SpireTween<LerpPropertyData<f64>> {
         let owner: Gd<AudioStreamPlayer2D> = self.to_gd().upcast();
         let data = AudioStreamPlayer2DFloatData {
             property: <AudioStreamPlayer2DFloatKind>::VolumeLinear,

@@ -47,8 +47,8 @@ impl ITestClass for MiscTests {
             ("test_camera_clip_shortcuts_freed_owner", Self::test_camera_clip_shortcuts_freed_owner),
             ("test_light_shortcuts", Self::test_light_shortcuts),
             ("test_light_shortcuts_freed_owner", Self::test_light_shortcuts_freed_owner),
-            ("test_audio_fade_aliases", Self::test_audio_fade_aliases),
-            ("test_audio_fade_aliases_freed_owner", Self::test_audio_fade_aliases_freed_owner),
+            ("test_audio_volume_linear", Self::test_audio_volume_linear),
+            ("test_audio_volume_linear_freed_owner", Self::test_audio_volume_linear_freed_owner),
             ("test_visual_3d_fade_aliases", Self::test_visual_3d_fade_aliases),
             ("test_visual_3d_fade_aliases_freed_owner", Self::test_visual_3d_fade_aliases_freed_owner),
         ]
@@ -109,46 +109,31 @@ impl MiscTests {
         Box::pin(async {})
     }
 
-    fn test_audio_fade_aliases(&mut self) -> PinnedTestTask {
+    fn test_audio_volume_linear(&mut self) -> PinnedTestTask {
         let player = AudioStreamPlayer::new_alloc();
         let player_2d = AudioStreamPlayer2D::new_alloc();
         let player_3d = AudioStreamPlayer3D::new_alloc();
         self.base_mut().add_child(&player);
         self.base_mut().add_child(&player_2d);
         self.base_mut().add_child(&player_3d);
-        for (owner, fade, canonical, pitch) in [
-            (
-                player.clone().upcast::<Node>(),
-                player.do_fade(2.0, 1.0),
-                player.do_volume_linear(2.0, 1.0),
-                player.do_pitch_scale(2.0, 1.0),
-            ),
-            // CanvasItem also supplies a visual do_fade for AudioStreamPlayer2D.
-            (
-                player_2d.clone().upcast(),
-                SpireDoAudioStreamPlayer2D::do_fade(&player_2d, 2.0, 1.0),
-                player_2d.do_volume_linear(2.0, 1.0),
-                player_2d.do_pitch_scale(2.0, 1.0),
-            ),
-            (
-                player_3d.clone().upcast(),
-                player_3d.do_fade(2.0, 1.0),
-                player_3d.do_volume_linear(2.0, 1.0),
-                player_3d.do_pitch_scale(2.0, 1.0),
-            ),
+        for (owner, volume, pitch) in [
+            (player.clone().upcast::<Node>(), player.do_volume_linear(2.0, 1.0), player.do_pitch_scale(2.0, 1.0)),
+            (player_2d.clone().upcast(), player_2d.do_volume_linear(2.0, 1.0), player_2d.do_pitch_scale(2.0, 1.0)),
+            (player_3d.clone().upcast(), player_3d.do_volume_linear(2.0, 1.0), player_3d.do_pitch_scale(2.0, 1.0)),
         ] {
-            assert_eq!(fade.get_property_path(), canonical.get_property_path());
             assert_eq!(pitch.get_property_path(), NodePath::from("pitch_scale"));
-            assert_scalar_shortcut(fade, owner.clone(), "volume_linear", 0.5, 2.0);
+            assert_scalar_shortcut(volume, owner.clone(), "volume_linear", 0.5, 2.0);
             assert_eq!(owner.get("pitch_scale").to::<f64>(), 1.0);
         }
+        // With the audio alias removed, method syntax selects CanvasItem's visual fade.
+        assert_eq!(player_2d.do_fade(0.0, 1.0).get_property_path(), NodePath::from("modulate:a"));
         let visual = player_2d.get_modulate();
-        for (owner, fade) in [
-            (player.clone().upcast::<Node>(), player.do_fade(0.0, 1.0)),
-            (player_2d.clone().upcast(), SpireDoAudioStreamPlayer2D::do_fade(&player_2d, 0.0, 1.0)),
-            (player_3d.clone().upcast(), player_3d.do_fade(0.0, 1.0)),
+        for (owner, volume) in [
+            (player.clone().upcast::<Node>(), player.do_volume_linear(0.0, 1.0)),
+            (player_2d.clone().upcast(), player_2d.do_volume_linear(0.0, 1.0)),
+            (player_3d.clone().upcast(), player_3d.do_volume_linear(0.0, 1.0)),
         ] {
-            assert_scalar_shortcut(fade, owner, "volume_linear", 2.0, 0.0);
+            assert_scalar_shortcut(volume, owner, "volume_linear", 2.0, 0.0);
         }
         assert_eq!(player_2d.get_modulate(), visual);
         player.free();
@@ -157,17 +142,17 @@ impl MiscTests {
         Box::pin(async {})
     }
 
-    fn test_audio_fade_aliases_freed_owner(&mut self) -> PinnedTestTask {
+    fn test_audio_volume_linear_freed_owner(&mut self) -> PinnedTestTask {
         let player = AudioStreamPlayer::new_alloc();
         let player_2d = AudioStreamPlayer2D::new_alloc();
         let player_3d = AudioStreamPlayer3D::new_alloc();
-        for (owner, fade) in [
-            (player.clone().upcast::<Node>(), player.do_fade(0.0, 1.0)),
-            (player_2d.clone().upcast(), SpireDoAudioStreamPlayer2D::do_fade(&player_2d, 0.0, 1.0)),
-            (player_3d.clone().upcast(), player_3d.do_fade(0.0, 1.0)),
+        for (owner, volume) in [
+            (player.clone().upcast::<Node>(), player.do_volume_linear(0.0, 1.0)),
+            (player_2d.clone().upcast(), player_2d.do_volume_linear(0.0, 1.0)),
+            (player_3d.clone().upcast(), player_3d.do_volume_linear(0.0, 1.0)),
         ] {
             self.base_mut().add_child(&owner);
-            assert_cancelled_shortcuts(owner, [fade]);
+            assert_cancelled_shortcuts(owner, [volume]);
         }
         Box::pin(async {})
     }

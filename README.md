@@ -479,16 +479,16 @@ These additional float shortcuts use the same `(node, to, duration)` signature a
 | `DoCamera3D.near` / `DoCamera3D.far` | Near/far clipping-plane distances along the camera's viewing direction, in world units. |
 | `DoLight3D.light_energy` | Light strength multiplier; accepts concrete `DirectionalLight3D`, `OmniLight3D`, and `SpotLight3D` nodes. |
 | `DoLight3D.shadow_opacity` | Shadow opacity: `0` is transparent and `1` is fully opaque. |
-| `DoAudioStreamPlayer.fade` / `DoAudioStreamPlayer2D.fade` / `DoAudioStreamPlayer3D.fade` | Alias for the corresponding `volume_linear` helper: `0` is silence, `1` is unchanged gain, and values above `1` amplify. Targets are not clamped to `[0, 1]`. |
+| `DoAudioStreamPlayer.volume_linear` / `DoAudioStreamPlayer2D.volume_linear` / `DoAudioStreamPlayer3D.volume_linear` | Linear audio gain: `0` is silence, `1` is unchanged gain, and values above `1` amplify. Targets are not clamped to `[0, 1]`. |
 | `DoSpriteBase3D.fade` | Alias for `modulate_a`, accepting `Sprite3D` and `AnimatedSprite3D`; preserves RGB. |
 | `DoLabel3D.fade` | Alias for `modulate_a`; preserves RGB and the separate outline color. |
 
-The existing `volume_linear`, `pitch_scale`, `modulate_a`, and `color_a` helpers remain available. Audio pitch uses `pitch_scale`, which changes both pitch and tempo and requires a positive multiplier. Audio `fade` controls gain and does not stop playback. The chosen easing controls how each property changes over time.
+Audio pitch uses `pitch_scale`, which changes both pitch and tempo and requires a positive multiplier. Changing `volume_linear` controls gain and does not stop playback. Visual fade also remains available through `modulate_a` and `color_a`. The chosen easing controls how each property changes over time.
 
 ```gdscript
 DoCamera3D.near(camera, 0.2, 0.5)
 DoLight3D.light_energy(light, 2.0, 0.5)
-DoAudioStreamPlayer.fade(music, 2.0, 1.0) # Amplify to twice the linear gain.
+DoAudioStreamPlayer.volume_linear(music, 2.0, 1.0) # Amplify to twice the linear gain.
 DoSpriteBase3D.fade(sprite_3d, 0.0, 0.3)
 DoLabel3D.fade(label_3d, 0.0, 0.3)
 ```

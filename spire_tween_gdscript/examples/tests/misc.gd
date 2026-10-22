@@ -40,7 +40,7 @@ func test_light_shortcuts_freed_owner() -> bool:
 	return true
 
 
-func test_audio_fade_aliases() -> bool:
+func test_audio_volume_linear() -> bool:
 	var player := AudioStreamPlayer.new()
 	var player_2d := AudioStreamPlayer2D.new()
 	var player_3d := AudioStreamPlayer3D.new()
@@ -52,26 +52,20 @@ func test_audio_fade_aliases() -> bool:
 	for index in players.size():
 		assert_true(ClassDB.class_has_method(helpers[index], &"pitch_scale"))
 		assert_true(not ClassDB.class_has_method(helpers[index], &"pitch"))
+		assert_true(not ClassDB.class_has_method(helpers[index], &"fade"))
 	# Keep these calls typed to check each public GDScript signature.
-	var fades: Array[SpirePropertyFloat] = [
-		DoAudioStreamPlayer.fade(player, 2.0, 1.0),
-		DoAudioStreamPlayer2D.fade(player_2d, 2.0, 1.0),
-		DoAudioStreamPlayer3D.fade(player_3d, 2.0, 1.0),
-	]
-	var canonical: Array[SpirePropertyFloat] = [
+	var volumes: Array[SpirePropertyFloat] = [
 		DoAudioStreamPlayer.volume_linear(player, 2.0, 1.0),
 		DoAudioStreamPlayer2D.volume_linear(player_2d, 2.0, 1.0),
 		DoAudioStreamPlayer3D.volume_linear(player_3d, 2.0, 1.0),
 	]
 	for index in players.size():
-		assert_eq(fades[index].get_property_path(), canonical[index].get_property_path())
-		Spire.unregister(canonical[index])
-		_assert_scalar_shortcut(fades[index], players[index], ^"volume_linear", 0.5, 2.0)
+		_assert_scalar_shortcut(volumes[index], players[index], ^"volume_linear", 0.5, 2.0)
 		assert_eq(players[index].get("pitch_scale"), 1.0)
 	var silence: Array[SpirePropertyFloat] = [
-		DoAudioStreamPlayer.fade(player, 0.0, 1.0),
-		DoAudioStreamPlayer2D.fade(player_2d, 0.0, 1.0),
-		DoAudioStreamPlayer3D.fade(player_3d, 0.0, 1.0),
+		DoAudioStreamPlayer.volume_linear(player, 0.0, 1.0),
+		DoAudioStreamPlayer2D.volume_linear(player_2d, 0.0, 1.0),
+		DoAudioStreamPlayer3D.volume_linear(player_3d, 0.0, 1.0),
 	]
 	for index in players.size():
 		_assert_scalar_shortcut(silence[index], players[index], ^"volume_linear", 2.0, 0.0)
@@ -81,15 +75,15 @@ func test_audio_fade_aliases() -> bool:
 	return true
 
 
-func test_audio_fade_aliases_freed_owner() -> bool:
+func test_audio_volume_linear_freed_owner() -> bool:
 	var player := AudioStreamPlayer.new()
 	var player_2d := AudioStreamPlayer2D.new()
 	var player_3d := AudioStreamPlayer3D.new()
 	for owner in [player, player_2d, player_3d]:
 		add_child(owner)
-	_assert_cancelled_shortcuts(player, [DoAudioStreamPlayer.fade(player, 0.0, 1.0)])
-	_assert_cancelled_shortcuts(player_2d, [DoAudioStreamPlayer2D.fade(player_2d, 0.0, 1.0)])
-	_assert_cancelled_shortcuts(player_3d, [DoAudioStreamPlayer3D.fade(player_3d, 0.0, 1.0)])
+	_assert_cancelled_shortcuts(player, [DoAudioStreamPlayer.volume_linear(player, 0.0, 1.0)])
+	_assert_cancelled_shortcuts(player_2d, [DoAudioStreamPlayer2D.volume_linear(player_2d, 0.0, 1.0)])
+	_assert_cancelled_shortcuts(player_3d, [DoAudioStreamPlayer3D.volume_linear(player_3d, 0.0, 1.0)])
 	return true
 
 

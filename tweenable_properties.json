@@ -7,21 +7,21 @@
 	{
 		"class": "AudioStreamPlayer", "tweens": [
 		{ "name": "volume_db", "ty": "f32" },
-		{ "name": "volume_linear", "ty": "f32", "alias": "fade" },
+		{ "name": "volume_linear", "ty": "f32" },
 		{ "name": "pitch_scale", "ty": "f32" }
 	]
 	},
 	{
 		"class": "AudioStreamPlayer2D", "group": "2D", "tweens": [
 		{ "name": "volume_db", "ty": "f32" },
-		{ "name": "volume_linear", "ty": "f32", "alias": "fade" },
+		{ "name": "volume_linear", "ty": "f32" },
 		{ "name": "pitch_scale", "ty": "f32" }
 	]
 	},
 	{
 		"class": "AudioStreamPlayer3D", "group": "3D", "tweens": [
 		{ "name": "volume_db", "ty": "f32" },
-		{ "name": "volume_linear", "ty": "f32", "alias": "fade" },
+		{ "name": "volume_linear", "ty": "f32" },
 		{ "name": "pitch_scale", "ty": "f32" }
 	]
 	},
