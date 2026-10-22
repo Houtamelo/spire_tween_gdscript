@@ -7,6 +7,8 @@ pub struct Camera3DFloatData {
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Camera3DFloatKind {
+    Near,
+    Far,
     Fov,
     Size,
     FrustumOffsetX,
@@ -18,6 +20,14 @@ impl IProperty<f64> for Camera3DFloatData {
     #[inline]
     fn get_property_value(&self) -> f64 {
         match self.property {
+            <Camera3DFloatKind>::Near => {
+                let obj = &self.owner;
+                (obj.get_near()) as f64
+            }
+            <Camera3DFloatKind>::Far => {
+                let obj = &self.owner;
+                (obj.get_far()) as f64
+            }
             <Camera3DFloatKind>::Fov => {
                 let obj = &self.owner;
                 (obj.get_fov()) as f64
@@ -47,6 +57,16 @@ impl IProperty<f64> for Camera3DFloatData {
     #[inline]
     fn set_property_value(&mut self, value: f64) {
         match self.property {
+            <Camera3DFloatKind>::Near => {
+                let obj = &mut self.owner;
+                let val = value;
+                obj.set_near(val as f32);
+            }
+            <Camera3DFloatKind>::Far => {
+                let obj = &mut self.owner;
+                let val = value;
+                obj.set_far(val as f32);
+            }
             <Camera3DFloatKind>::Fov => {
                 let obj = &mut self.owner;
                 let val = value;
@@ -89,6 +109,8 @@ impl IPropertyData for Camera3DFloatData {
     #[inline]
     fn get_property_path(&self) -> NodePath {
         match self.property {
+            <Camera3DFloatKind>::Near => NodePath::from("near"),
+            <Camera3DFloatKind>::Far => NodePath::from("far"),
             <Camera3DFloatKind>::Fov => NodePath::from("fov"),
             <Camera3DFloatKind>::Size => NodePath::from("size"),
             <Camera3DFloatKind>::FrustumOffsetX => NodePath::from("frustum_offset:x"),
@@ -109,6 +131,24 @@ impl TryFromPathAndObject for Camera3DFloatData {
             .ok()
             .and_then(|owner| {
                 match path {
+                    "near" => {
+                        Some(Self {
+                            property: <Camera3DFloatKind>::Near,
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
+                            owner,
+                        })
+                    }
+                    "far" => {
+                        Some(Self {
+                            property: <Camera3DFloatKind>::Far,
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
+                            owner,
+                        })
+                    }
                     "fov" => {
                         Some(Self {
                             property: <Camera3DFloatKind>::Fov,
@@ -234,6 +274,8 @@ impl TryFromPathAndObject for Camera3DVec2Data {
     }
 }
 pub trait SpireDoCamera3D<Marker = ()> {
+    fn do_near(&self, end_val: f64, duration: f64) -> SpireTween<LerpPropertyData<f64>>;
+    fn do_far(&self, end_val: f64, duration: f64) -> SpireTween<LerpPropertyData<f64>>;
     fn do_fov(&self, end_val: f64, duration: f64) -> SpireTween<LerpPropertyData<f64>>;
     fn do_size(&self, end_val: f64, duration: f64) -> SpireTween<LerpPropertyData<f64>>;
     fn do_frustum_offset_x(
@@ -263,6 +305,30 @@ pub trait SpireDoCamera3D<Marker = ()> {
     ) -> SpireTween<LerpPropertyData<Vector2>>;
 }
 impl<Class: Inherits<Camera3D> + Inherits<Object>> SpireDoCamera3D<()> for Gd<Class> {
+    fn do_near(&self, end_val: f64, duration: f64) -> SpireTween<LerpPropertyData<f64>> {
+        let data = Camera3DFloatData {
+            property: <Camera3DFloatKind>::Near,
+            owner: self.clone().upcast(),
+            owner_obj_or_node: ObjectOrNode::Node(
+                self.clone().upcast::<Camera3D>().upcast::<Node>(),
+            ),
+        };
+        SpireTween::<
+            LerpPropertyData<f64>,
+        >::new(data.into(), Evaluator::Static(end_val), duration)
+    }
+    fn do_far(&self, end_val: f64, duration: f64) -> SpireTween<LerpPropertyData<f64>> {
+        let data = Camera3DFloatData {
+            property: <Camera3DFloatKind>::Far,
+            owner: self.clone().upcast(),
+            owner_obj_or_node: ObjectOrNode::Node(
+                self.clone().upcast::<Camera3D>().upcast::<Node>(),
+            ),
+        };
+        SpireTween::<
+            LerpPropertyData<f64>,
+        >::new(data.into(), Evaluator::Static(end_val), duration)
+    }
     fn do_fov(&self, end_val: f64, duration: f64) -> SpireTween<LerpPropertyData<f64>> {
         let data = Camera3DFloatData {
             property: <Camera3DFloatKind>::Fov,
@@ -371,6 +437,28 @@ impl<Class: Inherits<Camera3D> + Inherits<Object>> SpireDoCamera3D<()> for Gd<Cl
 impl<
     T: WithBaseField + Inherits<Camera3D> + Inherits<Object>,
 > SpireDoCamera3D<BaseMarker> for T {
+    fn do_near(&self, end_val: f64, duration: f64) -> SpireTween<LerpPropertyData<f64>> {
+        let owner: Gd<Camera3D> = self.to_gd().upcast();
+        let data = Camera3DFloatData {
+            property: <Camera3DFloatKind>::Near,
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner,
+        };
+        SpireTween::<
+            LerpPropertyData<f64>,
+        >::new(data.into(), Evaluator::Static(end_val), duration)
+    }
+    fn do_far(&self, end_val: f64, duration: f64) -> SpireTween<LerpPropertyData<f64>> {
+        let owner: Gd<Camera3D> = self.to_gd().upcast();
+        let data = Camera3DFloatData {
+            property: <Camera3DFloatKind>::Far,
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner,
+        };
+        SpireTween::<
+            LerpPropertyData<f64>,
+        >::new(data.into(), Evaluator::Static(end_val), duration)
+    }
     fn do_fov(&self, end_val: f64, duration: f64) -> SpireTween<LerpPropertyData<f64>> {
         let owner: Gd<Camera3D> = self.to_gd().upcast();
         let data = Camera3DFloatData {

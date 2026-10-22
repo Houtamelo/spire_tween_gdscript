@@ -206,6 +206,30 @@ Per-item docs live on [docs.rs](https://docs.rs/spire_tween).
 
 `SpireDoCanvasItem::do_fade(to: f64, duration: f64)` aliases `do_modulate_a` and is inherited by `Node2D` and its subclasses. It animates `modulate.a`, preserving RGB and `self_modulate`. Like other native property constructors, it returns an unregistered builder: `node.do_fade(0.0, 0.3).register()`. GDScript exposes the same alias as `DoCanvasItem.fade(node, to, duration)`, returning an already registered `SpirePropertyFloat`.
 
+The following float shortcuts also return an unregistered `SpireTween<LerpPropertyData<f64>>`. Each takes `(to: f64, duration: f64)`, with duration measured in seconds, and works on `Gd` handles and native classes with the corresponding base field:
+
+| Native trait and methods | GDScript helpers | Behavior |
+|---|---|---|
+| `SpireDoCamera3D::do_near` / `do_far` | `DoCamera3D.near` / `far` | Clip-plane distances along the camera's viewing direction, in world units. |
+| `SpireDoLight3D::do_light_energy` | `DoLight3D.light_energy` | Light strength multiplier on any concrete `Light3D` subclass. |
+| `SpireDoLight3D::do_shadow_opacity` | `DoLight3D.shadow_opacity` | Shadow opacity, from transparent (`0`) to opaque (`1`). |
+| `SpireDoAudioStreamPlayer::do_fade` | `DoAudioStreamPlayer.fade` | Alias for `do_volume_linear`. |
+| `SpireDoAudioStreamPlayer2D::do_fade` | `DoAudioStreamPlayer2D.fade` | Alias for `do_volume_linear`. |
+| `SpireDoAudioStreamPlayer3D::do_fade` | `DoAudioStreamPlayer3D.fade` | Alias for `do_volume_linear`. |
+| `SpireDoSpriteBase3D::do_fade` | `DoSpriteBase3D.fade` | Alias for `do_modulate_a`, inherited by `Sprite3D` and `AnimatedSprite3D`. |
+| `SpireDoLabel3D::do_fade` | `DoLabel3D.fade` | Alias for `do_modulate_a`. |
+
+Audio fade uses linear gain: `0` is silence, `1` is unchanged gain, and values above `1` amplify. The target is not clamped to `[0, 1]`, and fading does not stop playback. Existing `do_volume_linear` and `do_pitch_scale` constructors remain available; `pitch_scale` changes both pitch and tempo and requires a positive multiplier. Visual fade preserves RGB; Label3D's separate outline color is also preserved. Existing `do_modulate_a` and `do_color_a` constructors remain available. All shortcuts use the ordinary property tween's easing, loop, binding, and cancellation behavior.
+
+`AudioStreamPlayer2D` inherits both the audio and CanvasItem visual `do_fade` traits. Select the audio trait explicitly when both are in scope:
+
+```rust
+camera.do_near(0.2, 0.5).register();
+light.do_light_energy(2.0, 0.5).register();
+SpireDoAudioStreamPlayer2D::do_fade(&audio_player_2d, 2.0, 1.0).register();
+sprite_3d.do_fade(0.0, 0.3).register();
+```
+
 Property helpers are generated with `cargo run --locked -p gdscript_bindgen` from `tweenable_properties.json`. The existing `alias` field also supports individual generated components: `{ "name": "modulate:a", "ty": "f32", "alias": "fade" }` in `CanvasItem` adds `do_fade` and `DoCanvasItem.fade` alongside the existing `do_color_a` / `DoCanvasItem.color_a` aliases. The parent `modulate` entry supplies the property accessors.
 
 ## Two register paths

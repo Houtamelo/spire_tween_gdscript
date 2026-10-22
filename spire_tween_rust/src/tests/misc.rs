@@ -1,5 +1,19 @@
 use godot::{
-    classes::{CanvasItem, CollisionShape2D},
+    classes::{
+        AnimatedSprite3D,
+        AudioStreamPlayer,
+        AudioStreamPlayer2D,
+        AudioStreamPlayer3D,
+        Camera3D,
+        CanvasItem,
+        CollisionShape2D,
+        DirectionalLight3D,
+        Label3D,
+        Light3D,
+        OmniLight3D,
+        SpotLight3D,
+        Sprite3D,
+    },
     prelude::*,
 };
 use spire_tween::prelude::*;
@@ -29,6 +43,14 @@ impl ITestClass for MiscTests {
             ("test_property_path", Self::test_property_path),
             ("test_fade_alias", Self::test_fade_alias),
             ("test_fade_alias_freed_owner", Self::test_fade_alias_freed_owner),
+            ("test_camera_clip_shortcuts", Self::test_camera_clip_shortcuts),
+            ("test_camera_clip_shortcuts_freed_owner", Self::test_camera_clip_shortcuts_freed_owner),
+            ("test_light_shortcuts", Self::test_light_shortcuts),
+            ("test_light_shortcuts_freed_owner", Self::test_light_shortcuts_freed_owner),
+            ("test_audio_fade_aliases", Self::test_audio_fade_aliases),
+            ("test_audio_fade_aliases_freed_owner", Self::test_audio_fade_aliases_freed_owner),
+            ("test_visual_3d_fade_aliases", Self::test_visual_3d_fade_aliases),
+            ("test_visual_3d_fade_aliases_freed_owner", Self::test_visual_3d_fade_aliases_freed_owner),
         ]
     }
 
@@ -36,6 +58,174 @@ impl ITestClass for MiscTests {
 }
 
 impl MiscTests {
+    fn test_camera_clip_shortcuts(&mut self) -> PinnedTestTask {
+        let camera = Camera3D::new_alloc();
+        self.base_mut().add_child(&camera);
+        assert_scalar_shortcut(camera.do_near(1.0, 1.0), camera.clone().upcast(), "near", 0.25, 1.0);
+        assert_scalar_shortcut(camera.do_far(300.0, 1.0), camera.clone().upcast(), "far", 100.0, 300.0);
+        assert_eq!(camera.get_near(), 1.0, "far tween must preserve near");
+        camera.free();
+        Box::pin(async {})
+    }
+
+    fn test_camera_clip_shortcuts_freed_owner(&mut self) -> PinnedTestTask {
+        let camera = Camera3D::new_alloc();
+        self.base_mut().add_child(&camera);
+        assert_cancelled_shortcuts(camera.clone().upcast(), [camera.do_near(1.0, 1.0), camera.do_far(300.0, 1.0)]);
+        Box::pin(async {})
+    }
+
+    fn test_light_shortcuts(&mut self) -> PinnedTestTask {
+        let lights: [Gd<Light3D>; 3] = [
+            DirectionalLight3D::new_alloc().upcast(),
+            OmniLight3D::new_alloc().upcast(),
+            SpotLight3D::new_alloc().upcast(),
+        ];
+        for light in lights {
+            self.base_mut().add_child(&light);
+            let color = light.get_color();
+            assert_scalar_shortcut(light.do_light_energy(3.0, 1.0), light.clone().upcast(), "light_energy", 1.0, 3.0);
+            assert_scalar_shortcut(
+                light.do_shadow_opacity(0.0, 1.0),
+                light.clone().upcast(),
+                "shadow_opacity",
+                1.0,
+                0.0,
+            );
+            assert_eq!(light.get_param(godot::classes::light_3d::Param::ENERGY), 3.0);
+            assert_eq!(light.get_color(), color);
+            light.free();
+        }
+        Box::pin(async {})
+    }
+
+    fn test_light_shortcuts_freed_owner(&mut self) -> PinnedTestTask {
+        let light = OmniLight3D::new_alloc();
+        self.base_mut().add_child(&light);
+        assert_cancelled_shortcuts(light.clone().upcast(), [
+            light.do_light_energy(3.0, 1.0),
+            light.do_shadow_opacity(0.0, 1.0),
+        ]);
+        Box::pin(async {})
+    }
+
+    fn test_audio_fade_aliases(&mut self) -> PinnedTestTask {
+        let player = AudioStreamPlayer::new_alloc();
+        let player_2d = AudioStreamPlayer2D::new_alloc();
+        let player_3d = AudioStreamPlayer3D::new_alloc();
+        self.base_mut().add_child(&player);
+        self.base_mut().add_child(&player_2d);
+        self.base_mut().add_child(&player_3d);
+        for (owner, fade, canonical, pitch) in [
+            (
+                player.clone().upcast::<Node>(),
+                player.do_fade(2.0, 1.0),
+                player.do_volume_linear(2.0, 1.0),
+                player.do_pitch_scale(2.0, 1.0),
+            ),
+            // CanvasItem also supplies a visual do_fade for AudioStreamPlayer2D.
+            (
+                player_2d.clone().upcast(),
+                SpireDoAudioStreamPlayer2D::do_fade(&player_2d, 2.0, 1.0),
+                player_2d.do_volume_linear(2.0, 1.0),
+                player_2d.do_pitch_scale(2.0, 1.0),
+            ),
+            (
+                player_3d.clone().upcast(),
+                player_3d.do_fade(2.0, 1.0),
+                player_3d.do_volume_linear(2.0, 1.0),
+                player_3d.do_pitch_scale(2.0, 1.0),
+            ),
+        ] {
+            assert_eq!(fade.get_property_path(), canonical.get_property_path());
+            assert_eq!(pitch.get_property_path(), NodePath::from("pitch_scale"));
+            assert_scalar_shortcut(fade, owner.clone(), "volume_linear", 0.5, 2.0);
+            assert_eq!(owner.get("pitch_scale").to::<f64>(), 1.0);
+        }
+        let visual = player_2d.get_modulate();
+        for (owner, fade) in [
+            (player.clone().upcast::<Node>(), player.do_fade(0.0, 1.0)),
+            (player_2d.clone().upcast(), SpireDoAudioStreamPlayer2D::do_fade(&player_2d, 0.0, 1.0)),
+            (player_3d.clone().upcast(), player_3d.do_fade(0.0, 1.0)),
+        ] {
+            assert_scalar_shortcut(fade, owner, "volume_linear", 2.0, 0.0);
+        }
+        assert_eq!(player_2d.get_modulate(), visual);
+        player.free();
+        player_2d.free();
+        player_3d.free();
+        Box::pin(async {})
+    }
+
+    fn test_audio_fade_aliases_freed_owner(&mut self) -> PinnedTestTask {
+        let player = AudioStreamPlayer::new_alloc();
+        let player_2d = AudioStreamPlayer2D::new_alloc();
+        let player_3d = AudioStreamPlayer3D::new_alloc();
+        for (owner, fade) in [
+            (player.clone().upcast::<Node>(), player.do_fade(0.0, 1.0)),
+            (player_2d.clone().upcast(), SpireDoAudioStreamPlayer2D::do_fade(&player_2d, 0.0, 1.0)),
+            (player_3d.clone().upcast(), player_3d.do_fade(0.0, 1.0)),
+        ] {
+            self.base_mut().add_child(&owner);
+            assert_cancelled_shortcuts(owner, [fade]);
+        }
+        Box::pin(async {})
+    }
+
+    fn test_visual_3d_fade_aliases(&mut self) -> PinnedTestTask {
+        let sprite = Sprite3D::new_alloc();
+        let animated = AnimatedSprite3D::new_alloc();
+        let label = Label3D::new_alloc();
+        let outline = label.get_outline_modulate();
+        for (owner, fade, canonical, color_alias) in [
+            (
+                sprite.clone().upcast::<Node>(),
+                sprite.do_fade(0.0, 1.0),
+                sprite.do_modulate_a(0.0, 1.0),
+                sprite.do_color_a(0.0, 1.0),
+            ),
+            (
+                animated.clone().upcast(),
+                animated.do_fade(0.0, 1.0),
+                animated.do_modulate_a(0.0, 1.0),
+                animated.do_color_a(0.0, 1.0),
+            ),
+            (
+                label.clone().upcast(),
+                label.do_fade(0.0, 1.0),
+                label.do_modulate_a(0.0, 1.0),
+                label.do_color_a(0.0, 1.0),
+            ),
+        ] {
+            self.base_mut().add_child(&owner);
+            assert_eq!(fade.get_property_path(), canonical.get_property_path());
+            assert_eq!(color_alias.get_property_path(), canonical.get_property_path());
+            owner
+                .clone()
+                .set("modulate", &Color::from_rgba(0.125, 0.25, 0.5, 1.0).to_variant());
+            assert_scalar_shortcut(fade, owner.clone(), "modulate:a", 1.0, 0.0);
+            assert_eq!(owner.get("modulate").to::<Color>(), Color::from_rgba(0.125, 0.25, 0.5, 0.0));
+        }
+        assert_eq!(label.get_outline_modulate(), outline);
+        sprite.free();
+        animated.free();
+        label.free();
+        Box::pin(async {})
+    }
+
+    fn test_visual_3d_fade_aliases_freed_owner(&mut self) -> PinnedTestTask {
+        let sprite = Sprite3D::new_alloc();
+        let label = Label3D::new_alloc();
+        for (owner, fade) in [
+            (sprite.clone().upcast::<Node>(), sprite.do_fade(0.0, 1.0)),
+            (label.clone().upcast(), label.do_fade(0.0, 1.0)),
+        ] {
+            self.base_mut().add_child(&owner);
+            assert_cancelled_shortcuts(owner, [fade]);
+        }
+        Box::pin(async {})
+    }
+
     fn test_fade_alias(&mut self) -> PinnedTestTask {
         let initial = Color::from_rgba(0.125, 0.25, 0.5, 1.0);
         self.shape.set_modulate(initial);
@@ -146,4 +336,52 @@ impl MiscTests {
 
         Box::pin(async move {})
     }
+}
+
+fn assert_scalar_shortcut(
+    tween: SpireTween<LerpPropertyData<f64>>,
+    mut owner: Gd<Node>,
+    path: &str,
+    initial: f64,
+    target: f64,
+) {
+    let path = NodePath::from(path);
+    assert_eq!(tween.get_property_path(), path);
+    // Set the start after construction to also exercise deferred start capture.
+    owner.set_indexed(&path, &initial.to_variant());
+    let mut tween = TweenPtr::new(tween);
+    assert!(!tween.is_registered(), "native shortcuts return unregistered builders");
+    tween.set_ease(EaseKind::Basic(Ease::Linear));
+    let events = RcPtr::new([0, 0]);
+    let stopped = events.clone();
+    tween.stopped_connect(move || stopped.to_mut()[0] += 1, SpireFlags::empty());
+    let finished = events.clone();
+    tween.finished_connect(move || finished.to_mut()[1] += 1, SpireFlags::empty());
+    assert!(matches!(tween.custom_step(0.5, false), TweenStepResult::Stepped(AdvanceTimeResult::Playing)));
+    let midpoint = owner.get_indexed(&path).to::<f64>();
+    assert!((midpoint - (initial + target) * 0.5).abs() < 0.00001, "unexpected midpoint: {midpoint}");
+    assert_eq!(*events, [0, 0]);
+    assert!(matches!(tween.custom_step(0.75, false), TweenStepResult::Stepped(AdvanceTimeResult::Completed { .. })));
+    let actual = owner.get_indexed(&path).to::<f64>();
+    assert!((actual - target).abs() < 0.00001, "unexpected final value: {actual}");
+    assert!(tween.is_stopped());
+    assert_eq!(*events, [1, 1]);
+}
+
+fn assert_cancelled_shortcuts(owner: Gd<Node>, tweens: impl IntoIterator<Item = SpireTween<LerpPropertyData<f64>>>) {
+    let mut tweens = tweens.into_iter().map(TweenPtr::new).collect::<Vec<_>>();
+    let events = RcPtr::new([0, 0]);
+    for tween in &mut tweens {
+        let stopped = events.clone();
+        tween.stopped_connect(move || stopped.to_mut()[0] += 1, SpireFlags::empty());
+        let finished = events.clone();
+        tween.finished_connect(move || finished.to_mut()[1] += 1, SpireFlags::empty());
+    }
+    owner.free();
+    for tween in &mut tweens {
+        assert!(matches!(tween.custom_step(0.5, false), TweenStepResult::Stepped(AdvanceTimeResult::ShouldDespawn)));
+        assert!(tween.is_stopped());
+        tween.stop();
+    }
+    assert_eq!(*events, [tweens.len(), 0], "freed owners must stop once without completing");
 }

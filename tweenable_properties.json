@@ -7,21 +7,21 @@
 	{
 		"class": "AudioStreamPlayer", "tweens": [
 		{ "name": "volume_db", "ty": "f32" },
-		{ "name": "volume_linear", "ty": "f32" },
+		{ "name": "volume_linear", "ty": "f32", "alias": "fade" },
 		{ "name": "pitch_scale", "ty": "f32" }
 	]
 	},
 	{
 		"class": "AudioStreamPlayer2D", "group": "2D", "tweens": [
 		{ "name": "volume_db", "ty": "f32" },
-		{ "name": "volume_linear", "ty": "f32" },
+		{ "name": "volume_linear", "ty": "f32", "alias": "fade" },
 		{ "name": "pitch_scale", "ty": "f32" }
 	]
 	},
 	{
 		"class": "AudioStreamPlayer3D", "group": "3D", "tweens": [
 		{ "name": "volume_db", "ty": "f32" },
-		{ "name": "volume_linear", "ty": "f32" },
+		{ "name": "volume_linear", "ty": "f32", "alias": "fade" },
 		{ "name": "pitch_scale", "ty": "f32" }
 	]
 	},
@@ -357,6 +357,8 @@
 	},
 	{
 		"class": "Camera3D", "group": "3D", "tweens": [
+		{ "name": "near", "ty": "f32" },
+		{ "name": "far", "ty": "f32" },
 		{ "name": "fov", "ty": "f32" },
 		{ "name": "size", "ty": "f32" },
 		{ "name": "frustum_offset", "ty": "Vector2" },
@@ -463,6 +465,7 @@
 		{ "name": "text", "ty": "String", "func": "label3d_do_text" },
 		{ "name": "line_spacing", "ty": "f32" },
 		{ "name": "modulate", "ty": "Color", "alias": "color" },
+		{ "name": "modulate:a", "ty": "f32", "alias": "fade" },
 		{ "name": "offset", "ty": "Vector2" },
 		{ "name": "outline_modulate", "ty": "Color", "alias": "outline_color" },
 		{ "name": "outline_size", "ty": "i32" },
@@ -472,6 +475,7 @@
 	{
 		"class": "SpriteBase3D", "group": "3D", "tweens": [
 		{ "name": "modulate", "ty": "Color", "alias": "color" },
+		{ "name": "modulate:a", "ty": "f32", "alias": "fade" },
 		{ "name": "offset", "ty": "Vector2" },
 		{ "name": "pixel_size", "ty": "f32" }
 	]
@@ -507,6 +511,18 @@
 	},
 	{
 		"class": "Light3D", "group": "3D", "tweens": [
+		{
+			"name": "light_energy",
+			"ty": "f32",
+			"get": "obj.get_param(godot::classes::light_3d::Param::ENERGY)",
+			"set": "obj.set_param(godot::classes::light_3d::Param::ENERGY, val as f32);"
+		},
+		{
+			"name": "shadow_opacity",
+			"ty": "f32",
+			"get": "obj.get_param(godot::classes::light_3d::Param::SHADOW_OPACITY)",
+			"set": "obj.set_param(godot::classes::light_3d::Param::SHADOW_OPACITY, val as f32);"
+		},
 		{
 			"name": "light_color",
 			"ty": "Color",

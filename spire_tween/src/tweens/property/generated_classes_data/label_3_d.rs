@@ -660,6 +660,7 @@ pub trait SpireDoLabel3D<Marker = ()> {
         end_val: f64,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<f64>>;
+    fn do_fade(&self, end_val: f64, duration: f64) -> SpireTween<LerpPropertyData<f64>>;
     fn do_offset_x(
         &self,
         end_val: f64,
@@ -912,6 +913,18 @@ impl<Class: Inherits<Label3D> + Inherits<Object>> SpireDoLabel3D<()> for Gd<Clas
         end_val: f64,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<f64>> {
+        let data = Label3DFloatData {
+            property: <Label3DFloatKind>::ModulateA,
+            owner: self.clone().upcast(),
+            owner_obj_or_node: ObjectOrNode::Node(
+                self.clone().upcast::<Label3D>().upcast::<Node>(),
+            ),
+        };
+        SpireTween::<
+            LerpPropertyData<f64>,
+        >::new(data.into(), Evaluator::Static(end_val), duration)
+    }
+    fn do_fade(&self, end_val: f64, duration: f64) -> SpireTween<LerpPropertyData<f64>> {
         let data = Label3DFloatData {
             property: <Label3DFloatKind>::ModulateA,
             owner: self.clone().upcast(),
@@ -1353,6 +1366,17 @@ for T {
         end_val: f64,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<f64>> {
+        let owner: Gd<Label3D> = self.to_gd().upcast();
+        let data = Label3DFloatData {
+            property: <Label3DFloatKind>::ModulateA,
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner,
+        };
+        SpireTween::<
+            LerpPropertyData<f64>,
+        >::new(data.into(), Evaluator::Static(end_val), duration)
+    }
+    fn do_fade(&self, end_val: f64, duration: f64) -> SpireTween<LerpPropertyData<f64>> {
         let owner: Gd<Label3D> = self.to_gd().upcast();
         let data = Label3DFloatData {
             property: <Label3DFloatKind>::ModulateA,

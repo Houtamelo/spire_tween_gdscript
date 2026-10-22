@@ -7,6 +7,30 @@ use super::*;
 pub struct DoLight3D {}
 #[godot_api]
 impl DoLight3D {
+    /**[b]Behavior: [/b]Tweens the property [member Light3D.light_energy] over [param duration] seconds.
+
+[b]Returns:[/b] A handle that can be used to further customize the tween.*/
+    #[func(rename = light_energy)]
+    fn r#light_energy(
+        node: Gd<Light3D>,
+        to: f64,
+        duration: f64,
+    ) -> Gd<SpirePropertyFloat> {
+        let tween = node.do_light_energy(to, duration).register();
+        gd_from_native_tween(tween)
+    }
+    /**[b]Behavior: [/b]Tweens the property [member Light3D.shadow_opacity] over [param duration] seconds.
+
+[b]Returns:[/b] A handle that can be used to further customize the tween.*/
+    #[func(rename = shadow_opacity)]
+    fn r#shadow_opacity(
+        node: Gd<Light3D>,
+        to: f64,
+        duration: f64,
+    ) -> Gd<SpirePropertyFloat> {
+        let tween = node.do_shadow_opacity(to, duration).register();
+        gd_from_native_tween(tween)
+    }
     /**[b]Behavior: [/b]Tweens the `r` component of the property [member Light3D.light_color] over [param duration] seconds.
 
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/

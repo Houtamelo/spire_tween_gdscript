@@ -31,6 +31,15 @@ impl DoAudioStreamPlayer2D {
         let tween = node.do_volume_linear(to, duration).register();
         gd_from_native_tween(tween)
     }
+    ///Alias for [method volume_linear].
+    #[func(rename = fade)]
+    fn r#fade(
+        node: Gd<AudioStreamPlayer2D>,
+        to: f64,
+        duration: f64,
+    ) -> Gd<SpirePropertyFloat> {
+        Self::r#volume_linear(node, to, duration)
+    }
     /**[b]Behavior: [/b]Tweens the property [member AudioStreamPlayer2D.pitch_scale] over [param duration] seconds.
 
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/

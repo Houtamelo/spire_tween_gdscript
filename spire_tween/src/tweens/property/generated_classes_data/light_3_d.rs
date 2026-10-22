@@ -7,6 +7,8 @@ pub struct Light3DFloatData {
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Light3DFloatKind {
+    LightEnergy,
+    ShadowOpacity,
     LightColorR,
     LightColorG,
     LightColorB,
@@ -17,6 +19,14 @@ impl IProperty<f64> for Light3DFloatData {
     #[inline]
     fn get_property_value(&self) -> f64 {
         match self.property {
+            <Light3DFloatKind>::LightEnergy => {
+                let obj = &self.owner;
+                (obj.get_param(godot::classes::light_3d::Param::ENERGY)) as f64
+            }
+            <Light3DFloatKind>::ShadowOpacity => {
+                let obj = &self.owner;
+                (obj.get_param(godot::classes::light_3d::Param::SHADOW_OPACITY)) as f64
+            }
             <Light3DFloatKind>::LightColorR => {
                 let obj = &self.owner;
                 (obj.get_color().r) as f64
@@ -42,6 +52,19 @@ impl IProperty<f64> for Light3DFloatData {
     #[inline]
     fn set_property_value(&mut self, value: f64) {
         match self.property {
+            <Light3DFloatKind>::LightEnergy => {
+                let obj = &mut self.owner;
+                let val = value;
+                obj.set_param(godot::classes::light_3d::Param::ENERGY, val as f32);
+            }
+            <Light3DFloatKind>::ShadowOpacity => {
+                let obj = &mut self.owner;
+                let val = value;
+                obj.set_param(
+                    godot::classes::light_3d::Param::SHADOW_OPACITY,
+                    val as f32,
+                );
+            }
             <Light3DFloatKind>::LightColorR => {
                 let obj = &mut self.owner;
                 let val = value;
@@ -87,6 +110,8 @@ impl IPropertyData for Light3DFloatData {
     #[inline]
     fn get_property_path(&self) -> NodePath {
         match self.property {
+            <Light3DFloatKind>::LightEnergy => NodePath::from("light_energy"),
+            <Light3DFloatKind>::ShadowOpacity => NodePath::from("shadow_opacity"),
             <Light3DFloatKind>::LightColorR => NodePath::from("light_color:r"),
             <Light3DFloatKind>::LightColorG => NodePath::from("light_color:g"),
             <Light3DFloatKind>::LightColorB => NodePath::from("light_color:b"),
@@ -106,6 +131,24 @@ impl TryFromPathAndObject for Light3DFloatData {
             .ok()
             .and_then(|owner| {
                 match path {
+                    "light_energy" => {
+                        Some(Self {
+                            property: <Light3DFloatKind>::LightEnergy,
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
+                            owner,
+                        })
+                    }
+                    "shadow_opacity" => {
+                        Some(Self {
+                            property: <Light3DFloatKind>::ShadowOpacity,
+                            owner_obj_or_node: ObjectOrNode::Node(
+                                owner.clone().upcast(),
+                            ),
+                            owner,
+                        })
+                    }
                     "light_color:r" => {
                         Some(Self {
                             property: <Light3DFloatKind>::LightColorR,
@@ -222,6 +265,16 @@ impl TryFromPathAndObject for Light3DColorData {
     }
 }
 pub trait SpireDoLight3D<Marker = ()> {
+    fn do_light_energy(
+        &self,
+        end_val: f64,
+        duration: f64,
+    ) -> SpireTween<LerpPropertyData<f64>>;
+    fn do_shadow_opacity(
+        &self,
+        end_val: f64,
+        duration: f64,
+    ) -> SpireTween<LerpPropertyData<f64>>;
     fn do_light_color_r(
         &self,
         end_val: f64,
@@ -279,6 +332,38 @@ pub trait SpireDoLight3D<Marker = ()> {
     ) -> SpireTween<LerpPropertyData<Color>>;
 }
 impl<Class: Inherits<Light3D> + Inherits<Object>> SpireDoLight3D<()> for Gd<Class> {
+    fn do_light_energy(
+        &self,
+        end_val: f64,
+        duration: f64,
+    ) -> SpireTween<LerpPropertyData<f64>> {
+        let data = Light3DFloatData {
+            property: <Light3DFloatKind>::LightEnergy,
+            owner: self.clone().upcast(),
+            owner_obj_or_node: ObjectOrNode::Node(
+                self.clone().upcast::<Light3D>().upcast::<Node>(),
+            ),
+        };
+        SpireTween::<
+            LerpPropertyData<f64>,
+        >::new(data.into(), Evaluator::Static(end_val), duration)
+    }
+    fn do_shadow_opacity(
+        &self,
+        end_val: f64,
+        duration: f64,
+    ) -> SpireTween<LerpPropertyData<f64>> {
+        let data = Light3DFloatData {
+            property: <Light3DFloatKind>::ShadowOpacity,
+            owner: self.clone().upcast(),
+            owner_obj_or_node: ObjectOrNode::Node(
+                self.clone().upcast::<Light3D>().upcast::<Node>(),
+            ),
+        };
+        SpireTween::<
+            LerpPropertyData<f64>,
+        >::new(data.into(), Evaluator::Static(end_val), duration)
+    }
     fn do_light_color_r(
         &self,
         end_val: f64,
@@ -458,6 +543,36 @@ impl<Class: Inherits<Light3D> + Inherits<Object>> SpireDoLight3D<()> for Gd<Clas
 }
 impl<T: WithBaseField + Inherits<Light3D> + Inherits<Object>> SpireDoLight3D<BaseMarker>
 for T {
+    fn do_light_energy(
+        &self,
+        end_val: f64,
+        duration: f64,
+    ) -> SpireTween<LerpPropertyData<f64>> {
+        let owner: Gd<Light3D> = self.to_gd().upcast();
+        let data = Light3DFloatData {
+            property: <Light3DFloatKind>::LightEnergy,
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner,
+        };
+        SpireTween::<
+            LerpPropertyData<f64>,
+        >::new(data.into(), Evaluator::Static(end_val), duration)
+    }
+    fn do_shadow_opacity(
+        &self,
+        end_val: f64,
+        duration: f64,
+    ) -> SpireTween<LerpPropertyData<f64>> {
+        let owner: Gd<Light3D> = self.to_gd().upcast();
+        let data = Light3DFloatData {
+            property: <Light3DFloatKind>::ShadowOpacity,
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner,
+        };
+        SpireTween::<
+            LerpPropertyData<f64>,
+        >::new(data.into(), Evaluator::Static(end_val), duration)
+    }
     fn do_light_color_r(
         &self,
         end_val: f64,

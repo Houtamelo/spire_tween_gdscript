@@ -7,6 +7,22 @@ use super::*;
 pub struct DoCamera3D {}
 #[godot_api]
 impl DoCamera3D {
+    /**[b]Behavior: [/b]Tweens the property [member Camera3D.near] over [param duration] seconds.
+
+[b]Returns:[/b] A handle that can be used to further customize the tween.*/
+    #[func(rename = near)]
+    fn r#near(node: Gd<Camera3D>, to: f64, duration: f64) -> Gd<SpirePropertyFloat> {
+        let tween = node.do_near(to, duration).register();
+        gd_from_native_tween(tween)
+    }
+    /**[b]Behavior: [/b]Tweens the property [member Camera3D.far] over [param duration] seconds.
+
+[b]Returns:[/b] A handle that can be used to further customize the tween.*/
+    #[func(rename = far)]
+    fn r#far(node: Gd<Camera3D>, to: f64, duration: f64) -> Gd<SpirePropertyFloat> {
+        let tween = node.do_far(to, duration).register();
+        gd_from_native_tween(tween)
+    }
     /**[b]Behavior: [/b]Tweens the property [member Camera3D.fov] over [param duration] seconds.
 
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/

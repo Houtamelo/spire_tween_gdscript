@@ -91,6 +91,11 @@ impl DoLabel3D {
     fn color_a(node: Gd<Label3D>, to: f64, duration: f64) -> Gd<SpirePropertyFloat> {
         Self::modulate_a(node, to, duration)
     }
+    ///Alias for [method modulate_a].
+    #[func(rename = fade)]
+    fn r#fade(node: Gd<Label3D>, to: f64, duration: f64) -> Gd<SpirePropertyFloat> {
+        Self::modulate_a(node, to, duration)
+    }
     /**[b]Behavior: [/b]Tweens the `x` component of the property [member Label3D.offset] over [param duration] seconds.
 
 [b]Returns:[/b] A handle that can be used to further customize the tween.*/

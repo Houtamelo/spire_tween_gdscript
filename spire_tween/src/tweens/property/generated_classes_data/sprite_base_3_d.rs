@@ -367,6 +367,7 @@ pub trait SpireDoSpriteBase3D<Marker = ()> {
         end_val: f64,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<f64>>;
+    fn do_fade(&self, end_val: f64, duration: f64) -> SpireTween<LerpPropertyData<f64>>;
     fn do_offset_x(
         &self,
         end_val: f64,
@@ -517,6 +518,18 @@ for Gd<Class> {
         end_val: f64,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<f64>> {
+        let data = SpriteBase3DFloatData {
+            property: <SpriteBase3DFloatKind>::ModulateA,
+            owner: self.clone().upcast(),
+            owner_obj_or_node: ObjectOrNode::Node(
+                self.clone().upcast::<SpriteBase3D>().upcast::<Node>(),
+            ),
+        };
+        SpireTween::<
+            LerpPropertyData<f64>,
+        >::new(data.into(), Evaluator::Static(end_val), duration)
+    }
+    fn do_fade(&self, end_val: f64, duration: f64) -> SpireTween<LerpPropertyData<f64>> {
         let data = SpriteBase3DFloatData {
             property: <SpriteBase3DFloatKind>::ModulateA,
             owner: self.clone().upcast(),
@@ -738,6 +751,17 @@ impl<
         end_val: f64,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<f64>> {
+        let owner: Gd<SpriteBase3D> = self.to_gd().upcast();
+        let data = SpriteBase3DFloatData {
+            property: <SpriteBase3DFloatKind>::ModulateA,
+            owner_obj_or_node: ObjectOrNode::Node(owner.clone().upcast()),
+            owner,
+        };
+        SpireTween::<
+            LerpPropertyData<f64>,
+        >::new(data.into(), Evaluator::Static(end_val), duration)
+    }
+    fn do_fade(&self, end_val: f64, duration: f64) -> SpireTween<LerpPropertyData<f64>> {
         let owner: Gd<SpriteBase3D> = self.to_gd().upcast();
         let data = SpriteBase3DFloatData {
             property: <SpriteBase3DFloatKind>::ModulateA,
