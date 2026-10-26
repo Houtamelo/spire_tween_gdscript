@@ -218,18 +218,39 @@ func test_duplicate_results_are_rejected() -> bool:
 
 func test_self_and_ancestor_results_are_rejected() -> bool:
 	for operation in 3:
+		var self_counts := [0, 0]
 		var seq := sequence()
-		add_ctor(seq, operation, func(): return seq)
-		# Keep a faulty acceptance from recursively ticking itself before cleanup.
-		seq.stop()
+		var seq_observer: WeakRef = weakref(seq)
+		add_ctor(seq, operation, func():
+			self_counts[0] += 1
+			return seq_observer.get_ref())
+		seq.append_call(func(): self_counts[1] += 1)
 		seq.custom_step(0.1)
+		check(self_counts == [1, 1], "Self factory must run once and rejection must allow the following callback")
+		check(seq.is_stopped(), "Rejecting a self result must allow the sequence to complete")
 		check(not seq.remove(seq), "A constructor must not adopt its own sequence")
+		seq.play()
+		seq.custom_step(0.1)
+		check(self_counts == [1, 2], "Replay must not reinvoke a rejected self factory")
+
+		var ancestor_counts := [0, 0, 0]
 		var nested := sequence()
 		var ancestor := sequence().append(nested)
-		add_ctor(nested, operation, func(): return ancestor)
-		ancestor.stop()
-		nested.custom_step(0.1)
+		var ancestor_observer: WeakRef = weakref(ancestor)
+		add_ctor(nested, operation, func():
+			ancestor_counts[0] += 1
+			return ancestor_observer.get_ref())
+		nested.append_call(func(): ancestor_counts[1] += 1)
+		ancestor.append_call(func(): ancestor_counts[2] += 1)
+		# Adoption pauses the nested tween; drive it through its playing parent.
+		ancestor.custom_step(0.1)
+		check(ancestor_counts == [1, 1, 1], "Ancestor factory must run once and rejection must allow both following callbacks")
+		check(ancestor.is_stopped() and nested.is_stopped(), "Rejecting an ancestor result must allow both sequences to complete")
 		check(not nested.remove(ancestor), "A constructor must not adopt an ancestor")
+		ancestor.play()
+		ancestor.custom_step(0.1)
+		check(ancestor_counts == [1, 2, 2], "Replay must not reinvoke a rejected ancestor factory")
+		check(ancestor.remove(nested), "Rejecting an ancestor result must preserve the original child")
 	return failures.is_empty()
 
 func test_current_default_ease_and_explicit_override() -> bool:
@@ -317,16 +338,17 @@ func test_many_callables_remain_callbacks() -> bool:
 
 func test_pending_factory_with_weak_parent_can_be_released() -> bool:
 	# Do not add this parent to `roots`: this test intentionally releases every owner.
-	var seq := Spire.sequence().set_process_mode(Spire.PROCESS_MODE_MANUAL)
-	var observer: WeakRef = weakref(seq)
-	var count := [0]
-	seq.append_ctor(func():
-		count[0] += 1
-		return observer.get_ref())
-	seq.stop()
-	seq.unregister()
-	seq = null
-	for _i in 4:
-		await get_tree().process_frame
-	check(observer.get_ref() == null and count[0] == 0, "A pending factory's weak parent capture must not keep the parent alive")
+	for operation in 3:
+		var seq := Spire.sequence().set_process_mode(Spire.PROCESS_MODE_MANUAL)
+		var observer: WeakRef = weakref(seq)
+		var count := [0]
+		add_ctor(seq, operation, func():
+			count[0] += 1
+			return observer.get_ref())
+		seq.stop()
+		seq.unregister()
+		seq = null
+		for _i in 4:
+			await get_tree().process_frame
+		check(observer.get_ref() == null and count[0] == 0, "A pending factory's weak parent capture must not keep the parent alive")
 	return failures.is_empty()

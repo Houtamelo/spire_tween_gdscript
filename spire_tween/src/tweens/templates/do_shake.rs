@@ -1,234 +1,286 @@
-use std::f32::consts::PI;
+use std::num::NonZeroUsize;
 
 use godot::obj::bounds::DeclEngine;
-use rand::Rng;
 use rand_xoshiro::{Xoshiro256PlusPlus, rand_core::SeedableRng};
 
-use super::*;
+use super::{shake_path::ShakePath, *};
 
-/// Shakes a `Node2D`'s **local** position within a ring of radii
-/// `[radius_min, radius_max]` and restores it to the origin when finished.
+const MIN_SEGMENTS: NonZeroUsize = NonZeroUsize::MIN.saturating_add(1);
+const MAX_SEGMENTS: usize = 65_536;
+
+/// Linearly interpolated local-position shake for `Node2D` and its subclasses.
 ///
-/// Parameters:
-/// - `radius_min` / `radius_max`: inner and outer ring radii. The shake offset
-///   sampled each step lies between these (Spire silently swaps if `min > max`).
-/// - `vibratio` (vibration ratio, clamped to `[0.0, 1.0]`):
-///   - `0.0` = fully random — successive offsets bear no positional relation.
-///   - `1.0` = opposite-point bounce — each offset is roughly opposite the
-///     previous one (a classic "screen shake" feel).
-///   - intermediate values blend the two.
-/// - `frequency`: Hz at which the offset is re-sampled. Higher = jitterier.
-/// - `duration`: total seconds.
+/// Uses a planar sampler implemented from the shake mathematical specification.
+/// Its timing, direction distribution and amplitude rules match the intended
+/// DOTween-compatible behavior without translating its source implementation.
+/// `strength` selects the per-axis shaping; waypoint magnitude is its length,
+/// so components are not hard bounds after DOTween's renormalization.
+/// `vibrato * duration`, truncated and clamped to `[2, 65536]`, is the segment count.
+/// Nonpositive vibrato and counts above the upper bound emit warnings. Short
+/// animations with positive vibrato use the minimum of two without a warning.
+/// `randomness` is an angle in degrees in `[0, 180]`; see [`ShakeRandomnessMode`].
 ///
-/// On completion the local position is restored to its starting value (Spire
-/// tracks the offset internally so external forces can also move the node during
-/// the shake without bias).
+/// `fade_out` decreases waypoint magnitude and increases segment durations;
+/// disabling it uses constant amplitude and equal segment durations. Both end
+/// at zero offset. The returned method tween follows the global default easing
+/// unless explicitly overridden. Easing remaps overall path progress.
+/// `blendable` applies `current - previous_offset + next_offset`, preserving
+/// additive movement and other blendable shakes. Absolute property writers can
+/// discard the tracked contribution. When false, the start is captured on first
+/// processing and each write is `start + offset`, including on replay.
 ///
-/// Implemented for any `Gd<T: Inherits<Node2D>>`. Returns an unregistered
-/// [`SpireTween<LerpMethodData<f64>>`] (the inner data is the elapsed-time
-/// driver) — call [`register`](SpireTween::register).
+/// Generates one path per playback. Restart and Incremental repeat that path
+/// without drift; Yoyo retraces it. Samples the method value modulo one, so
+/// easing overshoot wraps around the path. Keep the method's range at `0 -> 1`.
+/// Replaying after stop generates a new path; pause/resume keeps the current one.
+/// `stop()` leaves the node untouched. An immediate `finished` connection restores
+/// the zero offset on completion, including `force_complete()`, before later
+/// finish handlers. Restoration is not guaranteed before `stopped` handlers.
+/// Calling [`SpireTween::finished_clear_connections`] disables cleanup;
+/// [`SpireTween::stopped_clear_connections`] disables path invalidation for replay.
+/// Freeing the owner cancels without invoking the position accessors.
 ///
-/// For `Control` nodes use [`DoShakeControl`] (same signature, different node type).
+/// Returns an unregistered builder. Invalid parameters emit warnings:
+/// nonpositive/nonfinite duration becomes 1 second; negative or nonfinite
+/// strength components become zero; finite randomness is clamped to `[0, 180]`,
+/// and nonfinite randomness becomes 90 degrees.
+/// Rust passes every option explicitly; GDScript defaults `vibrato` to 10,
+/// `randomness` to 90, `fade_out` and `blendable` to true, and mode to Full.
 pub trait DoShakeNode2D<Marker = ()> {
     fn do_shake(
         &self,
-        radius_min: real,
-        radius_max: real,
-        vibratio: real,
-        frequency: f64,
         duration: f64,
+        strength: Vector2,
+        vibrato: i32,
+        randomness: real,
+        fade_out: bool,
+        randomness_mode: ShakeRandomnessMode,
+        blendable: bool,
     ) -> SpireTween<LerpMethodData<f64>>;
 }
 
 impl<T: Inherits<Node2D> + Inherits<Object>> DoShakeNode2D<()> for Gd<T> {
     fn do_shake(
         &self,
-        radius_min: real,
-        radius_max: real,
-        vibratio: real,
-        frequency: f64,
         duration: f64,
+        strength: Vector2,
+        vibrato: i32,
+        randomness: real,
+        fade_out: bool,
+        randomness_mode: ShakeRandomnessMode,
+        blendable: bool,
     ) -> SpireTween<LerpMethodData<f64>> {
-        let node = self.clone().upcast::<Node2D>();
         do_shake(
-            node,
+            self.clone().upcast::<Node2D>(),
             Node2D::get_position,
             Node2D::set_position,
-            radius_min,
-            radius_max,
-            vibratio,
-            frequency,
             duration,
+            strength,
+            vibrato,
+            randomness,
+            fade_out,
+            randomness_mode,
+            blendable,
         )
     }
 }
 
-/// `Control`-node counterpart of [`DoShakeNode2D`]. Same parameters and semantics —
-/// shakes the node's local `position` within a `[radius_min, radius_max]` ring at
-/// the given frequency for `duration` seconds, then restores the original position.
-///
-/// Implemented for any `Gd<T: Inherits<Control>>`.
+/// [`DoShakeNode2D`] for `Control` nodes. Same arguments, loop, blending,
+/// completion and parameter normalization semantics. Container layout can overwrite position.
 pub trait DoShakeControl<Marker = ()> {
     fn do_shake(
         &self,
-        radius_min: real,
-        radius_max: real,
-        vibratio: real,
-        frequency: f64,
         duration: f64,
+        strength: Vector2,
+        vibrato: i32,
+        randomness: real,
+        fade_out: bool,
+        randomness_mode: ShakeRandomnessMode,
+        blendable: bool,
     ) -> SpireTween<LerpMethodData<f64>>;
 }
 
 impl<T: Inherits<Control> + Inherits<Object>> DoShakeControl<()> for Gd<T> {
     fn do_shake(
         &self,
-        radius_min: real,
-        radius_max: real,
-        vibratio: real,
-        frequency: f64,
         duration: f64,
+        strength: Vector2,
+        vibrato: i32,
+        randomness: real,
+        fade_out: bool,
+        randomness_mode: ShakeRandomnessMode,
+        blendable: bool,
     ) -> SpireTween<LerpMethodData<f64>> {
-        let node = self.clone().upcast::<Control>();
         do_shake(
-            node,
+            self.clone().upcast::<Control>(),
             Control::get_position,
             Control::set_position,
-            radius_min,
-            radius_max,
-            vibratio,
-            frequency,
             duration,
+            strength,
+            vibrato,
+            randomness,
+            fade_out,
+            randomness_mode,
+            blendable,
         )
     }
 }
 
-fn do_shake<T: GodotClass<Declarer = DeclEngine>>(
-    mut node: Gd<T>,
+#[derive(Default)]
+struct ShakeState {
+    generated: bool,
+    initial_position: Option<Vector2>,
+    previous_offset: Vector2,
+}
+
+fn do_shake<T: GodotClass<Declarer = DeclEngine> + Inherits<Object>>(
+    node: Gd<T>,
     get_pos: fn(&T) -> Vector2,
     set_pos: fn(&mut T, Vector2),
-    radius_min: real,
-    radius_max: real,
-    vibratio: real,
-    frequency: f64,
     duration: f64,
+    strength: Vector2,
+    vibrato: i32,
+    randomness: real,
+    fade_out: bool,
+    randomness_mode: ShakeRandomnessMode,
+    blendable: bool,
 ) -> SpireTween<LerpMethodData<f64>> {
-    let amplitude_factor = 1.0 - vibratio.clamp(0.0, 1.0);
+    let rng = Xoshiro256PlusPlus::try_from_os_rng().unwrap_or_else(|_| {
+        godot_warn!("[do_shake] Failed to acquire OS randomness, falling back to fixed seed.");
+        Xoshiro256PlusPlus::seed_from_u64(1337)
+    });
+    do_shake_internal(
+        node,
+        get_pos,
+        set_pos,
+        duration,
+        strength,
+        vibrato,
+        randomness,
+        fade_out,
+        randomness_mode,
+        blendable,
+        rng,
+    )
+}
 
-    let radius_range = if radius_min < radius_max { radius_min..=radius_max } else { radius_max..=radius_min };
-    let radius_avg = (radius_min + radius_max) * 0.5;
-    let radius_avg_x2 = radius_avg * 2.0;
-
-    let update_interval = 1.0 / frequency;
-    let (angle_close_weight, angle_far_weight) =
-        if amplitude_factor <= 0.5 { (amplitude_factor * 2.0, 0.0) } else { (1.0, amplitude_factor * 2.0 - 1.0) };
-
-    let angle_vibration_range = {
-        let vibration_amplitude = PI * amplitude_factor;
-        -vibration_amplitude..=vibration_amplitude
+// Kept inside this private module; only integration-test builds re-export it.
+#[doc(hidden)]
+pub fn do_shake_internal<T: GodotClass<Declarer = DeclEngine> + Inherits<Object>>(
+    node: Gd<T>,
+    get_pos: fn(&T) -> Vector2,
+    set_pos: fn(&mut T, Vector2),
+    duration: f64,
+    strength: Vector2,
+    vibrato: i32,
+    randomness: real,
+    fade_out: bool,
+    randomness_mode: ShakeRandomnessMode,
+    blendable: bool,
+    mut rng: Xoshiro256PlusPlus,
+) -> SpireTween<LerpMethodData<f64>> {
+    let duration = if duration.is_finite() && duration > 0.0 {
+        duration
+    } else {
+        godot_warn!("[do_shake] duration must be finite and positive; using 1 second instead of {duration}.");
+        1.0
     };
 
-    let prev_offset = RcPtr::new(Vector2::ZERO);
-    let prev_update = RcPtr::new(0.0);
-    let delta_time_sum = RcPtr::new(0.0);
+    let strength = if strength.is_finite() && strength.x >= 0.0 && strength.y >= 0.0 {
+        strength
+    } else {
+        godot_warn!(
+            "[do_shake] strength must be finite and nonnegative; replacing invalid components of {strength} with zero."
+        );
+        Vector2::new(
+            if strength.x.is_finite() { strength.x.max(0.0) } else { 0.0 },
+            if strength.y.is_finite() { strength.y.max(0.0) } else { 0.0 },
+        )
+    };
+
+    let randomness = if randomness.is_finite() && (0.0..=180.0).contains(&randomness) {
+        randomness
+    } else {
+        let corrected = if randomness.is_finite() { randomness.clamp(0.0, 180.0) } else { 90.0 };
+        godot_warn!(
+            "[do_shake] randomness must be between 0 and 180 degrees; using {corrected} instead of {randomness}."
+        );
+        corrected
+    };
+
+    let owner = node.clone().upcast::<Object>();
+    let requested_segments = (f64::from(vibrato) * duration).floor();
+    let segment_count = requested_segments.clamp(MIN_SEGMENTS.get() as f64, MAX_SEGMENTS as f64) as usize;
+    let segments = NonZeroUsize::new(segment_count).unwrap_or(MIN_SEGMENTS);
+    if vibrato <= 0 || !requested_segments.is_finite() || requested_segments > MAX_SEGMENTS as f64 {
+        godot_warn!(
+            "[do_shake] invalid segment count {requested_segments} from vibrato {vibrato}; using {segments} (allowed \
+             2 to {MAX_SEGMENTS})."
+        );
+    }
+
+    let mut path =
+        ShakePath::new(segments, [strength.x as f64, strength.y as f64], randomness as f64, fade_out, randomness_mode);
+    let state = RcPtr::new(ShakeState::default());
 
     let callable = Callable::from_fn("do_shake", {
         let mut node = node.clone();
-        let mut rng = Xoshiro256PlusPlus::try_from_os_rng().ok().unwrap_or_else(|| {
-            godot_warn!("[do_shake] Failed to acquire OS randomness, falling back to fixed seed.");
-            Xoshiro256PlusPlus::seed_from_u64(1337)
-        });
-        let mut prev_angle = rng.random_range(0.0..=(2.0 * PI));
-        let mut prev_radius = rng.random_range(radius_range);
-        let mut prev_update = RcPtr::clone(&prev_update);
-        let mut delta_time_sum = RcPtr::clone(&delta_time_sum);
-        let mut prev_offset = RcPtr::clone(&prev_offset);
+        let mut state = state.clone();
 
         move |args| {
-            let Some(time) = args.first().and_then(|v| v.try_to_relaxed::<f64>().ok()) else {
-                godot_error!("[do_shake] BUG: Expected `time(f64)` argument.");
-                return Variant::nil();
+            let current = get_pos(&node);
+            let position = {
+                let initial = *state.initial_position.get_or_insert(current);
+                if !state.generated {
+                    path.regenerate(&mut rng);
+                    state.generated = true;
+                }
+
+                let phase = args[0].to::<f64>().rem_euclid(1.0);
+                let offset = path.sample(phase);
+                let offset = Vector2::new(offset[0] as real, offset[1] as real);
+                let position = if blendable { current - state.previous_offset + offset } else { initial + offset };
+                state.previous_offset = offset;
+                position
             };
-
-            *delta_time_sum += f64::abs(time - *prev_update);
-            *prev_update = time;
-
-            if *delta_time_sum < update_interval {
-                return Variant::nil();
-            }
-
-            let next_angle = {
-                let prev_angle_opposite = prev_angle + PI;
-                let angle_offset = rng.random_range(angle_vibration_range.clone());
-                prev_angle_opposite + angle_offset
-            };
-
-            let next_radius = {
-                let prev_radius_opposite = radius_avg_x2 - prev_radius;
-                let next_radius_range = match (amplitude_factor <= 0.5, prev_radius_opposite < radius_avg) {
-                    (true, true) => {
-                        let range_min = real::lerp(prev_radius_opposite, radius_min, angle_close_weight);
-                        let range_max = real::lerp(prev_radius_opposite, radius_avg, angle_close_weight);
-                        range_min..=range_max
-                    }
-                    (true, false) => {
-                        let range_min = real::lerp(prev_radius_opposite, radius_avg, angle_close_weight);
-                        let range_max = real::lerp(prev_radius_opposite, radius_max, angle_close_weight);
-                        range_min..=range_max
-                    }
-                    (false, true) => {
-                        let range_max = real::lerp(radius_avg, radius_max, angle_far_weight);
-                        radius_min..=range_max
-                    }
-                    (false, false) => {
-                        let range_min = real::lerp(radius_min, radius_avg, angle_far_weight);
-                        range_min..=radius_max
-                    }
-                };
-
-                rng.random_range(next_radius_range)
-            };
-
-            let next_offset = Vector2 {
-                x: next_radius * next_angle.cos(),
-                y: next_radius * next_angle.sin(),
-            };
-
-            let curr_pos = get_pos(&node);
-            let next_pos = curr_pos - *prev_offset + next_offset;
-
-            prev_angle = next_angle;
-            prev_radius = next_radius;
-            *prev_offset = next_offset;
-            *delta_time_sum %= update_interval;
-
-            set_pos(&mut node, next_pos); // LOCAL!
+            set_pos(&mut node, position);
             Variant::nil()
         }
     });
 
-    let mut tween = SpireTween::<LerpMethodData<f64>>::new(callable, 0.0, duration, duration);
-    tween.loop_finished_connect(
+    // Let the ordinary method tween easing remap overall path progress.
+    let mut tween = SpireTween::<LerpMethodData<f64>>::new(callable, 0.0, 1.0, duration);
+    tween.t.owner = Some(ObjectOrNode::from_unchecked_object(owner));
+
+    tween.stopped_connect(
         {
-            let mut prev_update = RcPtr::clone(&prev_update);
-            move || {
-                *prev_update = 0.0;
-            }
+            let mut state = state.clone();
+            move || state.generated = false
         },
         SpireFlags::empty(),
     );
 
     tween.finished_connect(
         {
-            let mut prev_offset = prev_offset;
-            let mut prev_update = prev_update;
-            let mut delta_time_sum = delta_time_sum;
+            let mut state = state;
+            let mut node = node;
+
             move || {
-                let curr_pos = get_pos(&node);
-                let final_pos = curr_pos - *prev_offset;
-                *prev_offset = Vector2::ZERO;
-                *prev_update = 0.0;
-                *delta_time_sum = 0.0;
-                set_pos(&mut node, final_pos); // LOCAL!
+                if !node.is_instance_valid() {
+                    return;
+                }
+
+                let position = {
+                    let position =
+                        if blendable { Some(get_pos(&node) - state.previous_offset) } else { state.initial_position };
+
+                    state.previous_offset = Vector2::ZERO;
+                    position
+                };
+
+                if let Some(position) = position {
+                    set_pos(&mut node, position);
+                }
             }
         },
         SpireFlags::empty(),

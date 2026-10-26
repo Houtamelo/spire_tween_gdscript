@@ -1,0 +1,18 @@
+--- spire_tween_gdscript/examples/tests/sequence_ctors.gd	2026-10-25 23:16:09.120956115 -0300
++++ dist/group2-20261022/gdscript-4.7.2/examples/tests/sequence_ctors.gd	2026-10-25 23:16:35.387361909 -0300
+@@ -225,6 +225,7 @@
+ 			self_counts[0] += 1
+ 			return seq_observer.get_ref())
+ 		seq.append_call(func(): self_counts[1] += 1)
++		seq.stop()
+ 		seq.custom_step(0.1)
+ 		check(self_counts == [1, 1], "Self factory must run once and rejection must allow the following callback")
+ 		check(seq.is_stopped(), "Rejecting a self result must allow the sequence to complete")
+@@ -243,6 +244,7 @@
+ 		nested.append_call(func(): ancestor_counts[1] += 1)
+ 		ancestor.append_call(func(): ancestor_counts[2] += 1)
+ 		# Adoption pauses the nested tween; drive it through its playing parent.
++		ancestor.stop()
+ 		ancestor.custom_step(0.1)
+ 		check(ancestor_counts == [1, 1, 1], "Ancestor factory must run once and rejection must allow both following callbacks")
+ 		check(ancestor.is_stopped() and nested.is_stopped(), "Rejecting an ancestor result must allow both sequences to complete")

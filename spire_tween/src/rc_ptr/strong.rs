@@ -16,7 +16,13 @@ impl<T: ?Sized> RcPtr<T> {
     #[inline]
     pub fn strong_count(&self) -> usize { Rc::strong_count(&self.0) }
 
-    /// Callers must ensure no overlapping mutable references exist.
+    /// Callers must ensure no overlapping references to the inner `T` exist.
+    ///
+    /// Note: This is only needed for situations where you don't own a `RcPtr<T>`,
+    /// such as if when you only have access to a `&RcPtr<T>`. This method allows mutably accessing `T` without having
+    /// to `let mut ptr = RcPtr::clone(ref_ptr);`. Which would result in unnecessary refcount bumping.
+    /// This is mostly useful within TweenGdHandles.
+    #[doc(hidden)]
     #[allow(clippy::mut_from_ref)]
     #[allow(clippy::wrong_self_convention)]
     pub fn to_mut(&self) -> &mut T { unsafe { &mut *self.0.get() } }
@@ -57,20 +63,20 @@ impl<T: ?Sized> Hash for RcPtr<T> {
 
 impl<T> Equivalent<*const ()> for RcPtr<T> {
     #[inline]
-    fn equivalent(&self, key: &*const ()) -> bool { std::ptr::addr_eq(self.address(), *key) }
+    fn equivalent(&self, key: &*const ()) -> bool { addr_eq(self.address(), *key) }
 }
 
 impl Equivalent<*const ()> for RcPtr<dyn Any> {
     #[inline]
-    fn equivalent(&self, key: &*const ()) -> bool { std::ptr::addr_eq(self.address(), *key) }
+    fn equivalent(&self, key: &*const ()) -> bool { addr_eq(self.address(), *key) }
 }
 
 impl<T> Equivalent<RcPtr<T>> for *const () {
     #[inline]
-    fn equivalent(&self, key: &RcPtr<T>) -> bool { std::ptr::addr_eq(*self, key.address()) }
+    fn equivalent(&self, key: &RcPtr<T>) -> bool { addr_eq(*self, key.address()) }
 }
 
 impl Equivalent<RcPtr<dyn Any>> for *const () {
     #[inline]
-    fn equivalent(&self, key: &RcPtr<dyn Any>) -> bool { std::ptr::addr_eq(*self, key.address()) }
+    fn equivalent(&self, key: &RcPtr<dyn Any>) -> bool { addr_eq(*self, key.address()) }
 }

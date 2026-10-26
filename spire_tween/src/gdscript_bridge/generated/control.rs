@@ -301,19 +301,52 @@ impl DoControl {
         let tween = node.do_size(to, duration).register();
         gd_from_native_tween(tween)
     }
+    /// Interpolates local-position shake waypoints using DOTween's sampling math.
+    /// [param strength] shapes each axis; its length is the initial waypoint magnitude.
+    /// [param vibrato] times [param duration] gives the segment count, clamped to 2-65536.
+    /// Nonpositive vibrato and counts above 65536 emit warnings. Short animations
+    /// with positive vibrato use the minimum of two without a warning.
+    /// [param randomness] is in degrees, from 0 to 180. [param fade_out] decreases
+    /// magnitude and increases segment durations; otherwise durations are equal.
+    /// [param blendable] replaces this tween's previous offset on the current position;
+    /// disabling it writes relative to the start captured on first processing.
+    /// Absolute property writers can disrupt blendable offset bookkeeping.
+    /// Generates one path per playback: Restart/Incremental repeat it without drift;
+    /// Yoyo retraces it. Replay regenerates; resume does not. The method value is
+    /// sampled modulo one, so easing overshoot wraps. Keep its range at 0 to 1.
+    /// Stop leaves position untouched. Natural/forced completion restores zero offset
+    /// before finished handlers, but not necessarily before stopped handlers.
+    /// Freed owners cancel. Invalid parameters emit warnings:
+    /// nonpositive/nonfinite duration becomes 1 second; negative/nonfinite strength
+    /// components become zero; finite randomness is clamped to 0-180 degrees,
+    /// and nonfinite randomness becomes 90 degrees. Returns an already registered method tween.
     #[func]
     fn shake(
         node: Gd<Control>,
-        radius_min: real,
-        radius_max: real,
-        vibratio: real,
-        frequency: f64,
         duration: f64,
+        strength: Vector2,
+        #[opt(default = 10)]
+        vibrato: i32,
+        #[opt(default = 90.0)]
+        randomness: real,
+        #[opt(default = true)]
+        fade_out: bool,
+        #[opt(default = ShakeRandomnessMode::Full)]
+        randomness_mode: ShakeRandomnessMode,
+        #[opt(default = true)]
+        blendable: bool,
     ) -> Gd<SpireMethodFloat> {
-        let inner = node
-            .do_shake(radius_min, radius_max, vibratio, frequency, duration)
-            .register();
-        gd_from_native_tween(inner)
+        let tween = node
+            .do_shake(
+                duration,
+                strength,
+                vibrato,
+                randomness,
+                fade_out,
+                randomness_mode,
+                blendable,
+            );
+        gd_from_native_tween(tween.register())
     }
     /// Expands [param to] to a uniform absolute scale. Already registered.
     #[func]

@@ -1,0 +1,79 @@
+WorkerThreadPool: 24 threads, 7 max low-priority.
+Initialize godot-rust (API v4.4.stable.official, runtime v4.4.stable.official, safeguards strict)
+Godot Engine v4.4.stable.official.4c311cbee - https://godotengine.org
+TextServer: Added interface "Dummy"
+TextServer: Added interface "ICU / HarfBuzz / Graphite (Built-in)"
+JoypadLinux: udev enabled and loaded successfully.
+Using "default" pen tablet driver...
+
+TextServer: Primary interface set to: "ICU / HarfBuzz / Graphite (Built-in)".
+Loading resource: res://examples/theme/examples_theme.tres
+Loading resource: res://examples/theme/style-box_disabled.tres
+Loading resource: res://examples/theme/style-box_focus.tres
+Loading resource: res://examples/theme/style-box_hover.tres
+Loading resource: res://examples/theme/style-box_hover_pressed.tres
+Loading resource: res://examples/theme/style-box_normal.tres
+Loading resource: res://examples/theme/style-box_pressed.tres
+CORE API HASH: 3954330213
+EDITOR API HASH: 1116905369
+Loaded system CA certificates
+Loading resource: res://examples/tests/test_runner.tscn
+Loading resource: res://examples/tests/test_runner.gd
+Loading resource: res://examples/tests/shake.tscn
+Loading resource: res://examples/tests/shake.gd
+Loading resource: res://examples/tests/group2.tscn
+Loading resource: res://examples/tests/group2.gd
+Loading resource: res://examples/tests/stop_events.tscn
+Loading resource: res://examples/tests/stop_events.gd
+Loading resource: res://examples/tests/delays.tscn
+Loading resource: res://examples/tests/delays.gd
+Loading resource: res://examples/world_bounds.tscn
+Loading resource: res://examples/bouncy_ball.tscn
+Loading resource: res://examples/screen_saver/bouncy_ball.gd
+Loading resource: res://examples/screen_saver/collision_fx.tscn
+Loading resource: res://examples/screen_saver/collision_fx.gd
+Loading resource: res://examples/tests/error_handling.tscn
+Loading resource: res://examples/tests/error_handling.gd
+Loading resource: res://examples/tests/misc.tscn
+Loading resource: res://examples/tests/misc.gd
+Loading resource: res://examples/tests/pause_process_modes.tscn
+Loading resource: res://examples/tests/pause_process_modes.gd
+Loading resource: res://examples/tests/play_pause_stop.tscn
+Loading resource: res://examples/tests/play_pause_stop.gd
+Loading resource: res://examples/tests/register_unregister.tscn
+Loading resource: res://examples/tests/register_unregister.gd
+Loading resource: res://examples/tests/sequences.tscn
+Loading resource: res://examples/tests/sequences.gd
+Loading resource: res://examples/tests/sequence_ctors.tscn
+Loading resource: res://examples/tests/sequence_ctors.gd
+Loading resource: res://examples/tests/sequence_speed.tscn
+Loading resource: res://examples/tests/sequence_speed.gd
+Loading resource: res://examples/tests/lerp_modes.tscn
+Loading resource: res://examples/tests/lerp_modes.gd
+Loading resource: res://examples/tests/lerp_callable.tscn
+Loading resource: res://examples/tests/lerp_callable.gd
+Loading resource: res://examples/tests/spiral.tscn
+Loading resource: res://examples/tests/spiral.gd
+Loading resource: res://examples/tests/trail_spawner.gd
+Loading resource: res://examples/tests/ellipsis.tscn
+Loading resource: res://examples/tests/ellipsis.gd
+Loading resource: res://examples/tests/ellipsis_regressions.tscn
+Loading resource: res://examples/tests/ellipsis_regressions.gd
+Loading resource: res://examples/tests/ownership.tscn
+Loading resource: res://examples/tests/ownership.gd
+Loading resource: res://examples/tests/node_binding.tscn
+Loading resource: res://examples/tests/node_binding.gd
+Loading resource: res://examples/tests/sequence_cycles.tscn
+Loading resource: res://examples/tests/sequence_cycles.gd
+Loading resource: res://examples/tests/delayed_call_validity.tscn
+Loading resource: res://examples/tests/delayed_call_validity.gd
+Loading resource: res://examples/tests/method_validity.tscn
+Loading resource: res://examples/tests/method_validity.gd
+---------------------------------
+Test Started: test_pending_factory_with_weak_parent_can_be_released
+Test Finished: test_pending_factory_with_weak_parent_can_be_released
+TEST_PASS res://examples/tests/sequence_ctors.tscn::test_pending_factory_with_weak_parent_can_be_released
+GDSCRIPT_TEST_RESULT total=1 failed=0 skipped=0
+XR: Clearing primary interface
+XR: Removed interface "Native mobile"
+XR: Removed interface "OpenXR"

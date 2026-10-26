@@ -14,6 +14,83 @@ DoShaderMaterial.parameter_float(material, &"strength", 0.8, 1.0)
 DoAudioServer.bus_volume_db(&"Music", -12.0, 0.5)
 ```
 
+## Shake
+
+`DoNode2D.shake` and `DoControl.shake` animate local position and return an already
+registered SpireMethodFloat. Their signature is:
+
+```gdscript
+DoNode2D.shake(node, duration, strength: Vector2,
+    vibrato = 10, randomness = 90.0, fade_out = true,
+    randomness_mode = Spire.SHAKE_RANDOMNESS_MODE_FULL, blendable = true)
+
+DoControl.shake(panel, 0.6, Vector2(6, 4))
+```
+
+This replaces the former `(radius_min, radius_max, vibratio, frequency, duration)`
+arguments. There is no ring sampler or fixed-frequency position teleportation.
+Rust's `do_shake` takes the same arguments after its receiver, with every option
+explicit, and returns `SpireTween<LerpMethodData<f64>>`:
+
+```rust,ignore
+node.do_shake(0.6, Vector2::new(6.0, 4.0), 10, 90.0, true,
+    ShakeRandomnessMode::Full, true).register();
+```
+
+The sampler implements a [mathematical specification](designs/shake_sampler_math.md)
+for the intended DOTween-compatible shake behavior using planar arithmetic.
+It generates `floor(vibrato * duration)` segments clamped to `[2, 65536]` and linearly
+interpolates between their waypoints each update. Vector strength shapes the
+axes; its length is the initial waypoint magnitude. Axis shaping couples the
+components and normalizes their magnitude, so an individual component can exceed
+that axis's strength. Zero strength is an inert animation. With
+`fade_out`, magnitudes decrease and segment durations have weights `1, 2, ..., N`.
+Otherwise magnitudes and segment durations are constant. The final offset is
+always zero. `randomness` is in degrees in `[0, 180]`; zero alternates opposite
+directions. Full mode perturbs turns in both directions; Harmonic mode uses one
+direction (`Spire.SHAKE_RANDOMNESS_MODE_HARMONIC`). The method driver follows the
+global default easing unless explicitly overridden. Changes to that global
+setting also affect existing shakes that still use the default. Easing remaps
+overall path progress; use an explicit Linear ease for the sampler's original
+waypoint timing.
+The method value is sampled modulo one, so positive and negative easing overshoot
+wrap around the path. Integer values sample zero offset. Keep the method's start
+and end values at `0` and `1`.
+
+`blendable = true` applies `current - previous_offset + next_offset`. Other
+blendable shakes and additive movement compose. An absolute property writer can
+discard the tracked offset and disrupt this bookkeeping. With `blendable = false`,
+the start is captured on first processing after the delay, then each update
+writes `start + offset`. That baseline is retained on replay.
+
+One random path is generated per playback. Restart and Incremental repeat it
+without drift; Yoyo retraces it exactly on alternating loops. Playing a stopped
+tween generates a fresh path on its next active update; resuming a paused tween
+retains its path. The waypoint buffer is allocated on first processing and reused.
+
+`stop()` never writes position. An immediate native `finished` connection restores
+the tracked contribution on natural and forced completion, before later native
+finish handlers and the Godot `finished` signal. Restoration is not guaranteed
+before `stopped` handlers, particularly with a nonzero custom eased endpoint.
+Native `stopped` bookkeeping invalidates the path for replay while retaining the
+last offset, so replay replaces the stopped contribution. In Rust, calling
+`finished_clear_connections()` disables cleanup; `stopped_clear_connections()`
+disables path invalidation. Disconnecting Godot signal subscribers does not remove
+these native connections. A stopped tween's `force_complete()` is a no-op.
+Freeing the owner cancels before access, including when forcing completion.
+Container layout can overwrite a Control's position.
+
+Both APIs always return a tween. Invalid arguments emit warnings and are corrected:
+nonpositive or nonfinite duration becomes 1 second; negative or nonfinite strength
+components become zero, preserving valid components; finite randomness is clamped
+to `[0, 180]`, and nonfinite randomness becomes 90 degrees. Nonpositive vibrato
+warns and uses the minimum of two segments. Positive vibrato producing fewer than
+two segments uses that minimum silently. Counts above 65536 warn and clamp to
+65536, limiting the waypoint buffer to approximately 1 MiB.
+
+The discarded source-port draft and the replacement's development inputs are
+recorded in the [provenance note](dotween_source_port_release_note.md).
+
 ## Motion
 
 `DoNode2D`, `DoNode3D`, and `DoControl` expose the following. The receiver is the

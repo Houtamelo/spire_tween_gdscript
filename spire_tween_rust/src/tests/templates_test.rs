@@ -37,6 +37,14 @@ impl ITestClass for TemplatesTests {
             ("test_do_shake", Self::test_do_shake),
             ("test_do_shake_stays_within_radius", Self::test_do_shake_stays_within_radius),
             ("test_do_shake_returns_to_origin", Self::test_do_shake_returns_to_origin),
+            ("test_shake_interpolation", Self::test_shake_interpolation),
+            ("test_shake_numerical_fixtures", Self::test_shake_numerical_fixtures),
+            ("test_shake_fade", Self::test_shake_fade),
+            ("test_shake_blending", Self::test_shake_blending),
+            ("test_shake_lifecycle", Self::test_shake_lifecycle),
+            ("test_shake_loops", Self::test_shake_loops),
+            ("test_shake_phase_and_cleanup", Self::test_shake_phase_and_cleanup),
+            ("test_shake_owners_and_inputs", Self::test_shake_owners_and_inputs),
             ("test_do_contour_shape", Self::test_do_contour_shape),
             ("test_do_contour_shape_speed_based", Self::test_do_contour_shape_speed_based),
             ("test_do_contour_shape_empty", Self::test_do_contour_shape_empty),
@@ -57,10 +65,9 @@ impl TemplatesTests {
     fn test_do_shake(&mut self) -> PinnedTestTask {
         let sprite = self.sprite.clone();
         let origin = sprite.get_position();
-        let radius_min = 5.0;
-        let radius_max = 25.0;
-
-        let handle = sprite.do_shake(radius_min, radius_max, 0.5, 30.0, 2.0).register();
+        let handle = sprite
+            .do_shake(2.0, Vector2::new(15.0, 20.0), 30, 90.0, true, ShakeRandomnessMode::Full, true)
+            .register();
         let tracker = RcPtr::clone(&self.time_tracker);
         assert_finished_timing(&handle, &tracker, 2.0);
 
@@ -85,39 +92,27 @@ impl TemplatesTests {
 
             assert!(max_deviation > 0.0, "do_shake must move the node at the tween");
 
-            // At 30 Hz over 2 s the shake should produce ~60 update events. Allow plenty
-            // of headroom for missed frames; a buggy shake that only fires once would
-            // produce 1 distinct position (the initial origin), which fails this check.
+            // Continuous waypoint interpolation must keep producing new positions.
             assert!(
                 distinct_positions >= 10,
-                "do_shake should produce many distinct positions over 2s @ 30Hz, only got {distinct_positions}"
+                "do_shake should continuously interpolate positions, only got {distinct_positions}"
             );
 
             let _ = &tracker;
         })
     }
 
-    /// Asserts the shake never moves the node beyond `radius_max` of origin.
-    ///
-    /// Regression guard: a prior bug seeded `prev_offset` with a random vector
-    /// that was never written to the node, propagating a permanent
-    /// `-INITIAL` bias through every tick (since the per-tick formula
-    /// `next_pos = curr_pos - prev_offset + next_offset` relies on
-    /// `prev_offset` matching what's actually on the node). Fixed by seeding
-    /// `prev_offset = Vector2::ZERO`.
+    /// Waypoints and their linear interpolation remain within strength.length().
     fn test_do_shake_stays_within_radius(&mut self) -> PinnedTestTask {
         let mut sprite = self.sprite.clone();
         sprite.set_position(Vector2::ZERO);
         let origin = sprite.get_position();
-        let radius_min: f32 = 5.0;
         let radius_max: f32 = 25.0;
         let tolerance: f32 = 0.5;
 
-        // vibratio=0.5 makes next_angle land near `prev_angle + PI`, so
-        // prev_offset and next_offset point in roughly opposite directions and
-        // their difference has magnitude near `prev_radius + next_radius`,
-        // which is always > radius_max when both radii are above radius_avg.
-        let handle = sprite.do_shake(radius_min, radius_max, 0.5, 60.0, 1.0).register();
+        let handle = sprite
+            .do_shake(1.0, Vector2::new(15.0, 20.0), 60, 90.0, true, ShakeRandomnessMode::Full, true)
+            .register();
         let tracker = RcPtr::clone(&self.time_tracker);
 
         Box::pin(async move {
@@ -147,16 +142,14 @@ impl TemplatesTests {
 
     /// Asserts the node ends at its origin position after the shake completes.
     ///
-    /// Regression guard for the same `prev_offset` seeding bug: even when the
-    /// `time.approx_eq(&duration)` restore branch fires, the persistent
-    /// `-INITIAL` bias would have left the node off-origin. Fixed by the
-    /// `prev_offset = Vector2::ZERO` seed change.
     fn test_do_shake_returns_to_origin(&mut self) -> PinnedTestTask {
         let mut sprite = self.sprite.clone();
         sprite.set_position(Vector2::ZERO);
         let origin = sprite.get_position();
 
-        let handle = sprite.do_shake(5.0, 25.0, 0.5, 30.0, 1.0).register();
+        let handle = sprite
+            .do_shake(1.0, Vector2::new(15.0, 20.0), 30, 90.0, true, ShakeRandomnessMode::Full, true)
+            .register();
         let tracker = RcPtr::clone(&self.time_tracker);
 
         Box::pin(async move {

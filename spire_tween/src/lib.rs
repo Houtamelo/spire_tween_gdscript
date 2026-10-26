@@ -166,7 +166,7 @@ pub mod prelude {
     pub use crate::tweens::{BasicLerp, CustomLerper, LerpMode, SpireLerp};
     pub use crate::{
         //connection::Connection,
-        enums::{Ease, EaseKind, Evaluator, LoopMode, PauseMode, ProcessMode, Spiral, State as TweenState},
+        enums::{Ease, EaseKind, Evaluator, LoopMode, PauseMode, ProcessMode, ShakeRandomnessMode, Spiral, State as TweenState},
         rc_ptr::*,
         tween_ptr::{TweenPtr, WeakTweenPtr},
         tweens::{
@@ -244,6 +244,8 @@ pub mod prelude {
 
 #[doc(hidden)]
 pub mod unversioned_api {
+    #[cfg(feature = "integration-tests")]
+    pub use crate::tweens::do_shake_internal;
     #[cfg(feature = "integration-tests")]
     pub use crate::global::BookkeepingSnapshot;
     pub use crate::global::{NodeStatus, TM, TweensMap};

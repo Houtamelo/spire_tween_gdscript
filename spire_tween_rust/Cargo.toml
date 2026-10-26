@@ -11,6 +11,7 @@ crate-type = ["cdylib"]
 godot = { version = "0.5", features = ["experimental-wasm", "register-docs"] }
 spire_tween = { path = "../spire_tween", features = ["integration-tests"] }
 futures-timer = "3.0.3"
+rand_xoshiro = "0.7.0"
 
 [features]
 api-4-4 = ["godot/api-4-4", "spire_tween/api-4-4"]

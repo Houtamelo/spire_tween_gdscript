@@ -6,6 +6,7 @@ inspired by Unity's [DOTween](https://dotween.demigiant.com/).
 - Type-safe per-property shortcuts (`do_position`, `do_modulate`, …) generated for every tweenable field of every Godot built-in class.
 - Sequences with parallel & sequential blocks, intervals, callbacks, and inserts at absolute time offsets.
 - Templates for higher-level patterns: `do_shake`, `do_follow`, `do_spiral`, `do_ellipsis` (2D/3D), `do_contour_shape`, `do_bone`.
+- `do_shake` now interpolates DOTween-style waypoints, with explicit blendable/absolute behavior; see the [shake API and migration notes](../docs/adapter_templates.md#shake).
 - Three lerp modes per property tween — absolute, relative (blends with external forces), speed-based (fixed units/second).
 - Pluggable custom lerpers via the `BasicLerp` / `SpireLerp` traits for non-built-in types.
 - Listen for `stopped`, `finished`, and `loop_finished` through pure-Rust closures (`*_connect`) or Godot signals (with a handle from `register_with_gd_handle`).

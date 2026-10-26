@@ -17,6 +17,7 @@ mod do_follow;
 mod do_follow_3d;
 #[allow(dead_code)]
 mod do_shake;
+mod shake_path;
 mod do_spiral;
 
 #[allow(unused_imports)]
@@ -27,6 +28,10 @@ pub use self::{
     do_ellipsis_3d::*,
     do_follow::*,
     do_follow_3d::*,
-    do_shake::*,
+    do_shake::{DoShakeControl, DoShakeNode2D},
     do_spiral::*,
 };
+
+#[cfg(feature = "integration-tests")]
+#[doc(hidden)]
+pub use self::do_shake::do_shake_internal;

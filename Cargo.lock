@@ -862,6 +862,7 @@ version = "0.1.0"
 dependencies = [
  "futures-timer",
  "godot",
+ "rand_xoshiro",
  "spire_tween",
 ]
 

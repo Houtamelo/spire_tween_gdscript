@@ -1,0 +1,209 @@
+WorkerThreadPool: 24 threads, 7 max low-priority.
+Initialize godot-rust (API v4.4.stable.official, runtime v4.7.2.stable.official, safeguards strict)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+TextServer: Added interface "Dummy"
+TextServer: Added interface "ICU / HarfBuzz / Graphite (Built-in)"
+SDL: Init OK!
+Using "default" pen tablet driver...
+
+TextServer: Primary interface set to: "ICU / HarfBuzz / Graphite (Built-in)".
+Loading resource: res://examples/theme/examples_theme.tres remapped: res://examples/theme/examples_theme.tres
+Loading resource: res://examples/theme/style-box_disabled.tres remapped: res://examples/theme/style-box_disabled.tres
+Completed load for: 'res://examples/theme/style-box_disabled.tres' remapped 'res://examples/theme/style-box_disabled.tres' at thread -1
+Loading resource: res://examples/theme/style-box_focus.tres remapped: res://examples/theme/style-box_focus.tres
+Completed load for: 'res://examples/theme/style-box_focus.tres' remapped 'res://examples/theme/style-box_focus.tres' at thread -1
+Loading resource: res://examples/theme/style-box_hover.tres remapped: res://examples/theme/style-box_hover.tres
+Completed load for: 'res://examples/theme/style-box_hover.tres' remapped 'res://examples/theme/style-box_hover.tres' at thread -1
+Loading resource: res://examples/theme/style-box_hover_pressed.tres remapped: res://examples/theme/style-box_hover_pressed.tres
+Completed load for: 'res://examples/theme/style-box_hover_pressed.tres' remapped 'res://examples/theme/style-box_hover_pressed.tres' at thread -1
+Loading resource: res://examples/theme/style-box_normal.tres remapped: res://examples/theme/style-box_normal.tres
+Completed load for: 'res://examples/theme/style-box_normal.tres' remapped 'res://examples/theme/style-box_normal.tres' at thread -1
+Loading resource: res://examples/theme/style-box_pressed.tres remapped: res://examples/theme/style-box_pressed.tres
+Completed load for: 'res://examples/theme/style-box_pressed.tres' remapped 'res://examples/theme/style-box_pressed.tres' at thread -1
+Completed load for: 'res://examples/theme/examples_theme.tres' remapped 'res://examples/theme/examples_theme.tres' at thread -1
+CORE API HASH: 2004498165
+EDITOR API HASH: 1696660745
+SceneTreeFTI: traversal method DEFAULT
+Loaded system CA certificates
+Loading resource: res://examples/tests/test_runner.tscn remapped: res://examples/tests/test_runner.tscn
+Loading resource: res://examples/tests/test_runner.gd remapped: res://examples/tests/test_runner.gd
+Loading resource: res://examples/tests/shake.tscn remapped: res://examples/tests/shake.tscn
+Loading resource: res://examples/tests/shake.gd remapped: res://examples/tests/shake.gd
+Completed load for: 'res://examples/tests/shake.gd' remapped 'res://examples/tests/shake.gd' at thread -1
+Completed load for: 'res://examples/tests/shake.tscn' remapped 'res://examples/tests/shake.tscn' at thread -1
+Loading resource: res://examples/tests/group2.tscn remapped: res://examples/tests/group2.tscn
+Loading resource: res://examples/tests/group2.gd remapped: res://examples/tests/group2.gd
+Completed load for: 'res://examples/tests/group2.gd' remapped 'res://examples/tests/group2.gd' at thread -1
+Completed load for: 'res://examples/tests/group2.tscn' remapped 'res://examples/tests/group2.tscn' at thread -1
+Loading resource: res://examples/tests/stop_events.tscn remapped: res://examples/tests/stop_events.tscn
+Loading resource: res://examples/tests/stop_events.gd remapped: res://examples/tests/stop_events.gd
+Completed load for: 'res://examples/tests/stop_events.gd' remapped 'res://examples/tests/stop_events.gd' at thread -1
+Completed load for: 'res://examples/tests/stop_events.tscn' remapped 'res://examples/tests/stop_events.tscn' at thread -1
+Loading resource: res://examples/tests/delays.tscn remapped: res://examples/tests/delays.tscn
+Loading resource: res://examples/tests/delays.gd remapped: res://examples/tests/delays.gd
+Completed load for: 'res://examples/tests/delays.gd' remapped 'res://examples/tests/delays.gd' at thread -1
+Loading resource: res://examples/world_bounds.tscn remapped: res://examples/world_bounds.tscn
+Completed load for: 'res://examples/world_bounds.tscn' remapped 'res://examples/world_bounds.tscn' at thread -1
+Loading resource: res://examples/bouncy_ball.tscn remapped: res://examples/bouncy_ball.tscn
+Loading resource: res://examples/screen_saver/bouncy_ball.gd remapped: res://examples/screen_saver/bouncy_ball.gd
+Loading resource: res://examples/screen_saver/collision_fx.tscn remapped: res://examples/screen_saver/collision_fx.tscn
+Loading resource: res://examples/screen_saver/collision_fx.gd remapped: res://examples/screen_saver/collision_fx.gd
+Completed load for: 'res://examples/screen_saver/collision_fx.gd' remapped 'res://examples/screen_saver/collision_fx.gd' at thread -1
+Completed load for: 'res://examples/screen_saver/collision_fx.tscn' remapped 'res://examples/screen_saver/collision_fx.tscn' at thread -1
+Completed load for: 'res://examples/screen_saver/bouncy_ball.gd' remapped 'res://examples/screen_saver/bouncy_ball.gd' at thread -1
+Completed load for: 'res://examples/bouncy_ball.tscn' remapped 'res://examples/bouncy_ball.tscn' at thread -1
+Completed load for: 'res://examples/tests/delays.tscn' remapped 'res://examples/tests/delays.tscn' at thread -1
+Loading resource: res://examples/tests/error_handling.tscn remapped: res://examples/tests/error_handling.tscn
+Loading resource: res://examples/tests/error_handling.gd remapped: res://examples/tests/error_handling.gd
+Completed load for: 'res://examples/tests/error_handling.gd' remapped 'res://examples/tests/error_handling.gd' at thread -1
+Completed load for: 'res://examples/tests/error_handling.tscn' remapped 'res://examples/tests/error_handling.tscn' at thread -1
+Loading resource: res://examples/tests/misc.tscn remapped: res://examples/tests/misc.tscn
+Loading resource: res://examples/tests/misc.gd remapped: res://examples/tests/misc.gd
+Completed load for: 'res://examples/tests/misc.gd' remapped 'res://examples/tests/misc.gd' at thread -1
+Completed load for: 'res://examples/tests/misc.tscn' remapped 'res://examples/tests/misc.tscn' at thread -1
+Loading resource: res://examples/tests/pause_process_modes.tscn remapped: res://examples/tests/pause_process_modes.tscn
+Loading resource: res://examples/tests/pause_process_modes.gd remapped: res://examples/tests/pause_process_modes.gd
+Completed load for: 'res://examples/tests/pause_process_modes.gd' remapped 'res://examples/tests/pause_process_modes.gd' at thread -1
+Completed load for: 'res://examples/tests/pause_process_modes.tscn' remapped 'res://examples/tests/pause_process_modes.tscn' at thread -1
+Loading resource: res://examples/tests/play_pause_stop.tscn remapped: res://examples/tests/play_pause_stop.tscn
+Loading resource: res://examples/tests/play_pause_stop.gd remapped: res://examples/tests/play_pause_stop.gd
+Completed load for: 'res://examples/tests/play_pause_stop.gd' remapped 'res://examples/tests/play_pause_stop.gd' at thread -1
+Completed load for: 'res://examples/tests/play_pause_stop.tscn' remapped 'res://examples/tests/play_pause_stop.tscn' at thread -1
+Loading resource: res://examples/tests/register_unregister.tscn remapped: res://examples/tests/register_unregister.tscn
+Loading resource: res://examples/tests/register_unregister.gd remapped: res://examples/tests/register_unregister.gd
+Completed load for: 'res://examples/tests/register_unregister.gd' remapped 'res://examples/tests/register_unregister.gd' at thread -1
+Completed load for: 'res://examples/tests/register_unregister.tscn' remapped 'res://examples/tests/register_unregister.tscn' at thread -1
+Loading resource: res://examples/tests/sequences.tscn remapped: res://examples/tests/sequences.tscn
+Loading resource: res://examples/tests/sequences.gd remapped: res://examples/tests/sequences.gd
+Completed load for: 'res://examples/tests/sequences.gd' remapped 'res://examples/tests/sequences.gd' at thread -1
+Completed load for: 'res://examples/tests/sequences.tscn' remapped 'res://examples/tests/sequences.tscn' at thread -1
+Loading resource: res://examples/tests/sequence_ctors.tscn remapped: res://examples/tests/sequence_ctors.tscn
+Loading resource: res://examples/tests/sequence_ctors.gd remapped: res://examples/tests/sequence_ctors.gd
+Completed load for: 'res://examples/tests/sequence_ctors.gd' remapped 'res://examples/tests/sequence_ctors.gd' at thread -1
+Completed load for: 'res://examples/tests/sequence_ctors.tscn' remapped 'res://examples/tests/sequence_ctors.tscn' at thread -1
+Loading resource: res://examples/tests/sequence_speed.tscn remapped: res://examples/tests/sequence_speed.tscn
+Loading resource: res://examples/tests/sequence_speed.gd remapped: res://examples/tests/sequence_speed.gd
+Completed load for: 'res://examples/tests/sequence_speed.gd' remapped 'res://examples/tests/sequence_speed.gd' at thread -1
+Completed load for: 'res://examples/tests/sequence_speed.tscn' remapped 'res://examples/tests/sequence_speed.tscn' at thread -1
+Loading resource: res://examples/tests/lerp_modes.tscn remapped: res://examples/tests/lerp_modes.tscn
+Loading resource: res://examples/tests/lerp_modes.gd remapped: res://examples/tests/lerp_modes.gd
+Completed load for: 'res://examples/tests/lerp_modes.gd' remapped 'res://examples/tests/lerp_modes.gd' at thread -1
+Completed load for: 'res://examples/tests/lerp_modes.tscn' remapped 'res://examples/tests/lerp_modes.tscn' at thread -1
+Loading resource: res://examples/tests/lerp_callable.tscn remapped: res://examples/tests/lerp_callable.tscn
+Loading resource: res://examples/tests/lerp_callable.gd remapped: res://examples/tests/lerp_callable.gd
+Completed load for: 'res://examples/tests/lerp_callable.gd' remapped 'res://examples/tests/lerp_callable.gd' at thread -1
+Completed load for: 'res://examples/tests/lerp_callable.tscn' remapped 'res://examples/tests/lerp_callable.tscn' at thread -1
+Loading resource: res://examples/tests/spiral.tscn remapped: res://examples/tests/spiral.tscn
+Loading resource: res://examples/tests/spiral.gd remapped: res://examples/tests/spiral.gd
+Completed load for: 'res://examples/tests/spiral.gd' remapped 'res://examples/tests/spiral.gd' at thread -1
+Loading resource: res://examples/tests/trail_spawner.gd remapped: res://examples/tests/trail_spawner.gd
+Completed load for: 'res://examples/tests/trail_spawner.gd' remapped 'res://examples/tests/trail_spawner.gd' at thread -1
+Completed load for: 'res://examples/tests/spiral.tscn' remapped 'res://examples/tests/spiral.tscn' at thread -1
+Loading resource: res://examples/tests/ellipsis.tscn remapped: res://examples/tests/ellipsis.tscn
+Loading resource: res://examples/tests/ellipsis.gd remapped: res://examples/tests/ellipsis.gd
+Completed load for: 'res://examples/tests/ellipsis.gd' remapped 'res://examples/tests/ellipsis.gd' at thread -1
+Completed load for: 'res://examples/tests/ellipsis.tscn' remapped 'res://examples/tests/ellipsis.tscn' at thread -1
+Loading resource: res://examples/tests/ellipsis_regressions.tscn remapped: res://examples/tests/ellipsis_regressions.tscn
+Loading resource: res://examples/tests/ellipsis_regressions.gd remapped: res://examples/tests/ellipsis_regressions.gd
+Completed load for: 'res://examples/tests/ellipsis_regressions.gd' remapped 'res://examples/tests/ellipsis_regressions.gd' at thread -1
+Completed load for: 'res://examples/tests/ellipsis_regressions.tscn' remapped 'res://examples/tests/ellipsis_regressions.tscn' at thread -1
+Loading resource: res://examples/tests/ownership.tscn remapped: res://examples/tests/ownership.tscn
+Loading resource: res://examples/tests/ownership.gd remapped: res://examples/tests/ownership.gd
+Completed load for: 'res://examples/tests/ownership.gd' remapped 'res://examples/tests/ownership.gd' at thread -1
+Completed load for: 'res://examples/tests/ownership.tscn' remapped 'res://examples/tests/ownership.tscn' at thread -1
+Loading resource: res://examples/tests/node_binding.tscn remapped: res://examples/tests/node_binding.tscn
+Loading resource: res://examples/tests/node_binding.gd remapped: res://examples/tests/node_binding.gd
+Completed load for: 'res://examples/tests/node_binding.gd' remapped 'res://examples/tests/node_binding.gd' at thread -1
+Completed load for: 'res://examples/tests/node_binding.tscn' remapped 'res://examples/tests/node_binding.tscn' at thread -1
+Loading resource: res://examples/tests/sequence_cycles.tscn remapped: res://examples/tests/sequence_cycles.tscn
+Loading resource: res://examples/tests/sequence_cycles.gd remapped: res://examples/tests/sequence_cycles.gd
+Completed load for: 'res://examples/tests/sequence_cycles.gd' remapped 'res://examples/tests/sequence_cycles.gd' at thread -1
+Completed load for: 'res://examples/tests/sequence_cycles.tscn' remapped 'res://examples/tests/sequence_cycles.tscn' at thread -1
+Loading resource: res://examples/tests/delayed_call_validity.tscn remapped: res://examples/tests/delayed_call_validity.tscn
+Loading resource: res://examples/tests/delayed_call_validity.gd remapped: res://examples/tests/delayed_call_validity.gd
+Completed load for: 'res://examples/tests/delayed_call_validity.gd' remapped 'res://examples/tests/delayed_call_validity.gd' at thread -1
+Completed load for: 'res://examples/tests/delayed_call_validity.tscn' remapped 'res://examples/tests/delayed_call_validity.tscn' at thread -1
+Loading resource: res://examples/tests/method_validity.tscn remapped: res://examples/tests/method_validity.tscn
+Loading resource: res://examples/tests/method_validity.gd remapped: res://examples/tests/method_validity.gd
+Completed load for: 'res://examples/tests/method_validity.gd' remapped 'res://examples/tests/method_validity.gd' at thread -1
+Completed load for: 'res://examples/tests/method_validity.tscn' remapped 'res://examples/tests/method_validity.tscn' at thread -1
+Completed load for: 'res://examples/tests/test_runner.gd' remapped 'res://examples/tests/test_runner.gd' at thread -1
+Completed load for: 'res://examples/tests/test_runner.tscn' remapped 'res://examples/tests/test_runner.tscn' at thread -1
+---------------------------------
+Test Started: test_self_and_ancestor_results_are_rejected
+Test Finished: test_self_and_ancestor_results_are_rejected
+TEST_PASS res://examples/tests/sequence_ctors.tscn::test_self_and_ancestor_results_are_rejected
+GDSCRIPT_TEST_RESULT total=1 failed=0 skipped=0
+WARNING: 12 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 2 resources still in use at exit.
+   at: clear (core/io/resource.cpp:817)
+XR: Clearing primary interface
+XR: Removed interface "Native mobile"
+XR: Removed interface "OpenXR"
+Leaked instance: GDScriptNativeClass:9223372052205929242 - Reference count: 2
+Leaked instance: GDScript:9223372067775186480 - Reference count: 2
+Leaked instance: GDScript:9223372075056498266 - Reference count: 6
+Leaked instance: :9223372084116195020
+Leaked instance: :9223372084132972237
+Leaked instance: :9223372084149749454
+Leaked instance: :9223372084166526671
+Leaked instance: :9223372084183303888
+Leaked instance: :9223372084200081105
+Leaked instance: :9223372084216858322
+Leaked instance: :9223372084233635539
+Leaked instance: :9223372084250412756
+Hint: Leaked instances typically happen when nodes are removed from the scene tree (with `remove_child()`) but not freed (with `free()` or `queue_free()`).
+Resource still in use: res://examples/tests/test_base.gd (GDScript)
+Resource still in use: res://examples/tests/sequence_ctors.gd (GDScript)
+Orphan StringName: test_invalid_callables_and_freed_factory_targets (static: 0, total: 1)
+Orphan StringName: _ready (static: 1, total: 2)
+Orphan StringName: _exit_tree (static: 1, total: 2)
+Orphan StringName: wait_loop_finished (static: 0, total: 1)
+Orphan StringName: near (static: 0, total: 1)
+Orphan StringName: "examples/tests/sequence_ctors.gd" (static: 0, total: 1)
+Orphan StringName: wait_seconds (static: 0, total: 1)
+Orphan StringName: test_append_is_lazy_and_reads_activation_state (static: 0, total: 1)
+Orphan StringName: start_frame (static: 0, total: 3)
+Orphan StringName: next_frame (static: 0, total: 1)
+Orphan StringName: assertion_failures (static: 0, total: 2)
+Orphan StringName: failures (static: 0, total: 2)
+Orphan StringName: check (static: 0, total: 1)
+Orphan StringName: test_forced_invalid_results_do_not_block_valid_factories (static: 0, total: 1)
+Orphan StringName: wait_finished (static: 0, total: 1)
+Orphan StringName: test_bridge_signatures_and_chaining (static: 0, total: 1)
+Orphan StringName: sequence (static: 0, total: 1)
+Orphan StringName: TestBase (static: 0, total: 3)
+Orphan StringName: test_invalid_results_are_skipped_for_all_operations (static: 0, total: 1)
+Orphan StringName: test_constructed_child_preserves_binding_and_cancels (static: 0, total: 1)
+Orphan StringName: test_pending_factory_with_weak_parent_can_be_released (static: 0, total: 1)
+Orphan StringName: test_insert_uses_per_update_delta_and_outlives_queue (static: 0, total: 1)
+Orphan StringName: fmt (static: 0, total: 1)
+Orphan StringName: assert_eq (static: 0, total: 1)
+Orphan StringName: assert_ge (static: 0, total: 1)
+Orphan StringName: assert_le (static: 0, total: 1)
+Orphan StringName: assert_ne (static: 0, total: 1)
+Orphan StringName: test_many_callables_remain_callbacks (static: 0, total: 1)
+Orphan StringName: test_current_default_ease_and_explicit_override (static: 0, total: 1)
+Orphan StringName: test_insert_waits_for_offset_plus_delay (static: 0, total: 1)
+Orphan StringName: test_force_complete_constructs_all_pending_children (static: 0, total: 1)
+Orphan StringName: assert_true (static: 0, total: 1)
+Orphan StringName: timer (static: 0, total: 3)
+Orphan StringName: FactoryTarget (static: 0, total: 1)
+Orphan StringName: _process (static: 3, total: 4)
+Orphan StringName: debug (static: 0, total: 1)
+Orphan StringName: test_bound_arguments_and_child_finished_signals (static: 0, total: 1)
+Orphan StringName: test_join_on_empty_sequence (static: 0, total: 1)
+Orphan StringName: roots (static: 0, total: 2)
+Orphan StringName: Node (static: 3, total: 4)
+Orphan StringName: test_factories_run_once_across_loops_and_replay (static: 0, total: 1)
+Orphan StringName: run_test (static: 0, total: 1)
+Orphan StringName: _time_since_start_seconds (static: 0, total: 1)
+Orphan StringName: test_duplicate_results_are_rejected (static: 0, total: 1)
+Orphan StringName: test_join_constructs_in_parallel_and_waits (static: 0, total: 1)
+Orphan StringName: add_ctor (static: 0, total: 1)
+Orphan StringName: _frames_since_start (static: 0, total: 1)
+Orphan StringName: test_self_and_ancestor_results_are_rejected (static: 0, total: 1)
+Orphan StringName: TIME_TOLERANCE (static: 0, total: 1)
+Orphan StringName: _assert_within_tolerance (static: 0, total: 1)
+StringName: 50 unclaimed string names at exit.

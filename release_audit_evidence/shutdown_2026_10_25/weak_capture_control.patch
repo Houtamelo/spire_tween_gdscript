@@ -1,0 +1,21 @@
+--- spire_tween_gdscript/examples/tests/sequence_ctors.gd	2026-10-11 21:51:04.214048418 -0300
++++ dist/group2-20261022/gdscript-4.7.2/examples/tests/sequence_ctors.gd	2026-10-25 22:50:35.318244698 -0300
+@@ -219,14 +219,16 @@
+ func test_self_and_ancestor_results_are_rejected() -> bool:
+ 	for operation in 3:
+ 		var seq := sequence()
+-		add_ctor(seq, operation, func(): return seq)
++		var seq_observer: WeakRef = weakref(seq)
++		add_ctor(seq, operation, func(): return seq_observer.get_ref())
+ 		# Keep a faulty acceptance from recursively ticking itself before cleanup.
+ 		seq.stop()
+ 		seq.custom_step(0.1)
+ 		check(not seq.remove(seq), "A constructor must not adopt its own sequence")
+ 		var nested := sequence()
+ 		var ancestor := sequence().append(nested)
+-		add_ctor(nested, operation, func(): return ancestor)
++		var ancestor_observer: WeakRef = weakref(ancestor)
++		add_ctor(nested, operation, func(): return ancestor_observer.get_ref())
+ 		ancestor.stop()
+ 		nested.custom_step(0.1)
+ 		check(not nested.remove(ancestor), "A constructor must not adopt an ancestor")

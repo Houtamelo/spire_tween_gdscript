@@ -9,6 +9,7 @@ mod loop_mode;
 mod macros;
 mod pause_mode;
 mod process_mode;
+mod shake_randomness_mode;
 mod spiral;
 mod state;
 
@@ -23,4 +24,13 @@ use godot::sys::{shard_add, shard_execute_pre_main};
 use macros::*;
 
 #[allow(unused_imports)]
-pub use self::{ease::*, evaluator::*, loop_mode::*, pause_mode::*, process_mode::*, spiral::*, state::*};
+pub use self::{
+    ease::*,
+    evaluator::*,
+    loop_mode::*,
+    pause_mode::*,
+    process_mode::*,
+    shake_randomness_mode::*,
+    spiral::*,
+    state::*,
+};
