@@ -38,6 +38,21 @@ impl ITestClass for MiscTests {
 
     fn test_list() -> Vec<NamedTest<Self>> {
         vec![
+            ("test_group3_global_easing", Self::test_group3_global_easing),
+            ("test_group3_punch", Self::test_group3_punch),
+            ("test_group3_punch_3d", Self::test_group3_punch_3d),
+            ("test_group3_effect_lifecycle", Self::test_group3_effect_lifecycle),
+            ("test_group3_shake", Self::test_group3_shake),
+            ("test_group3_shake_3d_camera", Self::test_group3_shake_3d_camera),
+            ("test_group3_generic", Self::test_group3_generic),
+            ("test_group3_quaternion", Self::test_group3_quaternion),
+            ("test_group3_rotation_modes", Self::test_group3_rotation_modes),
+            ("test_group3_blendable_rotation", Self::test_group3_blendable_rotation),
+            ("test_group3_look_at", Self::test_group3_look_at),
+            ("test_group3_pivot", Self::test_group3_pivot),
+            ("test_group3_scroll", Self::test_group3_scroll),
+            ("test_group3_spiral", Self::test_group3_spiral),
+            ("test_group3_cancellation_and_invalid", Self::test_group3_cancellation_and_invalid),
             ("test_group2_typed_accessors", Self::test_group2_typed_accessors),
             ("test_group2_callable_validity", Self::test_group2_callable_validity),
             ("test_group2_motion", Self::test_group2_motion),

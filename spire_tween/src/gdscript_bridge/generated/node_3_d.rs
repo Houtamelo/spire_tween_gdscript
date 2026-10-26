@@ -474,4 +474,379 @@ impl DoNode3D {
     ) -> Gd<SpireMethodFloat> {
         gd_from_native_tween(node.do_global_jump(to, height, jumps, duration).register())
     }
+    /// Alternating decaying waypoint punch. Captures the start on first step.
+    /// Rotation uses radians; scale deltas are additive. Stop leaves the
+    /// target untouched; successful/forced completion restores the offset.
+    /// Loops reuse the path; Yoyo retraces it. Easing remaps overall progress.
+    /// Invalid duration becomes 1 second, invalid vector components become
+    /// zero, elasticity clamps to 0-1, segment count clamps to 2-65536; warns.
+    /// Clearing native finish connections removes restoration. Registered.
+    #[func]
+    fn punch_position(
+        node: Gd<Node3D>,
+        punch: Vector3,
+        duration: f64,
+        #[opt(default = 10)]
+        vibrato: i32,
+        #[opt(default = 1.0)]
+        elasticity: f64,
+        #[opt(default = true)]
+        blendable: bool,
+    ) -> Gd<SpireMethodFloat> {
+        gd_from_native_tween(
+            node
+                .do_punch_position(punch, duration, vibrato, elasticity, blendable)
+                .register(),
+        )
+    }
+    /// Alternating decaying waypoint punch. Captures the start on first step.
+    /// Rotation uses radians; scale deltas are additive. Stop leaves the
+    /// target untouched; successful/forced completion restores the offset.
+    /// Loops reuse the path; Yoyo retraces it. Easing remaps overall progress.
+    /// Invalid duration becomes 1 second, invalid vector components become
+    /// zero, elasticity clamps to 0-1, segment count clamps to 2-65536; warns.
+    /// Clearing native finish connections removes restoration. Registered.
+    #[func]
+    fn punch_rotation(
+        node: Gd<Node3D>,
+        punch: Vector3,
+        duration: f64,
+        #[opt(default = 10)]
+        vibrato: i32,
+        #[opt(default = 1.0)]
+        elasticity: f64,
+        #[opt(default = true)]
+        blendable: bool,
+    ) -> Gd<SpireMethodFloat> {
+        gd_from_native_tween(
+            node
+                .do_punch_rotation(punch, duration, vibrato, elasticity, blendable)
+                .register(),
+        )
+    }
+    /// Alternating decaying waypoint punch. Captures the start on first step.
+    /// Rotation uses radians; scale deltas are additive. Stop leaves the
+    /// target untouched; successful/forced completion restores the offset.
+    /// Loops reuse the path; Yoyo retraces it. Easing remaps overall progress.
+    /// Invalid duration becomes 1 second, invalid vector components become
+    /// zero, elasticity clamps to 0-1, segment count clamps to 2-65536; warns.
+    /// Clearing native finish connections removes restoration. Registered.
+    #[func]
+    fn punch_scale(
+        node: Gd<Node3D>,
+        punch: Vector3,
+        duration: f64,
+        #[opt(default = 10)]
+        vibrato: i32,
+        #[opt(default = 1.0)]
+        elasticity: f64,
+        #[opt(default = true)]
+        blendable: bool,
+    ) -> Gd<SpireMethodFloat> {
+        gd_from_native_tween(
+            node
+                .do_punch_scale(punch, duration, vibrato, elasticity, blendable)
+                .register(),
+        )
+    }
+    /// Shake using the position-shake lifecycle and input normalization.
+    /// Rotation strength is in radians; scale strength is an additive delta.
+    /// Camera3D position shakes in its captured relative XY plane (Z ignored).
+    /// Generates once per playback, loops reuse, Yoyo retraces, replay regenerates.
+    /// Stop leaves the target untouched; successful/forced completion restores.
+    /// Invalid inputs warn and normalize; easing follows the global default.
+    /// Clearing native finish hooks disables restoration. Already registered.
+    #[func]
+    fn shake(
+        node: Gd<Node3D>,
+        duration: f64,
+        strength: Vector3,
+        #[opt(default = 10)]
+        vibrato: i32,
+        #[opt(default = 90.0)]
+        randomness: real,
+        #[opt(default = true)]
+        fade_out: bool,
+        #[opt(default = ShakeRandomnessMode::Full)]
+        randomness_mode: ShakeRandomnessMode,
+        #[opt(default = true)]
+        blendable: bool,
+    ) -> Gd<SpireMethodFloat> {
+        gd_from_native_tween(
+            node
+                .do_shake(
+                    duration,
+                    strength,
+                    vibrato,
+                    randomness,
+                    fade_out,
+                    randomness_mode,
+                    blendable,
+                )
+                .register(),
+        )
+    }
+    /// Shake using the position-shake lifecycle and input normalization.
+    /// Rotation strength is in radians; scale strength is an additive delta.
+    /// Camera3D position shakes in its captured relative XY plane (Z ignored).
+    /// Generates once per playback, loops reuse, Yoyo retraces, replay regenerates.
+    /// Stop leaves the target untouched; successful/forced completion restores.
+    /// Invalid inputs warn and normalize; easing follows the global default.
+    /// Clearing native finish hooks disables restoration. Already registered.
+    #[func]
+    fn shake_rotation(
+        node: Gd<Node3D>,
+        duration: f64,
+        strength: Vector3,
+        #[opt(default = 10)]
+        vibrato: i32,
+        #[opt(default = 90.0)]
+        randomness: real,
+        #[opt(default = true)]
+        fade_out: bool,
+        #[opt(default = ShakeRandomnessMode::Full)]
+        randomness_mode: ShakeRandomnessMode,
+        #[opt(default = true)]
+        blendable: bool,
+    ) -> Gd<SpireMethodFloat> {
+        gd_from_native_tween(
+            node
+                .do_shake_rotation(
+                    duration,
+                    strength,
+                    vibrato,
+                    randomness,
+                    fade_out,
+                    randomness_mode,
+                    blendable,
+                )
+                .register(),
+        )
+    }
+    /// Shake using the position-shake lifecycle and input normalization.
+    /// Rotation strength is in radians; scale strength is an additive delta.
+    /// Camera3D position shakes in its captured relative XY plane (Z ignored).
+    /// Generates once per playback, loops reuse, Yoyo retraces, replay regenerates.
+    /// Stop leaves the target untouched; successful/forced completion restores.
+    /// Invalid inputs warn and normalize; easing follows the global default.
+    /// Clearing native finish hooks disables restoration. Already registered.
+    #[func]
+    fn shake_scale(
+        node: Gd<Node3D>,
+        duration: f64,
+        strength: Vector3,
+        #[opt(default = 10)]
+        vibrato: i32,
+        #[opt(default = 90.0)]
+        randomness: real,
+        #[opt(default = true)]
+        fade_out: bool,
+        #[opt(default = ShakeRandomnessMode::Full)]
+        randomness_mode: ShakeRandomnessMode,
+        #[opt(default = true)]
+        blendable: bool,
+    ) -> Gd<SpireMethodFloat> {
+        gd_from_native_tween(
+            node
+                .do_shake_scale(
+                    duration,
+                    strength,
+                    vibrato,
+                    randomness,
+                    fade_out,
+                    randomness_mode,
+                    blendable,
+                )
+                .register(),
+        )
+    }
+    /// Local quaternion-composition punch with blending enabled. Radians.
+    #[func]
+    fn blendable_punch_rotation(
+        node: Gd<Node3D>,
+        punch: Vector3,
+        duration: f64,
+        #[opt(default = 10)]
+        vibrato: i32,
+        #[opt(default = 1.0)]
+        elasticity: f64,
+    ) -> Gd<SpireMethodFloat> {
+        gd_from_native_tween(
+            node
+                .do_blendable_punch_rotation(punch, duration, vibrato, elasticity)
+                .register(),
+        )
+    }
+    /// Euler target in radians, YXZ order. Fast chooses shortest angles;
+    /// FastBeyond360 preserves winding; WorldAxisAdd/LocalAxisAdd compose
+    /// relative rotations in world/object axes. Captures start on first step.
+    /// The global variant targets world orientation. Preserves scale.
+    /// Invalid values warn and normalize. Already registered float driver.
+    #[func]
+    fn rotate(
+        node: Gd<Node3D>,
+        to: Vector3,
+        duration: f64,
+        #[opt(default = RotateMode::Fast)]
+        mode: RotateMode,
+    ) -> Gd<SpireMethodFloat> {
+        gd_from_native_tween(node.do_rotate(to, duration, mode).register())
+    }
+    /// Euler target in radians, YXZ order. Fast chooses shortest angles;
+    /// FastBeyond360 preserves winding; WorldAxisAdd/LocalAxisAdd compose
+    /// relative rotations in world/object axes. Captures start on first step.
+    /// The global variant targets world orientation. Preserves scale.
+    /// Invalid values warn and normalize. Already registered float driver.
+    #[func]
+    fn global_rotate(
+        node: Gd<Node3D>,
+        to: Vector3,
+        duration: f64,
+        #[opt(default = RotateMode::Fast)]
+        mode: RotateMode,
+    ) -> Gd<SpireMethodFloat> {
+        gd_from_native_tween(node.do_global_rotate(to, duration, mode).register())
+    }
+    /// Shortest-arc quaternion interpolation. Captures start on first step;
+    /// preserves scale. Target normalizes; invalid/zero targets warn and
+    /// become identity. Ordinary easing applies. Returns a float method driver.
+    #[func]
+    fn rotate_quaternion(
+        node: Gd<Node3D>,
+        to: Quaternion,
+        duration: f64,
+    ) -> Gd<SpireMethodFloat> {
+        gd_from_native_tween(node.do_rotate_quaternion(to, duration).register())
+    }
+    /// Shortest-arc quaternion interpolation. Captures start on first step;
+    /// preserves scale. Target normalizes; invalid/zero targets warn and
+    /// become identity. Ordinary easing applies. Returns a float method driver.
+    #[func]
+    fn global_rotate_quaternion(
+        node: Gd<Node3D>,
+        to: Quaternion,
+        duration: f64,
+    ) -> Gd<SpireMethodFloat> {
+        gd_from_native_tween(node.do_global_rotate_quaternion(to, duration).register())
+    }
+    /// Adds successive quaternion rotation deltas in radians. Local deltas
+    /// multiply on the right; global deltas on the left. Order matters for
+    /// different axes. Preserves other rotation contributions and scale.
+    #[func]
+    fn blendable_rotation(
+        node: Gd<Node3D>,
+        by: Vector3,
+        duration: f64,
+    ) -> Gd<SpireMethodFloat> {
+        gd_from_native_tween(node.do_blendable_rotation(by, duration).register())
+    }
+    /// Adds successive quaternion rotation deltas in radians. Local deltas
+    /// multiply on the right; global deltas on the left. Order matters for
+    /// different axes. Preserves other rotation contributions and scale.
+    #[func]
+    fn blendable_global_rotation(
+        node: Gd<Node3D>,
+        by: Vector3,
+        duration: f64,
+    ) -> Gd<SpireMethodFloat> {
+        gd_from_native_tween(node.do_blendable_global_rotation(by, duration).register())
+    }
+    /// Faces a world-space point using Godot -Z forward (or +Z with
+    /// use_model_front). look_at captures the destination once; dynamic_look_at
+    /// recomputes it as the source moves; look_at_target also follows a moving
+    /// node and binds its lifetime/pause state. Axis constraints preserve
+    /// unselected initial Euler components every step via shortest Euler routes. Singular direction/up warns and
+    /// retains the last valid orientation. Captures start on first step.
+    #[func]
+    fn look_at(
+        node: Gd<Node3D>,
+        towards: Vector3,
+        duration: f64,
+        #[opt(default = Vector3::UP)]
+        up: Vector3,
+        #[opt(default = RotationAxis::All)]
+        axis: RotationAxis,
+        #[opt(default = false)]
+        use_model_front: bool,
+    ) -> Gd<SpireMethodFloat> {
+        gd_from_native_tween(
+            node.do_look_at(towards, duration, up, axis, use_model_front).register(),
+        )
+    }
+    /// Faces a world-space point using Godot -Z forward (or +Z with
+    /// use_model_front). look_at captures the destination once; dynamic_look_at
+    /// recomputes it as the source moves; look_at_target also follows a moving
+    /// node and binds its lifetime/pause state. Axis constraints preserve
+    /// unselected initial Euler components every step via shortest Euler routes. Singular direction/up warns and
+    /// retains the last valid orientation. Captures start on first step.
+    #[func]
+    fn dynamic_look_at(
+        node: Gd<Node3D>,
+        towards: Vector3,
+        duration: f64,
+        #[opt(default = Vector3::UP)]
+        up: Vector3,
+        #[opt(default = RotationAxis::All)]
+        axis: RotationAxis,
+        #[opt(default = false)]
+        use_model_front: bool,
+    ) -> Gd<SpireMethodFloat> {
+        gd_from_native_tween(
+            node
+                .do_dynamic_look_at(towards, duration, up, axis, use_model_front)
+                .register(),
+        )
+    }
+    /// Faces a world-space point using Godot -Z forward (or +Z with
+    /// use_model_front). look_at captures the destination once; dynamic_look_at
+    /// recomputes it as the source moves; look_at_target also follows a moving
+    /// node and binds its lifetime/pause state. Axis constraints preserve
+    /// unselected initial Euler components every step via shortest Euler routes. Singular direction/up warns and
+    /// retains the last valid orientation. Captures start on first step.
+    #[func]
+    fn look_at_target(
+        node: Gd<Node3D>,
+        target: Gd<Node3D>,
+        duration: f64,
+        #[opt(default = Vector3::UP)]
+        up: Vector3,
+        #[opt(default = RotationAxis::All)]
+        axis: RotationAxis,
+        #[opt(default = false)]
+        use_model_front: bool,
+    ) -> Gd<SpireMethodFloat> {
+        gd_from_native_tween(
+            node
+                .do_look_at_target(target, duration, up, axis, use_model_front)
+                .register(),
+        )
+    }
+    /// Local 3D Archimedean spiral. Captures start on first step. About axis,
+    /// travel=duration*speed*progress, angle=frequency*travel, radius=travel
+    /// (or expands then contracts), axial displacement=depth*travel. Snapping
+    /// rounds position. Invalid parameters warn and normalize. Public Pro
+    /// controls are supported; undocumented numerical parity is not asserted.
+    #[func]
+    fn spiral(
+        node: Gd<Node3D>,
+        duration: f64,
+        #[opt(default = Vector3::BACK)]
+        axis: Vector3,
+        #[opt(default = SpiralMode::Expand)]
+        mode: SpiralMode,
+        #[opt(default = 1.0)]
+        speed: f64,
+        #[opt(default = 10.0)]
+        frequency: f64,
+        #[opt(default = 0.0)]
+        depth: f64,
+        #[opt(default = false)]
+        snapping: bool,
+    ) -> Gd<SpireMethodFloat> {
+        gd_from_native_tween(
+            node
+                .do_spiral(duration, axis, mode, speed, frequency, depth, snapping)
+                .register(),
+        )
+    }
 }

@@ -429,6 +429,12 @@
 	]
 	},
 	{
+		"class": "ScrollContainer", "group": "UI", "tweens": [
+		{ "name": "scroll_horizontal", "ty": "i32", "get": "obj.get_h_scroll()", "set": "obj.set_h_scroll(val as i32);" },
+		{ "name": "scroll_vertical", "ty": "i32", "get": "obj.get_v_scroll()", "set": "obj.set_v_scroll(val as i32);" }
+	]
+	},
+	{
 		"class": "Node3D", "group": "3D", "tweens": [
 		{ "name": "position", "ty": "Vector3", "alias": "move_local" },
 		{ "name": "global_position", "ty": "Vector3", "alias": "move" },

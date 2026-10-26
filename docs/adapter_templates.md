@@ -1,6 +1,8 @@
 # Property adapters and simple templates
 
 These helpers use the ordinary property, method, and sequence processing paths.
+Punch, 3D shake, orientation, normalized UI, and 3D spiral APIs are documented
+in [group 3 templates](group3_templates.md).
 GDScript constructors register immediately. Rust constructors return builders:
 call `.register()` for automatic playback or `TweenPtr::new(builder)` for manual
 stepping. Durations are seconds. Godot 4.4 or newer is required.

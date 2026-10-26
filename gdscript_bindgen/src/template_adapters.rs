@@ -2,7 +2,7 @@ use super::*;
 
 pub fn methods(class: &Ident) -> TokenStream {
     let name = class.to_string();
-    match name.as_str() {
+    let mut out = match name.as_str() {
         "Node2D" | "Node3D" => motion_methods(class),
         "Control" => control_methods(class),
         "CanvasItem" | "SpriteBase3D" => color_methods(class, "modulate"),
@@ -14,7 +14,9 @@ pub fn methods(class: &Ident) -> TokenStream {
         "AudioServer" => audio_server_methods(),
         "ShaderMaterial" => shader_material_methods(),
         _ => TokenStream::new(),
-    }
+    };
+    out.extend(crate::group3_adapters::methods(class));
+    out
 }
 
 fn motion_methods(class: &Ident) -> TokenStream {

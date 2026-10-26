@@ -91,4 +91,78 @@ impl DoCamera3D {
         let tween = node.do_frustum_offset(to, duration).register();
         gd_from_native_tween(tween)
     }
+    /// Shake using the position-shake lifecycle and input normalization.
+    /// Rotation strength is in radians; scale strength is an additive delta.
+    /// Camera3D position shakes in its captured relative XY plane (Z ignored).
+    /// Generates once per playback, loops reuse, Yoyo retraces, replay regenerates.
+    /// Stop leaves the target untouched; successful/forced completion restores.
+    /// Invalid inputs warn and normalize; easing follows the global default.
+    /// Clearing native finish hooks disables restoration. Already registered.
+    #[func]
+    fn shake(
+        node: Gd<Camera3D>,
+        duration: f64,
+        strength: Vector3,
+        #[opt(default = 10)]
+        vibrato: i32,
+        #[opt(default = 90.0)]
+        randomness: real,
+        #[opt(default = true)]
+        fade_out: bool,
+        #[opt(default = ShakeRandomnessMode::Full)]
+        randomness_mode: ShakeRandomnessMode,
+        #[opt(default = true)]
+        blendable: bool,
+    ) -> Gd<SpireMethodFloat> {
+        gd_from_native_tween(
+            node
+                .do_shake(
+                    duration,
+                    strength,
+                    vibrato,
+                    randomness,
+                    fade_out,
+                    randomness_mode,
+                    blendable,
+                )
+                .register(),
+        )
+    }
+    /// Shake using the position-shake lifecycle and input normalization.
+    /// Rotation strength is in radians; scale strength is an additive delta.
+    /// Camera3D position shakes in its captured relative XY plane (Z ignored).
+    /// Generates once per playback, loops reuse, Yoyo retraces, replay regenerates.
+    /// Stop leaves the target untouched; successful/forced completion restores.
+    /// Invalid inputs warn and normalize; easing follows the global default.
+    /// Clearing native finish hooks disables restoration. Already registered.
+    #[func]
+    fn shake_rotation(
+        node: Gd<Camera3D>,
+        duration: f64,
+        strength: Vector3,
+        #[opt(default = 10)]
+        vibrato: i32,
+        #[opt(default = 90.0)]
+        randomness: real,
+        #[opt(default = true)]
+        fade_out: bool,
+        #[opt(default = ShakeRandomnessMode::Full)]
+        randomness_mode: ShakeRandomnessMode,
+        #[opt(default = true)]
+        blendable: bool,
+    ) -> Gd<SpireMethodFloat> {
+        gd_from_native_tween(
+            node
+                .do_shake_rotation(
+                    duration,
+                    strength,
+                    vibrato,
+                    randomness,
+                    fade_out,
+                    randomness_mode,
+                    blendable,
+                )
+                .register(),
+        )
+    }
 }

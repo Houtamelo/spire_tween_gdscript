@@ -126,13 +126,6 @@ impl<T: Inherits<Control> + Inherits<Object>> DoShakeControl<()> for Gd<T> {
     }
 }
 
-#[derive(Default)]
-struct ShakeState {
-    generated: bool,
-    initial_position: Option<Vector2>,
-    previous_offset: Vector2,
-}
-
 fn do_shake<T: GodotClass<Declarer = DeclEngine> + Inherits<Object>>(
     node: Gd<T>,
     get_pos: fn(&T) -> Vector2,
@@ -221,70 +214,20 @@ pub fn do_shake_internal<T: GodotClass<Declarer = DeclEngine> + Inherits<Object>
 
     let mut path =
         ShakePath::new(segments, [strength.x as f64, strength.y as f64], randomness as f64, fade_out, randomness_mode);
-    let state = RcPtr::new(ShakeState::default());
-
-    let callable = Callable::from_fn("do_shake", {
-        let mut node = node.clone();
-        let mut state = state.clone();
-
-        move |args| {
-            let current = get_pos(&node);
-            let position = {
-                let initial = *state.initial_position.get_or_insert(current);
-                if !state.generated {
-                    path.regenerate(&mut rng);
-                    state.generated = true;
-                }
-
-                let phase = args[0].to::<f64>().rem_euclid(1.0);
-                let offset = path.sample(phase);
-                let offset = Vector2::new(offset[0] as real, offset[1] as real);
-                let position = if blendable { current - state.previous_offset + offset } else { initial + offset };
-                state.previous_offset = offset;
-                position
-            };
-            set_pos(&mut node, position);
-            Variant::nil()
-        }
-    });
-
-    // Let the ordinary method tween easing remap overall path progress.
-    let mut tween = SpireTween::<LerpMethodData<f64>>::new(callable, 0.0, 1.0, duration);
-    tween.t.owner = Some(ObjectOrNode::from_unchecked_object(owner));
-
-    tween.stopped_connect(
-        {
-            let mut state = state.clone();
-            move || state.generated = false
-        },
-        SpireFlags::empty(),
-    );
-
-    tween.finished_connect(
-        {
-            let mut state = state;
-            let mut node = node;
-
-            move || {
-                if !node.is_instance_valid() {
-                    return;
-                }
-
-                let position = {
-                    let position =
-                        if blendable { Some(get_pos(&node) - state.previous_offset) } else { state.initial_position };
-
-                    state.previous_offset = Vector2::ZERO;
-                    position
-                };
-
-                if let Some(position) = position {
-                    set_pos(&mut node, position);
-                }
+    let read = node.clone();
+    let mut write = node;
+    effect::effect(
+        Some(owner),
+        move || get_pos(&read),
+        move |v| set_pos(&mut write, v),
+        move |p, regenerate| {
+            if regenerate {
+                path.regenerate(&mut rng);
             }
+            let offset = path.sample(p);
+            Vector2::new(offset[0] as real, offset[1] as real)
         },
-        SpireFlags::empty(),
-    );
-
-    tween
+        duration,
+        blendable,
+    )
 }

@@ -787,7 +787,7 @@ macro_rules! define_base_gd_methods {
             /// - Successful completion emits [signal stopped], then [signal finished].
             /// - This ignores any remaining loops and will not emit `loop_finished` for them.
             ///
-            /// Invalid property owners and method/delayed-call Callables cancel instead:
+            /// Invalid explicit bindings, property owners and method/delayed-call Callables cancel instead:
             /// they stop, emit [signal stopped], and do not emit completion signals.
             /// Registration is preserved while external owners retain the stopped tween;
             /// release the handle or call [method unregister] when it is no longer wanted.

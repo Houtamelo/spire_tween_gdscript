@@ -6,19 +6,19 @@ use rand::Rng;
 
 use crate::enums::ShakeRandomnessMode;
 
-pub(crate) struct ShakePath {
+pub(crate) struct ShakePath<const D: usize = 2> {
     segments: NonZeroUsize,
-    strength: [f64; 2],
+    strength: [f64; D],
     randomness_degrees: f64,
     fade_out: bool,
     mode: ShakeRandomnessMode,
-    waypoints: Vec<[f64; 2]>,
+    waypoints: Vec<[f64; D]>,
 }
 
-impl ShakePath {
+impl<const D: usize> ShakePath<D> {
     pub(crate) fn new(
         segments: NonZeroUsize,
-        strength: [f64; 2],
+        strength: [f64; D],
         randomness_degrees: f64,
         fade_out: bool,
         mode: ShakeRandomnessMode,
@@ -37,15 +37,16 @@ impl ShakePath {
         let segments = self.segments.get();
         let waypoint_count = segments + 1;
         if self.waypoints.len() != waypoint_count {
-            self.waypoints.resize(waypoint_count, [0.0, 0.0]);
+            self.waypoints.resize(waypoint_count, [0.0; D]);
         }
-        self.waypoints.fill([0.0, 0.0]);
+        self.waypoints.fill([0.0; D]);
 
-        let strength_magnitude = self.strength[0].hypot(self.strength[1]);
+        let strength_magnitude = self
+            .strength
+            .iter()
+            .fold(0.0_f64, |length, component| length.hypot(*component));
         let randomness_radians = self.randomness_degrees.to_radians();
         let mut theta = rng.random::<f64>() * (2.0 * std::f64::consts::PI);
-        let alpha = if strength_magnitude > 0.0 { self.strength[0] / strength_magnitude } else { 0.0 };
-        let beta = if strength_magnitude > 0.0 { self.strength[1] / strength_magnitude } else { 0.0 };
 
         for k in 1..segments {
             if k > 1 {
@@ -60,14 +61,15 @@ impl ShakePath {
             };
 
             if strength_magnitude > 0.0 {
-                self.waypoints[k] = shaped_waypoint(amplitude, theta, phi, alpha, beta);
+                self.waypoints[k] =
+                    shaped_waypoint(amplitude, theta, phi, self.strength.map(|s| s / strength_magnitude));
             }
         }
     }
 
-    pub(crate) fn sample(&self, progress: f64) -> [f64; 2] {
+    pub(crate) fn sample(&self, progress: f64) -> [f64; D] {
         if !(progress > 0.0 && progress < 1.0) {
-            return [0.0, 0.0];
+            return [0.0; D];
         }
 
         // Find the first destination knot whose time is at or after progress.
@@ -97,10 +99,7 @@ impl ShakePath {
         if fraction >= 1.0 {
             return end;
         }
-        [
-            start[0] + (end[0] - start[0]) * fraction,
-            start[1] + (end[1] - start[1]) * fraction,
-        ]
+        std::array::from_fn(|i| start[i] + (end[i] - start[i]) * fraction)
     }
 
     fn knot_time(&self, knot: usize) -> f64 {
@@ -117,17 +116,22 @@ fn randomness_offset(unit: f64, radians: f64, mode: ShakeRandomnessMode) -> f64 
     }
 }
 
-fn shaped_waypoint(amplitude: f64, theta: f64, phi: f64, alpha: f64, beta: f64) -> [f64; 2] {
+fn shaped_waypoint<const D: usize>(amplitude: f64, theta: f64, phi: f64, shaping: [f64; D]) -> [f64; D] {
     let cos_theta = theta.cos();
-    let x = alpha * cos_theta * phi.cos();
+    let x = shaping[0] * cos_theta * phi.cos();
     let y = theta.sin();
     let z = cos_theta * phi.sin();
     let d = (x * x + y * y + z * z).sqrt();
-    let h = if d <= beta { 1.0 } else { beta / d };
+    let h = if d <= shaping[1] { 1.0 } else { shaping[1] / d };
     let y_shaped = y * h;
-    let length = x.hypot(y_shaped);
-
-    if length > 0.0 { [amplitude * x / length, amplitude * y_shaped / length] } else { [0.0, 0.0] }
+    let z_shaped = if D == 3 {
+        let d = (x * x + y_shaped * y_shaped + z * z).sqrt();
+        -z * if d <= shaping[2] { 1.0 } else { shaping[2] / d }
+    } else {
+        0.0
+    };
+    let length = if D == 3 { x.hypot(y_shaped).hypot(z_shaped) } else { x.hypot(y_shaped) };
+    if length > 0.0 { std::array::from_fn(|i| amplitude * [x, y_shaped, z_shaped][i] / length) } else { [0.0; D] }
 }
 
 #[cfg(test)]
@@ -140,6 +144,24 @@ mod tests {
     use super::{ShakePath, ShakeRandomnessMode};
 
     fn seeded_rng() -> Xoshiro256PlusPlus { Xoshiro256PlusPlus::seed_from_u64(12345) }
+
+    #[test]
+    fn spatial_waypoints_match_independently_evaluated_equations() {
+        let mut path =
+            ShakePath::new(NonZeroUsize::new(4).unwrap(), [3.0, 4.0, 5.0], 90.0, true, ShakeRandomnessMode::Full);
+        path.regenerate(&mut seeded_rng());
+        // Calculated from the spherical direction, sequential component shaping,
+        // and normalization equations, using the documented seed's unit draws.
+        for (time, expected) in [
+            (0.1, [-2.3439257194279484, -2.1008340862112944, -6.331864525083977]),
+            (0.3, [0.9595328260297309, -3.699277883840274, 3.6769062938701094]),
+            (0.6, [0.2694263853910813, 3.482950640944519, -0.5444853125652347]),
+        ] {
+            for (a, b) in path.sample(time).into_iter().zip(expected) {
+                assert!((a - b).abs() < 1e-12);
+            }
+        }
+    }
 
     fn assert_close(actual: [f64; 2], expected: [f64; 2]) {
         for (actual, expected) in actual.into_iter().zip(expected) {

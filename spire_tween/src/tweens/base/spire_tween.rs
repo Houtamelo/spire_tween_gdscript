@@ -638,7 +638,7 @@ where SpireTween<T>: SpireTweener
     }
 
     /// Jumps to the final value, transitions to [`State::Stopped`], emits `stopped`,
-    /// then emits `finished` if completion succeeded. An invalid owner or callable
+    /// then emits `finished` if completion succeeded. An invalid binding, owner or callable
     /// cancels instead, emitting only `stopped`. Skips any remaining
     /// loops without firing `loop_finished` for them.
     ///
@@ -647,7 +647,9 @@ where SpireTween<T>: SpireTweener
         match self.state {
             State::Stopped => {}
             State::Paused | State::Playing => {
-                if self.force_complete_internal() {
+                if self.bound_nodes.iter().any(|node| !node.is_instance_valid()) {
+                    self.stop();
+                } else if self.force_complete_internal() {
                     self.handle_finished();
                 } else {
                     self.stop();

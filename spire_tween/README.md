@@ -1,5 +1,8 @@
 # spire_tween
 
+See [group 3 templates](../docs/group3_templates.md) for punch, 3D shake,
+quaternion/look-at rotation, normalized UI, and 3D spirals.
+
 Tweening library for Godot 4 via [godot-rust](https://github.com/godot-rust/gdext),
 inspired by Unity's [DOTween](https://dotween.demigiant.com/).
 

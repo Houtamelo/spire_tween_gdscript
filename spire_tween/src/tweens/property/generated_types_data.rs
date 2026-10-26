@@ -11,6 +11,7 @@ pub enum PropertyDataInt {
     LabelSettings(LabelSettingsIntData),
     LineEdit(LineEditIntData),
     RichTextLabel(RichTextLabelIntData),
+    ScrollContainer(ScrollContainerIntData),
     Sprite2D(Sprite2DIntData),
     SubViewport(SubViewportIntData),
     TextEdit(TextEditIntData),
@@ -23,8 +24,9 @@ impl IGeneralPropertyData for PropertyDataInt {
         nested_try_from_path_and_object! {
             _path_str, owner, AnimatedSprite2DIntData, AnimatedSprite3DIntData,
             CanvasItemIntData, LabelIntData, Label3DIntData, LabelSettingsIntData,
-            LineEditIntData, RichTextLabelIntData, Sprite2DIntData, SubViewportIntData,
-            TextEditIntData, WindowIntData, PropertyDataViaCallable < i64 >
+            LineEditIntData, RichTextLabelIntData, ScrollContainerIntData,
+            Sprite2DIntData, SubViewportIntData, TextEditIntData, WindowIntData,
+            PropertyDataViaCallable < i64 >
         }
         Self::Custom(PropertyDataCustom::from_path_and_owner(_path_str, path, owner))
     }

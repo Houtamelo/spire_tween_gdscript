@@ -512,4 +512,174 @@ impl DoControl {
                 .register(),
         )
     }
+    /// Alternating decaying waypoint punch. Captures the start on first step.
+    /// Rotation uses radians; scale deltas are additive. Stop leaves the
+    /// target untouched; successful/forced completion restores the offset.
+    /// Loops reuse the path; Yoyo retraces it. Easing remaps overall progress.
+    /// Invalid duration becomes 1 second, invalid vector components become
+    /// zero, elasticity clamps to 0-1, segment count clamps to 2-65536; warns.
+    /// Clearing native finish connections removes restoration. Registered.
+    #[func]
+    fn punch_position(
+        node: Gd<Control>,
+        punch: Vector2,
+        duration: f64,
+        #[opt(default = 10)]
+        vibrato: i32,
+        #[opt(default = 1.0)]
+        elasticity: f64,
+        #[opt(default = true)]
+        blendable: bool,
+    ) -> Gd<SpireMethodFloat> {
+        gd_from_native_tween(
+            node
+                .do_punch_position(punch, duration, vibrato, elasticity, blendable)
+                .register(),
+        )
+    }
+    /// Alternating decaying waypoint punch. Captures the start on first step.
+    /// Rotation uses radians; scale deltas are additive. Stop leaves the
+    /// target untouched; successful/forced completion restores the offset.
+    /// Loops reuse the path; Yoyo retraces it. Easing remaps overall progress.
+    /// Invalid duration becomes 1 second, invalid vector components become
+    /// zero, elasticity clamps to 0-1, segment count clamps to 2-65536; warns.
+    /// Clearing native finish connections removes restoration. Registered.
+    #[func]
+    fn punch_rotation(
+        node: Gd<Control>,
+        punch: f64,
+        duration: f64,
+        #[opt(default = 10)]
+        vibrato: i32,
+        #[opt(default = 1.0)]
+        elasticity: f64,
+        #[opt(default = true)]
+        blendable: bool,
+    ) -> Gd<SpireMethodFloat> {
+        gd_from_native_tween(
+            node
+                .do_punch_rotation(punch, duration, vibrato, elasticity, blendable)
+                .register(),
+        )
+    }
+    /// Alternating decaying waypoint punch. Captures the start on first step.
+    /// Rotation uses radians; scale deltas are additive. Stop leaves the
+    /// target untouched; successful/forced completion restores the offset.
+    /// Loops reuse the path; Yoyo retraces it. Easing remaps overall progress.
+    /// Invalid duration becomes 1 second, invalid vector components become
+    /// zero, elasticity clamps to 0-1, segment count clamps to 2-65536; warns.
+    /// Clearing native finish connections removes restoration. Registered.
+    #[func]
+    fn punch_scale(
+        node: Gd<Control>,
+        punch: Vector2,
+        duration: f64,
+        #[opt(default = 10)]
+        vibrato: i32,
+        #[opt(default = 1.0)]
+        elasticity: f64,
+        #[opt(default = true)]
+        blendable: bool,
+    ) -> Gd<SpireMethodFloat> {
+        gd_from_native_tween(
+            node
+                .do_punch_scale(punch, duration, vibrato, elasticity, blendable)
+                .register(),
+        )
+    }
+    /// Shake using the position-shake lifecycle and input normalization.
+    /// Rotation strength is in radians; scale strength is an additive delta.
+    /// Camera3D position shakes in its captured relative XY plane (Z ignored).
+    /// Generates once per playback, loops reuse, Yoyo retraces, replay regenerates.
+    /// Stop leaves the target untouched; successful/forced completion restores.
+    /// Invalid inputs warn and normalize; easing follows the global default.
+    /// Clearing native finish hooks disables restoration. Already registered.
+    #[func]
+    fn shake_rotation(
+        node: Gd<Control>,
+        duration: f64,
+        strength: f64,
+        #[opt(default = 10)]
+        vibrato: i32,
+        #[opt(default = 90.0)]
+        randomness: real,
+        #[opt(default = true)]
+        fade_out: bool,
+        #[opt(default = ShakeRandomnessMode::Full)]
+        randomness_mode: ShakeRandomnessMode,
+        #[opt(default = true)]
+        blendable: bool,
+    ) -> Gd<SpireMethodFloat> {
+        gd_from_native_tween(
+            node
+                .do_shake_rotation(
+                    duration,
+                    strength,
+                    vibrato,
+                    randomness,
+                    fade_out,
+                    randomness_mode,
+                    blendable,
+                )
+                .register(),
+        )
+    }
+    /// Shake using the position-shake lifecycle and input normalization.
+    /// Rotation strength is in radians; scale strength is an additive delta.
+    /// Camera3D position shakes in its captured relative XY plane (Z ignored).
+    /// Generates once per playback, loops reuse, Yoyo retraces, replay regenerates.
+    /// Stop leaves the target untouched; successful/forced completion restores.
+    /// Invalid inputs warn and normalize; easing follows the global default.
+    /// Clearing native finish hooks disables restoration. Already registered.
+    #[func]
+    fn shake_scale(
+        node: Gd<Control>,
+        duration: f64,
+        strength: Vector2,
+        #[opt(default = 10)]
+        vibrato: i32,
+        #[opt(default = 90.0)]
+        randomness: real,
+        #[opt(default = true)]
+        fade_out: bool,
+        #[opt(default = ShakeRandomnessMode::Full)]
+        randomness_mode: ShakeRandomnessMode,
+        #[opt(default = true)]
+        blendable: bool,
+    ) -> Gd<SpireMethodFloat> {
+        gd_from_native_tween(
+            node
+                .do_shake_scale(
+                    duration,
+                    strength,
+                    vibrato,
+                    randomness,
+                    fade_out,
+                    randomness_mode,
+                    blendable,
+                )
+                .register(),
+        )
+    }
+    /// Normalized pivot in 0-1, multiplied by the live Control size each
+    /// update. Axis variants preserve the other pixel component. Captures
+    /// the start ratio on first processing. Invalid targets warn and clamp.
+    #[func]
+    fn pivot(node: Gd<Control>, to: Vector2, duration: f64) -> Gd<SpireMethodFloat> {
+        gd_from_native_tween(node.do_pivot(to, duration).register())
+    }
+    /// Normalized pivot in 0-1, multiplied by the live Control size each
+    /// update. Axis variants preserve the other pixel component. Captures
+    /// the start ratio on first processing. Invalid targets warn and clamp.
+    #[func]
+    fn pivot_x(node: Gd<Control>, to: f64, duration: f64) -> Gd<SpireMethodFloat> {
+        gd_from_native_tween(node.do_pivot_x(to, duration).register())
+    }
+    /// Normalized pivot in 0-1, multiplied by the live Control size each
+    /// update. Axis variants preserve the other pixel component. Captures
+    /// the start ratio on first processing. Invalid targets warn and clamp.
+    #[func]
+    fn pivot_y(node: Gd<Control>, to: f64, duration: f64) -> Gd<SpireMethodFloat> {
+        gd_from_native_tween(node.do_pivot_y(to, duration).register())
+    }
 }

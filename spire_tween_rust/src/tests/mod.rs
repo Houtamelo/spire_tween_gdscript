@@ -6,6 +6,7 @@ mod ellipsis_test;
 mod error_handling;
 mod gd_handle_path;
 mod group2;
+mod group3;
 mod lerp_callable;
 mod lerp_modes;
 mod method_validity;

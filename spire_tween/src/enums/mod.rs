@@ -10,6 +10,7 @@ mod macros;
 mod pause_mode;
 mod process_mode;
 mod shake_randomness_mode;
+mod rotation;
 mod spiral;
 mod state;
 
@@ -31,6 +32,7 @@ pub use self::{
     pause_mode::*,
     process_mode::*,
     shake_randomness_mode::*,
+    rotation::*,
     spiral::*,
     state::*,
 };
