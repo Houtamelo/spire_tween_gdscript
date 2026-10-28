@@ -699,6 +699,71 @@ impl TryFromPathAndObject for Node3DVec3Data {
             })
     }
 }
+#[derive(Debug, Clone)]
+pub struct Node3DQuaternionData {
+    pub property: Node3DQuaternionKind,
+    pub owner: Gd<Node3D>,
+    pub owner_obj_or_node: ObjectOrNode,
+}
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum Node3DQuaternionKind {
+    Quaternion,
+}
+impl IProperty<Quaternion> for Node3DQuaternionData {
+    #[inline]
+    fn get_property_value(&self) -> Quaternion {
+        match self.property {
+            <Node3DQuaternionKind>::Quaternion => {
+                let obj = &self.owner;
+                obj.get_quaternion()
+            }
+        }
+    }
+    #[inline]
+    fn set_property_value(&mut self, value: Quaternion) {
+        match self.property {
+            <Node3DQuaternionKind>::Quaternion => {
+                let obj = &mut self.owner;
+                let val = value;
+                obj.set_quaternion(val);
+            }
+        }
+    }
+}
+impl IPropertyData for Node3DQuaternionData {
+    type Target = Node3D;
+    #[inline]
+    fn get_property_path(&self) -> NodePath {
+        match self.property {
+            <Node3DQuaternionKind>::Quaternion => NodePath::from("quaternion"),
+        }
+    }
+    #[inline]
+    fn get_owner(&self) -> Option<&ObjectOrNode> {
+        Some(&self.owner_obj_or_node)
+    }
+}
+impl TryFromPathAndObject for Node3DQuaternionData {
+    fn try_from_path_and_object(path: &str, object: Gd<Object>) -> Option<Self> {
+        object
+            .try_cast::<Node3D>()
+            .ok()
+            .and_then(|owner| {
+                match path {
+                    "quaternion" => {
+                        Some(Self {
+                            property: <Node3DQuaternionKind>::Quaternion,
+                            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                                owner.clone().upcast::<Object>(),
+                            ),
+                            owner,
+                        })
+                    }
+                    _ => None,
+                }
+            })
+    }
+}
 pub trait SpireDoNode3D<Marker = ()> {
     fn do_position_x(
         &self,
@@ -880,6 +945,11 @@ pub trait SpireDoNode3D<Marker = ()> {
         end_val: Vector3,
         duration: f64,
     ) -> SpireTween<LerpPropertyData<Vector3>>;
+    fn do_quaternion(
+        &self,
+        end_val: Quaternion,
+        duration: f64,
+    ) -> SpireTween<LerpPropertyData<Quaternion>>;
 }
 impl<Class: Inherits<Node3D> + Inherits<Object>> SpireDoNode3D<()> for Gd<Class> {
     fn do_position_x(
@@ -1456,6 +1526,22 @@ impl<Class: Inherits<Node3D> + Inherits<Object>> SpireDoNode3D<()> for Gd<Class>
         };
         SpireTween::<
             LerpPropertyData<Vector3>,
+        >::new(data.into(), Evaluator::Static(end_val), duration)
+    }
+    fn do_quaternion(
+        &self,
+        end_val: Quaternion,
+        duration: f64,
+    ) -> SpireTween<LerpPropertyData<Quaternion>> {
+        let data = Node3DQuaternionData {
+            property: <Node3DQuaternionKind>::Quaternion,
+            owner: self.clone().upcast(),
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                self.clone().upcast::<Object>(),
+            ),
+        };
+        SpireTween::<
+            LerpPropertyData<Quaternion>,
         >::new(data.into(), Evaluator::Static(end_val), duration)
     }
 }
@@ -2071,6 +2157,23 @@ for T {
         };
         SpireTween::<
             LerpPropertyData<Vector3>,
+        >::new(data.into(), Evaluator::Static(end_val), duration)
+    }
+    fn do_quaternion(
+        &self,
+        end_val: Quaternion,
+        duration: f64,
+    ) -> SpireTween<LerpPropertyData<Quaternion>> {
+        let owner: Gd<Node3D> = self.to_gd().upcast();
+        let data = Node3DQuaternionData {
+            property: <Node3DQuaternionKind>::Quaternion,
+            owner_obj_or_node: ObjectOrNode::from_unchecked_object(
+                owner.clone().upcast::<Object>(),
+            ),
+            owner,
+        };
+        SpireTween::<
+            LerpPropertyData<Quaternion>,
         >::new(data.into(), Evaluator::Static(end_val), duration)
     }
 }

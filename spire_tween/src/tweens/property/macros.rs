@@ -28,7 +28,7 @@ macro_rules! nested_try_from_path_and_object {
 pub(crate) use nested_try_from_path_and_object;
 
 macro_rules! gd_property_tween {
-    ($GdName:ident, $T:ty, $P:ident, $CStrName:literal,SpeedDocs = $SpeedDocs:literal) => {
+    ($GdName:ident, $T:ty, $P:ident, $CStrName:literal,SpeedDocs = $SpeedDocs:literal $(, ValueDocs = $ValueDocs:literal)?) => {
         /// A tween that interpolates the value of the property at [method get_property_path], by lerping between specific
         /// start and end values defined by the user. The weight of the lerp is based on how much time has passed
         /// relative to [method get_duration].
@@ -38,6 +38,7 @@ macro_rules! gd_property_tween {
         /// Spire also provides specialized constructors of this class for common properties, the constructors are present
         /// on special "namespace" classes for each node type, examples: [DoNode2D], [DoControl],
         /// [DoCanvasItem]. See those classes' methods for more details.
+        $(#[doc = $ValueDocs])?
         #[derive(GodotClass)]
         #[class(base = RefCounted, no_init)]
         pub struct $GdName {
@@ -386,6 +387,24 @@ Assuming a speed of `64.0`, it would take `1.732` seconds to go from `Vector3i(0
 gd_property_tween! { SpireProperty, Variant, Variant, c"SpireProperty", SpeedDocs =
 "Which interpolates the property at a fixed rate.\n" }
 
+gd_property_tween! { SpirePropertyVec4, Vector4, Vector4, c"SpirePropertyVec4", SpeedDocs =
+"For [Vector4], speed is the Euclidean distance per second across (x, y, z, w).", ValueDocs =
+"Interpolates all four numeric components. Relative mode adds each interpolated vector delta to the current value." }
+
+gd_property_tween! { SpirePropertyQuaternion, Quaternion, Quaternion, c"SpirePropertyQuaternion", SpeedDocs =
+"For [Quaternion], speed is the shortest rotation angle in radians per second. Interpolation follows the shortest arc. \
+Relative mode postmultiplies each rotation delta, so multiple rotation tweens compose in processing order.", ValueDocs =
+"Interpolates unit rotations along the shortest arc, extrapolating for easing overshoot and Incremental loops. \
+Relative mode uses identity as its baseline and applies current * previous.inverse() * next. \
+Finite nonzero inputs are normalized; zero/nonfinite inputs warn with the rejected value and use identity, \
+including on forced completion. A quaternion and its negation have the same orientation and zero angular distance." }
+
+gd_property_tween! { SpirePropertyRect2, Rect2, Rect2, c"SpirePropertyRect2", SpeedDocs =
+"For [Rect2], speed is the Euclidean distance per second across (position.x, position.y, size.x, size.y). \
+Position and size interpolate together; negative sizes are preserved.", ValueDocs =
+"Interpolates position and size together. Relative mode adds their component deltas. Signed sizes and easing overshoot \
+are preserved; the result is not normalized with Rect2.abs()." }
+
 macro_rules! define_instantiate_fn {
     ($GdName:ident, $T:ty, $Suffix:literal,Docs = $Docs:literal) => {
         #[godot_api(secondary)]
@@ -415,6 +434,9 @@ define_instantiate_fn! { SpirePropertyVec2, Vector2, "vec2", Docs = "See [method
 define_instantiate_fn! { SpirePropertyVec2i, Vector2i, "vec2i", Docs = "See [method Spire.do_property_vec2i]." }
 define_instantiate_fn! { SpirePropertyVec3, Vector3, "vec3", Docs = "See [method Spire.do_property_vec3]." }
 define_instantiate_fn! { SpirePropertyVec3i, Vector3i, "vec3i", Docs = "See [method Spire.do_property_vec3i]." }
+define_instantiate_fn! { SpirePropertyVec4, Vector4, "vec4", Docs = "See [method Spire.do_property_vec4]." }
+define_instantiate_fn! { SpirePropertyQuaternion, Quaternion, "quaternion", Docs = "See [method Spire.do_property_quaternion]." }
+define_instantiate_fn! { SpirePropertyRect2, Rect2, "rect2", Docs = "See [method Spire.do_property_rect2]." }
 
 #[godot_api(secondary)]
 impl SpireProperty {

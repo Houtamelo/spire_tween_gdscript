@@ -6,7 +6,7 @@ pub trait TyToMethodTween {
 }
 
 macro_rules! gd_method_tween {
-    ($GdName:ident, $T:ty, $P:ident, $CStrName:literal) => {
+    ($GdName:ident, $T:ty, $P:ident, $CStrName:literal $(, ValueDocs = $ValueDocs:literal)?) => {
         impl TyToMethodTween for $T {
             type GdTween = $GdName;
         }
@@ -23,6 +23,7 @@ macro_rules! gd_method_tween {
         ///
         /// [b]Note:[/b] You should not instantiate this class directly,
         /// instead use one of the `do_call_*` methods on [Spire].
+        $(#[doc = $ValueDocs])?
         #[derive(GodotClass)]
         #[class(base = RefCounted, no_init)]
         pub struct $GdName {
@@ -175,6 +176,14 @@ gd_method_tween! { SpireMethodVec2, Vector2, Vector2, c"SpireMethodVec2" }
 gd_method_tween! { SpireMethodVec2i, Vector2i, Vector2i, c"SpireMethodVec2i" }
 gd_method_tween! { SpireMethodVec3, Vector3, Vector3, c"SpireMethodVec3" }
 gd_method_tween! { SpireMethodVec3i, Vector3i, Vector3i, c"SpireMethodVec3i" }
+gd_method_tween! { SpireMethodVec4, Vector4, Vector4, c"SpireMethodVec4", ValueDocs =
+"Interpolates all four numeric components. Easing overshoot and Incremental loops extrapolate their differences." }
+gd_method_tween! { SpireMethodQuaternion, Quaternion, Quaternion, c"SpireMethodQuaternion", ValueDocs =
+"Interpolates unit rotations along the shortest arc. Finite nonzero inputs are normalized; zero/nonfinite inputs \
+warn with the rejected value and use identity. Easing overshoot and Incremental loops continue along the same arc. \
+A quaternion and its negation represent the same orientation." }
+gd_method_tween! { SpireMethodRect2, Rect2, Rect2, c"SpireMethodRect2", ValueDocs =
+"Interpolates position and size together. Signed sizes are preserved, including during easing overshoot and Incremental loops." }
 gd_method_tween! { SpireMethod, Variant, Variant, c"SpireMethod" }
 
 macro_rules! define_instantiate_fn {
@@ -202,6 +211,9 @@ define_instantiate_fn! { SpireMethodVec2, Vector2, Docs = "See [method Spire.do_
 define_instantiate_fn! { SpireMethodVec2i, Vector2i, Docs = "See [method Spire.do_call_vec2i]." }
 define_instantiate_fn! { SpireMethodVec3, Vector3, Docs = "See [method Spire.do_call_vec3]." }
 define_instantiate_fn! { SpireMethodVec3i, Vector3i, Docs = "See [method Spire.do_call_vec3i]." }
+define_instantiate_fn! { SpireMethodVec4, Vector4, Docs = "See [method Spire.do_call_vec4]." }
+define_instantiate_fn! { SpireMethodQuaternion, Quaternion, Docs = "See [method Spire.do_call_quaternion]." }
+define_instantiate_fn! { SpireMethodRect2, Rect2, Docs = "See [method Spire.do_call_rect2]." }
 
 #[godot_api(secondary)]
 impl SpireMethod {

@@ -69,6 +69,9 @@ pub fn tween_from_gd_handle(handle: Gd<RefCounted>) -> Result<AnyTween, Gd<RefCo
         SpirePropertyVec2i => Property,
         SpirePropertyVec3 => Property,
         SpirePropertyVec3i => Property,
+        SpirePropertyVec4 => Property,
+        SpirePropertyQuaternion => Property,
+        SpirePropertyRect2 => Property,
         SpireProperty => Property,
         SpireMethodInt => Method,
         SpireMethodFloat => Method,
@@ -78,6 +81,9 @@ pub fn tween_from_gd_handle(handle: Gd<RefCounted>) -> Result<AnyTween, Gd<RefCo
         SpireMethodVec2i => Method,
         SpireMethodVec3 => Method,
         SpireMethodVec3i => Method,
+        SpireMethodVec4 => Method,
+        SpireMethodQuaternion => Method,
+        SpireMethodRect2 => Method,
         SpireMethod => Method,
     }
 }

@@ -195,6 +195,7 @@ fn shader_material_methods() -> TokenStream {
         ("int", "i64", "SpirePropertyInt"),
         ("vec2", "Vector2", "SpirePropertyVec2"),
         ("vec3", "Vector3", "SpirePropertyVec3"),
+        ("vec4", "Vector4", "SpirePropertyVec4"),
         ("color", "Color", "SpirePropertyColor"),
         ("vec2i", "Vector2i", "SpirePropertyVec2i"),
         ("vec3i", "Vector3i", "SpirePropertyVec3i"),

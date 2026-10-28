@@ -86,6 +86,7 @@ pub enum PropertyDataFloat {
     TextureProgressBar(TextureProgressBarFloatData),
     VideoStreamPlayer(VideoStreamPlayerFloatData),
     Viewport(ViewportFloatData),
+    VisualShaderNodeVec4Constant(VisualShaderNodeVec4ConstantFloatData),
     ViaCallable(PropertyDataViaCallable<f64>),
     Custom(PropertyDataCustom),
 }
@@ -110,7 +111,8 @@ impl IGeneralPropertyData for PropertyDataFloat {
             RigidBody2DFloatData, RigidBody3DFloatData, Skeleton3DFloatData,
             SpriteBase3DFloatData, StaticBody2DFloatData, StaticBody3DFloatData,
             TextEditFloatData, TextureProgressBarFloatData, VideoStreamPlayerFloatData,
-            ViewportFloatData, PropertyDataViaCallable < f64 >
+            ViewportFloatData, VisualShaderNodeVec4ConstantFloatData,
+            PropertyDataViaCallable < f64 >
         }
         Self::Custom(PropertyDataCustom::from_path_and_owner(_path_str, path, owner))
     }
@@ -129,6 +131,7 @@ pub enum PropertyDataVec2 {
     Node2D(Node2DVec2Data),
     ParallaxBackground(ParallaxBackgroundVec2Data),
     RigidBody2D(RigidBody2DVec2Data),
+    Sprite2D(Sprite2DVec2Data),
     SpriteBase3D(SpriteBase3DVec2Data),
     StaticBody2D(StaticBody2DVec2Data),
     TextureProgressBar(TextureProgressBarVec2Data),
@@ -142,9 +145,9 @@ impl IGeneralPropertyData for PropertyDataVec2 {
             _path_str, owner, Area2DVec2Data, Camera2DVec2Data, Camera3DVec2Data,
             CanvasLayerVec2Data, CharacterBody2DVec2Data, ControlVec2Data,
             Label3DVec2Data, Node2DVec2Data, ParallaxBackgroundVec2Data,
-            RigidBody2DVec2Data, SpriteBase3DVec2Data, StaticBody2DVec2Data,
-            TextureProgressBarVec2Data, PropertyDataViaCallable < Vector2 >,
-            PropertyVec2Node2DFollowData
+            RigidBody2DVec2Data, Sprite2DVec2Data, SpriteBase3DVec2Data,
+            StaticBody2DVec2Data, TextureProgressBarVec2Data, PropertyDataViaCallable <
+            Vector2 >, PropertyVec2Node2DFollowData
         }
         Self::Custom(PropertyDataCustom::from_path_and_owner(_path_str, path, owner))
     }
@@ -212,6 +215,56 @@ impl IGeneralPropertyData for PropertyDataVec3i {
     fn from_path_and_owner(_path_str: &str, path: NodePath, owner: Gd<Object>) -> Self {
         nested_try_from_path_and_object! {
             _path_str, owner, PropertyDataViaCallable < Vector3i >
+        }
+        Self::Custom(PropertyDataCustom::from_path_and_owner(_path_str, path, owner))
+    }
+}
+#[derive(Debug, Clone)]
+#[allow(unused)]
+#[delegated_enum(impl_conversions)]
+pub enum PropertyDataVec4 {
+    VisualShaderNodeVec4Constant(VisualShaderNodeVec4ConstantVec4Data),
+    ViaCallable(PropertyDataViaCallable<Vector4>),
+    Custom(PropertyDataCustom),
+}
+impl IGeneralPropertyData for PropertyDataVec4 {
+    fn from_path_and_owner(_path_str: &str, path: NodePath, owner: Gd<Object>) -> Self {
+        nested_try_from_path_and_object! {
+            _path_str, owner, VisualShaderNodeVec4ConstantVec4Data,
+            PropertyDataViaCallable < Vector4 >
+        }
+        Self::Custom(PropertyDataCustom::from_path_and_owner(_path_str, path, owner))
+    }
+}
+#[derive(Debug, Clone)]
+#[allow(unused)]
+#[delegated_enum(impl_conversions)]
+pub enum PropertyDataQuaternion {
+    Node3D(Node3DQuaternionData),
+    ViaCallable(PropertyDataViaCallable<Quaternion>),
+    Custom(PropertyDataCustom),
+}
+impl IGeneralPropertyData for PropertyDataQuaternion {
+    fn from_path_and_owner(_path_str: &str, path: NodePath, owner: Gd<Object>) -> Self {
+        nested_try_from_path_and_object! {
+            _path_str, owner, Node3DQuaternionData, PropertyDataViaCallable < Quaternion
+            >
+        }
+        Self::Custom(PropertyDataCustom::from_path_and_owner(_path_str, path, owner))
+    }
+}
+#[derive(Debug, Clone)]
+#[allow(unused)]
+#[delegated_enum(impl_conversions)]
+pub enum PropertyDataRect2 {
+    Sprite2D(Sprite2DRect2Data),
+    ViaCallable(PropertyDataViaCallable<Rect2>),
+    Custom(PropertyDataCustom),
+}
+impl IGeneralPropertyData for PropertyDataRect2 {
+    fn from_path_and_owner(_path_str: &str, path: NodePath, owner: Gd<Object>) -> Self {
+        nested_try_from_path_and_object! {
+            _path_str, owner, Sprite2DRect2Data, PropertyDataViaCallable < Rect2 >
         }
         Self::Custom(PropertyDataCustom::from_path_and_owner(_path_str, path, owner))
     }

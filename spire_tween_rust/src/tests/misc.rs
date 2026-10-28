@@ -38,6 +38,22 @@ impl ITestClass for MiscTests {
 
     fn test_list() -> Vec<NamedTest<Self>> {
         vec![
+            ("test_typed_vec4_property", Self::test_typed_vec4_property),
+            ("test_typed_rect2_property", Self::test_typed_rect2_property),
+            ("test_typed_quaternion_property", Self::test_typed_quaternion_property),
+            ("test_typed_methods_and_accessors", Self::test_typed_methods_and_accessors),
+            ("test_typed_relative", Self::test_typed_relative),
+            ("test_typed_speed", Self::test_typed_speed),
+            ("test_typed_sequence_and_erasure", Self::test_typed_sequence_and_erasure),
+            ("test_typed_loops", Self::test_typed_loops),
+            ("test_typed_dynamic_targets", Self::test_typed_dynamic_targets),
+            ("test_typed_cancellation", Self::test_typed_cancellation),
+            ("test_typed_quaternion_edges", Self::test_typed_quaternion_edges),
+            ("test_typed_quaternion_completion", Self::test_typed_quaternion_completion),
+            ("test_typed_shader_vec4", Self::test_typed_shader_vec4),
+            ("test_typed_variant_dispatch", Self::test_typed_variant_dispatch),
+            ("test_variant_common_types", Self::test_variant_common_types),
+            ("test_variant_conversion_and_override", Self::test_variant_conversion_and_override),
             ("test_group3_global_easing", Self::test_group3_global_easing),
             ("test_group3_punch", Self::test_group3_punch),
             ("test_group3_punch_3d", Self::test_group3_punch_3d),

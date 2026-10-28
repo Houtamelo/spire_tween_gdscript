@@ -150,6 +150,9 @@ pub mod prelude {
             SpireMethodVec2i,
             SpireMethodVec3,
             SpireMethodVec3i,
+            SpireMethodVec4,
+            SpireMethodQuaternion,
+            SpireMethodRect2,
             SpireProperty,
             SpirePropertyColor,
             SpirePropertyFloat,
@@ -159,6 +162,9 @@ pub mod prelude {
             SpirePropertyVec2i,
             SpirePropertyVec3,
             SpirePropertyVec3i,
+            SpirePropertyVec4,
+            SpirePropertyQuaternion,
+            SpirePropertyRect2,
             SpireSequence,
         };
     }

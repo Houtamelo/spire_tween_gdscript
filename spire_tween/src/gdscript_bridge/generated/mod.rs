@@ -61,6 +61,7 @@ mod text_edit;
 mod texture_progress_bar;
 mod video_stream_player;
 mod viewport;
+mod visual_shader_node_vec_4_constant;
 mod window;
 #[allow(unused_imports)]
 pub use self::{
@@ -79,5 +80,6 @@ pub use self::{
     rich_text_label::*, rigid_body_2_d::*, rigid_body_3_d::*, scroll_container::*,
     shader_material::*, skeleton_3_d::*, sprite_2_d::*, sprite_base_3_d::*,
     static_body_2_d::*, static_body_3_d::*, status_indicator::*, sub_viewport::*,
-    text_edit::*, texture_progress_bar::*, video_stream_player::*, viewport::*, window::*,
+    text_edit::*, texture_progress_bar::*, video_stream_player::*, viewport::*,
+    visual_shader_node_vec_4_constant::*, window::*,
 };

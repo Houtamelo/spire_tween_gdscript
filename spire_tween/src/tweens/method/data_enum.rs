@@ -11,6 +11,9 @@ pub enum AnyMethodTween {
     Vector2i(TweenPtr<LerpMethodData<Vector2i>>),
     Vector3(TweenPtr<LerpMethodData<Vector3>>),
     Vector3i(TweenPtr<LerpMethodData<Vector3i>>),
+    Vector4(TweenPtr<LerpMethodData<Vector4>>),
+    Quaternion(TweenPtr<LerpMethodData<Quaternion>>),
+    Rect2(TweenPtr<LerpMethodData<Rect2>>),
     Variant(TweenPtr<LerpMethodData<Variant>>),
 }
 
@@ -38,6 +41,9 @@ impl_from_enum! {
         LerpMethodData<Vector2i> => AnyMethodTween::Vector2i,
         LerpMethodData<Vector3> => AnyMethodTween::Vector3,
         LerpMethodData<Vector3i> => AnyMethodTween::Vector3i,
+        LerpMethodData<Vector4> => AnyMethodTween::Vector4,
+        LerpMethodData<Quaternion> => AnyMethodTween::Quaternion,
+        LerpMethodData<Rect2> => AnyMethodTween::Rect2,
         LerpMethodData<Variant> => AnyMethodTween::Variant,
     }
 }
@@ -100,6 +106,9 @@ pub enum WeakMethodTween {
     Vector2i(WeakTweenPtr<LerpMethodData<Vector2i>>),
     Vector3(WeakTweenPtr<LerpMethodData<Vector3>>),
     Vector3i(WeakTweenPtr<LerpMethodData<Vector3i>>),
+    Vector4(WeakTweenPtr<LerpMethodData<Vector4>>),
+    Quaternion(WeakTweenPtr<LerpMethodData<Quaternion>>),
+    Rect2(WeakTweenPtr<LerpMethodData<Rect2>>),
     Variant(WeakTweenPtr<LerpMethodData<Variant>>),
 }
 
@@ -120,6 +129,9 @@ impl_from_enum_weak! {
         LerpMethodData<Vector2i> => WeakMethodTween::Vector2i,
         LerpMethodData<Vector3> => WeakMethodTween::Vector3,
         LerpMethodData<Vector3i> => WeakMethodTween::Vector3i,
+        LerpMethodData<Vector4> => WeakMethodTween::Vector4,
+        LerpMethodData<Quaternion> => WeakMethodTween::Quaternion,
+        LerpMethodData<Rect2> => WeakMethodTween::Rect2,
         LerpMethodData<Variant> => WeakMethodTween::Variant,
     }
 }

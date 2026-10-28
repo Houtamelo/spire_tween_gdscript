@@ -15,4 +15,40 @@ impl DoSprite2D {
         let tween = node.do_frame(to, duration).register();
         gd_from_native_tween(tween)
     }
+    /**Tweens component `position`. Tweens region position and size together. Enable region_enabled to display the region.
+
+[b]Returns:[/b] A handle that can be used to further customize the tween.*/
+    #[func(rename = region_rect_position)]
+    fn region_rect_position(
+        node: Gd<Sprite2D>,
+        to: Vector2,
+        duration: f64,
+    ) -> Gd<SpirePropertyVec2> {
+        let tween = node.do_region_rect_position(to, duration).register();
+        gd_from_native_tween(tween)
+    }
+    /**Tweens component `size`. Tweens region position and size together. Enable region_enabled to display the region.
+
+[b]Returns:[/b] A handle that can be used to further customize the tween.*/
+    #[func(rename = region_rect_size)]
+    fn region_rect_size(
+        node: Gd<Sprite2D>,
+        to: Vector2,
+        duration: f64,
+    ) -> Gd<SpirePropertyVec2> {
+        let tween = node.do_region_rect_size(to, duration).register();
+        gd_from_native_tween(tween)
+    }
+    /**Tweens region position and size together. Enable region_enabled to display the region.
+
+[b]Returns:[/b] A handle that can be used to further customize the tween.*/
+    #[func(rename = region_rect)]
+    fn r#region_rect(
+        node: Gd<Sprite2D>,
+        to: Rect2,
+        duration: f64,
+    ) -> Gd<SpirePropertyRect2> {
+        let tween = node.do_region_rect(to, duration).register();
+        gd_from_native_tween(tween)
+    }
 }

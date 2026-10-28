@@ -32,8 +32,9 @@ pub enum LerpMode<T> {
     /// previous tick's lerp point) to the property's *current* value. Blends with
     /// external forces and with other relative tweens on the same property.
     ///
-    /// `relative_to` is the conceptual zero — passed at construction as
-    /// `T::default()` by [`SpireTween::<LerpPropertyData<T>>::as_relative`].
+    /// `relative_to` is the conceptual zero — supplied explicitly to
+    /// [`SpireTween::<LerpPropertyData<T>>::as_relative`] in Rust, or selected as
+    /// `T::default()` by the typed GDScript wrappers.
     /// `previous_anim_pos` tracks the previous frame's eased progress.
     Relative {
         duration: f64,

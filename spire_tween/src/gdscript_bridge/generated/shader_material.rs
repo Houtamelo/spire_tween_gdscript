@@ -91,6 +91,22 @@ impl DoShaderMaterial {
     /// explicitly in headless mode, where defaults are unavailable. Replacing
     /// the Shader resource cancels existing uniform tweens.
     #[func]
+    fn parameter_vec4(
+        node: Gd<ShaderMaterial>,
+        parameter: StringName,
+        to: Vector4,
+        duration: f64,
+    ) -> Option<Gd<SpirePropertyVec4>> {
+        let tween = do_shader_parameter(node, parameter, to, duration).log_if_err()?;
+        Some(gd_from_native_tween(tween.register()))
+    }
+    /// Tweens an existing shader uniform of the indicated type. Reads its
+    /// start on first processing. Missing/incompatible uniforms return null
+    /// with a diagnostic. Retains the material; shared users see the changes.
+    /// Without an override, reads the renderer default. Initialize the value
+    /// explicitly in headless mode, where defaults are unavailable. Replacing
+    /// the Shader resource cancels existing uniform tweens.
+    #[func]
     fn parameter_color(
         node: Gd<ShaderMaterial>,
         parameter: StringName,

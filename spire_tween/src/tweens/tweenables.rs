@@ -49,6 +49,9 @@ impl_tweenables! {
     LerpMethodData<Vector2i> => Gd<SpireMethodVec2i>, SpireMethodVec2i;
     LerpMethodData<Vector3> => Gd<SpireMethodVec3>, SpireMethodVec3;
     LerpMethodData<Vector3i> => Gd<SpireMethodVec3i>, SpireMethodVec3i;
+    LerpMethodData<Vector4> => Gd<SpireMethodVec4>, SpireMethodVec4;
+    LerpMethodData<Quaternion> => Gd<SpireMethodQuaternion>, SpireMethodQuaternion;
+    LerpMethodData<Rect2> => Gd<SpireMethodRect2>, SpireMethodRect2;
     LerpPropertyData<Variant> => Gd<SpireProperty>, SpireProperty;
     LerpPropertyData<i64> => Gd<SpirePropertyInt>, SpirePropertyInt;
     LerpPropertyData<f64> => Gd<SpirePropertyFloat>, SpirePropertyFloat;
@@ -58,4 +61,7 @@ impl_tweenables! {
     LerpPropertyData<Vector2i> => Gd<SpirePropertyVec2i>, SpirePropertyVec2i;
     LerpPropertyData<Vector3> => Gd<SpirePropertyVec3>, SpirePropertyVec3;
     LerpPropertyData<Vector3i> => Gd<SpirePropertyVec3i>, SpirePropertyVec3i;
+    LerpPropertyData<Vector4> => Gd<SpirePropertyVec4>, SpirePropertyVec4;
+    LerpPropertyData<Quaternion> => Gd<SpirePropertyQuaternion>, SpirePropertyQuaternion;
+    LerpPropertyData<Rect2> => Gd<SpirePropertyRect2>, SpirePropertyRect2;
 }

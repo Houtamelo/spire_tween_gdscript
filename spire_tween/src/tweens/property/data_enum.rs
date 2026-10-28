@@ -11,6 +11,9 @@ pub enum AnyPropertyTween {
     Vector2i(TweenPtr<LerpPropertyData<Vector2i>>),
     Vector3(TweenPtr<LerpPropertyData<Vector3>>),
     Vector3i(TweenPtr<LerpPropertyData<Vector3i>>),
+    Vector4(TweenPtr<LerpPropertyData<Vector4>>),
+    Quaternion(TweenPtr<LerpPropertyData<Quaternion>>),
+    Rect2(TweenPtr<LerpPropertyData<Rect2>>),
     Variant(TweenPtr<LerpPropertyData<Variant>>),
 }
 
@@ -38,6 +41,9 @@ impl_from_enum! {
         LerpPropertyData<Vector2i> => AnyPropertyTween::Vector2i,
         LerpPropertyData<Vector3> => AnyPropertyTween::Vector3,
         LerpPropertyData<Vector3i> => AnyPropertyTween::Vector3i,
+        LerpPropertyData<Vector4> => AnyPropertyTween::Vector4,
+        LerpPropertyData<Quaternion> => AnyPropertyTween::Quaternion,
+        LerpPropertyData<Rect2> => AnyPropertyTween::Rect2,
         LerpPropertyData<Variant> => AnyPropertyTween::Variant,
     }
 }
@@ -100,6 +106,9 @@ pub enum WeakPropertyTween {
     Vector2i(WeakTweenPtr<LerpPropertyData<Vector2i>>),
     Vector3(WeakTweenPtr<LerpPropertyData<Vector3>>),
     Vector3i(WeakTweenPtr<LerpPropertyData<Vector3i>>),
+    Vector4(WeakTweenPtr<LerpPropertyData<Vector4>>),
+    Quaternion(WeakTweenPtr<LerpPropertyData<Quaternion>>),
+    Rect2(WeakTweenPtr<LerpPropertyData<Rect2>>),
     Variant(WeakTweenPtr<LerpPropertyData<Variant>>),
 }
 
@@ -120,6 +129,9 @@ impl_from_enum_weak! {
         LerpPropertyData<Vector2i> => WeakPropertyTween::Vector2i,
         LerpPropertyData<Vector3> => WeakPropertyTween::Vector3,
         LerpPropertyData<Vector3i> => WeakPropertyTween::Vector3i,
+        LerpPropertyData<Vector4> => WeakPropertyTween::Vector4,
+        LerpPropertyData<Quaternion> => WeakPropertyTween::Quaternion,
+        LerpPropertyData<Rect2> => WeakPropertyTween::Rect2,
         LerpPropertyData<Variant> => WeakPropertyTween::Variant,
     }
 }

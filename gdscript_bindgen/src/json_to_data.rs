@@ -165,7 +165,7 @@ impl TweenFunc {
 
             match ty {
                 TweenType::Vector2i | TweenType::Vector3i => (quote! { (#expr) as i64 }, expr_direct),
-                TweenType::Vector2 | TweenType::Vector3 | TweenType::Color => (quote! { (#expr) as f64 }, expr_direct),
+                TweenType::Vector2 | TweenType::Vector3 | TweenType::Vector4 | TweenType::Color => (quote! { (#expr) as f64 }, expr_direct),
                 _ => (expr, expr_direct),
             }
         };
@@ -182,7 +182,7 @@ impl TweenFunc {
                         #set_ts
                     }
                 }
-                TweenType::Vector2 | TweenType::Vector3 | TweenType::Color => {
+                TweenType::Vector2 | TweenType::Vector3 | TweenType::Vector4 | TweenType::Color => {
                     quote! {
                         let mut prop_val = #get_expr_direct;
                         prop_val.#inner_field_ident = val as f32;
@@ -210,7 +210,7 @@ impl TweenFunc {
                         obj.#set_ident(prop_val);
                     }
                 }
-                TweenType::Vector2 | TweenType::Vector3 | TweenType::Color => {
+                TweenType::Vector2 | TweenType::Vector3 | TweenType::Vector4 | TweenType::Color => {
                     quote! {
                         let mut prop_val = obj.#get_ident();
                         prop_val.#inner_field_ident = val as f32;
@@ -308,7 +308,23 @@ fn gen_class_type_tweens_map(ClassJson { class, tweens, .. }: &ClassJson) -> GdS
                     TweenFunc::indexed("a", tween_json),
                 ]);
             }
-            | TweenType::f32 | TweenType::f64 | TweenType::i32 | TweenType::i64 | TweenType::String => {}
+            TweenType::Vector4 => {
+                type_tweens_map[GdScriptType::float].methods.extend([
+                    TweenFunc::indexed("x", tween_json),
+                    TweenFunc::indexed("y", tween_json),
+                    TweenFunc::indexed("z", tween_json),
+                    TweenFunc::indexed("w", tween_json),
+                ]);
+            }
+            TweenType::Rect2 => {
+                type_tweens_map[GdScriptType::Vector2].methods.extend([
+                    TweenFunc::indexed("position", tween_json),
+                    TweenFunc::indexed("size", tween_json),
+                ]);
+            }
+            // Quaternion components cannot be animated independently while
+            // preserving unit rotations. Generate only the whole-value tween.
+            | TweenType::f32 | TweenType::f64 | TweenType::i32 | TweenType::i64 | TweenType::String | TweenType::Quaternion => {}
         }
     }
 

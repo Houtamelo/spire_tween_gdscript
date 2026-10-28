@@ -222,7 +222,9 @@ where
     ///
     /// **Note:** The unit of `speed` depends on the tweened type:
     /// - `i64` / `f64`: units per second.
-    /// - `Vector2` / `Vector2i` / `Vector3` / `Vector3i`: Euclidean distance per second.
+    /// - `Vector2` / `Vector2i` / `Vector3` / `Vector3i` / `Vector4`: Euclidean distance per second.
+    /// - `Quaternion`: shortest rotation angle in radians per second.
+    /// - `Rect2`: 4D Euclidean distance per second across position and size.
     /// - `Color`: 4D Euclidean distance per second across `(r, g, b, a)`.
     /// - `GString`: characters per second (different number of differing characters).
     #[inline]
@@ -322,6 +324,7 @@ where
                 }
             };
 
+            let target_value = self.t.lerper.prepare_completion_value(target_value);
             self.t.data.set_property_value(target_value);
         } else {
             let prop_name = &self.t.data.get_property_path();
@@ -397,7 +400,8 @@ where
 
                 if start_distance_val.is_zero_approx() {
                     *step_sum = 0.;
-                    set_fn(&mut self.t.data, effective_end_val);
+                    let target_val = self.t.lerper.prepare_completion_value(effective_end_val);
+                    set_fn(&mut self.t.data, target_val);
                     step
                 } else {
                     const EPS: f64 = 0.01;
@@ -586,7 +590,8 @@ where
 impl SpireTween<LerpPropertyData<Variant>> {
     /// Constructs a `Variant`-typed property tween with a user-supplied
     /// [`CustomLerper`]. Use this when the tweened property has a type Spire doesn't
-    /// natively support (anything outside `i64`/`f64`/`GString`/`Color`/`Vector2`/`Vector2i`/`Vector3`/`Vector3i`).
+    /// natively support (anything outside `i64`/`f64`/`GString`/`Color`/`Vector2`/`Vector2i`/`Vector3`/`Vector3i`/
+    /// `Vector4`/`Quaternion`/`Rect2`).
     ///
     /// The `CustomLerper` provides the four callbacks Spire needs (`lerp`,
     /// `add_relative`, `step`, `distance`); see its docs for which modes need which.

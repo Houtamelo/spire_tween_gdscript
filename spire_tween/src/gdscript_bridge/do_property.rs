@@ -46,6 +46,9 @@ define_manual_tween_builders! {
     do_property_vec2i, Vector2i, "Vector2i";
     do_property_vec3, Vector3, "Vector3";
     do_property_vec3i, Vector3i, "Vector3i";
+    do_property_vec4, Vector4, "Vector4";
+    do_property_quaternion, Quaternion, "Quaternion";
+    do_property_rect2, Rect2, "Rect2";
     do_property_color, Color, "Color";
     do_property_string, GString, "String";
 }
@@ -59,7 +62,8 @@ impl Spire {
     /// [b]Usage:[/b] This function provides a generic way to tween properties of a custom type,
     /// use this when the property you want to animate isn't covered by any of Spire's
     /// `Do[ClassName].[property_name]` functions, and it isn't one of the types natively supported by Spire
-    /// (int, float, Vector2, Vector2i, Vector3, Vector3i, Color, String).
+    /// ([int], [float], [Vector2], [Vector2i], [Vector3], [Vector3i], [Vector4],
+    /// [Quaternion], [Rect2], [Color], [String]).
     ///
     /// [b]Returns:[/b] A handle that can be used to further customize the tween.
     ///

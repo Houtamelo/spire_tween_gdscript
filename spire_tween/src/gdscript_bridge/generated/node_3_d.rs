@@ -347,6 +347,18 @@ impl DoNode3D {
         let tween = node.do_global_rotation_degrees(to, duration).register();
         gd_from_native_tween(tween)
     }
+    /**Tweens local orientation along the shortest arc. Relative mode composes local rotation deltas; speed is radians per second.
+
+[b]Returns:[/b] A handle that can be used to further customize the tween.*/
+    #[func(rename = quaternion)]
+    fn r#quaternion(
+        node: Gd<Node3D>,
+        to: Quaternion,
+        duration: f64,
+    ) -> Gd<SpirePropertyQuaternion> {
+        let tween = node.do_quaternion(to, duration).register();
+        gd_from_native_tween(tween)
+    }
     /// Moves [param node] toward [param follow_this]'s global position at [param speed] units per second,
     /// sampling the target every processing step. By default, the tween finishes once it reaches the target.
     /// For continuous following, call [code]set_loops(-1, Spire.LOOP_MODE_RESTART)[/code] on the returned handle.

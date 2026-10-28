@@ -3,6 +3,8 @@
 These helpers use the ordinary property, method, and sequence processing paths.
 Punch, 3D shake, orientation, normalized UI, and 3D spiral APIs are documented
 in [group 3 templates](group3_templates.md).
+Built-in `Vector4`, `Quaternion`, and `Rect2` tween families are documented in
+[typed Godot values](typed_values.md), including vec4 shader uniforms.
 GDScript constructors register immediately. Rust constructors return builders:
 call `.register()` for automatic playback or `TweenPtr::new(builder)` for manual
 stepping. Durations are seconds. Godot 4.4 or newer is required.

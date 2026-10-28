@@ -338,7 +338,8 @@
 	},
 	{
 		"class": "Sprite2D", "group": "2D", "tweens": [
-		{ "name": "frame", "ty": "i32" }
+		{ "name": "frame", "ty": "i32" },
+		{ "name": "region_rect", "ty": "Rect2", "doc": "Tweens region position and size together. Enable region_enabled to display the region." }
 	]
 	},
 	{
@@ -440,6 +441,7 @@
 		{ "name": "global_position", "ty": "Vector3", "alias": "move" },
 		{ "name": "scale", "ty": "Vector3" },
 		{ "name": "rotation", "ty": "Vector3" },
+		{ "name": "quaternion", "ty": "Quaternion", "doc": "Tweens local orientation along the shortest arc. Relative mode composes local rotation deltas; speed is radians per second." },
 		{ "name": "rotation_degrees", "ty": "Vector3" },
 		{ "name": "global_rotation", "ty": "Vector3" },
 		{ "name": "global_rotation_degrees", "ty": "Vector3" }
@@ -706,6 +708,17 @@
 	{
 		"class": "ShaderMaterial",
 		"tweens": []
+	},
+	{
+		"class": "VisualShaderNodeVec4Constant",
+		"tweens": [
+			{
+				"name": "constant", "ty": "Vector4",
+				"get": "{ let v = obj.get_constant(); Vector4::new(v.x, v.y, v.z, v.w) }",
+				"set": "obj.set_constant(Quaternion::new(val.x, val.y, val.z, val.w));",
+				"doc": "Tweens the four numeric components of this vec4 shader constant. Godot exposes its storage as Quaternion; this adapter treats it as Vector4 data, not as a rotation."
+			}
+		]
 	},
 	{
 		"class": "AudioServer",

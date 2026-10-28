@@ -48,6 +48,9 @@ define_manual_tween_builders! {
     do_call_vec2i, Vector2i, "Vector2i";
     do_call_vec3, Vector3, "Vector3";
     do_call_vec3i, Vector3i, "Vector3i";
+    do_call_vec4, Vector4, "Vector4";
+    do_call_quaternion, Quaternion, "Quaternion";
+    do_call_rect2, Rect2, "Rect2";
     do_call_color, Color, "Color";
     do_call_string, GString, "String";
 }
@@ -60,7 +63,8 @@ impl Spire {
     /// that represents the progress of the tween towards completion (usually computed as: `elapsed_time/duration`).
     ///
     /// [b]Usage:[/b] This is an untyped way of creating a method tweener, if the type being tweened is one of
-    /// [int, float, Vector2, Vector2i, Vector3, Vector3i, Color, String], then consider using the typed
+    /// [int], [float], [Vector2], [Vector2i], [Vector3], [Vector3i], [Vector4],
+    /// [Quaternion], [Rect2], [Color], or [String], then consider using the typed
     /// variants instead ([method do_call_int], [method do_call_float], etc.), they are more efficient and
     /// don't require specifying a `lerp` function.
     ///

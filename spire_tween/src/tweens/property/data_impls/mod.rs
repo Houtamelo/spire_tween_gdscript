@@ -9,6 +9,9 @@ mod vector2;
 mod vector2i;
 mod vector3;
 mod vector3i;
+mod vector4;
+mod quaternion;
+mod rect2;
 mod via_callable;
 
 #[allow(unused_imports)]

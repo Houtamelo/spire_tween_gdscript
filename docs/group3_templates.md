@@ -109,8 +109,9 @@ matters. Existing Euler property constructors retain their behavior.
 Scale is preserved. Global writes rebuild an orthogonal world basis with its
 current scale; nonuniformly scaled parents can cause shear/decomposition effects.
 Use Restart/Yoyo for quaternion/look-at templates; an Incremental quaternion loop
-contract is not provided. These float-driver templates do not add the group-4
-typed Quaternion property/method family. Nonfinite Euler components become zero;
+contract is not provided. These templates retain their float-driver return types;
+the general [typed Quaternion property/method family](typed_values.md) also
+supports rotation-arc extrapolation. Nonfinite Euler components become zero;
 quaternion targets normalize, with zero/nonfinite targets becoming identity. Warns
 on corrections. Invalid duration becomes one second.
 

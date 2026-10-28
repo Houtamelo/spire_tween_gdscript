@@ -12,6 +12,9 @@ pub enum TweenType {
     Vector2i,
     Vector3,
     Vector3i,
+    Vector4,
+    Quaternion,
+    Rect2,
     Color,
     String,
 }
@@ -29,6 +32,9 @@ impl TweenType {
             TweenType::String => parse_quote! { GString },
             TweenType::Vector2i => parse_quote! { Vector2i },
             TweenType::Vector3i => parse_quote! { Vector3i },
+            TweenType::Vector4 => parse_quote! { Vector4 },
+            TweenType::Quaternion => parse_quote! { Quaternion },
+            TweenType::Rect2 => parse_quote! { Rect2 },
         }
     }
 }
@@ -43,6 +49,9 @@ pub enum GdScriptType {
     Vector2i,
     Vector3,
     Vector3i,
+    Vector4,
+    Quaternion,
+    Rect2,
     Color,
     String,
 }
@@ -56,6 +65,9 @@ impl GdScriptType {
             GdScriptType::Vector2i => format_ident!("Vec2i"),
             GdScriptType::Vector3 => format_ident!("Vec3"),
             GdScriptType::Vector3i => format_ident!("Vec3i"),
+            GdScriptType::Vector4 => format_ident!("Vec4"),
+            GdScriptType::Quaternion => format_ident!("Quaternion"),
+            GdScriptType::Rect2 => format_ident!("Rect2"),
             GdScriptType::Color => format_ident!("Color"),
             GdScriptType::String => format_ident!("String"),
         }
@@ -71,6 +83,9 @@ impl GdScriptType {
             GdScriptType::Color => format_ident!("Color"),
             GdScriptType::String => format_ident!("String"),
             GdScriptType::Vector3i => format_ident!("Vector3i"),
+            GdScriptType::Vector4 => format_ident!("Vector4"),
+            GdScriptType::Quaternion => format_ident!("Quaternion"),
+            GdScriptType::Rect2 => format_ident!("Rect2"),
         }
     }
 
@@ -84,6 +99,9 @@ impl GdScriptType {
             GdScriptType::String => parse_quote! { GString },
             GdScriptType::Vector2i => parse_quote! { Vector2i },
             GdScriptType::Vector3i => parse_quote! { Vector3i },
+            GdScriptType::Vector4 => parse_quote! { Vector4 },
+            GdScriptType::Quaternion => parse_quote! { Quaternion },
+            GdScriptType::Rect2 => parse_quote! { Rect2 },
         }
     }
 
@@ -107,6 +125,9 @@ impl From<TweenType> for GdScriptType {
             TweenType::Vector2i => GdScriptType::Vector2i,
             TweenType::Vector3 => GdScriptType::Vector3,
             TweenType::Vector3i => GdScriptType::Vector3i,
+            TweenType::Vector4 => GdScriptType::Vector4,
+            TweenType::Quaternion => GdScriptType::Quaternion,
+            TweenType::Rect2 => GdScriptType::Rect2,
             TweenType::Color => GdScriptType::Color,
             TweenType::String => GdScriptType::String,
         }
