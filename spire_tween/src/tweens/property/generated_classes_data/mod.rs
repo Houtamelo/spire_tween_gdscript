@@ -37,6 +37,7 @@ mod light_3_d;
 mod line_2_d;
 mod line_edit;
 mod link_button;
+mod margin_container;
 mod node_2_d;
 mod node_3_d;
 mod parallax_background;
@@ -75,11 +76,11 @@ pub use self::{
     gpu_particles_attractor_3_d::*, gpu_particles_attractor_box_3_d::*,
     gpu_particles_attractor_sphere_3_d::*, gpu_particles_attractor_vector_field_3_d::*,
     label::*, label_3_d::*, label_settings::*, light_3_d::*, line_2_d::*, line_edit::*,
-    link_button::*, node_2_d::*, node_3_d::*, parallax_background::*, path_follow_2_d::*,
-    path_follow_3_d::*, physical_bone_3_d::*, range::*, reflection_probe::*,
-    rich_text_label::*, rigid_body_2_d::*, rigid_body_3_d::*, scroll_container::*,
-    shader_material::*, skeleton_3_d::*, sprite_2_d::*, sprite_base_3_d::*,
-    static_body_2_d::*, static_body_3_d::*, status_indicator::*, sub_viewport::*,
-    text_edit::*, texture_progress_bar::*, video_stream_player::*, viewport::*,
-    visual_shader_node_vec_4_constant::*, window::*,
+    link_button::*, margin_container::*, node_2_d::*, node_3_d::*,
+    parallax_background::*, path_follow_2_d::*, path_follow_3_d::*, physical_bone_3_d::*,
+    range::*, reflection_probe::*, rich_text_label::*, rigid_body_2_d::*,
+    rigid_body_3_d::*, scroll_container::*, shader_material::*, skeleton_3_d::*,
+    sprite_2_d::*, sprite_base_3_d::*, static_body_2_d::*, static_body_3_d::*,
+    status_indicator::*, sub_viewport::*, text_edit::*, texture_progress_bar::*,
+    video_stream_player::*, viewport::*, visual_shader_node_vec_4_constant::*, window::*,
 };

@@ -7,6 +7,7 @@ mod error_handling;
 mod gd_handle_path;
 mod group2;
 mod group3;
+mod group4;
 mod typed_values;
 mod lerp_callable;
 mod lerp_modes;

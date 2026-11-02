@@ -50,11 +50,55 @@ define_manual_tween_builders! {
     do_property_quaternion, Quaternion, "Quaternion";
     do_property_rect2, Rect2, "Rect2";
     do_property_color, Color, "Color";
-    do_property_string, GString, "String";
 }
 
 #[godot_api(secondary)]
 impl Spire {
+    /// [b]Behavior:[/b] Once every update, sets the property at [param property_path] on the object [param owner],
+    /// with a value that is calculated by lerping the property's initial value towards [param to]
+    /// based on how much time has elapsed relative to [param duration].
+    ///
+    /// [b]Usage:[/b] This function provides a generic way to tween any [String] property,
+    /// use this when the property you want to animate isn't covered by any of Spire's
+    /// `Do[ClassName].[property_name]` functions.
+    ///
+    /// [b]Returns:[/b] A registered [SpirePropertyString] handle that can be used to further customize the tween.
+    ///
+    /// [b]Note:[/b] If the property at [param property_path] is a "known"/"common" engine property,
+    /// then Spire will automatically optimize the tween to directly use that property's getter/setter;
+    /// otherwise it will fall back to [method Object.get_indexed]/[method Object.set_indexed]
+    /// (the same methods that the built-in [Tween] uses).
+    ///
+    /// [b]Parameter [param rich_text_enabled]:[/b] Enables BBCode handling, which counts parsed characters
+    /// and preserves balanced tags in every mode. Configure the receiver's BBCode rendering separately.
+    ///
+    /// [b]Parameter [param scramble_mode]:[/b] Selects scrambling for unrevealed characters in absolute mode.
+    /// Relative and speed-based modes warn once per options configuration and ignore scrambling.
+    ///
+    /// [b]Parameter [param scramble_chars]:[/b] Supplies the alphabet for custom scrambling.
+    /// See [method SpirePropertyString.set_text_options] for option details.
+    #[func]
+    pub fn do_property_string(
+        owner: Option<Gd<Object>>,
+        property_path: NodePath,
+        to: GString,
+        duration: f64,
+        #[opt(default = false)] rich_text_enabled: bool,
+        #[opt(default = ScrambleMode::None)] scramble_mode: ScrambleMode,
+        #[opt(default = "")] scramble_chars: GString,
+    ) -> Option<Gd<SpirePropertyString>> {
+        let owner = owner.log_null_arg(|| "owner")?;
+        let tween = owner
+            .do_property(&property_path, Evaluator::Static(to), duration)
+            .with_text_options(TextOptions {
+                rich_text_enabled,
+                scramble_mode,
+                scramble_chars,
+            })
+            .register();
+        Some(gd_from_native_tween(tween))
+    }
+
     /// [b]Behavior:[/b] Once every update, sets the property at [param property_path] on the object [param owner],
     /// with a value that is calculated by lerping the property's initial value towards [param to]
     /// based on how much time has elapsed relative to [param duration].

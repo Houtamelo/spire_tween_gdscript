@@ -172,7 +172,7 @@ pub mod prelude {
     pub use crate::tweens::{BasicLerp, CustomLerper, LerpMode, SpireLerp};
     pub use crate::{
         //connection::Connection,
-        enums::{Ease, EaseKind, Evaluator, LoopMode, PauseMode, ProcessMode, RotateMode, RotationAxis, ShakeRandomnessMode, Spiral, SpiralMode, State as TweenState},
+        enums::{Ease, EaseKind, Evaluator, LoopMode, PauseMode, ProcessMode, RotateMode, RotationAxis, ShakeRandomnessMode, Spiral, SpiralMode, PathType, PathMode, ScrambleMode, State as TweenState},
         rc_ptr::*,
         tween_ptr::{TweenPtr, WeakTweenPtr},
         tweens::{
@@ -215,6 +215,15 @@ pub mod prelude {
             DoLabelCounter,
             DoRichTextLabelCounter,
             DoLabel3DCounter,
+            TextOptions,
+            StringLerper,
+            PathOptions,
+            DoPath2D,
+            DoPath3D,
+            DoPathControl,
+            DoMargins,
+            do_get_set_margins,
+            do_property_margins,
             DoShakeControl,
             DoShakeNode2D,
             DoSpiral,

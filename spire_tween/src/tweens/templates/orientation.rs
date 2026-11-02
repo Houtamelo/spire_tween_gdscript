@@ -5,7 +5,7 @@ use super::{effect::*, motion::owned_progress, punch::clean_vec3, *};
 fn rotation(node: &Node3D, global: bool) -> Quaternion {
     if global { node.get_global_basis().orthonormalized().get_quaternion().normalized() } else { node.get_quaternion() }
 }
-fn set_rotation(node: &mut Node3D, value: Quaternion, global: bool) {
+pub(super) fn set_rotation(node: &mut Node3D, value: Quaternion, global: bool) {
     if global {
         let scale = node.get_global_basis().get_scale();
         // Scale columns (R*S). Basis::scaled premultiplies (S*R), which would
@@ -83,7 +83,7 @@ fn blendable_tween(mut node: Gd<Node3D>, by: Vector3, duration: f64, global: boo
     })
 }
 
-fn look_rotation(direction: Vector3, up: Vector3, model_front: bool) -> Option<Quaternion> {
+pub(super) fn look_rotation(direction: Vector3, up: Vector3, model_front: bool) -> Option<Quaternion> {
     if !direction.is_finite() || direction.length_squared() < 0.00000001 {
         return None;
     }

@@ -70,8 +70,26 @@ fn tokenize_class_bridge(class: &ClassData) -> TokenStream {
                     )
                 };
 
+                let text_options = matches!(gd_ty, GdScriptType::String) && property_path == "text";
+                let option_args = text_options.then(|| quote! {
+                    #[opt(default = false)] rich_text_enabled: bool,
+                    #[opt(default = ScrambleMode::None)] scramble_mode: ScrambleMode,
+                    #[opt(default = "")] scramble_chars: GString,
+                });
+                let configure = text_options.then(|| quote! {
+                    .with_text_options(TextOptions { rich_text_enabled, scramble_mode, scramble_chars })
+                });
+                let alias_args = text_options.then(|| quote!(, rich_text_enabled, scramble_mode, scramble_chars));
+                let text_doc = if text_options {
+                    "\n\nOptional BBCode handling counts parsed characters and preserves balanced tags in all modes. \
+                     Configure RichTextLabel.bbcode_enabled separately. Scrambling randomizes unrevealed characters \
+                     in absolute mode; relative and speed-based modes warn once and ignore scrambling. \
+                     Relative mode appends/removes characters. Speed-based mode measures character edits per second, \
+                     excluding tags. Empty custom alphabets warn and use letters/digits. \
+                     Options can also be changed with SpirePropertyString.set_text_options."
+                } else { "" };
                 let doc2 =
-                    format!("{doc1}\n\n[b]Returns:[/b] A handle that can be used to further customize the tween.");
+                    format!("{doc1}{text_doc}\n\n[b]Returns:[/b] A handle that can be used to further customize the tween.");
 
                 let doc2 = Lit::Str(LitStr::new(&doc2, Span::call_site()));
 
@@ -110,8 +128,8 @@ fn tokenize_class_bridge(class: &ClassData) -> TokenStream {
                     quote! {
                         #alias_doc
                         #[func(rename = #non_raw)]
-                        fn #alias_bridge(node: Gd<#class_ident>, to: #rust_ty, duration: f64) -> Gd<#tween_ty> {
-                            Self::#bridge_fn_name(node, to, duration)
+                        fn #alias_bridge(node: Gd<#class_ident>, to: #rust_ty, duration: f64, #option_args) -> Gd<#tween_ty> {
+                            Self::#bridge_fn_name(node, to, duration #alias_args)
                         }
                     }
                 });
@@ -125,8 +143,9 @@ fn tokenize_class_bridge(class: &ClassData) -> TokenStream {
                         node: Gd<#class_ident>,
                         to: #rust_ty,
                         duration: f64,
+                        #option_args
                     ) -> Gd<#tween_ty> {
-                        let tween = node.#trait_fn_name(to, duration).register();
+                        let tween = node.#trait_fn_name(to, duration) #configure .register();
                         gd_from_native_tween(tween)
                     }
 

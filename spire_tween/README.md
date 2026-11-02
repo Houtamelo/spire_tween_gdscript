@@ -4,6 +4,8 @@ See [group 3 templates](../docs/group3_templates.md) for punch, 3D shake,
 quaternion/look-at rotation, normalized UI, and 3D spirals.
 See [typed Godot values](../docs/typed_values.md) for `Vector4`, `Quaternion`, and
 `Rect2` property/method tweens and their interpolation rules.
+See [paths, text effects, and integer margins](../docs/paths_text_and_values.md)
+for the remaining group 4 templates and their Godot mappings.
 
 Tweening library for Godot 4 via [godot-rust](https://github.com/godot-rust/gdext),
 inspired by Unity's [DOTween](https://dotween.demigiant.com/).

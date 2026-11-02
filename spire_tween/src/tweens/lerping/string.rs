@@ -2,33 +2,29 @@ use super::*;
 
 impl ILerpable for GString {
     type BasicLerper = ();
-    type Lerper = ();
+    type Lerper = StringLerper;
 }
 
 impl BasicLerp<GString> for () {
     fn spire_lerp(&mut self, from: &GString, to: &GString, t: f64) -> GString {
-        let from = from.to_string();
-        let to = to.to_string();
+        let from = from.chars();
+        let to = to.chars();
 
         let t = f64::clamp(t, 0.0, 1.0);
 
-        let from_len = from.chars().count() as i64;
-        let to_len = to.chars().count() as i64;
+        let from_len = from.len() as i64;
+        let to_len = to.len() as i64;
         let new_len_raw = from_len + ((to_len - from_len) as f64 * t).round() as i64;
         let new_len = i64::abs(new_len_raw) as usize;
 
-        let mut result = from.chars().collect::<Vec<_>>();
         let chars_to_take = usize::min((to_len as f64 * t).round() as usize, to_len as usize);
-        let taken_chars = to.chars().take(chars_to_take).enumerate();
-        for (index, char) in taken_chars {
-            if result.len() > index {
-                result[index] = char;
-            } else {
-                result.push(char);
-            }
-        }
-
-        GString::from(result.into_iter().take(new_len).collect::<String>().as_str())
+        let result: SmallVec<[char; 128]> = to[..chars_to_take]
+            .iter()
+            .chain(from.iter().skip(chars_to_take))
+            .take(new_len)
+            .copied()
+            .collect();
+        GString::from(result.as_slice())
     }
 }
 
@@ -37,20 +33,18 @@ impl SpireLerp<GString> for () {
         let previous_calc = prev_calc.chars();
         let next_calc = next_calc.chars();
 
-        let mut result = present_at_obj.to_string();
+        let mut result = SmallVec::<[char; 128]>::from_slice(present_at_obj.chars());
 
         let prev_len = previous_calc.len();
         let next_len = next_calc.len();
 
         if prev_len < next_len {
-            result.extend(&next_calc[prev_len..]);
+            result.extend_from_slice(&next_calc[prev_len..]);
         } else {
-            for _ in 0..(prev_len - next_len) {
-                result.pop();
-            }
+            result.truncate(result.len().saturating_sub(prev_len - next_len));
         }
 
-        GString::from(result.as_str())
+        GString::from(result.as_slice())
     }
 
     fn spire_step(&mut self, from: &GString, to: &GString, speed: f64, step: f64) -> (GString, StepResult) {
@@ -62,16 +56,15 @@ impl SpireLerp<GString> for () {
         let abs_step = max_step.floor() as i64;
         let unused_time = (max_step - abs_step as f64) / speed;
 
-        let from_len = from.len();
-        let to_len = to.len();
-
-        let to_str = to.to_string();
-
-        let mut result = from.to_string().chars().collect::<Vec<_>>();
+        let from_chars = from.chars();
+        let to_chars = to.chars();
+        let from_len = from_chars.len();
+        let to_len = to_chars.len();
+        let mut result = SmallVec::<[char; 128]>::from_slice(from_chars);
 
         let mut remaining = abs_step;
 
-        for (idx, char) in to_str.chars().enumerate() {
+        for (idx, &char) in to_chars.iter().enumerate() {
             if remaining <= 0 {
                 break;
             }
@@ -93,9 +86,7 @@ impl SpireLerp<GString> for () {
         }
 
         let final_unused_time = unused_time + (remaining as f64 / speed);
-        let value = result.into_iter().collect::<String>();
-
-        let step_result = if value == to_str {
+        let step_result = if result.as_slice() == to_chars {
             StepResult::Finished {
                 excess_time: final_unused_time,
             }
@@ -105,7 +96,7 @@ impl SpireLerp<GString> for () {
             }
         };
 
-        (GString::from(value.as_str()), step_result)
+        (GString::from(result.as_slice()), step_result)
     }
 
     fn spire_distance(&mut self, from: &GString, to: &GString) -> f64 {

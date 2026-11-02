@@ -7,6 +7,7 @@ mod lerp_mode;
 mod quaternion;
 mod rect2;
 mod string;
+mod text;
 mod variant;
 mod vector2;
 mod vector2i;
@@ -15,7 +16,11 @@ mod vector3i;
 mod vector4;
 
 #[allow(unused_imports)]
-pub use self::{lerp_mode::*, variant::*};
+pub use self::{
+    lerp_mode::*,
+    text::{StringLerper, TextOptions},
+    variant::*,
+};
 
 /// The minimum lerping operation: take `from`, `to`, and a weight, return the
 /// interpolated value.
@@ -66,6 +71,11 @@ pub trait BasicLerp<T> {
 ///
 /// See each method's documentation for the contract.
 pub trait SpireLerp<T>: BasicLerp<T> {
+    /// Selects the active property mode before processing or forced completion.
+    /// Stateful lerpers can adapt options to the mode. For example, string
+    /// scrambling is ignored in relative and speed-based modes.
+    fn prepare_mode(&mut self, _mode: &LerpMode<T>) {}
+
     /// Prepares a property value for a completion path that may bypass
     /// interpolation. Called before the write on forced completion (all modes)
     /// and when speed-based endpoints already coincide.
@@ -162,9 +172,9 @@ pub trait MoveTowards {
 ///
 /// Spire ships `impl ILerpable for …` for: `i64`, `f64`, `GString`, `Color`,
 /// `Vector2`, `Vector2i`, `Vector3`, `Vector3i`, `Vector4`, `Quaternion`, `Rect2`,
-/// and `Variant`. For all built-in
-/// types both lerpers default to `()`, which has the matching `BasicLerp` /
-/// `SpireLerp` impl in this module.
+/// and `Variant`. Built-in lerpers default to `()`, except `GString` property
+/// tweens use [`StringLerper`] to support optional BBCode handling and scrambling.
+/// String method tweens use the plain `()` lerper.
 ///
 /// `Vector4` interpolates its four components; `Rect2` interpolates position and
 /// size together. Their speed-based distance is Euclidean across four scalars.

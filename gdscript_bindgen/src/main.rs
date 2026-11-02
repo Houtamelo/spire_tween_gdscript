@@ -7,6 +7,7 @@ mod tween_ty;
 mod types_property_data;
 mod template_adapters;
 mod group3_adapters;
+mod group4_adapters;
 
 use std::str::FromStr;
 

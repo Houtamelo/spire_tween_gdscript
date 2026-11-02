@@ -303,9 +303,10 @@ where
     fn stop_internal(&mut self) { self.t.lerp_mode.reset_state(); }
 
     fn force_complete_internal(&mut self) -> bool {
-        let is_valid = self.t.data.accessors_are_valid()
-            && self.t.data.get_owner().is_none_or(|obj| obj.is_instance_valid());
+        let is_valid =
+            self.t.data.accessors_are_valid() && self.t.data.get_owner().is_none_or(|obj| obj.is_instance_valid());
         if is_valid {
+            self.t.lerper.prepare_mode(&self.t.lerp_mode);
             let target_value = match &mut self.t.lerp_mode {
                 LerpMode::Absolute { .. } => self.t.to.eval(),
                 LerpMode::SpeedBased { step_sum, .. } => {
@@ -351,6 +352,7 @@ where
         let Some(step) = self.handle_time_step(delta_time) else { return AdvanceTimeResult::Playing };
 
         let set_fn = <T as PropertyType>::Data::set_property_value;
+        self.t.lerper.prepare_mode(&self.t.lerp_mode);
 
         let step_excess = match &mut self.t.lerp_mode {
             LerpMode::Absolute { duration, from } => {

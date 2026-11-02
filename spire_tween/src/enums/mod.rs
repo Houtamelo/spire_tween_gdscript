@@ -11,6 +11,7 @@ mod pause_mode;
 mod process_mode;
 mod shake_randomness_mode;
 mod rotation;
+mod path_text;
 mod spiral;
 mod state;
 
@@ -33,6 +34,7 @@ pub use self::{
     process_mode::*,
     shake_randomness_mode::*,
     rotation::*,
+    path_text::*,
     spiral::*,
     state::*,
 };

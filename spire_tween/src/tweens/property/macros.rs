@@ -350,8 +350,13 @@ gd_property_tween! { SpirePropertyFloat, f64, f64, c"SpirePropertyFloat", SpeedD
 Assuming a speed of `7.5`, it would take `4.0` seconds to go from `0.0` to `30.0`.\n" }
 
 gd_property_tween! { SpirePropertyString, GString, GString, c"SpirePropertyString", SpeedDocs =
-"For [String], `speed` is measured in chars per second.\n\
-Assuming a speed of `2.0`, it would take `6.0` seconds to go from `\"\"`(no chars) to `\"Hello world!\"`(12 chars).\n" }
+"For [String], speed counts character replacements, appends, and removals per second. \
+With BBCode handling enabled, paired tags carry no distance and images count as one unit. \
+Formatting-only targets apply immediately. Scrambling is ignored with one warning.\n\
+At a linear speed of 2.0, it takes 6.0 seconds to go from an empty string to Hello world! (12 chars).", ValueDocs =
+"Plain text by default. Use [method set_text_options] for BBCode handling in all modes \
+and optional scrambling in absolute mode. Relative mode appends/removes characters at the end. \
+The starting value, final value, dynamic targets, easing, and loops remain ordinary property-tween controls." }
 
 gd_property_tween! { SpirePropertyColor, Color, Color, c"SpirePropertyColor", SpeedDocs =
 "For [Color], `speed` is measured in 4D-Euclidean-distance per second (A [Color] is simply a 4D Vector(r,g,b,a)).\n\

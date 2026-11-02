@@ -1,4 +1,5 @@
 [
+	{ "class": "MarginContainer", "group": "UI", "tweens": [] },
 	{
 		"class": "AnimationPlayer", "tweens": [
 		{ "name": "speed_scale", "ty": "f32" }

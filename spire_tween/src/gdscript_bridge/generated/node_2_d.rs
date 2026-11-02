@@ -583,4 +583,82 @@ impl DoNode2D {
                 .register(),
         )
     }
+    /// Visits waypoints by distance. path uses local coordinates;
+    /// global_path uses world coordinates. Captures start on first step.
+    /// The with_options variants copy a SpirePathOptions configuration.
+    /// Other variants select linear defaults. Cubic inputs use
+    /// triples: destination, preceding handle, destination handle.
+    /// Supports closure, axis locks, and optional look-at orientation.
+    /// This sets transforms directly; it does not perform physics motion.
+    /// Returns an already registered float progress tween.
+    #[func]
+    fn path(
+        node: Gd<Node2D>,
+        waypoints: PackedVector2Array,
+        duration: f64,
+    ) -> Gd<SpireMethodFloat> {
+        let options = PathOptions::default();
+        gd_from_native_tween(
+            node.do_path(waypoints.to_vec(), duration, options).register(),
+        )
+    }
+    /// Visits waypoints by distance. path uses local coordinates;
+    /// global_path uses world coordinates. Captures start on first step.
+    /// The with_options variants copy a SpirePathOptions configuration.
+    /// Other variants select linear defaults. Cubic inputs use
+    /// triples: destination, preceding handle, destination handle.
+    /// Supports closure, axis locks, and optional look-at orientation.
+    /// This sets transforms directly; it does not perform physics motion.
+    /// Returns an already registered float progress tween.
+    #[func]
+    fn global_path(
+        node: Gd<Node2D>,
+        waypoints: PackedVector2Array,
+        duration: f64,
+    ) -> Gd<SpireMethodFloat> {
+        let options = PathOptions::default();
+        gd_from_native_tween(
+            node.do_global_path(waypoints.to_vec(), duration, options).register(),
+        )
+    }
+    /// Visits waypoints by distance. path uses local coordinates;
+    /// global_path uses world coordinates. Captures start on first step.
+    /// The with_options variants copy a SpirePathOptions configuration.
+    /// Other variants select linear defaults. Cubic inputs use
+    /// triples: destination, preceding handle, destination handle.
+    /// Supports closure, axis locks, and optional look-at orientation.
+    /// This sets transforms directly; it does not perform physics motion.
+    /// Returns an already registered float progress tween.
+    #[func]
+    fn path_with_options(
+        node: Gd<Node2D>,
+        waypoints: PackedVector2Array,
+        duration: f64,
+        options: Gd<PathOptions>,
+    ) -> Gd<SpireMethodFloat> {
+        let options = options.bind().clone();
+        gd_from_native_tween(
+            node.do_path(waypoints.to_vec(), duration, options).register(),
+        )
+    }
+    /// Visits waypoints by distance. path uses local coordinates;
+    /// global_path uses world coordinates. Captures start on first step.
+    /// The with_options variants copy a SpirePathOptions configuration.
+    /// Other variants select linear defaults. Cubic inputs use
+    /// triples: destination, preceding handle, destination handle.
+    /// Supports closure, axis locks, and optional look-at orientation.
+    /// This sets transforms directly; it does not perform physics motion.
+    /// Returns an already registered float progress tween.
+    #[func]
+    fn global_path_with_options(
+        node: Gd<Node2D>,
+        waypoints: PackedVector2Array,
+        duration: f64,
+        options: Gd<PathOptions>,
+    ) -> Gd<SpireMethodFloat> {
+        let options = options.bind().clone();
+        gd_from_native_tween(
+            node.do_global_path(waypoints.to_vec(), duration, options).register(),
+        )
+    }
 }

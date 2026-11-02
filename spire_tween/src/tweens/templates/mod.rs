@@ -9,6 +9,9 @@ mod shake_variants;
 mod orientation;
 mod ui_normalized;
 mod spiral_3d;
+mod waypoint_path;
+mod margins;
+pub use self::{waypoint_path::*, margins::*};
 pub use self::{punch::*, shake_variants::*, orientation::*, ui_normalized::*, spiral_3d::*};
 pub use self::{adapters::*, motion::*, color::*, counter::*};
 // TODO: Check if integration tests cover all these.

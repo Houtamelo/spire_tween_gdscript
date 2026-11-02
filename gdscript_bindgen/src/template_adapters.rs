@@ -15,7 +15,8 @@ pub fn methods(class: &Ident) -> TokenStream {
         "ShaderMaterial" => shader_material_methods(),
         _ => TokenStream::new(),
     };
-    out.extend(crate::group3_adapters::methods(class));
+    out.extend(group3_adapters::methods(class));
+    out.extend(group4_adapters::methods(class));
     out
 }
 
