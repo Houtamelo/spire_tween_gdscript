@@ -38,6 +38,11 @@ impl ITestClass for MiscTests {
 
     fn test_list() -> Vec<NamedTest<Self>> {
         vec![
+            ("test_animatable_body_2d_translation", Self::test_animatable_body_2d_translation),
+            ("test_animatable_body_3d_translation", Self::test_animatable_body_3d_translation),
+            ("test_animatable_body_2d_rotation_sequence", Self::test_animatable_body_2d_rotation_sequence),
+            ("test_animatable_body_3d_rotation_sequence", Self::test_animatable_body_3d_rotation_sequence),
+            ("test_animatable_body_stop_and_free", Self::test_animatable_body_stop_and_free),
             ("test_group4_text_buffers", Self::test_group4_text_buffers),
             ("test_group4_text_relative", Self::test_group4_text_relative),
             ("test_group4_text_speed", Self::test_group4_text_speed),

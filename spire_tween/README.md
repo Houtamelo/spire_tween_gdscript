@@ -1,5 +1,7 @@
 # spire_tween
 
+See [animatable bodies](../docs/animatable_bodies.md) for physics-clock platforms
+and doors using the existing position/rotation tweens.
 See [group 3 templates](../docs/group3_templates.md) for punch, 3D shake,
 quaternion/look-at rotation, normalized UI, and 3D spirals.
 See [typed Godot values](../docs/typed_values.md) for `Vector4`, `Quaternion`, and
