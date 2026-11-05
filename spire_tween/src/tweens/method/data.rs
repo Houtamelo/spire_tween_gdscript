@@ -16,6 +16,10 @@ pub struct LerpMethodData<T: ILerpable> {
     /// The callable invoked each tick. Must accept exactly one argument of type `T`
     /// (or implicitly-convertible). Bind extra arguments via `Callable::bind` if needed.
     pub callable: Callable,
+    /// Optional zero-argument predicate for targets which can disappear while
+    /// their owner remains alive, such as a character index after a text edit.
+    /// Checked before invocation, including forced completion.
+    pub validation: Option<Callable>,
     /// Starting value passed to the callable at time `0.0`.
     pub from: T,
     /// Final value the callable will be invoked with — at the time
@@ -29,6 +33,16 @@ pub struct LerpMethodData<T: ILerpable> {
     /// The lerping math itself — `()` for built-in types, [`CustomBasicLerper`] for
     /// user-supplied lerping (see [`SpireTween::<LerpMethodData<Variant>>::new_custom`]).
     pub lerper: T::BasicLerper,
+}
+
+impl<T: ILerpable> LerpMethodData<T> {
+    fn accessors_are_valid(&self) -> bool {
+        self.callable.is_valid()
+            && self
+                .validation
+                .as_ref()
+                .is_none_or(|check| check.is_valid() && check.call(&[]).try_to::<bool>().unwrap_or(false))
+    }
 }
 
 impl<T: ILerpable> SpireTween<LerpMethodData<T>>
@@ -108,8 +122,8 @@ where LerpMethodData<T>: ITweenable
 
     #[inline]
     fn force_complete_internal(&mut self) -> bool {
-        let is_valid = self.t.callable.is_valid()
-            && self.t.owner.as_ref().is_none_or(|owner| owner.is_instance_valid());
+        let is_valid =
+            self.t.accessors_are_valid() && self.t.owner.as_ref().is_none_or(|owner| owner.is_instance_valid());
         if is_valid {
             let target_value = {
                 let eased_ratio = self.t.ease.sample(1.);
@@ -123,7 +137,7 @@ where LerpMethodData<T>: ITweenable
     }
 
     fn process_internal(&mut self, delta_time: f64, _is_tree_paused: bool) -> AdvanceTimeResult {
-        if !self.t.callable.is_valid() {
+        if !self.t.accessors_are_valid() {
             return AdvanceTimeResult::ShouldDespawn;
         }
 
@@ -222,6 +236,7 @@ where
         Self::new_with_data(LerpMethodData {
             owner,
             callable,
+            validation: None,
             duration,
             ease: Default::default(),
             from,
@@ -253,6 +268,7 @@ impl SpireTween<LerpMethodData<Variant>> {
         Self::new_with_data(LerpMethodData {
             owner,
             callable,
+            validation: None,
             duration,
             ease: Default::default(),
             from,

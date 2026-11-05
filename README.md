@@ -405,6 +405,7 @@ child constructors uninvoked.
 
 *For "live" example scenes that you can play, see folder [examples](spire_tween_gdscript/examples).*
 
+For individual letter effects, see [per-character animation](docs/character_animation.md).
 For moving platforms and doors, see the [AnimatableBody physics workflow](docs/animatable_bodies.md)
 with GDScript and Rust examples and real collision-test coverage.
 

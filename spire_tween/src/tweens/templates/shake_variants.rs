@@ -64,6 +64,24 @@ fn shake_3d<V: EffectValue>(
     owner: Option<Gd<Object>>,
     getter: impl Fn() -> V + 'static,
     setter: impl FnMut(V) + 'static,
+    map: impl FnMut(Vector3) -> V + 'static,
+    strength: Vector3,
+    duration: f64,
+    vibrato: i32,
+    randomness: real,
+    fade_out: bool,
+    mode: ShakeRandomnessMode,
+    blendable: bool,
+) -> SpireTween<LerpMethodData<f64>> {
+    shake_3d_with_epoch(
+        owner, getter, setter, map, strength, duration, vibrato, randomness, fade_out, mode, blendable, None,
+    )
+}
+
+pub(super) fn shake_3d_with_epoch<V: EffectValue>(
+    owner: Option<Gd<Object>>,
+    getter: impl Fn() -> V + 'static,
+    setter: impl FnMut(V) + 'static,
     mut map: impl FnMut(Vector3) -> V + 'static,
     strength: Vector3,
     duration: f64,
@@ -72,6 +90,7 @@ fn shake_3d<V: EffectValue>(
     fade_out: bool,
     mode: ShakeRandomnessMode,
     blendable: bool,
+    epoch: Option<std::rc::Rc<dyn Fn() -> u64>>,
 ) -> SpireTween<LerpMethodData<f64>> {
     let duration = duration_or_default(duration);
     let strength = clean_vec3(strength, true);
@@ -83,7 +102,7 @@ fn shake_3d<V: EffectValue>(
         mode,
     );
     let mut rng = random_source();
-    effect(
+    effect_with_epoch(
         owner,
         getter,
         setter,
@@ -96,6 +115,7 @@ fn shake_3d<V: EffectValue>(
         },
         duration,
         blendable,
+        epoch,
     )
 }
 

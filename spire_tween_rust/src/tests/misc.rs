@@ -38,6 +38,19 @@ impl ITestClass for MiscTests {
 
     fn test_list() -> Vec<NamedTest<Self>> {
         vec![
+            ("test_characters_translation", Self::test_characters_translation),
+            ("test_characters_rotation", Self::test_characters_rotation),
+            ("test_characters_effect_refresh", Self::test_characters_effect_refresh),
+            ("test_characters_automatic", Self::test_characters_automatic),
+            ("test_characters_attach", Self::test_characters_attach),
+            ("test_characters_channels", Self::test_characters_channels),
+            ("test_characters_refresh", Self::test_characters_refresh),
+            ("test_characters_lifecycle", Self::test_characters_lifecycle),
+            ("test_characters_loops_sequence", Self::test_characters_loops_sequence),
+            ("test_characters_effects", Self::test_characters_effects),
+            ("test_characters_invalid", Self::test_characters_invalid),
+            ("test_characters_render", Self::test_characters_render),
+            ("test_characters_unicode_render", Self::test_characters_unicode_render),
             ("test_animatable_body_2d_translation", Self::test_animatable_body_2d_translation),
             ("test_animatable_body_3d_translation", Self::test_animatable_body_3d_translation),
             ("test_animatable_body_2d_rotation_sequence", Self::test_animatable_body_2d_rotation_sequence),

@@ -26,9 +26,10 @@ impl EffectValue for Quaternion {
 }
 
 struct EffectState<V> {
-    initial:   Option<V>,
-    previous:  V,
+    initial: Option<V>,
+    previous: V,
     generated: bool,
+    epoch: u64,
 }
 
 pub(crate) fn duration_or_default(duration: f64) -> f64 {
@@ -71,14 +72,29 @@ pub(crate) fn effect<V: EffectValue>(
     owner: Option<Gd<Object>>,
     getter: impl Fn() -> V + 'static,
     setter: impl FnMut(V) + 'static,
-    mut sample: impl FnMut(f64, bool) -> V + 'static,
+    sample: impl FnMut(f64, bool) -> V + 'static,
     duration: f64,
     blendable: bool,
 ) -> SpireTween<LerpMethodData<f64>> {
+    effect_with_epoch(owner, getter, setter, sample, duration, blendable, None)
+}
+
+// A rebuilt target has already discarded the previous contribution. Reset the
+// effect's bookkeeping before sampling/restoring it, without changing its clock.
+pub(crate) fn effect_with_epoch<V: EffectValue>(
+    owner: Option<Gd<Object>>,
+    getter: impl Fn() -> V + 'static,
+    setter: impl FnMut(V) + 'static,
+    mut sample: impl FnMut(f64, bool) -> V + 'static,
+    duration: f64,
+    blendable: bool,
+    epoch: Option<Rc<dyn Fn() -> u64>>,
+) -> SpireTween<LerpMethodData<f64>> {
     let state = RcPtr::new(EffectState {
-        initial:   None,
-        previous:  V::ZERO,
+        initial: None,
+        previous: V::ZERO,
         generated: false,
+        epoch: 0,
     });
     let getter = Rc::new(getter);
     let setter = RcPtr::new(setter);
@@ -86,7 +102,15 @@ pub(crate) fn effect<V: EffectValue>(
         let mut state = state.clone();
         let getter = getter.clone();
         let mut setter = setter.clone();
+        let epoch = epoch.clone();
         move |args| {
+            let current_epoch = epoch.as_ref().map_or(0, |read| read());
+            if state.epoch != current_epoch {
+                state.initial = None;
+                state.previous = V::ZERO;
+                state.generated = false;
+                state.epoch = current_epoch;
+            }
             let current = getter();
             let initial = *state.initial.get_or_insert(current);
             let next = sample(args[0].to::<f64>().rem_euclid(1.0), !state.generated);
@@ -114,7 +138,13 @@ pub(crate) fn effect<V: EffectValue>(
                 if owner.as_ref().is_some_and(|owner| !owner.is_instance_valid()) {
                     return;
                 }
-                let value = if blendable { Some(V::replace(getter(), state.previous, V::ZERO)) } else { state.initial };
+                let current = if blendable || epoch.is_some() { getter() } else { V::ZERO };
+                if epoch.as_ref().is_some_and(|read| read() != state.epoch) {
+                    state.initial = None;
+                    state.previous = V::ZERO;
+                    return;
+                }
+                let value = if blendable { Some(V::replace(current, state.previous, V::ZERO)) } else { state.initial };
                 state.previous = V::ZERO;
                 if let Some(value) = value {
                     setter(value);

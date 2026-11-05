@@ -1,7 +1,7 @@
 use super::{effect::*, *};
 
 // Analytic knots avoid allocating a second waypoint/timing buffer for punch.
-fn punch_sample(progress: f64, n: usize, elasticity: f64) -> f64 {
+pub(super) fn punch_sample(progress: f64, n: usize, elasticity: f64) -> f64 {
     if !(progress > 0.0 && progress < 1.0) {
         return 0.0;
     }

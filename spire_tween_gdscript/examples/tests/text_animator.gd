@@ -1,0 +1,374 @@
+extends TestBase
+
+func _label(text: String, bbcode: bool = false) -> RichTextLabel:
+	var n := RichTextLabel.new()
+	n.bbcode_enabled = bbcode
+	n.text = text
+	n.size = Vector2(500, 140)
+	n.add_theme_color_override("default_color", Color.WHITE)
+	n.add_theme_font_size_override("normal_font_size", 36)
+	add_child(n)
+	return n
+
+func _manual(t: SpireMethodFloat) -> SpireMethodFloat:
+	return t.set_process_mode(Spire.PROCESS_MODE_MANUAL).set_ease(Spire.EASE_LINEAR)
+
+func _near(a: float, b: float) -> void:
+	assert_true(abs(a - b) < 0.0002, str(a) + " != " + str(b))
+
+func _v2(a: Vector2, b: Vector2) -> void:
+	_near(a.distance_to(b), 0)
+
+func _v3(a: Vector3, b: Vector3) -> void:
+	_near(a.distance_to(b), 0)
+
+func _overshoot_ease(p: float) -> float:
+	return p + 3 * p * (1 - p)
+
+func test_characters_translation() -> bool:
+	var locale := TranslationServer.get_locale()
+	TranslationServer.set_locale("en")
+	var translation := Translation.new()
+	translation.set_locale("es")
+	translation.add_message("SPIRE_CHAR_TRANSLATION", "[color=red]猫AB[/color]")
+	TranslationServer.add_translation(translation)
+	var n := _label("SPIRE_CHAR_TRANSLATION", true)
+	var a := SpireTextAnimator.attach(n)
+	TranslationServer.set_locale("es")
+	for _i in 4:
+		await next_frame()
+	assert_eq(a.get_character_count(), 3)
+	assert_eq(n.text, "SPIRE_CHAR_TRANSLATION")
+	assert_eq(n.get_parsed_text(), "猫AB")
+	assert_eq(a.get_char_color(0), Color.RED)
+	TranslationServer.set_locale(locale)
+	TranslationServer.remove_translation(translation)
+	n.free()
+	return true
+
+func test_characters_rotation() -> bool:
+	var n := _label("A")
+	var a := SpireTextAnimator.attach(n)
+	var angle := TAU * 2 + 0.8
+	for mode in [Spire.ROTATE_MODE_FAST, Spire.ROTATE_MODE_FAST_BEYOND_360]:
+		a.reset()
+		var t := _manual(a.rotate_char(0, Vector3(0, 0, angle), 1, mode))
+		t.custom_step(0.5)
+		_near(a.get_char_rotation(0).z, 0.4 if mode == Spire.ROTATE_MODE_FAST else angle / 2)
+	var from := Vector3(0.2, 0.3, 0.4)
+	var by := Vector3(0.3, -0.4, 0)
+	for mode in [Spire.ROTATE_MODE_WORLD_AXIS_ADD, Spire.ROTATE_MODE_LOCAL_AXIS_ADD]:
+		a.set_char_rotation(0, from)
+		var t := _manual(a.rotate_char(0, by, 1, mode))
+		t.force_complete()
+		var expected := Quaternion.from_euler(by) * Quaternion.from_euler(from) if mode == Spire.ROTATE_MODE_WORLD_AXIS_ADD else Quaternion.from_euler(from) * Quaternion.from_euler(by)
+		assert_true(abs(Quaternion.from_euler(a.get_char_rotation(0)).dot(expected)) > 0.99999)
+	n.free()
+	return true
+
+func test_characters_effect_refresh() -> bool:
+	var n := _label("A")
+	var a := SpireTextAnimator.attach(n)
+	for blendable in [true, false]:
+		a.reset()
+		var t := _manual(a.punch_char_offset(0, Vector2(4, 0), 1, 4, 1, blendable))
+		t.custom_step(0.1)
+		_v2(a.get_char_offset(0), Vector2(4, 0))
+		n.text = "B" if blendable else "C"
+		_v2(a.get_char_offset(0), Vector2.ZERO)
+		t.custom_step(0.2)
+		_v2(a.get_char_offset(0), Vector2(-3, 0))
+		a.reset()
+		t.force_complete()
+		_v2(a.get_char_offset(0), Vector2.ZERO)
+	n.free()
+	return true
+
+func test_characters_automatic() -> bool:
+	var n := _label("A")
+	var a := SpireTextAnimator.attach(n)
+	var t := a.offset_char(0, Vector2(8, 0), 0.05)
+	var events := [0, 0]
+	t.stopped.connect(func(): events[0] += 1)
+	t.finished.connect(func(): events[1] += 1)
+	for _i in 60:
+		await next_frame()
+		if t.get_state() == Spire.STATE_STOPPED:
+			break
+	assert_eq(events, [1, 1])
+	_v2(a.get_char_offset(0), Vector2(8, 0))
+	n.text = "[color=red]B[/color]"
+	n.bbcode_enabled = true
+	for _i in 4:
+		await next_frame()
+	# The red baseline can only be learned by the reattached real draw effect.
+	assert_eq(a.get_char_color(0), Color.RED)
+	_v2(a.get_char_offset(0), Vector2.ZERO)
+	n.free()
+	return true
+
+func test_characters_attach() -> bool:
+	var n := _label("[b]AB[/b]")
+	var a := SpireTextAnimator.attach(n)
+	var count := n.get_child_count()
+	assert_eq(count, 0)
+	assert_eq(SpireTextAnimator.attach(n), a)
+	assert_eq(n.get_child_count(), count)
+	assert_eq(n.text, "[b]AB[/b]")
+	assert_true(not n.bbcode_enabled)
+	assert_eq(a.get_character_count(), 9)
+	n.bbcode_enabled = true
+	assert_eq(a.get_character_count(), 2)
+	assert_eq(n.get_parsed_text(), "AB")
+	var copy := n.duplicate() as RichTextLabel
+	assert_true(copy != null, "Runtime helper must not block Node.duplicate")
+	if copy != null:
+		add_child(copy)
+		var other := SpireTextAnimator.attach(copy)
+		a.set_char_offset(1, Vector2.ONE)
+		other.set_char_offset(1, Vector2(4, 0))
+		_v2(a.get_char_offset(1), Vector2.ONE)
+		_v2(other.get_char_offset(1), Vector2(4, 0))
+		copy.free()
+	assert_true(a.is_valid_char(1))
+	assert_true(not a.is_valid_char(-1))
+	assert_true(not a.is_valid_char(2))
+	assert_eq(SpireTextAnimator.attach(null), null)
+	var orphan := SpireTextAnimator.new()
+	assert_eq(orphan.get_character_count(), 0)
+	var invalid := orphan.offset_char(0, Vector2.ONE, 1)
+	assert_eq(invalid.get_state(), Spire.STATE_STOPPED)
+	orphan.free()
+	n.free()
+	return true
+
+func test_characters_channels() -> bool:
+	var n := _label("ABC")
+	var a := SpireTextAnimator.attach(n)
+	a.set_char_offset(0, Vector2(2, 4))
+	var offset := _manual(a.offset_char(0, Vector2(10, 12), 1))
+	var scale := _manual(a.scale_char(1, Vector2(3, 5), 1))
+	a.set_char_color(2, Color(1, 0, 0, 0.8))
+	var color := _manual(a.color_char(2, Color(0, 0, 1, 0.4), 1))
+	for t in [offset, scale, color]:
+		t.custom_step(0.5)
+	_v2(a.get_char_offset(0), Vector2(6, 8))
+	_v2(a.get_char_scale(1), Vector2(2, 3))
+	_near(a.get_char_color(2).r, 0.5)
+	_near(a.get_char_alpha(2), 0.6)
+	var fade := _manual(a.fade_char(2, 0, 1))
+	fade.custom_step(0.5)
+	_near(a.get_char_alpha(2), 0.3)
+	_near(a.get_char_color(2).r, 0.5)
+	for t in [offset, scale, color, fade]:
+		t.force_complete()
+	_v2(a.get_char_offset(0), Vector2(10, 12))
+	_near(a.get_char_alpha(2), 0)
+	a.set_char_alpha(2, 1)
+	var overshoot := _manual(a.fade_char(2, 0, 1)).set_ease_func(_overshoot_ease)
+	overshoot.custom_step(0.5)
+	assert_true(a.get_char_alpha(2) < 0, "Valid easing overshoot must not be treated as invalid input")
+	overshoot.force_complete()
+	_near(a.get_char_alpha(2), 0)
+	a.set_char_color(2, Color.WHITE)
+	overshoot = _manual(a.color_char(2, Color(0, 0, 1, 0), 1)).set_ease_func(_overshoot_ease)
+	overshoot.custom_step(0.5)
+	assert_true(a.get_char_alpha(2) < 0)
+	overshoot.force_complete()
+	_near(a.get_char_alpha(2), 0)
+	n.free()
+	return true
+
+func test_characters_refresh() -> bool:
+	var n := _label("ABC")
+	var a := SpireTextAnimator.attach(n)
+	var t := _manual(a.offset_char(2, Vector2(8, 0), 1))
+	t.custom_step(0.25)
+	_v2(a.get_char_offset(2), Vector2(2, 0))
+	n.text = "12345"
+	_v2(a.get_char_offset(2), Vector2.ZERO)
+	t.custom_step(0.25)
+	_v2(a.get_char_offset(2), Vector2(4, 0))
+	_near(t.get_total_elapsed_time(), 0.5)
+	n.size = Vector2(100, 100)
+	_v2(a.get_char_offset(2), Vector2(4, 0))
+	var events := [0, 0, 0]
+	t.stopped.connect(func(): events[0] += 1)
+	t.finished.connect(func(): events[1] += 1)
+	t.loop_finished.connect(func(): events[2] += 1)
+	n.text = "A"
+	assert_true(not t.custom_step(1))
+	assert_eq(events, [1, 0, 0])
+	assert_eq(t.get_state(), Spire.STATE_STOPPED)
+	var invalid := _manual(a.offset_char(2, Vector2.ONE, 1))
+	assert_eq(invalid.get_state(), Spire.STATE_STOPPED)
+	invalid.play()
+	invalid.force_complete()
+	assert_eq(invalid.get_state(), Spire.STATE_STOPPED)
+	assert_eq(n.text, "A")
+	n.free()
+	return true
+
+func test_characters_lifecycle() -> bool:
+	var n := _label("AB")
+	var a := SpireTextAnimator.attach(n)
+	var t := _manual(a.offset_char(0, Vector2(8, 0), 1))
+	t.custom_step(0.25)
+	t.pause()
+	t.custom_step(0.5)
+	_v2(a.get_char_offset(0), Vector2(2, 0))
+	t.play()
+	t.custom_step(0.25)
+	t.stop()
+	t.force_complete()
+	_v2(a.get_char_offset(0), Vector2(4, 0))
+	t.play()
+	t.custom_step(0.25)
+	a.reset()
+	_v2(a.get_char_offset(0), Vector2.ZERO)
+	t.custom_step(0.25)
+	_v2(a.get_char_offset(0), Vector2(4, 0))
+	var events := [0, 0]
+	t.stopped.connect(func(): events[0] += 1)
+	t.finished.connect(func(): events[1] += 1)
+	n.free()
+	assert_true(not t.custom_step(1))
+	assert_eq(events, [1, 0])
+	n = _label("A")
+	a = SpireTextAnimator.attach(n)
+	t = _manual(a.fade_char(0, 0, 1))
+	a.free()
+	assert_true(not t.custom_step(1))
+	assert_eq(t.get_state(), Spire.STATE_STOPPED)
+	n.free()
+	return true
+
+func test_characters_loops_sequence() -> bool:
+	var n := _label("A")
+	var a := SpireTextAnimator.attach(n)
+	for mode in [Spire.LOOP_MODE_RESTART, Spire.LOOP_MODE_YOYO, Spire.LOOP_MODE_INCREMENTAL]:
+		a.reset()
+		var t := _manual(a.offset_char(0, Vector2(8, 0), 1))
+		t.set_loops(2, mode)
+		t.custom_step(1)
+		t.custom_step(0.25)
+		var x: float = 2 if mode == Spire.LOOP_MODE_RESTART else (6 if mode == Spire.LOOP_MODE_YOYO else 10)
+		_near(a.get_char_offset(0).x, x)
+		t.stop()
+	a.reset()
+	var child := _manual(a.offset_char(0, Vector2(8, 0), 1))
+	child.set_speed_scale(2)
+	var sequence := Spire.sequence().set_process_mode(Spire.PROCESS_MODE_MANUAL)
+	sequence.set_default_children_ease(Spire.EASE_LINEAR)
+	sequence.append(child).append(a.offset_char(0, Vector2(16, 0), 1))
+	sequence.custom_step(0.75)
+	_near(a.get_char_offset(0).x, 10)
+	n.free()
+	return true
+
+func test_characters_effects() -> bool:
+	var n := _label("A")
+	var a := SpireTextAnimator.attach(n)
+	var effects := [
+		_manual(a.punch_char_offset(0, Vector2(4, 0), 1, 4, 1)),
+		_manual(a.punch_char_scale(0, Vector2(0, 2), 1, 4, 1)),
+		_manual(a.punch_char_rotation(0, Vector3(0.3, 0, 0), 1, 4, 1)),
+	]
+	for t in effects:
+		t.custom_step(0.1)
+	_v2(a.get_char_offset(0), Vector2(4, 0))
+	_v2(a.get_char_scale(0), Vector2(1, 3))
+	_v3(a.get_char_rotation(0), Vector3(0.3, 0, 0))
+	for t in effects:
+		t.force_complete()
+	_v2(a.get_char_offset(0), Vector2.ZERO)
+	_v2(a.get_char_scale(0), Vector2.ONE)
+	_v3(a.get_char_rotation(0), Vector3.ZERO)
+	effects = [
+		_manual(a.shake_char_offset(0, 1, Vector2(4, 0), 4, 0, false)),
+		_manual(a.shake_char_scale(0, 1, Vector2(0, 2), 4, 0, false, Spire.SHAKE_RANDOMNESS_MODE_HARMONIC)),
+		_manual(a.shake_char_rotation(0, 1, Vector3(0.3, 0, 0), 4, 0, false)),
+	]
+	for t in effects:
+		t.custom_step(0.125)
+	assert_true(a.get_char_offset(0).length() > 0.00001)
+	assert_true((a.get_char_scale(0) - Vector2.ONE).length() > 0.00001)
+	assert_true(a.get_char_rotation(0).length() > 0.00001)
+	for t in effects:
+		t.force_complete()
+	_v2(a.get_char_offset(0), Vector2.ZERO)
+	_v2(a.get_char_scale(0), Vector2.ONE)
+	_v3(a.get_char_rotation(0), Vector3.ZERO)
+	n.free()
+	return true
+
+func test_characters_invalid() -> bool:
+	var n := _label("A")
+	var a := SpireTextAnimator.attach(n)
+	var t := _manual(a.offset_char(0, Vector2(NAN, 4), NAN))
+	_near(t.get_duration(), 1)
+	t.force_complete()
+	_v2(a.get_char_offset(0), Vector2(0, 4))
+	a.set_char_alpha(0, 3)
+	_near(a.get_char_alpha(0), 1)
+	a.set_char_offset(-1, Vector2.ONE)
+	_v2(a.get_char_offset(-1), Vector2.ZERO)
+	_v2(a.get_char_scale(2), Vector2.ONE)
+	_v2(a.get_char_offset(0), Vector2(0, 4))
+	a.set_char_rotation(0, Vector3(NAN, 0, 0))
+	_v3(a.get_char_rotation(0), Vector3.ZERO)
+	t = _manual(a.shake_char_offset(0, 1, Vector2.ONE, 0, NAN, false))
+	n.text = ""
+	t.force_complete()
+	assert_eq(t.get_state(), Spire.STATE_STOPPED)
+	t = _manual(a.fade_char(-1, 0, 1))
+	assert_eq(t.get_state(), Spire.STATE_STOPPED)
+	n.free()
+	return true
+
+func test_characters_render() -> bool:
+	var n := _label("[color=red]A[/color]B", true)
+	var a := SpireTextAnimator.attach(n)
+	await n.draw
+	# Baseline is captured by the real RichTextEffect callback, not a synthetic call.
+	assert_eq(a.get_char_color(0), Color.RED)
+	assert_eq(a.get_char_color(1), Color.WHITE)
+	var color := _manual(a.color_char(0, Color.BLUE, 1))
+	color.custom_step(0.5)
+	assert_eq(a.get_char_color(0), Color(0.5, 0, 0.5, 1))
+	color.stop()
+	a.set_char_pivot(0, Vector2(10, -6))
+	_v2(a.get_char_pivot(0), Vector2(10, -6))
+	a.set_char_rotation(0, Vector3(PI / 3, PI / 3, 0))
+	a.set_char_scale(0, Vector2(2, 3))
+	a.set_char_offset(0, Vector2(10, 20))
+	a.set_char_color(0, Color.BLUE)
+	a.set_char_alpha(0, 0.25)
+	for _i in 3:
+		await next_frame()
+	assert_eq(a.get_char_color(0), Color(0, 0, 1, 0.25))
+	a.reset()
+	for _i in 3:
+		await next_frame()
+	assert_eq(a.get_char_color(0), Color.RED)
+	_v2(a.get_char_offset(0), Vector2.ZERO)
+	_v2(a.get_char_pivot(0), Vector2.ZERO)
+	_v3(a.get_char_rotation(0), Vector3.ZERO)
+	_v2(a.get_char_scale(0), Vector2.ONE)
+	n.free()
+	return true
+
+func test_characters_unicode_render() -> bool:
+	var n := _label("e\u0301אב")
+	var a := SpireTextAnimator.attach(n)
+	assert_eq(a.get_character_count(), 4)
+	a.set_char_offset(1, Vector2(12, 3))
+	for _i in 4:
+		await next_frame()
+	_v2(a.get_char_offset(0), Vector2(12, 3))
+	_v2(a.get_char_offset(1), Vector2(12, 3))
+	a.set_char_scale(0, Vector2(2, 2))
+	_v2(a.get_char_scale(1), Vector2(2, 2))
+	assert_true(a.is_valid_char(2))
+	n.free()
+	return true

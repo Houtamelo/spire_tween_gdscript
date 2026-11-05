@@ -1,5 +1,6 @@
 mod api_compatibility;
 mod animatable_body;
+mod text_animator;
 mod bookkeeping;
 mod delayed_call_validity;
 mod delays;
