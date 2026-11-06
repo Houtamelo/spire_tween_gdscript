@@ -1,0 +1,43 @@
+{
+  "original_source_sha256": "66355f7507888903a6299c64ffade9bb7d5fab21148651a4e7b210b8552e6c0b",
+  "rustc": "rustc 1.99.0-nightly (12c36e253 2026-08-10)",
+  "cargo": "cargo 1.99.0-nightly (b07e5a086 2026-08-07)",
+  "godot_rust": "0.5.5",
+  "api": "4.4",
+  "builds": [
+    {
+      "variant": "no_tool",
+      "command": [
+        "cargo",
+        "build",
+        "--offline",
+        "-p",
+        "spire_tween",
+        "--features",
+        "include_gdext_lib,include_gdscript_bridge,api-4-4",
+        "-j",
+        "2"
+      ],
+      "source_sha256": "fbaa0e01aa3257ce57826dc2317c5e916b54bbd911013c5b32c0a3982ae9bb48",
+      "artifact": "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/target/editor_controller_probe_2026_11_03/artifacts/no_tool/libspire_tween.so",
+      "artifact_sha256": "659b879531c63e1a8026c32d56b00cabc5e5349fbf5bd34dda79ef857bb4936a"
+    },
+    {
+      "variant": "tool",
+      "command": [
+        "cargo",
+        "build",
+        "--offline",
+        "-p",
+        "spire_tween",
+        "--features",
+        "include_gdext_lib,include_gdscript_bridge,api-4-4",
+        "-j",
+        "2"
+      ],
+      "source_sha256": "a86834e3c8b3bc64cebfb6dd96a0a522db476e28306d1e6d0f1d1e66ac10fbc7",
+      "artifact": "/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/target/editor_controller_probe_2026_11_03/artifacts/tool/libspire_tween.so",
+      "artifact_sha256": "2ac9fceb0a7aae619fe33e390fb27e36f4b2e68c06de5d5c1f7665c53e09bb2f"
+    }
+  ]
+}

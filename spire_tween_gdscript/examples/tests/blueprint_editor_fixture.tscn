@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://examples/tests/blueprint_custom.gd" id="1"]
+
+[node name="Target" type="Node2D"]
+position = Vector2(3, 4)
+
+[node name="Blueprint" type="TweenBlueprint" parent="." node_paths=PackedStringArray("target")]
+target = NodePath("..")
+trigger_condition = 1
+kind = 2
+animated_property = &"position"
+speed_or_duration = 0.75
+start_value = Vector2(1, 2)
+end_value = Vector2(6, 7)
+
+[node name="Custom" type="TweenBlueprint" parent="."]
+script = ExtResource("1")
+trigger_condition = 2

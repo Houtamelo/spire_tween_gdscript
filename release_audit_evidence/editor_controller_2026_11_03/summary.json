@@ -1,0 +1,283 @@
+{
+  "production_controller_change": "Add tool to the class declaration",
+  "production_source_sha256": "21f1a00e2d28e20d523a6b420b1578d95d36717a2d82f8bb832388319c38c91d",
+  "production_artifact_sha256": "bd8e4ec1f99bdd9d3373fddc9fd4d0ca5da02c9c0ac066fd1634a12252376025",
+  "production_build_command": [
+    "cargo",
+    "build",
+    "-p",
+    "spire_tween",
+    "--features",
+    "include_gdext_lib,include_gdscript_bridge",
+    "-j",
+    "2"
+  ],
+  "production_diff": "diff --git a/spire_tween/src/global/mod.rs b/spire_tween/src/global/mod.rs\nindex ca84f71..5095e30 100644\n--- a/spire_tween/src/global/mod.rs\n+++ b/spire_tween/src/global/mod.rs\n@@ -65,7 +65,7 @@ fn try_init_singleton() -> Result<()> {\n }\n \n #[derive(GodotClass)]\n-#[class(init, base = Node, internal)]\n+#[class(init, tool, base = Node, internal)]\n pub(crate) struct TweensController {\n     base: Base<Node>,\n     #[init(val = OnReady::from_base_fn(|base| base.get_tree()))]\n",
+  "run_count": 6,
+  "runs": [
+    {
+      "name": "no_tool_headless",
+      "passed": true,
+      "version": {
+        "editor_hint": true,
+        "event": "version",
+        "godot": {
+          "build": "official",
+          "hash": "ed1daf0bf001b61586d9930840f2f1394092c079",
+          "hex": 263938,
+          "major": 4,
+          "minor": 7,
+          "patch": 2,
+          "status": "stable",
+          "string": "4.7.2-stable (official)",
+          "timestamp": 0
+        },
+        "headless": "headless",
+        "ms": 3698,
+        "pid": 13,
+        "variant": "no_tool"
+      },
+      "registration": {
+        "event": "classdb_registration",
+        "expected_tool": false,
+        "ms": 3699,
+        "pid": 13,
+        "ready_configured": false,
+        "variant": "no_tool"
+      },
+      "result": {
+        "event": "RESULT",
+        "failures": [],
+        "ms": 6296,
+        "ok": true,
+        "pid": 13,
+        "variant": "no_tool"
+      },
+      "errors": [],
+      "warnings": [
+        "WARNING: godot-rust: TypedSignal connections are now auto-disconnected."
+      ],
+      "jsonl_sha256": "dca73b1979cc89eb1dd91edf8e75b88b958f8b9b418b8ae5b510640309aaf5dc"
+    },
+    {
+      "name": "no_tool_gui",
+      "passed": true,
+      "version": {
+        "editor_hint": true,
+        "event": "version",
+        "godot": {
+          "build": "official",
+          "hash": "ed1daf0bf001b61586d9930840f2f1394092c079",
+          "hex": 263938,
+          "major": 4,
+          "minor": 7,
+          "patch": 2,
+          "status": "stable",
+          "string": "4.7.2-stable (official)",
+          "timestamp": 0
+        },
+        "headless": "X11",
+        "ms": 3046,
+        "pid": 15,
+        "variant": "no_tool"
+      },
+      "registration": null,
+      "result": {
+        "event": "RESULT",
+        "failures": [],
+        "ms": 5687,
+        "ok": true,
+        "pid": 15,
+        "variant": "no_tool"
+      },
+      "errors": [],
+      "warnings": [
+        "WARNING: Failed to create wd.xic as the input method or its xim server may not have started yet.",
+        "WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.",
+        "WARNING: godot-rust: TypedSignal connections are now auto-disconnected."
+      ],
+      "jsonl_sha256": "b11cb940c62d790032126ab491a337a6b1a3625731aaf7e8eb8f233d2b9de809"
+    },
+    {
+      "name": "tool_headless",
+      "passed": true,
+      "version": {
+        "editor_hint": true,
+        "event": "version",
+        "godot": {
+          "build": "official",
+          "hash": "ed1daf0bf001b61586d9930840f2f1394092c079",
+          "hex": 263938,
+          "major": 4,
+          "minor": 7,
+          "patch": 2,
+          "status": "stable",
+          "string": "4.7.2-stable (official)",
+          "timestamp": 0
+        },
+        "headless": "headless",
+        "ms": 1760,
+        "pid": 12,
+        "variant": "tool"
+      },
+      "registration": null,
+      "result": {
+        "event": "RESULT",
+        "failures": [],
+        "ms": 4361,
+        "ok": true,
+        "pid": 12,
+        "variant": "tool"
+      },
+      "errors": [],
+      "warnings": [
+        "WARNING: godot-rust: TypedSignal connections are now auto-disconnected."
+      ],
+      "jsonl_sha256": "13816729b5b5afcbd972d23cc807823861fe09902cf9de00fc4f83c79dd56dce"
+    },
+    {
+      "name": "tool_gui",
+      "passed": true,
+      "version": {
+        "editor_hint": true,
+        "event": "version",
+        "godot": {
+          "build": "official",
+          "hash": "ed1daf0bf001b61586d9930840f2f1394092c079",
+          "hex": 263938,
+          "major": 4,
+          "minor": 7,
+          "patch": 2,
+          "status": "stable",
+          "string": "4.7.2-stable (official)",
+          "timestamp": 0
+        },
+        "headless": "X11",
+        "ms": 2201,
+        "pid": 24,
+        "variant": "tool"
+      },
+      "registration": null,
+      "result": {
+        "event": "RESULT",
+        "failures": [],
+        "ms": 4850,
+        "ok": true,
+        "pid": 24,
+        "variant": "tool"
+      },
+      "errors": [],
+      "warnings": [
+        "WARNING: Failed to create wd.xic as the input method or its xim server may not have started yet.",
+        "WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.",
+        "WARNING: godot-rust: TypedSignal connections are now auto-disconnected."
+      ],
+      "jsonl_sha256": "6dac2a342767646a02d7522e8270f16e1c8ae7a0e888dccdf185e41eaffbc9e6"
+    },
+    {
+      "name": "production_headless",
+      "passed": true,
+      "version": {
+        "editor_hint": true,
+        "event": "version",
+        "godot": {
+          "build": "official",
+          "hash": "ed1daf0bf001b61586d9930840f2f1394092c079",
+          "hex": 263938,
+          "major": 4,
+          "minor": 7,
+          "patch": 2,
+          "status": "stable",
+          "string": "4.7.2-stable (official)",
+          "timestamp": 0
+        },
+        "headless": "headless",
+        "ms": 1826,
+        "pid": 13,
+        "variant": "production"
+      },
+      "registration": {
+        "event": "classdb_registration",
+        "expected_tool": true,
+        "ms": 1826,
+        "pid": 13,
+        "ready_configured": true,
+        "variant": "production"
+      },
+      "result": {
+        "event": "RESULT",
+        "failures": [],
+        "ms": 4428,
+        "ok": true,
+        "pid": 13,
+        "variant": "production"
+      },
+      "errors": [],
+      "warnings": [
+        "WARNING: godot-rust: TypedSignal connections are now auto-disconnected."
+      ],
+      "jsonl_sha256": "79542b6e6673c6dbf2745ee23ef266868be436ce9e228a96705912bf32d6c9b6"
+    },
+    {
+      "name": "production_gui",
+      "passed": true,
+      "version": {
+        "editor_hint": true,
+        "event": "version",
+        "godot": {
+          "build": "official",
+          "hash": "ed1daf0bf001b61586d9930840f2f1394092c079",
+          "hex": 263938,
+          "major": 4,
+          "minor": 7,
+          "patch": 2,
+          "status": "stable",
+          "string": "4.7.2-stable (official)",
+          "timestamp": 0
+        },
+        "headless": "X11",
+        "ms": 2983,
+        "pid": 17,
+        "variant": "production"
+      },
+      "registration": {
+        "event": "classdb_registration",
+        "expected_tool": true,
+        "ms": 2983,
+        "pid": 17,
+        "ready_configured": true,
+        "variant": "production"
+      },
+      "result": {
+        "event": "RESULT",
+        "failures": [],
+        "ms": 5632,
+        "ok": true,
+        "pid": 17,
+        "variant": "production"
+      },
+      "errors": [],
+      "warnings": [
+        "WARNING: Failed to create wd.xic as the input method or its xim server may not have started yet.",
+        "WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.",
+        "WARNING: godot-rust: TypedSignal connections are now auto-disconnected."
+      ],
+      "jsonl_sha256": "5611b8f57e7f9992f2df42c2ee2dd022a5e7cc4e1a65db32123439f291206975"
+    }
+  ],
+  "negative_control": {
+    "name": "without_tool_expected_failure_headless",
+    "expected_exit_code": 1,
+    "actual_exit_code": 1,
+    "result": {
+      "event": "RESULT",
+      "failures": [
+        "ClassDB instantiation reflects the expected tool registration"
+      ],
+      "ms": 4538,
+      "ok": false,
+      "pid": 13,
+      "variant": "without_tool_expected_failure"
+    }
+  }
+}

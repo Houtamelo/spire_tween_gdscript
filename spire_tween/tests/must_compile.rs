@@ -4,6 +4,8 @@ extern crate spire_tween;
 
 use godot::prelude::*;
 use spire_tween::prelude::*;
+#[cfg(feature = "include_gdscript_bridge")]
+use spire_tween::prelude::gdscript::SpireSequence;
 
 macro_rules! new_tween_method {
     () => {
@@ -101,6 +103,12 @@ macro_rules! full_ptr_api {
 }
 
 fn compile() {
+    {
+        #[cfg(feature = "include_gdscript_bridge")]
+        let _: fn(Gd<TweenBlueprint>) -> Gd<SpireSequence> = TweenBlueprint::play;
+        let _: fn(Gd<TweenBlueprint>) = TweenBlueprint::stop;
+        let _ = (BlueprintKind::Property, LerpModeKind::Relative, TriggerCondition::Manual);
+    }
     {
         let ease = Ease::get_global_default();
         Ease::set_global_default(ease);

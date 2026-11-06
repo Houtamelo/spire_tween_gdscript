@@ -129,6 +129,8 @@ The library is written to `target/release`; the platform scripts also place arti
 
 ## Running integration tests
 
+For scene-authored animations, see [TweenBlueprint authoring](docs/tween_blueprint.md). Its isolated runtime and editor checks run with `bash scripts/test_blueprint.sh godot`; add `--rendered` to verify the Inspector and editor save workflow under Xvfb.
+
 From the repository root, request every GDScript test without reading or writing cached results:
 
 ```bash

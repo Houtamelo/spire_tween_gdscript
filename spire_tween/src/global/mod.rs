@@ -65,7 +65,7 @@ fn try_init_singleton() -> Result<()> {
 }
 
 #[derive(GodotClass)]
-#[class(init, base = Node, internal)]
+#[class(init, tool, base = Node, internal)]
 pub(crate) struct TweensController {
     base: Base<Node>,
     #[init(val = OnReady::from_base_fn(|base| base.get_tree()))]

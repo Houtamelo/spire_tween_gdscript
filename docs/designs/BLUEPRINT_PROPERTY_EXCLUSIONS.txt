@@ -1,0 +1,1551 @@
+TWEENBLUEPRINT: PROPOSED BUILT-IN PROPERTY EXCLUSIONS
+Audit date: 2026-11-05
+Status: review list only; no product implementation or integration tests.
+
+SCOPE AND METHOD
+
+Engine inspected: 4.7.2-stable (official) (ed1daf0bf001b61586d9930840f2f1394092c079).
+Enumerated all 1051 registered built-in core/editor classes, including
+abstract classes, through ClassDB rather than instantiating every class.
+Reviewed 5640 declared property entries; 2333 survived the current
+preliminary type, read-only, hint, and nonempty-setter filters, across
+457 classes. Inherited properties were reviewed at their declaring class.
+
+The preliminary filters are the snapshot of property_should_suggest and its
+helpers read at the start of this task. The existing name denylist is omitted
+from that preliminary pass so existing exclusions can also be reviewed.
+SCRIPT_VARIABLE bypass behavior is unchanged by these recommendations.
+
+Candidates below pass static ClassDB property metadata. Individual instances
+can further change metadata in _validate_property, or add dynamic properties
+in _get_property_list. Those instance-specific lists were not exhaustively
+enumerated. Compiled-out modules, third-party extensions, and custom classes
+are outside this built-in-class audit. Only Godot 4.7.2 was enumerated; this
+is not a claim about every supported engine version.
+
+The current target is a Node. Section A is immediately relevant to Node
+targets. Sections B and C also cover Resource/RefCounted/singleton classes
+because the request covers every built-in class. Non-Node-only entries do
+not currently affect which target can be assigned.
+
+The rationale is semantic suitability, not the Variant's numeric type:
+identity, executable text, collection topology, buffer allocation, solver
+budgets, build/bake settings, and diagnostic metadata are poor defaults.
+Ordinary dimensions, colors, motion, physics forces, audio parameters, and
+useful integer animation controls remain eligible.
+
+READING THE LIST
+
+A/B contain 206 NEW names that can be considered for the existing
+name-only matcher (89 occur on Node classes; 117 only elsewhere).
+Each name was checked for other occurrences among all preliminary candidates.
+Existing entries are recorded separately in D. These are recommendations,
+not a promise that a specialized procedural workflow could never use them.
+
+C requires the named class context. DO NOT copy its generic property names
+into an unconditional name-only matcher. For example, GLTFNode.height is
+hierarchy depth, while CylinderMesh.height is a useful geometric dimension.
+Class-scoped rules should account for inheritance if implemented later.
+
+The complete proposed set contains 692 declaring-class/property pairs
+across 287 classes, including existing exclusions and class-scoped
+catalogues. 173 pairs are declared on Node classes. Most Resource-only
+schema entries are grouped in C rather than treated as global name bans.
+
+A. NEW NAME-ONLY EXCLUSIONS PRESENT ON NODE CLASSES
+
+"amount"
+  Classes: CPUParticles2D, CPUParticles3D, GPUParticles2D, GPUParticles3D.
+  Reason: Particle population/allocation; GPU variants restart when changed. Prefer GPU amount_ratio for an emission envelope.
+
+"android_surface_size"
+  Classes: OpenXRCompositionLayer.
+  Reason: Native surface allocation or swapchain sampling quality.
+
+"audio_track"
+  Classes: VideoStreamPlayer.
+  Reason: Audio track selection or decoder buffer capacity; not volume or playback speed.
+
+"bake_simplification_distance"
+  Classes: OccluderInstance3D.
+  Reason: Occlusion mesh baking tolerance, not an active visibility effect.
+
+"base_type"
+  Classes: EditorResourcePicker.
+  Reason: Resource class/type constraint.
+
+"body_size_limit"
+  Classes: HTTPRequest.
+  Reason: Network transfer limits, buffering, and scheduling rather than visual state.
+
+"bone"
+  Classes: LookAtModifier3D, ModifierBoneTarget3D, SpringBoneCollision3D.
+  Reason: Selects a skeleton bone; intermediate indices select unrelated bones.
+
+"bone2d_index"
+  Classes: PhysicalBone2D.
+  Reason: Selects a skeleton bone; intermediate indices select unrelated bones.
+
+"bone_idx"
+  Classes: BoneAttachment3D.
+  Reason: Selects an attachment bone; intermediate indices select unrelated bones.
+
+"buffering_msec"
+  Classes: VideoStreamPlayer.
+  Reason: Audio track selection or decoder buffer capacity; not volume or playback speed.
+
+"cell_octant_size"
+  Classes: GridMap.
+  Reason: Spatial batching partition size, not cell position or visual scale.
+
+"chain_count"
+  Classes: LimitAngularVelocityModifier3D.
+  Reason: Resizes a bone-chain collection.
+
+"collision_priority"
+  Classes: CSGShape3D, CollisionObject2D, CollisionObject3D, GridMap.
+  Reason: Collision-resolution preference; algorithm configuration rather than a motion target.
+
+"current_path"
+  Classes: FileDialog.
+  Reason: Filesystem navigation/filter configuration; intermediate strings are meaningless or invalid paths.
+
+"current_screen"
+  Classes: Window.
+  Reason: Monitor selector; intermediate integers hop between unrelated displays.
+
+"current_tab"
+  Classes: TabBar, TabContainer.
+  Reason: Tab selection or drag-and-drop group identity; not a tab transition animation.
+
+"custom_word_separators"
+  Classes: TextEdit.
+  Reason: Token/navigation delimiter configuration; intermediate strings change editing behavior.
+
+"debug_color"
+  Classes: CollisionPolygon3D, CollisionShape2D, CollisionShape3D.
+  Reason: Collision debug visualization color rather than rendered scene appearance.
+
+"debug_custom_color"
+  Classes: Path3D.
+  Reason: Path debug visualization rather than rendered scene appearance.
+
+"debug_path_custom_color"
+  Classes: NavigationAgent2D, NavigationAgent3D.
+  Reason: Navigation debug visualization rather than rendered character appearance.
+
+"debug_path_custom_line_width"
+  Classes: NavigationAgent2D.
+  Reason: Navigation debug visualization rather than rendered character appearance.
+
+"debug_path_custom_point_size"
+  Classes: NavigationAgent2D, NavigationAgent3D.
+  Reason: Navigation debug visualization rather than rendered character appearance.
+
+"debug_shape_custom_color"
+  Classes: RayCast3D, ShapeCast3D.
+  Reason: Raycast debug visualization rather than rendered scene appearance. Shape query debug visualization rather than rendered scene appearance.
+
+"debug_shape_thickness"
+  Classes: RayCast3D.
+  Reason: Raycast debug visualization rather than rendered scene appearance.
+
+"delta_interval"
+  Classes: MultiplayerSynchronizer.
+  Reason: Network update scheduling rather than replicated animated values.
+
+"download_chunk_size"
+  Classes: HTTPRequest.
+  Reason: Network transfer limits, buffering, and scheduling rather than visual state.
+
+"draw_passes"
+  Classes: GPUParticles3D.
+  Reason: Number of particle mesh slots/draw passes, not a rendered blend.
+
+"fallback_segments"
+  Classes: OpenXRCompositionLayerCylinder, OpenXRCompositionLayerEquirect.
+  Reason: Fallback geometry tessellation count.
+
+"filename_filter"
+  Classes: FileDialog.
+  Reason: Filesystem navigation/filter configuration; intermediate strings are meaningless or invalid paths.
+
+"fixed_fps"
+  Classes: CPUParticles2D, CPUParticles3D, GPUParticles2D, GPUParticles3D.
+  Reason: Simulation tick-rate configuration; speed_scale controls playback speed.
+
+"gi_lightmap_texel_scale"
+  Classes: GeometryInstance3D.
+  Reason: Lightmap bake density; changing it does not animate already baked lighting.
+
+"gizmo_extents"
+  Classes: Marker2D, Marker3D.
+  Reason: Editor-only marker gizmo dimensions.
+
+"gui_drag_threshold"
+  Classes: Viewport.
+  Reason: Input gesture recognition threshold, not visual feedback.
+
+"gutters_line_numbers_min_digits"
+  Classes: CodeEdit.
+  Reason: Code-editor formatting/gutter configuration rather than feedback state.
+
+"hframes"
+  Classes: Sprite2D, Sprite3D.
+  Reason: Sprite-sheet layout; changing it reinterprets frame indices and can reset frame.
+
+"indent_size"
+  Classes: CodeEdit.
+  Reason: Code-editor formatting/gutter configuration rather than feedback state.
+
+"internal_vertex_count"
+  Classes: Polygon2D.
+  Reason: Polygon/UV topology partition; intermediate counts reinterpret vertex data.
+
+"item_count"
+  Classes: ItemList, MenuButton, OptionButton, PopupMenu.
+  Reason: Resizes an item collection; intermediate counts add/remove entries.
+
+"layout_key"
+  Classes: EditorDock.
+  Reason: Editor layout persistence identity.
+
+"max_contacts_reported"
+  Classes: RigidBody2D, RigidBody3D.
+  Reason: Contact reporting capacity, not a physical force or motion.
+
+"max_iterations"
+  Classes: IterateIK3D, SkeletonIK3D.
+  Reason: IK solver iteration budget.
+
+"max_length"
+  Classes: LineEdit.
+  Reason: Input limit; decreasing it can destructively truncate existing text.
+
+"max_neighbors"
+  Classes: NavigationAgent2D, NavigationAgent3D.
+  Reason: Avoidance neighbor/search budget rather than a movement envelope.
+
+"max_redirects"
+  Classes: HTTPRequest.
+  Reason: Network transfer limits, buffering, and scheduling rather than visual state.
+
+"max_results"
+  Classes: ShapeCast2D, ShapeCast3D.
+  Reason: Collision query result capacity.
+
+"max_slides"
+  Classes: CharacterBody2D, CharacterBody3D.
+  Reason: Collision-solver iteration budget, not movement.
+
+"option_count"
+  Classes: FileDialog.
+  Reason: Resizes the dialog option collection rather than animating an option.
+
+"origin_bone"
+  Classes: LookAtModifier3D.
+  Reason: Selects the origin bone; intermediate indices select unrelated bones.
+
+"original_class"
+  Classes: MissingNode, MissingResource.
+  Reason: Missing-type recovery/serialization metadata.
+
+"original_scene"
+  Classes: MissingNode.
+  Reason: Missing-type recovery/serialization metadata.
+
+"oversampling_override"
+  Classes: Viewport.
+  Reason: Font rasterization/cache quality configuration.
+
+"path_interval"
+  Classes: CSGPolygon3D.
+  Reason: Path extrusion sampling/tessellation quality rather than position along a path.
+
+"path_search_max_distance"
+  Classes: NavigationAgent2D, NavigationAgent3D, NavigationPathQueryParameters2D, NavigationPathQueryParameters3D.
+  Reason: Pathfinding search-work boundary, not the destination or movement distance.
+
+"path_search_max_polygons"
+  Classes: NavigationAgent2D, NavigationAgent3D, NavigationPathQueryParameters2D, NavigationPathQueryParameters3D.
+  Reason: Pathfinding search-work budget, not the agent target or motion.
+
+"path_simplify_angle"
+  Classes: CSGPolygon3D.
+  Reason: Path extrusion sampling/tessellation quality rather than position along a path.
+
+"physics_quadrant_size"
+  Classes: TileMapLayer.
+  Reason: Collision batching/merging partition size.
+
+"positional_shadow_atlas_size"
+  Classes: Viewport.
+  Reason: Shadow-buffer allocation/resolution; values are rounded to powers of two.
+
+"preprocess"
+  Classes: CPUParticles2D, CPUParticles3D, GPUParticles2D, GPUParticles3D.
+  Reason: Warm-up/startup simulation time, not current playback time.
+
+"progress_bar_delay"
+  Classes: RichTextLabel.
+  Reason: Background text-loading indicator scheduling, not the visible text or its reveal.
+
+"radial_segments"
+  Classes: CSGSphere3D, CapsuleMesh, CylinderMesh, SphereMesh.
+  Reason: Mesh tessellation/topology counts, not dimensions. CSG tessellation/topology counts.
+
+"rendering_quadrant_size"
+  Classes: TileMap, TileMapLayer.
+  Reason: Rendering batch partition size.
+
+"replication_interval"
+  Classes: MultiplayerSynchronizer.
+  Reason: Network update scheduling rather than replicated animated values.
+
+"ring_sides"
+  Classes: CSGTorus3D.
+  Reason: CSG tessellation/topology count.
+
+"rings"
+  Classes: CSGSphere3D, CapsuleMesh, CylinderMesh, SphereMesh, TorusMesh.
+  Reason: Mesh tessellation/topology counts, not dimensions. CSG tessellation/topology counts.
+
+"root_subfolder"
+  Classes: FileDialog.
+  Reason: Filesystem navigation/filter configuration; intermediate strings are meaningless or invalid paths.
+
+"round_precision"
+  Classes: Line2D.
+  Reason: Round joint/cap tessellation quality, not line width or curvature.
+
+"search_bar_fuzzy_search_max_misses"
+  Classes: OptionButton, PopupMenu.
+  Reason: Search activation/algorithm thresholds rather than presentation state.
+
+"search_bar_min_item_count"
+  Classes: OptionButton, PopupMenu.
+  Reason: Search activation/algorithm thresholds rather than presentation state.
+
+"secret_character"
+  Classes: LineEdit.
+  Reason: Password masking symbol; an interpolated string is not a meaningful mask transition.
+
+"seed"
+  Classes: CPUParticles2D, CPUParticles3D, FastNoiseLite, GPUParticles2D, GPUParticles3D, RandomNumberGenerator.
+  Reason: Random sequence identity; intermediate seeds produce unrelated random systems. Random sequence identity/state, not a smoothly varying random parameter. Noise realization identity; animate offset/frequency instead of replacing the random sequence.
+
+"selected"
+  Classes: OptionButton.
+  Reason: Selected item index; intermediate indices select unrelated options.
+
+"setting_count"
+  Classes: AimModifier3D, BoneTwistDisperser3D, ConvertTransformModifier3D, CopyTransformModifier3D, IterateIK3D, SplineIK3D, SpringBoneSimulator3D, TwoBoneIK3D.
+  Reason: Resizes a modifier setting collection rather than animating an individual setting.
+
+"sides"
+  Classes: CSGCylinder3D, CSGTorus3D.
+  Reason: CSG tessellation/topology count.
+
+"simulation_precision"
+  Classes: SoftBody3D.
+  Reason: Simulation solver quality/iteration budget.
+
+"solver_priority"
+  Classes: Joint3D.
+  Reason: Solver ordering/configuration rather than joint motion or strength.
+
+"spawn_limit"
+  Classes: MultiplayerSpawner.
+  Reason: Network entity capacity, not a spawn animation.
+
+"spin_sides"
+  Classes: CSGPolygon3D.
+  Reason: CSG spin tessellation/topology count.
+
+"start_index"
+  Classes: MenuBar.
+  Reason: Native menu insertion/index configuration, not an animated menu position.
+
+"submenu_popup_delay"
+  Classes: PopupMenu.
+  Reason: Hover interaction timing; does not animate opening a submenu.
+
+"swapchain_state_max_anisotropy"
+  Classes: OpenXRCompositionLayer.
+  Reason: Native surface allocation or swapchain sampling quality.
+
+"tab_count"
+  Classes: TabBar.
+  Reason: Resizes the tab collection; shrinking removes tab data.
+
+"tabs_rearrange_group"
+  Classes: TabBar, TabContainer.
+  Reason: Tab selection or drag-and-drop group identity; not a tab transition animation.
+
+"timeout"
+  Classes: HTTPRequest.
+  Reason: Network transfer limits, buffering, and scheduling rather than visual state.
+
+"trail_section_subdivisions"
+  Classes: GPUParticles2D.
+  Reason: Trail tessellation/mesh complexity rather than trail length or opacity.
+
+"trail_sections"
+  Classes: GPUParticles2D.
+  Reason: Trail tessellation/mesh complexity rather than trail length or opacity.
+
+"uri"
+  Classes: LinkButton.
+  Reason: Navigation destination; interpolated strings can produce unintended destinations.
+
+"vframes"
+  Classes: Sprite2D, Sprite3D.
+  Reason: Sprite-sheet layout; changing it reinterprets frame indices and can reset frame.
+
+"view_count"
+  Classes: RenderSceneBuffersConfiguration, SubViewport.
+  Reason: Rendering view count/topology rather than a viewport transform. Rendering view count/topology in a buffer-creation descriptor.
+
+"visibility_rect"
+  Classes: GPUParticles2D.
+  Reason: Particle culling bounds rather than the emitted particles or their appearance.
+
+B. ADDITIONAL NEW NAME-ONLY EXCLUSIONS ON NON-NODE CLASSES
+
+"_data"
+  Classes: Curve, Curve2D, Curve3D.
+  Reason: Curve topology or internal serialization payload; intermediate values are not curve samples.
+
+"_source"
+  Classes: DPITexture.
+  Reason: Internal SVG/source payload, not a visual parameter.
+
+"advance_expression"
+  Classes: AnimationNodeStateMachineTransition.
+  Reason: Executable transition condition; intermediate strings are not valid transitions.
+
+"auth_timeout"
+  Classes: SceneMultiplayer.
+  Reason: Network authentication scheduling or packet-size budgets.
+
+"background_camera_feed_id"
+  Classes: Environment.
+  Reason: Camera source identity, not a background blend.
+
+"bake_interval"
+  Classes: Curve2D, Curve3D.
+  Reason: Curve cache sampling interval; changes force cache regeneration.
+
+"bake_resolution"
+  Classes: Curve.
+  Reason: Curve cache sampling budget.
+
+"bar_beats"
+  Classes: AudioStreamMP3, AudioStreamOggVorbis.
+  Reason: Musical timing/track-length metadata used by stream synchronization and looping.
+
+"beat_count"
+  Classes: AudioStreamMP3, AudioStreamOggVorbis.
+  Reason: Musical timing/track-length metadata used by stream synchronization and looping.
+
+"bone_index"
+  Classes: SkeletonModification2DLookAt.
+  Reason: Selects a skeleton bone; intermediate indices select unrelated bones.
+
+"bone_size"
+  Classes: SkeletonProfile.
+  Reason: Resizes skeleton-retargeting schema collections.
+
+"bpm"
+  Classes: AudioStreamMP3, AudioStreamOggVorbis.
+  Reason: Musical timing/track-length metadata used by stream synchronization and looping.
+
+"buffer_length"
+  Classes: AudioEffectCapture, AudioEffectSpectrumAnalyzer, AudioStreamGenerator.
+  Reason: Audio capture/analysis/generation ring-buffer capacity.
+
+"bus_count"
+  Classes: AudioServer.
+  Reason: Mixer topology or hardware device selection, not an audio effect.
+
+"camera_feed_id"
+  Classes: CameraTexture.
+  Reason: Camera device/feed-plane selection.
+
+"ccdik_data_chain_length"
+  Classes: SkeletonModification2DCCDIK.
+  Reason: Resizes the CCD IK bone-chain configuration.
+
+"clip_count"
+  Classes: AudioStreamInteractive.
+  Reason: Resizes the interactive audio clip collection.
+
+"code"
+  Classes: Shader, ShaderInclude.
+  Reason: Shader source; tween steps generate incomplete programs and repeated compilation.
+
+"collision_layer"
+  Classes: PhysicsDirectBodyState2D, PhysicsDirectBodyState3D.
+  Reason: Physics bit masks; integer interpolation flips unrelated membership bits.
+
+"collision_mask"
+  Classes: PhysicsDirectBodyState2D, PhysicsDirectBodyState3D.
+  Reason: Physics bit masks; integer interpolation flips unrelated membership bits.
+
+"compression_level"
+  Classes: ZIPPacker.
+  Reason: Archive encoding quality/work budget.
+
+"corner_detail"
+  Classes: StyleBoxFlat.
+  Reason: Rounded-corner tessellation quality, not corner radius.
+
+"curve_step"
+  Classes: TextMesh.
+  Reason: Glyph curve approximation/tessellation quality, not displayed text size.
+
+"display_refresh_rate"
+  Classes: OpenXRInterface.
+  Reason: Hardware refresh rate or render-quality/allocation selection, not a scene transform.
+
+"domain_warp_fractal_octaves"
+  Classes: FastNoiseLite.
+  Reason: Discrete noise-layer complexity/quality budget.
+
+"emission_point_count"
+  Classes: ParticleProcessMaterial.
+  Reason: Count describing emission point texture/data rather than emission strength.
+
+"encode_buffer_max_size"
+  Classes: PacketPeer.
+  Reason: Packet encoding capacity.
+
+"environment_blend_mode"
+  Classes: XRInterface.
+  Reason: XR compositor blend mode selector.
+
+"fabrik_data_chain_length"
+  Classes: SkeletonModification2DFABRIK.
+  Reason: Resizes the FABRIK IK bone-chain configuration.
+
+"file"
+  Classes: VideoStream.
+  Reason: Media source path; intermediate strings identify unrelated or invalid files.
+
+"fixed_size_scale_mode"
+  Classes: FontFile.
+  Reason: Bitmap-font scaling mode selector.
+
+"font_name"
+  Classes: FontFile.
+  Reason: Font face identity metadata.
+
+"foveation_level"
+  Classes: OpenXRInterface.
+  Reason: Hardware refresh rate or render-quality/allocation selection, not a scene transform.
+
+"fractal_octaves"
+  Classes: FastNoiseLite.
+  Reason: Discrete noise-layer complexity/quality budget.
+
+"frames"
+  Classes: AnimatedTexture.
+  Reason: Resizes/selects the active frame collection, not the currently displayed frame.
+
+"geometry_source_group_name"
+  Classes: NavigationMesh.
+  Reason: Baking source group identity.
+
+"graph_offset"
+  Classes: AnimationNodeBlendTree, VisualShader.
+  Reason: Graph editor canvas position, not an animation/shader parameter.
+
+"group_size"
+  Classes: SkeletonProfile.
+  Reason: Resizes skeleton-retargeting schema collections.
+
+"handshake_timeout"
+  Classes: WebSocketMultiplayerPeer.
+  Reason: Network handshake scheduling or buffering/queue capacity.
+
+"heartbeat_interval"
+  Classes: WebSocketPeer.
+  Reason: Network buffering/queue capacity or keepalive scheduling.
+
+"heightmap_max_layers"
+  Classes: BaseMaterial3D.
+  Reason: Parallax-occlusion sampling budgets, not height/displacement amplitude.
+
+"heightmap_min_layers"
+  Classes: BaseMaterial3D.
+  Reason: Parallax-occlusion sampling budgets, not height/displacement amplitude.
+
+"inbound_buffer_size"
+  Classes: WebSocketMultiplayerPeer, WebSocketPeer.
+  Reason: Network handshake scheduling or buffering/queue capacity. Network buffering/queue capacity or keepalive scheduling.
+
+"input_buffer_max_size"
+  Classes: PacketPeerStream.
+  Reason: Network input/output buffering capacity.
+
+"input_count"
+  Classes: AnimationNodeTransition.
+  Reason: Resizes the animation graph input collection.
+
+"input_device"
+  Classes: AudioServer.
+  Reason: Mixer topology or hardware device selection, not an audio effect.
+
+"instance_count"
+  Classes: MultiMesh.
+  Reason: Instance buffer allocation/topology; visible_instance_count is the reveal control.
+
+"jiggle_data_chain_length"
+  Classes: SkeletonModification2DJiggle.
+  Reason: Resizes the jiggle bone-chain configuration.
+
+"layers"
+  Classes: PlaceholderTextureLayered.
+  Reason: Placeholder array/volume texture topology.
+
+"lightmap_size_hint"
+  Classes: Mesh.
+  Reason: Lightmap bake layout/resolution hint, not runtime mesh size.
+
+"localized_name"
+  Classes: OpenXRAction, OpenXRActionSet.
+  Reason: Action binding/UI identity text, not an animated input value.
+
+"low_processor_usage_mode_sleep_usec"
+  Classes: OS.
+  Reason: Operating-system idle scheduling interval.
+
+"map_depth"
+  Classes: HeightMapShape3D.
+  Reason: Height sample-grid topology; intermediate values reinterpret/resize the sample data.
+
+"map_width"
+  Classes: HeightMapShape3D.
+  Reason: Height sample-grid topology; intermediate values reinterpret/resize the sample data.
+
+"max_collisions"
+  Classes: PhysicsTestMotionParameters3D.
+  Reason: Physics query result capacity.
+
+"max_delta_packet_size"
+  Classes: SceneMultiplayer.
+  Reason: Network authentication scheduling or packet-size budgets.
+
+"max_fps"
+  Classes: Engine.
+  Reason: Engine scheduling/simulation configuration; time_scale is the explicit time envelope control.
+
+"max_pending_connections"
+  Classes: UDPServer.
+  Reason: Network connection queue capacity.
+
+"max_physics_steps_per_frame"
+  Classes: Engine.
+  Reason: Engine scheduling/simulation configuration; time_scale is the explicit time envelope control.
+
+"max_queued_packets"
+  Classes: WebSocketMultiplayerPeer, WebSocketPeer.
+  Reason: Network handshake scheduling or buffering/queue capacity. Network buffering/queue capacity or keepalive scheduling.
+
+"max_steps"
+  Classes: UndoRedo.
+  Reason: Undo history capacity; reducing it can discard history.
+
+"max_sync_packet_size"
+  Classes: SceneMultiplayer.
+  Reason: Network authentication scheduling or packet-size budgets.
+
+"mix_rate"
+  Classes: AudioStreamGenerator, AudioStreamWAV.
+  Reason: Audio sample format/rate configuration; pitch_scale is the playback pitch/speed control.
+
+"modification_count"
+  Classes: SkeletonModificationStack2D.
+  Reason: Resizes the modifier collection.
+
+"mouse_mode"
+  Classes: Input.
+  Reason: Mouse capture/visibility mode selector encoded as an integer.
+
+"object_id"
+  Classes: EncodedObjectAsID.
+  Reason: Object identity; intermediate values refer to unrelated or absent objects.
+
+"outbound_buffer_size"
+  Classes: WebSocketMultiplayerPeer, WebSocketPeer.
+  Reason: Network handshake scheduling or buffering/queue capacity. Network buffering/queue capacity or keepalive scheduling.
+
+"output_buffer_max_size"
+  Classes: PacketPeerStream.
+  Reason: Network input/output buffering capacity.
+
+"output_device"
+  Classes: AudioServer.
+  Reason: Mixer topology or hardware device selection, not an audio effect.
+
+"palette_index"
+  Classes: FontVariation.
+  Reason: Font face or color palette selection; intermediate indices select unrelated resources.
+
+"particles_anim_h_frames"
+  Classes: BaseMaterial3D, CanvasItemMaterial.
+  Reason: Particle atlas layout; intermediate counts reinterpret the texture.
+
+"particles_anim_v_frames"
+  Classes: BaseMaterial3D, CanvasItemMaterial.
+  Reason: Particle atlas layout; intermediate counts reinterpret the texture.
+
+"path_length"
+  Classes: NavigationPathQueryResult2D, NavigationPathQueryResult3D.
+  Reason: Cached pathfinding result; overwriting it does not move or recompute a path.
+
+"physical_bone_chain_length"
+  Classes: SkeletonModification2DPhysicalBones.
+  Reason: Resizes the physical-bone chain configuration.
+
+"physics_jitter_fix"
+  Classes: Engine.
+  Reason: Engine scheduling/simulation configuration; time_scale is the explicit time envelope control.
+
+"physics_ticks_per_second"
+  Classes: Engine.
+  Reason: Engine scheduling/simulation configuration; time_scale is the explicit time envelope control.
+
+"plural_rules_override"
+  Classes: Translation.
+  Reason: Pluralization grammar/program configuration, not translated display text.
+
+"point_count"
+  Classes: Curve, Curve2D, Curve3D.
+  Reason: Curve topology or internal serialization payload; intermediate values are not curve samples.
+
+"polyphony"
+  Classes: AudioStreamPolyphonic.
+  Reason: Voice capacity rather than an audio envelope.
+
+"pseudolocalization_prefix"
+  Classes: TranslationDomain.
+  Reason: Localization-testing wrappers, not the displayed string itself.
+
+"pseudolocalization_suffix"
+  Classes: TranslationDomain.
+  Reason: Localization-testing wrappers, not the displayed string itself.
+
+"radial_steps"
+  Classes: TubeTrailMesh.
+  Reason: Trail mesh tessellation/topology counts, not radius or section length.
+
+"read_chunk_size"
+  Classes: HTTPClient.
+  Reason: Network read-buffer chunk capacity.
+
+"render_target_size_multiplier"
+  Classes: OpenXRInterface.
+  Reason: Hardware refresh rate or render-quality/allocation selection, not a scene transform.
+
+"resource_name"
+  Classes: Resource.
+  Reason: Resource identity, cache/path association, or scene serialization metadata.
+
+"resource_path"
+  Classes: Resource.
+  Reason: Resource identity, cache/path association, or scene serialization metadata.
+
+"resource_scene_unique_id"
+  Classes: Resource.
+  Reason: Resource identity, cache/path association, or scene serialization metadata.
+
+"ring_segments"
+  Classes: TorusMesh.
+  Reason: Mesh tessellation/topology counts, not dimensions.
+
+"sampling_rate"
+  Classes: OggPacketSequence.
+  Reason: Encoded stream sample-rate metadata.
+
+"sdfgi_cascades"
+  Classes: Environment.
+  Reason: Ray-marching work budget or discrete GI cascade topology.
+
+"section_rings"
+  Classes: TubeTrailMesh.
+  Reason: Trail mesh tessellation/topology counts, not radius or section length.
+
+"section_segments"
+  Classes: RibbonTrailMesh.
+  Reason: Trail mesh tessellation/topology counts, not width or section length.
+
+"sections"
+  Classes: RibbonTrailMesh, TubeTrailMesh.
+  Reason: Trail mesh tessellation/topology counts, not radius or section length. Trail mesh tessellation/topology counts, not width or section length.
+
+"source_code"
+  Classes: Script.
+  Reason: Executable script source; partial/interpolated programs are invalid.
+
+"source_geometry_group_name"
+  Classes: NavigationPolygon.
+  Reason: Baking source group identity.
+
+"ssr_max_steps"
+  Classes: Environment.
+  Reason: Ray-marching work budget or discrete GI cascade topology.
+
+"stacked_outline_count"
+  Classes: LabelSettings.
+  Reason: Resizes outline/shadow layer collections rather than their visual parameters.
+
+"stacked_shadow_count"
+  Classes: LabelSettings.
+  Reason: Resizes outline/shadow layer collections rather than their visual parameters.
+
+"state"
+  Classes: RandomNumberGenerator.
+  Reason: Random sequence identity/state, not a smoothly varying random parameter.
+
+"stencil_reference"
+  Classes: BaseMaterial3D.
+  Reason: Stencil comparison/mask identity, not a continuous visual parameter.
+
+"stream_count"
+  Classes: AudioStreamPlaylist, AudioStreamSynchronized.
+  Reason: Resizes the stream collection.
+
+"streams_count"
+  Classes: AudioStreamRandomizer.
+  Reason: Resizes the randomized stream pool.
+
+"style_name"
+  Classes: FontFile.
+  Reason: Font face identity metadata.
+
+"subdivide_depth"
+  Classes: BoxMesh, PlaneMesh, PrismMesh.
+  Reason: Mesh tessellation/topology counts, not dimensions.
+
+"subdivide_height"
+  Classes: BoxMesh, PrismMesh.
+  Reason: Mesh tessellation/topology counts, not dimensions.
+
+"subdivide_width"
+  Classes: BoxMesh, PlaneMesh, PrismMesh.
+  Reason: Mesh tessellation/topology counts, not dimensions.
+
+"terrain"
+  Classes: TileData.
+  Reason: Terrain set/type selectors, not a transition between terrain appearances.
+
+"terrain_set"
+  Classes: TileData.
+  Reason: Terrain set/type selectors, not a transition between terrain appearances.
+
+"tile_size"
+  Classes: TileSet.
+  Reason: Logical tile cell layout/asset interpretation rather than a rendered scale.
+
+"transfer_channel"
+  Classes: MultiplayerPeer.
+  Reason: Network delivery channel selector.
+
+"uv2_padding"
+  Classes: PrimitiveMesh.
+  Reason: Secondary UV unwrap/bake padding, not a visible transform.
+
+"value_label"
+  Classes: AnimationNodeBlendSpace1D.
+  Reason: Graph editor axis label.
+
+"variation_face_index"
+  Classes: FontVariation.
+  Reason: Font face or color palette selection; intermediate indices select unrelated resources.
+
+"voice_count"
+  Classes: AudioEffectChorus.
+  Reason: Number of enabled chorus voices rather than a per-voice sound parameter.
+
+"which_feed"
+  Classes: CameraTexture.
+  Reason: Camera device/feed-plane selection.
+
+"x_label"
+  Classes: AnimationNodeBlendSpace2D.
+  Reason: Graph editor axis labels.
+
+"y_label"
+  Classes: AnimationNodeBlendSpace2D.
+  Reason: Graph editor axis labels.
+
+C. CLASS-SCOPED EXCLUSIONS: KEEP THEIR GENERIC NAMES OUT OF THE GLOBAL LIST
+
+Area2D [Node]
+  Properties: priority.
+  Reason: Ordering of overlapping area overrides, not a smoothly varying force.
+
+Area3D [Node]
+  Properties: priority.
+  Reason: Ordering of overlapping area overrides, not a smoothly varying force.
+
+CSGShape3D [Node]
+  Properties: snap.
+  Reason: CSG vertex snapping/precision configuration.
+
+GridContainer [Node]
+  Properties: columns.
+  Reason: Discrete layout topology; animate child positions/layout constraints for a transition.
+
+LightmapGI [Node]
+  Properties: bias, bounce_indirect_energy, bounces, denoiser_range, denoiser_strength, environment_custom_color, environment_custom_energy, max_texture_size, supersampling_factor, texel_scale.
+  Reason: Lightmap bake inputs/quality settings; tweening does not rebake or animate the existing baked result.
+
+RootMotionView [Node]
+  Properties: cell_size, color, radius.
+  Reason: Editor root-motion preview-grid configuration; this helper is hidden during normal gameplay.
+
+Tree [Node]
+  Properties: columns.
+  Reason: Resizes the tree column schema, potentially affecting per-column data.
+
+VisibleOnScreenNotifier2D [Node]
+  Properties: rect.
+  Reason: Visibility detection bounds rather than a drawn rectangle.
+
+AnimationNodeStateMachineTransition [non-Node]
+  Properties: priority.
+  Reason: Discrete transition selection order.
+
+AStarGrid2D [non-Node]
+  Properties: region, size.
+  Reason: Logical navigation grid topology, not a rendered rectangle/size.
+
+AudioEffectPitchShift [non-Node]
+  Properties: oversampling.
+  Reason: Audio processing quality/CPU budget; pitch_scale is the sound envelope control.
+
+CharFXTransform [non-Node]
+  Properties: elapsed_time, glyph_count, glyph_flags, glyph_index, range, relative_index.
+  Reason: Per-shaping/per-callback glyph metadata; animate offset/color instead.
+
+CurveTexture [non-Node]
+  Properties: width.
+  Reason: Generated texture allocation/sampling resolution rather than an effect parameter.
+
+CurveXYZTexture [non-Node]
+  Properties: width.
+  Reason: Generated texture allocation/sampling resolution rather than an effect parameter.
+
+FontFile [non-Node]
+  Properties: msdf_pixel_range, msdf_size, oversampling.
+  Reason: Font rasterization/cache quality configuration, not displayed font size or color.
+
+GLTFAccessor [non-Node]
+  Properties: accessor_type, buffer_view, byte_offset, component_type, count, sparse_count, sparse_indices_buffer_view, sparse_indices_byte_offset, sparse_indices_component_type, sparse_values_buffer_view, sparse_values_byte_offset, type.
+  Reason: glTF import/export document schema or serialized asset data; this is not the imported live scene object.
+
+GLTFAnimation [non-Node]
+  Properties: original_name.
+  Reason: glTF import/export document schema or serialized asset data; this is not the imported live scene object.
+
+GLTFBufferView [non-Node]
+  Properties: buffer, byte_length, byte_offset, byte_stride.
+  Reason: glTF import/export document schema or serialized asset data; this is not the imported live scene object.
+
+GLTFCamera [non-Node]
+  Properties: depth_far, depth_near, fov, size_mag.
+  Reason: glTF import/export document schema or serialized asset data; this is not the imported live scene object.
+
+GLTFDocument [non-Node]
+  Properties: fallback_image_format, fallback_image_quality, image_format, lossy_quality, root_node_mode, texture_map_mode, visibility_mode.
+  Reason: glTF import/export document schema or serialized asset data; this is not the imported live scene object.
+
+GLTFLight [non-Node]
+  Properties: color, inner_cone_angle, intensity, light_type, outer_cone_angle, range.
+  Reason: glTF import/export document schema or serialized asset data; this is not the imported live scene object.
+
+GLTFMesh [non-Node]
+  Properties: original_name.
+  Reason: glTF import/export document schema or serialized asset data; this is not the imported live scene object.
+
+GLTFNode [non-Node]
+  Properties: camera, height, light, mesh, original_name, parent, position, rotation, scale, skeleton, skin.
+  Reason: glTF import/export document schema or serialized asset data; this is not the imported live scene object.
+
+GLTFObjectModelProperty [non-Node]
+  Properties: object_model_type, variant_type.
+  Reason: glTF import/export document schema or serialized asset data; this is not the imported live scene object.
+
+GLTFPhysicsBody [non-Node]
+  Properties: angular_velocity, body_type, center_of_mass, inertia_diagonal, inertia_orientation, linear_velocity, mass.
+  Reason: glTF import/export document schema or serialized asset data; this is not the imported live scene object.
+
+GLTFPhysicsShape [non-Node]
+  Properties: height, mesh_index, radius, shape_type, size.
+  Reason: glTF import/export document schema or serialized asset data; this is not the imported live scene object.
+
+GLTFSkin [non-Node]
+  Properties: skeleton, skin_root.
+  Reason: glTF import/export document schema or serialized asset data; this is not the imported live scene object.
+
+GLTFSpecGloss [non-Node]
+  Properties: diffuse_factor, gloss_factor, specular_factor.
+  Reason: glTF import/export document schema or serialized asset data; this is not the imported live scene object.
+
+GLTFState [non-Node]
+  Properties: bake_fps, base_path, copyright, filename, major_version, minor_version, scene_name.
+  Reason: glTF import/export document schema or serialized asset data; this is not the imported live scene object.
+
+GLTFTexture [non-Node]
+  Properties: sampler, src_image.
+  Reason: glTF import/export document schema or serialized asset data; this is not the imported live scene object.
+
+GLTFTextureSampler [non-Node]
+  Properties: mag_filter, min_filter, wrap_s, wrap_t.
+  Reason: glTF import/export document schema or serialized asset data; this is not the imported live scene object.
+
+GradientTexture1D [non-Node]
+  Properties: width.
+  Reason: Generated texture allocation/sampling resolution rather than an effect parameter.
+
+GradientTexture2D [non-Node]
+  Properties: height, width.
+  Reason: Generated texture allocation/sampling resolution rather than an effect parameter.
+
+InputEvent [non-Node]
+  Properties: device.
+  Reason: Input event payload/identity; mutating a stored event does not animate the corresponding device or Control.
+
+InputEventAction [non-Node]
+  Properties: event_index, strength.
+  Reason: Input event payload/identity; mutating a stored event does not animate the corresponding device or Control.
+
+InputEventFromWindow [non-Node]
+  Properties: window_id.
+  Reason: Input event payload/identity; mutating a stored event does not animate the corresponding device or Control.
+
+InputEventGesture [non-Node]
+  Properties: position.
+  Reason: Input event payload/identity; mutating a stored event does not animate the corresponding device or Control.
+
+InputEventJoypadButton [non-Node]
+  Properties: button_index, pressure.
+  Reason: Input event payload/identity; mutating a stored event does not animate the corresponding device or Control.
+
+InputEventJoypadMotion [non-Node]
+  Properties: axis, axis_value.
+  Reason: Input event payload/identity; mutating a stored event does not animate the corresponding device or Control.
+
+InputEventKey [non-Node]
+  Properties: key_label, keycode, physical_keycode, unicode.
+  Reason: Input event payload/identity; mutating a stored event does not animate the corresponding device or Control.
+
+InputEventMagnifyGesture [non-Node]
+  Properties: factor.
+  Reason: Input event payload/identity; mutating a stored event does not animate the corresponding device or Control.
+
+InputEventMIDI [non-Node]
+  Properties: channel, controller_number, controller_value, instrument, message, pitch, pressure, velocity.
+  Reason: Input event payload/identity; mutating a stored event does not animate the corresponding device or Control.
+
+InputEventMouse [non-Node]
+  Properties: button_mask, global_position, position.
+  Reason: Input event payload/identity; mutating a stored event does not animate the corresponding device or Control.
+
+InputEventMouseButton [non-Node]
+  Properties: button_index, factor.
+  Reason: Input event payload/identity; mutating a stored event does not animate the corresponding device or Control.
+
+InputEventMouseMotion [non-Node]
+  Properties: pressure, relative, screen_relative, screen_velocity, tilt, velocity.
+  Reason: Input event payload/identity; mutating a stored event does not animate the corresponding device or Control.
+
+InputEventPanGesture [non-Node]
+  Properties: delta.
+  Reason: Input event payload/identity; mutating a stored event does not animate the corresponding device or Control.
+
+InputEventScreenDrag [non-Node]
+  Properties: index, position, pressure, relative, screen_relative, screen_velocity, tilt, velocity.
+  Reason: Input event payload/identity; mutating a stored event does not animate the corresponding device or Control.
+
+InputEventScreenTouch [non-Node]
+  Properties: index, position.
+  Reason: Input event payload/identity; mutating a stored event does not animate the corresponding device or Control.
+
+MeshConvexDecompositionSettings [non-Node]
+  Properties: convex_hull_downsampling, max_concavity, max_convex_hulls, max_num_vertices_per_convex_hull, min_volume_per_convex_hull, plane_downsampling, resolution, revolution_axes_clipping_bias, symmetry_planes_clipping_bias.
+  Reason: Convex decomposition build parameters, not live collision shape motion.
+
+NavigationMesh [non-Node]
+  Properties: agent_height, agent_max_climb, agent_max_slope, agent_radius, border_size, cell_height, cell_size, detail_sample_distance, detail_sample_max_error, edge_max_error, edge_max_length, filter_baking_aabb_offset, region_merge_size, region_min_size, vertices_per_polygon.
+  Reason: Navigation geometry bake/source configuration; not a live navigation effect.
+
+NavigationPolygon [non-Node]
+  Properties: agent_radius, baking_rect, baking_rect_offset, border_size, cell_size.
+  Reason: Navigation geometry bake/source configuration; not a live navigation effect.
+
+NoiseTexture2D [non-Node]
+  Properties: height, width.
+  Reason: Generated texture allocation/sampling resolution rather than an effect parameter.
+
+NoiseTexture3D [non-Node]
+  Properties: depth, height, width.
+  Reason: Generated texture allocation/sampling resolution rather than an effect parameter.
+
+OpenXRActionSet [non-Node]
+  Properties: priority.
+  Reason: Input action-set conflict resolution order.
+
+OpenXRAnchorTracker [non-Node]
+  Properties: uuid.
+  Reason: XR binding/profile/anchor identity.
+
+OpenXRInteractionProfile [non-Node]
+  Properties: interaction_profile_path.
+  Reason: XR binding/profile/anchor identity.
+
+OpenXRIPBinding [non-Node]
+  Properties: binding_path.
+  Reason: XR binding/profile/anchor identity.
+
+OpenXRMarkerTracker [non-Node]
+  Properties: bounds_size, marker_id, marker_type.
+  Reason: XR tracker identity/classification or tracking-result payload, not a scene-node effect.
+
+OpenXRPlaneTracker [non-Node]
+  Properties: bounds_size, plane_alignment, plane_label.
+  Reason: XR tracker identity/classification or tracking-result payload, not a scene-node effect.
+
+OpenXRSpatialCapabilityConfigurationAprilTag [non-Node]
+  Properties: april_dict.
+  Reason: Marker dictionary selector encoded as an integer.
+
+OpenXRSpatialCapabilityConfigurationAruco [non-Node]
+  Properties: aruco_dict.
+  Reason: Marker dictionary selector encoded as an integer.
+
+OpenXRSpatialEntityTracker [non-Node]
+  Properties: spatial_tracking_state.
+  Reason: XR tracker identity/classification or tracking-result payload, not a scene-node effect.
+
+ParticleProcessMaterial [non-Node]
+  Properties: sub_emitter_amount_at_collision, sub_emitter_amount_at_end, sub_emitter_amount_at_start.
+  Reason: Discrete sub-emission event burst configuration.
+
+RDAccelerationStructureGeometry [non-Node]
+  Properties: flags, index_count, index_offset, vertex_count, vertex_format, vertex_offset, vertex_stride.
+  Reason: RenderingDevice creation/compilation descriptor or shader diagnostic/source, not an already-created live GPU object.
+
+RDAccelerationStructureInstance [non-Node]
+  Properties: flags, hit_sbt_range, id, mask.
+  Reason: RenderingDevice creation/compilation descriptor or shader diagnostic/source, not an already-created live GPU object.
+
+RDAttachmentFormat [non-Node]
+  Properties: format, samples, usage_flags.
+  Reason: RenderingDevice creation/compilation descriptor or shader diagnostic/source, not an already-created live GPU object.
+
+RDFramebufferPass [non-Node]
+  Properties: depth_attachment.
+  Reason: RenderingDevice creation/compilation descriptor or shader diagnostic/source, not an already-created live GPU object.
+
+RDPipelineColorBlendState [non-Node]
+  Properties: blend_constant, logic_op.
+  Reason: RenderingDevice creation/compilation descriptor or shader diagnostic/source, not an already-created live GPU object.
+
+RDPipelineColorBlendStateAttachment [non-Node]
+  Properties: alpha_blend_op, color_blend_op, dst_alpha_blend_factor, dst_color_blend_factor, src_alpha_blend_factor, src_color_blend_factor.
+  Reason: RenderingDevice creation/compilation descriptor or shader diagnostic/source, not an already-created live GPU object.
+
+RDPipelineDepthStencilState [non-Node]
+  Properties: back_op_compare, back_op_compare_mask, back_op_depth_fail, back_op_fail, back_op_pass, back_op_reference, back_op_write_mask, depth_compare_operator, depth_range_max, depth_range_min, front_op_compare, front_op_compare_mask, front_op_depth_fail, front_op_fail, front_op_pass, front_op_reference, front_op_write_mask.
+  Reason: RenderingDevice creation/compilation descriptor or shader diagnostic/source, not an already-created live GPU object.
+
+RDPipelineMultisampleState [non-Node]
+  Properties: min_sample_shading, sample_count.
+  Reason: RenderingDevice creation/compilation descriptor or shader diagnostic/source, not an already-created live GPU object.
+
+RDPipelineRasterizationState [non-Node]
+  Properties: cull_mode, depth_bias_clamp, depth_bias_constant_factor, depth_bias_slope_factor, front_face, line_width, patch_control_points.
+  Reason: RenderingDevice creation/compilation descriptor or shader diagnostic/source, not an already-created live GPU object.
+
+RDPipelineSpecializationConstant [non-Node]
+  Properties: constant_id.
+  Reason: RenderingDevice creation/compilation descriptor or shader diagnostic/source, not an already-created live GPU object.
+
+RDSamplerState [non-Node]
+  Properties: anisotropy_max, border_color, compare_op, lod_bias, mag_filter, max_lod, min_filter, min_lod, mip_filter, repeat_u, repeat_v, repeat_w.
+  Reason: RenderingDevice creation/compilation descriptor or shader diagnostic/source, not an already-created live GPU object.
+
+RDShaderFile [non-Node]
+  Properties: base_error.
+  Reason: RenderingDevice creation/compilation descriptor or shader diagnostic/source, not an already-created live GPU object.
+
+RDShaderSource [non-Node]
+  Properties: language, source_any_hit, source_closest_hit, source_compute, source_fragment, source_intersection, source_miss, source_raygen, source_tesselation_control, source_tesselation_evaluation, source_vertex.
+  Reason: RenderingDevice creation/compilation descriptor or shader diagnostic/source, not an already-created live GPU object.
+
+RDShaderSPIRV [non-Node]
+  Properties: compile_error_any_hit, compile_error_closest_hit, compile_error_compute, compile_error_fragment, compile_error_intersection, compile_error_miss, compile_error_raygen, compile_error_tesselation_control, compile_error_tesselation_evaluation, compile_error_vertex.
+  Reason: RenderingDevice creation/compilation descriptor or shader diagnostic/source, not an already-created live GPU object.
+
+RDTextureFormat [non-Node]
+  Properties: array_layers, depth, format, height, mipmaps, samples, texture_type, usage_bits, width.
+  Reason: RenderingDevice creation/compilation descriptor or shader diagnostic/source, not an already-created live GPU object.
+
+RDTextureView [non-Node]
+  Properties: format_override, swizzle_a, swizzle_b, swizzle_g, swizzle_r.
+  Reason: RenderingDevice creation/compilation descriptor or shader diagnostic/source, not an already-created live GPU object.
+
+RDUniform [non-Node]
+  Properties: binding, uniform_type.
+  Reason: RenderingDevice creation/compilation descriptor or shader diagnostic/source, not an already-created live GPU object.
+
+RDVertexAttribute [non-Node]
+  Properties: binding, format, frequency, location, offset, stride.
+  Reason: RenderingDevice creation/compilation descriptor or shader diagnostic/source, not an already-created live GPU object.
+
+RenderSceneBuffersConfiguration [non-Node]
+  Properties: anisotropic_filtering_level, internal_size, target_size.
+  Reason: Render-buffer creation/allocation descriptor rather than a live viewport animation.
+
+SystemFont [non-Node]
+  Properties: msdf_pixel_range, msdf_size, oversampling.
+  Reason: Font rasterization/cache quality configuration, not displayed font size or color.
+
+TileSetAtlasSource [non-Node]
+  Properties: margins, separation, texture_region_size.
+  Reason: Atlas slicing/layout; intermediate values reinterpret tile regions.
+
+UPNP [non-Node]
+  Properties: discover_local_port, discover_multicast_if.
+  Reason: Network discovery/service endpoint configuration, not a presentation effect.
+
+UPNPDevice [non-Node]
+  Properties: description_url, igd_control_url, igd_our_addr, igd_service_type, service_type.
+  Reason: Network discovery/service endpoint configuration, not a presentation effect.
+
+VisualShaderNode [non-Node]
+  Properties: linked_parent_graph_frame, output_port_for_preview.
+  Reason: Visual shader graph/code-generation or editor metadata; animate a shader uniform on the live material instead.
+
+VisualShaderNodeColorConstant [non-Node]
+  Properties: constant.
+  Reason: Visual shader graph/code-generation or editor metadata; animate a shader uniform on the live material instead.
+
+VisualShaderNodeColorParameter [non-Node]
+  Properties: default_value.
+  Reason: Visual shader graph/code-generation or editor metadata; animate a shader uniform on the live material instead.
+
+VisualShaderNodeComment [non-Node]
+  Properties: description.
+  Reason: Visual shader graph/code-generation or editor metadata; animate a shader uniform on the live material instead.
+
+VisualShaderNodeCustom [non-Node]
+  Properties: properties.
+  Reason: Visual shader graph/code-generation or editor metadata; animate a shader uniform on the live material instead.
+
+VisualShaderNodeExpression [non-Node]
+  Properties: expression.
+  Reason: Visual shader graph/code-generation or editor metadata; animate a shader uniform on the live material instead.
+
+VisualShaderNodeFloatConstant [non-Node]
+  Properties: constant.
+  Reason: Visual shader graph/code-generation or editor metadata; animate a shader uniform on the live material instead.
+
+VisualShaderNodeFloatParameter [non-Node]
+  Properties: default_value, max, min, step.
+  Reason: Visual shader graph/code-generation or editor metadata; animate a shader uniform on the live material instead.
+
+VisualShaderNodeFrame [non-Node]
+  Properties: tint_color, title.
+  Reason: Visual shader graph/code-generation or editor metadata; animate a shader uniform on the live material instead.
+
+VisualShaderNodeIntConstant [non-Node]
+  Properties: constant.
+  Reason: Visual shader graph/code-generation or editor metadata; animate a shader uniform on the live material instead.
+
+VisualShaderNodeIntParameter [non-Node]
+  Properties: default_value, max, min, step.
+  Reason: Visual shader graph/code-generation or editor metadata; animate a shader uniform on the live material instead.
+
+VisualShaderNodeParameter [non-Node]
+  Properties: instance_index.
+  Reason: Visual shader graph/code-generation or editor metadata; animate a shader uniform on the live material instead.
+
+VisualShaderNodeParameterRef [non-Node]
+  Properties: param_type.
+  Reason: Visual shader graph/code-generation or editor metadata; animate a shader uniform on the live material instead.
+
+VisualShaderNodeParticleMeshEmitter [non-Node]
+  Properties: surface_index.
+  Reason: Visual shader graph/code-generation or editor metadata; animate a shader uniform on the live material instead.
+
+VisualShaderNodeReroute [non-Node]
+  Properties: port_type.
+  Reason: Visual shader graph/code-generation or editor metadata; animate a shader uniform on the live material instead.
+
+VisualShaderNodeResizableBase [non-Node]
+  Properties: size.
+  Reason: Visual shader graph/code-generation or editor metadata; animate a shader uniform on the live material instead.
+
+VisualShaderNodeUIntConstant [non-Node]
+  Properties: constant.
+  Reason: Visual shader graph/code-generation or editor metadata; animate a shader uniform on the live material instead.
+
+VisualShaderNodeUIntParameter [non-Node]
+  Properties: default_value.
+  Reason: Visual shader graph/code-generation or editor metadata; animate a shader uniform on the live material instead.
+
+VisualShaderNodeVec2Constant [non-Node]
+  Properties: constant.
+  Reason: Visual shader graph/code-generation or editor metadata; animate a shader uniform on the live material instead.
+
+VisualShaderNodeVec2Parameter [non-Node]
+  Properties: default_value.
+  Reason: Visual shader graph/code-generation or editor metadata; animate a shader uniform on the live material instead.
+
+VisualShaderNodeVec3Constant [non-Node]
+  Properties: constant.
+  Reason: Visual shader graph/code-generation or editor metadata; animate a shader uniform on the live material instead.
+
+VisualShaderNodeVec3Parameter [non-Node]
+  Properties: default_value.
+  Reason: Visual shader graph/code-generation or editor metadata; animate a shader uniform on the live material instead.
+
+VisualShaderNodeVec4Constant [non-Node]
+  Properties: constant, constant_v4.
+  Reason: Visual shader graph/code-generation or editor metadata; animate a shader uniform on the live material instead.
+
+VisualShaderNodeVec4Parameter [non-Node]
+  Properties: default_value.
+  Reason: Visual shader graph/code-generation or editor metadata; animate a shader uniform on the live material instead.
+
+WebXRInterface [non-Node]
+  Properties: optional_features, requested_reference_space_types, required_features, session_mode.
+  Reason: XR session negotiation and required hardware/reference-space capabilities.
+
+XRPose [non-Node]
+  Properties: angular_velocity, linear_velocity, name, tracking_confidence, transform.
+  Reason: XR pose/result payload owned by tracking updates; animate a scene-node offset instead.
+
+XRPositionalTracker [non-Node]
+  Properties: profile.
+  Reason: XR tracker identity/classification or tracking-result payload, not a scene-node effect.
+
+XRTracker [non-Node]
+  Properties: description, name, type.
+  Reason: XR tracker identity/classification or tracking-result payload, not a scene-node effect.
+
+D. EXISTING NAME-ONLY EXCLUSIONS
+
+"accessibility_description"
+  Classes: Control, Window.
+  Reason: Assistive-technology metadata; transient interpolated text is misleading.
+
+"accessibility_name"
+  Classes: Control, Window.
+  Reason: Assistive-technology metadata; transient interpolated text is misleading.
+
+"audio_max_polyphony"
+  Classes: AnimationMixer.
+  Reason: Voice capacity, not an audio envelope.
+
+"editor_description"
+  Classes: Node.
+  Reason: Identity/editor metadata or execution scheduling, rather than an animated state.
+
+"max_polyphony"
+  Classes: AudioStreamPlayer, AudioStreamPlayer2D, AudioStreamPlayer3D.
+  Reason: Voice capacity, not volume, pitch, or another audio envelope.
+
+"playback_auto_capture_duration"
+  Classes: AnimationPlayer.
+  Reason: Defaults used when starting/capturing transitions; tweening them does not drive a transition.
+
+"playback_default_blend_time"
+  Classes: AnimationPlayer.
+  Reason: Defaults used when starting/capturing transitions; tweening them does not drive a transition.
+
+"process_physics_priority"
+  Classes: Node.
+  Reason: Identity/editor metadata or execution scheduling, rather than an animated state.
+
+"process_priority"
+  Classes: Node.
+  Reason: Identity/editor metadata or execution scheduling, rather than an animated state.
+
+"process_thread_group_order"
+  Classes: Node.
+  Reason: Identity/editor metadata or execution scheduling, rather than an animated state.
+
+"scene_file_path"
+  Classes: Node.
+  Reason: Identity/editor metadata or execution scheduling, rather than an animated state.
+
+"size_flags_stretch_ratio"
+  Classes: Control.
+  Reason: Existing exclusion: container layout weighting; see the policy note about legitimate animated layout uses.
+
+"name"
+  Existing entry retained for reference. Node.name is StringName in the
+  inspected engine, so it already fails property_is_type_lerpable, which
+  accepts STRING but not STRING_NAME. Its identity semantics remain a good
+  example of why a name-based exclusion can be useful. XR identity names
+  are separately covered by the class-scoped tracker catalogue.
+
+E. BORDERLINE CASES: REVIEW BEFORE ADDING MORE BLANKET EXCLUSIONS
+
+CanvasItem.z_index; CanvasLayer.layer; TileData.z_index;
+Material.render_priority; SpriteBase3D.render_priority;
+Label3D.render_priority and outline_render_priority;
+Light2D.range_z_min/range_z_max/range_layer_min/range_layer_max;
+Environment.background_canvas_max_layer; OpenXRCompositionLayer.sort_order:
+  Discrete rendering/layer order or masks-by-range. Usually set once or
+  changed at a specific event, but a deliberately stepped reveal/order
+  effect is plausible. These are not part of the proposed name-only list.
+
+Control.size_flags_stretch_ratio:
+  Already excluded by the WiP. Retained as an existing decision, but it can
+  be a valid target for an expanding/collapsing weighted Container layout.
+  Its exclusion is a product policy rather than a universal semantic rule.
+
+LineEdit.caret_column; Label.lines_skipped/max_lines_visible;
+ItemList.max_columns; Slider.tick_count; RichTextLabel.tab_size;
+CodeEdit.indent_size/gutters_line_numbers_min_digits:
+  Discrete UI formatting or navigation. The CodeEdit fields are proposed
+  above as editor setup; the others have plausible reveal/layout uses and
+  are left for policy review rather than added blindly to the matcher.
+
+Timer.wait_time; SceneTreeTimer.time_left; LineEdit.caret_blink_interval;
+TextEdit.caret_blink_interval; AnimationNodeOneShot fade/restart durations;
+AudioStreamPlaylist.fade_time:
+  Timing and scheduling values can be useful for changing repeated behavior
+  over time. Do not ban every duration or interval because the existing
+  AnimationPlayer default-transition fields are excluded.
+
+FontFile.font_weight/font_stretch/fixed_size;
+SystemFont.font_weight/font_stretch; FontVariation.variation_embolden;
+Viewport.scaling_3d_scale; SubViewportContainer.stretch_shrink;
+OpenXRInterface.foveation_level:
+  Font face/cache changes and render resolution/quality changes often
+  belong to setup. Some can support deliberate visual effects. The core
+  list proposes excluding OpenXR foveation as a device/render-quality
+  selector; leave broader visual-quality policies for explicit review.
+  FontVariation emboldening is a visual parameter, so remains eligible.
+
+NavigationAgent2D/3D target/avoidance distances, radius, height, max_speed,
+avoidance_priority; navigation link/region enter_cost and travel_cost:
+  These are gameplay navigation behavior. They can support growing agents,
+  changing speed/priority, or dynamic routing. The audit excludes explicit
+  work budgets and bake topology, not all navigation parameters.
+
+GPUParticles2D/3D.visibility bounds; VisibleOnScreenNotifier2D.rect;
+Marker2D/3D.gizmo_extents; collision/navigation/path debug colors:
+  Proposed above as culling, editor, or debug setup. A specialized diagnostic
+  tool could animate them; this is a default-suggestion policy, not a claim
+  that the setters cannot be called at runtime. GPUParticles3D visibility_aabb
+  does not pass the current type filter, so is not an addition here.
+
+F. IMPORTANT VALID CANDIDATES THAT WERE DELIBERATELY KEPT
+
+Sprite2D/3D.frame and frame_coords; AnimatedSprite2D/3D.frame,
+frame_progress and speed_scale; AnimatedTexture.current_frame:
+  Intentional frame animation. Do not confuse frame selection with atlas
+  layout (hframes/vframes) or frame collection size (frames).
+
+Label/RichTextLabel.visible_characters and visible_ratio; ordinary display
+text fields, placeholder_text, dialog/button/title/tooltip text:
+  Character reveal, typewriter effects, and other visible text transitions.
+  Metadata, code, identifiers, delimiters, and destination URLs are different.
+
+MultiMesh.visible_instance_count:
+  Reveal an existing allocation progressively. instance_count changes the
+  allocation and is proposed for exclusion.
+
+GPUParticles2D/3D.amount_ratio; particle color, direction, gravity, velocity,
+scale, speed_scale, lifetime, emission dimensions and trail_lifetime:
+  Emission and appearance envelopes. Unlike GPU amount, amount_ratio is the
+  documented way to vary emission amount without restarting the system.
+
+Node2D/3D and Control transforms; Camera2D zoom/offset/limits;
+Camera3D fov/near/far; PathFollow progress/progress_ratio;
+Range.value/ratio/min_value/max_value/page; scrolling properties;
+Control layout dimensions, anchor/offset values, and minimum size:
+  Direct movement, layout, framing, scrolling, and gauge animation targets.
+
+Mesh/shape/CSG radius, height, size, depth and other geometric dimensions;
+joint/motor strengths, limits and target velocities; rigid-body forces,
+velocities, mass/damping; vehicle steering/engine_force/brake:
+  Geometry and physical behavior can be intentionally animated. Expensive
+  setters or a physics-clock requirement do not by themselves imply that
+  every such property should be removed from suggestions.
+
+Material/shader-facing colors, opacity, roughness, emission and UV transforms;
+light energy/color; Environment fog/exposure/color effects;
+AudioStreamPlayer volume/pitch and audio-effect signal parameters;
+Engine.time_scale and XRServer/XROrigin3D.world_scale:
+  Natural visual, audio, temporal, or spatial envelopes. Schema/build fields
+  in GLTF/RenderingDevice/VisualShader objects are listed with class context
+  instead of globally banning names such as color, scale, or default_value.
+
+G. COVERAGE NOTES
+
+170 classes had preliminary candidates but no proposed exclusions.
+Their remaining declared properties were considered useful or insufficiently
+clear to ban. Classes with exclusions can also retain useful properties.
+
+AcceptDialog, AnimatedSprite2D, AnimatedSprite3D, Animation, AnimationNodeAnimation
+AnimationNodeOneShot, AreaLight3D, AspectRatioContainer, AtlasTexture, AudioEffectAmplify
+AudioEffectCompressor, AudioEffectDelay, AudioEffectDistortion, AudioEffectFilter
+AudioEffectHardLimiter, AudioEffectLimiter, AudioEffectPanner, AudioEffectPhaser, AudioEffectReverb
+AudioEffectStereoEnhance, BackBufferCopy, BoxOccluder3D, BoxShape3D, Button, CSGBox3D, Camera2D
+Camera3D, CameraAttributes, CameraAttributesPhysical, CameraAttributesPractical, CanvasGroup
+CanvasItem, CanvasLayer, CanvasModulate, CanvasTexture, CapsuleShape2D, CapsuleShape3D
+CircleShape2D, CodeHighlighter, CollisionPolygon2D, ColorPicker, ColorPickerButton, ColorRect
+ConeTwistJoint3D, ConfirmationDialog, CylinderShape3D, DampedSpringJoint2D, Decal
+DirectionalLight2D, DirectionalLight3D, EditorProperty, EditorSpinSlider, ExternalTexture
+FogMaterial, FogVolume, FoldableContainer, GPUParticlesAttractor3D, GPUParticlesAttractorBox3D
+GPUParticlesAttractorSphere3D, GPUParticlesAttractorVectorField3D, GPUParticlesCollisionBox3D
+GPUParticlesCollisionHeightField3D, GPUParticlesCollisionSDF3D, GPUParticlesCollisionSphere3D
+Generic6DOFJoint3D, GraphEdit, GraphElement, GraphFrame, GraphNode, GrooveJoint2D, HingeJoint3D
+ImporterMeshInstance3D, Joint2D, JointLimitationCone3D, Label, Label3D, Light2D, Light3D, Material
+MeshTexture, MobileVRInterface, NavigationLink2D, NavigationLink3D, NavigationObstacle2D
+NavigationObstacle3D, NavigationRegion2D, NavigationRegion3D, NinePatchRect, Node2D, Node3D
+OmniLight3D, OpenXRAnalogThresholdModifier, OpenXRCompositionLayerQuad, OpenXRDpadBindingModifier
+OpenXRHapticVibration, PanoramaSkyMaterial, Parallax2D, ParallaxBackground, ParallaxLayer
+PathFollow2D, PathFollow3D, PhysicalBone3D, PhysicalSkyMaterial, PhysicsMaterial
+PhysicsPointQueryParameters2D, PhysicsPointQueryParameters3D, PhysicsRayQueryParameters2D
+PhysicsRayQueryParameters3D, PhysicsShapeQueryParameters2D, PhysicsShapeQueryParameters3D
+PhysicsTestMotionParameters2D, PinJoint2D, PinJoint3D, PlaceholderTexture2D, PlaceholderTexture3D
+PointLight2D, PortableCompressedTexture2D, ProceduralSkyMaterial, QuadOccluder3D, Range, RayCast2D
+RectangleShape2D, ReferenceRect, ReflectionProbe, SceneTreeTimer, ScrollBar, ScrollContainer
+SegmentShape2D, SeparationRayShape2D, SeparationRayShape3D, Shape2D, Shape3D, Skeleton3D
+SkeletonModification2DTwoBoneIK, SkeletonModifier3D, Slider, SliderJoint3D, SphereOccluder3D
+SphereShape3D, SpinBox, SplitContainer, SpotLight3D, SpringArm3D, SpringBoneCollisionCapsule3D
+SpringBoneCollisionSphere3D, SpriteBase3D, StaticBody2D, StaticBody3D, StatusIndicator, StyleBox
+StyleBoxLine, StyleBoxTexture, SubViewportContainer, TextLine, TextParagraph, TextureProgressBar
+Theme, ThemeDB, Timer, TreeItem, VehicleBody3D, VehicleWheel3D, VirtualJoystick, VisualInstance3D
+VoxelGI, VoxelGIData, WorldBoundaryShape2D, XROrigin3D, XRServer, XRVRS
+
+594 additional registered classes had no declared properties surviving
+the preliminary filters. Inherited properties were still handled at their
+declaring class. Boolean, object, array, dictionary, StringName, NodePath,
+AABB, transform, and other unsupported Variant types were not turned into
+new semantic exclusions just because their names looked suspicious.
+
+Sources and reproducibility:
+  - Local engine ClassDB metadata: 4.7.2-stable (official); hash ed1daf0bf001b61586d9930840f2f1394092c079.
+  - Embedded property descriptions in that engine's extension API JSON.
+  - https://docs.godotengine.org/en/4.4/classes/class_classdb.html
+  - https://docs.godotengine.org/en/4.4/classes/class_gpuparticles2d.html#class-gpuparticles2d-property-amount
+  - Source filters: spire_tween/src/blueprint/mod.rs, read on 2026-11-05.
+
+Temporary enumeration data and scripts are in
+  /tmp/spire-blueprint-property-audit/
+The metadata enumeration itself completed successfully. The separate engine
+documentation-dump command wrote a complete parseable JSON file, then
+crashed during editor cleanup; it is not represented as a successful test.
+This task produced this review file only. Product source and tests were not
+modified by the audit.

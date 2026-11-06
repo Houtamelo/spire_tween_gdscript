@@ -1,0 +1,56 @@
+Initialize godot-rust (API v4.4.stable.official, runtime v4.4.stable.official, safeguards strict)
+Godot Engine v4.4.stable.official.4c311cbee - https://godotengine.org
+
+BLUEPRINT_START test_blueprint_property_and_restart
+BLUEPRINT_PASS test_blueprint_property_and_restart
+BLUEPRINT_START test_blueprint_explicit_start_delay_and_configuration
+BLUEPRINT_PASS test_blueprint_explicit_start_delay_and_configuration
+BLUEPRINT_START test_blueprint_serial_and_parallel_children
+BLUEPRINT_PASS test_blueprint_serial_and_parallel_children
+BLUEPRINT_START test_blueprint_supported_property_types
+BLUEPRINT_PASS test_blueprint_supported_property_types
+BLUEPRINT_START test_blueprint_relative_speed_and_curve
+BLUEPRINT_PASS test_blueprint_relative_speed_and_curve
+BLUEPRINT_START test_blueprint_independent_targets_and_fallback
+BLUEPRINT_PASS test_blueprint_independent_targets_and_fallback
+BLUEPRINT_START test_blueprint_invalid_steps_do_not_block_siblings
+WARNING: TweenBlueprint: property 'missing_property' is missing or cannot be tweened; skipping step.
+     at: spire_tween::blueprint::runtime::<impl spire_tween::blueprint::TweenBlueprint>::build_native (spire_tween/src/blueprint/runtime.rs:140)
+WARNING: TweenBlueprint: end_value is incompatible with 'position'.
+     at: spire_tween::blueprint::runtime::<impl spire_tween::blueprint::TweenBlueprint>::build_native (spire_tween/src/blueprint/runtime.rs:185)
+WARNING: TweenBlueprint: duration must be finite and non-negative; speed must be positive.
+     at: spire_tween::blueprint::runtime::<impl spire_tween::blueprint::TweenBlueprint>::build_native (spire_tween/src/blueprint/runtime.rs:144)
+BLUEPRINT_PASS test_blueprint_invalid_steps_do_not_block_siblings
+BLUEPRINT_START test_blueprint_handles_do_not_retain_themselves
+BLUEPRINT_PASS test_blueprint_handles_do_not_retain_themselves
+BLUEPRINT_START test_blueprint_stop_and_freed_bindings
+WARNING: TweenBlueprint: property 'position' is missing or cannot be tweened; skipping step.
+     at: spire_tween::blueprint::runtime::<impl spire_tween::blueprint::TweenBlueprint>::build_native (spire_tween/src/blueprint/runtime.rs:140)
+BLUEPRINT_PASS test_blueprint_stop_and_freed_bindings
+BLUEPRINT_START test_blueprint_invalid_runtime_scalars_and_missing_builder
+WARNING: TweenBlueprint: delay must be finite and non-negative; using 0.
+     at: spire_tween::blueprint::runtime::normalize_non_negative (spire_tween/src/blueprint/runtime.rs:288)
+WARNING: TweenBlueprint: speed_scale must be finite and non-negative; using 1.
+     at: spire_tween::blueprint::runtime::normalize_non_negative (spire_tween/src/blueprint/runtime.rs:288)
+WARNING: Expected `play_internal` to be overridden if a script is attached, please override `func _play_internal(SpireSequence)` in your GDScript.
+     at: spire_tween::blueprint::TweenBlueprint::__earlybound_play_internal (spire_tween/src/blueprint/mod.rs:232)
+WARNING: TweenBlueprint: Mouse triggers require a Control, CollisionObject2D or CollisionObject3D source.
+     at: spire_tween::blueprint::triggers::<impl spire_tween::blueprint::TweenBlueprint>::refresh_blueprint_triggers (spire_tween/src/blueprint/triggers.rs:83)
+WARNING: TweenBlueprint: Mouse triggers require a Control, CollisionObject2D or CollisionObject3D source.
+     at: spire_tween::blueprint::triggers::<impl spire_tween::blueprint::TweenBlueprint>::refresh_blueprint_triggers (spire_tween/src/blueprint/triggers.rs:83)
+WARNING: TweenBlueprint: Mouse triggers require a Control, CollisionObject2D or CollisionObject3D source.
+     at: spire_tween::blueprint::triggers::<impl spire_tween::blueprint::TweenBlueprint>::refresh_blueprint_triggers (spire_tween/src/blueprint/triggers.rs:83)
+WARNING: TweenBlueprint: Mouse triggers require a Control, CollisionObject2D or CollisionObject3D source.
+     at: spire_tween::blueprint::triggers::<impl spire_tween::blueprint::TweenBlueprint>::refresh_blueprint_triggers (spire_tween/src/blueprint/triggers.rs:83)
+BLUEPRINT_PASS test_blueprint_invalid_runtime_scalars_and_missing_builder
+BLUEPRINT_START test_blueprint_runtime_trigger_reconfiguration_and_3d_input
+BLUEPRINT_PASS test_blueprint_runtime_trigger_reconfiguration_and_3d_input
+BLUEPRINT_START test_blueprint_ready_enter_and_parent_managed_triggers
+BLUEPRINT_PASS test_blueprint_ready_enter_and_parent_managed_triggers
+BLUEPRINT_START test_blueprint_native_signal_connection_survives_packing
+BLUEPRINT_PASS test_blueprint_native_signal_connection_survives_packing
+BLUEPRINT_START test_blueprint_mouse_trigger_filters_buttons_and_release
+BLUEPRINT_PASS test_blueprint_mouse_trigger_filters_buttons_and_release
+BLUEPRINT_START test_blueprint_custom_hooks_and_signal_identity
+BLUEPRINT_PASS test_blueprint_custom_hooks_and_signal_identity
+BLUEPRINT_RESULT total=15 failed=0

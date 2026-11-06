@@ -381,8 +381,33 @@ pub(crate) use define_base_methods;
 
 macro_rules! define_base_gd_methods {
     ($Ty:ident, $TweenTy:ty, $InnerTy:ty) => {
-        #[godot_api(secondary)]
+        #[godot_api]
         impl $Ty {
+            /// Emitted once when playback changes from playing or paused to stopped,
+            /// including successful completion, explicit [method stop], and cancellation
+            /// caused by an invalid owner or binding. State is already stopped.
+            /// Repeated stops and intermediate loops do not emit it; replay permits another emission.
+            /// Unregistering or dropping a handle does not itself stop the tween.
+            ///
+            /// Successful completion emits [signal stopped] before [signal finished].
+            /// Deferred handlers execute later. Cancellation emits no completion signals.
+            #[signal]
+            pub fn stopped();
+
+            /// Emitted when this tween completes a loop.
+            ///
+            /// [b]Note:[/b] On the last loop of a tween, this is emitted before [signal finished].
+            #[signal]
+            pub fn loop_finished();
+
+            /// Emitted when this tween successfully finishes playing, after [signal stopped].
+            /// This happens when the tween completes all its loops, or when [method force_complete] is called.
+            ///
+            /// Infinite looping prevents natural completion; a successful [method force_complete]
+            /// still emits this signal.
+            #[signal]
+            pub fn finished();
+
             #[inline]
             pub(crate) fn to_ref(&self) -> &TweenPtr<$InnerTy> { unsafe { &*self.inner.get() } }
 

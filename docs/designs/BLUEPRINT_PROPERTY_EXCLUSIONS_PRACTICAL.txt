@@ -1,0 +1,387 @@
+TWEENBLUEPRINT: PROPERTY EXCLUSIONS FOR LIKELY TWEEN TARGETS
+Date: 2026-11-05
+Review list only. Based on BLUEPRINT_PROPERTY_EXCLUSIONS.txt and its Godot
+4.7.2 metadata snapshot; this is a class-likelihood filter of that audit.
+
+SELECTION POLICY
+
+Keep general-purpose scene/UI visuals, cameras, lights, particles, animation
+players, character pose modifiers, and physical/geometry objects. Keep
+materials, meshes, shapes, style boxes, text styling, environments, audio
+effects and a small set of resources with useful live effect parameters.
+Engine is retained because time_scale is a conventional global tween target.
+Retained declaration bases (Node, Resource, Mesh, etc.) cover their fields
+inherited by those likely targets; the base itself need not be instantiated.
+
+Drop classes primarily used for editor infrastructure, networking, navigation
+algorithms, import/export, low-level GPU creation, shader graph/source authoring,
+input payloads, XR device/session setup, bake/debug helpers, resource recovery,
+font-face setup, and query/result containers. Raw audio stream assets and
+generated texture/curve storage are also dropped unless they expose a clear
+live effect control (AnimatedTexture and GradientTexture2D are retained).
+
+This is a practical default for general game animation, not a prohibition on
+specialized tween workflows. A removed helper may still inherit position,
+scale, or other tweenable values. Likelihood concerns its usual role.
+
+RESULT
+
+Retained 181 class/property pairs in 99 declaration classes; removed
+511 pairs in 188 classes from the exhaustive proposal.
+There are 99 proposed NEW name-only additions: 58 occur on retained Node
+classes and 41 only on retained non-Node targets. 11 further pairs need
+class context and must not be copied into an unconditional name matcher.
+Existing exclusions are identified separately below and are not counted as new.
+
+In the audited snapshot, target only accepts Nodes. Resource/global entries are
+included because those are conventional tween targets in the broader library;
+they do not imply that TweenBlueprint can already accept those objects.
+
+1. NEW NAME-ONLY ADDITIONS: RETAINED NODE CLASSES
+
+"amount" -- CPUParticles2D, CPUParticles3D, GPUParticles2D, GPUParticles3D
+  Particle population/allocation; GPU variants restart when changed. Prefer GPU amount_ratio for an emission envelope.
+"audio_track" -- VideoStreamPlayer
+  Audio track selection or decoder buffer capacity; not volume or playback speed.
+"bone" -- LookAtModifier3D, ModifierBoneTarget3D
+  Selects a skeleton bone; intermediate indices select unrelated bones.
+"bone2d_index" -- PhysicalBone2D
+  Selects a skeleton bone; intermediate indices select unrelated bones.
+"bone_idx" -- BoneAttachment3D
+  Selects an attachment bone; intermediate indices select unrelated bones.
+"buffering_msec" -- VideoStreamPlayer
+  Audio track selection or decoder buffer capacity; not volume or playback speed.
+"cell_octant_size" -- GridMap
+  Spatial batching partition size, not cell position or visual scale.
+"chain_count" -- LimitAngularVelocityModifier3D
+  Resizes a bone-chain collection.
+"collision_priority" -- CSGShape3D, CollisionObject2D, CollisionObject3D, GridMap
+  Collision-resolution preference; algorithm configuration rather than a motion target.
+"current_screen" -- Window
+  Monitor selector; intermediate integers hop between unrelated displays.
+"current_tab" -- TabBar, TabContainer
+  Tab selection or drag-and-drop group identity; not a tab transition animation.
+"custom_word_separators" -- TextEdit
+  Token/navigation delimiter configuration; intermediate strings change editing behavior.
+"debug_color" -- CollisionPolygon3D, CollisionShape2D, CollisionShape3D
+  Collision debug visualization color rather than rendered scene appearance.
+"debug_custom_color" -- Path3D
+  Path debug visualization rather than rendered scene appearance.
+"draw_passes" -- GPUParticles3D
+  Number of particle mesh slots/draw passes, not a rendered blend.
+"fixed_fps" -- CPUParticles2D, CPUParticles3D, GPUParticles2D, GPUParticles3D
+  Simulation tick-rate configuration; speed_scale controls playback speed.
+"gi_lightmap_texel_scale" -- GeometryInstance3D
+  Lightmap bake density; changing it does not animate already baked lighting.
+"gui_drag_threshold" -- Viewport
+  Input gesture recognition threshold, not visual feedback.
+"hframes" -- Sprite2D, Sprite3D
+  Sprite-sheet layout; changing it reinterprets frame indices and can reset frame.
+"internal_vertex_count" -- Polygon2D
+  Polygon/UV topology partition; intermediate counts reinterpret vertex data.
+"item_count" -- ItemList, MenuButton, OptionButton, PopupMenu
+  Resizes an item collection; intermediate counts add/remove entries.
+"max_contacts_reported" -- RigidBody2D, RigidBody3D
+  Contact reporting capacity, not a physical force or motion.
+"max_iterations" -- IterateIK3D, SkeletonIK3D
+  IK solver iteration budget.
+"max_length" -- LineEdit
+  Input limit; decreasing it can destructively truncate existing text.
+"max_slides" -- CharacterBody2D, CharacterBody3D
+  Collision-solver iteration budget, not movement.
+"origin_bone" -- LookAtModifier3D
+  Selects the origin bone; intermediate indices select unrelated bones.
+"oversampling_override" -- Viewport
+  Font rasterization/cache quality configuration.
+"path_interval" -- CSGPolygon3D
+  Path extrusion sampling/tessellation quality rather than position along a path.
+"path_simplify_angle" -- CSGPolygon3D
+  Path extrusion sampling/tessellation quality rather than position along a path.
+"physics_quadrant_size" -- TileMapLayer
+  Collision batching/merging partition size.
+"positional_shadow_atlas_size" -- Viewport
+  Shadow-buffer allocation/resolution; values are rounded to powers of two.
+"preprocess" -- CPUParticles2D, CPUParticles3D, GPUParticles2D, GPUParticles3D
+  Warm-up/startup simulation time, not current playback time.
+"progress_bar_delay" -- RichTextLabel
+  Background text-loading indicator scheduling, not the visible text or its reveal.
+"radial_segments" -- CSGSphere3D, CapsuleMesh, CylinderMesh, SphereMesh
+  Mesh tessellation/topology counts, not dimensions. CSG tessellation/topology counts.
+"rendering_quadrant_size" -- TileMap, TileMapLayer
+  Rendering batch partition size.
+"ring_sides" -- CSGTorus3D
+  CSG tessellation/topology count.
+"rings" -- CSGSphere3D, CapsuleMesh, CylinderMesh, SphereMesh, TorusMesh
+  Mesh tessellation/topology counts, not dimensions. CSG tessellation/topology counts.
+"round_precision" -- Line2D
+  Round joint/cap tessellation quality, not line width or curvature.
+"search_bar_fuzzy_search_max_misses" -- OptionButton, PopupMenu
+  Search activation/algorithm thresholds rather than presentation state.
+"search_bar_min_item_count" -- OptionButton, PopupMenu
+  Search activation/algorithm thresholds rather than presentation state.
+"secret_character" -- LineEdit
+  Password masking symbol; an interpolated string is not a meaningful mask transition.
+"seed" -- CPUParticles2D, CPUParticles3D, FastNoiseLite, GPUParticles2D, GPUParticles3D
+  Random sequence identity; intermediate seeds produce unrelated random systems. Noise realization identity; animate offset/frequency instead of replacing the random sequence.
+"selected" -- OptionButton
+  Selected item index; intermediate indices select unrelated options.
+"setting_count" -- AimModifier3D, BoneTwistDisperser3D, ConvertTransformModifier3D, CopyTransformModifier3D, IterateIK3D, SplineIK3D, SpringBoneSimulator3D, TwoBoneIK3D
+  Resizes a modifier setting collection rather than animating an individual setting.
+"sides" -- CSGCylinder3D, CSGTorus3D
+  CSG tessellation/topology count.
+"simulation_precision" -- SoftBody3D
+  Simulation solver quality/iteration budget.
+"solver_priority" -- Joint3D
+  Solver ordering/configuration rather than joint motion or strength.
+"spin_sides" -- CSGPolygon3D
+  CSG spin tessellation/topology count.
+"start_index" -- MenuBar
+  Native menu insertion/index configuration, not an animated menu position.
+"submenu_popup_delay" -- PopupMenu
+  Hover interaction timing; does not animate opening a submenu.
+"tab_count" -- TabBar
+  Resizes the tab collection; shrinking removes tab data.
+"tabs_rearrange_group" -- TabBar, TabContainer
+  Tab selection or drag-and-drop group identity; not a tab transition animation.
+"trail_section_subdivisions" -- GPUParticles2D
+  Trail tessellation/mesh complexity rather than trail length or opacity.
+"trail_sections" -- GPUParticles2D
+  Trail tessellation/mesh complexity rather than trail length or opacity.
+"uri" -- LinkButton
+  Navigation destination; interpolated strings can produce unintended destinations.
+"vframes" -- Sprite2D, Sprite3D
+  Sprite-sheet layout; changing it reinterprets frame indices and can reset frame.
+"view_count" -- SubViewport
+  Rendering view count/topology rather than a viewport transform.
+"visibility_rect" -- GPUParticles2D
+  Particle culling bounds rather than the emitted particles or their appearance.
+
+2. NEW NAME-ONLY ADDITIONS: RETAINED NON-NODE CLASSES
+
+"background_camera_feed_id" -- Environment
+  Camera source identity, not a background blend.
+"corner_detail" -- StyleBoxFlat
+  Rounded-corner tessellation quality, not corner radius.
+"curve_step" -- TextMesh
+  Glyph curve approximation/tessellation quality, not displayed text size.
+"domain_warp_fractal_octaves" -- FastNoiseLite
+  Discrete noise-layer complexity/quality budget.
+"emission_point_count" -- ParticleProcessMaterial
+  Count describing emission point texture/data rather than emission strength.
+"fractal_octaves" -- FastNoiseLite
+  Discrete noise-layer complexity/quality budget.
+"frames" -- AnimatedTexture
+  Resizes/selects the active frame collection, not the currently displayed frame.
+"heightmap_max_layers" -- BaseMaterial3D
+  Parallax-occlusion sampling budgets, not height/displacement amplitude.
+"heightmap_min_layers" -- BaseMaterial3D
+  Parallax-occlusion sampling budgets, not height/displacement amplitude.
+"instance_count" -- MultiMesh
+  Instance buffer allocation/topology; visible_instance_count is the reveal control.
+"jiggle_data_chain_length" -- SkeletonModification2DJiggle
+  Resizes the jiggle bone-chain configuration.
+"lightmap_size_hint" -- Mesh
+  Lightmap bake layout/resolution hint, not runtime mesh size.
+"map_depth" -- HeightMapShape3D
+  Height sample-grid topology; intermediate values reinterpret/resize the sample data.
+"map_width" -- HeightMapShape3D
+  Height sample-grid topology; intermediate values reinterpret/resize the sample data.
+"max_fps" -- Engine
+  Engine scheduling/simulation configuration; time_scale is the explicit time envelope control.
+"max_physics_steps_per_frame" -- Engine
+  Engine scheduling/simulation configuration; time_scale is the explicit time envelope control.
+"modification_count" -- SkeletonModificationStack2D
+  Resizes the modifier collection.
+"palette_index" -- FontVariation
+  Font face or color palette selection; intermediate indices select unrelated resources.
+"particles_anim_h_frames" -- BaseMaterial3D, CanvasItemMaterial
+  Particle atlas layout; intermediate counts reinterpret the texture.
+"particles_anim_v_frames" -- BaseMaterial3D, CanvasItemMaterial
+  Particle atlas layout; intermediate counts reinterpret the texture.
+"physics_jitter_fix" -- Engine
+  Engine scheduling/simulation configuration; time_scale is the explicit time envelope control.
+"physics_ticks_per_second" -- Engine
+  Engine scheduling/simulation configuration; time_scale is the explicit time envelope control.
+"radial_steps" -- TubeTrailMesh
+  Trail mesh tessellation/topology counts, not radius or section length.
+"resource_name" -- Resource
+  Resource identity, cache/path association, or scene serialization metadata.
+"resource_path" -- Resource
+  Resource identity, cache/path association, or scene serialization metadata.
+"resource_scene_unique_id" -- Resource
+  Resource identity, cache/path association, or scene serialization metadata.
+"ring_segments" -- TorusMesh
+  Mesh tessellation/topology counts, not dimensions.
+"sdfgi_cascades" -- Environment
+  Ray-marching work budget or discrete GI cascade topology.
+"section_rings" -- TubeTrailMesh
+  Trail mesh tessellation/topology counts, not radius or section length.
+"section_segments" -- RibbonTrailMesh
+  Trail mesh tessellation/topology counts, not width or section length.
+"sections" -- RibbonTrailMesh, TubeTrailMesh
+  Trail mesh tessellation/topology counts, not radius or section length. Trail mesh tessellation/topology counts, not width or section length.
+"ssr_max_steps" -- Environment
+  Ray-marching work budget or discrete GI cascade topology.
+"stacked_outline_count" -- LabelSettings
+  Resizes outline/shadow layer collections rather than their visual parameters.
+"stacked_shadow_count" -- LabelSettings
+  Resizes outline/shadow layer collections rather than their visual parameters.
+"stencil_reference" -- BaseMaterial3D
+  Stencil comparison/mask identity, not a continuous visual parameter.
+"subdivide_depth" -- BoxMesh, PlaneMesh, PrismMesh
+  Mesh tessellation/topology counts, not dimensions.
+"subdivide_height" -- BoxMesh, PrismMesh
+  Mesh tessellation/topology counts, not dimensions.
+"subdivide_width" -- BoxMesh, PlaneMesh, PrismMesh
+  Mesh tessellation/topology counts, not dimensions.
+"uv2_padding" -- PrimitiveMesh
+  Secondary UV unwrap/bake padding, not a visible transform.
+"variation_face_index" -- FontVariation
+  Font face or color palette selection; intermediate indices select unrelated resources.
+"voice_count" -- AudioEffectChorus
+  Number of enabled chorus voices rather than a per-voice sound parameter.
+
+3. CLASS-SCOPED EXCLUSIONS
+
+These keep the full audit's class-specific classification. Filtering classes
+does not make generic names such as width, priority or columns globally safe.
+
+Area2D: priority
+  Ordering of overlapping area overrides, not a smoothly varying force.
+Area3D: priority
+  Ordering of overlapping area overrides, not a smoothly varying force.
+AudioEffectPitchShift: oversampling
+  Audio processing quality/CPU budget; pitch_scale is the sound envelope control.
+CSGShape3D: snap
+  CSG vertex snapping/precision configuration.
+GradientTexture2D: height, width
+  Generated texture allocation/sampling resolution rather than an effect parameter.
+GridContainer: columns
+  Discrete layout topology; animate child positions/layout constraints for a transition.
+ParticleProcessMaterial: sub_emitter_amount_at_collision, sub_emitter_amount_at_end, sub_emitter_amount_at_start
+  Discrete sub-emission event burst configuration.
+Tree: columns
+  Resizes the tree column schema, potentially affecting per-column data.
+
+4. EXISTING NAME-ONLY ENTRIES STILL RELEVANT
+
+"accessibility_description" -- Control, Window
+  Assistive-technology metadata; transient interpolated text is misleading.
+"accessibility_name" -- Control, Window
+  Assistive-technology metadata; transient interpolated text is misleading.
+"audio_max_polyphony" -- AnimationMixer
+  Voice capacity, not an audio envelope.
+"editor_description" -- Node
+  Identity/editor metadata or execution scheduling, rather than an animated state.
+"max_polyphony" -- AudioStreamPlayer, AudioStreamPlayer2D, AudioStreamPlayer3D
+  Voice capacity, not volume, pitch, or another audio envelope.
+"playback_auto_capture_duration" -- AnimationPlayer
+  Defaults used when starting/capturing transitions; tweening them does not drive a transition.
+"playback_default_blend_time" -- AnimationPlayer
+  Defaults used when starting/capturing transitions; tweening them does not drive a transition.
+"process_physics_priority" -- Node
+  Identity/editor metadata or execution scheduling, rather than an animated state.
+"process_priority" -- Node
+  Identity/editor metadata or execution scheduling, rather than an animated state.
+"process_thread_group_order" -- Node
+  Identity/editor metadata or execution scheduling, rather than an animated state.
+"scene_file_path" -- Node
+  Identity/editor metadata or execution scheduling, rather than an animated state.
+"size_flags_stretch_ratio" -- Control
+  Existing exclusion: container layout weighting; see the policy note about legitimate animated layout uses.
+"name" -- Node identity; retained from the original matcher. In the inspected
+  engine Node.name is StringName and already fails the current type filter.
+
+Control.size_flags_stretch_ratio remains listed because it is an existing
+decision. Weighted-container expansion/collapse can be a legitimate use;
+it should not be mistaken for an intrinsically untweenable value.
+
+5. PRACTICAL BOUNDARIES
+
+Keep frame/frame_coords, frame_progress, visible_characters, visible_ratio,
+and visible_instance_count. Their integer/count-like names do not make them
+bad targets: they drive frame animation and intentional reveals.
+
+Keep visual dimensions, colors, material/light/environment parameters,
+transforms, camera/path progress, UI ranges/scrolling/layout, audio parameters,
+physics forces/velocities and character pose weights. The goal is to remove
+setup/schema/budget fields from likely targets, not reject whole domains
+because their setters may require a particular update clock or be expensive.
+
+Render ordering (z_index, layer, render_priority), caret/line selection,
+timers and other deliberately stepped or timing-based effects remain policy
+questions from the full audit. This shorter list does not promote them into
+new blanket exclusions.
+
+The original static-metadata limits still apply: instance-specific dynamic
+property lists and validation, other engine versions, and custom classes were
+not re-audited for this companion. Existing SCRIPT_VARIABLE bypass behavior
+is outside this list. No product implementation or integration tests are part
+of this document-only change.
+
+6. DECLARING CLASSES RETAINED FROM THE FULL PROPOSAL
+
+AimModifier3D, AnimatedTexture, AnimationMixer, AnimationPlayer, Area2D, Area3D, AudioEffectChorus
+AudioEffectPitchShift, AudioStreamPlayer, AudioStreamPlayer2D, AudioStreamPlayer3D, BaseMaterial3D
+BoneAttachment3D, BoneTwistDisperser3D, BoxMesh, CPUParticles2D, CPUParticles3D, CSGCylinder3D
+CSGPolygon3D, CSGShape3D, CSGSphere3D, CSGTorus3D, CanvasItemMaterial, CapsuleMesh, CharacterBody2D
+CharacterBody3D, CollisionObject2D, CollisionObject3D, CollisionPolygon3D, CollisionShape2D
+CollisionShape3D, Control, ConvertTransformModifier3D, CopyTransformModifier3D, CylinderMesh, Engine
+Environment, FastNoiseLite, FontVariation, GPUParticles2D, GPUParticles3D, GeometryInstance3D
+GradientTexture2D, GridContainer, GridMap, HeightMapShape3D, ItemList, IterateIK3D, Joint3D
+LabelSettings, LimitAngularVelocityModifier3D, Line2D, LineEdit, LinkButton, LookAtModifier3D
+MenuBar, MenuButton, Mesh, ModifierBoneTarget3D, MultiMesh, Node, OptionButton
+ParticleProcessMaterial, Path3D, PhysicalBone2D, PlaneMesh, Polygon2D, PopupMenu, PrimitiveMesh
+PrismMesh, Resource, RibbonTrailMesh, RichTextLabel, RigidBody2D, RigidBody3D, SkeletonIK3D
+SkeletonModification2DJiggle, SkeletonModificationStack2D, SoftBody3D, SphereMesh, SplineIK3D
+SpringBoneSimulator3D, Sprite2D, Sprite3D, StyleBoxFlat, SubViewport, TabBar, TabContainer, TextEdit
+TextMesh, TileMap, TileMapLayer, TorusMesh, Tree, TubeTrailMesh, TwoBoneIK3D, VideoStreamPlayer
+Viewport, Window
+
+7. DECLARING CLASSES FILTERED OUT OF THE FULL PROPOSAL
+
+AStarGrid2D, AnimationNodeBlendSpace1D, AnimationNodeBlendSpace2D, AnimationNodeBlendTree
+AnimationNodeStateMachineTransition, AnimationNodeTransition, AudioEffectCapture
+AudioEffectSpectrumAnalyzer, AudioServer, AudioStreamGenerator, AudioStreamInteractive
+AudioStreamMP3, AudioStreamOggVorbis, AudioStreamPlaylist, AudioStreamPolyphonic
+AudioStreamRandomizer, AudioStreamSynchronized, AudioStreamWAV, CameraTexture, CharFXTransform
+CodeEdit, Curve, Curve2D, Curve3D, CurveTexture, CurveXYZTexture, DPITexture, EditorDock
+EditorResourcePicker, EncodedObjectAsID, FileDialog, FontFile, GLTFAccessor, GLTFAnimation
+GLTFBufferView, GLTFCamera, GLTFDocument, GLTFLight, GLTFMesh, GLTFNode, GLTFObjectModelProperty
+GLTFPhysicsBody, GLTFPhysicsShape, GLTFSkin, GLTFSpecGloss, GLTFState, GLTFTexture
+GLTFTextureSampler, GradientTexture1D, HTTPClient, HTTPRequest, Input, InputEvent, InputEventAction
+InputEventFromWindow, InputEventGesture, InputEventJoypadButton, InputEventJoypadMotion
+InputEventKey, InputEventMIDI, InputEventMagnifyGesture, InputEventMouse, InputEventMouseButton
+InputEventMouseMotion, InputEventPanGesture, InputEventScreenDrag, InputEventScreenTouch, LightmapGI
+Marker2D, Marker3D, MeshConvexDecompositionSettings, MissingNode, MissingResource, MultiplayerPeer
+MultiplayerSpawner, MultiplayerSynchronizer, NavigationAgent2D, NavigationAgent3D, NavigationMesh
+NavigationPathQueryParameters2D, NavigationPathQueryParameters3D, NavigationPathQueryResult2D
+NavigationPathQueryResult3D, NavigationPolygon, NoiseTexture2D, NoiseTexture3D, OS
+OccluderInstance3D, OggPacketSequence, OpenXRAction, OpenXRActionSet, OpenXRAnchorTracker
+OpenXRCompositionLayer, OpenXRCompositionLayerCylinder, OpenXRCompositionLayerEquirect
+OpenXRIPBinding, OpenXRInteractionProfile, OpenXRInterface, OpenXRMarkerTracker, OpenXRPlaneTracker
+OpenXRSpatialCapabilityConfigurationAprilTag, OpenXRSpatialCapabilityConfigurationAruco
+OpenXRSpatialEntityTracker, PacketPeer, PacketPeerStream, PhysicsDirectBodyState2D
+PhysicsDirectBodyState3D, PhysicsTestMotionParameters3D, PlaceholderTextureLayered
+RDAccelerationStructureGeometry, RDAccelerationStructureInstance, RDAttachmentFormat
+RDFramebufferPass, RDPipelineColorBlendState, RDPipelineColorBlendStateAttachment
+RDPipelineDepthStencilState, RDPipelineMultisampleState, RDPipelineRasterizationState
+RDPipelineSpecializationConstant, RDSamplerState, RDShaderFile, RDShaderSPIRV, RDShaderSource
+RDTextureFormat, RDTextureView, RDUniform, RDVertexAttribute, RandomNumberGenerator, RayCast3D
+RenderSceneBuffersConfiguration, RootMotionView, SceneMultiplayer, Script, Shader, ShaderInclude
+ShapeCast2D, ShapeCast3D, SkeletonModification2DCCDIK, SkeletonModification2DFABRIK
+SkeletonModification2DLookAt, SkeletonModification2DPhysicalBones, SkeletonProfile
+SpringBoneCollision3D, SystemFont, TileData, TileSet, TileSetAtlasSource, Translation
+TranslationDomain, UDPServer, UPNP, UPNPDevice, UndoRedo, VideoStream, VisibleOnScreenNotifier2D
+VisualShader, VisualShaderNode, VisualShaderNodeColorConstant, VisualShaderNodeColorParameter
+VisualShaderNodeComment, VisualShaderNodeCustom, VisualShaderNodeExpression
+VisualShaderNodeFloatConstant, VisualShaderNodeFloatParameter, VisualShaderNodeFrame
+VisualShaderNodeIntConstant, VisualShaderNodeIntParameter, VisualShaderNodeParameter
+VisualShaderNodeParameterRef, VisualShaderNodeParticleMeshEmitter, VisualShaderNodeReroute
+VisualShaderNodeResizableBase, VisualShaderNodeUIntConstant, VisualShaderNodeUIntParameter
+VisualShaderNodeVec2Constant, VisualShaderNodeVec2Parameter, VisualShaderNodeVec3Constant
+VisualShaderNodeVec3Parameter, VisualShaderNodeVec4Constant, VisualShaderNodeVec4Parameter
+WebSocketMultiplayerPeer, WebSocketPeer, WebXRInterface, XRInterface, XRPose, XRPositionalTracker
+XRTracker, ZIPPacker
+
+Source: docs/designs/BLUEPRINT_PROPERTY_EXCLUSIONS.txt

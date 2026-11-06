@@ -31,34 +31,8 @@ macro_rules! gd_method_tween {
             pub inner: UnsafeCell<TweenPtr<LerpMethodData<$T>>>,
         }
 
-        #[godot_api]
+        #[godot_api(secondary)]
         impl $GdName {
-            /// Emitted once when playback changes from playing or paused to stopped,
-            /// including successful completion, explicit [method stop], and cancellation
-            /// caused by an invalid callable, owner, or binding. State is already stopped.
-            /// Repeated stops and intermediate loops do not emit it; replay permits another emission.
-            /// Unregistering or dropping a handle does not itself stop the tween.
-            ///
-            /// Successful completion emits [signal stopped] before [signal finished].
-            /// Deferred handlers execute later. Cancellation emits no completion signals.
-            #[signal]
-            pub fn stopped();
-
-            /// Emitted when this tween completes a loop.
-            ///
-            /// [b]Note:[/b] On the last loop of a tween, this is emitted before [signal finished].
-            #[signal]
-            pub fn loop_finished();
-
-            /// Emitted when this tween successfully finishes playing, after [signal stopped].
-            /// This happens when the tween completes all its loops, or when [method force_complete] is called.
-            ///
-            /// Invalid callable cancellation does not emit this signal.
-            /// Infinite looping prevents natural completion; a valid [method force_complete]
-            /// still emits this signal.
-            #[signal]
-            pub fn finished();
-
             /// Returns the [Callable] that will be invoked on every update with
             /// the interpolated value (between [method get_start_value] and [method get_final_value]).
             #[func]
@@ -166,9 +140,7 @@ macro_rules! gd_method_tween {
     };
 }
 
-//gd_method_tween! { SpireMethodI32, i32, i32, c"SpireMethodI32" }
 gd_method_tween! { SpireMethodInt, i64, i64, c"SpireMethodInt" }
-//gd_method_tween! { SpireMethodF32, f32, f32, c"SpireMethodF32" }
 gd_method_tween! { SpireMethodFloat, f64, f64, c"SpireMethodFloat" }
 gd_method_tween! { SpireMethodString, GString, GString, c"SpireMethodString" }
 gd_method_tween! { SpireMethodColor, Color, Color, c"SpireMethodColor" }
@@ -201,9 +173,7 @@ macro_rules! define_instantiate_fn {
 }
 
 define_instantiate_fn! { SpireMethod, Variant, Docs = "See [method Spire.do_call]." }
-//define_instantiate_fn! { SpireMethodI32, i32, Docs = "See [method Spire.do_call_i32]." }
 define_instantiate_fn! { SpireMethodInt, i64, Docs = "See [method Spire.do_call_int]." }
-//define_instantiate_fn! { SpireMethodF32, f32, Docs = "See [method Spire.do_call_f32]." }
 define_instantiate_fn! { SpireMethodFloat, f64, Docs = "See [method Spire.do_call_float]." }
 define_instantiate_fn! { SpireMethodString, GString, Docs = "See [method Spire.do_call_string]." }
 define_instantiate_fn! { SpireMethodColor, Color, Docs = "See [method Spire.do_call_color]." }

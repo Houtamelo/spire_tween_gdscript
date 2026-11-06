@@ -1,0 +1,31 @@
+diff --git a/spire_tween/src/global/mod.rs b/target/editor_controller_probe_2026_11_03/native/spire_tween/src/global/mod.rs
+index ca84f71..d44cbf6 100644
+--- a/spire_tween/src/global/mod.rs
++++ b/target/editor_controller_probe_2026_11_03/native/spire_tween/src/global/mod.rs
+@@ -68,6 +68,10 @@ fn try_init_singleton() -> Result<()> {
+ #[class(init, base = Node, internal)]
+ pub(crate) struct TweensController {
+     base: Base<Node>,
++    #[var]
++    probe_process_ticks: i64,
++    #[var]
++    probe_physics_ticks: i64,
+     #[init(val = OnReady::from_base_fn(|base| base.get_tree()))]
+     scene_tree: OnReady<Gd<SceneTree>>,
+     last_process_ticks_usec: u64,
+@@ -88,6 +92,7 @@ impl INode for TweensController {
+     }
+ 
+     fn process(&mut self, delta_time: f64) {
++        self.probe_process_ticks += 1;
+         let is_tree_paused = self.scene_tree.is_paused();
+ 
+         let curr_ticks_usec = Time::singleton().get_ticks_usec();
+@@ -98,6 +103,7 @@ impl INode for TweensController {
+     }
+ 
+     fn physics_process(&mut self, delta_time: f64) {
++        self.probe_physics_ticks += 1;
+         let is_tree_paused = self.scene_tree.is_paused();
+ 
+         let curr_ticks_usec = Time::singleton().get_ticks_usec();

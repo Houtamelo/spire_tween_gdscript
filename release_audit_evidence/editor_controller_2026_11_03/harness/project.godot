@@ -1,0 +1,13 @@
+config_version=5
+
+[application]
+config/name="SpireTween Editor Controller Probe"
+
+[editor_plugins]
+enabled=PackedStringArray("res://addons/controller_probe/plugin.cfg")
+
+[rendering]
+renderer/rendering_method="gl_compatibility"
+
+[audio]
+driver/enable_input=false
