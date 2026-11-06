@@ -2,6 +2,8 @@
 
 Add `TweenBlueprint` nodes to a scene to store animation configuration in the Inspector. Each call to `play()` builds a fresh native `SpireSequence`. Property, serial, and parallel animations require no script; GDScript supplies custom builders.
 
+[Watch the editor authoring walkthrough](../readme_images/blueprint_authoring.mp4) (1:44). It shows creating a two-step animation without code, connecting a Button signal, using Undo/Redo, and saving and reopening the scene.
+
 ## Animate a property
 
 1. Add a `TweenBlueprint` under the node to animate and set **Kind** to **Property**.
