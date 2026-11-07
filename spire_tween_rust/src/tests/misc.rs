@@ -42,7 +42,7 @@ impl ITestClass for MiscTests {
             ("test_characters_rotation", Self::test_characters_rotation),
             ("test_characters_effect_refresh", Self::test_characters_effect_refresh),
             ("test_characters_automatic", Self::test_characters_automatic),
-            ("test_characters_attach", Self::test_characters_attach),
+            ("test_characters_label", Self::test_characters_label),
             ("test_characters_channels", Self::test_characters_channels),
             ("test_characters_refresh", Self::test_characters_refresh),
             ("test_characters_lifecycle", Self::test_characters_lifecycle),

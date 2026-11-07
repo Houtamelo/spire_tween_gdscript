@@ -1,3 +1,4 @@
+mod characters;
 mod inspector;
 mod runtime;
 mod triggers;
@@ -59,7 +60,7 @@ pub struct TweenBlueprint {
     // General Configuration -------------------------->
 
     // <-------------------------- Tween Property Configuration
-    #[export_group(name = "Property Animation")]
+    #[export_group(name = "Animation Values")]
     #[export]
     #[var(set = set_animated_property)]
     animated_property: StringName,
@@ -85,7 +86,63 @@ pub struct TweenBlueprint {
     #[export]
     #[var]
     ease_curve: Option<Gd<Curve>>,
+
     // Tween Property Data -------------------------->
+    #[export_group(name = "Character Animation")]
+    #[export]
+    #[var(set = set_character_animation)]
+    character_animation: CharacterAnimation,
+    /// First logical character index, including spaces and excluding BBCode tags.
+    #[export(range = (0.0, 100.0, or_greater))]
+    #[var]
+    character_first: i64,
+    /// Inclusive last index; -1 selects through the end of the text.
+    #[export(range = (-1.0, 100.0, or_greater))]
+    #[var]
+    #[init(val = -1)]
+    character_last: i64,
+    /// Delay in seconds between selected characters.
+    #[export(range = (0.0, 1.0, 0.005, or_greater))]
+    #[var]
+    character_stagger: f64,
+    /// Pixel pivot relative to the glyph pen origin; no font metrics are inferred.
+    #[export]
+    #[var]
+    character_pivot: Vector2,
+    #[export]
+    #[var]
+    character_rotate_mode: RotateMode,
+    /// Loops of each character's method tween, independently of the containing sequence.
+    #[export(range = (1.0, 10.0, or_greater))]
+    #[var]
+    #[init(val = 1)]
+    character_loops: i64,
+    #[export]
+    #[var]
+    character_loop_mode: LoopMode,
+    #[export(range = (1.0, 30.0, or_greater))]
+    #[var]
+    #[init(val = 10)]
+    character_vibrato: i32,
+    #[export(range = (0.0, 1.0))]
+    #[var]
+    #[init(val = 1.0)]
+    character_elasticity: f64,
+    #[export(range = (0.0, 180.0))]
+    #[var]
+    #[init(val = 90.0)]
+    character_randomness: real,
+    #[export]
+    #[var]
+    #[init(val = true)]
+    character_fade_out: bool,
+    #[export]
+    #[var]
+    character_randomness_mode: ShakeRandomnessMode,
+    #[export]
+    #[var]
+    #[init(val = true)]
+    character_blendable: bool,
 }
 
 #[godot_api]
@@ -171,6 +228,18 @@ impl TweenBlueprint {
     #[func]
     fn set_kind(&mut self, kind: BlueprintKind) {
         self.kind = kind;
+        self.configuration_changed();
+    }
+
+    #[func]
+    fn set_character_animation(&mut self, animation: CharacterAnimation) {
+        let (start, end) = self.character_animation.defaults();
+        if self.kind == BlueprintKind::Characters && self.start_value == start && self.end_value == end {
+            // Values still at both channel defaults can follow the selector's type.
+            self.start_value = Variant::nil();
+            self.end_value = Variant::nil();
+        }
+        self.character_animation = animation;
         self.configuration_changed();
     }
 

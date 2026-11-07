@@ -26,8 +26,8 @@ fn near(a: f64, b: f64) {
 }
 fn v2(a: Vector2, b: Vector2) { near(a.distance_to(b) as f64, 0.0); }
 fn v3(a: Vector3, b: Vector3) { near(a.distance_to(b) as f64, 0.0); }
-fn label(parent: &mut Node2D, text: &str, bbcode: bool) -> Gd<RichTextLabel> {
-    let mut n = RichTextLabel::new_alloc();
+fn label(parent: &mut Node2D, text: &str, bbcode: bool) -> Gd<SpireRichTextLabel> {
+    let mut n = SpireRichTextLabel::new_alloc();
     n.set_use_bbcode(bbcode);
     n.set_text(text);
     n.set_size(Vector2::new(500.0, 140.0));
@@ -150,18 +150,25 @@ impl MiscTests {
             // that discovers the edit, resets state and installs the new scope.
             let sample = a
                 .render_sample_for_test(0)
-                .expect("processing child must maintain the effect without live tweens");
+                .expect("label must maintain the effect without live tweens");
             v2(sample.0.a, Vector2::RIGHT);
             v2(a.get_char_offset(0), Vector2::ZERO);
             n.free();
         })
     }
 
-    pub(super) fn test_characters_attach(&mut self) -> PinnedTestTask {
+    pub(super) fn test_characters_label(&mut self) -> PinnedTestTask {
         let mut n = label(&mut self.base_mut(), "[b]AB[/b]", false);
         let a = TextAnimator::new(n.clone());
         let children = n.get_child_count();
-        assert_eq!(children, 0, "runtime helper must be internal");
+        assert_eq!(children, 0, "character animation must not add child nodes");
+        let plain = RichTextLabel::new_alloc();
+        assert_eq!(
+            n.get_child_count_ex().include_internal(true).done(),
+            plain.get_child_count_ex().include_internal(true).done()
+        );
+        plain.free();
+        assert_eq!(n.get_process_mode(), godot::classes::node::ProcessMode::INHERIT);
         let b = TextAnimator::new(n.clone());
         assert_eq!(n.get_child_count(), children);
         assert_eq!(n.get_text(), GString::from("[b]AB[/b]"));
@@ -174,8 +181,8 @@ impl MiscTests {
         v2(b.get_char_offset(1), Vector2::ONE);
         let copy = n
             .duplicate()
-            .expect("runtime helper must not block Node::duplicate")
-            .cast::<RichTextLabel>();
+            .expect("character state must not block Node::duplicate")
+            .cast::<SpireRichTextLabel>();
         self.base_mut().add_child(&copy);
         let other = TextAnimator::new(copy.clone());
         other.set_char_offset(1, Vector2::new(4.0, 0.0));
@@ -322,10 +329,9 @@ impl MiscTests {
         let n = label(&mut self.base_mut(), "A", false);
         let a = TextAnimator::new(n.clone());
         let t = manual(a.do_fade_char(0, 0.0, 1.0));
-        SpireTextAnimator::attach(n.clone()).free();
+        n.free();
         step(&t, 1.0);
         assert_eq!(t.get_state(), TweenState::Stopped);
-        n.free();
         Box::pin(async {})
     }
 

@@ -1,7 +1,8 @@
-# Animate individual RichTextLabel characters
+# Animate individual SpireRichTextLabel characters
 
-`TextAnimator` in Rust and `SpireTextAnimator` in GDScript animate individual
-logical character indices. They support fade, color, offset, three-axis rotation,
+`SpireRichTextLabel` extends Godot's `RichTextLabel` with animation of individual
+logical character indices. Rust callers use its shared `TextAnimator` handle.
+They support fade, color, offset, three-axis rotation,
 scale, and punch/shake of offset, rotation and scale. Each constructor uses an
 ordinary Spire method-progress tween, including easing, delays, loops, manual
 stepping, node lifetime checks, signals and sequence composition.
@@ -14,29 +15,32 @@ describes its GIF output, pixel/state assertions and isolated virtual display.
 ## Quick start
 
 ```gdscript
-label.bbcode_enabled = true
-label.text = "[color=gold]Hello[/color]"
-var animator := SpireTextAnimator.attach(label)
+@onready var label: SpireRichTextLabel = %Dialogue
 
-# The draw callback supplies the effective BBCode color and shaping clusters.
-await label.draw
+func animate() -> void:
+    label.bbcode_enabled = true
+    label.text = "[color=gold]Hello[/color]"
 
-var sequence := Spire.sequence()
-sequence.set_default_children_ease(Spire.EASE_OUT_CUBIC)
-for index in animator.get_character_count():
-    animator.set_char_offset(index, Vector2(0, -20))
-    var tween := animator.offset_char(index, Vector2.ZERO, 0.4)
-    tween.set_delay(index * 0.04)
-    sequence.join(tween)
+    # Drawing supplies the effective BBCode color and shaping clusters.
+    await label.draw
 
-# Angles are radians. X/Y tilts use orthographic projection.
-animator.rotate_char(0, Vector3(0, PI / 3, 0), 0.5)
+    var sequence := Spire.sequence()
+    sequence.set_default_children_ease(Spire.EASE_OUT_CUBIC)
+    for index in label.get_character_count():
+        label.set_char_offset(index, Vector2(0, -20))
+        var tween := label.offset_char(index, Vector2.ZERO, 0.4)
+        tween.set_delay(index * 0.04)
+        sequence.join(tween)
+
+    # Angles are radians. X/Y tilts use orthographic projection.
+    label.rotate_char(0, Vector3(0, PI / 3, 0), 0.5)
 ```
 
 ```rust
 use godot::prelude::*;
 use spire_tween::prelude::*;
 
+// label: Gd<SpireRichTextLabel>
 let animator = TextAnimator::new(label.clone());
 animator
     .do_offset_char(0, Vector2::new(0.0, -20.0), 0.4)
@@ -49,18 +53,18 @@ builders. GDScript constructors register and return `SpireMethodFloat`. That
 float is tween progress, not the character's current property value. Use the
 animator getters below to inspect character state.
 
-## Attachment and ownership
+## Node type and ownership
 
-Attachment creates one internal processing child under the label. Attaching again
-reuses it. It is excluded from ordinary child enumeration. `Node.duplicate()`
-creates an inert helper which binds fresh, independent state when the copied
-label enters the tree; `attach(copy)` also initializes it outside the tree.
-Existing tweens remain attached to the original label.
-The default `SpireTextAnimator.new()` constructor is inert until initialized by
-`attach()` or entering the tree under a RichTextLabel; use `attach(label)` in
-application code. Calls on an unattached helper report no valid indices and
-return stopped tweens.
-This child maintains a `RichTextEffect` scope through `push_customfx()`;
+Add a `SpireRichTextLabel` directly, or right-click an existing `RichTextLabel`
+in the Scene dock and choose **Change Type → SpireRichTextLabel**. Existing
+`RichTextLabel` properties, themes, layout and ordinary `DoRichTextLabel` tweens
+remain available. GDScript inheritors use `extends SpireRichTextLabel`.
+
+The label owns its character state directly and creates no helper nodes.
+`Node.duplicate()` and scene instantiation create fresh, independent animation
+state; active tweens remain bound to the original label. Character methods also
+initialize state on first use before the label enters the tree.
+The label maintains a `RichTextEffect` scope through `push_customfx()`;
 callers do not add effect tags. The label's `text` and `bbcode_enabled` properties
 remain unchanged, including literal brackets when BBCode is disabled. Godot
 continues to handle wrapping, fonts, BBCode and bidirectional layout.
@@ -70,15 +74,24 @@ tweens. Manual `push_*`, `add_text`, `append_text` and `clear` formatting-stack
 edits are not tracked; the animator manages that stack. Rebuilding can also reset
 selection and scroll state, as a normal text assignment does.
 
-The label owns the processing child; do not move it to another node. Freeing
-the label or animator invalidates its character tweens. Dropping a Rust handle
-does not remove the label's animator or its deformations. The effect's state
+Freeing the label invalidates its character tweens. Dropping a Rust handle
+preserves the label's character state and deformations. The effect's state
 reference is weak, so the state/effect ownership does not form a reference cycle.
 
 Godot continuously processes custom rich-text effects while their scope remains
 in the label, including between tweens. This integration also checks source
 changes once per frame. Character buffers are reused across refreshes; the
 production draw callback does not allocate a per-glyph buffer.
+
+`process_mode` stays under user control. Normal bound tweens pause when the label
+cannot process, including during a SceneTree pause, and resume afterward.
+Automatic text refresh follows the label's processing settings too.
+
+The editor warns if an attached script, including a script ancestor, implements
+`_process()`: this overrides the native automatic-refresh callback.
+`super._process()` cannot invoke the Rust implementation. Put custom per-frame
+logic on another node. The editor never initializes animation state or changes
+the rendering stack merely by inspecting the label.
 
 ## Indices, refresh and reset
 
@@ -192,7 +205,7 @@ For pivot `p`, basis `A` and offset `o`, the additional transform is
 Godot 4.4's effect API does not expose the effective font size or glyph bounds
 needed to calculate TMP's exact automatic center pivot. No approximate font
 metrics are substituted. Automatic centering and perspective are potential
-future rendering extensions. RichTextLabel is the supported receiver;
+future rendering extensions. SpireRichTextLabel is the supported receiver;
 Label/Label3D require a separate rendering integration.
 
 ## Provenance and validation

@@ -176,6 +176,7 @@ pub mod prelude {
         //connection::Connection,
         enums::{
             BlueprintKind,
+            CharacterAnimation,
             Ease,
             EaseKind,
             Evaluator,
@@ -253,7 +254,7 @@ pub mod prelude {
             PropertyDataViaCallable,
             Sequence,
             SpireFlags,
-            SpireTextAnimator,
+            SpireRichTextLabel,
             SpireTween,
             SpireTweener,
             StringLerper,

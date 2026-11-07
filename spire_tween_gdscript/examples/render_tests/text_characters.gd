@@ -149,8 +149,8 @@ func _card(key: String, title: String, subtitle: String, area: Rect2i, accent: C
 
 
 func _characters(key: String, content: String, at: Vector2, width: float, font_size: int,
-		color: Color = INK) -> SpireTextAnimator:
-	var label := RichTextLabel.new()
+		color: Color = INK) -> SpireRichTextLabel:
+	var label := SpireRichTextLabel.new()
 	label.position = at
 	label.size = Vector2(width, 68)
 	label.bbcode_enabled = true
@@ -162,7 +162,7 @@ func _characters(key: String, content: String, at: Vector2, width: float, font_s
 	label.add_theme_color_override("default_color", color)
 	label.text = content
 	add_child(label)
-	var animator := SpireTextAnimator.attach(label)
+	var animator := label
 	# A caller-specified visual pivot near the middle of this font's capitals.
 	for index in animator.get_character_count():
 		animator.set_char_pivot(index, Vector2(font_size * 0.30, -font_size * 0.34))
@@ -175,7 +175,7 @@ func _build_showcase() -> void:
 	_rect(Vector2.ZERO, Vector2(SIZE), Color("0c1220"))
 	_text("SPIRE TWEEN   /   RENDERED TEST 01", Vector2(32, 20), 13, MINT)
 	_text("Characters in motion", Vector2(30, 42), 34)
-	_text("RichTextLabel  ·  11 tween constructors  ·  real rendered glyphs", Vector2(32, 90), 14, MUTED)
+	_text("SpireRichTextLabel  ·  11 tween constructors  ·  real rendered glyphs", Vector2(32, 90), 14, MUTED)
 	_phase = _text("01  /  ARRIVE", Vector2(752, 62), 14, GOLD)
 	_card("reveal", "01  STAGGERED REVEAL", "Offset + alpha / per-character delays", Rect2i(32, 134, 288, 164), MINT)
 	_characters("reveal", "HELLO SPIRE", Vector2(48, 220), 268, 30, MINT)
@@ -205,7 +205,7 @@ func _build_showcase() -> void:
 	_lifetime_status = _text("index 5 is animating", Vector2(658, 712), 12, MUTED)
 	_rect(Vector2(32, 776), Vector2(896, 2), Color("29354e"))
 	_progress = _rect(Vector2(32, 776), Vector2(0, 2), MINT)
-	_text("GODOT 4.4   /   Xvfb + software OpenGL", Vector2(32, 789), 11, MUTED)
+	_text("GODOT %s   /   Xvfb + software OpenGL" % Engine.get_version_info().string, Vector2(32, 789), 11, MUTED)
 	_text("10 SECONDS   ·   25 FPS", Vector2(766, 789), 11, MUTED)
 
 
@@ -228,7 +228,7 @@ func _at(frame: int, action: Callable) -> void:
 
 
 func _prepare_reveal() -> void:
-	var animator: SpireTextAnimator = _animators.reveal
+	var animator: SpireRichTextLabel = _animators.reveal
 	for index in animator.get_character_count():
 		animator.set_char_offset(index, Vector2(0, 20))
 		animator.set_char_alpha(index, 0.0)
@@ -252,21 +252,21 @@ func _schedule() -> void:
 
 
 func _reveal() -> void:
-	var animator: SpireTextAnimator = _animators.reveal
+	var animator: SpireRichTextLabel = _animators.reveal
 	for index in animator.get_character_count():
 		_track(animator.offset_char(index, Vector2.ZERO, 0.65), Spire.EASE_OUT_CUBIC, index * 0.055)
 		_track(animator.fade_char(index, 1.0, 0.5), Spire.EASE_LINEAR, index * 0.055)
 
 
 func _basic_channels() -> void:
-	var colors: SpireTextAnimator = _animators.color
+	var colors: SpireRichTextLabel = _animators.color
 	for index in colors.get_character_count():
 		_track(colors.color_char(index, [MINT, LILAC, CORAL][index % 3], 0.7), Spire.EASE_LINEAR, index * 0.07).set_loops(2, Spire.LOOP_MODE_YOYO)
-	var rotation: SpireTextAnimator = _animators.rotation
+	var rotation: SpireRichTextLabel = _animators.rotation
 	_track(rotation.rotate_char(0, Vector3(1.15, 0, 0), 0.8)).set_loops(2, Spire.LOOP_MODE_YOYO)
 	_track(rotation.rotate_char(4, Vector3(0, 1.15, 0), 0.8), Spire.EASE_OUT_CUBIC, 0.18).set_loops(2, Spire.LOOP_MODE_YOYO)
 	_track(rotation.rotate_char(8, Vector3(0, 0, TAU), 1.3, Spire.ROTATE_MODE_FAST_BEYOND_360), Spire.EASE_OUT_CUBIC, 0.35)
-	var scale: SpireTextAnimator = _animators.scale
+	var scale: SpireRichTextLabel = _animators.scale
 	for index in scale.get_character_count():
 		_track(scale.scale_char(index, Vector2(0.65, 1.6), 0.55), Spire.EASE_OUT_CUBIC, index * 0.1).set_loops(2, Spire.LOOP_MODE_YOYO)
 
@@ -283,7 +283,7 @@ func _effects() -> void:
 
 
 func _compose() -> void:
-	var animator: SpireTextAnimator = _animators.composition
+	var animator: SpireRichTextLabel = _animators.composition
 	var sequence = Spire.sequence().set_default_children_ease(Spire.EASE_OUT_CUBIC)
 	for index in animator.get_character_count():
 		var delay := index * 0.07

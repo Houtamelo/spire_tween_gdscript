@@ -1,6 +1,6 @@
 # spire_tween
 
-See [per-character animation](../docs/character_animation.md) for RichTextLabel
+See [per-character animation](../docs/character_animation.md) for SpireRichTextLabel
 fade, color, offset, rotation, scale, punch and shake.
 See [animatable bodies](../docs/animatable_bodies.md) for physics-clock platforms
 and doors using the existing position/rotation tweens.

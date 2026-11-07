@@ -1,6 +1,6 @@
 # Author animations with TweenBlueprint
 
-Add `TweenBlueprint` nodes to a scene to store animation configuration in the Inspector. Each call to `play()` builds a fresh native `SpireSequence`. Property, serial, and parallel animations require no script; GDScript supplies custom builders.
+Add `TweenBlueprint` nodes to a scene to store animation configuration in the Inspector. Each call to `play()` builds a fresh native `SpireSequence`. Property, character, serial, and parallel animations require no script; GDScript supplies custom builders.
 
 [Watch the editor authoring walkthrough](../readme_images/blueprint_authoring.mp4) (1:44). It shows creating a two-step animation without code, connecting a Button signal, using Undo/Redo, and saving and reopening the scene.
 
@@ -23,6 +23,20 @@ Changing or hiding a field preserves its stored value. Incompatible values remai
 Set **Kind** to **Chain Block** to run direct blueprint children serially, or **Parallel Block** to run them together. Non-blueprint children are ignored. Each child keeps its own delay, speed, loops, easing, and sequence handle; child sequences are adopted by the parent rather than ticked independently.
 
 Children are built eagerly when the parent is played. Their implicit start values are read when their property tween actually starts, after delay and preceding serial steps. Replaying or looping a returned native sequence reuses its constructed children.
+
+## Animate text characters
+
+Set **Kind** to **Characters** and target a `SpireRichTextLabel`. Use the editor's **Change Type** action to convert an existing `RichTextLabel`. **Character Animation** selects Offset, Fade, Color, Rotation, Scale, or punch/shake of offset, rotation, and scale. These use the native [character animation](character_animation.md) constructors; no script is required.
+
+`character_first` and `character_last` select an inclusive range of logical indices, including spaces and excluding BBCode tags. The default last index, -1, follows the current text length. `character_stagger` adds a delay between the selected characters, beginning at `character_first`. `speed_or_duration` is a positive duration in seconds for each character.
+
+`end_value` uses Vector2 for offsets/scales, Vector3 for rotation, float for alpha, and Color for color. For punch/shake, it specifies the strength. Enable `start_enabled` to supply an explicit `start_value` in the same type. Explicit starts and pivots apply to the whole selection when the Blueprint begins, after its delay and preceding serial steps, before per-character staggering. A reveal can therefore start with the entire phrase hidden. Constructing a serial composition does not change its later targets early. When both value fields still equal the previous channel's defaults, they follow changes to `character_animation`. Other authored values are retained, including incompatible values requiring repair.
+
+`character_pivot` is a pixel offset from the glyph pen origin. Rotation uses radians; `character_rotate_mode` can preserve full turns. `character_loops` and `character_loop_mode` loop each character's native method tween, including Yoyo, independently of the containing sequence's Restart loops. Punch exposes `character_vibrato`, `character_elasticity`, and `character_blendable`; shake exposes vibrato, randomness, fade-out, randomness mode, and blending controls. The Inspector hides settings which do not apply to the selected effect.
+
+Combine Offset and Fade children in a Parallel Block for a staggered reveal. Combine Offset, Rotation, Scale, and Color children for a composed effect. Use Property steps on the label's `text` for text replacement: an active character which disappears cancels on its next step and never redirects to another index. A fresh `play()` selects the range against the current text.
+
+The label initializes its character state at runtime without animating. For BBCode start colors, trigger after the label's first draw; a manually connected Button naturally does this. If playing immediately from After Ready or After Enter Tree, supply a delay allowing the first draw, as required by the underlying character constructors. Editor inspection never initializes runtime character state or writes to the target.
 
 Each blueprint resolves its own target independently: its configured Target, then its first non-blueprint ancestor. Containers do not pass targets to their children. A nested child's fallback skips all blueprint ancestors, including their configured targets. The Inspector uses the same resolution as runtime playback.
 

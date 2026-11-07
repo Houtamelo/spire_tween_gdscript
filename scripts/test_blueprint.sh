@@ -15,7 +15,7 @@ if [[ -z "$blueprint_library" ]]; then
     blueprint_library="$blueprint_repo/target/debug/libspire_tween.so"
 fi
 mkdir -p "$blueprint_fixture/examples/tests" "$blueprint_fixture/.godot" "$blueprint_fixture/addons/blueprint_probe"
-for blueprint_file in blueprint.gd blueprint.tscn blueprint_custom.gd blueprint_property_target.gd blueprint_runner.gd blueprint_editor.gd test_base.gd; do
+for blueprint_file in blueprint.gd blueprint.tscn blueprint_custom.gd blueprint_property_target.gd blueprint_runner.gd blueprint_editor.gd test_base.gd rich_text_label_process_override.gd rich_text_label_process_inherited.gd rich_text_label_no_process.gd; do
     cp -- "$blueprint_repo/spire_tween_gdscript/examples/tests/$blueprint_file" "$blueprint_fixture/examples/tests/$blueprint_file"
 done
 cp -- "$blueprint_repo/spire_tween_gdscript/examples/tests/blueprint_editor_fixture.tscn" "$blueprint_fixture/blueprint_editor_fixture.tscn"
@@ -83,5 +83,9 @@ fi
 timeout 90s "$blueprint_godot" "${blueprint_editor_args[@]}" --editor --path "$blueprint_fixture" \
     --rendering-method gl_compatibility > "$blueprint_fixture/editor.log" 2>&1
 if rg -n 'SCRIPT ERROR:|^ERROR:|\[panic' "$blueprint_fixture/editor.log"; then exit 1; fi
+if rg -n 'WARNING:.*`animated_property` must be non-empty' "$blueprint_fixture/editor.log"; then
+    printf 'Incomplete Inspector configuration must not emit repeated console warnings.\n' >&2
+    exit 1
+fi
 rg '^BLUEPRINT_EDITOR_RESULT failed=0$' "$blueprint_fixture/editor.log"
 printf 'Blueprint test evidence: %s\n' "$blueprint_fixture"

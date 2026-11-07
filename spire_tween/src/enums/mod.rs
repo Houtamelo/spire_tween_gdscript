@@ -2,6 +2,7 @@
 use super::*;
 
 mod blueprint_kind;
+mod character_animation;
 #[allow(dead_code)]
 pub mod docs;
 mod ease;
@@ -31,6 +32,7 @@ pub(crate) use macros::register_enum;
 #[allow(unused_imports)]
 pub use self::{
     blueprint_kind::*,
+    character_animation::*,
     ease::*,
     evaluator::*,
     lerp_mode_kind::*,

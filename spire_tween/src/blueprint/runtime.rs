@@ -9,7 +9,8 @@ impl TweenBlueprint {
     }
 
     pub(super) fn manages_children(&self) -> bool {
-        self.base().get_script().is_some() || self.kind != BlueprintKind::Property
+        self.base().get_script().is_some()
+            || matches!(self.kind, BlueprintKind::ChainBlock | BlueprintKind::ParallelBlock)
     }
 
     pub(super) fn is_managed_by_parent(&self) -> bool {
@@ -46,7 +47,9 @@ impl TweenBlueprint {
             sequence.ignore_time_scale = state.ignore_time_scale;
             // Built-in containers do not animate their own target; their children
             // own independent target bindings.
-            if state.kind == BlueprintKind::Property || state.base().get_script().is_some() {
+            if matches!(state.kind, BlueprintKind::Property | BlueprintKind::Characters)
+                || state.base().get_script().is_some()
+            {
                 if let Some(target) = state.resolve_target() {
                     sequence = sequence.bound_to(target);
                 }
@@ -100,6 +103,7 @@ impl TweenBlueprint {
             (state.kind, state.get_resolved_target())
         };
         match kind {
+            BlueprintKind::Characters => Self::build_characters(this, sequence),
             BlueprintKind::ChainBlock | BlueprintKind::ParallelBlock => {
                 for node in this.get_children().iter_shared() {
                     let Ok(child) = node.try_cast::<Self>() else { continue };

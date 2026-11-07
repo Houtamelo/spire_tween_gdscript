@@ -3,9 +3,15 @@ extern crate godot;
 extern crate spire_tween;
 
 use godot::prelude::*;
-use spire_tween::prelude::*;
 #[cfg(feature = "include_gdscript_bridge")]
 use spire_tween::prelude::gdscript::SpireSequence;
+use spire_tween::prelude::*;
+
+fn rich_text_label_api(label: Gd<SpireRichTextLabel>) {
+    let _: Gd<godot::classes::RichTextLabel> = label.clone().upcast();
+    let animator = TextAnimator::new(label);
+    let _: SpireTween<LerpMethodData<f64>> = animator.do_offset_char(0, Vector2::ONE, 0.5);
+}
 
 macro_rules! new_tween_method {
     () => {
@@ -107,7 +113,13 @@ fn compile() {
         #[cfg(feature = "include_gdscript_bridge")]
         let _: fn(Gd<TweenBlueprint>) -> Gd<SpireSequence> = TweenBlueprint::play;
         let _: fn(Gd<TweenBlueprint>) = TweenBlueprint::stop;
-        let _ = (BlueprintKind::Property, LerpModeKind::Relative, TriggerCondition::Manual);
+        let _ = (
+            BlueprintKind::Property,
+            BlueprintKind::Characters,
+            CharacterAnimation::ShakeScale,
+            LerpModeKind::Relative,
+            TriggerCondition::Manual,
+        );
     }
     {
         let ease = Ease::get_global_default();

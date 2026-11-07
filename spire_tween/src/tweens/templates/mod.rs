@@ -12,7 +12,7 @@ mod spiral_3d;
 mod waypoint_path;
 mod margins;
 mod text_animator;
-pub use text_animator::{TextAnimator, SpireTextAnimator};
+pub use text_animator::{TextAnimator, SpireRichTextLabel};
 pub use self::{waypoint_path::*, margins::*};
 pub use self::{punch::*, shake_variants::*, orientation::*, ui_normalized::*, spiral_3d::*};
 pub use self::{adapters::*, motion::*, color::*, counter::*};

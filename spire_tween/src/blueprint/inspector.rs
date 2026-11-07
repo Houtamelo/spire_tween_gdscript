@@ -7,6 +7,17 @@ use super::{
 impl TweenBlueprint {
     #[func(gd_self)]
     pub(super) fn initialize_blueprint_values(mut this: Gd<Self>) {
+        {
+            let mut state = this.bind_mut();
+            if state.kind == BlueprintKind::Characters {
+                if state.start_value.is_nil() && state.end_value.is_nil() {
+                    (state.start_value, state.end_value) = state.character_animation.defaults();
+                    drop(state);
+                    this.notify_property_list_changed();
+                }
+                return;
+            }
+        }
         let (target, name, unconfigured) = {
             let state = this.bind();
             (
@@ -34,10 +45,18 @@ impl TweenBlueprint {
 
     pub(super) fn validate_inspector_property(&self, property: &mut PropertyInfo) {
         let scripted = self.base().get_script().is_some();
+        let characters = self.kind == BlueprintKind::Characters;
         let name = property.property_name.to_string();
         let name = name.as_str();
 
-        if let "kind" | "target" | "animated_property" | "start_enabled" | "lerp_mode" | "trigger_condition" = name {
+        if let "kind"
+        | "target"
+        | "animated_property"
+        | "start_enabled"
+        | "lerp_mode"
+        | "trigger_condition"
+        | "character_animation" = name
+        {
             property.usage = property.usage.with(PropertyUsageFlags::UPDATE_ALL_IF_MODIFIED);
         }
 
@@ -72,15 +91,53 @@ impl TweenBlueprint {
         | "ease_basic" | "ease_curve" = name
         {
             property.usage = property.usage.with(PropertyUsageFlags::STORAGE);
-            property.usage = if scripted || self.kind != BlueprintKind::Property {
+            property.usage = if scripted || !matches!(self.kind, BlueprintKind::Property | BlueprintKind::Characters) {
                 property.usage.without(PropertyUsageFlags::EDITOR)
             } else {
                 property.usage.with(PropertyUsageFlags::EDITOR)
             };
         }
 
-        if name == "start_enabled" && self.lerp_mode != LerpModeKind::Absolute
-            || name == "start_value" && (!self.start_enabled || self.lerp_mode != LerpModeKind::Absolute)
+        if characters && matches!(name, "animated_property" | "lerp_mode") {
+            property.usage = property.usage.without(PropertyUsageFlags::EDITOR);
+        }
+
+        if matches!(
+            name,
+            "character_animation"
+                | "character_first"
+                | "character_last"
+                | "character_stagger"
+                | "character_pivot"
+                | "character_rotate_mode"
+                | "character_loops"
+                | "character_loop_mode"
+                | "character_vibrato"
+                | "character_elasticity"
+                | "character_randomness"
+                | "character_fade_out"
+                | "character_randomness_mode"
+                | "character_blendable"
+        ) {
+            let animation = self.character_animation;
+            let visible = !scripted
+                && characters
+                && match name {
+                    "character_pivot" => animation.has_pivot(),
+                    "character_rotate_mode" => animation == CharacterAnimation::Rotation,
+                    "character_vibrato" | "character_blendable" => animation.is_punch() || animation.is_shake(),
+                    "character_elasticity" => animation.is_punch(),
+                    "character_randomness" | "character_fade_out" | "character_randomness_mode" => animation.is_shake(),
+                    _ => true,
+                };
+            property.usage = property.usage.with(PropertyUsageFlags::STORAGE);
+            if !visible {
+                property.usage = property.usage.without(PropertyUsageFlags::EDITOR);
+            }
+        }
+
+        if name == "start_enabled" && !characters && self.lerp_mode != LerpModeKind::Absolute
+            || name == "start_value" && (!self.start_enabled || !characters && self.lerp_mode != LerpModeKind::Absolute)
         {
             property.usage = property.usage.without(PropertyUsageFlags::EDITOR);
         }
@@ -98,6 +155,20 @@ impl TweenBlueprint {
                 property.hint_info.hint_string = separator.join(&names);
             }
         } else if let "start_value" | "end_value" = name {
+            if scripted || !matches!(self.kind, BlueprintKind::Property | BlueprintKind::Characters) {
+                return;
+            }
+            if characters {
+                let ty = self.character_animation.value_type();
+                let value = if name == "start_value" { &self.start_value } else { &self.end_value };
+                if value.is_nil() || value.get_type() == ty {
+                    property.variant_type = ty;
+                    property.class_name = StringName::default();
+                    property.hint_info = PropertyHintInfo::none();
+                    property.usage = property.usage.without(PropertyUsageFlags::NIL_IS_VARIANT);
+                }
+                return;
+            }
             let Some(target) = target else { return };
 
             match property_descriptor(&target, &self.animated_property) {
@@ -111,9 +182,9 @@ impl TweenBlueprint {
                         property.usage = property.usage.without(PropertyUsageFlags::NIL_IS_VARIANT);
                     }
                 }
-                Err(err) => {
-                    godot_warn!("{err}");
-                }
+                // The Scene dock already presents configuration warnings. Metadata
+                // queries also run while authoring incomplete steps and must stay quiet.
+                Err(_) => {}
             }
         }
     }
@@ -169,6 +240,10 @@ impl TweenBlueprint {
             if !self.speed_or_duration.is_finite() || self.speed_or_duration <= 0.0 {
                 warnings.push("`speed_or_duration` must be finite and greater than 0.0.");
             }
+        }
+
+        if self.base().get_script().is_none() && self.kind == BlueprintKind::Characters {
+            warnings.extend_array(&self.character_warnings());
         }
 
         if !self.is_managed_by_parent()

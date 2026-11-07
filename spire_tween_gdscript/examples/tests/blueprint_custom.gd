@@ -2,6 +2,7 @@
 extends TweenBlueprint
 
 @export var custom_duration: float = 0.5
+@export var character_distance: float = 24.0
 var reset_count: int = 0
 var build_count: int = 0
 

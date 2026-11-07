@@ -10,5 +10,8 @@ register_enum! {
         ParallelBlock = 1,
         [RS = "Property", GD = "BLUEPRINT_KIND_PROPERTY"]
         Property = 2,
+        /// Animate selected logical characters of a RichTextLabel.
+        [RS = "Characters", GD = "BLUEPRINT_KIND_CHARACTERS"]
+        Characters = 3,
     }
 }

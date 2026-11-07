@@ -18,6 +18,26 @@ func property_info(effect: TweenBlueprint, name: StringName) -> Dictionary:
 		if info.name == name: return info
 	return {}
 
+func scene_item(node: Node) -> TreeItem:
+	for tree: Tree in EditorInterface.get_base_control().find_children("*", "Tree", true, false):
+		var items: Array[TreeItem] = []
+		if tree.get_root() != null: items.append(tree.get_root())
+		while not items.is_empty():
+			var item: TreeItem = items.pop_back()
+			var metadata: Variant = item.get_metadata(0)
+			if typeof(metadata) == TYPE_NODE_PATH and metadata == node.get_path():
+				return item
+			for child in item.get_children(): items.append(child)
+	return null
+
+func scene_warnings(node: Node) -> String:
+	var item := scene_item(node)
+	if item == null: return ""
+	var text := ""
+	for button in item.get_button_count(0):
+		text += item.get_button_tooltip_text(0, button) + "\n"
+	return text
+
 func _run() -> void:
 	for _frame in 8: await get_tree().process_frame
 	EditorInterface.open_scene_from_path("res://blueprint_editor_fixture.tscn")
@@ -35,6 +55,17 @@ func _run() -> void:
 	for _frame in 8: await get_tree().process_frame
 	check(target.position == Vector2(3, 4), "Editor ready/enter and Inspector selection must not play")
 	check(custom.get("build_count") == 0, "Editor lifecycle must not invoke custom builders")
+	check(property_info(custom, &"character_distance").usage & PROPERTY_USAGE_EDITOR != 0, "Character settings must not hide similarly named script exports")
+	var incomplete := TweenBlueprint.new()
+	scene.add_child(incomplete)
+	EditorInterface.edit_node(incomplete)
+	for _frame in 3: await get_tree().process_frame
+	incomplete.kind = Spire.BLUEPRINT_KIND_PROPERTY
+	EditorInterface.edit_node(incomplete)
+	for _frame in 3: await get_tree().process_frame
+	for _query in 3: incomplete.get_property_list()
+	incomplete.free()
+	EditorInterface.edit_node(effect)
 	check(not effect.has_method("play_on"), "The editor API must not expose target overrides")
 	check(property_info(effect, &"override_children_targets").is_empty(), "Target propagation must not appear in the Inspector")
 	check(property_info(effect, &"trigger_signal").is_empty(), "The signal picker must not appear in the Inspector")
@@ -91,6 +122,65 @@ func _run() -> void:
 		check(property_info(custom, name).usage & PROPERTY_USAGE_EDITOR == 0, "A script must hide built-in animation fields even when kind is Property: " + name)
 		check(property_info(custom, name).usage & PROPERTY_USAGE_STORAGE != 0, "A script's hidden built-in fields must remain serializable: " + name)
 	custom.kind = custom_kind
+	var text := SpireRichTextLabel.new()
+	text.name = "CharacterText"
+	text.text = "ABC"
+	scene.add_child(text)
+	text.owner = scene
+	for _frame in 8: await get_tree().process_frame
+	check(scene_item(text) != null, "The Scene dock must display SpireRichTextLabel")
+	check(not scene_warnings(text).contains("automatic character"), "An unscripted label must not warn about _process")
+	for script_name in ["rich_text_label_process_override", "rich_text_label_process_inherited"]:
+		text.set_script(load("res://examples/tests/" + script_name + ".gd"))
+		for _frame in 8: await get_tree().process_frame
+		check(scene_warnings(text).contains("automatic character") and scene_warnings(text).contains("_process"), "The Scene dock must warn for direct and inherited _process overrides: " + script_name)
+	text.set_script(load("res://examples/tests/rich_text_label_no_process.gd"))
+	for _frame in 8: await get_tree().process_frame
+	check(not scene_warnings(text).contains("automatic character"), "A script without _process must clear the warning")
+	text.set_script(load("res://examples/tests/rich_text_label_process_override.gd"))
+	for _frame in 8: await get_tree().process_frame
+	check(scene_warnings(text).contains("automatic character"), "Reattaching an overriding script must restore the warning")
+	text.set_script(null)
+	for _frame in 8: await get_tree().process_frame
+	check(not scene_warnings(text).contains("automatic character"), "Removing the script must clear the warning")
+	var plain_text := RichTextLabel.new()
+	check(text.text == "ABC" and text.get_child_count(true) == plain_text.get_child_count(true), "Editor warning checks must not mutate text or add helper nodes")
+	plain_text.free()
+	var characters := TweenBlueprint.new()
+	characters.name = "Characters"
+	characters.kind = Spire.BLUEPRINT_KIND_CHARACTERS
+	text.add_child(characters)
+	characters.owner = scene
+	for _frame in 3: await get_tree().process_frame
+	check(characters.target == null and characters.get_resolved_target() == text, "Characters must support ancestor target fallback")
+	check(property_info(characters, &"end_value").type == TYPE_VECTOR2, "Offset characters must use the Vector2 editor")
+	check(characters.start_value == Vector2.ZERO and characters.end_value == Vector2.ZERO, "Character defaults must initialize without writing to the target")
+	characters.character_animation = Spire.CHARACTER_ANIMATION_FADE
+	for _frame in 3: await get_tree().process_frame
+	check(property_info(characters, &"end_value").type == TYPE_FLOAT and characters.end_value == 1.0, "Unedited defaults must follow a new character channel's type")
+	characters.end_value = 0.25
+	characters.character_animation = Spire.CHARACTER_ANIMATION_ROTATION
+	for _frame in 3: await get_tree().process_frame
+	check(characters.end_value == 0.25, "Changing channels must preserve explicitly authored incompatible values")
+	characters.end_value = Vector3(0, 0, TAU)
+	characters.start_value = Vector3.ZERO
+	characters.character_pivot = Vector2(12, -14)
+	characters.character_rotate_mode = Spire.ROTATE_MODE_FAST_BEYOND_360
+	characters.character_loops = 2
+	characters.character_loop_mode = Spire.LOOP_MODE_YOYO
+	for name in [&"character_animation", &"character_first", &"character_last", &"character_stagger", &"character_pivot", &"character_rotate_mode", &"character_loops", &"character_loop_mode", &"end_value", &"speed_or_duration"]:
+		check(property_info(characters, name).usage & PROPERTY_USAGE_EDITOR != 0, "Relevant character fields must be visible: " + name)
+		check(property_info(characters, name).usage & PROPERTY_USAGE_STORAGE != 0, "Character fields must remain serializable: " + name)
+	for name in [&"animated_property", &"lerp_mode", &"character_vibrato", &"character_elasticity", &"character_randomness"]:
+		check(property_info(characters, name).usage & PROPERTY_USAGE_EDITOR == 0, "Irrelevant character fields must be hidden: " + name)
+		check(property_info(characters, name).usage & PROPERTY_USAGE_STORAGE != 0, "Hidden settings must retain serialization: " + name)
+	characters.character_animation = Spire.CHARACTER_ANIMATION_SHAKE_ROTATION
+	check(property_info(characters, &"character_randomness").usage & PROPERTY_USAGE_EDITOR != 0, "Shake must expose randomness controls")
+	check(property_info(characters, &"character_elasticity").usage & PROPERTY_USAGE_EDITOR == 0, "Shake must hide punch controls")
+	characters.character_animation = Spire.CHARACTER_ANIMATION_ROTATION
+	EditorInterface.edit_node(characters)
+	for _frame in 3: await get_tree().process_frame
+	check(text.get_child_count() == 1 and text.text == "ABC", "Editor inspection must not add helper nodes or mutate text")
 	for kind in [Spire.BLUEPRINT_KIND_CHAIN_BLOCK, Spire.BLUEPRINT_KIND_PARALLEL_BLOCK]:
 		effect.kind = kind
 		check(property_info(effect, &"end_value").usage & PROPERTY_USAGE_EDITOR == 0, "Container fields must be hidden")
@@ -119,6 +209,9 @@ func _run() -> void:
 	check(restored_effect.start_enabled and restored_effect.start_value == Vector2(1, 2), "Save/reload must preserve explicit start configuration")
 	check(restored_effect.end_value == Vector2(8, 9), "Save/reload must preserve the endpoint")
 	check(restored_effect.target == restored, "Save/reload must preserve relative node references")
+	var restored_characters: TweenBlueprint = restored.get_node("CharacterText/Characters")
+	check(restored_characters.end_value.is_equal_approx(Vector3(0, 0, TAU)) and restored_characters.character_pivot == Vector2(12, -14), "Editor save/reload must preserve character values and pivots")
+	check(restored_characters.character_loops == 2 and restored_characters.character_loop_mode == Spire.LOOP_MODE_YOYO, "Editor save/reload must preserve character loop settings")
 	restored.free()
 	var original: Variant = effect.end_value
 	effect.animated_property = &"rotation"

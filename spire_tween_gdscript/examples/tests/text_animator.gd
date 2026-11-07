@@ -1,7 +1,7 @@
 extends TestBase
 
-func _label(text: String, bbcode: bool = false) -> RichTextLabel:
-	var n := RichTextLabel.new()
+func _label(text: String, bbcode: bool = false) -> SpireRichTextLabel:
+	var n := SpireRichTextLabel.new()
 	n.bbcode_enabled = bbcode
 	n.text = text
 	n.size = Vector2(500, 140)
@@ -33,7 +33,7 @@ func test_characters_translation() -> bool:
 	translation.add_message("SPIRE_CHAR_TRANSLATION", "[color=red]猫AB[/color]")
 	TranslationServer.add_translation(translation)
 	var n := _label("SPIRE_CHAR_TRANSLATION", true)
-	var a := SpireTextAnimator.attach(n)
+	var a := n
 	TranslationServer.set_locale("es")
 	for _i in 4:
 		await next_frame()
@@ -48,7 +48,7 @@ func test_characters_translation() -> bool:
 
 func test_characters_rotation() -> bool:
 	var n := _label("A")
-	var a := SpireTextAnimator.attach(n)
+	var a := n
 	var angle := TAU * 2 + 0.8
 	for mode in [Spire.ROTATE_MODE_FAST, Spire.ROTATE_MODE_FAST_BEYOND_360]:
 		a.reset()
@@ -68,7 +68,7 @@ func test_characters_rotation() -> bool:
 
 func test_characters_effect_refresh() -> bool:
 	var n := _label("A")
-	var a := SpireTextAnimator.attach(n)
+	var a := n
 	for blendable in [true, false]:
 		a.reset()
 		var t := _manual(a.punch_char_offset(0, Vector2(4, 0), 1, 4, 1, blendable))
@@ -86,7 +86,7 @@ func test_characters_effect_refresh() -> bool:
 
 func test_characters_automatic() -> bool:
 	var n := _label("A")
-	var a := SpireTextAnimator.attach(n)
+	var a := n
 	var t := a.offset_char(0, Vector2(8, 0), 0.05)
 	var events := [0, 0]
 	t.stopped.connect(func(): events[0] += 1)
@@ -107,24 +107,30 @@ func test_characters_automatic() -> bool:
 	n.free()
 	return true
 
-func test_characters_attach() -> bool:
+func test_characters_label() -> bool:
 	var n := _label("[b]AB[/b]")
-	var a := SpireTextAnimator.attach(n)
+	var a := n
 	var count := n.get_child_count()
 	assert_eq(count, 0)
-	assert_eq(SpireTextAnimator.attach(n), a)
-	assert_eq(n.get_child_count(), count)
+	assert_true(n is RichTextLabel)
+	assert_true(ClassDB.is_parent_class("SpireRichTextLabel", "RichTextLabel"))
+	assert_true(not ClassDB.class_exists("SpireTextAnimator"))
+	assert_true(not n.has_method("attach"))
+	assert_eq(n.process_mode, Node.PROCESS_MODE_INHERIT)
+	var plain := RichTextLabel.new()
+	assert_eq(n.get_child_count(true), plain.get_child_count(true))
+	plain.free()
 	assert_eq(n.text, "[b]AB[/b]")
 	assert_true(not n.bbcode_enabled)
 	assert_eq(a.get_character_count(), 9)
 	n.bbcode_enabled = true
 	assert_eq(a.get_character_count(), 2)
 	assert_eq(n.get_parsed_text(), "AB")
-	var copy := n.duplicate() as RichTextLabel
-	assert_true(copy != null, "Runtime helper must not block Node.duplicate")
+	var copy := n.duplicate() as SpireRichTextLabel
+	assert_true(copy != null, "Character state must not block Node.duplicate")
 	if copy != null:
 		add_child(copy)
-		var other := SpireTextAnimator.attach(copy)
+		var other := copy
 		a.set_char_offset(1, Vector2.ONE)
 		other.set_char_offset(1, Vector2(4, 0))
 		_v2(a.get_char_offset(1), Vector2.ONE)
@@ -133,18 +139,87 @@ func test_characters_attach() -> bool:
 	assert_true(a.is_valid_char(1))
 	assert_true(not a.is_valid_char(-1))
 	assert_true(not a.is_valid_char(2))
-	assert_eq(SpireTextAnimator.attach(null), null)
-	var orphan := SpireTextAnimator.new()
+	var orphan := SpireRichTextLabel.new()
 	assert_eq(orphan.get_character_count(), 0)
 	var invalid := orphan.offset_char(0, Vector2.ONE, 1)
 	assert_eq(invalid.get_state(), Spire.STATE_STOPPED)
+	orphan.text = "A"
+	assert_eq(orphan.get_character_count(), 1)
+	orphan.set_char_offset(0, Vector2(3, 4))
+	_v2(orphan.get_char_offset(0), Vector2(3, 4))
+	orphan.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
+	add_child(orphan)
+	assert_eq(orphan.process_mode, Node.PROCESS_MODE_WHEN_PAUSED)
+	orphan.process_mode = Node.PROCESS_MODE_INHERIT
+	var packed := PackedScene.new()
+	assert_eq(packed.pack(orphan), OK)
+	var restored := packed.instantiate() as SpireRichTextLabel
+	assert_true(restored != null)
+	if restored != null:
+		assert_eq(restored.text, "A")
+		assert_eq(restored.process_mode, Node.PROCESS_MODE_INHERIT)
+		assert_eq(restored.get_character_count(), 1)
+		_v2(restored.get_char_offset(0), Vector2.ZERO)
+		restored.free()
 	orphan.free()
+	var content := DoRichTextLabel.text(n, "Hello", 1.0)
+	content.set_process_mode(Spire.PROCESS_MODE_MANUAL)
+	content.force_complete()
+	assert_eq(n.text, "Hello")
+	assert_eq(n.get_character_count(), 5)
+	n.free()
+	return true
+
+func test_characters_process_mode_and_pause() -> bool:
+	var n := _label("A")
+	var tween := _manual(n.offset_char(0, Vector2(8, 0), 1))
+	tween.custom_step(0.25)
+	_v2(n.get_char_offset(0), Vector2(2, 0))
+	n.process_mode = Node.PROCESS_MODE_DISABLED
+	tween.custom_step(0.25)
+	_v2(n.get_char_offset(0), Vector2(2, 0))
+	_near(tween.get_total_elapsed_time(), 0.25)
+	n.process_mode = Node.PROCESS_MODE_INHERIT
+	var was_paused := get_tree().paused
+	get_tree().paused = true
+	tween.custom_step(0.25)
+	_v2(n.get_char_offset(0), Vector2(2, 0))
+	# Detect automatic refresh through the actual RichTextLabel parsing stack,
+	# without a character getter which would itself refresh the state.
+	n.text = "B"
+	n.append_text("SENTINEL")
+	for _frame in 3: await get_tree().process_frame
+	assert_eq(n.get_parsed_text(), "BSENTINEL")
+	get_tree().paused = false
+	for _frame in 3: await get_tree().process_frame
+	assert_eq(n.get_parsed_text(), "B")
+	tween.custom_step(0.25)
+	_v2(n.get_char_offset(0), Vector2(4, 0))
+	get_tree().paused = true
+	n.process_mode = Node.PROCESS_MODE_ALWAYS
+	tween.custom_step(0.25)
+	_v2(n.get_char_offset(0), Vector2(6, 0))
+	assert_eq(n.process_mode, Node.PROCESS_MODE_ALWAYS)
+	get_tree().paused = was_paused
+	n.free()
+	return true
+
+func test_characters_script_process_override() -> bool:
+	var n := _label("A")
+	n.set_script(load("res://examples/tests/rich_text_label_process_override.gd"))
+	n.text = "B"
+	n.append_text("SENTINEL")
+	for _frame in 3: await next_frame()
+	assert_eq(n.get_parsed_text(), "BSENTINEL")
+	n.set_script(load("res://examples/tests/rich_text_label_no_process.gd"))
+	for _frame in 3: await next_frame()
+	assert_eq(n.get_parsed_text(), "B")
 	n.free()
 	return true
 
 func test_characters_channels() -> bool:
 	var n := _label("ABC")
-	var a := SpireTextAnimator.attach(n)
+	var a := n
 	a.set_char_offset(0, Vector2(2, 4))
 	var offset := _manual(a.offset_char(0, Vector2(10, 12), 1))
 	var scale := _manual(a.scale_char(1, Vector2(3, 5), 1))
@@ -181,7 +256,7 @@ func test_characters_channels() -> bool:
 
 func test_characters_refresh() -> bool:
 	var n := _label("ABC")
-	var a := SpireTextAnimator.attach(n)
+	var a := n
 	var t := _manual(a.offset_char(2, Vector2(8, 0), 1))
 	t.custom_step(0.25)
 	_v2(a.get_char_offset(2), Vector2(2, 0))
@@ -211,7 +286,7 @@ func test_characters_refresh() -> bool:
 
 func test_characters_lifecycle() -> bool:
 	var n := _label("AB")
-	var a := SpireTextAnimator.attach(n)
+	var a := n
 	var t := _manual(a.offset_char(0, Vector2(8, 0), 1))
 	t.custom_step(0.25)
 	t.pause()
@@ -235,17 +310,16 @@ func test_characters_lifecycle() -> bool:
 	assert_true(not t.custom_step(1))
 	assert_eq(events, [1, 0])
 	n = _label("A")
-	a = SpireTextAnimator.attach(n)
+	a = n
 	t = _manual(a.fade_char(0, 0, 1))
-	a.free()
+	n.free()
 	assert_true(not t.custom_step(1))
 	assert_eq(t.get_state(), Spire.STATE_STOPPED)
-	n.free()
 	return true
 
 func test_characters_loops_sequence() -> bool:
 	var n := _label("A")
-	var a := SpireTextAnimator.attach(n)
+	var a := n
 	for mode in [Spire.LOOP_MODE_RESTART, Spire.LOOP_MODE_YOYO, Spire.LOOP_MODE_INCREMENTAL]:
 		a.reset()
 		var t := _manual(a.offset_char(0, Vector2(8, 0), 1))
@@ -268,7 +342,7 @@ func test_characters_loops_sequence() -> bool:
 
 func test_characters_effects() -> bool:
 	var n := _label("A")
-	var a := SpireTextAnimator.attach(n)
+	var a := n
 	var effects := [
 		_manual(a.punch_char_offset(0, Vector2(4, 0), 1, 4, 1)),
 		_manual(a.punch_char_scale(0, Vector2(0, 2), 1, 4, 1)),
@@ -304,7 +378,7 @@ func test_characters_effects() -> bool:
 
 func test_characters_invalid() -> bool:
 	var n := _label("A")
-	var a := SpireTextAnimator.attach(n)
+	var a := n
 	var t := _manual(a.offset_char(0, Vector2(NAN, 4), NAN))
 	_near(t.get_duration(), 1)
 	t.force_complete()
@@ -328,7 +402,7 @@ func test_characters_invalid() -> bool:
 
 func test_characters_render() -> bool:
 	var n := _label("[color=red]A[/color]B", true)
-	var a := SpireTextAnimator.attach(n)
+	var a := n
 	await n.draw
 	# Baseline is captured by the real RichTextEffect callback, not a synthetic call.
 	assert_eq(a.get_char_color(0), Color.RED)
@@ -360,7 +434,7 @@ func test_characters_render() -> bool:
 
 func test_characters_unicode_render() -> bool:
 	var n := _label("e\u0301אב")
-	var a := SpireTextAnimator.attach(n)
+	var a := n
 	assert_eq(a.get_character_count(), 4)
 	a.set_char_offset(1, Vector2(12, 3))
 	for _i in 4:
