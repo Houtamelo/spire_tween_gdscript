@@ -144,12 +144,13 @@ func test_remove_midway() -> bool:
 	assert_eq(shape.scale, grown_scale)
 	
 	await wait_seconds(1.5)
+	var removed_at := _time_since_start_seconds()
 	assert_true(seq.remove(second))
 	
-	await wait_finished(third, 4.5, "Third")
+	await wait_finished(third, removed_at + 2.0, "Third")
 	assert_eq(shape.scale, shrink_scale)
 	
-	await wait_finished(seq, 4.5, "Sequence")
+	await wait_finished(seq, removed_at + 2.0, "Sequence")
 	return true
 
 

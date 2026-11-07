@@ -46,7 +46,7 @@ func wait_seconds(seconds: float):
 
 func wait_loop_finished(tween, expected_end_time: float, tween_name: String = ""):
 	await tween.loop_finished
-	_assert_within_tolerance(_time_since_start_seconds() - expected_end_time)
+	_assert_event_time(expected_end_time)
 	
 	if tween_name.is_empty(): debug("Loop completed")
 	else: debug("Tween {0}: Loop completed".format([tween_name]))
@@ -54,10 +54,17 @@ func wait_loop_finished(tween, expected_end_time: float, tween_name: String = ""
 
 func wait_finished(tween, expected_end_time: float, tween_name: String = ""):
 	await tween.finished
-	_assert_within_tolerance(_time_since_start_seconds() - expected_end_time)
+	_assert_event_time(expected_end_time)
 	
 	if tween_name.is_empty(): debug("Finished")
 	else: debug("Tween {0}: Finished".format([tween_name]))
+
+
+func _assert_event_time(expected_end_time: float) -> void:
+	# Completion and observation are quantized to their processing clocks. Allow
+	# one actual idle/physics tick while retaining the existing precision floor.
+	var tick := maxf(get_process_delta_time(), get_physics_process_delta_time())
+	_assert_within_tolerance(_time_since_start_seconds() - expected_end_time, maxf(TIME_TOLERANCE, tick) + 0.000001)
 
 
 func debug(message: String):

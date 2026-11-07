@@ -17,12 +17,13 @@ func test_unregistered_does_not_affect_game() -> bool:
 	assert_true(!tween.is_registered())
 	
 	debug("Re-Registering")
+	var registered_at := _time_since_start_seconds()
 	tween.register()
 	assert_true(tween.is_registered())
 	debug("Is registered")
 	
-	await wait_loop_finished(tween, 7)
-	await wait_finished(tween, 7)
+	await wait_loop_finished(tween, registered_at + 5.0)
+	await wait_finished(tween, registered_at + 5.0)
 	
 	assert_eq(shape.scale, final_scale)
 	assert_true(tween.is_stopped())

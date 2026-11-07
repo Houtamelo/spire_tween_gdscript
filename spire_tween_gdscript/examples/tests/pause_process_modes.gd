@@ -97,12 +97,13 @@ func test_pause_mode_bound() -> bool:
 	assert_eq(sprite.scale, initial_value)
 	
 	debug("Setting sprite process mode to INHERIT")
+	var enabled_at := _time_since_start_seconds()
 	sprite.process_mode = Node.PROCESS_MODE_INHERIT
 	assert_eq(tween.get_total_elapsed_time(), 0)
 	assert_true(tween.is_playing())
 	assert_true(sprite.can_process())
 	assert_true(tween.is_registered())
-	await wait_finished(tween, 9)
+	await wait_finished(tween, enabled_at + 3.0)
 	assert_eq(sprite.scale, final_value)
 	return true
 
@@ -163,7 +164,7 @@ func test_pause_mode_bound_process_mode_physics() -> bool:
 	assert_true(tween.is_registered())
 	
 	#await next_frame()
-	await ensure_only_processing_at(sprite, tween, Process.Physics, 9)
+	await ensure_only_processing_at(sprite, tween, Process.Physics, 3.0)
 	
 	assert_eq(sprite.scale, final_value)
 	return true
@@ -173,8 +174,20 @@ func ensure_only_processing_at(
 	node: Node2D,
 	tween: SpirePropertyVec2,
 	process: Process,
-	expected_end_time: float
+	expected_duration: float
 ):
+	var started_at := _time_since_start_seconds()
+	var first_physics_frame := Engine.get_physics_frames()
+	# Physics time and the idle timer have independent phases. Measure completion
+	# on its processing clock rather than after the deferred phase probe resumes.
+	tween.finished.connect(func():
+		var elapsed := _time_since_start_seconds() - started_at
+		var tick := get_process_delta_time()
+		if process == Process.Physics:
+			tick = get_physics_process_delta_time()
+			elapsed = (Engine.get_physics_frames() - first_physics_frame) * tick
+		_assert_within_tolerance(elapsed - expected_duration, maxf(TIME_TOLERANCE, tick) + 0.000001)
+	, CONNECT_ONE_SHOT)
 	while true:
 		if tween.is_stopped(): break
 		
@@ -197,5 +210,3 @@ func ensure_only_processing_at(
 			assert_eq(curr_process, Process.None)
 			var frame_end_val := node.scale
 			assert_eq(frame_begin_val, frame_end_val)
-	
-	_assert_within_tolerance(_time_since_start_seconds() - expected_end_time)

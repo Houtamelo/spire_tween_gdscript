@@ -62,17 +62,21 @@ func test_sequence_respects_delay() -> bool:
 	
 	await wait_loop_finished(seq, 7, "Sequence")
 	assert_eq(shape.scale, initial_value)
+	# The next loop starts on a later tick; anchor its timings to the actual
+	# boundary rather than accumulating the first loop's quantization error.
+	var second_loop_started := _time_since_start_seconds()
 	
-	assert_true(seq.get_total_elapsed_time() >= 7.0)
+	var elapsed := seq.get_total_elapsed_time()
+	assert_true(elapsed >= 7.0 or is_equal_approx(elapsed, 7.0))
 	assert_true(seq.get_total_elapsed_time() <= 7.1)
 	
-	await wait_finished(first_tween, 9, "Grow")
+	await wait_finished(first_tween, second_loop_started + 2.0, "Grow")
 	assert_eq(shape.scale, final_value)
 	
-	await wait_finished(second_tween, 11, "Shrink")
+	await wait_finished(second_tween, second_loop_started + 4.0, "Shrink")
 	assert_eq(shape.scale, initial_value)
 	
-	await wait_finished(seq, 11, "Sequence")
+	await wait_finished(seq, second_loop_started + 4.0, "Sequence")
 	assert_eq(shape.scale, initial_value)
 	return true
 

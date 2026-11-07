@@ -1,11 +1,9 @@
 extends Node
 
+const Waits := preload("res://examples/tests/test_waits.gd")
+
 func run_test(method: Callable) -> bool:
 	return await method.call()
-
-func frames(count: int = 8) -> void:
-	for _frame in count:
-		await get_tree().process_frame
 
 func check(condition: bool, message: String) -> bool:
 	if not condition:
@@ -32,7 +30,7 @@ func test_initially_invalid_callables_across_clocks() -> bool:
 		for call in [Callable(), Callable(target, &"missing_method_validity_target")]:
 			var tween := Spire.do_call_float(call, 0.0, 2.0, 100.0).set_process_mode(mode)
 			var counts := events(tween)
-			await frames()
+			await Waits.manager_turns(get_tree())
 			ok = cancelled(tween, counts) and ok
 	return ok
 
@@ -44,7 +42,7 @@ func test_freed_node_target_during_processing() -> bool:
 		var tween := Spire.do_call_float(target.set_rotation, 0.0, 2.0, 100.0).set_process_mode(mode)
 		var counts := events(tween)
 		target.queue_free()
-		await frames()
+		await Waits.manager_turns(get_tree())
 		ok = check(not is_instance_valid(target), "Method target must really be freed") and ok
 		ok = check(not tween.get_callable().is_valid(), "Method callable must become invalid") and ok
 		ok = cancelled(tween, counts) and ok
@@ -62,7 +60,7 @@ func test_invalid_manual_step_keeps_owner_control() -> bool:
 		var counts := events(tween)
 		ok = check(not tween.custom_step(0.0), "Invalid custom_step must report no further lifetime") and ok
 		ok = check(tween.is_stopped() and counts == [0, 0], "Manual invalidation must stop silently") and ok
-		await frames()
+		await Waits.manager_turns(get_tree())
 		ok = check(tween.is_registered(), "Manual stepping must leave registration policy to its caller") and ok
 		ok = check(not tween.custom_step(1.0), "Repeated invalid step must stay stopped") and ok
 		tween.force_complete()
@@ -73,9 +71,9 @@ func test_invalid_manual_step_keeps_owner_control() -> bool:
 			tween.unregister()
 			ok = check(not tween.is_registered() and weak.get_ref() != null, "Unregistration must preserve the caller's handle") and ok
 		tween = null
-		await frames()
+		await Waits.manager_turns(get_tree())
 		ok = check(weak.get_ref() == null, "Dropping the last external handle must let the manager release it") and ok
-	await frames()
+	await Waits.manager_turns(get_tree())
 	return ok
 
 func test_invalid_force_complete_playing_and_paused() -> bool:
@@ -93,14 +91,14 @@ func test_invalid_force_complete_playing_and_paused() -> bool:
 			target.free()
 			tween.force_complete()
 			ok = check(tween.is_stopped() and counts == [0, 0], "Invalid forced completion must stop silently") and ok
-			await frames()
+			await Waits.manager_turns(get_tree())
 			ok = check(tween.is_registered(), "A retained stopped handle must preserve registration") and ok
 			tween.force_complete()
 			ok = check(counts == [0, 0], "Repeated invalid force_complete must stay silent") and ok
 			tween = null
-			await frames()
+			await Waits.manager_turns(get_tree())
 			ok = check(weak.get_ref() == null, "Manager must release the stopped tween when its owner drops it") and ok
-	await frames()
+	await Waits.manager_turns(get_tree())
 	return ok
 
 func test_invalid_custom_method_skips_lerper() -> bool:
@@ -120,7 +118,7 @@ func test_invalid_custom_method_skips_lerper() -> bool:
 		ok = check(tween.is_stopped() and tween.is_registered() and counts == [0, 0], "Custom method validation must stop silently without choosing registration policy") and ok
 		ok = check(lerp_calls[0] == 0, "An invalid target must skip its custom lerper") and ok
 		tween.unregister()
-	await frames()
+	await Waits.manager_turns(get_tree())
 	return ok
 
 func test_valid_completion_force_complete_and_replay() -> bool:
@@ -149,7 +147,7 @@ func test_valid_completion_force_complete_and_replay() -> bool:
 			tween.force_complete()
 		ok = check(tween.is_stopped() and samples.size() == 4 and is_equal_approx(samples[0], 1.0) and samples.slice(1) == [2.0, 2.0, 2.0] and counts == [3, 1], "Valid forced completion and paused replay must emit finished without inventing loop events") and ok
 		tween.unregister()
-	await frames()
+	await Waits.manager_turns(get_tree())
 	return ok
 
 func test_invalid_sequence_child_does_not_block() -> bool:
@@ -164,5 +162,5 @@ func test_invalid_sequence_child_does_not_block() -> bool:
 	var ok := cancelled(child, child_events)
 	ok = check(calls[0] == 1 and parent.is_stopped() and parent_events == [1, 1], "Sequence must complete after cancelling its invalid child") and ok
 	ok = check(not parent.remove(child), "Invalid child must leave the sequence") and ok
-	await frames()
+	await Waits.manager_turns(get_tree())
 	return ok

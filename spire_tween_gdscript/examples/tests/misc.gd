@@ -221,8 +221,9 @@ func test_force_complete() -> bool:
 	
 	shape.scale = Vector2.ONE
 	
+	var replay_started := _time_since_start_seconds()
 	tween.play()
-	await wait_finished(tween, 7)
+	await wait_finished(tween, replay_started + 5.0)
 	assert_eq(shape.scale, final_value)
 	return true
 
@@ -239,12 +240,13 @@ func test_dyn_target() -> bool:
 	
 	var wait_time := 3.0
 	await wait_seconds(wait_time)
-	var expected_scale := initial_scale.move_toward(dyn_target, speed * wait_time)
+	var expected_scale := initial_scale.move_toward(dyn_target, speed * tween.get_total_elapsed_time())
 	assert_le(shape.scale.distance_to(expected_scale), 0.01)
 	
+	var target_changed_at := _time_since_start_seconds()
 	dyn_target = Vector2.ONE
 	var expected_duration := shape.scale.distance_to(dyn_target) / speed
-	await wait_finished(tween, wait_time + expected_duration)
+	await wait_finished(tween, target_changed_at + expected_duration)
 	assert_eq(shape.scale, dyn_target)
 	
 	return true

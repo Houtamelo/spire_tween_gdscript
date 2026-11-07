@@ -1,5 +1,6 @@
 extends "res://examples/tests/test_base.gd"
 
+const Waits := preload("res://examples/tests/test_waits.gd")
 const KINDS := ["sequence", "property", "property_variant", "method", "method_variant", "delayed"]
 
 func make_tween(kind: String, node: Node2D = null) -> RefCounted:
@@ -114,8 +115,7 @@ func test_stop_manager_completion_and_cancellation() -> bool:
 		var completed := events_for(complete)
 		var invalid := Spire.do_call_float(Callable(), 0.0, 1.0, 100.0).set_process_mode(mode)
 		var cancelled := events_for(invalid)
-		for _frame in 8:
-			await get_tree().process_frame
+		await Waits.manager_turns(get_tree())
 		assert_eq(completed, ["loop", "stopped", "finished"])
 		assert_eq(cancelled, ["stopped"])
 		assert_true(not invalid.is_registered())

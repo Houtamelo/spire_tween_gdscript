@@ -96,10 +96,10 @@ func test_speed_based_plus_relative() -> bool:
 	assert_true(speed_tween.is_playing())
 	assert_true(speed_tween.is_speed_based())
 	
+	var relative_finished_at := _time_since_start_seconds()
 	var distance := ball.global_position.distance_to(final_pos)
 	var expected_time := distance / speed
-	await speed_tween.finished
-	assert_le(abs(expected_time + 3 - timer), TIME_TOLERANCE * 2)
+	await wait_finished(speed_tween, relative_finished_at + expected_time)
 	assert_eq(ball.global_position, final_pos)
 	
 	return true

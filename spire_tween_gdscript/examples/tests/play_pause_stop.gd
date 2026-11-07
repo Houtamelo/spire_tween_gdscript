@@ -30,10 +30,11 @@ func test_pause_play_works() -> bool:
 	assert_eq(ball.scale, initial_scale)
 	
 	# Assert that a paused tween can be properly resumed.
+	var resumed_at := _time_since_start_seconds()
 	tween.play()
 	# `loop_finished` should be emitted before `finished`
-	await wait_loop_finished(tween, 5)
-	await wait_finished(tween, 5)
+	await wait_loop_finished(tween, resumed_at + 2.0)
+	await wait_finished(tween, resumed_at + 2.0)
 	assert_eq(ball.scale, final_scale)
 	assert_true(tween.is_stopped())
 	
@@ -58,10 +59,11 @@ func test_play_stop_play_works() -> bool:
 	await wait_seconds(3)
 	
 	# Assert that playing again is fine
+	var replay_started := _time_since_start_seconds()
 	tween.play()
 	
-	await wait_loop_finished(tween, 7)
-	await wait_finished(tween, 7)
+	await wait_loop_finished(tween, replay_started + 2.0)
+	await wait_finished(tween, replay_started + 2.0)
 	
 	assert_eq(ball.scale, final_scale)
 	assert_true(tween.is_stopped())

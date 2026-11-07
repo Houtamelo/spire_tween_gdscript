@@ -27,7 +27,10 @@ func test_invalid_enum() -> bool:
 	
 	await get_tree().process_frame
 	await get_tree().process_frame
-	assert_true(tween.get_animation_position() < 0.02)
+	assert_eq(tween.get_loops_finished(), 1)
+	assert_true(tween.is_playing())
+	var elapsed_in_second_loop := tween.get_total_elapsed_time() - tween.get_duration()
+	assert_true(is_equal_approx(tween.get_animation_position(), elapsed_in_second_loop))
 	
 	await wait_finished(tween, 10)
 	assert_true(sprite.scale.distance_to(final_scale) < 0.001)
