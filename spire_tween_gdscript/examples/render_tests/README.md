@@ -3,7 +3,7 @@
 `text_characters.tscn` exercises all eleven per-character constructors through
 the real GDScript bridge. It renders eight labeled panels: staggered offset/fade,
 BBCode color, X/Y/Z rotation, scale, punch and shake on all three channels,
-sequence composition, and cancellation after a text rebuild removes an index.
+sequence composition, and continued playback after a text rebuild removes an index.
 
 On Linux x86_64, install Godot 4.4+, Xvfb, FFmpeg, ripgrep and util-linux. Build
 the current addon with the bridge enabled, then run from the repository root:

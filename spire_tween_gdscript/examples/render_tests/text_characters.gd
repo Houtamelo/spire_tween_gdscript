@@ -23,8 +23,8 @@ var _phase: Label
 var _lifetime_status: Label
 var _progress: ColorRect
 var _finished_count := 0
-var _cancel_events := [0, 0]
-var _cancelled: SpireMethodFloat
+var _rebuild_events := [0, 0]
+var _rebuild_tween: SpireMethodFloat
 var _output := ""
 var _captured_frames := 0
 
@@ -86,7 +86,7 @@ func _ready() -> void:
 		"size": [SIZE.x, SIZE.y], "engine": Engine.get_version_info().string,
 		"display": DisplayServer.get_name(), "renderer": RenderingServer.get_video_adapter_name(),
 		"distinct_text_images": changes, "completed_tweens": _finished_count,
-		"missing_index_stopped": _cancel_events[0], "missing_index_finished": _cancel_events[1],
+		"missing_index_stopped": _rebuild_events[0], "missing_index_finished": _rebuild_events[1],
 		"failures": _failures,
 	}
 	var report_file := FileAccess.open(_output.path_join("../result.json"), FileAccess.WRITE)
@@ -97,7 +97,7 @@ func _ready() -> void:
 	for tween in _active:
 		tween.stop()
 	_active.clear()
-	_cancelled = null
+	_rebuild_tween = null
 	print("RENDER_TEST_RESULT name=text_characters frames=%d panels=8 samples=%d failed=%d fps=%d" % [
 		_captured_frames, _regions.size(), _failures.size(), FPS])
 	get_tree().quit(0 if _failures.is_empty() else 1)
@@ -200,7 +200,7 @@ func _build_showcase() -> void:
 			_pixel_states[key] = {}
 	_card("composition", "07  COMPOSE", "Offset + rotation + scale + color / joined in a sequence", Rect2i(32, 564, 592, 186), LILAC)
 	_characters("composition", "SPIRE TWEEN", Vector2(105, 650), 510, 45, LILAC)
-	_card("refresh", "08  TEXT REBUILD", "Numeric index disappears → stop", Rect2i(640, 564, 288, 186), GOLD)
+	_card("refresh", "08  TEXT REBUILD", "Numeric index disappears → ignored", Rect2i(640, 564, 288, 186), GOLD)
 	_characters("refresh", "LONGER", Vector2(686, 640), 230, 31, GOLD)
 	_lifetime_status = _text("index 5 is animating", Vector2(658, 712), 12, MUTED)
 	_rect(Vector2(32, 776), Vector2(896, 2), Color("29354e"))
@@ -242,7 +242,7 @@ func _schedule() -> void:
 	_at(65, _compose)
 	_at(82, _start_lifetime)
 	_at(112, _shorten_text)
-	_at(114, _check_cancellation)
+	_at(114, _check_missing_index)
 	_at(125, func(): _phase.text = "03  /  REBUILD")
 	_at(133, _effects)
 	_at(169, _restore_text)
@@ -295,9 +295,9 @@ func _compose() -> void:
 
 
 func _start_lifetime() -> void:
-	_cancelled = _track(_animators.refresh.offset_char(5, Vector2(0, -24), 3.0), Spire.EASE_LINEAR)
-	_cancelled.stopped.connect(func(): _cancel_events[0] += 1)
-	_cancelled.finished.connect(func(): _cancel_events[1] += 1)
+	_rebuild_tween = _track(_animators.refresh.offset_char(5, Vector2(0, -24), 3.0), Spire.EASE_LINEAR)
+	_rebuild_tween.stopped.connect(func(): _rebuild_events[0] += 1)
+	_rebuild_tween.finished.connect(func(): _rebuild_events[1] += 1)
 
 
 func _shorten_text() -> void:
@@ -305,12 +305,12 @@ func _shorten_text() -> void:
 	_lifetime_status.text = "text changed  /  rebuilding…"
 
 
-func _check_cancellation() -> void:
-	_check(_cancelled.get_state() == Spire.STATE_STOPPED, "Vanished character must stop its tween.")
-	_check(_cancel_events == [1, 0], "Vanished character must emit stopped once and never finished.")
+func _check_missing_index() -> void:
+	_check(_rebuild_tween.get_state() == Spire.STATE_PLAYING, "Vanished character must preserve playback.")
+	_check(_rebuild_events == [0, 0], "Missing indices must not stop or finish playback early.")
 	_check(_animators.refresh.get_character_count() == 3, "Refresh must update the parsed character count.")
 	_check(_animators.refresh.get_char_offset(0).is_zero_approx(), "Refresh must reset surviving character transforms.")
-	_lifetime_status.text = "stopped: 1   /   finished: 0"
+	_lifetime_status.text = "playing  /  missing index ignored"
 	_lifetime_status.add_theme_color_override("font_color", MINT)
 
 
@@ -341,7 +341,7 @@ func _reset_all() -> void:
 
 func _validate_final_state() -> void:
 	_check(_finished_count > 100, "Showcase tweens must successfully complete.")
-	_check(_cancel_events == [1, 0], "The cancelled tween must never finish after its index reappears.")
+	_check(_rebuild_events == [1, 1], "The tween must complete normally despite its missing index.")
 	for animator in _animators.values():
 		for index in animator.get_character_count():
 			_check(animator.get_char_offset(index).is_zero_approx(), "reset() must clear offsets.")

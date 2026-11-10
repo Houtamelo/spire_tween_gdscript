@@ -1,7 +1,9 @@
 # Animate individual SpireRichTextLabel characters
 
 `SpireRichTextLabel` extends Godot's `RichTextLabel` with animation of individual
-logical character indices. Rust callers use its shared `TextAnimator` handle.
+logical character indices. Rust callers use the `SpireDoRichTextCharacters` extension trait on the label or its `Gd` handle.
+For reusable looping effects selected with BBCode tags, see
+[rich-text effect presets](rich_text_effect_presets.md).
 They support fade, color, offset, three-axis rotation,
 scale, and punch/shake of offset, rotation and scale. Each constructor uses an
 ordinary Spire method-progress tween, including easing, delays, loops, manual
@@ -41,8 +43,7 @@ use godot::prelude::*;
 use spire_tween::prelude::*;
 
 // label: Gd<SpireRichTextLabel>
-let animator = TextAnimator::new(label.clone());
-animator
+label
     .do_offset_char(0, Vector2::new(0.0, -20.0), 0.4)
     .with_ease(EaseKind::Basic(Ease::OutCubic))
     .register();
@@ -50,8 +51,9 @@ animator
 
 Native constructors return unregistered `SpireTween<LerpMethodData<f64>>`
 builders. GDScript constructors register and return `SpireMethodFloat`. That
-float is tween progress, not the character's current property value. Use the
-animator getters below to inspect character state.
+float is tween progress, not the character's current property value. Native state
+accessors are associated functions, for example
+`SpireRichTextLabel::get_char_offset(label.clone(), 0)`.
 
 ## Node type and ownership
 
@@ -60,10 +62,12 @@ in the Scene dock and choose **Change Type → SpireRichTextLabel**. Existing
 `RichTextLabel` properties, themes, layout and ordinary `DoRichTextLabel` tweens
 remain available. GDScript inheritors use `extends SpireRichTextLabel`.
 
-The label owns its character state directly and creates no helper nodes.
+The label owns an internal `SpireCharRenderer` Resource containing its character
+state and creates no helper nodes.
 `Node.duplicate()` and scene instantiation create fresh, independent animation
-state; active tweens remain bound to the original label. Character methods also
-initialize state on first use before the label enters the tree.
+state; active tweens remain bound to the original label. Character buffers are populated at runtime ready, during automatic processing,
+or by an explicit `refresh()`. Accessing the lazy effect Resource alone does not
+populate those buffers.
 The label maintains a `RichTextEffect` scope through `push_customfx()`;
 callers do not add effect tags. The label's `text` and `bbcode_enabled` properties
 remain unchanged, including literal brackets when BBCode is disabled. Godot
@@ -71,16 +75,17 @@ continues to handle wrapping, fonts, BBCode and bidirectional layout.
 
 Supply content through `RichTextLabel.text`, including ordinary Spire text
 tweens. Manual `push_*`, `add_text`, `append_text` and `clear` formatting-stack
-edits are not tracked; the animator manages that stack. Rebuilding can also reset
+edits are not tracked; the label manages that stack. Rebuilding can also reset
 selection and scroll state, as a normal text assignment does.
 
-Freeing the label invalidates its character tweens. Dropping a Rust handle
-preserves the label's character state and deformations. The effect's state
-reference is weak, so the state/effect ownership does not form a reference cycle.
+Freeing the label invalidates its character tweens through their linked callables.
+The label owns its rendering effect; tweens update that effect through the label.
+Preset registration and change subscriptions also belong to the label and are
+released when it is freed.
 
 Godot continuously processes custom rich-text effects while their scope remains
-in the label, including between tweens. This integration also checks source
-changes once per frame. Character buffers are reused across refreshes; the
+in the label, including between tweens. The label checks source changes once per
+processing frame. Character buffers are reused across refreshes; the
 production draw callback does not allocate a per-glyph buffer.
 
 `process_mode` stays under user control. Normal bound tweens pause when the label
@@ -90,8 +95,9 @@ Automatic text refresh follows the label's processing settings too.
 The editor warns if an attached script, including a script ancestor, implements
 `_process()`: this overrides the native automatic-refresh callback.
 `super._process()` cannot invoke the Rust implementation. Put custom per-frame
-logic on another node. The editor never initializes animation state or changes
-the rendering stack merely by inspecting the label.
+logic on another node. Labels with assigned effect presets render those loops in
+the editor. Labels without presets do not initialize animation state or change
+the rendering stack merely through inspection.
 
 ## Indices, refresh and reset
 
@@ -109,17 +115,32 @@ new grapheme-segmentation algorithm.
 
 | Operation | Behavior |
 |---|---|
-| Change text, BBCode setting or translation | Rebuild character data and reset all deformations. Automatically detected. |
+| Change text, BBCode setting or translation | Detected during the label's next processing callback; rebuild character data and reset deformations then. |
 | Resize or reflow | Preserve character state. Godot supplies the new layout. |
 | `refresh()` | Explicitly rebuild and reset, even if the source is unchanged. |
 | `reset()` | Reset deformations without rebuilding text. |
 
+Character getters, setters, tween updates, and rendering observers use the last
+refreshed character buffer. They do not check the text for changes or rebuild
+the rendering stack. Call `refresh()` before these operations when current state
+is needed synchronously, including before the label enters the tree, immediately
+after editing text, and before manual stepping or forced completion.
+
+```gdscript
+label.text = "New text"
+label.refresh()
+label.set_char_offset(0, Vector2(0, -20))
+```
+
+`reset()` only resets existing character data; it does not refresh changed text.
+
 Refresh/reset do not cancel or restart active tweens. Surviving numeric indices
 continue at their existing playback positions, even if they now contain different
-characters. An index which no longer exists cancels on the tween's next processing
-step or forced completion: `stopped` fires, `finished` does not. A paused tween
-is checked when processing resumes. Invalid constructor indices warn and return
-stopped tweens; they are never clamped or redirected to another character.
+characters. Writes to an index which no longer exists are ignored while the
+tween's clock continues. It still completes normally and emits `finished`; if the same numeric
+index reappears before completion, writes resume. Invalid constructor indices
+also produce ordinary playing tweens whose missing-target writes do nothing.
+Indices are never clamped or redirected to another character.
 
 Punch/shake discard their previous contribution bookkeeping after a reset so
 they cannot subtract an offset which the reset has already removed. Their clocks
@@ -215,7 +236,7 @@ Independently authored against the public
 and Godot's [RichTextEffect](https://docs.godotengine.org/en/4.4/classes/class_richtexteffect.html),
 [CharFXTransform](https://docs.godotengine.org/en/4.4/classes/class_charfxtransform.html)
 and [RichTextLabel](https://docs.godotengine.org/en/4.4/classes/class_richtextlabel.html)
-APIs. No DOTween source was copied. Missing-index cancellation and the documented
+APIs. No DOTween source was copied. Missing-index no-op behavior and the documented
 Godot rendering boundaries are explicit Spire contracts.
 
 Real-engine fixtures are in `spire_tween_rust/src/tests/text_animator.rs` and

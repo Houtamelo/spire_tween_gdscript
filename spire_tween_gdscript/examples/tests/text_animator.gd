@@ -75,6 +75,7 @@ func test_characters_effect_refresh() -> bool:
 		t.custom_step(0.1)
 		_v2(a.get_char_offset(0), Vector2(4, 0))
 		n.text = "B" if blendable else "C"
+		n.refresh()
 		_v2(a.get_char_offset(0), Vector2.ZERO)
 		t.custom_step(0.2)
 		_v2(a.get_char_offset(0), Vector2(-3, 0))
@@ -124,6 +125,7 @@ func test_characters_label() -> bool:
 	assert_true(not n.bbcode_enabled)
 	assert_eq(a.get_character_count(), 9)
 	n.bbcode_enabled = true
+	n.refresh()
 	assert_eq(a.get_character_count(), 2)
 	assert_eq(n.get_parsed_text(), "AB")
 	var copy := n.duplicate() as SpireRichTextLabel
@@ -142,8 +144,10 @@ func test_characters_label() -> bool:
 	var orphan := SpireRichTextLabel.new()
 	assert_eq(orphan.get_character_count(), 0)
 	var invalid := orphan.offset_char(0, Vector2.ONE, 1)
-	assert_eq(invalid.get_state(), Spire.STATE_STOPPED)
+	assert_eq(invalid.get_state(), Spire.STATE_PLAYING)
+	invalid.force_complete()
 	orphan.text = "A"
+	orphan.refresh()
 	assert_eq(orphan.get_character_count(), 1)
 	orphan.set_char_offset(0, Vector2(3, 4))
 	_v2(orphan.get_char_offset(0), Vector2(3, 4))
@@ -158,6 +162,7 @@ func test_characters_label() -> bool:
 	if restored != null:
 		assert_eq(restored.text, "A")
 		assert_eq(restored.process_mode, Node.PROCESS_MODE_INHERIT)
+		restored.refresh()
 		assert_eq(restored.get_character_count(), 1)
 		_v2(restored.get_char_offset(0), Vector2.ZERO)
 		restored.free()
@@ -166,6 +171,7 @@ func test_characters_label() -> bool:
 	content.set_process_mode(Spire.PROCESS_MODE_MANUAL)
 	content.force_complete()
 	assert_eq(n.text, "Hello")
+	n.refresh()
 	assert_eq(n.get_character_count(), 5)
 	n.free()
 	return true
@@ -184,8 +190,7 @@ func test_characters_process_mode_and_pause() -> bool:
 	get_tree().paused = true
 	tween.custom_step(0.25)
 	_v2(n.get_char_offset(0), Vector2(2, 0))
-	# Detect automatic refresh through the actual RichTextLabel parsing stack,
-	# without a character getter which would itself refresh the state.
+	# Detect automatic refresh through the actual RichTextLabel parsing stack.
 	n.text = "B"
 	n.append_text("SENTINEL")
 	for _frame in 3: await get_tree().process_frame
@@ -261,6 +266,7 @@ func test_characters_refresh() -> bool:
 	t.custom_step(0.25)
 	_v2(a.get_char_offset(2), Vector2(2, 0))
 	n.text = "12345"
+	n.refresh()
 	_v2(a.get_char_offset(2), Vector2.ZERO)
 	t.custom_step(0.25)
 	_v2(a.get_char_offset(2), Vector2(4, 0))
@@ -272,15 +278,22 @@ func test_characters_refresh() -> bool:
 	t.finished.connect(func(): events[1] += 1)
 	t.loop_finished.connect(func(): events[2] += 1)
 	n.text = "A"
-	assert_true(not t.custom_step(1))
-	assert_eq(events, [1, 0, 0])
+	n.refresh()
+	assert_true(t.custom_step(0.25))
+	assert_eq(events, [0, 0, 0])
+	_near(t.get_total_elapsed_time(), 0.75)
+	_v2(a.get_char_offset(0), Vector2.ZERO)
+	n.text = "ABC"
+	n.refresh()
+	assert_true(not t.custom_step(0.25))
+	assert_eq(events, [1, 1, 1])
+	_v2(a.get_char_offset(2), Vector2(8, 0))
 	assert_eq(t.get_state(), Spire.STATE_STOPPED)
-	var invalid := _manual(a.offset_char(2, Vector2.ONE, 1))
-	assert_eq(invalid.get_state(), Spire.STATE_STOPPED)
-	invalid.play()
+	var invalid := _manual(a.offset_char(-1, Vector2.ONE, 1))
+	assert_eq(invalid.get_state(), Spire.STATE_PLAYING)
 	invalid.force_complete()
 	assert_eq(invalid.get_state(), Spire.STATE_STOPPED)
-	assert_eq(n.text, "A")
+	assert_eq(n.text, "ABC")
 	n.free()
 	return true
 
@@ -393,11 +406,93 @@ func test_characters_invalid() -> bool:
 	_v3(a.get_char_rotation(0), Vector3.ZERO)
 	t = _manual(a.shake_char_offset(0, 1, Vector2.ONE, 0, NAN, false))
 	n.text = ""
+	n.refresh()
 	t.force_complete()
 	assert_eq(t.get_state(), Spire.STATE_STOPPED)
 	t = _manual(a.fade_char(-1, 0, 1))
-	assert_eq(t.get_state(), Spire.STATE_STOPPED)
+	assert_eq(t.get_state(), Spire.STATE_PLAYING)
+	t.force_complete()
 	n.free()
+	return true
+
+func test_characters_color_input_normalization() -> bool:
+	var n := _label("A")
+	var cases := [
+		[Color(2, -1, 0.5, -2), Color(2, -1, 0.5, 0)],
+		[Color(0.25, 0.5, 0.75, 3), Color(0.25, 0.5, 0.75, 1)],
+		[Color(NAN, INF, -INF, NAN), Color.WHITE],
+	]
+	for data in cases:
+		n.set_char_color(0, data[0])
+		assert_true(n.get_char_color(0).is_equal_approx(data[1]))
+		n.set_char_color(0, Color.BLACK)
+		var tween := _manual(n.color_char(0, data[0], 1))
+		tween.force_complete()
+		assert_true(n.get_char_color(0).is_equal_approx(data[1]))
+	n.free()
+	return true
+
+func test_characters_missing_indices_keep_playing() -> bool:
+	var n := _label("ABC")
+	var tweens := [
+		n.offset_char(2, Vector2(8, 0), 1), n.scale_char(2, Vector2(2, 2), 1),
+		n.color_char(2, Color.RED, 1), n.fade_char(2, 0.25, 1),
+		n.rotate_char(2, Vector3(0, 0, 1), 1),
+		n.punch_char_offset(2, Vector2.ONE, 1), n.punch_char_rotation(2, Vector3.ONE, 1), n.punch_char_scale(2, Vector2.ONE, 1),
+		n.shake_char_offset(2, 1, Vector2.ONE), n.shake_char_rotation(2, 1, Vector3.ONE), n.shake_char_scale(2, 1, Vector2.ONE),
+	]
+	for tween: SpireMethodFloat in tweens:
+		_manual(tween)
+		tween.custom_step(0.1)
+	n.text = "A"
+	n.refresh()
+	for tween: SpireMethodFloat in tweens:
+		var finished := [0]
+		tween.finished.connect(func(): finished[0] += 1)
+		assert_true(tween.custom_step(0.2))
+		assert_eq(tween.get_state(), Spire.STATE_PLAYING)
+		_near(tween.get_total_elapsed_time(), 0.3)
+		tween.force_complete()
+		assert_eq(finished, [1])
+	_v2(n.get_char_offset(0), Vector2.ZERO)
+	_v2(n.get_char_scale(0), Vector2.ONE)
+	assert_eq(n.get_char_color(0), Color.WHITE)
+	n.free()
+	return true
+
+func test_characters_explicit_refresh() -> bool:
+	var n := SpireRichTextLabel.new()
+	n.text = "A"
+	assert_true(n.get_character_count() == 0, "Reading state must not initialize character data before ready")
+	assert_true(not n.is_valid_char(0))
+	_v2(n.get_char_offset(0), Vector2.ZERO)
+	n.refresh()
+	assert_eq(n.get_character_count(), 1)
+	n.set_char_offset(0, Vector2(3, 4))
+	n.text = "BC"
+	n.append_text("SENTINEL")
+	assert_true(n.get_character_count() == 1, "Getters must read the last refreshed state")
+	_v2(n.get_char_offset(0), Vector2(3, 4))
+	assert_true(not n.is_valid_char(1))
+	n.set_char_offset(0, Vector2(7, 8))
+	var tween := _manual(n.offset_char(0, Vector2(12, 13), 1))
+	tween.force_complete()
+	_v2(n.get_char_offset(0), Vector2(12, 13))
+	assert_true(n.get_parsed_text() == "BCSENTINEL", "Setters and forced tween callbacks must not rebuild the stack")
+	n.reset()
+	assert_eq(n.get_character_count(), 1)
+	assert_true(n.get_parsed_text() == "BCSENTINEL", "reset() must not refresh changed text")
+	n.refresh()
+	assert_eq(n.get_character_count(), 2)
+	assert_eq(n.get_parsed_text(), "BC")
+	_v2(n.get_char_offset(0), Vector2.ZERO)
+	n.free()
+	var automatic := _label("A")
+	automatic.text = "BC"
+	assert_eq(automatic.get_character_count(), 1)
+	for _frame in 4: await next_frame()
+	assert_true(automatic.get_character_count() == 2, "Automatic processing must still refresh text changes")
+	automatic.free()
 	return true
 
 func test_characters_render() -> bool:

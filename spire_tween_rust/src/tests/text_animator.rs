@@ -38,6 +38,53 @@ fn label(parent: &mut Node2D, text: &str, bbcode: bool) -> Gd<SpireRichTextLabel
 }
 
 impl MiscTests {
+    pub(super) fn test_text_presets_rust_api(&mut self) -> PinnedTestTask {
+        let n = label(&mut self.base_mut(), "[bob]A[/bob]", true);
+        let plain = label(&mut self.base_mut(), "A", false);
+        let mut offset = SpireTextOffsetEffect::new_gd();
+        offset.bind_mut().set_from(Vector2::new(12.0, 0.0));
+        offset.bind_mut().set_to(Vector2::new(12.0, 0.0));
+        let mut preset = SpireRichTextEffectPreset::new_gd();
+        preset.bind_mut().set_bbcode("bob".into());
+        let mut entries = VarArray::new();
+        entries.push(&offset.to_variant());
+        preset.bind_mut().set_effects(entries);
+        {
+            let mut label = n.clone();
+            let mut state = label.bind_mut();
+            state.effect_presets.push(None::<&Gd<SpireRichTextEffectPreset>>);
+            state.effect_presets.push(Some(&preset));
+            assert!(state.effect_presets.at(0).is_none());
+            assert!(state.effect_presets.at(1).is_some());
+        }
+        let animator = n.clone();
+        let baseline = plain.clone();
+        Box::pin(async move {
+            for _ in 0..4 {
+                next_frame().await;
+            }
+            assert_eq!(n.get_parsed_text(), GString::from("A"));
+            assert_eq!(n.get_effects().len(), 1);
+            assert_eq!(n.get_effects().at(0).to::<Gd<Resource>>().get_class(), GString::from("SpireRichTextEffect"));
+            let before = SpireRichTextLabel::sample_for_test(animator.clone(), 0).unwrap().0;
+            let origin = SpireRichTextLabel::sample_for_test(baseline.clone(), 0)
+                .unwrap()
+                .0
+                .origin;
+            v2(before.origin - origin, Vector2::new(12.0, 0.0));
+            let mut tween = manual(animator.do_offset_char(0, Vector2::new(3.0, 0.0), 1.0));
+            tween.force_complete();
+            for _ in 0..4 {
+                next_frame().await;
+            }
+            let after = SpireRichTextLabel::sample_for_test(animator.clone(), 0).unwrap().0;
+            v2(after.origin - origin, Vector2::new(15.0, 0.0));
+            v2(SpireRichTextLabel::get_char_offset(animator.clone(), 0), Vector2::new(3.0, 0.0));
+            n.free();
+            plain.free();
+        })
+    }
+
     pub(super) fn test_characters_translation(&mut self) -> PinnedTestTask {
         let mut server = TranslationServer::singleton();
         let locale = server.get_locale();
@@ -47,16 +94,16 @@ impl MiscTests {
         translation.add_message("SPIRE_CHAR_TRANSLATION", "[color=red]猫AB[/color]");
         server.add_translation(&translation);
         let n = label(&mut self.base_mut(), "SPIRE_CHAR_TRANSLATION", true);
-        let a = TextAnimator::new(n.clone());
+        let a = n.clone();
         server.set_locale("es");
         Box::pin(async move {
             for _ in 0..4 {
                 next_frame().await;
             }
-            let count = a.character_count();
+            let count = SpireRichTextLabel::get_character_count(a.clone());
             let source = n.get_text();
             let parsed = n.get_parsed_text();
-            let sample = a.render_sample_for_test(0);
+            let sample = SpireRichTextLabel::sample_for_test(a.clone(), 0);
             server.set_locale(&locale);
             server.remove_translation(&translation);
             n.free();
@@ -69,18 +116,21 @@ impl MiscTests {
 
     pub(super) fn test_characters_rotation(&mut self) -> PinnedTestTask {
         let n = label(&mut self.base_mut(), "A", false);
-        let a = TextAnimator::new(n.clone());
+        let a = n.clone();
         let angle = std::f32::consts::TAU * 2.0 + 0.8;
         for mode in [RotateMode::Fast, RotateMode::FastBeyond360] {
-            a.reset();
+            SpireRichTextLabel::reset(a.clone());
             let t = manual(a.do_rotate_char(0, Vector3::new(0.0, 0.0, angle), 1.0, mode));
             step(&t, 0.5);
-            near(a.get_char_rotation(0).z as f64, if mode == RotateMode::Fast { 0.4 } else { angle as f64 / 2.0 });
+            near(
+                SpireRichTextLabel::get_char_rotation(a.clone(), 0).z as f64,
+                if mode == RotateMode::Fast { 0.4 } else { angle as f64 / 2.0 },
+            );
         }
         let from = Vector3::new(0.2, 0.3, 0.4);
         let by = Vector3::new(0.3, -0.4, 0.0);
         for mode in [RotateMode::WorldAxisAdd, RotateMode::LocalAxisAdd] {
-            a.set_char_rotation(0, from);
+            SpireRichTextLabel::set_char_rotation(a.clone(), 0, from);
             let mut t = manual(a.do_rotate_char(0, by, 1.0, mode));
             t.force_complete();
             let expected = if mode == RotateMode::WorldAxisAdd {
@@ -88,7 +138,12 @@ impl MiscTests {
             } else {
                 Quaternion::from_euler(from) * Quaternion::from_euler(by)
             };
-            assert!(Quaternion::from_euler(a.get_char_rotation(0)).dot(expected).abs() > 0.99999);
+            assert!(
+                Quaternion::from_euler(SpireRichTextLabel::get_char_rotation(a.clone(), 0))
+                    .dot(expected)
+                    .abs()
+                    > 0.99999
+            );
         }
         n.free();
         Box::pin(async {})
@@ -96,19 +151,20 @@ impl MiscTests {
 
     pub(super) fn test_characters_effect_refresh(&mut self) -> PinnedTestTask {
         let mut n = label(&mut self.base_mut(), "A", false);
-        let a = TextAnimator::new(n.clone());
+        let a = n.clone();
         for blendable in [true, false] {
-            a.reset();
+            SpireRichTextLabel::reset(a.clone());
             let mut t = manual(a.do_punch_char_offset(0, Vector2::new(4.0, 0.0), 1.0, 4, 1.0, blendable));
             step(&t, 0.1);
-            v2(a.get_char_offset(0), Vector2::new(4.0, 0.0));
+            v2(SpireRichTextLabel::get_char_offset(a.clone(), 0), Vector2::new(4.0, 0.0));
             n.set_text(if blendable { "B" } else { "C" });
-            v2(a.get_char_offset(0), Vector2::ZERO);
+            SpireRichTextLabel::refresh(n.clone());
+            v2(SpireRichTextLabel::get_char_offset(a.clone(), 0), Vector2::ZERO);
             step(&t, 0.2);
-            v2(a.get_char_offset(0), Vector2::new(-3.0, 0.0));
-            a.reset();
+            v2(SpireRichTextLabel::get_char_offset(a.clone(), 0), Vector2::new(-3.0, 0.0));
+            SpireRichTextLabel::reset(a.clone());
             t.force_complete();
-            v2(a.get_char_offset(0), Vector2::ZERO);
+            v2(SpireRichTextLabel::get_char_offset(a.clone(), 0), Vector2::ZERO);
         }
         n.free();
         Box::pin(async {})
@@ -116,7 +172,7 @@ impl MiscTests {
 
     pub(super) fn test_characters_automatic(&mut self) -> PinnedTestTask {
         let mut n = label(&mut self.base_mut(), "A", false);
-        let a = TextAnimator::new(n.clone());
+        let a = n.clone();
         let mut t = a.do_offset_char(0, Vector2::new(8.0, 0.0), 0.05).register();
         let events = RcPtr::new([0, 0]);
         t.stopped_connect(
@@ -141,25 +197,24 @@ impl MiscTests {
                 }
             }
             assert_eq!(*events, [1, 1]);
-            v2(a.get_char_offset(0), Vector2::new(8.0, 0.0));
+            v2(SpireRichTextLabel::get_char_offset(a.clone(), 0), Vector2::new(8.0, 0.0));
             n.set_text("B");
             for _ in 0..4 {
                 next_frame().await;
             }
             // The sample must already exist: a getter must not be the action
             // that discovers the edit, resets state and installs the new scope.
-            let sample = a
-                .render_sample_for_test(0)
+            let sample = SpireRichTextLabel::sample_for_test(a.clone(), 0)
                 .expect("label must maintain the effect without live tweens");
             v2(sample.0.a, Vector2::RIGHT);
-            v2(a.get_char_offset(0), Vector2::ZERO);
+            v2(SpireRichTextLabel::get_char_offset(a.clone(), 0), Vector2::ZERO);
             n.free();
         })
     }
 
     pub(super) fn test_characters_label(&mut self) -> PinnedTestTask {
         let mut n = label(&mut self.base_mut(), "[b]AB[/b]", false);
-        let a = TextAnimator::new(n.clone());
+        let a = n.clone();
         let children = n.get_child_count();
         assert_eq!(children, 0, "character animation must not add child nodes");
         let plain = RichTextLabel::new_alloc();
@@ -169,89 +224,126 @@ impl MiscTests {
         );
         plain.free();
         assert_eq!(n.get_process_mode(), godot::classes::node::ProcessMode::INHERIT);
-        let b = TextAnimator::new(n.clone());
+        let b = n.clone();
         assert_eq!(n.get_child_count(), children);
         assert_eq!(n.get_text(), GString::from("[b]AB[/b]"));
         assert!(!n.is_using_bbcode());
-        assert_eq!(a.character_count(), 9);
+        assert_eq!(SpireRichTextLabel::get_character_count(a.clone()), 9);
         n.set_use_bbcode(true);
-        assert_eq!(a.character_count(), 2);
+        SpireRichTextLabel::refresh(n.clone());
+        assert_eq!(SpireRichTextLabel::get_character_count(a.clone()), 2);
         assert_eq!(n.get_parsed_text(), GString::from("AB"));
-        a.set_char_offset(1, Vector2::ONE);
-        v2(b.get_char_offset(1), Vector2::ONE);
+        SpireRichTextLabel::set_char_offset(a.clone(), 1, Vector2::ONE);
+        v2(SpireRichTextLabel::get_char_offset(b.clone(), 1), Vector2::ONE);
         let copy = n
             .duplicate()
             .expect("character state must not block Node::duplicate")
             .cast::<SpireRichTextLabel>();
         self.base_mut().add_child(&copy);
-        let other = TextAnimator::new(copy.clone());
-        other.set_char_offset(1, Vector2::new(4.0, 0.0));
-        v2(a.get_char_offset(1), Vector2::ONE);
-        v2(other.get_char_offset(1), Vector2::new(4.0, 0.0));
+        let other = copy.clone();
+        SpireRichTextLabel::set_char_offset(other.clone(), 1, Vector2::new(4.0, 0.0));
+        v2(SpireRichTextLabel::get_char_offset(a.clone(), 1), Vector2::ONE);
+        v2(SpireRichTextLabel::get_char_offset(other.clone(), 1), Vector2::new(4.0, 0.0));
         copy.free();
-        assert!(!a.is_valid_char(-1));
-        assert!(!a.is_valid_char(2));
+        assert!(!SpireRichTextLabel::is_valid_char(a.clone(), -1));
+        assert!(!SpireRichTextLabel::is_valid_char(a.clone(), 2));
+        // Both trait receivers build label-linked callables without reborrowing userdata.
+        SpireRichTextLabel::set_char_offset(n.clone(), 1, Vector2::ZERO);
+        let mut from_ref = manual(n.bind().do_offset_char(1, Vector2::new(6.0, 0.0), 1.0));
+        assert_eq!(from_ref.get_callable().object_id(), Some(n.instance_id()));
+        step(&from_ref, 0.5);
+        v2(SpireRichTextLabel::get_char_offset(n.clone(), 1), Vector2::new(3.0, 0.0));
+        from_ref.force_complete();
+        let builders = {
+            let state = n.bind_mut();
+            [
+                state.do_offset_char(99, Vector2::ONE, 1.0),
+                state.do_scale_char(99, Vector2::ONE, 1.0),
+                state.do_color_char(99, Color::RED, 1.0),
+                state.do_fade_char(99, 0.0, 1.0),
+                state.do_rotate_char(99, Vector3::ONE, 1.0, RotateMode::Fast),
+                state.do_punch_char_offset(99, Vector2::ONE, 1.0, 4, 1.0, true),
+                state.do_punch_char_rotation(99, Vector3::ONE, 1.0, 4, 1.0, true),
+                state.do_punch_char_scale(99, Vector2::ONE, 1.0, 4, 1.0, true),
+                state.do_shake_char_offset(99, 1.0, Vector2::ONE, 4, 90.0, true, ShakeRandomnessMode::Full, true),
+                state.do_shake_char_rotation(99, 1.0, Vector3::ONE, 4, 90.0, true, ShakeRandomnessMode::Full, true),
+                state.do_shake_char_scale(99, 1.0, Vector2::ONE, 4, 90.0, true, ShakeRandomnessMode::Full, true),
+            ]
+        };
+        for builder in builders {
+            assert_eq!(builder.get_callable().object_id(), Some(n.instance_id()));
+            assert!(builder.get_owner().is_some());
+            let mut tween = manual(builder);
+            step(&tween, 0.25);
+            assert_eq!(tween.get_state(), TweenState::Playing);
+            tween.force_complete();
+        }
         n.free();
-        assert_eq!(a.character_count(), 0);
+        assert!(!a.is_instance_valid());
+        assert!(!b.is_instance_valid());
         Box::pin(async {})
     }
 
     pub(super) fn test_characters_channels(&mut self) -> PinnedTestTask {
         let n = label(&mut self.base_mut(), "ABC", false);
-        let a = TextAnimator::new(n.clone());
-        a.set_char_offset(0, Vector2::new(2.0, 4.0));
+        let a = n.clone();
+        SpireRichTextLabel::set_char_offset(a.clone(), 0, Vector2::new(2.0, 4.0));
         let mut offset = manual(a.do_offset_char(0, Vector2::new(10.0, 12.0), 1.0));
         let mut scale = manual(a.do_scale_char(1, Vector2::new(3.0, 5.0), 1.0));
-        a.set_char_color(2, Color::from_rgba(1.0, 0.0, 0.0, 0.8));
+        SpireRichTextLabel::set_char_color(a.clone(), 2, Color::from_rgba(1.0, 0.0, 0.0, 0.8));
         let mut color = manual(a.do_color_char(2, Color::from_rgba(0.0, 0.0, 1.0, 0.4), 1.0));
         for t in [&offset, &scale, &color] {
             step(t, 0.5);
         }
-        v2(a.get_char_offset(0), Vector2::new(6.0, 8.0));
-        v2(a.get_char_scale(1), Vector2::new(2.0, 3.0));
-        near(a.get_char_color(2).r as f64, 0.5);
-        near(a.get_char_alpha(2), 0.6);
+        v2(SpireRichTextLabel::get_char_offset(a.clone(), 0), Vector2::new(6.0, 8.0));
+        v2(SpireRichTextLabel::get_char_scale(a.clone(), 1), Vector2::new(2.0, 3.0));
+        near(SpireRichTextLabel::get_char_color(a.clone(), 2).r as f64, 0.5);
+        near(SpireRichTextLabel::get_char_alpha(a.clone(), 2), 0.6);
         let mut fade = manual(a.do_fade_char(2, 0.0, 1.0));
         step(&fade, 0.5);
-        near(a.get_char_alpha(2), 0.3);
-        near(a.get_char_color(2).r as f64, 0.5);
+        near(SpireRichTextLabel::get_char_alpha(a.clone(), 2), 0.3);
+        near(SpireRichTextLabel::get_char_color(a.clone(), 2).r as f64, 0.5);
         for t in [&mut offset, &mut scale, &mut color, &mut fade] {
             t.force_complete();
         }
-        v2(a.get_char_offset(0), Vector2::new(10.0, 12.0));
-        v2(a.get_char_scale(1), Vector2::new(3.0, 5.0));
-        near(a.get_char_alpha(2), 0.0);
-        a.set_char_alpha(2, 1.0);
+        v2(SpireRichTextLabel::get_char_offset(a.clone(), 0), Vector2::new(10.0, 12.0));
+        v2(SpireRichTextLabel::get_char_scale(a.clone(), 1), Vector2::new(3.0, 5.0));
+        near(SpireRichTextLabel::get_char_alpha(a.clone(), 2), 0.0);
+        SpireRichTextLabel::set_char_alpha(a.clone(), 2, 1.0);
         let mut overshoot = manual(a.do_fade_char(2, 0.0, 1.0));
         overshoot.set_ease(overshoot_ease());
         step(&overshoot, 0.5);
-        assert!(a.get_char_alpha(2) < 0.0, "valid easing overshoot must not be treated as invalid input");
+        assert!(
+            SpireRichTextLabel::get_char_alpha(a.clone(), 2) < 0.0,
+            "valid easing overshoot must not be treated as invalid input"
+        );
         overshoot.force_complete();
-        near(a.get_char_alpha(2), 0.0);
-        a.set_char_color(2, Color::WHITE);
+        near(SpireRichTextLabel::get_char_alpha(a.clone(), 2), 0.0);
+        SpireRichTextLabel::set_char_color(a.clone(), 2, Color::WHITE);
         let mut overshoot = manual(a.do_color_char(2, Color::from_rgba(0.0, 0.0, 1.0, 0.0), 1.0));
         overshoot.set_ease(overshoot_ease());
         step(&overshoot, 0.5);
-        assert!(a.get_char_alpha(2) < 0.0);
+        assert!(SpireRichTextLabel::get_char_alpha(a.clone(), 2) < 0.0);
         overshoot.force_complete();
-        near(a.get_char_alpha(2), 0.0);
+        near(SpireRichTextLabel::get_char_alpha(a.clone(), 2), 0.0);
         n.free();
         Box::pin(async {})
     }
 
     pub(super) fn test_characters_refresh(&mut self) -> PinnedTestTask {
         let mut n = label(&mut self.base_mut(), "ABC", false);
-        let a = TextAnimator::new(n.clone());
+        let a = n.clone();
         let mut t = manual(a.do_offset_char(2, Vector2::new(8.0, 0.0), 1.0));
         step(&t, 0.25);
-        v2(a.get_char_offset(2), Vector2::new(2.0, 0.0));
+        v2(SpireRichTextLabel::get_char_offset(a.clone(), 2), Vector2::new(2.0, 0.0));
         n.set_text("12345");
-        v2(a.get_char_offset(2), Vector2::ZERO);
+        SpireRichTextLabel::refresh(n.clone());
+        v2(SpireRichTextLabel::get_char_offset(a.clone(), 2), Vector2::ZERO);
         step(&t, 0.25);
-        v2(a.get_char_offset(2), Vector2::new(4.0, 0.0));
+        v2(SpireRichTextLabel::get_char_offset(a.clone(), 2), Vector2::new(4.0, 0.0));
         near(t.get_total_elapsed_time(), 0.5);
         n.set_size(Vector2::new(100.0, 100.0));
-        v2(a.get_char_offset(2), Vector2::new(4.0, 0.0));
+        v2(SpireRichTextLabel::get_char_offset(a.clone(), 2), Vector2::new(4.0, 0.0));
         let events = RcPtr::new([0, 0, 0]);
         t.stopped_connect(
             {
@@ -275,38 +367,74 @@ impl MiscTests {
             SpireFlags::empty(),
         );
         n.set_text("A");
-        assert!(matches!(t.custom_step(1.0, false), TweenStepResult::Stepped(AdvanceTimeResult::ShouldDespawn)));
-        assert_eq!(*events, [1, 0, 0]);
+        SpireRichTextLabel::refresh(n.clone());
+        assert!(matches!(t.custom_step(0.25, false), TweenStepResult::Stepped(AdvanceTimeResult::Playing)));
+        assert_eq!(*events, [0, 0, 0]);
+        near(t.get_total_elapsed_time(), 0.75);
+        v2(SpireRichTextLabel::get_char_offset(a.clone(), 0), Vector2::ZERO);
+        n.set_text("ABC");
+        SpireRichTextLabel::refresh(n.clone());
+        step(&t, 0.25);
+        assert_eq!(*events, [1, 1, 1]);
+        v2(SpireRichTextLabel::get_char_offset(a.clone(), 2), Vector2::new(8.0, 0.0));
         assert_eq!(t.get_state(), TweenState::Stopped);
-        let mut invalid = manual(a.do_offset_char(2, Vector2::ONE, 1.0));
-        assert_eq!(invalid.get_state(), TweenState::Stopped);
-        invalid.play();
+        let mut invalid = manual(a.do_offset_char(-1, Vector2::ONE, 1.0));
+        assert_eq!(invalid.get_state(), TweenState::Playing);
         invalid.force_complete();
         assert_eq!(invalid.get_state(), TweenState::Stopped);
-        assert_eq!(n.get_text(), GString::from("A"));
+        assert_eq!(n.get_text(), GString::from("ABC"));
+        n.free();
+        Box::pin(async {})
+    }
+
+    pub(super) fn test_characters_explicit_refresh(&mut self) -> PinnedTestTask {
+        let mut n = SpireRichTextLabel::new_alloc();
+        n.set_text("A");
+        assert_eq!(SpireRichTextLabel::get_character_count(n.clone()), 0);
+        assert!(!SpireRichTextLabel::is_valid_char(n.clone(), 0));
+        SpireRichTextLabel::refresh(n.clone());
+        assert_eq!(SpireRichTextLabel::get_character_count(n.clone()), 1);
+        SpireRichTextLabel::set_char_offset(n.clone(), 0, Vector2::new(3.0, 4.0));
+        n.set_text("BC");
+        n.append_text("SENTINEL");
+        let epoch = n.bind().char_renderer.bind().epoch;
+        assert_eq!(SpireRichTextLabel::get_character_count(n.clone()), 1);
+        v2(SpireRichTextLabel::get_char_offset(n.clone(), 0), Vector2::new(3.0, 4.0));
+        let mut tween = manual(n.do_offset_char(0, Vector2::new(8.0, 9.0), 1.0));
+        tween.force_complete();
+        assert_eq!(n.bind().char_renderer.bind().epoch, epoch);
+        assert_eq!(n.get_parsed_text(), GString::from("BCSENTINEL"));
+        v2(SpireRichTextLabel::get_char_offset(n.clone(), 0), Vector2::new(8.0, 9.0));
+        SpireRichTextLabel::reset(n.clone());
+        assert_eq!(SpireRichTextLabel::get_character_count(n.clone()), 1);
+        assert_eq!(n.get_parsed_text(), GString::from("BCSENTINEL"));
+        SpireRichTextLabel::refresh(n.clone());
+        assert_eq!(SpireRichTextLabel::get_character_count(n.clone()), 2);
+        assert_eq!(n.get_parsed_text(), GString::from("BC"));
+        v2(SpireRichTextLabel::get_char_offset(n.clone(), 0), Vector2::ZERO);
         n.free();
         Box::pin(async {})
     }
 
     pub(super) fn test_characters_lifecycle(&mut self) -> PinnedTestTask {
         let n = label(&mut self.base_mut(), "AB", false);
-        let a = TextAnimator::new(n.clone());
+        let a = n.clone();
         let mut t = manual(a.do_offset_char(0, Vector2::new(8.0, 0.0), 1.0));
         step(&t, 0.25);
         t.pause();
         step(&t, 0.5);
-        v2(a.get_char_offset(0), Vector2::new(2.0, 0.0));
+        v2(SpireRichTextLabel::get_char_offset(a.clone(), 0), Vector2::new(2.0, 0.0));
         t.play();
         step(&t, 0.25);
         t.stop();
         t.force_complete();
-        v2(a.get_char_offset(0), Vector2::new(4.0, 0.0));
+        v2(SpireRichTextLabel::get_char_offset(a.clone(), 0), Vector2::new(4.0, 0.0));
         t.play();
         step(&t, 0.25);
-        a.reset();
-        v2(a.get_char_offset(0), Vector2::ZERO);
+        SpireRichTextLabel::reset(a.clone());
+        v2(SpireRichTextLabel::get_char_offset(a.clone(), 0), Vector2::ZERO);
         step(&t, 0.25);
-        v2(a.get_char_offset(0), Vector2::new(4.0, 0.0));
+        v2(SpireRichTextLabel::get_char_offset(a.clone(), 0), Vector2::new(4.0, 0.0));
         let events = RcPtr::new([0, 0]);
         t.stopped_connect(
             {
@@ -327,7 +455,7 @@ impl MiscTests {
         assert_eq!(t.get_state(), TweenState::Stopped);
         assert_eq!(*events, [1, 0]);
         let n = label(&mut self.base_mut(), "A", false);
-        let a = TextAnimator::new(n.clone());
+        let a = n.clone();
         let t = manual(a.do_fade_char(0, 0.0, 1.0));
         n.free();
         step(&t, 1.0);
@@ -337,9 +465,9 @@ impl MiscTests {
 
     pub(super) fn test_characters_loops_sequence(&mut self) -> PinnedTestTask {
         let n = label(&mut self.base_mut(), "A", false);
-        let a = TextAnimator::new(n.clone());
+        let a = n.clone();
         for mode in [LoopMode::Restart, LoopMode::Yoyo, LoopMode::Incremental] {
-            a.reset();
+            SpireRichTextLabel::reset(a.clone());
             let mut t = manual(a.do_offset_char(0, Vector2::new(8.0, 0.0), 1.0).with_loops(2, mode));
             step(&t, 1.0);
             step(&t, 0.25);
@@ -348,10 +476,10 @@ impl MiscTests {
                 LoopMode::Yoyo => 6.0,
                 LoopMode::Incremental => 10.0,
             };
-            near(a.get_char_offset(0).x as f64, x);
+            near(SpireRichTextLabel::get_char_offset(a.clone(), 0).x as f64, x);
             t.stop();
         }
-        a.reset();
+        SpireRichTextLabel::reset(a.clone());
         let mut child = a
             .do_offset_char(0, Vector2::new(8.0, 0.0), 1.0)
             .with_ease(EaseKind::Basic(Ease::Linear));
@@ -362,14 +490,14 @@ impl MiscTests {
         sequence.set_default_ease(Ease::Linear);
         let seq = TweenPtr::new(sequence);
         let _ = seq.custom_step(0.75, false);
-        near(a.get_char_offset(0).x as f64, 10.0);
+        near(SpireRichTextLabel::get_char_offset(a.clone(), 0).x as f64, 10.0);
         n.free();
         Box::pin(async {})
     }
 
     pub(super) fn test_characters_effects(&mut self) -> PinnedTestTask {
         let n = label(&mut self.base_mut(), "A", false);
-        let a = TextAnimator::new(n.clone());
+        let a = n.clone();
         let mut effects = [
             manual(a.do_punch_char_offset(0, Vector2::new(4.0, 0.0), 1.0, 4, 1.0, true)),
             manual(a.do_punch_char_scale(0, Vector2::new(0.0, 2.0), 1.0, 4, 1.0, true)),
@@ -378,15 +506,15 @@ impl MiscTests {
         for t in &effects {
             step(t, 0.1);
         }
-        v2(a.get_char_offset(0), Vector2::new(4.0, 0.0));
-        v2(a.get_char_scale(0), Vector2::new(1.0, 3.0));
-        v3(a.get_char_rotation(0), Vector3::new(0.3, 0.0, 0.0));
+        v2(SpireRichTextLabel::get_char_offset(a.clone(), 0), Vector2::new(4.0, 0.0));
+        v2(SpireRichTextLabel::get_char_scale(a.clone(), 0), Vector2::new(1.0, 3.0));
+        v3(SpireRichTextLabel::get_char_rotation(a.clone(), 0), Vector3::new(0.3, 0.0, 0.0));
         for t in &mut effects {
             t.force_complete();
         }
-        v2(a.get_char_offset(0), Vector2::ZERO);
-        v2(a.get_char_scale(0), Vector2::ONE);
-        v3(a.get_char_rotation(0), Vector3::ZERO);
+        v2(SpireRichTextLabel::get_char_offset(a.clone(), 0), Vector2::ZERO);
+        v2(SpireRichTextLabel::get_char_scale(a.clone(), 0), Vector2::ONE);
+        v3(SpireRichTextLabel::get_char_rotation(a.clone(), 0), Vector3::ZERO);
         let mut shakes = [
             manual(a.do_shake_char_offset(
                 0,
@@ -422,105 +550,110 @@ impl MiscTests {
         for t in &shakes {
             step(t, 0.125);
         }
-        assert!(a.get_char_offset(0).length() > 0.00001);
-        assert!((a.get_char_scale(0) - Vector2::ONE).length() > 0.00001);
-        assert!(a.get_char_rotation(0).length() > 0.00001);
+        assert!(SpireRichTextLabel::get_char_offset(a.clone(), 0).length() > 0.00001);
+        assert!((SpireRichTextLabel::get_char_scale(a.clone(), 0) - Vector2::ONE).length() > 0.00001);
+        assert!(SpireRichTextLabel::get_char_rotation(a.clone(), 0).length() > 0.00001);
         for t in &mut shakes {
             t.force_complete();
         }
-        v2(a.get_char_offset(0), Vector2::ZERO);
-        v2(a.get_char_scale(0), Vector2::ONE);
-        v3(a.get_char_rotation(0), Vector3::ZERO);
+        v2(SpireRichTextLabel::get_char_offset(a.clone(), 0), Vector2::ZERO);
+        v2(SpireRichTextLabel::get_char_scale(a.clone(), 0), Vector2::ONE);
+        v3(SpireRichTextLabel::get_char_rotation(a.clone(), 0), Vector3::ZERO);
         n.free();
         Box::pin(async {})
     }
 
     pub(super) fn test_characters_invalid(&mut self) -> PinnedTestTask {
         let mut n = label(&mut self.base_mut(), "A", false);
-        let a = TextAnimator::new(n.clone());
+        let a = n.clone();
         let mut t = manual(a.do_offset_char(0, Vector2::new(real::NAN, 4.0), f64::NAN));
         near(t.get_duration(), 1.0);
         t.force_complete();
-        v2(a.get_char_offset(0), Vector2::new(0.0, 4.0));
-        a.set_char_alpha(0, 3.0);
-        near(a.get_char_alpha(0), 1.0);
-        a.set_char_offset(-1, Vector2::ONE);
-        v2(a.get_char_offset(-1), Vector2::ZERO);
-        v2(a.get_char_scale(2), Vector2::ONE);
-        v2(a.get_char_offset(0), Vector2::new(0.0, 4.0));
-        a.set_char_rotation(0, Vector3::new(real::NAN, 0.0, 0.0));
-        v3(a.get_char_rotation(0), Vector3::ZERO);
+        v2(SpireRichTextLabel::get_char_offset(a.clone(), 0), Vector2::new(0.0, 4.0));
+        SpireRichTextLabel::set_char_alpha(a.clone(), 0, 3.0);
+        near(SpireRichTextLabel::get_char_alpha(a.clone(), 0), 1.0);
+        SpireRichTextLabel::set_char_offset(a.clone(), -1, Vector2::ONE);
+        v2(SpireRichTextLabel::get_char_offset(a.clone(), -1), Vector2::ZERO);
+        v2(SpireRichTextLabel::get_char_scale(a.clone(), 2), Vector2::ONE);
+        v2(SpireRichTextLabel::get_char_offset(a.clone(), 0), Vector2::new(0.0, 4.0));
+        SpireRichTextLabel::set_char_rotation(a.clone(), 0, Vector3::new(real::NAN, 0.0, 0.0));
+        v3(SpireRichTextLabel::get_char_rotation(a.clone(), 0), Vector3::ZERO);
         let mut t =
             manual(a.do_shake_char_offset(0, 1.0, Vector2::ONE, 0, real::NAN, false, ShakeRandomnessMode::Full, true));
         n.set_text("");
+        SpireRichTextLabel::refresh(n.clone());
         t.force_complete();
         assert_eq!(t.get_state(), TweenState::Stopped);
-        let t = manual(a.do_fade_char(-1, 0.0, 1.0));
-        assert_eq!(t.get_state(), TweenState::Stopped);
+        let mut t = manual(a.do_fade_char(-1, 0.0, 1.0));
+        assert_eq!(t.get_state(), TweenState::Playing);
+        t.force_complete();
         n.free();
         Box::pin(async {})
     }
 
     pub(super) fn test_characters_render(&mut self) -> PinnedTestTask {
         let n = label(&mut self.base_mut(), "[color=red]A[/color]B", true);
-        let a = TextAnimator::new(n.clone());
+        let a = n.clone();
         Box::pin(async move {
             for _ in 0..4 {
                 next_frame().await;
             }
-            let original = a
-                .render_sample_for_test(0)
-                .expect("engine must invoke the real RichTextEffect");
+            let original =
+                SpireRichTextLabel::sample_for_test(a.clone(), 0).expect("engine must invoke the real RichTextEffect");
             near(original.1.r as f64, 1.0);
             near(original.1.g as f64, 0.0);
-            near(a.get_char_color(0).r as f64, 1.0);
-            a.set_char_offset(0, Vector2::new(10.0, 20.0));
-            a.set_char_scale(0, Vector2::new(2.0, 3.0));
-            a.set_char_rotation(0, Vector3::new(0.0, std::f32::consts::FRAC_PI_3, 0.0));
-            a.set_char_color(0, Color::BLUE);
-            a.set_char_alpha(0, 0.25);
+            near(SpireRichTextLabel::get_char_color(a.clone(), 0).r as f64, 1.0);
+            SpireRichTextLabel::set_char_offset(a.clone(), 0, Vector2::new(10.0, 20.0));
+            SpireRichTextLabel::set_char_scale(a.clone(), 0, Vector2::new(2.0, 3.0));
+            SpireRichTextLabel::set_char_rotation(a.clone(), 0, Vector3::new(0.0, std::f32::consts::FRAC_PI_3, 0.0));
+            SpireRichTextLabel::set_char_color(a.clone(), 0, Color::BLUE);
+            SpireRichTextLabel::set_char_alpha(a.clone(), 0, 0.25);
             for _ in 0..3 {
                 next_frame().await;
             }
-            let sample = a.render_sample_for_test(0).unwrap();
+            let sample = SpireRichTextLabel::sample_for_test(a.clone(), 0).unwrap();
             v2(sample.0.a, Vector2::RIGHT);
             v2(sample.0.b, Vector2::DOWN * 3.0);
             v2(sample.0.origin - original.0.origin, Vector2::new(10.0, 20.0));
             near(sample.1.b as f64, 1.0);
             near(sample.1.a as f64, 0.25);
-            let other = a.render_sample_for_test(1).unwrap();
+            let other = SpireRichTextLabel::sample_for_test(a.clone(), 1).unwrap();
             v2(other.0.a, Vector2::RIGHT);
             v2(other.0.b, Vector2::DOWN);
-            a.reset();
+            SpireRichTextLabel::reset(a.clone());
             for _ in 0..3 {
                 next_frame().await;
             }
-            let reset = a.render_sample_for_test(0).unwrap();
+            let reset = SpireRichTextLabel::sample_for_test(a.clone(), 0).unwrap();
             v2(reset.0.a, Vector2::RIGHT);
             v2(reset.0.origin, original.0.origin);
             near(reset.1.r as f64, 1.0);
-            a.set_char_pivot(0, Vector2::new(10.0, -6.0));
-            a.set_char_rotation(0, Vector3::new(std::f32::consts::FRAC_PI_3, 0.0, 0.0));
+            SpireRichTextLabel::set_char_pivot(a.clone(), 0, Vector2::new(10.0, -6.0));
+            SpireRichTextLabel::set_char_rotation(a.clone(), 0, Vector3::new(std::f32::consts::FRAC_PI_3, 0.0, 0.0));
             for _ in 0..3 {
                 next_frame().await;
             }
-            let tilted = a.render_sample_for_test(0).unwrap().0;
+            let tilted = SpireRichTextLabel::sample_for_test(a.clone(), 0).unwrap().0;
             v2(tilted.a, Vector2::RIGHT);
             v2(tilted.b, Vector2::DOWN * 0.5);
             v2(tilted.origin - original.0.origin, Vector2::new(0.0, -3.0));
-            a.set_char_pivot(0, Vector2::ZERO);
-            a.set_char_rotation(0, Vector3::new(std::f32::consts::FRAC_PI_3, std::f32::consts::FRAC_PI_3, 0.0));
+            SpireRichTextLabel::set_char_pivot(a.clone(), 0, Vector2::ZERO);
+            SpireRichTextLabel::set_char_rotation(
+                a.clone(),
+                0,
+                Vector3::new(std::f32::consts::FRAC_PI_3, std::f32::consts::FRAC_PI_3, 0.0),
+            );
             for _ in 0..3 {
                 next_frame().await;
             }
-            let combined = a.render_sample_for_test(0).unwrap().0;
+            let combined = SpireRichTextLabel::sample_for_test(a.clone(), 0).unwrap().0;
             v2(combined.a, Vector2::new(0.5, 0.0));
             v2(combined.b, Vector2::new(0.75, 0.5));
-            a.set_char_rotation(0, Vector3::new(0.0, 0.0, std::f32::consts::FRAC_PI_2));
+            SpireRichTextLabel::set_char_rotation(a.clone(), 0, Vector3::new(0.0, 0.0, std::f32::consts::FRAC_PI_2));
             for _ in 0..3 {
                 next_frame().await;
             }
-            let rotated = a.render_sample_for_test(0).unwrap().0;
+            let rotated = SpireRichTextLabel::sample_for_test(a.clone(), 0).unwrap().0;
             v2(rotated.a, Vector2::DOWN);
             v2(rotated.b, Vector2::LEFT);
             n.free();
@@ -529,20 +662,20 @@ impl MiscTests {
 
     pub(super) fn test_characters_unicode_render(&mut self) -> PinnedTestTask {
         let n = label(&mut self.base_mut(), "e\u{301}אב", false);
-        let a = TextAnimator::new(n.clone());
-        assert_eq!(a.character_count(), 4);
-        a.set_char_offset(1, Vector2::new(12.0, 3.0));
+        let a = n.clone();
+        assert_eq!(SpireRichTextLabel::get_character_count(a.clone()), 4);
+        SpireRichTextLabel::set_char_offset(a.clone(), 1, Vector2::new(12.0, 3.0));
         Box::pin(async move {
             for _ in 0..4 {
                 next_frame().await;
             }
-            assert!(a.render_sample_for_test(0).is_some());
-            v2(a.get_char_offset(0), Vector2::new(12.0, 3.0));
-            v2(a.get_char_offset(1), Vector2::new(12.0, 3.0));
-            a.set_char_scale(0, Vector2::splat(2.0));
-            v2(a.get_char_scale(1), Vector2::splat(2.0));
-            assert!(a.is_valid_char(2));
-            assert!(a.render_sample_for_test(2).is_some());
+            assert!(SpireRichTextLabel::sample_for_test(a.clone(), 0).is_some());
+            v2(SpireRichTextLabel::get_char_offset(a.clone(), 0), Vector2::new(12.0, 3.0));
+            v2(SpireRichTextLabel::get_char_offset(a.clone(), 1), Vector2::new(12.0, 3.0));
+            SpireRichTextLabel::set_char_scale(a.clone(), 0, Vector2::splat(2.0));
+            v2(SpireRichTextLabel::get_char_scale(a.clone(), 1), Vector2::splat(2.0));
+            assert!(SpireRichTextLabel::is_valid_char(a.clone(), 2));
+            assert!(SpireRichTextLabel::sample_for_test(a.clone(), 2).is_some());
             n.free();
         })
     }

@@ -9,8 +9,24 @@ use spire_tween::prelude::*;
 
 fn rich_text_label_api(label: Gd<SpireRichTextLabel>) {
     let _: Gd<godot::classes::RichTextLabel> = label.clone().upcast();
-    let animator = TextAnimator::new(label);
-    let _: SpireTween<LerpMethodData<f64>> = animator.do_offset_char(0, Vector2::ONE, 0.5);
+    let _: SpireTween<LerpMethodData<f64>> = label.do_offset_char(0, Vector2::ONE, 0.5);
+    let _: SpireTween<LerpMethodData<f64>> = label.bind().do_offset_char(0, Vector2::ONE, 0.5);
+    let _: Vector2 = SpireRichTextLabel::get_char_offset(label.clone(), 0);
+}
+
+fn rich_text_preset_api(mut label: Gd<SpireRichTextLabel>) {
+    let mut offset = SpireTextOffsetEffect::new_gd();
+    offset.bind_mut().set_duration(0.8);
+    offset.bind_mut().set_to(Vector2::new(0.0, 12.0));
+    let mut preset = SpireRichTextEffectPreset::new_gd();
+    preset.bind_mut().set_bbcode("bob".into());
+    let mut entries = VarArray::new();
+    entries.push(&offset.to_variant());
+    preset.bind_mut().set_effects(entries);
+    let mut presets = Array::<Option<Gd<SpireRichTextEffectPreset>>>::new();
+    presets.push(None::<&Gd<SpireRichTextEffectPreset>>);
+    presets.push(Some(&preset));
+    label.bind_mut().effect_presets = presets;
 }
 
 macro_rules! new_tween_method {

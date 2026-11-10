@@ -105,6 +105,14 @@ impl TweenBlueprint {
 
     pub(super) fn build_characters(this: Gd<Self>, sequence: Gd<SpireSequence>) {
         let state = this.bind();
+        let label = state
+            .resolve_target()
+            .and_then(|node| node.try_cast::<SpireRichTextLabel>().ok());
+        // Range selection needs the current text. Synchronize explicitly here,
+        // without resetting unchanged state when replaying a blueprint.
+        if let Some(label) = &label {
+            SpireRichTextLabel::refresh_characters(label.clone(), false);
+        }
         let warnings = state.character_warnings();
         if !warnings.is_empty() {
             for warning in warnings.as_slice() {
@@ -112,9 +120,12 @@ impl TweenBlueprint {
             }
             return;
         }
-        let label = state.resolve_target().unwrap().cast::<SpireRichTextLabel>();
-        let animator = TextAnimator::new(label.clone());
-        let last = if state.character_last == -1 { animator.character_count() - 1 } else { state.character_last };
+        let label = label.expect("validated character target");
+        let last = if state.character_last == -1 {
+            SpireRichTextLabel::get_character_count(label.clone()) - 1
+        } else {
+            state.character_last
+        };
         let ease = state
             .ease_curve
             .as_ref()
@@ -125,36 +136,53 @@ impl TweenBlueprint {
         let start = state.start_value.clone();
         let explicit = state.start_enabled;
         let pivot = state.character_pivot;
-        let initialize = animator.clone();
+        let initialize = label.clone();
         let first = state.character_first;
         // Initialize the whole selection when this Blueprint begins, before staggering
         // its animation. This supports a hidden reveal without touching later serial steps.
         sequence.bind().to_mut().append_fn(move || {
+            if !initialize.is_instance_valid() {
+                return;
+            }
             for index in first..=last {
-                if !initialize.is_valid_char(index) {
+                if !SpireRichTextLabel::is_valid_char(initialize.clone(), index) {
                     continue;
                 }
                 if animation.has_pivot() {
-                    initialize.set_char_pivot(index, pivot);
+                    SpireRichTextLabel::set_char_pivot(initialize.clone(), index, pivot);
                 }
                 if explicit {
                     match animation {
                         CharacterAnimation::Offset
                         | CharacterAnimation::PunchOffset
-                        | CharacterAnimation::ShakeOffset => initialize
-                            .set_char_offset(index, start.try_to_relaxed().expect("validated character value")),
-                        CharacterAnimation::Fade => {
-                            initialize.set_char_alpha(index, start.try_to_relaxed().expect("validated character value"))
-                        }
-                        CharacterAnimation::Color => {
-                            initialize.set_char_color(index, start.try_to_relaxed().expect("validated character value"))
-                        }
+                        | CharacterAnimation::ShakeOffset => SpireRichTextLabel::set_char_offset(
+                            initialize.clone(),
+                            index,
+                            start.try_to_relaxed().expect("validated character value"),
+                        ),
+                        CharacterAnimation::Fade => SpireRichTextLabel::set_char_alpha(
+                            initialize.clone(),
+                            index,
+                            start.try_to_relaxed().expect("validated character value"),
+                        ),
+                        CharacterAnimation::Color => SpireRichTextLabel::set_char_color(
+                            initialize.clone(),
+                            index,
+                            start.try_to_relaxed().expect("validated character value"),
+                        ),
                         CharacterAnimation::Rotation
                         | CharacterAnimation::PunchRotation
-                        | CharacterAnimation::ShakeRotation => initialize
-                            .set_char_rotation(index, start.try_to_relaxed().expect("validated character value")),
+                        | CharacterAnimation::ShakeRotation => SpireRichTextLabel::set_char_rotation(
+                            initialize.clone(),
+                            index,
+                            start.try_to_relaxed().expect("validated character value"),
+                        ),
                         CharacterAnimation::Scale | CharacterAnimation::PunchScale | CharacterAnimation::ShakeScale => {
-                            initialize.set_char_scale(index, start.try_to_relaxed().expect("validated character value"))
+                            SpireRichTextLabel::set_char_scale(
+                                initialize.clone(),
+                                index,
+                                start.try_to_relaxed().expect("validated character value"),
+                            )
                         }
                     }
                 }
@@ -174,24 +202,24 @@ impl TweenBlueprint {
             let mode = state.character_randomness_mode;
             let tween = match animation {
                 CharacterAnimation::Offset => {
-                    animator.do_offset_char(index, end.try_to_relaxed().expect("validated character value"), duration)
+                    label.do_offset_char(index, end.try_to_relaxed().expect("validated character value"), duration)
                 }
                 CharacterAnimation::Fade => {
-                    animator.do_fade_char(index, end.try_to_relaxed().expect("validated character value"), duration)
+                    label.do_fade_char(index, end.try_to_relaxed().expect("validated character value"), duration)
                 }
                 CharacterAnimation::Color => {
-                    animator.do_color_char(index, end.try_to_relaxed().expect("validated character value"), duration)
+                    label.do_color_char(index, end.try_to_relaxed().expect("validated character value"), duration)
                 }
-                CharacterAnimation::Rotation => animator.do_rotate_char(
+                CharacterAnimation::Rotation => label.do_rotate_char(
                     index,
                     end.try_to_relaxed().expect("validated character value"),
                     duration,
                     state.character_rotate_mode,
                 ),
                 CharacterAnimation::Scale => {
-                    animator.do_scale_char(index, end.try_to_relaxed().expect("validated character value"), duration)
+                    label.do_scale_char(index, end.try_to_relaxed().expect("validated character value"), duration)
                 }
-                CharacterAnimation::PunchOffset => animator.do_punch_char_offset(
+                CharacterAnimation::PunchOffset => label.do_punch_char_offset(
                     index,
                     end.try_to_relaxed().expect("validated character value"),
                     duration,
@@ -199,7 +227,7 @@ impl TweenBlueprint {
                     elasticity,
                     blendable,
                 ),
-                CharacterAnimation::PunchRotation => animator.do_punch_char_rotation(
+                CharacterAnimation::PunchRotation => label.do_punch_char_rotation(
                     index,
                     end.try_to_relaxed().expect("validated character value"),
                     duration,
@@ -207,7 +235,7 @@ impl TweenBlueprint {
                     elasticity,
                     blendable,
                 ),
-                CharacterAnimation::PunchScale => animator.do_punch_char_scale(
+                CharacterAnimation::PunchScale => label.do_punch_char_scale(
                     index,
                     end.try_to_relaxed().expect("validated character value"),
                     duration,
@@ -215,7 +243,7 @@ impl TweenBlueprint {
                     elasticity,
                     blendable,
                 ),
-                CharacterAnimation::ShakeOffset => animator.do_shake_char_offset(
+                CharacterAnimation::ShakeOffset => label.do_shake_char_offset(
                     index,
                     duration,
                     end.try_to_relaxed().expect("validated character value"),
@@ -225,7 +253,7 @@ impl TweenBlueprint {
                     mode,
                     blendable,
                 ),
-                CharacterAnimation::ShakeRotation => animator.do_shake_char_rotation(
+                CharacterAnimation::ShakeRotation => label.do_shake_char_rotation(
                     index,
                     duration,
                     end.try_to_relaxed().expect("validated character value"),
@@ -235,7 +263,7 @@ impl TweenBlueprint {
                     mode,
                     blendable,
                 ),
-                CharacterAnimation::ShakeScale => animator.do_shake_char_scale(
+                CharacterAnimation::ShakeScale => label.do_shake_char_scale(
                     index,
                     duration,
                     end.try_to_relaxed().expect("validated character value"),

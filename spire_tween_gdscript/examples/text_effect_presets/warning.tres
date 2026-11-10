@@ -1,0 +1,16 @@
+[gd_resource type="SpireRichTextEffectPreset" load_steps=3 format=3]
+
+[sub_resource type="SpireTextShakeOffsetEffect" id="Shake"]
+duration = 0.7
+strength = Vector2(1.5, 2.5)
+fade_out = false
+
+[sub_resource type="SpireTextColorEffect" id="Color"]
+duration = 0.5
+loop_mode = 1
+from = Color(1, 0.8, 0.3, 1)
+to = Color(1, 0.3, 0.4, 1)
+
+[resource]
+bbcode = "warning_text"
+effects = [SubResource("Shake"), SubResource("Color")]

@@ -1,5 +1,7 @@
 # spire_tween
 
+See [looping rich-text presets](../docs/rich_text_effect_presets.md) for reusable
+effects authored as Resources and applied with BBCode tags.
 See [per-character animation](../docs/character_animation.md) for SpireRichTextLabel
 fade, color, offset, rotation, scale, punch and shake.
 See [animatable bodies](../docs/animatable_bodies.md) for physics-clock platforms

@@ -150,6 +150,19 @@ func test_blueprint_character_stagger_start_loops_and_restart() -> bool:
 	check(same(animator.get_char_offset(0), Vector2(4, 0)), "A serial character step must initialize and advance when reached")
 	return failures.is_empty()
 
+func test_blueprint_character_build_refreshes_text() -> bool:
+	var label := SpireRichTextLabel.new()
+	label.text = "A"
+	add_child(label)
+	var step := character_step(self, label, Spire.CHARACTER_ANIMATION_OFFSET, Vector2(3, 4))
+	label.text = "ABCD"
+	check(label.get_character_count() == 1, "Character getters must keep the last refreshed state")
+	var sequence := play(step)
+	check(label.get_character_count() == 4, "Blueprint range selection must explicitly synchronize current text")
+	sequence.force_complete()
+	check(label.get_char_offset(3) == Vector2(3, 4), "A fresh blueprint run must select the updated full range")
+	return failures.is_empty()
+
 func test_blueprint_character_invalid_configuration_and_lifetime() -> bool:
 	var label := SpireRichTextLabel.new()
 	label.text = "ABCDE"
@@ -188,9 +201,12 @@ func test_blueprint_character_invalid_configuration_and_lifetime() -> bool:
 	delayed.delay = 0.5
 	var sequence := play(delayed)
 	label.text = "HI!"
-	sequence.custom_step(2.0)
-	check(sequence.is_stopped() and animator.get_character_count() == 3, "A disappeared delayed character must cancel safely")
-	check(animator.get_char_offset(0) == Vector2.ZERO, "Cancellation must not redirect writes to a surviving character")
+	label.refresh()
+	sequence.custom_step(0.6)
+	check(not sequence.is_stopped() and animator.get_character_count() == 3, "A disappeared delayed character must preserve playback")
+	sequence.force_complete()
+	check(sequence.is_stopped(), "Playback with a missing character must still complete normally")
+	check(animator.get_char_offset(0) == Vector2.ZERO, "Missing indices must not redirect writes to a surviving character")
 	label.text = "ABCDE"
 	sequence = play(delayed)
 	label.free()

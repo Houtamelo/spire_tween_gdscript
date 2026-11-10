@@ -1,21 +1,32 @@
 use super::*;
 mod adapters;
-mod motion;
 mod color;
 mod counter;
 mod effect;
+mod margins;
+mod motion;
+mod orientation;
 mod punch;
 mod shake_variants;
-mod orientation;
-mod ui_normalized;
 mod spiral_3d;
-mod waypoint_path;
-mod margins;
 mod text_animator;
-pub use text_animator::{TextAnimator, SpireRichTextLabel};
-pub use self::{waypoint_path::*, margins::*};
-pub use self::{punch::*, shake_variants::*, orientation::*, ui_normalized::*, spiral_3d::*};
-pub use self::{adapters::*, motion::*, color::*, counter::*};
+mod ui_normalized;
+mod waypoint_path;
+pub use text_animator::{SpireCharRenderer, SpireDoRichTextCharacters, SpireRichTextLabel, presets::*};
+
+pub use self::{
+    adapters::*,
+    color::*,
+    counter::*,
+    margins::*,
+    motion::*,
+    orientation::*,
+    punch::*,
+    shake_variants::*,
+    spiral_3d::*,
+    ui_normalized::*,
+    waypoint_path::*,
+};
 // TODO: Check if integration tests cover all these.
 
 #[allow(dead_code)]
@@ -29,9 +40,12 @@ mod do_follow;
 mod do_follow_3d;
 #[allow(dead_code)]
 mod do_shake;
-mod shake_path;
 mod do_spiral;
+mod shake_path;
 
+#[cfg(feature = "integration-tests")]
+#[doc(hidden)]
+pub use self::do_shake::do_shake_internal;
 #[allow(unused_imports)]
 pub use self::{
     do_bone::*,
@@ -43,7 +57,3 @@ pub use self::{
     do_shake::{DoShakeControl, DoShakeNode2D},
     do_spiral::*,
 };
-
-#[cfg(feature = "integration-tests")]
-#[doc(hidden)]
-pub use self::do_shake::do_shake_internal;

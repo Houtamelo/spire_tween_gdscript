@@ -98,12 +98,12 @@ pub(crate) fn effect_with_epoch<V: EffectValue>(
     });
     let getter = Rc::new(getter);
     let setter = RcPtr::new(setter);
-    let callable = Callable::from_fn("spire_effect", {
+    let update = {
         let mut state = state.clone();
         let getter = getter.clone();
         let mut setter = setter.clone();
         let epoch = epoch.clone();
-        move |args| {
+        move |args: &[&Variant]| {
             let current_epoch = epoch.as_ref().map_or(0, |read| read());
             if state.epoch != current_epoch {
                 state.initial = None;
@@ -120,9 +120,13 @@ pub(crate) fn effect_with_epoch<V: EffectValue>(
             setter(value);
             Variant::nil()
         }
-    });
+    };
+    let callable = if let Some(owner) = &owner {
+        owner.linked_callable("spire_effect", update)
+    } else {
+        Callable::from_fn("spire_effect", update)
+    };
     let mut tween = SpireTween::<LerpMethodData<f64>>::new(callable, 0.0, 1.0, duration_or_default(duration));
-    tween.t.owner = owner.clone().map(ObjectOrNode::from_unchecked_object);
     tween.stopped_connect(
         {
             let mut state = state.clone();
