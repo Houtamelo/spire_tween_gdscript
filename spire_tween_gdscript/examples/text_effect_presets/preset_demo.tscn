@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://examples/text_effect_presets/preset_demo.gd" id="1"]
 [ext_resource type="SpireRichTextEffectPreset" path="res://examples/text_effect_presets/enchanted.tres" id="2"]
 [ext_resource type="SpireRichTextEffectPreset" path="res://examples/text_effect_presets/warning.tres" id="3"]
+[ext_resource type="SpireTextOffsetEffect" path="res://examples/text_effect_presets/enchanted_offset.tres" id="4"]
 
 [node name="TextPresetDemo" type="Control"]
 layout_mode = 3
@@ -37,7 +38,7 @@ offset_top = 90.0
 offset_right = 900.0
 offset_bottom = 150.0
 theme_override_colors/font_color = Color(0.65, 0.72, 0.85, 1)
-text = "Presets animate tagged text. The buttons apply ordinary character tweens.\nInspect enchanted.tres or warning.tres to edit the loops."
+text = "Presets animate tagged text. The buttons apply character tweens and a Blueprint.\nThe Blueprint and enchanted preset share enchanted_offset.tres."
 
 [node name="Text" type="SpireRichTextLabel" parent="."]
 offset_left = 40.0
@@ -48,6 +49,13 @@ theme_override_font_sizes/normal_font_size = 38
 bbcode_enabled = true
 text = "[enchanted]Characters in motion[/enchanted]\n\n[warning_text]Something is approaching![/warning_text]"
 effect_presets = Array[SpireRichTextEffectPreset]([ExtResource("2"), ExtResource("3")])
+
+[node name="SharedEffect" type="TweenBlueprint" parent="Text"]
+kind = 3
+start_enabled = true
+character_effect = ExtResource("4")
+character_stagger = 0.03
+character_loops = 2
 
 [node name="Buttons" type="HBoxContainer" parent="."]
 offset_left = 40.0
@@ -71,6 +79,12 @@ custom_minimum_size = Vector2(180, 48)
 layout_mode = 2
 text = "Reset code effects"
 
+[node name="Blueprint" type="Button" parent="Buttons"]
+custom_minimum_size = Vector2(180, 48)
+layout_mode = 2
+text = "Play shared Blueprint"
+
 [connection signal="pressed" from="Buttons/Punch" to="." method="_on_punch_pressed"]
 [connection signal="pressed" from="Buttons/Fade" to="." method="_on_fade_pressed"]
 [connection signal="pressed" from="Buttons/Reset" to="." method="_on_reset_pressed"]
+[connection signal="pressed" from="Buttons/Blueprint" to="Text/SharedEffect" method="play"]

@@ -41,7 +41,7 @@ macro_rules! effect_resource {
         #[class(init, tool, base = Resource)]
         pub struct $name {
             base: Base<Resource>,
-            /// Seconds per loop leg. Must be finite and positive.
+            /// Seconds per tween or loop leg. Must be finite and positive.
             #[export(range = (0.001, 10.0, or_greater))]
             #[var(set = set_duration)]
             #[init(val = 1.0)]
@@ -54,7 +54,8 @@ macro_rules! effect_resource {
             #[export]
             #[var(set = set_loop_mode)]
             pub loop_mode: LoopMode,
-            /// Seconds of phase advancement per logical character within this tag.
+            /// Seconds of phase advancement per logical character within a preset tag.
+            /// Blueprint character steps use their own `character_stagger` instead.
             #[export]
             #[var(set = set_character_phase_offset)]
             pub character_phase_offset: f64,
@@ -94,54 +95,54 @@ macro_rules! effect_resource {
     };
 }
 
-effect_resource!(SpireTextColorEffect, "Loops between two fill colors. Alpha affects fill and outline.", {
+effect_resource!(SpireTextColorEffect, "Interpolates between two fill colors. Alpha affects fill and outline.", {
     from: Color = Color::WHITE => set_from,
     to: Color = Color::WHITE => set_to,
 });
-effect_resource!(SpireTextFadeEffect, "Loops between two alpha values, preserving incoming RGB.", {
+effect_resource!(SpireTextFadeEffect, "Interpolates between two alpha values, preserving incoming RGB.", {
     from: f64 = 0.0 => set_from,
     to: f64 = 1.0 => set_to,
 });
-effect_resource!(SpireTextOffsetEffect, "Loops between additional glyph offsets in local pixels.", {
+effect_resource!(SpireTextOffsetEffect, "Interpolates between additional glyph offsets in local pixels.", {
     from: Vector2 = Vector2::ZERO => set_from,
     to: Vector2 = Vector2::ZERO => set_to,
 });
-effect_resource!(SpireTextRotationEffect, "Loops between YXZ Euler rotations in radians with orthographic projection.", {
+effect_resource!(SpireTextRotationEffect, "Interpolates between YXZ Euler rotations in radians with orthographic projection.", {
     from: Vector3 = Vector3::ZERO => set_from,
     to: Vector3 = Vector3::ZERO => set_to,
     rotate_mode: RotateMode = RotateMode::Fast => set_rotate_mode,
     pivot: Vector2 = Vector2::ZERO => set_pivot,
 });
-effect_resource!(SpireTextScaleEffect, "Loops between per-axis glyph scale multipliers.", {
+effect_resource!(SpireTextScaleEffect, "Interpolates between per-axis glyph scale multipliers.", {
     from: Vector2 = Vector2::ONE => set_from,
     to: Vector2 = Vector2::ONE => set_to,
     pivot: Vector2 = Vector2::ZERO => set_pivot,
 });
-effect_resource!(SpireTextPunchOffsetEffect, "Repeats a punch of glyph offset using Spire's punch sampler.", {
+effect_resource!(SpireTextPunchOffsetEffect, "Punches glyph offset using Spire's punch sampler.", {
     punch: Vector2 = Vector2::ZERO => set_punch,
     vibrato: i32 = 10 => set_vibrato,
     elasticity: f64 = 1.0 => set_elasticity,
 });
-effect_resource!(SpireTextPunchRotationEffect, "Repeats a punch of glyph rotation, in radians.", {
+effect_resource!(SpireTextPunchRotationEffect, "Punches glyph rotation, in radians.", {
     punch: Vector3 = Vector3::ZERO => set_punch,
     vibrato: i32 = 10 => set_vibrato,
     elasticity: f64 = 1.0 => set_elasticity,
     pivot: Vector2 = Vector2::ZERO => set_pivot,
 });
-effect_resource!(SpireTextPunchScaleEffect, "Repeats a punch of additive glyph scale deltas.", {
+effect_resource!(SpireTextPunchScaleEffect, "Punches additive glyph scale deltas.", {
     punch: Vector2 = Vector2::ZERO => set_punch,
     vibrato: i32 = 10 => set_vibrato,
     elasticity: f64 = 1.0 => set_elasticity,
     pivot: Vector2 = Vector2::ZERO => set_pivot,
 });
-effect_resource!(SpireTextShakeOffsetEffect, "Repeats a stable random glyph offset path.", {
+effect_resource!(SpireTextShakeOffsetEffect, "Shakes glyph offsets along a random path.", {
     strength: Vector2 = Vector2::ONE => set_strength,
     vibrato: i32 = 10 => set_vibrato,
     randomness: f64 = 90.0 => set_randomness,
     randomness_mode: ShakeRandomnessMode = ShakeRandomnessMode::Full => set_randomness_mode,
     fade_out: bool = true => set_fade_out,
 });
-effect_resource!(SpireTextShakeRotationEffect, "Repeats a stable random glyph rotation path, in radians.", {
+effect_resource!(SpireTextShakeRotationEffect, "Shakes glyph rotation along a random path, in radians.", {
     strength: Vector3 = Vector3::ONE => set_strength,
     vibrato: i32 = 10 => set_vibrato,
     randomness: f64 = 90.0 => set_randomness,
@@ -149,7 +150,7 @@ effect_resource!(SpireTextShakeRotationEffect, "Repeats a stable random glyph ro
     fade_out: bool = true => set_fade_out,
     pivot: Vector2 = Vector2::ZERO => set_pivot,
 });
-effect_resource!(SpireTextShakeScaleEffect, "Repeats a stable random path of additive glyph scale deltas.", {
+effect_resource!(SpireTextShakeScaleEffect, "Shakes additive glyph scale deltas along a random path.", {
     strength: Vector2 = Vector2::ONE => set_strength,
     vibrato: i32 = 10 => set_vibrato,
     randomness: f64 = 90.0 => set_randomness,

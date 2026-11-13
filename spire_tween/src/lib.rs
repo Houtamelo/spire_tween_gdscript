@@ -176,7 +176,6 @@ pub mod prelude {
         //connection::Connection,
         enums::{
             BlueprintKind,
-            CharacterAnimation,
             Ease,
             EaseKind,
             Evaluator,

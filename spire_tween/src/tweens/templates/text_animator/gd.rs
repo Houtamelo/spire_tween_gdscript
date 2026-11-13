@@ -138,7 +138,7 @@ impl IRichTextLabel for SpireRichTextLabel {
             return warnings;
         }
         for warning in &self.presets.warnings {
-            warnings.push(warning);
+            warnings.push(warning.as_str());
         }
         let mut script = self.base().get_script();
         while let Some(current) = script {

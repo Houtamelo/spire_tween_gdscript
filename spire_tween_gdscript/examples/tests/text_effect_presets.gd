@@ -123,6 +123,18 @@ func test_text_presets_example_scene() -> bool:
 	await _draw_frames()
 	var label: SpireRichTextLabel = example.get_node("Text")
 	assert_true(not label.get_parsed_text().contains("[enchanted]"))
+	var blueprint: TweenBlueprint = label.get_node("SharedEffect")
+	assert_eq(blueprint.character_effect, label.effect_presets[0].effects[0])
+	blueprint.tween_process_mode = Spire.PROCESS_MODE_MANUAL
+	var spawned: Array[SpireSequence] = []
+	blueprint.tween_spawned.connect(func(sequence: SpireSequence): spawned.append(sequence))
+	example.get_node("Buttons/Blueprint").pressed.emit()
+	assert_eq(spawned.size(), 1)
+	if not spawned.is_empty():
+		spawned[0].custom_step(0.2)
+		assert_true(not label.get_char_offset(0).is_zero_approx(), "The shared resource must drive Blueprint playback")
+		example.get_node("Buttons/Reset").pressed.emit()
+		assert_true(spawned[0].is_stopped() and label.get_char_offset(0).is_zero_approx(), "Reset must stop the example Blueprint before clearing its effects")
 	example.get_node("Buttons/Punch").pressed.emit()
 	await get_tree().create_timer(0.7).timeout
 	await _draw_frames()

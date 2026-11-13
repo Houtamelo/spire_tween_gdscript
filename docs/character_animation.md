@@ -55,6 +55,35 @@ float is tween progress, not the character's current property value. Native stat
 accessors are associated functions, for example
 `SpireRichTextLabel::get_char_offset(label.clone(), 0)`.
 
+## Range tween timing (planned)
+
+The [range tween design](designs/CHARACTER_RANGE_TWEENS.md) introduces a Char
+tween that animates a selection through one handle. This API is not implemented
+yet.
+
+**`duration` is the animation duration of each character for one leg. The Char
+tween finishes when the last character finishes, including its start delay and
+requested loops.** Total duration is the largest character completion time,
+measured from the start of the range; characters animate concurrently.
+
+The optional delay curve supplies `f(x)`, where `x` is the character's normalized
+position within the selection. Each character starts at `f(x) * duration`.
+Samples must be finite and non-negative. With no curve, all characters start
+together.
+
+For example, `duration = 1` second and `f(x) = x` gives each character a one-second
+animation. The first starts at 0 seconds and finishes at 1 second; the last starts
+at 1 second and finishes at 2 seconds. The Char tween's total duration is therefore
+2 seconds. For one leg:
+
+```text
+total_duration = max(character_start_time + duration)
+```
+
+The start delay applies once. Each character then loops continuously on its own
+timeline, and finite range playback completes after every character finishes its
+requested legs.
+
 ## Node type and ownership
 
 Add a `SpireRichTextLabel` directly, or right-click an existing `RichTextLabel`

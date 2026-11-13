@@ -7,16 +7,8 @@ use super::{
 impl TweenBlueprint {
     #[func(gd_self)]
     pub(super) fn initialize_blueprint_values(mut this: Gd<Self>) {
-        {
-            let mut state = this.bind_mut();
-            if state.kind == BlueprintKind::Characters {
-                if state.start_value.is_nil() && state.end_value.is_nil() {
-                    (state.start_value, state.end_value) = state.character_animation.defaults();
-                    drop(state);
-                    this.notify_property_list_changed();
-                }
-                return;
-            }
+        if this.bind().kind == BlueprintKind::Characters {
+            return;
         }
         let (target, name, unconfigured) = {
             let state = this.bind();
@@ -42,216 +34,204 @@ impl TweenBlueprint {
             this.notify_property_list_changed();
         }
     }
+}
 
-    pub(super) fn validate_inspector_property(&self, property: &mut PropertyInfo) {
-        let scripted = self.base().get_script().is_some();
-        let characters = self.kind == BlueprintKind::Characters;
-        let name = property.property_name.to_string();
-        let name = name.as_str();
+pub(super) fn get_configuration_warnings(bp: &TweenBlueprint) -> PackedStringArray {
+    let mut warnings = PackedStringArray::new();
 
-        if let "kind"
-        | "target"
-        | "animated_property"
-        | "start_enabled"
-        | "lerp_mode"
-        | "trigger_condition"
-        | "character_animation" = name
-        {
-            property.usage = property.usage.with(PropertyUsageFlags::UPDATE_ALL_IF_MODIFIED);
-        }
+    if !bp.delay.is_finite() || bp.delay < 0.0 {
+        warnings.push("`delay` must be finite and non-negative.");
+    }
 
-        if let "kind" = name
-            && scripted
-        {
-            property.usage = property
-                .usage
-                .with(PropertyUsageFlags::READ_ONLY)
-                .without(PropertyUsageFlags::EDITOR);
-        }
+    if !bp.speed_scale.is_finite() || bp.speed_scale < 0.0 {
+        warnings.push("`speed_scale` must be finite and non-negative.");
+    }
 
-        if let "trigger_condition" = name
-            && self.is_managed_by_parent()
-        {
-            property.usage = property
-                .usage
-                .with(PropertyUsageFlags::READ_ONLY)
-                .without(PropertyUsageFlags::EDITOR);
-        }
-
-        if let "trigger_source" = name
-            && matches!(
-                self.trigger_condition,
-                TriggerCondition::Manual | TriggerCondition::AfterReady | TriggerCondition::AfterEnterTree
-            )
-        {
-            property.usage = property.usage.without(PropertyUsageFlags::EDITOR);
-        }
-
-        if let "animated_property" | "speed_or_duration" | "start_enabled" | "start_value" | "end_value" | "lerp_mode"
-        | "ease_basic" | "ease_curve" = name
-        {
-            property.usage = property.usage.with(PropertyUsageFlags::STORAGE);
-            property.usage = if scripted || !matches!(self.kind, BlueprintKind::Property | BlueprintKind::Characters) {
-                property.usage.without(PropertyUsageFlags::EDITOR)
-            } else {
-                property.usage.with(PropertyUsageFlags::EDITOR)
-            };
-        }
-
-        if characters && matches!(name, "animated_property" | "lerp_mode") {
-            property.usage = property.usage.without(PropertyUsageFlags::EDITOR);
-        }
-
-        if matches!(
-            name,
-            "character_animation"
-                | "character_first"
-                | "character_last"
-                | "character_stagger"
-                | "character_pivot"
-                | "character_rotate_mode"
-                | "character_loops"
-                | "character_loop_mode"
-                | "character_vibrato"
-                | "character_elasticity"
-                | "character_randomness"
-                | "character_fade_out"
-                | "character_randomness_mode"
-                | "character_blendable"
-        ) {
-            let animation = self.character_animation;
-            let visible = !scripted
-                && characters
-                && match name {
-                    "character_pivot" => animation.has_pivot(),
-                    "character_rotate_mode" => animation == CharacterAnimation::Rotation,
-                    "character_vibrato" | "character_blendable" => animation.is_punch() || animation.is_shake(),
-                    "character_elasticity" => animation.is_punch(),
-                    "character_randomness" | "character_fade_out" | "character_randomness_mode" => animation.is_shake(),
-                    _ => true,
-                };
-            property.usage = property.usage.with(PropertyUsageFlags::STORAGE);
-            if !visible {
-                property.usage = property.usage.without(PropertyUsageFlags::EDITOR);
+    if bp.base().get_script().is_none()
+        && let BlueprintKind::Property = bp.kind
+    {
+        match bp.resolve_target() {
+            None => {
+                warnings.push("`target` could not be resolved. Assign a valid node or add a non-blueprint ancestor.")
             }
-        }
-
-        if name == "start_enabled" && !characters && self.lerp_mode != LerpModeKind::Absolute
-            || name == "start_value" && (!self.start_enabled || !characters && self.lerp_mode != LerpModeKind::Absolute)
-        {
-            property.usage = property.usage.without(PropertyUsageFlags::EDITOR);
-        }
-
-        let target = self.resolve_target();
-
-        if let "animated_property" = name {
-            property.hint_info = PropertyHintInfo::none();
-            if let Some(target) = &target
-                && let Ok(names) = suggested_properties(target)
-            {
-                let separator = GString::from(",");
-
-                property.hint_info.hint = PropertyHint::ENUM_SUGGESTION;
-                property.hint_info.hint_string = separator.join(&names);
-            }
-        } else if let "start_value" | "end_value" = name {
-            if scripted || !matches!(self.kind, BlueprintKind::Property | BlueprintKind::Characters) {
-                return;
-            }
-            if characters {
-                let ty = self.character_animation.value_type();
-                let value = if name == "start_value" { &self.start_value } else { &self.end_value };
-                if value.is_nil() || value.get_type() == ty {
-                    property.variant_type = ty;
-                    property.class_name = StringName::default();
-                    property.hint_info = PropertyHintInfo::none();
-                    property.usage = property.usage.without(PropertyUsageFlags::NIL_IS_VARIANT);
-                }
-                return;
-            }
-            let Some(target) = target else { return };
-
-            match property_descriptor(&target, &self.animated_property) {
+            Some(target) => match property_descriptor(&target, &bp.animated_property) {
                 Ok(info) => {
-                    let value = if let "start_value" = name { &self.start_value } else { &self.end_value };
-                    // Retain incompatible payloads for explicit repair; inspection never rewrites authored values.
-                    if value.is_nil() || value.get_type() == info.variant_type {
-                        property.variant_type = info.variant_type;
-                        property.class_name = info.class_name;
-                        property.hint_info = info.hint_info;
-                        property.usage = property.usage.without(PropertyUsageFlags::NIL_IS_VARIANT);
+                    if !value_matches(&bp.end_value, info.variant_type) {
+                        warnings.push(&format!(
+                            "`end_value` must match the type selected by `animated_property`: expected {}, got {}.",
+                            info.variant_type.godot_type_name(),
+                            bp.end_value.get_type().godot_type_name()
+                        ));
+                    }
+
+                    if bp.start_enabled
+                        && bp.lerp_mode == LerpModeKind::Absolute
+                        && !value_matches(&bp.start_value, info.variant_type)
+                    {
+                        warnings.push(&format!(
+                            "`start_value` must match the type selected by `animated_property`: expected {}, got {}.",
+                            info.variant_type.godot_type_name(),
+                            bp.start_value.get_type().godot_type_name()
+                        ));
                     }
                 }
-                // The Scene dock already presents configuration warnings. Metadata
-                // queries also run while authoring incomplete steps and must stay quiet.
-                Err(_) => {}
-            }
+                Err(err) => {
+                    warnings
+                        .push(&format!("Cannot resolve `animated_property` (`{}`):\n\t{}", bp.animated_property, err));
+                }
+            },
+        }
+
+        if !bp.speed_or_duration.is_finite() || bp.speed_or_duration <= 0.0 {
+            warnings.push("`speed_or_duration` must be finite and greater than 0.0.");
         }
     }
 
-    pub(super) fn configuration_warnings(&self) -> PackedStringArray {
-        let mut warnings = PackedStringArray::new();
+    if bp.base().get_script().is_none()
+        && bp.kind == BlueprintKind::Characters
+        && let Err(warning) = bp.resolve_effect_configuration()
+    {
+        warnings.push(warning.to_string().as_str());
+    }
 
-        if !self.delay.is_finite() || self.delay < 0.0 {
-            warnings.push("`delay` must be finite and non-negative.");
+    if !bp.is_managed_by_parent()
+        && let Some(message) = bp.trigger_warning()
+    {
+        warnings.push(&message);
+    }
+
+    warnings
+}
+
+pub(super) fn on_validate_property(bp: &TweenBlueprint, property: &mut PropertyInfo) {
+    let scripted = bp.base().get_script().is_some();
+    let characters = bp.kind == BlueprintKind::Characters;
+    let name = property.property_name.to_string();
+    let name = name.as_str();
+
+    if let "kind" | "target" | "animated_property" | "start_enabled" | "lerp_mode" | "trigger_condition"
+    | "character_effect" = name
+    {
+        property.usage = property.usage.with(PropertyUsageFlags::UPDATE_ALL_IF_MODIFIED);
+    }
+
+    if let "kind" = name
+        && scripted
+    {
+        property.usage = property
+            .usage
+            .with(PropertyUsageFlags::READ_ONLY)
+            .without(PropertyUsageFlags::EDITOR);
+    }
+
+    if let "trigger_condition" = name
+        && bp.is_managed_by_parent()
+    {
+        property.usage = property
+            .usage
+            .with(PropertyUsageFlags::READ_ONLY)
+            .without(PropertyUsageFlags::EDITOR);
+    }
+
+    if let "trigger_source" = name
+        && matches!(
+            bp.trigger_condition,
+            TriggerCondition::Manual | TriggerCondition::AfterReady | TriggerCondition::AfterEnterTree
+        )
+    {
+        property.usage = property.usage.without(PropertyUsageFlags::EDITOR);
+    }
+
+    if let "animated_property" | "speed_or_duration" | "start_enabled" | "start_value" | "end_value" | "lerp_mode"
+    | "ease_basic" | "ease_curve" = name
+    {
+        property.usage = property.usage.with(PropertyUsageFlags::STORAGE);
+        let character_field = characters && matches!(name, "start_enabled" | "start_value" | "ease_curve");
+        property.usage = if scripted || !(bp.kind == BlueprintKind::Property || character_field) {
+            property.usage.without(PropertyUsageFlags::EDITOR)
+        } else {
+            property.usage.with(PropertyUsageFlags::EDITOR)
+        };
+    }
+
+    let impulse_start = if characters {
+        bp.compiled_character_effect()
+            .ok()
+            .and_then(|effect| effect.impulse_start_default())
+    } else {
+        None
+    };
+
+    if characters && name == "start_value" && impulse_start.is_none() {
+        property.usage = property.usage.without(PropertyUsageFlags::EDITOR);
+    }
+
+    if matches!(
+        name,
+        "character_effect"
+            | "character_first"
+            | "character_last"
+            | "character_stagger"
+            | "character_loops"
+            | "character_blendable"
+    ) {
+        let visible = !scripted && characters && (name != "character_blendable" || impulse_start.is_some());
+        property.usage = property.usage.with(PropertyUsageFlags::STORAGE);
+        if !visible {
+            property.usage = property.usage.without(PropertyUsageFlags::EDITOR);
         }
+    }
 
-        if !self.speed_scale.is_finite() || self.speed_scale < 0.0 {
-            warnings.push("`speed_scale` must be finite and non-negative.");
-        }
+    if name == "start_enabled" && !characters && bp.lerp_mode != LerpModeKind::Absolute
+        || name == "start_value" && (!bp.start_enabled || !characters && bp.lerp_mode != LerpModeKind::Absolute)
+    {
+        property.usage = property.usage.without(PropertyUsageFlags::EDITOR);
+    }
 
-        if self.base().get_script().is_none()
-            && let BlueprintKind::Property = self.kind
+    let target = bp.resolve_target();
+
+    if let "animated_property" = name {
+        property.hint_info = PropertyHintInfo::none();
+        if let Some(target) = &target
+            && let Ok(names) = suggested_properties(target)
         {
-            match self.resolve_target() {
-                None => warnings
-                    .push("`target` could not be resolved. Assign a valid node or add a non-blueprint ancestor."),
-                Some(target) => match property_descriptor(&target, &self.animated_property) {
-                    Ok(info) => {
-                        if !value_matches(&self.end_value, info.variant_type) {
-                            warnings.push(&format!(
-                                "`end_value` must match the type selected by `animated_property`: expected {}, got {}.",
-                                info.variant_type.godot_type_name(),
-                                self.end_value.get_type().godot_type_name()
-                            ));
-                        }
+            let separator = GString::from(",");
 
-                        if self.start_enabled
-                            && self.lerp_mode == LerpModeKind::Absolute
-                            && !value_matches(&self.start_value, info.variant_type)
-                        {
-                            warnings.push(&format!(
-                                "`start_value` must match the type selected by `animated_property`: expected {}, got \
-                                 {}.",
-                                info.variant_type.godot_type_name(),
-                                self.start_value.get_type().godot_type_name()
-                            ));
-                        }
-                    }
-                    Err(err) => {
-                        warnings.push(&format!(
-                            "Cannot resolve `animated_property` (`{}`):\n\t{}",
-                            self.animated_property, err
-                        ));
-                    }
-                },
+            property.hint_info.hint = PropertyHint::ENUM_SUGGESTION;
+            property.hint_info.hint_string = separator.join(&names);
+        }
+    } else if let "start_value" | "end_value" = name {
+        if scripted || !matches!(bp.kind, BlueprintKind::Property | BlueprintKind::Characters) {
+            return;
+        }
+        if characters {
+            let Some(default) = impulse_start.filter(|_| name == "start_value") else { return };
+            let ty = default.get_type();
+            let value = &bp.start_value;
+            if value.is_nil() || value.get_type() == ty {
+                property.variant_type = ty;
+                property.class_name = StringName::default();
+                property.hint_info = PropertyHintInfo::none();
+                property.usage = property.usage.without(PropertyUsageFlags::NIL_IS_VARIANT);
             }
+            return;
+        }
+        let Some(target) = target else { return };
 
-            if !self.speed_or_duration.is_finite() || self.speed_or_duration <= 0.0 {
-                warnings.push("`speed_or_duration` must be finite and greater than 0.0.");
+        match property_descriptor(&target, &bp.animated_property) {
+            Ok(info) => {
+                let value = if let "start_value" = name { &bp.start_value } else { &bp.end_value };
+                // Retain incompatible payloads for explicit repair; inspection never rewrites authored values.
+                if value.is_nil() || value.get_type() == info.variant_type {
+                    property.variant_type = info.variant_type;
+                    property.class_name = info.class_name;
+                    property.hint_info = info.hint_info;
+                    property.usage = property.usage.without(PropertyUsageFlags::NIL_IS_VARIANT);
+                }
             }
+            // The Scene dock already presents configuration warnings. Metadata
+            // queries also run while authoring incomplete steps and must stay quiet.
+            Err(_) => {}
         }
-
-        if self.base().get_script().is_none() && self.kind == BlueprintKind::Characters {
-            warnings.extend_array(&self.character_warnings());
-        }
-
-        if !self.is_managed_by_parent()
-            && let Some(message) = self.trigger_warning()
-        {
-            warnings.push(&message);
-        }
-
-        warnings
     }
 }

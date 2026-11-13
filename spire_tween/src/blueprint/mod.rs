@@ -4,6 +4,8 @@ mod runtime;
 mod triggers;
 mod tweenable_property_validation;
 
+use godot::signal::ConnectHandle;
+
 use super::*;
 
 /// Stores an editable animation and builds a fresh [SpireSequence] on every [method play].
@@ -19,6 +21,7 @@ pub struct TweenBlueprint {
     target: Option<Gd<Node>>,
     current_tween: Option<Gd<SpireSequence>>,
     trigger_connection: Option<triggers::TriggerConnection>,
+    character_effect_connection: Option<ConnectHandle>,
     enter_trigger_pending: bool,
 
     // <-------------------------- General Configuration
@@ -70,6 +73,8 @@ pub struct TweenBlueprint {
     speed_or_duration: f64,
     #[export]
     #[var]
+    /// Initialize before playback. Basic character effects use the resource's
+    /// `from`; property and punch/shake steps use `start_value`.
     start_enabled: bool,
     #[export]
     #[var]
@@ -89,9 +94,12 @@ pub struct TweenBlueprint {
 
     // Tween Property Data -------------------------->
     #[export_group(name = "Character Animation")]
+    /// Effect parameters shared with looping rich-text presets. Each play builds
+    /// fresh ordinary tweens from the resource's current fields.
     #[export]
-    #[var(set = set_character_animation)]
-    character_animation: CharacterAnimation,
+    #[var(set = set_character_effect, hint = RESOURCE_TYPE,
+        hint_string = "SpireTextColorEffect,SpireTextFadeEffect,SpireTextOffsetEffect,SpireTextRotationEffect,SpireTextScaleEffect,SpireTextPunchOffsetEffect,SpireTextPunchRotationEffect,SpireTextPunchScaleEffect,SpireTextShakeOffsetEffect,SpireTextShakeRotationEffect,SpireTextShakeScaleEffect")]
+    character_effect: Option<Gd<Resource>>,
     /// First logical character index, including spaces and excluding BBCode tags.
     #[export(range = (0.0, 100.0, or_greater))]
     #[var]
@@ -105,13 +113,6 @@ pub struct TweenBlueprint {
     #[export(range = (0.0, 1.0, 0.005, or_greater))]
     #[var]
     character_stagger: f64,
-    /// Pixel pivot relative to the glyph pen origin; no font metrics are inferred.
-    #[export]
-    #[var]
-    character_pivot: Vector2,
-    #[export]
-    #[var]
-    character_rotate_mode: RotateMode,
     /// Loops of each character's method tween, independently of the containing sequence.
     #[export(range = (1.0, 10.0, or_greater))]
     #[var]
@@ -119,29 +120,8 @@ pub struct TweenBlueprint {
     character_loops: i64,
     #[export]
     #[var]
-    character_loop_mode: LoopMode,
-    #[export(range = (1.0, 30.0, or_greater))]
-    #[var]
-    #[init(val = 10)]
-    character_vibrato: i32,
-    #[export(range = (0.0, 1.0))]
-    #[var]
-    #[init(val = 1.0)]
-    character_elasticity: f64,
-    #[export(range = (0.0, 180.0))]
-    #[var]
-    #[init(val = 90.0)]
-    character_randomness: real,
-    #[export]
-    #[var]
     #[init(val = true)]
-    character_fade_out: bool,
-    #[export]
-    #[var]
-    character_randomness_mode: ShakeRandomnessMode,
-    #[export]
-    #[var]
-    #[init(val = true)]
+    /// Preserve other additive contributions during punch/shake playback.
     character_blendable: bool,
 }
 
@@ -171,9 +151,9 @@ impl INode for TweenBlueprint {
         Self::stop(this);
     }
 
-    fn on_validate_property(&self, property: &mut PropertyInfo) { self.validate_inspector_property(property); }
+    fn on_validate_property(&self, property: &mut PropertyInfo) { inspector::on_validate_property(self, property); }
 
-    fn get_configuration_warnings(&self) -> PackedStringArray { self.configuration_warnings() }
+    fn get_configuration_warnings(&self) -> PackedStringArray { inspector::get_configuration_warnings(self) }
 }
 
 #[godot_api]
@@ -228,19 +208,50 @@ impl TweenBlueprint {
     #[func]
     fn set_kind(&mut self, kind: BlueprintKind) {
         self.kind = kind;
+        self.initialize_character_start();
         self.configuration_changed();
     }
 
     #[func]
-    fn set_character_animation(&mut self, animation: CharacterAnimation) {
-        let (start, end) = self.character_animation.defaults();
-        if self.kind == BlueprintKind::Characters && self.start_value == start && self.end_value == end {
-            // Values still at both channel defaults can follow the selector's type.
+    fn set_character_effect(&mut self, effect: Option<Gd<Resource>>) {
+        if self.kind == BlueprintKind::Characters
+            && let Ok(previous) = self.compiled_character_effect()
+            && previous.impulse_start_default().as_ref() == Some(&self.start_value)
+        {
             self.start_value = Variant::nil();
-            self.end_value = Variant::nil();
         }
-        self.character_animation = animation;
+        self.disconnect_character_effect();
+        self.character_effect = effect;
+        self.initialize_character_start();
+        if let Some(resource) = &self.character_effect {
+            // Resource setters emit while their Rust state is borrowed. Defer
+            // inspection/validation until that borrow has been released.
+            let warnings = self.base().callable("update_configuration_warnings");
+            let inspector = self.base().callable("notify_property_list_changed");
+            self.character_effect_connection = Some(resource.signals().changed().connect(move || {
+                warnings.call_deferred(&[]);
+                inspector.call_deferred(&[]);
+            }));
+        }
         self.configuration_changed();
+    }
+
+    fn initialize_character_start(&mut self) {
+        if self.kind == BlueprintKind::Characters
+            && self.start_value.is_nil()
+            && let Ok(effect) = self.compiled_character_effect()
+            && let Some(value) = effect.impulse_start_default()
+        {
+            self.start_value = value;
+        }
+    }
+
+    fn disconnect_character_effect(&mut self) {
+        if let Some(handle) = self.character_effect_connection.take()
+            && handle.is_connected()
+        {
+            handle.disconnect();
+        }
     }
 
     #[func]

@@ -256,6 +256,25 @@ func test_text_presets_extended_resource_metadata() -> bool:
 	n.free()
 	return true
 
+func test_text_presets_invalid_entries_preserve_valid_entries() -> bool:
+	var invalid := SpireTextFadeEffect.new()
+	invalid.duration = 0.0
+	var color := SpireTextColorEffect.new()
+	color.from = Color.GREEN
+	color.to = Color.GREEN
+	var offset := SpireTextOffsetEffect.new()
+	offset.from = Vector2(4, 7)
+	offset.to = offset.from
+	var n := _label("[test]A[/test]", [_preset("test", [invalid, color, Resource.new(), offset])])
+	await _draw_frames()
+	assert_eq(n.get_parsed_text(), "A")
+	assert_eq(n.get_char_color(0), Color.GREEN)
+	var sample := _sample(n, 0.25)
+	assert_eq(sample.color, Color.GREEN)
+	assert_true(sample.transform.origin == Vector2(4, 7), "Invalid entries must not prevent later valid effects from being compiled")
+	n.free()
+	return true
+
 func test_text_presets_nested_clusters() -> bool:
 	var offset := SpireTextOffsetEffect.new()
 	offset.from = Vector2(5, 0)

@@ -62,6 +62,11 @@ references, mutable playback clocks, character state, or mutable random generato
 inside shared authoring resources. Two labels can reference the same preset
 without sharing playback state.
 
+The same effect-entry resources also configure `TweenBlueprint.character_effect`.
+Each Blueprint play validates and copies the resource fields into ordinary
+character tweens; range selection, stagger, and finite loop counts stay on the
+Blueprint. Preset rendering and Blueprint playback share resource compilation.
+
 Create an adapter per label/preset registration. Separate occurrences of a tag
 use the rendering context supplied by Godot; do not place occurrence-specific
 state in a shared preset. Any compiled sampling data belongs to the adapter or

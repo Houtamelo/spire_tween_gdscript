@@ -38,6 +38,14 @@ func scene_warnings(node: Node) -> String:
 		text += item.get_button_tooltip_text(0, button) + "\n"
 	return text
 
+func wait_for_scene_warning(node: Node, field: String, present: bool) -> bool:
+	# The Scene dock batches warning updates independently of process frames.
+	var deadline := Time.get_ticks_usec() + 2_000_000
+	while scene_warnings(node).contains(field) != present:
+		if Time.get_ticks_usec() >= deadline: return false
+		await get_tree().process_frame
+	return true
+
 func _run() -> void:
 	for _frame in 8: await get_tree().process_frame
 	EditorInterface.open_scene_from_path("res://blueprint_editor_fixture.tscn")
@@ -153,31 +161,82 @@ func _run() -> void:
 	characters.owner = scene
 	for _frame in 3: await get_tree().process_frame
 	check(characters.target == null and characters.get_resolved_target() == text, "Characters must support ancestor target fallback")
-	check(property_info(characters, &"end_value").type == TYPE_VECTOR2, "Offset characters must use the Vector2 editor")
-	check(characters.start_value == Vector2.ZERO and characters.end_value == Vector2.ZERO, "Character defaults must initialize without writing to the target")
-	characters.character_animation = Spire.CHARACTER_ANIMATION_FADE
+	check(scene_warnings(characters).contains("character_effect"), "An unconfigured character step must warn about its missing resource")
+	var rotation := SpireTextRotationEffect.new()
+	rotation.to = Vector3(0, 0, TAU)
+	rotation.pivot = Vector2(12, -14)
+	rotation.rotate_mode = Spire.ROTATE_MODE_FAST_BEYOND_360
+	rotation.loop_mode = Spire.LOOP_MODE_YOYO
+	EditorInterface.edit_node(characters)
 	for _frame in 3: await get_tree().process_frame
-	check(property_info(characters, &"end_value").type == TYPE_FLOAT and characters.end_value == 1.0, "Unedited defaults must follow a new character channel's type")
-	characters.end_value = 0.25
-	characters.character_animation = Spire.CHARACTER_ANIMATION_ROTATION
-	for _frame in 3: await get_tree().process_frame
-	check(characters.end_value == 0.25, "Changing channels must preserve explicitly authored incompatible values")
-	characters.end_value = Vector3(0, 0, TAU)
-	characters.start_value = Vector3.ZERO
-	characters.character_pivot = Vector2(12, -14)
-	characters.character_rotate_mode = Spire.ROTATE_MODE_FAST_BEYOND_360
+	var assigned := false
+	for property: EditorProperty in EditorInterface.get_inspector().find_children("*", "EditorProperty", true, false):
+		if property.get_edited_property() == &"character_effect":
+			property.emit_changed(&"character_effect", rotation)
+			assigned = true
+			break
+	for _frame in 8: await get_tree().process_frame
+	check(assigned and characters.character_effect == rotation, "The actual Inspector must assign an existing effect resource")
+	var resource_info := property_info(characters, &"character_effect")
+	check(resource_info.type == TYPE_OBJECT and resource_info.hint == PROPERTY_HINT_RESOURCE_TYPE, "Character effects must use the Inspector resource picker")
+	for effect_class_name in ["SpireTextColorEffect", "SpireTextFadeEffect", "SpireTextOffsetEffect", "SpireTextRotationEffect", "SpireTextScaleEffect", "SpireTextPunchOffsetEffect", "SpireTextPunchRotationEffect", "SpireTextPunchScaleEffect", "SpireTextShakeOffsetEffect", "SpireTextShakeRotationEffect", "SpireTextShakeScaleEffect"]:
+		check(effect_class_name in resource_info.hint_string.split(","), "The resource picker must offer " + effect_class_name)
+	check(await wait_for_scene_warning(characters, "character_effect", false), "Assigning a valid resource must clear the warning")
 	characters.character_loops = 2
-	characters.character_loop_mode = Spire.LOOP_MODE_YOYO
-	for name in [&"character_animation", &"character_first", &"character_last", &"character_stagger", &"character_pivot", &"character_rotate_mode", &"character_loops", &"character_loop_mode", &"end_value", &"speed_or_duration"]:
+	characters.character_first = 99
+	characters.character_stagger = -0.1
+	characters.character_loops = 0
+	characters.update_configuration_warnings()
+	var range_error_visible: bool = await wait_for_scene_warning(characters, "character_first", true)
+	check(range_error_visible and not scene_warnings(characters).contains("character_stagger") and not scene_warnings(characters).contains("character_loops"), "Character validation must report its first error")
+	characters.character_first = 0
+	characters.update_configuration_warnings()
+	var stagger_error_visible: bool = await wait_for_scene_warning(characters, "character_stagger", true)
+	check(stagger_error_visible and not scene_warnings(characters).contains("character_loops"), "Fixing the range must expose the next character error")
+	characters.character_stagger = 0.0
+	characters.update_configuration_warnings()
+	check(await wait_for_scene_warning(characters, "character_loops", true), "Fixing stagger must expose the invalid loop count")
+	characters.character_loops = 2
+	characters.update_configuration_warnings()
+	check(await wait_for_scene_warning(characters, "character_loops", false), "A valid character configuration must clear the error")
+	for name in [&"character_effect", &"character_first", &"character_last", &"character_stagger", &"character_loops", &"start_enabled", &"ease_curve"]:
 		check(property_info(characters, name).usage & PROPERTY_USAGE_EDITOR != 0, "Relevant character fields must be visible: " + name)
 		check(property_info(characters, name).usage & PROPERTY_USAGE_STORAGE != 0, "Character fields must remain serializable: " + name)
-	for name in [&"animated_property", &"lerp_mode", &"character_vibrato", &"character_elasticity", &"character_randomness"]:
+	for name in [&"animated_property", &"lerp_mode", &"end_value", &"start_value", &"speed_or_duration", &"ease_basic", &"character_blendable"]:
 		check(property_info(characters, name).usage & PROPERTY_USAGE_EDITOR == 0, "Irrelevant character fields must be hidden: " + name)
 		check(property_info(characters, name).usage & PROPERTY_USAGE_STORAGE != 0, "Hidden settings must retain serialization: " + name)
-	characters.character_animation = Spire.CHARACTER_ANIMATION_SHAKE_ROTATION
-	check(property_info(characters, &"character_randomness").usage & PROPERTY_USAGE_EDITOR != 0, "Shake must expose randomness controls")
-	check(property_info(characters, &"character_elasticity").usage & PROPERTY_USAGE_EDITOR == 0, "Shake must hide punch controls")
-	characters.character_animation = Spire.CHARACTER_ANIMATION_ROTATION
+	for name in [&"character_animation", &"character_pivot", &"character_rotate_mode", &"character_loop_mode", &"character_vibrato", &"character_elasticity", &"character_randomness", &"character_fade_out", &"character_randomness_mode"]:
+		check(property_info(characters, name).is_empty(), "Duplicated character settings must be removed: " + name)
+	var impulse := SpireTextPunchScaleEffect.new()
+	characters.character_effect = impulse
+	characters.start_enabled = true
+	for _frame in 3: await get_tree().process_frame
+	check(characters.start_value == Vector2.ONE, "Impulse starts must initialize to the neutral channel value")
+	check(property_info(characters, &"start_value").type == TYPE_VECTOR2 and property_info(characters, &"start_value").usage & PROPERTY_USAGE_EDITOR != 0, "Impulse starts must use the typed editor")
+	check(property_info(characters, &"character_blendable").usage & PROPERTY_USAGE_EDITOR != 0, "Impulse resources must expose blending")
+	characters.character_effect = rotation
+	EditorInterface.inspect_object(rotation)
+	for _frame in 3: await get_tree().process_frame
+	var edited := false
+	for property: EditorProperty in EditorInterface.get_inspector().find_children("*", "EditorProperty", true, false):
+		if property.get_edited_property() == &"duration":
+			property.emit_changed(&"duration", 2.0)
+			edited = true
+			break
+	for _frame in 8: await get_tree().process_frame
+	check(edited and rotation.duration == 2.0, "The Inspector must edit the shared resource's timing")
+	var resource_undo := EditorInterface.get_editor_undo_redo()
+	var resource_history := resource_undo.get_history_undo_redo(resource_undo.get_object_history_id(rotation))
+	resource_history.undo()
+	check(rotation.duration == 1.0, "Undo must restore resource timing")
+	resource_history.redo()
+	check(rotation.duration == 2.0, "Redo must restore edited resource timing")
+	rotation.duration = 0.0
+	for _frame in 8: await get_tree().process_frame
+	check(await wait_for_scene_warning(characters, "duration", true), "Nested resource edits must update the Scene dock warnings")
+	rotation.duration = 2.0
+	for _frame in 8: await get_tree().process_frame
+	check(await wait_for_scene_warning(characters, "duration", false), "Repairing the resource must clear its warnings")
 	EditorInterface.edit_node(characters)
 	for _frame in 3: await get_tree().process_frame
 	check(text.get_child_count() == 1 and text.text == "ABC", "Editor inspection must not add helper nodes or mutate text")
@@ -210,8 +269,8 @@ func _run() -> void:
 	check(restored_effect.end_value == Vector2(8, 9), "Save/reload must preserve the endpoint")
 	check(restored_effect.target == restored, "Save/reload must preserve relative node references")
 	var restored_characters: TweenBlueprint = restored.get_node("CharacterText/Characters")
-	check(restored_characters.end_value.is_equal_approx(Vector3(0, 0, TAU)) and restored_characters.character_pivot == Vector2(12, -14), "Editor save/reload must preserve character values and pivots")
-	check(restored_characters.character_loops == 2 and restored_characters.character_loop_mode == Spire.LOOP_MODE_YOYO, "Editor save/reload must preserve character loop settings")
+	check(restored_characters.character_effect is SpireTextRotationEffect and restored_characters.character_effect.to.is_equal_approx(Vector3(0, 0, TAU)) and restored_characters.character_effect.pivot == Vector2(12, -14), "Editor save/reload must preserve the effect resource and its values")
+	check(restored_characters.character_loops == 2 and restored_characters.character_effect.loop_mode == Spire.LOOP_MODE_YOYO and restored_characters.character_effect.duration == 2.0, "Editor save/reload must preserve resource timing and loop settings")
 	restored.free()
 	var original: Variant = effect.end_value
 	effect.animated_property = &"rotation"

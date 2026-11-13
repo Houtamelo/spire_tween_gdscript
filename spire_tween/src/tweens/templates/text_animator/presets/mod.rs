@@ -5,7 +5,9 @@ mod registry;
 mod reserved_tags;
 mod resources;
 mod sample;
+mod tween;
 
+pub(crate) use compile::CompiledTextEffect;
 use godot::classes::{CharFxTransform, IRichTextEffect, Resource, RichTextEffect};
 pub(super) use registry::Registry;
 pub use resources::*;

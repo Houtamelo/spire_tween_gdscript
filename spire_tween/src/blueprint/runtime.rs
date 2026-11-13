@@ -295,6 +295,7 @@ impl TweenBlueprint {
 
 impl Drop for TweenBlueprint {
     fn drop(&mut self) {
+        self.disconnect_character_effect();
         if let Some(sequence) = self.current_tween.take() {
             sequence.bind().to_mut().stop();
         }

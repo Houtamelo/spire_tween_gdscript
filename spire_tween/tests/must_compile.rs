@@ -132,7 +132,6 @@ fn compile() {
         let _ = (
             BlueprintKind::Property,
             BlueprintKind::Characters,
-            CharacterAnimation::ShakeScale,
             LerpModeKind::Relative,
             TriggerCondition::Manual,
         );

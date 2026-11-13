@@ -19,6 +19,7 @@ func _on_fade_pressed() -> void:
 		code_tweens.append(text.fade_char(index, 0.0, 0.6))
 
 func _on_reset_pressed() -> void:
+	$Text/SharedEffect.stop()
 	for tween in code_tweens: tween.stop()
 	code_tweens.clear()
 	text.reset()

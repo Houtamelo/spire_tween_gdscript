@@ -1,0 +1,9 @@
+[gd_resource type="SpireTextOffsetEffect" format=3]
+
+[resource]
+duration = 0.65
+ease = 16
+loop_mode = 1
+character_phase_offset = 0.06
+from = Vector2(0, -6)
+to = Vector2(0, 6)

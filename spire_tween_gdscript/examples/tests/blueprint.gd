@@ -56,13 +56,12 @@ func play(effect: TweenBlueprint) -> SpireSequence:
 		sequences.append(sequence)
 	return sequence
 
-func character_step(parent: Node, target: RichTextLabel, animation: int, end: Variant) -> TweenBlueprint:
+func character_step(parent: Node, target: RichTextLabel, resource: Resource, end: Variant) -> TweenBlueprint:
 	var result := blueprint(parent, Spire.BLUEPRINT_KIND_CHARACTERS)
 	result.target = target
-	result.character_animation = animation
-	result.end_value = end
-	result.speed_or_duration = 1.0
-	result.ease_basic = Spire.EASE_LINEAR
+	var type := resource.get_class()
+	resource.set("punch" if "Punch" in type else ("strength" if "Shake" in type else "to"), end)
+	result.character_effect = resource
 	return result
 
 func test_blueprint_character_constructors() -> bool:
@@ -71,17 +70,17 @@ func test_blueprint_character_constructors() -> bool:
 	add_child(label)
 	var animator := label
 	var cases := [
-		[Spire.CHARACTER_ANIMATION_OFFSET, Vector2(12, 8), "get_char_offset", Vector2.ZERO],
-		[Spire.CHARACTER_ANIMATION_FADE, 0.2, "get_char_alpha", 1.0],
-		[Spire.CHARACTER_ANIMATION_COLOR, Color(0.2, 0.4, 0.6), "get_char_color", Color.WHITE],
-		[Spire.CHARACTER_ANIMATION_ROTATION, Vector3(0, 0, 1), "get_char_rotation", Vector3.ZERO],
-		[Spire.CHARACTER_ANIMATION_SCALE, Vector2(2, 3), "get_char_scale", Vector2.ONE],
-		[Spire.CHARACTER_ANIMATION_PUNCH_OFFSET, Vector2(12, 8), "get_char_offset", Vector2.ZERO],
-		[Spire.CHARACTER_ANIMATION_PUNCH_ROTATION, Vector3(0.2, 0.3, 0.4), "get_char_rotation", Vector3.ZERO],
-		[Spire.CHARACTER_ANIMATION_PUNCH_SCALE, Vector2(0.2, 0.4), "get_char_scale", Vector2.ONE],
-		[Spire.CHARACTER_ANIMATION_SHAKE_OFFSET, Vector2(12, 8), "get_char_offset", Vector2.ZERO],
-		[Spire.CHARACTER_ANIMATION_SHAKE_ROTATION, Vector3(0.2, 0.3, 0.4), "get_char_rotation", Vector3.ZERO],
-		[Spire.CHARACTER_ANIMATION_SHAKE_SCALE, Vector2(0.2, 0.4), "get_char_scale", Vector2.ONE],
+		[SpireTextOffsetEffect.new(), Vector2(12, 8), "get_char_offset", Vector2.ZERO],
+		[SpireTextFadeEffect.new(), 0.2, "get_char_alpha", 1.0],
+		[SpireTextColorEffect.new(), Color(0.2, 0.4, 0.6), "get_char_color", Color.WHITE],
+		[SpireTextRotationEffect.new(), Vector3(0, 0, 1), "get_char_rotation", Vector3.ZERO],
+		[SpireTextScaleEffect.new(), Vector2(2, 3), "get_char_scale", Vector2.ONE],
+		[SpireTextPunchOffsetEffect.new(), Vector2(12, 8), "get_char_offset", Vector2.ZERO],
+		[SpireTextPunchRotationEffect.new(), Vector3(0.2, 0.3, 0.4), "get_char_rotation", Vector3.ZERO],
+		[SpireTextPunchScaleEffect.new(), Vector2(0.2, 0.4), "get_char_scale", Vector2.ONE],
+		[SpireTextShakeOffsetEffect.new(), Vector2(12, 8), "get_char_offset", Vector2.ZERO],
+		[SpireTextShakeRotationEffect.new(), Vector3(0.2, 0.3, 0.4), "get_char_rotation", Vector3.ZERO],
+		[SpireTextShakeScaleEffect.new(), Vector2(0.2, 0.4), "get_char_scale", Vector2.ONE],
 	]
 	for item in cases:
 		animator.reset()
@@ -93,7 +92,13 @@ func test_blueprint_character_constructors() -> bool:
 			check(not same(animator.call(item[2], index), item[3]), "Character constructor must advance every selected index: %s" % item[0])
 		sequence.force_complete()
 		for index in 3:
-			check(same(animator.call(item[2], index), item[3] if item[0] >= Spire.CHARACTER_ANIMATION_PUNCH_OFFSET else item[1]), "Character completion must reach its endpoint or restore its contribution: %s" % item[0])
+			var impulse: bool = "Punch" in item[0].get_class() or "Shake" in item[0].get_class()
+			check(same(animator.call(item[2], index), item[3] if impulse else item[1]), "Character completion must reach its endpoint or restore its contribution: %s" % item[0])
+		# Every supported resource must also reject invalid timing in a Blueprint.
+		animator.reset()
+		item[0].duration = 0.0
+		play(effect).force_complete()
+		check(same(animator.call(item[2], 0), item[3]), "Invalid resource timing must skip the character step: %s" % item[0])
 	return failures.is_empty()
 
 func test_blueprint_character_stagger_start_loops_and_restart() -> bool:
@@ -101,13 +106,13 @@ func test_blueprint_character_stagger_start_loops_and_restart() -> bool:
 	label.text = "ABC"
 	add_child(label)
 	var animator := label
-	var effect := character_step(self, label, Spire.CHARACTER_ANIMATION_OFFSET, Vector2(10, 0))
+	var effect := character_step(self, label, SpireTextOffsetEffect.new(), Vector2(10, 0))
 	effect.character_first = 1
 	effect.character_last = 2
 	effect.character_stagger = 0.25
 	effect.delay = 0.5
 	effect.start_enabled = true
-	effect.start_value = Vector2(2, 0)
+	effect.character_effect.from = Vector2(2, 0)
 	var first := play(effect)
 	check(animator.get_char_offset(1) == Vector2.ZERO, "Building must not apply explicit character starts")
 	first.custom_step(0.25)
@@ -129,7 +134,7 @@ func test_blueprint_character_stagger_start_loops_and_restart() -> bool:
 	second.stop()
 	animator.reset()
 	effect.character_loops = 2
-	effect.character_loop_mode = Spire.LOOP_MODE_YOYO
+	effect.character_effect.loop_mode = Spire.LOOP_MODE_YOYO
 	var yoyo := play(effect)
 	for _tick in 3: yoyo.custom_step(0.5)
 	check(same(animator.get_char_offset(1), Vector2(5, 0)), "Character loops must support yoyo independently of sequence loops: %s" % animator.get_char_offset(1))
@@ -140,9 +145,9 @@ func test_blueprint_character_stagger_start_loops_and_restart() -> bool:
 	add_child(sprite)
 	var serial := blueprint(self)
 	property_step(serial, sprite, &"position:x", 10.0)
-	var later := character_step(serial, label, Spire.CHARACTER_ANIMATION_OFFSET, Vector2(10, 0))
+	var later := character_step(serial, label, SpireTextOffsetEffect.new(), Vector2(10, 0))
 	later.start_enabled = true
-	later.start_value = Vector2(2, 0)
+	later.character_effect.from = Vector2(2, 0)
 	var chain := play(serial)
 	chain.custom_step(0.5)
 	check(animator.get_char_offset(0) == Vector2.ZERO, "A later serial character step must not initialize its start early")
@@ -154,7 +159,7 @@ func test_blueprint_character_build_refreshes_text() -> bool:
 	var label := SpireRichTextLabel.new()
 	label.text = "A"
 	add_child(label)
-	var step := character_step(self, label, Spire.CHARACTER_ANIMATION_OFFSET, Vector2(3, 4))
+	var step := character_step(self, label, SpireTextOffsetEffect.new(), Vector2(3, 4))
 	label.text = "ABCD"
 	check(label.get_character_count() == 1, "Character getters must keep the last refreshed state")
 	var sequence := play(step)
@@ -176,18 +181,12 @@ func test_blueprint_character_invalid_configuration_and_lifetime() -> bool:
 	var invalid_cases := [
 		["target", sprite], ["target", plain_label], ["character_first", -1], ["character_first", 99], ["character_last", 99],
 		["character_last", -2], ["character_stagger", -0.1], ["character_stagger", NAN],
-		["character_pivot", Vector2(INF, 0)], ["character_loops", 0],
-		["end_value", "wrong type"], ["speed_or_duration", 0.0], ["speed_or_duration", NAN],
+		["character_loops", 0], ["character_effect", null], ["character_effect", Resource.new()],
 		["start_value", "wrong type"],
-		["character_vibrato", 0, Spire.CHARACTER_ANIMATION_PUNCH_OFFSET],
-		["character_elasticity", NAN, Spire.CHARACTER_ANIMATION_PUNCH_OFFSET],
-		["character_elasticity", 2.0, Spire.CHARACTER_ANIMATION_PUNCH_OFFSET],
-		["character_randomness", NAN, Spire.CHARACTER_ANIMATION_SHAKE_OFFSET],
-		["character_randomness", 181.0, Spire.CHARACTER_ANIMATION_SHAKE_OFFSET],
 	]
 	for item in invalid_cases:
 		var container := blueprint(self)
-		var invalid := character_step(container, label, item[2] if item.size() > 2 else Spire.CHARACTER_ANIMATION_OFFSET, Vector2(10, 0))
+		var invalid := character_step(container, label, SpireTextPunchOffsetEffect.new() if item[0] == "start_value" else SpireTextOffsetEffect.new(), Vector2(10, 0))
 		if item[0] == "start_value": invalid.start_enabled = true
 		invalid.set(item[0], item[1])
 		property_step(container, sprite, &"position:x", 5.0)
@@ -195,7 +194,27 @@ func test_blueprint_character_invalid_configuration_and_lifetime() -> bool:
 		play(container).force_complete()
 		check(near(sprite.position.x, 5.0), "Invalid character steps must leave valid following siblings playable: " + item[0])
 		check(animator.get_char_offset(0) == Vector2.ZERO, "Invalid character settings must not mutate the label")
-	var delayed := character_step(self, label, Spire.CHARACTER_ANIMATION_OFFSET, Vector2(0, -24))
+	var invalid_resources := [
+		[SpireTextRotationEffect.new(), "pivot", Vector2(INF, 0)],
+		[SpireTextOffsetEffect.new(), "duration", NAN],
+		[SpireTextOffsetEffect.new(), "to", Vector2(NAN, 0)],
+		[SpireTextPunchOffsetEffect.new(), "vibrato", 0],
+		[SpireTextPunchOffsetEffect.new(), "elasticity", NAN],
+		[SpireTextPunchOffsetEffect.new(), "elasticity", 2.0],
+		[SpireTextShakeOffsetEffect.new(), "randomness", NAN],
+		[SpireTextShakeOffsetEffect.new(), "randomness", 181.0],
+	]
+	for item in invalid_resources:
+		var container := blueprint(self)
+		var invalid := blueprint(container, Spire.BLUEPRINT_KIND_CHARACTERS)
+		invalid.target = label
+		invalid.character_effect = item[0]
+		item[0].set(item[1], item[2])
+		property_step(container, sprite, &"position:x", 5.0)
+		sprite.position = Vector2.ZERO
+		play(container).force_complete()
+		check(near(sprite.position.x, 5.0) and animator.get_char_offset(0) == Vector2.ZERO, "Invalid resource settings must leave valid siblings playable: " + item[1])
+	var delayed := character_step(self, label, SpireTextOffsetEffect.new(), Vector2(0, -24))
 	delayed.character_first = 4
 	delayed.character_last = 4
 	delayed.delay = 0.5
@@ -214,6 +233,160 @@ func test_blueprint_character_invalid_configuration_and_lifetime() -> bool:
 	check(sequence.is_stopped(), "Freeing the RichTextLabel must cancel character playback")
 	return failures.is_empty()
 
+func test_blueprint_character_resource_from_values() -> bool:
+	var label := SpireRichTextLabel.new()
+	label.text = "AB"
+	add_child(label)
+	var cases := [
+		[SpireTextColorEffect.new(), Color.RED, Color.BLUE, Color(0.75, 0, 0.25), "get_char_color"],
+		[SpireTextFadeEffect.new(), 0.2, 0.6, 0.3, "get_char_alpha"],
+		[SpireTextOffsetEffect.new(), Vector2(-8, 0), Vector2(8, 4), Vector2(-4, 1), "get_char_offset"],
+		[SpireTextScaleEffect.new(), Vector2(2, 3), Vector2(4, 7), Vector2(2.5, 4), "get_char_scale"],
+		[SpireTextRotationEffect.new(), Vector3(0.2, 0, 0), Vector3(0.6, 0, 0), Vector3(0.3, 0, 0), "get_char_rotation"],
+	]
+	for item in cases:
+		label.reset()
+		var entry: Resource = item[0]
+		entry.set("from", item[1])
+		var step := character_step(self, label, entry, item[2])
+		step.start_enabled = true
+		step.character_stagger = 0.5
+		var sequence := play(step)
+		sequence.custom_step(0.25)
+		check(same(label.call(item[4], 0), item[3]), "Basic resource from/to must interpolate the first selected character")
+		check(same(label.call(item[4], 1), item[1]), "Basic resource from must initialize the remaining characters before their delay")
+		sequence.stop()
+	return failures.is_empty()
+
+func test_blueprint_character_resource_timing_and_curve() -> bool:
+	var label := SpireRichTextLabel.new()
+	label.text = "AB"
+	add_child(label)
+	var entry := SpireTextOffsetEffect.new()
+	entry.duration = 2.0
+	entry.ease = Spire.EASE_IN_QUAD
+	entry.character_phase_offset = 0.75
+	var step := character_step(self, label, entry, Vector2(16, 0))
+	step.start_enabled = true
+	entry.from = Vector2(4, 0)
+	var sequence := play(step)
+	sequence.custom_step(1.0)
+	for index in 2:
+		check(same(label.get_char_offset(index), Vector2(7, 0)), "Resource duration/ease/from must drive the tween; preset phase must not act as a start delay")
+	sequence.stop()
+	var curve := Curve.new()
+	curve.add_point(Vector2(0, 0.25))
+	curve.add_point(Vector2(1, 0.25))
+	step.ease_curve = curve
+	sequence = play(step)
+	sequence.custom_step(1.5)
+	check(same(label.get_char_offset(0), Vector2(7, 0)), "The Blueprint curve must override the resource's basic easing")
+	return failures.is_empty()
+
+func test_blueprint_hidden_character_resource_preserves_property_values() -> bool:
+	var target := Node2D.new()
+	add_child(target)
+	var step := property_step(self, target, &"position", Vector2(5, 6))
+	step.character_effect = SpireTextPunchScaleEffect.new()
+	check(step.start_value == null, "A hidden character resource must not initialize property values")
+	step.start_value = Vector2.ONE
+	step.character_effect = SpireTextPunchRotationEffect.new()
+	check(typeof(step.start_value) == TYPE_VECTOR2 and step.start_value == Vector2.ONE, "Replacing a hidden character resource must preserve the authored property start")
+	step.start_value = null
+	step.kind = Spire.BLUEPRINT_KIND_CHARACTERS
+	check(typeof(step.start_value) == TYPE_VECTOR3 and step.start_value == Vector3.ZERO, "Switching to Characters must initialize an unset impulse start synchronously")
+	return failures.is_empty()
+
+func test_blueprint_character_impulse_default_is_synchronous() -> bool:
+	var label := SpireRichTextLabel.new()
+	label.text = "A"
+	add_child(label)
+	for item in [[SpireTextPunchOffsetEffect.new(), Vector2.ZERO], [SpireTextPunchScaleEffect.new(), Vector2.ONE], [SpireTextPunchRotationEffect.new(), Vector3.ZERO]]:
+		var step := blueprint(self, Spire.BLUEPRINT_KIND_CHARACTERS)
+		step.target = label
+		step.character_effect = item[0]
+		step.start_enabled = true
+		check(step.start_value == item[1], "Assigning a resource must initialize its neutral impulse start before an immediate play")
+		play(step).force_complete()
+	return failures.is_empty()
+
+func test_blueprint_character_impulse_start_and_blending() -> bool:
+	var label := SpireRichTextLabel.new()
+	label.text = "A"
+	add_child(label)
+	for blendable in [true, false]:
+		var entry := SpireTextPunchScaleEffect.new()
+		entry.punch = Vector2(0.4, 0.2)
+		entry.vibrato = 4
+		entry.elasticity = 0.4
+		var step := blueprint(self, Spire.BLUEPRINT_KIND_CHARACTERS)
+		step.target = label
+		step.character_effect = entry
+		step.start_enabled = true
+		step.start_value = Vector2(2, 3)
+		step.character_blendable = blendable
+		var sequence := play(step)
+		sequence.custom_step(0.1)
+		check(same(label.get_char_scale(0), Vector2(2.4, 3.2)), "Impulse resources must initialize their Blueprint start before sampling")
+		label.set_char_scale(0, label.get_char_scale(0) + Vector2.ONE)
+		sequence.force_complete()
+		check(same(label.get_char_scale(0), Vector2(3, 4) if blendable else Vector2(2, 3)), "Blendable playback must preserve external contributions; nonblendable playback restores its initial value")
+	return failures.is_empty()
+
+func test_blueprint_character_shared_resource_and_watch_lifetime() -> bool:
+	var entry := SpireTextOffsetEffect.new()
+	entry.to = Vector2(10, 0)
+	entry.duration = 2.0
+	entry.ease = Spire.EASE_IN_QUAD
+	var preset := SpireRichTextEffectPreset.new()
+	preset.bbcode = "bob"
+	preset.effects = [entry]
+	var a := SpireRichTextLabel.new()
+	a.bbcode_enabled = true
+	a.text = "[bob]AB[/bob]"
+	a.effect_presets = [preset]
+	add_child(a)
+	var b := SpireRichTextLabel.new()
+	b.text = "AB"
+	add_child(b)
+	var first := blueprint(self, Spire.BLUEPRINT_KIND_CHARACTERS)
+	first.target = a
+	first.character_effect = entry
+	first.start_enabled = true
+	var second := blueprint(self, Spire.BLUEPRINT_KIND_CHARACTERS)
+	second.target = b
+	second.character_effect = entry
+	second.start_enabled = true
+	check(entry.get_signal_connection_list("changed").size() == 3, "Two Blueprint consumers and the preset renderer must watch the same resource independently")
+	var running := play(first)
+	running.custom_step(0.5)
+	check(same(a.get_char_offset(0), Vector2(0.625, 0)), "The first run must capture the resource's initial configuration")
+	entry.to = Vector2(20, 0)
+	entry.duration = 1.0
+	for _frame in 4: await next_frame()
+	check(a.get_parsed_text() == "AB" and same(a.get_char_offset(0), Vector2(0.625, 0)), "Preset resource refreshes must preserve the Blueprint's code-controlled state")
+	running.custom_step(0.5)
+	check(same(a.get_char_offset(0), Vector2(2.5, 0)), "Editing a resource must not mutate an already-built tween")
+	play(second).custom_step(0.5)
+	check(same(b.get_char_offset(0), Vector2(5, 0)), "The next run must use the edited resource")
+	# Reassignment must not accumulate connections, including externally removed watches.
+	second.character_effect = entry
+	check(entry.get_signal_connection_list("changed").size() == 3, "Reassigning the same resource must replace its watch")
+	var replacement := SpireTextFadeEffect.new()
+	second.character_effect = replacement
+	check(entry.get_signal_connection_list("changed").size() == 2, "Replacing a resource must disconnect the old watch")
+	var connections := replacement.get_signal_connection_list("changed")
+	replacement.changed.disconnect(connections[0].callable)
+	second.character_effect = null
+	second.free()
+	first.free()
+	check(entry.get_signal_connection_list("changed").size() == 1, "Freeing Blueprints must leave only the label's subscription")
+	a.free()
+	check(entry.get_signal_connection_list("changed").is_empty(), "Freeing the label must release its final watch")
+	entry.emit_changed()
+	replacement.emit_changed()
+	return failures.is_empty()
+
 func test_blueprint_character_rotation_pivot_and_serialization() -> bool:
 	var root := Node.new()
 	var label := SpireRichTextLabel.new()
@@ -222,13 +395,13 @@ func test_blueprint_character_rotation_pivot_and_serialization() -> bool:
 	root.add_child(label)
 	label.owner = root
 	add_child(root)
-	var effect := character_step(label, label, Spire.CHARACTER_ANIMATION_ROTATION, Vector3(0, 0, TAU))
+	var effect := character_step(label, label, SpireTextRotationEffect.new(), Vector3(0, 0, TAU))
 	effect.name = "Spin"
 	effect.owner = root
-	effect.character_pivot = Vector2(12, -14)
-	effect.character_rotate_mode = Spire.ROTATE_MODE_FAST_BEYOND_360
+	effect.character_effect.pivot = Vector2(12, -14)
+	effect.character_effect.rotate_mode = Spire.ROTATE_MODE_FAST_BEYOND_360
 	effect.character_loops = 2
-	effect.character_loop_mode = Spire.LOOP_MODE_YOYO
+	effect.character_effect.loop_mode = Spire.LOOP_MODE_YOYO
 	var animator := label
 	var sequence := play(effect)
 	check(animator.get_char_pivot(0) == Vector2.ZERO, "Construction must not set the pivot")
@@ -240,9 +413,9 @@ func test_blueprint_character_rotation_pivot_and_serialization() -> bool:
 	check(packed.pack(root) == OK, "Character settings must pack")
 	var copy := packed.instantiate()
 	var restored: TweenBlueprint = copy.get_node("Label/Spin")
-	check(restored.kind == Spire.BLUEPRINT_KIND_CHARACTERS and restored.character_animation == Spire.CHARACTER_ANIMATION_ROTATION, "Character kind and animation must serialize")
-	check(restored.end_value == Vector3(0, 0, TAU) and restored.character_pivot == Vector2(12, -14), "Typed values and pivots must serialize")
-	check(restored.character_rotate_mode == Spire.ROTATE_MODE_FAST_BEYOND_360 and restored.character_loops == 2 and restored.character_loop_mode == Spire.LOOP_MODE_YOYO, "Rotation and loop policies must serialize")
+	check(restored.kind == Spire.BLUEPRINT_KIND_CHARACTERS and restored.character_effect is SpireTextRotationEffect, "Character kind and resource type must serialize")
+	check(restored.character_effect.to == Vector3(0, 0, TAU) and restored.character_effect.pivot == Vector2(12, -14), "Typed resource values and pivots must serialize")
+	check(restored.character_effect.rotate_mode == Spire.ROTATE_MODE_FAST_BEYOND_360 and restored.character_loops == 2 and restored.character_effect.loop_mode == Spire.LOOP_MODE_YOYO, "Rotation and loop policies must serialize")
 	check(restored.target == copy.get_node("Label"), "Character targets must serialize as relative references")
 	copy.free()
 	return failures.is_empty()

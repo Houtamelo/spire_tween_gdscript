@@ -21,7 +21,16 @@ is embedded in the native library. Artists do not need to attach a script.
 
 Try [the example scene](../spire_tween_gdscript/examples/text_effect_presets/preset_demo.tscn).
 Its buttons punch, fade, and reset the same text through the normal code API.
-Edit `enchanted.tres` and `warning.tres` to change the reusable loops.
+The **Play shared Blueprint** button uses the same `enchanted_offset.tres`
+resource as the `enchanted` preset. **Reset** stops that Blueprint too.
+Edit the preset resources or their effect entries to change the authored animation.
+
+The individual `SpireText*Effect` resources also configure finite
+[Blueprint character steps](tween_blueprint.md#animate-text-characters). Assign
+one to a step's `character_effect`, or share the same resource with a preset.
+Blueprints construct ordinary tweens from its fields; presets continue sampling
+it during rendering. Blueprint character delays use `character_stagger`, while
+`character_phase_offset` remains a preset phase setting.
 
 When assigning an array held in a GDScript variable, declare it as
 `Array[SpireRichTextEffectPreset]`. You can also append presets directly to

@@ -1,12 +1,6 @@
 [gd_resource type="SpireRichTextEffectPreset" load_steps=3 format=3]
 
-[sub_resource type="SpireTextOffsetEffect" id="Offset"]
-duration = 0.65
-ease = 16
-loop_mode = 1
-character_phase_offset = 0.06
-from = Vector2(0, -6)
-to = Vector2(0, 6)
+[ext_resource type="SpireTextOffsetEffect" path="res://examples/text_effect_presets/enchanted_offset.tres" id="Offset"]
 
 [sub_resource type="SpireTextColorEffect" id="Color"]
 duration = 1.8
@@ -16,4 +10,4 @@ to = Color(0.8, 0.5, 1, 1)
 
 [resource]
 bbcode = "enchanted"
-effects = [SubResource("Offset"), SubResource("Color")]
+effects = [ExtResource("Offset"), SubResource("Color")]

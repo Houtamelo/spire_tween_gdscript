@@ -37,7 +37,7 @@ pub(in super::super) struct Registry {
     adapters: Vec<Gd<SpireRichTextEffect>>,
     authored_effects: Vec<Variant>,
     connections: Vec<(Gd<Resource>, ConnectHandle)>,
-    pub(in super::super) warnings: Vec<GString>,
+    pub(in super::super) warnings: Vec<String>,
 }
 
 impl Drop for Registry {
@@ -151,8 +151,9 @@ impl Registry {
             for entry in &entries {
                 if let Ok(resource) = entry.try_to::<Gd<Resource>>() {
                     self.watch(resource.clone());
-                    if let Some(entry) = sample::Entry::compile(&resource, &mut self.warnings) {
-                        compiled.push(entry);
+                    match CompiledTextEffect::compile(&resource, "effects") {
+                        Ok(effect) => compiled.push(sample::Entry::new(effect)),
+                        Err(warning) => self.warnings.push(warning.to_string()),
                     }
                 } else if !entry.is_nil() {
                     self.warnings
@@ -166,15 +167,14 @@ impl Registry {
             });
             let tag = bbcode.to_string();
             if !tag_valid(&tag) || reserved(&tag) {
-                self.warnings.push(GString::from(&format!(
+                self.warnings.push(format!(
                     "`bbcode` must be an identifier distinct from built-in tags; got `{tag}`. Preset skipped."
-                )));
+                ));
                 continue;
             }
             if !tags.insert(tag.clone()) {
-                self.warnings.push(GString::from(&format!(
-                    "`bbcode` `{tag}` is already registered; the first registration is used."
-                )));
+                self.warnings
+                    .push(format!("`bbcode` `{tag}` is already registered; the first registration is used."));
                 continue;
             }
             let mut script = GDScript::new_gd();
