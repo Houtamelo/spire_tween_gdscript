@@ -35,7 +35,7 @@ Keep the prototype's existing serialized field names and enum ordinals. In parti
 | `animated_property` | Direct property StringName, initially empty. |
 | `start_enabled` | New Boolean, default false. |
 | `start_value`, `end_value` | Sole stored Variant payloads; retain their actual types even when hidden, disabled, unresolved, or incompatible. |
-| `speed_or_duration`, `lerp_mode`, `ease_basic`, `ease_curve` | Retain the prototype fields. The first-release authoring roles use Absolute mode and duration semantics; unsupported stored authoring modes diagnose and skip without changing the saved value. Existing native tween APIs keep all their modes. |
+| `speed_or_duration`, `lerp_mode`, `ease_source`, `ease_enum`, `ease_curve` | Preserve authored mode and easing settings. The first-release authoring roles use Absolute mode and duration semantics; unsupported stored authoring modes diagnose and skip without changing the saved value. Existing native tween APIs keep all their modes. |
 | `method_name` | New StringName, initially empty; relevant to MethodCaller. |
 | `trigger_source` | Optional mouse-event source node; otherwise use the resolved target. |
 | Existing native speed/process/pause/loop fields | Preserve and forward to native tween configuration. No additional preview speed/loop controls are introduced. |

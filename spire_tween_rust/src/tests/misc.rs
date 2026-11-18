@@ -39,6 +39,9 @@ impl ITestClass for MiscTests {
     fn test_list() -> Vec<NamedTest<Self>> {
         vec![
             ("test_characters_translation", Self::test_characters_translation),
+            ("test_characters_ranges", Self::test_characters_ranges),
+            ("test_characters_ease_kind", Self::test_characters_ease_kind),
+            ("test_characters_range_failures", Self::test_characters_range_failures),
             ("test_text_presets_rust_api", Self::test_text_presets_rust_api),
             ("test_characters_rotation", Self::test_characters_rotation),
             ("test_characters_effect_refresh", Self::test_characters_effect_refresh),

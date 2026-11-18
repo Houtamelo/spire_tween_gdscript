@@ -43,6 +43,7 @@ macro_rules! impl_invoke_signals {
 impl_invoke_signals! {
     Gd<SpireDelayedCall>,
     Gd<SpireSequence>,
+    Gd<SpireCharTween>,
     Gd<SpireMethod>,
     Gd<SpireMethodInt>,
     Gd<SpireMethodFloat>,

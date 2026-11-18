@@ -1,0 +1,92 @@
+ENGINE CLASS ENUM PROPERTY METADATA
+
+This probe instantiates five built-in classes and calls get_property_list()
+on each instance, then prints the complete dictionary for the selected property.
+These are Inspector-visible, stored properties backed by class-scoped enums.
+ClassDB.class_has_enum(class, enum, true) independently verifies that each enum
+is declared on that engine class rather than inherited or global.
+
+Probe: docs/reports/probes/engine_class_enum_properties.gd
+Run the probe with --headless --path <empty Godot project> --script <absolute probe path>.
+Use isolated writable XDG_DATA_HOME, XDG_CONFIG_HOME, and XDG_CACHE_HOME directories.
+No SpireTween addon or scene is required.
+
+Selected properties and documented enum types:
+- Node.process_mode -> Node.ProcessMode
+  https://docs.godotengine.org/en/4.4/classes/class_node.html#enum-node-processmode
+- Control.mouse_filter -> Control.MouseFilter
+  https://docs.godotengine.org/en/4.4/classes/class_control.html#enum-control-mousefilter
+- TextureRect.stretch_mode -> TextureRect.StretchMode
+  https://docs.godotengine.org/en/4.4/classes/class_texturerect.html#enum-texturerect-stretchmode
+- Camera2D.anchor_mode -> Camera2D.AnchorMode
+  https://docs.godotengine.org/en/4.4/classes/class_camera2d.html#enum-camera2d-anchormode
+- Line2D.joint_mode -> Line2D.LineJointMode
+  https://docs.godotengine.org/en/4.4/classes/class_line2d.html#enum-line2d-linejointmode
+
+Observed on both Godot versions:
+- All five property dictionaries are identical between 4.4 and 4.7.2.
+- type=2 is TYPE_INT; hint=2 is PROPERTY_HINT_ENUM.
+- usage=6 is PROPERTY_USAGE_STORAGE | PROPERTY_USAGE_EDITOR.
+- class_name is the empty StringName in all five dictionaries.
+- PROPERTY_USAGE_CLASS_IS_ENUM (65536) is absent from all five usage masks.
+- The dictionaries expose dropdown labels through hint_string, but do not name
+  the class-scoped enum type. The type mappings above were verified separately.
+- Both processes exited with code 0; each reported cases=5 failed=0.
+
+EXACT GODOT 4.4 STDOUT
+
+Godot Engine v4.4.stable.official.4c311cbee - https://godotengine.org
+
+Engine: 4.4-stable (official)
+TYPE_INT=2, PROPERTY_HINT_ENUM=2, PROPERTY_USAGE_STORAGE=2, PROPERTY_USAGE_EDITOR=4, PROPERTY_USAGE_CLASS_IS_ENUM=65536
+
+Node.process_mode : Node.ProcessMode
+ClassDB.class_has_enum(class, enum, true): true
+{ "name": "process_mode", "class_name": &"", "type": 2, "hint": 2, "hint_string": "Inherit,Pausable,When Paused,Always,Disabled", "usage": 6 }
+
+Control.mouse_filter : Control.MouseFilter
+ClassDB.class_has_enum(class, enum, true): true
+{ "name": "mouse_filter", "class_name": &"", "type": 2, "hint": 2, "hint_string": "Stop,Pass (Propagate Up),Ignore", "usage": 6 }
+
+TextureRect.stretch_mode : TextureRect.StretchMode
+ClassDB.class_has_enum(class, enum, true): true
+{ "name": "stretch_mode", "class_name": &"", "type": 2, "hint": 2, "hint_string": "Scale,Tile,Keep,Keep Centered,Keep Aspect,Keep Aspect Centered,Keep Aspect Covered", "usage": 6 }
+
+Camera2D.anchor_mode : Camera2D.AnchorMode
+ClassDB.class_has_enum(class, enum, true): true
+{ "name": "anchor_mode", "class_name": &"", "type": 2, "hint": 2, "hint_string": "Fixed Top Left,Drag Center", "usage": 6 }
+
+Line2D.joint_mode : Line2D.LineJointMode
+ClassDB.class_has_enum(class, enum, true): true
+{ "name": "joint_mode", "class_name": &"", "type": 2, "hint": 2, "hint_string": "Sharp,Bevel,Round", "usage": 6 }
+
+ENUM_PROPERTY_PROBE_RESULT cases=5 failed=0
+
+EXACT GODOT 4.7.2 STDOUT
+
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Engine: 4.7.2-stable (official)
+TYPE_INT=2, PROPERTY_HINT_ENUM=2, PROPERTY_USAGE_STORAGE=2, PROPERTY_USAGE_EDITOR=4, PROPERTY_USAGE_CLASS_IS_ENUM=65536
+
+Node.process_mode : Node.ProcessMode
+ClassDB.class_has_enum(class, enum, true): true
+{ "name": "process_mode", "class_name": &"", "type": 2, "hint": 2, "hint_string": "Inherit,Pausable,When Paused,Always,Disabled", "usage": 6 }
+
+Control.mouse_filter : Control.MouseFilter
+ClassDB.class_has_enum(class, enum, true): true
+{ "name": "mouse_filter", "class_name": &"", "type": 2, "hint": 2, "hint_string": "Stop,Pass (Propagate Up),Ignore", "usage": 6 }
+
+TextureRect.stretch_mode : TextureRect.StretchMode
+ClassDB.class_has_enum(class, enum, true): true
+{ "name": "stretch_mode", "class_name": &"", "type": 2, "hint": 2, "hint_string": "Scale,Tile,Keep,Keep Centered,Keep Aspect,Keep Aspect Centered,Keep Aspect Covered", "usage": 6 }
+
+Camera2D.anchor_mode : Camera2D.AnchorMode
+ClassDB.class_has_enum(class, enum, true): true
+{ "name": "anchor_mode", "class_name": &"", "type": 2, "hint": 2, "hint_string": "Fixed Top Left,Drag Center", "usage": 6 }
+
+Line2D.joint_mode : Line2D.LineJointMode
+ClassDB.class_has_enum(class, enum, true): true
+{ "name": "joint_mode", "class_name": &"", "type": 2, "hint": 2, "hint_string": "Sharp,Bevel,Round", "usage": 6 }
+
+ENUM_PROPERTY_PROBE_RESULT cases=5 failed=0

@@ -32,10 +32,13 @@ impl TweenBlueprint {
              `character_last` to follow the text length."
         );
 
-        ensure!(
-            self.character_stagger.is_finite() && self.character_stagger >= 0.0,
-            "`character_stagger` must be finite and non-negative."
-        );
+        let last = if self.character_last == -1 { count - 1 } else { self.character_last };
+        let delay_field = match self.character_delay_ease_source {
+            EaseSource::Curve if self.character_delay_ease_curve.is_some() => "character_delay_ease_curve",
+            _ => "character_delay_ease_enum",
+        };
+        character_start_delays(self.character_first, last, effect.duration(), &self.character_delay_ease())
+            .with_context(|| format!("Invalid `{delay_field}`."))?;
 
         ensure!(self.character_loops >= 1, "`character_loops` must be at least 1.");
 
@@ -64,7 +67,7 @@ impl TweenBlueprint {
         let (effect, label) = match state.resolve_effect_configuration() {
             Ok(configuration) => configuration,
             Err(warning) => {
-                godot_warn!("[TweenBlueprint] {warning}");
+                godot_warn!("[TweenBlueprint] {warning:#}");
                 return;
             }
         };
@@ -88,22 +91,16 @@ impl TweenBlueprint {
                 }
             }
         });
-        for index in first..=last {
-            let mut child = TweenSequence::new()
-                .bound_to(label.clone())
-                .with_delay((index - first) as f64 * state.character_stagger);
-            let mut tween = effect
-                .tween(label.clone(), index, state.character_blendable)
-                .with_loops(state.character_loops, effect.loop_mode());
-            if let Some(curve) = state.ease_curve.as_ref().filter(|curve| curve.is_instance_valid()) {
-                tween = tween.with_ease(EaseKind::GodotCurve(curve.clone()));
-            }
-            child.append(tween);
-            if index == first {
-                sequence.bind().to_mut().append(child);
-            } else {
-                sequence.bind().to_mut().join(child);
-            }
+
+        let mut tween = effect
+            .range_tween(label, first, last, state.character_delay_ease(), state.character_blendable)
+            .with_loops(state.character_loops, effect.loop_mode());
+
+        let ease = state.ease_source.resolve(state.ease_enum, state.ease_curve.as_ref());
+        if !matches!(ease, EaseKind::Basic(Ease::Default)) {
+            tween = tween.with_ease(ease);
         }
+
+        sequence.bind().to_mut().append(tween);
     }
 }

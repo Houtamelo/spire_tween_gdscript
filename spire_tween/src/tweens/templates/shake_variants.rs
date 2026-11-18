@@ -13,7 +13,7 @@ fn random_source() -> Xoshiro256PlusPlus {
         Xoshiro256PlusPlus::seed_from_u64(1337)
     })
 }
-fn angle(randomness: real) -> f64 {
+pub(super) fn angle(randomness: real) -> f64 {
     let value = finite(randomness as f64, 90.0, "randomness");
     if !(0.0..=180.0).contains(&value) {
         godot_warn!("[do_shake] randomness must be in [0,180], got {value}; clamping.");

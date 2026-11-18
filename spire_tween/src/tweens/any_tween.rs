@@ -7,6 +7,7 @@ pub enum AnyTween {
     Method(AnyMethodTween),
     DelayedCall(TweenPtr<Callable>),
     Sequence(TweenPtr<Sequence>),
+    Char(TweenPtr<CharTweenData>),
 }
 
 #[delegate_impl]
@@ -33,6 +34,7 @@ pub enum WeakAnyTween {
     Method(WeakMethodTween),
     DelayedCall(WeakTweenPtr<Callable>),
     Sequence(WeakTweenPtr<Sequence>),
+    Char(WeakTweenPtr<CharTweenData>),
 }
 
 impl WeakAnyTween {
@@ -60,6 +62,7 @@ pub fn tween_from_gd_handle(handle: Gd<RefCounted>) -> Result<AnyTween, Gd<RefCo
 
     match_tys! { handle,
         SpireSequence => Sequence,
+        SpireCharTween => Char,
         SpireDelayedCall => DelayedCall,
         SpirePropertyInt => Property,
         SpirePropertyFloat => Property,

@@ -1,4 +1,4 @@
-[gd_resource type="SpireRichTextEffectPreset" load_steps=3 format=3]
+[gd_resource type="SpireRichTextEffectPreset" format=3 uid="uid://cepslwir1vtin"]
 
 [ext_resource type="SpireTextOffsetEffect" path="res://examples/text_effect_presets/enchanted_offset.tres" id="Offset"]
 

@@ -10,7 +10,7 @@ func _label(text: String, bbcode: bool = false) -> SpireRichTextLabel:
 	add_child(n)
 	return n
 
-func _manual(t: SpireMethodFloat) -> SpireMethodFloat:
+func _manual(t: SpireCharTween) -> SpireCharTween:
 	return t.set_process_mode(Spire.PROCESS_MODE_MANUAL).set_ease(Spire.EASE_LINEAR)
 
 func _near(a: float, b: float) -> void:
@@ -24,6 +24,384 @@ func _v3(a: Vector3, b: Vector3) -> void:
 
 func _overshoot_ease(p: float) -> float:
 	return p + 3 * p * (1 - p)
+
+func _delay_curve(from: float, to: float) -> Curve:
+	var curve := Curve.new()
+	curve.min_value = minf(0, minf(from, to))
+	curve.max_value = maxf(1, maxf(from, to))
+	curve.add_point(Vector2(0, from), 0, to - from)
+	curve.add_point(Vector2(1, to), to - from, 0)
+	return curve
+
+func test_character_ranges_basic_curves() -> bool:
+	var n := _label("ABC")
+	var t := _manual(n.offset_chars(0, -1, Vector2(10, 0), 1, Spire.EASE_LINEAR))
+	_near(t.get_duration(), 2)
+	t.custom_step(0.5)
+	_v2(n.get_char_offset(0), Vector2(5, 0))
+	_v2(n.get_char_offset(1), Vector2.ZERO)
+	t.stop()
+	n.reset()
+	var curved := _manual(n.offset_chars(0, -1, Vector2(10, 0), 1, Spire.EASE_OUT_QUAD))
+	curved.custom_step(1)
+	_v2(n.get_char_offset(1), Vector2(2.5, 0))
+	_v2(n.get_char_offset(2), Vector2.ZERO)
+	curved.stop()
+	n.reset()
+	n.text = "ABCD"
+	n.refresh()
+	var invalid := _manual(n.offset_chars(0, -1, Vector2.ONE, 1, Spire.EASE_PUNCH))
+	assert_true(not invalid.custom_step(0.25))
+	_v2(n.get_char_offset(0), Vector2.ZERO)
+	n.free()
+	return true
+
+func test_character_ranges_duration_and_snapshot() -> bool:
+	var n := _label("ABC")
+	var curve := _delay_curve(0, 1)
+	var t := _manual(n.offset_chars(0, -1, Vector2(10, 0), 1, curve))
+	_near(t.get_character_duration(), 1)
+	_near(t.get_duration(), 2)
+	var events: Array[String] = []
+	t.loop_finished.connect(func(): events.append("loop"))
+	t.stopped.connect(func(): events.append("stop"))
+	t.finished.connect(func(): events.append("finish"))
+	t.custom_step(0.25)
+	_v2(n.get_char_offset(0), Vector2(2.5, 0))
+	_v2(n.get_char_offset(1), Vector2.ZERO)
+	curve.clear_points()
+	curve.add_point(Vector2.ZERO)
+	t.custom_step(1.0)
+	_v2(n.get_char_offset(0), Vector2(10, 0))
+	_v2(n.get_char_offset(1), Vector2(7.5, 0))
+	_v2(n.get_char_offset(2), Vector2(2.5, 0))
+	assert_eq(t.get_loops_finished(), 0)
+	assert_eq(events, [])
+	assert_true(not t.custom_step(0.75))
+	assert_eq(events, ["loop", "stop", "finish"])
+	n.reset()
+	var next := _manual(n.offset_chars(0, -1, Vector2(10, 0), 1, curve))
+	_near(next.get_duration(), 1)
+	n.free()
+	return true
+
+func test_character_ranges_singleton_reverse_and_middle_delays() -> bool:
+	var n := _label("ABCDE")
+	var reverse := _manual(n.offset_chars(1, 3, Vector2(10, 0), 1, _delay_curve(1, 0)))
+	reverse.custom_step(0.25)
+	_v2(n.get_char_offset(0), Vector2.ZERO)
+	_v2(n.get_char_offset(1), Vector2.ZERO)
+	_v2(n.get_char_offset(3), Vector2(2.5, 0))
+	reverse.stop()
+	n.reset()
+	var middle := _delay_curve(0, 0)
+	middle.add_point(Vector2(0.5, 1))
+	var wave := _manual(n.offset_chars(1, 3, Vector2(10, 0), 2, middle))
+	_near(wave.get_duration(), 4)
+	wave.custom_step(1)
+	_v2(n.get_char_offset(1), Vector2(5, 0))
+	_v2(n.get_char_offset(2), Vector2.ZERO)
+	_v2(n.get_char_offset(3), Vector2(5, 0))
+	wave.stop()
+	n.reset()
+	var single := _manual(n.offset_chars(2, 2, Vector2(10, 0), 0.5, _delay_curve(2, 0)))
+	_near(single.get_duration(), 1.5)
+	single.custom_step(0.75)
+	_v2(n.get_char_offset(2), Vector2.ZERO)
+	single.custom_step(0.5)
+	_v2(n.get_char_offset(2), Vector2(5, 0))
+	single.custom_step(0.25)
+	assert_true(single.is_stopped())
+	n.free()
+	return true
+
+func test_character_ranges_local_easing_and_implicit_starts() -> bool:
+	var n := _label("AB")
+	var t := _manual(n.offset_chars(0, 1, Vector2(10, 0), 1, _delay_curve(0, 0.5)))
+	t.set_ease(Spire.EASE_OUT_QUAD)
+	t.custom_step(0.25)
+	_v2(n.get_char_offset(0), Vector2(4.375, 0))
+	n.set_char_offset(1, Vector2(2, 0))
+	t.custom_step(0.5)
+	_v2(n.get_char_offset(0), Vector2(9.375, 0))
+	_v2(n.get_char_offset(1), Vector2(5.5, 0))
+	n.free()
+	return true
+
+func test_character_ranges_continuous_loops_and_collective_events() -> bool:
+	var n := _label("AB")
+	var t := _manual(n.offset_chars(0, 1, Vector2(10, 0), 1, _delay_curve(0, 0.5)))
+	t.set_loops(2)
+	_near(t.get_duration(), 2.5)
+	var loops: Array[int] = []
+	t.loop_finished.connect(func(): loops.append(loops.size() + 1))
+	t.custom_step(0.75)
+	t.custom_step(0.25)
+	t.custom_step(0.25)
+	_v2(n.get_char_offset(0), Vector2(2.5, 0))
+	_v2(n.get_char_offset(1), Vector2(7.5, 0))
+	assert_eq(loops, [])
+	t.custom_step(0.25)
+	assert_eq(loops, [1])
+	_v2(n.get_char_offset(0), Vector2(5, 0))
+	_v2(n.get_char_offset(1), Vector2(10, 0))
+	t.custom_step(0.5)
+	_v2(n.get_char_offset(0), Vector2(10, 0))
+	_v2(n.get_char_offset(1), Vector2(5, 0))
+	t.custom_step(0.5)
+	assert_eq(loops, [1, 2])
+	assert_true(t.is_stopped())
+	n.free()
+	return true
+
+func test_character_ranges_yoyo_incremental_and_large_steps() -> bool:
+	var n := _label("AB")
+	for mode in [Spire.LOOP_MODE_YOYO, Spire.LOOP_MODE_INCREMENTAL]:
+		n.reset()
+		var t := _manual(n.offset_chars(0, 1, Vector2(10, 0), 1, _delay_curve(0, 0.5)))
+		t.set_loops(2, mode)
+		for _tick in 3: t.custom_step(0.5)
+		_v2(n.get_char_offset(0), Vector2(5 if mode == Spire.LOOP_MODE_YOYO else 15, 0))
+		_v2(n.get_char_offset(1), Vector2(10, 0))
+		for _tick in 2: t.custom_step(0.5)
+		_v2(n.get_char_offset(1), Vector2(0 if mode == Spire.LOOP_MODE_YOYO else 20, 0))
+		assert_true(t.is_stopped())
+	n.reset()
+	var infinite := _manual(n.offset_chars(0, 1, Vector2(10, 0), 1, _delay_curve(0, 0.5)))
+	infinite.set_loops(-1)
+	assert_true(is_inf(infinite.get_duration()))
+	infinite.custom_step(8)
+	assert_eq(infinite.get_loops_finished(), 1)
+	infinite.custom_step(0)
+	assert_eq(infinite.get_loops_finished(), 2)
+	assert_true(infinite.is_playing())
+	n.free()
+	return true
+
+func test_character_ranges_lifecycle_and_scaled_sequence_excess() -> bool:
+	var n := _label("AB")
+	var t := _manual(n.offset_chars(0, 1, Vector2(10, 0), 1, _delay_curve(0, 0.5)))
+	t.custom_step(0.25)
+	t.pause()
+	t.custom_step(10)
+	_v2(n.get_char_offset(0), Vector2(2.5, 0))
+	t.play()
+	t.custom_step(0.25)
+	t.stop()
+	_v2(n.get_char_offset(0), Vector2(5, 0))
+	t.play()
+	t.custom_step(0.25)
+	_v2(n.get_char_offset(0), Vector2(2.5, 0))
+	t.force_complete()
+	_v2(n.get_char_offset(1), Vector2(10, 0))
+	n.reset()
+	var sprite := Node2D.new()
+	add_child(sprite)
+	var sequence := Spire.sequence().set_process_mode(Spire.PROCESS_MODE_MANUAL)
+	sequence.set_default_children_ease(Spire.EASE_LINEAR)
+	var range := n.offset_chars(0, 1, Vector2(10, 0), 1, _delay_curve(0, 0.5))
+	range.set_delay(0.25).set_speed_scale(2)
+	sequence.append(range)
+	sequence.append(Spire.do_property_float(sprite, ^"position:x", 8, 1))
+	sequence.custom_step(1)
+	_near(sprite.position.x, 1)
+	assert_true(range.is_stopped() and sequence.is_playing())
+	sequence.force_complete()
+	_near(sprite.position.x, 8)
+	n.free()
+	sprite.free()
+	return true
+
+func test_character_ranges_force_completion_and_extended_loops() -> bool:
+	var n := _label("AB")
+	var t := _manual(n.offset_chars(0, 1, Vector2(10, 0), 1, Spire.EASE_LINEAR))
+	t.custom_step(1.25)
+	n.set_char_offset(0, Vector2(20, 0))
+	t.force_complete()
+	_v2(n.get_char_offset(0), Vector2(20, 0))
+	_v2(n.get_char_offset(1), Vector2(10, 0))
+	n.reset()
+	var infinite := _manual(n.offset_chars(0, 1, Vector2(10, 0), 1, Spire.EASE_LINEAR))
+	infinite.set_loops(-1, Spire.LOOP_MODE_YOYO)
+	infinite.custom_step(1.25)
+	infinite.force_complete()
+	_v2(n.get_char_offset(0), Vector2.ZERO)
+	_v2(n.get_char_offset(1), Vector2(10, 0))
+	n.reset()
+	var extended := _manual(n.offset_chars(0, 1, Vector2(10, 0), 1, Spire.EASE_LINEAR))
+	extended.custom_step(1.25)
+	extended.set_loops(2)
+	extended.custom_step(0.25)
+	_v2(n.get_char_offset(0), Vector2(5, 0))
+	extended.custom_step(0.5)
+	assert_eq(extended.get_loops_finished(), 1)
+	extended.custom_step(1)
+	assert_eq(extended.get_loops_finished(), 2)
+	assert_true(extended.is_stopped())
+	n.free()
+	return true
+
+func test_character_ranges_small_positive_durations() -> bool:
+	var samples: Array[float] = []
+	var method := Spire.do_call_float(func(value: float): samples.append(value), 0.0, 10.0, 1.0e-10)
+	method.set_process_mode(Spire.PROCESS_MODE_MANUAL).set_ease(Spire.EASE_LINEAR)
+	method.custom_step(0.5e-10)
+	_near(samples.back(), 5)
+	method.custom_step(0.5e-10)
+	assert_true(method.is_stopped())
+	var n := _label("AB")
+	var t := _manual(n.offset_chars(0, 1, Vector2(10, 0), 1.0e-10, _delay_curve(0, 0)))
+	t.custom_step(0.5e-10)
+	for index in 2: _v2(n.get_char_offset(index), Vector2(5, 0))
+	t.custom_step(0.5e-10)
+	assert_true(t.is_stopped())
+	n.free()
+	return true
+
+func test_character_ranges_callable_delay_curve() -> bool:
+	var n := _label("ABC")
+	var samples: Array[float] = []
+	var delays := func(x: float) -> float:
+		samples.append(x)
+		return x * 0.5
+	var t := _manual(n.offset_chars(0, -1, Vector2(10, 0), 1, delays))
+	assert_eq(samples, [0.0, 0.5, 1.0])
+	_near(t.get_duration(), 1.5)
+	t.custom_step(0.5)
+	_v2(n.get_char_offset(0), Vector2(5, 0))
+	_v2(n.get_char_offset(1), Vector2(2.5, 0))
+	_v2(n.get_char_offset(2), Vector2.ZERO)
+	t.custom_step(1.0)
+	assert_eq(samples.size(), 3)
+	assert_true(t.is_stopped())
+	n.free()
+	for factor in [-0.1, NAN, INF]:
+		n = _label("AB")
+		var invalid := func(_x: float) -> float: return factor
+		t = _manual(n.offset_chars(0, -1, Vector2.ONE, 1, invalid))
+		t.custom_step(0.1)
+		assert_true(t.is_stopped())
+		_v2(n.get_char_offset(0), Vector2.ZERO)
+		n.free()
+	return true
+
+func test_character_ranges_invalid_samples_and_ranges() -> bool:
+	var n := _label("ABC")
+	var middle := _delay_curve(0, 0)
+	middle.min_value = -1
+	middle.add_point(Vector2(0.5, -0.5))
+	for curve in [_delay_curve(-0.5, -0.5), middle]:
+		var t := _manual(n.offset_chars(0, 2, Vector2.ONE, 1, curve))
+		var finished: Array[bool] = []
+		t.finished.connect(func(): finished.append(true))
+		assert_true(not t.custom_step(0.25))
+		assert_eq(finished, [])
+		_v2(n.get_char_offset(0), Vector2.ZERO)
+	var overflow := _delay_curve(2, 2)
+	var huge := _manual(n.offset_chars(0, 2, Vector2.ONE, 1.0e308, overflow))
+	assert_true(not huge.custom_step(0.25))
+	for bounds in [Vector2i(2, 1), Vector2i(-2, 1), Vector2i(0, 9)]:
+		var t := _manual(n.offset_chars(bounds.x, bounds.y, Vector2.ONE, 1, _delay_curve(0, 0)))
+		assert_true(not t.custom_step(0.25))
+		_v2(n.get_char_offset(0), Vector2.ZERO)
+	n.free()
+	return true
+
+func test_character_ranges_missing_indices_and_target_lifetime() -> bool:
+	var n := _label("ABC")
+	var t := _manual(n.offset_chars(0, 2, Vector2(10, 0), 1, _delay_curve(0, 1)))
+	t.custom_step(0.25)
+	n.text = "A"
+	n.refresh()
+	t.custom_step(1)
+	n.text = "XYZ"
+	n.refresh()
+	t.custom_step(0.25)
+	_v2(n.get_char_offset(2), Vector2(5, 0))
+	t.custom_step(0.5)
+	assert_true(t.is_stopped())
+	var freed := _manual(n.offset_chars(0, 2, Vector2.ONE, 1, _delay_curve(0, 0)))
+	var events: Array[String] = []
+	freed.stopped.connect(func(): events.append("stop"))
+	freed.finished.connect(func(): events.append("finish"))
+	n.free()
+	assert_true(not freed.custom_step(0.25))
+	assert_eq(events, ["stop"])
+	return true
+
+func test_character_ranges_all_effects() -> bool:
+	var n := _label("AB")
+	var cases := [
+		["offset_chars", [Vector2(8, 5), 1, _delay_curve(0, 0)], "get_char_offset", Vector2.ZERO, Vector2(8, 5)],
+		["scale_chars", [Vector2(2, 3), 1, _delay_curve(0, 0)], "get_char_scale", Vector2.ONE, Vector2(2, 3)],
+		["color_chars", [Color(0.2, 0.3, 0.4), 1, _delay_curve(0, 0)], "get_char_color", Color.WHITE, Color(0.2, 0.3, 0.4)],
+		["fade_chars", [0.2, 1, _delay_curve(0, 0)], "get_char_alpha", 1.0, 0.2],
+		["rotate_chars", [Vector3(0.2, 0.3, 0.4), 1, _delay_curve(0, 0)], "get_char_rotation", Vector3.ZERO, Vector3(0.2, 0.3, 0.4)],
+		["punch_chars_offset", [Vector2(8, 5), 1, _delay_curve(0, 0)], "get_char_offset", Vector2.ZERO, Vector2.ZERO],
+		["punch_chars_scale", [Vector2(0.5, 0.4), 1, _delay_curve(0, 0)], "get_char_scale", Vector2.ONE, Vector2.ONE],
+		["punch_chars_rotation", [Vector3(0.2, 0.3, 0.4), 1, _delay_curve(0, 0)], "get_char_rotation", Vector3.ZERO, Vector3.ZERO],
+		["shake_chars_offset", [1, Vector2(8, 5), _delay_curve(0, 0)], "get_char_offset", Vector2.ZERO, Vector2.ZERO],
+		["shake_chars_scale", [1, Vector2(0.5, 0.4), _delay_curve(0, 0)], "get_char_scale", Vector2.ONE, Vector2.ONE],
+		["shake_chars_rotation", [1, Vector3(0.2, 0.3, 0.4), _delay_curve(0, 0)], "get_char_rotation", Vector3.ZERO, Vector3.ZERO],
+	]
+	for item in cases:
+		n.reset()
+		var args: Array = [0, 1]
+		args.append_array(item[1])
+		var t := _manual(n.callv(item[0], args))
+		t.custom_step(0.173)
+		for index in 2: assert_true(n.call(item[2], index) != item[3], item[0] + " must animate every selected character")
+		t.force_complete()
+		for index in 2:
+			if item[4] is Vector2: _v2(n.call(item[2], index), item[4])
+			elif item[4] is Vector3: _v3(n.call(item[2], index), item[4])
+			elif item[4] is float: _near(n.call(item[2], index), item[4])
+			else: assert_true(n.call(item[2], index).is_equal_approx(item[4]))
+	n.free()
+	return true
+
+func test_character_ranges_impulse_blending_and_reset() -> bool:
+	var n := _label("AB")
+	for blendable in [true, false]:
+		n.reset()
+		for index in 2: n.set_char_offset(index, Vector2(10, 0))
+		var t := _manual(n.punch_chars_offset(0, 1, Vector2(4, 0), 1, _delay_curve(0, 0), 4, 1, blendable))
+		t.custom_step(0.1)
+		for index in 2: _v2(n.get_char_offset(index), Vector2(14, 0))
+		n.set_char_offset(0, Vector2(19, 0))
+		t.custom_step(0.2)
+		_v2(n.get_char_offset(0), Vector2(12 if blendable else 7, 0))
+		_v2(n.get_char_offset(1), Vector2(7, 0))
+		t.force_complete()
+		_v2(n.get_char_offset(0), Vector2(15 if blendable else 10, 0))
+		_v2(n.get_char_offset(1), Vector2(10, 0))
+		n.reset()
+		var reset := _manual(n.punch_chars_offset(0, 1, Vector2(4, 0), 1, _delay_curve(0, 0), 4, 1, blendable))
+		reset.custom_step(0.1)
+		n.refresh()
+		reset.custom_step(0.2)
+		for index in 2: _v2(n.get_char_offset(index), Vector2(-3, 0))
+		n.reset()
+		reset.force_complete()
+		for index in 2: _v2(n.get_char_offset(index), Vector2.ZERO)
+	n.free()
+	return true
+
+func test_character_ranges_real_rendering() -> bool:
+	var n := _label("AB")
+	for _frame in 4: await next_frame()
+	var before_first := n.render_sample_for_test(0)
+	var before_last := n.render_sample_for_test(1)
+	assert_true(not before_first.is_empty() and not before_last.is_empty())
+	var t := _manual(n.offset_chars(0, 1, Vector2(10, 0), 1, _delay_curve(0, 0.5)))
+	t.custom_step(0.25)
+	for _frame in 2: await next_frame()
+	var first := n.render_sample_for_test(0)
+	var last := n.render_sample_for_test(1)
+	_v2(first.transform.origin - before_first.transform.origin, Vector2(2.5, 0))
+	_v2(last.transform.origin - before_last.transform.origin, Vector2.ZERO)
+	n.free()
+	return true
 
 func test_characters_translation() -> bool:
 	var locale := TranslationServer.get_locale()
@@ -404,6 +782,12 @@ func test_characters_invalid() -> bool:
 	_v2(a.get_char_offset(0), Vector2(0, 4))
 	a.set_char_rotation(0, Vector3(NAN, 0, 0))
 	_v3(a.get_char_rotation(0), Vector3.ZERO)
+	for randomness in [-5.0, 250.0]:
+		t = _manual(a.shake_char_scale(0, 1, Vector2.ONE, 10, randomness))
+		t.custom_step(0.5)
+		assert_true(a.get_char_scale(0).is_finite())
+		t.force_complete()
+		_v2(a.get_char_scale(0), Vector2.ONE)
 	t = _manual(a.shake_char_offset(0, 1, Vector2.ONE, 0, NAN, false))
 	n.text = ""
 	n.refresh()
@@ -441,12 +825,12 @@ func test_characters_missing_indices_keep_playing() -> bool:
 		n.punch_char_offset(2, Vector2.ONE, 1), n.punch_char_rotation(2, Vector3.ONE, 1), n.punch_char_scale(2, Vector2.ONE, 1),
 		n.shake_char_offset(2, 1, Vector2.ONE), n.shake_char_rotation(2, 1, Vector3.ONE), n.shake_char_scale(2, 1, Vector2.ONE),
 	]
-	for tween: SpireMethodFloat in tweens:
+	for tween: SpireCharTween in tweens:
 		_manual(tween)
 		tween.custom_step(0.1)
 	n.text = "A"
 	n.refresh()
-	for tween: SpireMethodFloat in tweens:
+	for tween: SpireCharTween in tweens:
 		var finished := [0]
 		tween.finished.connect(func(): finished[0] += 1)
 		assert_true(tween.custom_step(0.2))

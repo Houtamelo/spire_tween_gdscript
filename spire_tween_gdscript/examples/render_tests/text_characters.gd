@@ -24,7 +24,7 @@ var _lifetime_status: Label
 var _progress: ColorRect
 var _finished_count := 0
 var _rebuild_events := [0, 0]
-var _rebuild_tween: SpireMethodFloat
+var _rebuild_tween: SpireCharTween
 var _output := ""
 var _captured_frames := 0
 
@@ -215,7 +215,7 @@ func _watch(tween) -> void:
 	_active.append(tween)
 
 
-func _track(tween: SpireMethodFloat, ease: int = Spire.EASE_OUT_CUBIC, delay: float = 0.0) -> SpireMethodFloat:
+func _track(tween: SpireCharTween, ease: int = Spire.EASE_OUT_CUBIC, delay: float = 0.0) -> SpireCharTween:
 	tween.set_ease(ease).set_delay(delay)
 	_watch(tween)
 	return tween

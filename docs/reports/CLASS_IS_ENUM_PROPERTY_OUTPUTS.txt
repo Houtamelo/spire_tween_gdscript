@@ -1,0 +1,78 @@
+PROPERTY_USAGE_CLASS_IS_ENUM: SEARCH AND OBSERVED PROPERTY DICTIONARIES
+
+Native search:
+ClassDB.get_class_list() was scanned using
+ClassDB.class_get_property_list(class_name, true), with no_inheritance=true to
+count each class's declared properties once. Matches require:
+    property["usage"] & PROPERTY_USAGE_CLASS_IS_ENUM
+
+Godot 4.4:   968 classes, 5550 property entries, 0 matches.
+Godot 4.7.2: 1054 classes, 5640 property entries, 0 matches.
+
+This covers registered native ClassDB properties in these engine builds,
+without loading SpireTween or other addons. It does not enumerate dynamic
+instance properties supplied by _get_property_list().
+
+Three matching cases:
+Since no native registered property matched, the probe constructs a GDScript
+Resource with three exported properties typed with engine class enums:
+
+    @export var node_process_mode: Node.ProcessMode = Node.PROCESS_MODE_INHERIT
+    @export var control_mouse_filter: Control.MouseFilter = Control.MOUSE_FILTER_STOP
+    @export var texture_stretch_mode: TextureRect.StretchMode = TextureRect.STRETCH_SCALE
+
+These are deliberately authored GDScript examples, not native engine properties.
+The probe then calls get_property_list() on that Resource instance and records
+the complete dictionaries below. Godot supplies their enum metadata; the probe
+does not manually add or alter any usage flags.
+
+All three properties:
+- Set PROPERTY_USAGE_CLASS_IS_ENUM (65536).
+- Set PROPERTY_USAGE_SCRIPT_VARIABLE (4096).
+- Set PROPERTY_USAGE_STORAGE (2) and PROPERTY_USAGE_EDITOR (4).
+- Therefore have usage=69638.
+- Contain their fully qualified enum name in class_name.
+- Have type=2 (TYPE_INT) and hint=2 (PROPERTY_HINT_ENUM).
+- Have explicit numeric values in hint_string.
+- Return identical dictionaries on Godot 4.4 and 4.7.2.
+
+Both probes exited with code 0 and reported matches=3 failed=0.
+
+Probe source:
+docs/reports/probes/class_enum_usage_flag.gd
+
+Run with --headless --path <empty Godot project> --script <absolute probe path>.
+Use isolated writable XDG_DATA_HOME, XDG_CONFIG_HOME, and XDG_CACHE_HOME directories.
+
+Official flag documentation:
+https://docs.godotengine.org/en/4.4/classes/class_@globalscope.html#class-globalscope-constant-property-usage-class-is-enum
+
+EXACT GODOT 4.4 STDOUT
+
+Godot Engine v4.4.stable.official.4c311cbee - https://godotengine.org
+
+Engine: 4.4-stable (official)
+PROPERTY_USAGE_CLASS_IS_ENUM=65536, PROPERTY_USAGE_SCRIPT_VARIABLE=4096, PROPERTY_USAGE_STORAGE=2, PROPERTY_USAGE_EDITOR=4
+NATIVE_ENUM_SCAN_RESULT classes=968 properties=5550 matches=0
+
+GDScript exported properties, from fixture.get_property_list():
+{ "name": "node_process_mode", "class_name": &"Node.ProcessMode", "type": 2, "hint": 2, "hint_string": "Process Mode Inherit:0,Process Mode Pausable:1,Process Mode When Paused:2,Process Mode Always:3,Process Mode Disabled:4", "usage": 69638 }
+{ "name": "control_mouse_filter", "class_name": &"Control.MouseFilter", "type": 2, "hint": 2, "hint_string": "Mouse Filter Stop:0,Mouse Filter Pass:1,Mouse Filter Ignore:2", "usage": 69638 }
+{ "name": "texture_stretch_mode", "class_name": &"TextureRect.StretchMode", "type": 2, "hint": 2, "hint_string": "Stretch Scale:0,Stretch Tile:1,Stretch Keep:2,Stretch Keep Centered:3,Stretch Keep Aspect:4,Stretch Keep Aspect Centered:5,Stretch Keep Aspect Covered:6", "usage": 69638 }
+
+CLASS_ENUM_FLAG_PROBE_RESULT matches=3 failed=0
+
+EXACT GODOT 4.7.2 STDOUT
+
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Engine: 4.7.2-stable (official)
+PROPERTY_USAGE_CLASS_IS_ENUM=65536, PROPERTY_USAGE_SCRIPT_VARIABLE=4096, PROPERTY_USAGE_STORAGE=2, PROPERTY_USAGE_EDITOR=4
+NATIVE_ENUM_SCAN_RESULT classes=1054 properties=5640 matches=0
+
+GDScript exported properties, from fixture.get_property_list():
+{ "name": "node_process_mode", "class_name": &"Node.ProcessMode", "type": 2, "hint": 2, "hint_string": "Process Mode Inherit:0,Process Mode Pausable:1,Process Mode When Paused:2,Process Mode Always:3,Process Mode Disabled:4", "usage": 69638 }
+{ "name": "control_mouse_filter", "class_name": &"Control.MouseFilter", "type": 2, "hint": 2, "hint_string": "Mouse Filter Stop:0,Mouse Filter Pass:1,Mouse Filter Ignore:2", "usage": 69638 }
+{ "name": "texture_stretch_mode", "class_name": &"TextureRect.StretchMode", "type": 2, "hint": 2, "hint_string": "Stretch Scale:0,Stretch Tile:1,Stretch Keep:2,Stretch Keep Centered:3,Stretch Keep Aspect:4,Stretch Keep Aspect Centered:5,Stretch Keep Aspect Covered:6", "usage": 69638 }
+
+CLASS_ENUM_FLAG_PROBE_RESULT matches=3 failed=0

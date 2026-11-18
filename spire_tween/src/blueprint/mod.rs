@@ -22,6 +22,7 @@ pub struct TweenBlueprint {
     current_tween: Option<Gd<SpireSequence>>,
     trigger_connection: Option<triggers::TriggerConnection>,
     character_effect_connection: Option<ConnectHandle>,
+    character_delay_curve_connection: Option<ConnectHandle>,
     enter_trigger_pending: bool,
 
     // <-------------------------- General Configuration
@@ -85,17 +86,21 @@ pub struct TweenBlueprint {
     #[export]
     #[var]
     lerp_mode: LerpModeKind,
+    #[export_subgroup(name = "Ease")]
     #[export]
     #[var]
-    ease_basic: Ease,
+    ease_source: EaseSource,
+    #[export]
+    #[var]
+    ease_enum: Ease,
     #[export]
     #[var]
     ease_curve: Option<Gd<Curve>>,
 
-    // Tween Property Data -------------------------->
+    // Tween Property Configuration -------------------------->
     #[export_group(name = "Character Animation")]
     /// Effect parameters shared with looping rich-text presets. Each play builds
-    /// fresh ordinary tweens from the resource's current fields.
+    /// a fresh Char range tween from the resource's current fields.
     #[export]
     #[var(set = set_character_effect, hint = RESOURCE_TYPE,
         hint_string = "SpireTextColorEffect,SpireTextFadeEffect,SpireTextOffsetEffect,SpireTextRotationEffect,SpireTextScaleEffect,SpireTextPunchOffsetEffect,SpireTextPunchRotationEffect,SpireTextPunchScaleEffect,SpireTextShakeOffsetEffect,SpireTextShakeRotationEffect,SpireTextShakeScaleEffect")]
@@ -109,11 +114,20 @@ pub struct TweenBlueprint {
     #[var]
     #[init(val = -1)]
     character_last: i64,
-    /// Delay in seconds between selected characters.
-    #[export(range = (0.0, 1.0, 0.005, or_greater))]
-    #[var]
-    character_stagger: f64,
-    /// Loops of each character's method tween, independently of the containing sequence.
+    /// Start delay for each selected character as a multiple of the effect's
+    /// per-character duration. Samples must be finite and non-negative. The
+    /// range finishes when the last character completes its delay and loops.
+    #[export]
+    #[var(set = set_character_delay_ease_source)]
+    character_delay_ease_source: EaseSource,
+    #[export]
+    #[var(set = set_character_delay_ease_enum)]
+    #[init(val = Ease::Linear)]
+    character_delay_ease_enum: Ease,
+    #[export]
+    #[var(set = set_character_delay_ease_curve)]
+    character_delay_ease_curve: Option<Gd<Curve>>,
+    /// Animation legs per character, independently of the containing sequence.
     #[export(range = (1.0, 10.0, or_greater))]
     #[var]
     #[init(val = 1)]
@@ -224,16 +238,46 @@ impl TweenBlueprint {
         self.character_effect = effect;
         self.initialize_character_start();
         if let Some(resource) = &self.character_effect {
-            // Resource setters emit while their Rust state is borrowed. Defer
-            // inspection/validation until that borrow has been released.
-            let warnings = self.base().callable("update_configuration_warnings");
-            let inspector = self.base().callable("notify_property_list_changed");
-            self.character_effect_connection = Some(resource.signals().changed().connect(move || {
-                warnings.call_deferred(&[]);
-                inspector.call_deferred(&[]);
-            }));
+            self.character_effect_connection = Some(self.watch_character_configuration(resource));
         }
         self.configuration_changed();
+    }
+
+    #[func]
+    fn set_character_delay_ease_source(&mut self, source: EaseSource) {
+        self.character_delay_ease_source = source;
+        self.configuration_changed();
+    }
+
+    #[func]
+    fn set_character_delay_ease_enum(&mut self, ease: Ease) {
+        self.character_delay_ease_enum = ease;
+        self.configuration_changed();
+    }
+
+    #[func]
+    fn set_character_delay_ease_curve(&mut self, curve: Option<Gd<Curve>>) {
+        Self::disconnect_configuration_watch(&mut self.character_delay_curve_connection);
+        self.character_delay_ease_curve = curve;
+        if let Some(curve) = &self.character_delay_ease_curve {
+            self.character_delay_curve_connection = Some(self.watch_character_configuration(&curve.clone().upcast()));
+        }
+        self.configuration_changed();
+    }
+
+    fn character_delay_ease(&self) -> EaseKind {
+        self.character_delay_ease_source
+            .resolve(self.character_delay_ease_enum, self.character_delay_ease_curve.as_ref())
+    }
+
+    fn watch_character_configuration(&self, resource: &Gd<Resource>) -> ConnectHandle {
+        // Resource setters emit while their Rust state is borrowed.
+        let warnings = self.base().callable("update_configuration_warnings");
+        let inspector = self.base().callable("notify_property_list_changed");
+        resource.signals().changed().connect(move || {
+            warnings.call_deferred(&[]);
+            inspector.call_deferred(&[]);
+        })
     }
 
     fn initialize_character_start(&mut self) {
@@ -247,7 +291,11 @@ impl TweenBlueprint {
     }
 
     fn disconnect_character_effect(&mut self) {
-        if let Some(handle) = self.character_effect_connection.take()
+        Self::disconnect_configuration_watch(&mut self.character_effect_connection);
+    }
+
+    fn disconnect_configuration_watch(connection: &mut Option<ConnectHandle>) {
+        if let Some(handle) = connection.take()
             && handle.is_connected()
         {
             handle.disconnect();

@@ -301,9 +301,9 @@ impl SpireRichTextLabel {
     /// Missing character indices are ignored without stopping playback. Invalid duration becomes
     /// one second. Text edits reset deformations; surviving indices continue.
     ///
-    /// [b]Returns:[/b] A registered [SpireMethodFloat] progress tween.
+    /// [b]Returns:[/b] A registered [SpireCharTween] for one character.
     #[func(gd_self)]
-    pub fn offset_char(this: Gd<Self>, index: i64, to: Vector2, duration: f64) -> Gd<SpireMethodFloat> {
+    pub fn offset_char(this: Gd<Self>, index: i64, to: Vector2, duration: f64) -> Gd<SpireCharTween> {
         gd_from_native_tween(this.do_offset_char(index, to, duration).register())
     }
 
@@ -311,9 +311,9 @@ impl SpireRichTextLabel {
     /// Missing character indices are ignored without stopping playback. Invalid duration becomes
     /// one second. Text edits reset deformations; surviving indices continue.
     ///
-    /// [b]Returns:[/b] A registered [SpireMethodFloat] progress tween.
+    /// [b]Returns:[/b] A registered [SpireCharTween] for one character.
     #[func(gd_self)]
-    pub fn scale_char(this: Gd<Self>, index: i64, to: Vector2, duration: f64) -> Gd<SpireMethodFloat> {
+    pub fn scale_char(this: Gd<Self>, index: i64, to: Vector2, duration: f64) -> Gd<SpireCharTween> {
         gd_from_native_tween(this.do_scale_char(index, to, duration).register())
     }
 
@@ -322,9 +322,9 @@ impl SpireRichTextLabel {
     /// Missing character indices are ignored without stopping playback. Invalid duration becomes
     /// one second. Text edits reset deformations; surviving indices continue.
     ///
-    /// [b]Returns:[/b] A registered [SpireMethodFloat] progress tween.
+    /// [b]Returns:[/b] A registered [SpireCharTween] for one character.
     #[func(gd_self)]
-    pub fn color_char(this: Gd<Self>, index: i64, to: Color, duration: f64) -> Gd<SpireMethodFloat> {
+    pub fn color_char(this: Gd<Self>, index: i64, to: Color, duration: f64) -> Gd<SpireCharTween> {
         gd_from_native_tween(this.do_color_char(index, to, duration).register())
     }
 
@@ -334,9 +334,9 @@ impl SpireRichTextLabel {
     /// Missing character indices are ignored without stopping playback. Invalid duration becomes
     /// one second. Text edits reset deformations; surviving indices continue.
     ///
-    /// [b]Returns:[/b] A registered [SpireMethodFloat] progress tween.
+    /// [b]Returns:[/b] A registered [SpireCharTween] for one character.
     #[func(gd_self)]
-    pub fn fade_char(this: Gd<Self>, index: i64, to: f64, duration: f64) -> Gd<SpireMethodFloat> {
+    pub fn fade_char(this: Gd<Self>, index: i64, to: f64, duration: f64) -> Gd<SpireCharTween> {
         gd_from_native_tween(this.do_fade_char(index, to, duration).register())
     }
 
@@ -345,7 +345,7 @@ impl SpireRichTextLabel {
     /// turns. WorldAxisAdd/LocalAxisAdd compose before/after the initial rotation.
     /// Missing character indices are ignored; invalid duration becomes one second.
     ///
-    /// [b]Returns:[/b] A registered [SpireMethodFloat] progress tween.
+    /// [b]Returns:[/b] A registered [SpireCharTween] for one character.
     #[func(gd_self)]
     pub fn rotate_char(
         this: Gd<Self>,
@@ -353,7 +353,7 @@ impl SpireRichTextLabel {
         to: Vector3,
         duration: f64,
         #[opt(default = RotateMode::Fast)] mode: RotateMode,
-    ) -> Gd<SpireMethodFloat> {
+    ) -> Gd<SpireCharTween> {
         gd_from_native_tween(this.do_rotate_char(index, to, duration, mode).register())
     }
 
@@ -361,7 +361,7 @@ impl SpireRichTextLabel {
     /// Uses Spire's existing punch math. Stop leaves the last deformation;
     /// successful completion removes this effect's contribution.
     ///
-    /// [b]Returns:[/b] A registered [SpireMethodFloat] progress tween.
+    /// [b]Returns:[/b] A registered [SpireCharTween] for one character.
     #[func(gd_self)]
     pub fn punch_char_offset(
         this: Gd<Self>,
@@ -371,7 +371,7 @@ impl SpireRichTextLabel {
         #[opt(default = 10)] vibrato: i32,
         #[opt(default = 1.0)] elasticity: f64,
         #[opt(default = true)] blendable: bool,
-    ) -> Gd<SpireMethodFloat> {
+    ) -> Gd<SpireCharTween> {
         gd_from_native_tween(
             this.do_punch_char_offset(index, punch, duration, vibrato, elasticity, blendable)
                 .register(),
@@ -383,7 +383,7 @@ impl SpireRichTextLabel {
     /// deformation; successful completion removes this effect's contribution.
     /// Invalid inputs warn with rejected values and normalize.
     ///
-    /// [b]Returns:[/b] A registered [SpireMethodFloat] progress tween.
+    /// [b]Returns:[/b] A registered [SpireCharTween] for one character.
     #[func(gd_self)]
     pub fn shake_char_offset(
         this: Gd<Self>,
@@ -395,7 +395,7 @@ impl SpireRichTextLabel {
         #[opt(default = true)] fade_out: bool,
         #[opt(default = ShakeRandomnessMode::Full)] randomness_mode: ShakeRandomnessMode,
         #[opt(default = true)] blendable: bool,
-    ) -> Gd<SpireMethodFloat> {
+    ) -> Gd<SpireCharTween> {
         gd_from_native_tween(
             this.do_shake_char_offset(
                 index,
@@ -415,7 +415,7 @@ impl SpireRichTextLabel {
     /// Uses Spire's existing punch math. Stop leaves the last deformation;
     /// successful completion removes this effect's contribution.
     ///
-    /// [b]Returns:[/b] A registered [SpireMethodFloat] progress tween.
+    /// [b]Returns:[/b] A registered [SpireCharTween] for one character.
     #[func(gd_self)]
     pub fn punch_char_rotation(
         this: Gd<Self>,
@@ -425,7 +425,7 @@ impl SpireRichTextLabel {
         #[opt(default = 10)] vibrato: i32,
         #[opt(default = 1.0)] elasticity: f64,
         #[opt(default = true)] blendable: bool,
-    ) -> Gd<SpireMethodFloat> {
+    ) -> Gd<SpireCharTween> {
         gd_from_native_tween(
             this.do_punch_char_rotation(index, punch, duration, vibrato, elasticity, blendable)
                 .register(),
@@ -437,7 +437,7 @@ impl SpireRichTextLabel {
     /// deformation; successful completion removes this effect's contribution.
     /// Invalid inputs warn with rejected values and normalize.
     ///
-    /// [b]Returns:[/b] A registered [SpireMethodFloat] progress tween.
+    /// [b]Returns:[/b] A registered [SpireCharTween] for one character.
     #[func(gd_self)]
     pub fn shake_char_rotation(
         this: Gd<Self>,
@@ -449,7 +449,7 @@ impl SpireRichTextLabel {
         #[opt(default = true)] fade_out: bool,
         #[opt(default = ShakeRandomnessMode::Full)] randomness_mode: ShakeRandomnessMode,
         #[opt(default = true)] blendable: bool,
-    ) -> Gd<SpireMethodFloat> {
+    ) -> Gd<SpireCharTween> {
         gd_from_native_tween(
             this.do_shake_char_rotation(
                 index,
@@ -469,7 +469,7 @@ impl SpireRichTextLabel {
     /// Uses Spire's existing punch math. Stop leaves the last deformation;
     /// successful completion removes this effect's contribution.
     ///
-    /// [b]Returns:[/b] A registered [SpireMethodFloat] progress tween.
+    /// [b]Returns:[/b] A registered [SpireCharTween] for one character.
     #[func(gd_self)]
     pub fn punch_char_scale(
         this: Gd<Self>,
@@ -479,7 +479,7 @@ impl SpireRichTextLabel {
         #[opt(default = 10)] vibrato: i32,
         #[opt(default = 1.0)] elasticity: f64,
         #[opt(default = true)] blendable: bool,
-    ) -> Gd<SpireMethodFloat> {
+    ) -> Gd<SpireCharTween> {
         gd_from_native_tween(
             this.do_punch_char_scale(index, punch, duration, vibrato, elasticity, blendable)
                 .register(),
@@ -491,7 +491,7 @@ impl SpireRichTextLabel {
     /// deformation; successful completion removes this effect's contribution.
     /// Invalid inputs warn with rejected values and normalize.
     ///
-    /// [b]Returns:[/b] A registered [SpireMethodFloat] progress tween.
+    /// [b]Returns:[/b] A registered [SpireCharTween] for one character.
     #[func(gd_self)]
     pub fn shake_char_scale(
         this: Gd<Self>,
@@ -503,7 +503,7 @@ impl SpireRichTextLabel {
         #[opt(default = true)] fade_out: bool,
         #[opt(default = ShakeRandomnessMode::Full)] randomness_mode: ShakeRandomnessMode,
         #[opt(default = true)] blendable: bool,
-    ) -> Gd<SpireMethodFloat> {
+    ) -> Gd<SpireCharTween> {
         gd_from_native_tween(
             this.do_shake_char_scale(
                 index,

@@ -4,7 +4,7 @@ use super::*;
 /// Type-specific hooks used by the common [`SpireTween`] playback pipeline.
 /// Implemented by every concrete tween type
 /// (`SpireTween<LerpPropertyData<T>>`, `SpireTween<LerpMethodData<T>>`,
-/// `SpireTween<Sequence>`, `SpireTween<Callable>`).
+/// `SpireTween<Sequence>`, `SpireTween<Callable>`, `SpireTween<CharTweenData>`).
 ///
 /// Call [`SpireTween::play`], [`SpireTween::pause`], [`SpireTween::stop`], and
 /// [`SpireTween::force_complete`] (also delegated by [`AnyTween`]) for state guards

@@ -668,6 +668,28 @@ impl Ease {
     pub fn set_global_default(ease: Self) { unsafe { DEFAULT_EASE = ease } }
 }
 
+register_enum! {
+    [GD = "EaseSource"]
+    EaseSource {
+        /// Use the selected built-in Ease.
+        [RS = "Enum", GD = "EASE_ENUM"]
+        #[default]
+        Enum = 0,
+        /// Use the selected Curve, falling back to the Ease when no Curve is assigned.
+        [RS = "Curve", GD = "EASE_CURVE"]
+        Curve = 1,
+    }
+}
+
+impl EaseSource {
+    pub(crate) fn resolve(self, ease: Ease, curve: Option<&Gd<Curve>>) -> EaseKind {
+        match (self, curve) {
+            (Self::Curve, Some(curve)) => EaseKind::GodotCurve(curve.clone()),
+            _ => EaseKind::Basic(ease),
+        }
+    }
+}
+
 /// Wraps `Ease` presets, Godot `Curve` resources, `Callable`s, or custom
 /// `dyn EasingFunction` implementations.
 #[derive(Clone)]

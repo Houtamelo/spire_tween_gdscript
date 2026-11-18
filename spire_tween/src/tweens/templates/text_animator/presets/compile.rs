@@ -54,7 +54,6 @@ fn punch(channel: Channel, strength: Vector3, duration: f64, vibrato: i32, elast
     Ok(Effect::Punch(channel, PunchSettings {
         strength,
         segments,
-        vibrato,
         elasticity,
     }))
 }
@@ -72,7 +71,6 @@ fn shake<const D: usize>(
     ensure!(!strength.iter().any(|&axis| axis < 0.0), "`strength` must be non-negative; effect entry skipped.");
     Ok(ShakeSettings {
         segments,
-        vibrato,
         strength: strength.map(|axis| axis as f64),
         randomness,
         fade_out,

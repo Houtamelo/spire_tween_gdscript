@@ -28,8 +28,9 @@ Edit the preset resources or their effect entries to change the authored animati
 The individual `SpireText*Effect` resources also configure finite
 [Blueprint character steps](tween_blueprint.md#animate-text-characters). Assign
 one to a step's `character_effect`, or share the same resource with a preset.
-Blueprints construct ordinary tweens from its fields; presets continue sampling
-it during rendering. Blueprint character delays use `character_stagger`, while
+Blueprints construct Char range tweens from its fields; presets continue sampling
+it during rendering. Blueprint character delays use `character_delay_ease_source`
+with `character_delay_ease_enum` or `character_delay_ease_curve`, while
 `character_phase_offset` remains a preset phase setting.
 
 When assigning an array held in a GDScript variable, declare it as

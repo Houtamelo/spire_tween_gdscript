@@ -5,9 +5,10 @@ logical character indices. Rust callers use the `SpireDoRichTextCharacters` exte
 For reusable looping effects selected with BBCode tags, see
 [rich-text effect presets](rich_text_effect_presets.md).
 They support fade, color, offset, three-axis rotation,
-scale, and punch/shake of offset, rotation and scale. Each constructor uses an
-ordinary Spire method-progress tween, including easing, delays, loops, manual
-stepping, node lifetime checks, signals and sequence composition.
+scale, and punch/shake of offset, rotation and scale. Character constructors use
+the canonical Char tween type, including easing, delays, loops, manual stepping,
+node lifetime checks, signals and sequence composition. Range constructors update
+the selected characters through one handle.
 
 For a rendered showcase of all eleven constructors, run
 `bash scripts/render_text_characters.sh` from the repository root. The
@@ -18,6 +19,7 @@ describes its GIF output, pixel/state assertions and isolated virtual display.
 
 ```gdscript
 @onready var label: SpireRichTextLabel = %Dialogue
+@export var start_delays: Curve
 
 func animate() -> void:
     label.bbcode_enabled = true
@@ -26,13 +28,12 @@ func animate() -> void:
     # Drawing supplies the effective BBCode color and shaping clusters.
     await label.draw
 
-    var sequence := Spire.sequence()
-    sequence.set_default_children_ease(Spire.EASE_OUT_CUBIC)
     for index in label.get_character_count():
         label.set_char_offset(index, Vector2(0, -20))
-        var tween := label.offset_char(index, Vector2.ZERO, 0.4)
-        tween.set_delay(index * 0.04)
-        sequence.join(tween)
+    # Use a custom graph, or the built-in linear delay curve.
+    var delays: Variant = start_delays if start_delays != null else Spire.EASE_LINEAR
+    var tween := label.offset_chars(0, -1, Vector2.ZERO, 0.4, delays)
+    tween.set_ease(Spire.EASE_OUT_CUBIC)
 
     # Angles are radians. X/Y tilts use orthographic projection.
     label.rotate_char(0, Vector3(0, PI / 3, 0), 0.5)
@@ -44,32 +45,32 @@ use spire_tween::prelude::*;
 
 // label: Gd<SpireRichTextLabel>
 label
-    .do_offset_char(0, Vector2::new(0.0, -20.0), 0.4)
+    .do_offset_chars(0, -1, Vector2::new(0.0, -20.0), 0.4, EaseKind::Basic(Ease::Linear))
     .with_ease(EaseKind::Basic(Ease::OutCubic))
     .register();
 ```
 
-Native constructors return unregistered `SpireTween<LerpMethodData<f64>>`
-builders. GDScript constructors register and return `SpireMethodFloat`. That
-float is tween progress, not the character's current property value. Native state
+Native constructors return unregistered `SpireTween<CharTweenData>` builders.
+GDScript constructors register and return `SpireCharTween`. Native state
 accessors are associated functions, for example
 `SpireRichTextLabel::get_char_offset(label.clone(), 0)`.
 
-## Range tween timing (planned)
-
-The [range tween design](designs/CHARACTER_RANGE_TWEENS.md) introduces a Char
-tween that animates a selection through one handle. This API is not implemented
-yet.
+## Range timing
 
 **`duration` is the animation duration of each character for one leg. The Char
 tween finishes when the last character finishes, including its start delay and
 requested loops.** Total duration is the largest character completion time,
 measured from the start of the range; characters animate concurrently.
 
-The optional delay curve supplies `f(x)`, where `x` is the character's normalized
+The delay curve supplies `f(x)`, where `x` is the character's normalized
 position within the selection. Each character starts at `f(x) * duration`.
-Samples must be finite and non-negative. With no curve, all characters start
-together.
+Samples must be finite and non-negative. `EaseKind` accepts a built-in `Ease`,
+a scalar Godot `Curve`, a `Callable`, or a Rust `EasingFunction`. Blueprint
+start delays default to Linear, giving `f(x) = x`; pass
+`EaseKind::Basic(Ease::Linear)` explicitly in Rust or `Spire.EASE_LINEAR` in
+GDScript for the same behavior. `EaseKind::default()` follows the global default
+easing. A flat custom graph at zero starts all characters together. A
+single-character selection samples at `x = 0`.
 
 For example, `duration = 1` second and `f(x) = x` gives each character a one-second
 animation. The first starts at 0 seconds and finishes at 1 second; the last starts
@@ -80,9 +81,21 @@ at 1 second and finishes at 2 seconds. The Char tween's total duration is theref
 total_duration = max(character_start_time + duration)
 ```
 
+`get_character_duration()` returns the supplied per-character duration.
+`get_duration()` returns the computed total range duration, including all
+requested legs and the latest character start delay. These durations exclude
+the tween's outer `set_delay()` and speed-scale adjustments. Pauses and the
+one-loop-per-update policy can extend wall-clock completion.
+
 The start delay applies once. Each character then loops continuously on its own
 timeline, and finite range playback completes after every character finishes its
 requested legs.
+
+`get_loops_finished()` reports the minimum completed-leg count across the
+selection. `loop_finished` fires when that count advances. Each character uses
+the selected Restart, Yoyo, or Incremental mode and completes at most one leg per
+processing update. Infinite looping returns infinity from `get_duration()` and
+continues until stopped or force-completed.
 
 ## Node type and ownership
 
@@ -107,7 +120,7 @@ tweens. Manual `push_*`, `add_text`, `append_text` and `clear` formatting-stack
 edits are not tracked; the label manages that stack. Rebuilding can also reset
 selection and scroll state, as a normal text assignment does.
 
-Freeing the label invalidates its character tweens through their linked callables.
+Freeing the label invalidates its character tweens through their target lifetime checks.
 The label owns its rendering effect; tweens update that effect through the label.
 Preset registration and change subscriptions also belong to the label and are
 released when it is freed.
@@ -178,8 +191,33 @@ state.
 
 ## Constructors
 
-Rust names have a `do_` prefix; GDScript names omit it. All constructors begin
-with `index: i64` / `int`. Basic constructors then take `to, duration`.
+Rust names have a `do_` prefix; GDScript names omit it. Single-character
+constructors begin with `index: i64` / `int`. Range constructors begin with
+inclusive `first, last` indices; `last = -1` selects through the text end at
+construction. Basic constructors then take `to, duration`.
+
+Range names are `offset_chars`, `scale_chars`, `color_chars`, `fade_chars`,
+`rotate_chars`, `punch_chars_offset`, `punch_chars_rotation`, `punch_chars_scale`,
+`shake_chars_offset`, `shake_chars_rotation`, and `shake_chars_scale`.
+
+In GDScript, pass `delay_curve` after the required effect
+arguments, before optional rotation/punch/shake settings. For example:
+
+```gdscript
+label.rotate_chars(0, -1, Vector3(0, 0, TAU), 0.5, Spire.EASE_LINEAR,
+    Spire.ROTATE_MODE_FAST_BEYOND_360)
+label.punch_chars_offset(0, -1, Vector2(0, -12), 0.5, Spire.EASE_OUT_QUAD)
+label.shake_chars_scale(0, -1, 0.5, Vector2(0.2, 0.2), Spire.EASE_LINEAR)
+```
+
+Use an Ease constant, a `Curve` resource, or a `Callable` taking normalized
+character position and returning a delay factor for this argument. It is currently
+required in GDScript; the [binding-default limitation](reports/EASE_KIND_DEFAULT_ARGUMENTS.md)
+prevents automatic argument omission for this union type.
+
+Rust range constructors take `delay_curve: EaseKind` as their final
+argument, after the explicit effect settings. Single-character constructors use
+the same Char runtime with a selection containing one index.
 
 | Rust constructor | Target | Meaning |
 |---|---|---|
@@ -189,7 +227,8 @@ with `index: i64` / `int`. Basic constructors then take `to, duration`.
 | `do_rotate_char` | `Vector3` | YXZ Euler angles in radians; also accepts `RotateMode`. |
 | `do_scale_char` | `Vector2` | Per-axis scale multipliers; negative values mirror. |
 
-Starting values are captured on first processing and retained for replay. Before
+Starting values are captured when each character's delay elapses and retained
+for replay. Before
 the first draw, color reads use the theme default. **Wait for the label's first
 draw before starting color/fade tweens which must capture BBCode or other effect
 colors.** Other channels do not require waiting. The baseline is the color passed
@@ -219,13 +258,20 @@ These reuse Spire's independently authored punch math and interpolated waypoint
 shake sampler, including their existing looping and restoration behavior.
 
 `stop()` preserves the last deformation. Successful completion removes the
-punch/shake contribution. `force_complete()` follows the ordinary method-tween
-contract and does nothing while stopped. Blendable effects replace only their
+punch/shake contribution. `force_complete()` completes every unfinished selected character,
+including characters still waiting to start, and does nothing while stopped.
+It skips loop events and applies the final leg's direction for finite playback.
+Blendable effects replace only their
 own additive contribution; competing absolute tweens use processing order.
 
 Invalid duration becomes one second. Nonfinite target components use safe
 defaults. Alpha/elasticity clamp to 0..1; randomness clamps to 0..180 degrees;
 shake strengths are nonnegative. Warnings include rejected values.
+
+Invalid range bounds or negative/nonfinite delay samples warn and cancel the
+range without changing character state or emitting `finished`. A computed start
+or completion time that overflows also cancels. A missing individual index still
+uses the ordinary no-op-write behavior described above.
 
 ## State access and pivots
 

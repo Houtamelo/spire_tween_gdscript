@@ -40,6 +40,7 @@ macro_rules! impl_tweenables {
 impl_tweenables! {
     Callable => Gd<SpireDelayedCall>, SpireDelayedCall;
     Sequence => Gd<SpireSequence>, SpireSequence;
+    CharTweenData => Gd<SpireCharTween>, SpireCharTween;
     LerpMethodData<Variant> => Gd<SpireMethod>, SpireMethod;
     LerpMethodData<i64> => Gd<SpireMethodInt>, SpireMethodInt;
     LerpMethodData<f64> => Gd<SpireMethodFloat>, SpireMethodFloat;

@@ -51,85 +51,17 @@ impl CompiledTextEffect {
         }
     }
 
-    pub(crate) fn tween(
+    pub(crate) fn duration(&self) -> f64 { self.timing.duration }
+
+    pub(crate) fn range_tween(
         &self,
         label: Gd<SpireRichTextLabel>,
-        index: i64,
+        first: i64,
+        last: i64,
+        delay_curve: EaseKind,
         blendable: bool,
-    ) -> SpireTween<LerpMethodData<f64>> {
-        let duration = self.timing.duration;
-        let tween = match self.effect {
-            Effect::Color(_, to) => label.do_color_char(index, to, duration),
-            Effect::Fade(_, to) => label.do_fade_char(index, to, duration),
-            Effect::Offset(_, to) => label.do_offset_char(index, to, duration),
-            Effect::Scale(_, to) => label.do_scale_char(index, to, duration),
-            Effect::Rotation(_, to, mode) => label.do_rotate_char(index, to, duration, mode),
-            Effect::Punch(channel, settings) => {
-                let strength = settings.strength;
-                match channel {
-                    Channel::Offset => label.do_punch_char_offset(
-                        index,
-                        Vector2::new(strength.x, strength.y),
-                        duration,
-                        settings.vibrato,
-                        settings.elasticity,
-                        blendable,
-                    ),
-                    Channel::Scale => label.do_punch_char_scale(
-                        index,
-                        Vector2::new(strength.x, strength.y),
-                        duration,
-                        settings.vibrato,
-                        settings.elasticity,
-                        blendable,
-                    ),
-                    Channel::Rotation => label.do_punch_char_rotation(
-                        index,
-                        strength,
-                        duration,
-                        settings.vibrato,
-                        settings.elasticity,
-                        blendable,
-                    ),
-                }
-            }
-            Effect::Shake2(channel, settings) => {
-                let strength = Vector2::new(settings.strength[0] as real, settings.strength[1] as real);
-                match channel {
-                    Channel::Offset => label.do_shake_char_offset(
-                        index,
-                        duration,
-                        strength,
-                        settings.vibrato,
-                        settings.randomness as real,
-                        settings.fade_out,
-                        settings.mode,
-                        blendable,
-                    ),
-                    Channel::Scale => label.do_shake_char_scale(
-                        index,
-                        duration,
-                        strength,
-                        settings.vibrato,
-                        settings.randomness as real,
-                        settings.fade_out,
-                        settings.mode,
-                        blendable,
-                    ),
-                    Channel::Rotation => unreachable!("rotation uses the three-axis shake settings"),
-                }
-            }
-            Effect::Shake3(settings) => label.do_shake_char_rotation(
-                index,
-                duration,
-                Vector3::new(settings.strength[0] as real, settings.strength[1] as real, settings.strength[2] as real),
-                settings.vibrato,
-                settings.randomness as real,
-                settings.fade_out,
-                settings.mode,
-                blendable,
-            ),
-        };
-        tween.with_ease(EaseKind::Basic(self.timing.ease))
+    ) -> SpireTween<CharTweenData> {
+        CharTweenData::build(label, first, last, self.timing.duration, delay_curve, self.effect, blendable)
+            .with_ease(EaseKind::Basic(self.timing.ease))
     }
 }

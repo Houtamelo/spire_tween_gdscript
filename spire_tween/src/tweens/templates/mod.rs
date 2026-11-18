@@ -12,7 +12,15 @@ mod spiral_3d;
 mod text_animator;
 mod ui_normalized;
 mod waypoint_path;
-pub use text_animator::{SpireCharRenderer, SpireDoRichTextCharacters, SpireRichTextLabel, presets::*};
+pub(crate) use text_animator::character_start_delays;
+pub use text_animator::{
+    CharTweenData,
+    SpireCharRenderer,
+    SpireCharTween,
+    SpireDoRichTextCharacters,
+    SpireRichTextLabel,
+    presets::*,
+};
 
 pub use self::{
     adapters::*,

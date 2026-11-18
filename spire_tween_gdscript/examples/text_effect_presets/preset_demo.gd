@@ -1,7 +1,7 @@
 extends Control
 
 @onready var text: SpireRichTextLabel = $Text
-var code_tweens: Array[SpireMethodFloat] = []
+var code_tweens: Array[SpireCharTween] = []
 
 func _forget_finished() -> void:
 	for index in range(code_tweens.size() - 1, -1, -1):

@@ -18,6 +18,20 @@ func property_info(effect: TweenBlueprint, name: StringName) -> Dictionary:
 		if info.name == name: return info
 	return {}
 
+func edited_property(name: StringName) -> EditorProperty:
+	for property: EditorProperty in EditorInterface.get_inspector().find_children("*", "EditorProperty", true, false):
+		if property.get_edited_property() == name: return property
+	return null
+
+func wait_for_edited_property(name: StringName, previous_id: int = 0) -> EditorProperty:
+	var deadline := Time.get_ticks_usec() + 2_000_000
+	while true:
+		var property := edited_property(name)
+		if property != null and property.get_instance_id() != previous_id: return property
+		if Time.get_ticks_usec() >= deadline: return null
+		await get_tree().process_frame
+	return null
+
 func scene_item(node: Node) -> TreeItem:
 	for tree: Tree in EditorInterface.get_base_control().find_children("*", "Tree", true, false):
 		var items: Array[TreeItem] = []
@@ -45,6 +59,23 @@ func wait_for_scene_warning(node: Node, field: String, present: bool) -> bool:
 		if Time.get_ticks_usec() >= deadline: return false
 		await get_tree().process_frame
 	return true
+
+func reveal_property(control: Control) -> void:
+	# Expand collapsed Inspector sections through their actual mouse input path.
+	for _attempt in 4:
+		if control.is_visible_in_tree(): return
+		var section := control.get_parent()
+		while section != null and (section.get_class() != "EditorInspectorSection" or not section.is_visible_in_tree()):
+			section = section.get_parent()
+		if section == null: break
+		for pressed in [true, false]:
+			var click := InputEventMouseButton.new()
+			click.position = section.get_global_rect().position + Vector2(20, 12)
+			click.button_index = MOUSE_BUTTON_LEFT
+			click.pressed = pressed
+			Input.parse_input_event(click)
+		for _frame in 4: await get_tree().process_frame
+	check(control.is_visible_in_tree(), "The curve editor must be visible in the Inspector")
 
 func _run() -> void:
 	for _frame in 8: await get_tree().process_frame
@@ -125,7 +156,7 @@ func _run() -> void:
 	check(property_info(effect, &"start_value").usage & PROPERTY_USAGE_EDITOR != 0, "Enabled explicit start must be visible")
 	var custom_kind := custom.kind
 	custom.kind = Spire.BLUEPRINT_KIND_PROPERTY
-	for name in [&"animated_property", &"speed_or_duration", &"start_enabled", &"start_value", &"end_value", &"lerp_mode", &"ease_basic", &"ease_curve"]:
+	for name in [&"animated_property", &"speed_or_duration", &"start_enabled", &"start_value", &"end_value", &"lerp_mode", &"ease_source", &"ease_enum", &"ease_curve"]:
 		check(property_info(effect, name).usage & PROPERTY_USAGE_STORAGE != 0, "Visible fields must remain serializable: " + name)
 		check(property_info(custom, name).usage & PROPERTY_USAGE_EDITOR == 0, "A script must hide built-in animation fields even when kind is Property: " + name)
 		check(property_info(custom, name).usage & PROPERTY_USAGE_STORAGE != 0, "A script's hidden built-in fields must remain serializable: " + name)
@@ -184,29 +215,111 @@ func _run() -> void:
 	check(await wait_for_scene_warning(characters, "character_effect", false), "Assigning a valid resource must clear the warning")
 	characters.character_loops = 2
 	characters.character_first = 99
-	characters.character_stagger = -0.1
+	var invalid_delay := Curve.new()
+	invalid_delay.min_value = -1.0
+	invalid_delay.add_point(Vector2(0, -0.1))
+	invalid_delay.add_point(Vector2(1, -0.1))
+	characters.character_delay_ease_source = Spire.EASE_CURVE
+	characters.character_delay_ease_curve = invalid_delay
 	characters.character_loops = 0
 	characters.update_configuration_warnings()
 	var range_error_visible: bool = await wait_for_scene_warning(characters, "character_first", true)
-	check(range_error_visible and not scene_warnings(characters).contains("character_stagger") and not scene_warnings(characters).contains("character_loops"), "Character validation must report its first error")
+	check(range_error_visible and not scene_warnings(characters).contains("character_delay_ease_curve") and not scene_warnings(characters).contains("character_loops"), "Character validation must report its first error")
 	characters.character_first = 0
 	characters.update_configuration_warnings()
-	var stagger_error_visible: bool = await wait_for_scene_warning(characters, "character_stagger", true)
+	var stagger_error_visible: bool = await wait_for_scene_warning(characters, "character_delay_ease_curve", true)
 	check(stagger_error_visible and not scene_warnings(characters).contains("character_loops"), "Fixing the range must expose the next character error")
-	characters.character_stagger = 0.0
+	characters.character_delay_ease_source = Spire.EASE_ENUM
 	characters.update_configuration_warnings()
 	check(await wait_for_scene_warning(characters, "character_loops", true), "Fixing stagger must expose the invalid loop count")
+	check(characters.character_delay_ease_curve == invalid_delay and not scene_warnings(characters).contains("character_delay_ease_curve"), "Inactive invalid curves must be preserved without rejecting Enum mode")
+	characters.character_delay_ease_curve = null
 	characters.character_loops = 2
 	characters.update_configuration_warnings()
 	check(await wait_for_scene_warning(characters, "character_loops", false), "A valid character configuration must clear the error")
-	for name in [&"character_effect", &"character_first", &"character_last", &"character_stagger", &"character_loops", &"start_enabled", &"ease_curve"]:
+	text.text = "ABCD"
+	characters.character_delay_ease_enum = Spire.EASE_PUNCH
+	check(await wait_for_scene_warning(characters, "character_delay_ease_enum", true), "Invalid built-in delay samples must identify the exported Ease field")
+	characters.character_delay_ease_enum = Spire.EASE_LINEAR
+	check(await wait_for_scene_warning(characters, "character_delay_ease_enum", false), "Repairing the built-in delay Ease must clear the warning")
+	text.text = "ABC"
+	for name in [&"character_effect", &"character_first", &"character_last", &"character_delay_ease_source", &"character_delay_ease_enum", &"character_loops", &"start_enabled", &"ease_source", &"ease_enum"]:
 		check(property_info(characters, name).usage & PROPERTY_USAGE_EDITOR != 0, "Relevant character fields must be visible: " + name)
 		check(property_info(characters, name).usage & PROPERTY_USAGE_STORAGE != 0, "Character fields must remain serializable: " + name)
-	for name in [&"animated_property", &"lerp_mode", &"end_value", &"start_value", &"speed_or_duration", &"ease_basic", &"character_blendable"]:
+	for name in [&"animated_property", &"lerp_mode", &"end_value", &"start_value", &"speed_or_duration", &"character_delay_ease_curve", &"ease_curve", &"character_blendable"]:
 		check(property_info(characters, name).usage & PROPERTY_USAGE_EDITOR == 0, "Irrelevant character fields must be hidden: " + name)
 		check(property_info(characters, name).usage & PROPERTY_USAGE_STORAGE != 0, "Hidden settings must retain serialization: " + name)
-	for name in [&"character_animation", &"character_pivot", &"character_rotate_mode", &"character_loop_mode", &"character_vibrato", &"character_elasticity", &"character_randomness", &"character_fade_out", &"character_randomness_mode"]:
+	for name in [&"character_stagger", &"character_animation", &"character_pivot", &"character_rotate_mode", &"character_loop_mode", &"character_vibrato", &"character_elasticity", &"character_randomness", &"character_fade_out", &"character_randomness_mode"]:
 		check(property_info(characters, name).is_empty(), "Duplicated character settings must be removed: " + name)
+	EditorInterface.edit_node(characters)
+	for _frame in 4: await get_tree().process_frame
+	var mode := edited_property(&"character_delay_ease_source")
+	check(mode != null and characters.character_delay_ease_source == Spire.EASE_ENUM, "Character delays must expose a native EaseSource property")
+	if mode != null: await reveal_property(mode)
+	if DisplayServer.get_name() != "headless":
+		# The 4.4 editor can stop drawing while idle; force a fresh capture.
+		RenderingServer.force_draw()
+		EditorInterface.get_base_control().get_viewport().get_texture().get_image().save_png("res://character_curve_basic.png")
+	if mode != null:
+		mode.emit_changed(&"character_delay_ease_source", Spire.EASE_CURVE)
+		check(await wait_for_edited_property(&"character_delay_ease_curve") != null, "Curve mode must rebuild the native Inspector with a resource editor")
+		check(characters.character_delay_ease_source == Spire.EASE_CURVE, "The native Inspector must change the selected delay source")
+		check(property_info(characters, &"character_delay_ease_curve").usage & PROPERTY_USAGE_EDITOR != 0, "Curve mode must expose the native resource picker")
+		check(property_info(characters, &"character_delay_ease_enum").usage & PROPERTY_USAGE_EDITOR == 0, "Curve mode must hide the inactive Ease")
+		var curve_undo := EditorInterface.get_editor_undo_redo()
+		var curve_history := curve_undo.get_history_undo_redo(curve_undo.get_object_history_id(characters))
+		curve_history.undo()
+		check(await wait_for_edited_property(&"character_delay_ease_enum") != null, "Undo must restore the Ease control")
+		check(characters.character_delay_ease_source == Spire.EASE_ENUM, "Undo must restore the original delay source")
+		curve_history.redo()
+		check(await wait_for_edited_property(&"character_delay_ease_curve") != null, "Redo must restore the Curve editor")
+		check(characters.character_delay_ease_source == Spire.EASE_CURVE, "Redo must restore Curve mode")
+		mode = edited_property(&"character_delay_ease_source")
+		mode.emit_changed(&"character_delay_ease_source", Spire.EASE_ENUM)
+		await wait_for_edited_property(&"character_delay_ease_enum")
+		var basic := edited_property(&"character_delay_ease_enum")
+		check(basic != null, "Basic mode must expose an Ease dropdown")
+		if basic != null:
+			basic.emit_changed(&"character_delay_ease_enum", Spire.EASE_OUT_QUAD)
+			for _frame in 4: await get_tree().process_frame
+			check(characters.character_delay_ease_enum == Spire.EASE_OUT_QUAD, "The Ease dropdown must update the stored Ease")
+		mode = edited_property(&"character_delay_ease_source")
+		mode.emit_changed(&"character_delay_ease_source", Spire.EASE_CURVE)
+		await wait_for_edited_property(&"character_delay_ease_curve")
+	var start_curve := Curve.new()
+	start_curve.min_value = -1
+	start_curve.add_point(Vector2.ZERO, 0, 1)
+	start_curve.add_point(Vector2.ONE, 1, 0)
+	var curve_assigned := false
+	var delay_property := edited_property(&"character_delay_ease_curve")
+	var delay_property_id := delay_property.get_instance_id() if delay_property != null else 0
+	if delay_property != null:
+		for picker: EditorResourcePicker in delay_property.find_children("*", "EditorResourcePicker", true, false):
+			picker.set_edited_resource(start_curve)
+			picker.resource_changed.emit(start_curve)
+			curve_assigned = true
+			break
+	check(curve_assigned and characters.character_delay_ease_curve == start_curve, "The actual Inspector must assign a typed start-delay Curve")
+	check(characters.character_delay_ease_enum == Spire.EASE_OUT_QUAD, "Switching sources must preserve the inactive Ease")
+	# The setter schedules a full Inspector rebuild. Check the replacement
+	# resource picker, rather than the control that emitted the edit.
+	var refreshed := await wait_for_edited_property(&"character_delay_ease_curve", delay_property_id)
+	check(refreshed != null, "Curve assignment must rebuild the Inspector")
+	var picker_updated := false
+	if refreshed != null:
+		for picker: EditorResourcePicker in refreshed.find_children("*", "EditorResourcePicker", true, false):
+			picker_updated = picker.get_edited_resource() == start_curve
+			break
+	check(picker_updated, "The rebuilt Inspector must display the assigned Curve")
+	if DisplayServer.get_name() != "headless":
+		await reveal_property(refreshed)
+		await get_tree().process_frame
+		RenderingServer.force_draw()
+		EditorInterface.get_base_control().get_viewport().get_texture().get_image().save_png("res://character_curve_custom.png")
+	start_curve.set_point_value(1, -0.2)
+	check(await wait_for_scene_warning(characters, "character_delay_ease_curve", true), "Curve edits must refresh configuration warnings through Resource.changed")
+	start_curve.set_point_value(1, 1.0)
+	check(await wait_for_scene_warning(characters, "character_delay_ease_curve", false), "Repairing the curve must clear its configuration warning")
 	var impulse := SpireTextPunchScaleEffect.new()
 	characters.character_effect = impulse
 	characters.start_enabled = true
@@ -271,6 +384,7 @@ func _run() -> void:
 	var restored_characters: TweenBlueprint = restored.get_node("CharacterText/Characters")
 	check(restored_characters.character_effect is SpireTextRotationEffect and restored_characters.character_effect.to.is_equal_approx(Vector3(0, 0, TAU)) and restored_characters.character_effect.pivot == Vector2(12, -14), "Editor save/reload must preserve the effect resource and its values")
 	check(restored_characters.character_loops == 2 and restored_characters.character_effect.loop_mode == Spire.LOOP_MODE_YOYO and restored_characters.character_effect.duration == 2.0, "Editor save/reload must preserve resource timing and loop settings")
+	check(restored_characters.character_delay_ease_source == Spire.EASE_CURVE and restored_characters.character_delay_ease_enum == Spire.EASE_OUT_QUAD and restored_characters.character_delay_ease_curve is Curve and is_equal_approx(restored_characters.character_delay_ease_curve.sample(1), 1), "Editor save/reload must preserve the start-delay Curve")
 	restored.free()
 	var original: Variant = effect.end_value
 	effect.animated_property = &"rotation"

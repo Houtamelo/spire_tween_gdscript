@@ -32,7 +32,7 @@ impl Timing {
 }
 
 #[derive(Clone, Copy)]
-pub(super) enum Effect {
+pub(crate) enum Effect {
     Color(Color, Color),
     Fade(f64, f64),
     Offset(Vector2, Vector2),
@@ -44,17 +44,15 @@ pub(super) enum Effect {
 }
 
 #[derive(Clone, Copy)]
-pub(super) struct PunchSettings {
+pub(crate) struct PunchSettings {
     pub strength: Vector3,
     pub segments: NonZeroUsize,
-    pub vibrato: i32,
     pub elasticity: f64,
 }
 
 #[derive(Clone, Copy)]
-pub(super) struct ShakeSettings<const D: usize> {
+pub(crate) struct ShakeSettings<const D: usize> {
     pub segments: NonZeroUsize,
-    pub vibrato: i32,
     pub strength: [f64; D],
     pub randomness: f64,
     pub fade_out: bool,
@@ -62,7 +60,7 @@ pub(super) struct ShakeSettings<const D: usize> {
 }
 
 impl<const D: usize> ShakeSettings<D> {
-    fn path(&self, seed: u64) -> ShakePath<D> {
+    pub(crate) fn path(&self, seed: u64) -> ShakePath<D> {
         let mut path = ShakePath::new(self.segments, self.strength, self.randomness, self.fade_out, self.mode);
         path.regenerate(&mut Xoshiro256PlusPlus::seed_from_u64(seed));
         path

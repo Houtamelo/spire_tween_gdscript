@@ -8,6 +8,7 @@ mod sample;
 mod tween;
 
 pub(crate) use compile::CompiledTextEffect;
+pub(crate) use sample::{Effect, PunchSettings, ShakeSettings};
 use godot::classes::{CharFxTransform, IRichTextEffect, Resource, RichTextEffect};
 pub(super) use registry::Registry;
 pub use resources::*;

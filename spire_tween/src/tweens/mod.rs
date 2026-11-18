@@ -43,7 +43,7 @@ pub(crate) fn calc_animation_position(
     loop_mode: LoopMode,
     ease: &EaseKind,
 ) -> f64 {
-    if duration.approx_eq(&0.0) {
+    if duration == 0.0 {
         godot_error!("Duration cannot be zero, returning animation position `1.0`.");
         return 1.;
     }

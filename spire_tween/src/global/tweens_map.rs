@@ -73,6 +73,7 @@ impl TweensMap {
                     }
                     WeakAnyTween::DelayedCall(weak) => weak.is_expired(),
                     WeakAnyTween::Sequence(weak) => weak.is_expired(),
+                    WeakAnyTween::Char(weak) => weak.is_expired(),
                 })
                 .count();
         }
@@ -357,6 +358,12 @@ impl TweensMap {
                     && is_instance_id_valid(owner.instance_id_unchecked().to_i64())
                 {
                     unsafe { self.node_ensure_tracked(owner.clone()) };
+                }
+            }
+            AnyTween::Char(tween) => {
+                let owner = tween.get_owner();
+                if is_instance_id_valid(owner.instance_id_unchecked().to_i64()) {
+                    unsafe { self.node_ensure_tracked(owner.clone().upcast()) };
                 }
             }
             AnyTween::DelayedCall(_) | AnyTween::Sequence(_) => {}

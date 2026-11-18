@@ -9,8 +9,13 @@ use spire_tween::prelude::*;
 
 fn rich_text_label_api(label: Gd<SpireRichTextLabel>) {
     let _: Gd<godot::classes::RichTextLabel> = label.clone().upcast();
-    let _: SpireTween<LerpMethodData<f64>> = label.do_offset_char(0, Vector2::ONE, 0.5);
-    let _: SpireTween<LerpMethodData<f64>> = label.bind().do_offset_char(0, Vector2::ONE, 0.5);
+    let _: SpireTween<CharTweenData> = label.do_offset_char(0, Vector2::ONE, 0.5);
+    let _: SpireTween<CharTweenData> = label.bind().do_offset_char(0, Vector2::ONE, 0.5);
+    let _: SpireTween<CharTweenData> = label.do_offset_chars(0, -1, Vector2::ONE, 0.5, EaseKind::Basic(Ease::Linear));
+    let _: SpireTween<CharTweenData> =
+        label
+            .bind()
+            .do_offset_chars(0, -1, Vector2::ONE, 0.5, EaseKind::Basic(Ease::Linear));
     let _: Vector2 = SpireRichTextLabel::get_char_offset(label.clone(), 0);
 }
 
@@ -129,12 +134,7 @@ fn compile() {
         #[cfg(feature = "include_gdscript_bridge")]
         let _: fn(Gd<TweenBlueprint>) -> Gd<SpireSequence> = TweenBlueprint::play;
         let _: fn(Gd<TweenBlueprint>) = TweenBlueprint::stop;
-        let _ = (
-            BlueprintKind::Property,
-            BlueprintKind::Characters,
-            LerpModeKind::Relative,
-            TriggerCondition::Manual,
-        );
+        let _ = (BlueprintKind::Property, BlueprintKind::Characters, LerpModeKind::Relative, TriggerCondition::Manual);
     }
     {
         let ease = Ease::get_global_default();

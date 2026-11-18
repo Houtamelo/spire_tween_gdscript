@@ -91,7 +91,7 @@ pub(super) fn get_configuration_warnings(bp: &TweenBlueprint) -> PackedStringArr
         && bp.kind == BlueprintKind::Characters
         && let Err(warning) = bp.resolve_effect_configuration()
     {
-        warnings.push(warning.to_string().as_str());
+        warnings.push(format!("{warning:#}").as_str());
     }
 
     if !bp.is_managed_by_parent()
@@ -109,8 +109,15 @@ pub(super) fn on_validate_property(bp: &TweenBlueprint, property: &mut PropertyI
     let name = property.property_name.to_string();
     let name = name.as_str();
 
-    if let "kind" | "target" | "animated_property" | "start_enabled" | "lerp_mode" | "trigger_condition"
-    | "character_effect" = name
+    if let "kind"
+    | "target"
+    | "animated_property"
+    | "start_enabled"
+    | "lerp_mode"
+    | "trigger_condition"
+    | "character_effect"
+    | "ease_source"
+    | "character_delay_ease_source" = name
     {
         property.usage = property.usage.with(PropertyUsageFlags::UPDATE_ALL_IF_MODIFIED);
     }
@@ -142,15 +149,31 @@ pub(super) fn on_validate_property(bp: &TweenBlueprint, property: &mut PropertyI
         property.usage = property.usage.without(PropertyUsageFlags::EDITOR);
     }
 
-    if let "animated_property" | "speed_or_duration" | "start_enabled" | "start_value" | "end_value" | "lerp_mode"
-    | "ease_basic" | "ease_curve" = name
+    if let "animated_property" | "speed_or_duration" | "start_enabled" | "start_value" | "end_value" | "lerp_mode" =
+        name
     {
         property.usage = property.usage.with(PropertyUsageFlags::STORAGE);
-        let character_field = characters && matches!(name, "start_enabled" | "start_value" | "ease_curve");
+        let character_field = characters && matches!(name, "start_enabled" | "start_value");
         property.usage = if scripted || !(bp.kind == BlueprintKind::Property || character_field) {
             property.usage.without(PropertyUsageFlags::EDITOR)
         } else {
             property.usage.with(PropertyUsageFlags::EDITOR)
+        };
+    }
+
+    if matches!(name, "ease_source" | "ease_enum" | "ease_curve") {
+        let visible = !scripted
+            && matches!(bp.kind, BlueprintKind::Property | BlueprintKind::Characters)
+            && match name {
+                "ease_enum" => bp.ease_source == EaseSource::Enum,
+                "ease_curve" => bp.ease_source == EaseSource::Curve,
+                _ => true,
+            };
+        property.usage = property.usage.with(PropertyUsageFlags::STORAGE);
+        property.usage = if visible {
+            property.usage.with(PropertyUsageFlags::EDITOR)
+        } else {
+            property.usage.without(PropertyUsageFlags::EDITOR)
         };
     }
 
@@ -171,11 +194,20 @@ pub(super) fn on_validate_property(bp: &TweenBlueprint, property: &mut PropertyI
         "character_effect"
             | "character_first"
             | "character_last"
-            | "character_stagger"
+            | "character_delay_ease_source"
+            | "character_delay_ease_enum"
+            | "character_delay_ease_curve"
             | "character_loops"
             | "character_blendable"
     ) {
-        let visible = !scripted && characters && (name != "character_blendable" || impulse_start.is_some());
+        let visible = !scripted
+            && characters
+            && match name {
+                "character_blendable" => impulse_start.is_some(),
+                "character_delay_ease_enum" => bp.character_delay_ease_source == EaseSource::Enum,
+                "character_delay_ease_curve" => bp.character_delay_ease_source == EaseSource::Curve,
+                _ => true,
+            };
         property.usage = property.usage.with(PropertyUsageFlags::STORAGE);
         if !visible {
             property.usage = property.usage.without(PropertyUsageFlags::EDITOR);

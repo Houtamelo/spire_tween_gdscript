@@ -1,12 +1,16 @@
 //! Per-character animation owned by a RichTextEffect and updated by ordinary tweens.
 
+mod char_tween;
 mod gd;
 pub mod presets;
+mod ranges_gd;
 mod render;
 #[cfg(feature = "integration-tests")]
 mod testing;
 mod tween;
 
+pub(crate) use char_tween::character_start_delays;
+pub use char_tween::{CharTweenData, SpireCharTween};
 use godot::classes::IRichTextLabel;
 pub use render::SpireCharRenderer;
 pub use tween::SpireDoRichTextCharacters;
@@ -19,7 +23,7 @@ use super::{
 };
 
 #[derive(Clone, Copy)]
-enum Channel {
+pub(crate) enum Channel {
     Offset,
     Rotation,
     Scale,

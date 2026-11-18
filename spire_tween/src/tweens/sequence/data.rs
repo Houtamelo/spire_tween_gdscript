@@ -987,6 +987,11 @@ impl SpireTween<Sequence> {
                     tween.set_ease(EaseKind::Basic(ease));
                 }
             }
+            AnyTween::Char(tween) => {
+                if let EaseKind::Basic(Ease::Default) = tween.get_ease() {
+                    tween.set_ease(EaseKind::Basic(ease));
+                }
+            }
             AnyTween::DelayedCall(_) => {}
             AnyTween::Sequence(tween) => {
                 if tween.t.default_ease.is_none_or(|e| e == Ease::Default) {

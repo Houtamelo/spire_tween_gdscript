@@ -125,12 +125,9 @@ impl TweenBlueprint {
 
                 let (path, end, start, start_enabled, duration, mode, ease) = {
                     let state = this.bind();
-                    let ease = if let Some(curve) = state.ease_curve.as_ref().filter(|curve| curve.is_instance_valid())
-                    {
-                        EaseKind::GodotCurve(curve.clone())
-                    } else {
-                        EaseKind::Basic(state.ease_basic)
-                    };
+
+                    let ease = state.ease_source.resolve(state.ease_enum, state.ease_curve.as_ref());
+
                     (
                         state.animated_property.clone(),
                         state.end_value.clone(),
@@ -296,6 +293,7 @@ impl TweenBlueprint {
 impl Drop for TweenBlueprint {
     fn drop(&mut self) {
         self.disconnect_character_effect();
+        Self::disconnect_configuration_watch(&mut self.character_delay_curve_connection);
         if let Some(sequence) = self.current_tween.take() {
             sequence.bind().to_mut().stop();
         }

@@ -36,10 +36,10 @@
 //! - **Tween pointer types** — [`TweenPtr`], [`WeakTweenPtr`].
 //! - **Processing results** — [`TweenStepResult`], [`AdvanceTimeResult`].
 //! - **Shared-state pointers** — [`RcPtr`], [`WeakPtr`].
-//! - **Enums** — [`Ease`], [`EaseKind`], [`Evaluator`],
+//! - **Enums** — [`Ease`], [`EaseKind`], [`EaseSource`], [`Evaluator`],
 //!   [`LoopMode`], [`PauseMode`], [`ProcessMode`],
 //!   [`Spiral`], [`State`].
-//! - **Tween-data types** — [`LerpPropertyData`], [`LerpMethodData`],
+//! - **Tween-data types** — [`LerpPropertyData`], [`LerpMethodData`], [`CharTweenData`],
 //!   plus the generated per-class adapter enums (`PropertyDataFloat`,
 //!   `PropertyDataVec2`, …).
 //! - **Constructor traits** — [`DoProperty`], [`DoMethod`],
@@ -142,6 +142,7 @@ pub mod prelude {
     #[cfg(feature = "include_gdscript_bridge")]
     pub mod gdscript {
         pub use crate::tweens::{
+            SpireCharTween,
             SpireDelayedCall,
             SpireMethod,
             SpireMethodColor,
@@ -178,6 +179,7 @@ pub mod prelude {
             BlueprintKind,
             Ease,
             EaseKind,
+            EaseSource,
             Evaluator,
             LerpModeKind,
             LoopMode,
@@ -201,6 +203,7 @@ pub mod prelude {
             AnyMethodTween,
             AnyPropertyTween,
             AnyTween,
+            CharTweenData,
             CompleteBoundTweens,
             DoBone,
             DoCanvasItemColors,

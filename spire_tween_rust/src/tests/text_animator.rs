@@ -7,8 +7,8 @@ use super::{
     util::{PinnedTestTask, next_frame},
 };
 
-type Driver = TweenPtr<LerpMethodData<f64>>;
-fn manual(t: SpireTween<LerpMethodData<f64>>) -> Driver {
+type Driver = TweenPtr<CharTweenData>;
+fn manual(t: SpireTween<CharTweenData>) -> Driver {
     TweenPtr::new(
         t.with_process_mode(ProcessMode::Manual)
             .with_ease(EaseKind::Basic(Ease::Linear)),
@@ -38,6 +38,133 @@ fn label(parent: &mut Node2D, text: &str, bbcode: bool) -> Gd<SpireRichTextLabel
 }
 
 impl MiscTests {
+    pub(super) fn test_characters_ease_kind(&mut self) -> PinnedTestTask {
+        let value = EaseKind::Basic(Ease::Linear);
+        near(value.sample(0.5), 0.5);
+        let encoded = value.to_variant();
+        let decoded = encoded.try_to::<EaseKind>().expect("basic curve round trip");
+        assert!(matches!(decoded, EaseKind::Basic(Ease::Linear)));
+        let basic = Ease::OutQuad.to_variant().to::<EaseKind>();
+        near(basic.sample(0.5), 0.75);
+        let mut curve = Curve::new_gd();
+        curve.add_point(Vector2::new(0.0, 0.25));
+        curve.add_point(Vector2::new(1.0, 0.25));
+        let value = curve.to_variant().to::<EaseKind>();
+        assert!(matches!(&value, EaseKind::GodotCurve(current) if current == &curve));
+        near(value.sample(0.5), 0.25);
+        assert_eq!(value.to_variant().to::<Gd<Curve>>(), curve);
+        let callable = Callable::from_fn("character_delays", |args| {
+            let x = args[0].to::<f64>();
+            (x * 0.5).to_variant()
+        });
+        let from_callable = callable.to_variant().to::<EaseKind>();
+        near(from_callable.sample(0.5), 0.25);
+        assert_eq!(from_callable.to_variant().to::<Callable>(), callable);
+        for invalid in [
+            Variant::nil(),
+            999_i64.to_variant(),
+            "invalid".to_variant(),
+            Resource::new_gd().to_variant(),
+        ] {
+            assert!(invalid.try_to::<EaseKind>().is_err());
+        }
+        let n = label(&mut self.base_mut(), "ABC", false);
+        let mut t = manual(n.do_offset_chars(0, -1, Vector2::new(10.0, 0.0), 1.0, EaseKind::Basic(Ease::Linear)));
+        near(t.get_duration(), 2.0);
+        step(&t, 0.5);
+        v2(SpireRichTextLabel::get_char_offset(n.clone(), 0), Vector2::new(5.0, 0.0));
+        v2(SpireRichTextLabel::get_char_offset(n.clone(), 1), Vector2::ZERO);
+        t.stop();
+        SpireRichTextLabel::reset(n.clone());
+        let t = manual(n.do_offset_chars(0, -1, Vector2::new(10.0, 0.0), 1.0, from_callable));
+        near(t.get_duration(), 1.5);
+        step(&t, 0.5);
+        v2(SpireRichTextLabel::get_char_offset(n.clone(), 1), Vector2::new(2.5, 0.0));
+        n.free();
+        Box::pin(async {})
+    }
+
+    pub(super) fn test_characters_ranges(&mut self) -> PinnedTestTask {
+        let n = label(&mut self.base_mut(), "ABC", false);
+        let mut curve = Curve::new_gd();
+        curve.add_point(Vector2::ZERO);
+        curve.add_point(Vector2::ONE);
+        curve.set_point_right_tangent(0, 1.0);
+        curve.set_point_left_tangent(1, 1.0);
+        // Borrowed-label constructors must also work without reborrowing Rust state.
+        let tween = n
+            .bind()
+            .do_offset_chars(0, -1, Vector2::new(10.0, 0.0), 1.0, EaseKind::GodotCurve(curve.clone()));
+        let t = manual(tween);
+        let any: AnyTween = t.clone().into();
+        assert!(matches!(any, AnyTween::Char(_)));
+        let weak = any.downgrade();
+        assert!(weak.upgrade().is_some());
+        near(t.get_character_duration(), 1.0);
+        near(t.get_duration(), 2.0);
+        step(&t, 0.25);
+        v2(SpireRichTextLabel::get_char_offset(n.clone(), 0), Vector2::new(2.5, 0.0));
+        v2(SpireRichTextLabel::get_char_offset(n.clone(), 1), Vector2::ZERO);
+        // Editing the Curve does not change this playback's sampled delays.
+        curve.set_point_value(1, 0.0);
+        step(&t, 1.0);
+        assert_eq!(t.get_loops_finished(), 0);
+        v2(SpireRichTextLabel::get_char_offset(n.clone(), 2), Vector2::new(2.5, 0.0));
+        step(&t, 0.75);
+        assert_eq!(t.get_loops_finished(), 1);
+        assert!(t.is_stopped());
+        let mut sequence = TweenSequence::new();
+        sequence.append(n.do_scale_chars(0, -1, Vector2::splat(2.0), 0.5, EaseKind::Basic(Ease::Linear)));
+        let mut sequence = TweenPtr::new(sequence.with_process_mode(ProcessMode::Manual));
+        sequence.force_complete();
+        v2(SpireRichTextLabel::get_char_scale(n.clone(), 2), Vector2::splat(2.0));
+        let carried = manual(
+            n.do_offset_chars(
+                0,
+                2,
+                Vector2::ONE,
+                1.0,
+                EaseKind::GodotCurve({
+                    let mut curve = Curve::new_gd();
+                    curve.add_point(Vector2::ZERO);
+                    curve.add_point(Vector2::new(1.0, 0.5));
+                    curve.set_point_right_tangent(0, 0.5);
+                    curve.set_point_left_tangent(1, 0.5);
+                    curve
+                }),
+            )
+            .with_loops(2, LoopMode::Restart),
+        );
+        assert!(matches!(carried.custom_step(4.0, false), TweenStepResult::Stepped(AdvanceTimeResult::Playing)));
+        assert_eq!(carried.get_loops_finished(), 1);
+        match carried.custom_step(0.0, false) {
+            TweenStepResult::Stepped(AdvanceTimeResult::Completed { unscaled_excess_time }) => {
+                near(unscaled_excess_time, 1.5)
+            }
+            _ => panic!("the next update must complete the second leg and preserve carried excess"),
+        }
+        n.free();
+        drop(any);
+        drop(t);
+        assert!(weak.upgrade().is_none());
+        Box::pin(async {})
+    }
+
+    pub(super) fn test_characters_range_failures(&mut self) -> PinnedTestTask {
+        let n = label(&mut self.base_mut(), "AB", false);
+        let mut curve = Curve::new_gd();
+        curve.set_min_value(-1.0);
+        curve.add_point(Vector2::new(0.0, -0.5));
+        curve.add_point(Vector2::new(1.0, -0.5));
+        let invalid = manual(n.do_offset_chars(0, 1, Vector2::ONE, 1.0, EaseKind::GodotCurve(curve)));
+        assert!(matches!(invalid.custom_step(0.25, false), TweenStepResult::Stepped(AdvanceTimeResult::ShouldDespawn)));
+        v2(SpireRichTextLabel::get_char_offset(n.clone(), 0), Vector2::ZERO);
+        let valid = manual(n.do_offset_chars(0, 1, Vector2::ONE, 1.0, EaseKind::Basic(Ease::Linear)));
+        n.free();
+        assert!(matches!(valid.custom_step(0.25, false), TweenStepResult::Stepped(AdvanceTimeResult::ShouldDespawn)));
+        Box::pin(async {})
+    }
+
     pub(super) fn test_text_presets_rust_api(&mut self) -> PinnedTestTask {
         let n = label(&mut self.base_mut(), "[bob]A[/bob]", true);
         let plain = label(&mut self.base_mut(), "A", false);
@@ -250,7 +377,7 @@ impl MiscTests {
         // Both trait receivers build label-linked callables without reborrowing userdata.
         SpireRichTextLabel::set_char_offset(n.clone(), 1, Vector2::ZERO);
         let mut from_ref = manual(n.bind().do_offset_char(1, Vector2::new(6.0, 0.0), 1.0));
-        assert_eq!(from_ref.get_callable().object_id(), Some(n.instance_id()));
+        assert_eq!(from_ref.get_owner().instance_id(), n.instance_id());
         step(&from_ref, 0.5);
         v2(SpireRichTextLabel::get_char_offset(n.clone(), 1), Vector2::new(3.0, 0.0));
         from_ref.force_complete();
@@ -271,8 +398,7 @@ impl MiscTests {
             ]
         };
         for builder in builders {
-            assert_eq!(builder.get_callable().object_id(), Some(n.instance_id()));
-            assert!(builder.get_owner().is_some());
+            assert_eq!(builder.get_owner().instance_id(), n.instance_id());
             let mut tween = manual(builder);
             step(&tween, 0.25);
             assert_eq!(tween.get_state(), TweenState::Playing);

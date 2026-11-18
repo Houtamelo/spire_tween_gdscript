@@ -41,7 +41,9 @@ macro_rules! effect_resource {
         #[class(init, tool, base = Resource)]
         pub struct $name {
             base: Base<Resource>,
-            /// Seconds per tween or loop leg. Must be finite and positive.
+            /// Seconds per animation leg for each character. Must be finite and
+            /// positive. A Char tween's total duration includes its latest
+            /// character start delay and every requested leg.
             #[export(range = (0.001, 10.0, or_greater))]
             #[var(set = set_duration)]
             #[init(val = 1.0)]
@@ -55,7 +57,7 @@ macro_rules! effect_resource {
             #[var(set = set_loop_mode)]
             pub loop_mode: LoopMode,
             /// Seconds of phase advancement per logical character within a preset tag.
-            /// Blueprint character steps use their own `character_stagger` instead.
+            /// Blueprint character steps configure separate character start-delay easing.
             #[export]
             #[var(set = set_character_phase_offset)]
             pub character_phase_offset: f64,

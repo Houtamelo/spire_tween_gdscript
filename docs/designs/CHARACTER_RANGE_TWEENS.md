@@ -1,11 +1,14 @@
 # Character ranges with a start-delay curve
 
-Status: non-negative start-delay samples and continuous travelling loops agreed
-on 2026-11-13. The curve replaces Blueprint's `character_stagger`. Implementation
-has not started; the runtime representation below is a proposal.
+Status: implemented. The start-delay curve replaces Blueprint's
+`character_stagger`. Runtime constructors accept `EaseKind`: a built-in Ease,
+a scalar Godot Curve, a Callable, or a Rust easing implementation. Blueprint
+authoring uses the native `character_delay_ease_source`,
+`character_delay_ease_enum`, and `character_delay_ease_curve` fields, defaulting
+to Enum with Linear. Inactive settings stay serialized.
 
-Character animation constructors should target a range and update its characters
-through one runtime tween. An optional scalar curve supplies each character's
+Character animation constructors target a range and update its characters
+through one runtime tween. A scalar curve supplies each character's
 start delay as a multiple of `duration`. **The user-provided `duration` is the
 duration of one animation leg for each character. The total duration of the Char
 tween is the largest completion time among its characters, including their start
@@ -24,7 +27,8 @@ start_time[i] = delay_factor[i] * d
 ```
 
 Use floating-point division for `x`. For a single-character selection, use
-`x = 0`. An absent curve supplies zero for every character. All sampled factors
+`x = 0`. The default Blueprint Linear curve supplies `f(x) = x`; a flat custom curve
+at zero supplies simultaneous starts. All sampled factors
 must be finite and non-negative; factors greater than one are allowed and delay
 the character by more than one leg's duration. Computed start times must also
 remain finite.
@@ -131,7 +135,7 @@ characters; it does not change that processing policy.
 
 ## Runtime and integration constraints
 
-Use one update callback to borrow the renderer, update selected character states,
+Use one batched update to borrow the renderer, update selected character states,
 and request redraw. Per-character initial values, shake paths, and additive
 contributions still need their own state where applicable.
 
@@ -142,7 +146,7 @@ continue to ignore writes while playback progresses.
 Preserve the existing runtime rule that a tween completes at most one loop per
 processing update. Curve offsets must not introduce catch-up loops.
 
-Replace Blueprint's `character_stagger` with the optional start-delay curve.
+Replace Blueprint's `character_stagger` with the exported start-delay curve.
 Blueprint character steps build one range tween using their selected range,
 effect resource, and delay curve. A linear delay curve covers ordinary staggered
 starts.
@@ -151,9 +155,9 @@ The existing preset `character_phase_offset` belongs to the separate continuous
 preset-rendering workflow. This range-tween design does not specify changes to
 that preset field.
 
-## Proposed runtime representation
+## Runtime representation
 
-Introduce character-range tween data under the existing `SpireTween<T>`
+Character-range tween data uses the existing `SpireTween<T>`
 lifecycle, exposed as a new `AnyTween` category. Following existing handle storage:
 
 ```rust
@@ -175,7 +179,7 @@ loop completion, and effect cleanup.
 | Existing method tween with a stateful callback | Can drive a batched range, but its normal easing applies to the driver and its normal loops repeat the driver. Additional plumbing must route public controls to the characters' local timelines. |
 | Dedicated character tween data | Makes local easing, continuous character loops, range completion, and forced completion explicit while retaining the existing common tween lifecycle. Requires integration with strong/weak handles, GDScript wrappers, sequence default easing, and owner tracking. |
 
-The dedicated category is the recommended direction. It still has one handle and
+The dedicated category has one handle and
 one batched update for the range; per-character state remains internal data.
 
 ## Range loop events
