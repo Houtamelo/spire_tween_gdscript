@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://b2eh4lv0dont0" path="res://examples/text_effect_presets/preset_demo.gd" id="1"]
 [ext_resource type="SpireRichTextEffectPreset" uid="uid://cepslwir1vtin" path="res://examples/text_effect_presets/enchanted.tres" id="2"]
 [ext_resource type="SpireRichTextEffectPreset" uid="uid://c1wygytjxc8oc" path="res://examples/text_effect_presets/warning.tres" id="3"]
-[ext_resource type="SpireTextOffsetEffect" path="res://examples/text_effect_presets/enchanted_offset.tres" id="4"]
+[ext_resource type="SpireTextEffect" path="res://examples/text_effect_presets/enchanted_offset.tres" id="4"]
 
 [sub_resource type="Curve" id="Delay"]
 _data = [Vector2(0, 0), 0.0, 1.0, 0, 0, Vector2(1, 1), 1.0, 0.0, 0, 0]

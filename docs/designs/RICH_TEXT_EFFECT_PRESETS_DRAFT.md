@@ -32,7 +32,7 @@ the small GDScript adapter needed for custom tag registration.
 | Purpose | Presets provide looping text effects. |
 | Selection | A preset's `bbcode` identifies tagged sections of a label's text. |
 | Composition | One preset can combine multiple effects. |
-| Authoring types | Each effect has a separate Resource type; do not use one large Resource with an effect enum and unrelated hidden fields. |
+| Authoring types | Use one `SpireTextEffect` Resource. Its `TextEffectKind` selects visible fields and endpoint types; hidden fields retain serialization. |
 | Timing | Every effect entry has independent duration, easing, and loop behavior. |
 | Evaluation | Evaluate preset contributions directly during `_process_custom_fx()`, reusing Spire's easing and effect mathematics. Presets do not create ordinary runtime tweens. |
 | Engine adapter | Supply a GDScript subclass with a `bbcode` variable. Configuration and effect evaluation remain in Rust. |
@@ -50,8 +50,8 @@ The implementation uses the following ownership layout.
 
 | Object | Authored data | Runtime responsibility |
 |---|---|---|
-| `SpireRichTextEffectPreset` | `bbcode: GString`; ordered collection of effect-entry resources. | Describe a reusable tagged appearance. |
-| Effect-entry resources | Effect-specific parameters and independent timing fields. | Describe one contribution; evaluation uses shared Rust mathematics. |
+| `SpireRichTextEffectPreset` | `bbcode: GString`; ordered `Array[SpireTextEffect]` with optional empty slots. | Describe a reusable tagged appearance. |
+| `SpireTextEffect` | `kind`, effect parameters, and independent timing fields. | Describe one contribution; evaluation uses shared Rust mathematics. |
 | `SpireRichTextLabel` | `effect_presets` array. | Own preset registration and change subscriptions, rebuild content when required, and retain the character rendering effect. |
 | Internal `SpireRichTextEffect` adapter | None (generated from the preset). | Store the tag and compiled entries per label; evaluate their combined contribution for the current glyph. |
 | Internal `SpireCharRenderer` | None. | Own code-controlled character state and apply it after preset effects. |
@@ -72,16 +72,19 @@ use the rendering context supplied by Godot; do not place occurrence-specific
 state in a shared preset. Any compiled sampling data belongs to the adapter or
 an appropriate label-owned cache.
 
-Each effect is a concrete Rust class inheriting Godot's `Resource`. A macro
-provides the shared timing fields and change-notifying setters. A resource-filtered
-array exposes the supported entry types without requiring Rust extension classes
-to inherit from one another. Real Inspector and save/reload checks verify it.
+`SpireTextEffect` inherits Godot's `Resource`. Its exported fields use
+change-notifying setters. Inspector validation selects the concrete endpoint
+types and hides irrelevant fields while preserving their stored values.
+Changing `kind` preserves incompatible endpoints for explicit repair; the
+Inspector's Revert action supplies defaults for the selected kind. Presets use
+a typed effect array, and Blueprint uses a typed optional effect reference.
+Real Inspector and save/reload checks verify these behaviors.
 
 ### Effect catalogue
 
 Use the eleven effect families already supported by the character API. Each row
-below represents a separate Resource type. Exact class names are listed in the
-[authoring guide](../rich_text_effect_presets.md#effect-resources).
+below represents a value of `TextEffectKind` on `SpireTextEffect`. See the
+[authoring guide](../rich_text_effect_presets.md#effect-configuration).
 
 | Entry | Parameters in addition to timing |
 |---|---|

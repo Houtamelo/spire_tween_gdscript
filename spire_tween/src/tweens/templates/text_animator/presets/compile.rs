@@ -17,7 +17,7 @@ pub(crate) struct CompiledTextEffect {
     pub(super) effect: Effect,
 }
 
-trait Finite {
+trait Finite: Copy {
     fn is_finite(self) -> bool;
 }
 
@@ -78,101 +78,88 @@ fn shake<const D: usize>(
     })
 }
 
+fn endpoint<T: FromGodot + Finite>(value: &Variant, name: &str) -> Result<T> {
+    let value = value
+        .try_to_relaxed::<T>()
+        .map_err(|error| anyhow::anyhow!("`{name}` must match `kind`: {error}; effect entry skipped."))?;
+    check_finite(value, name)?;
+    Ok(value)
+}
+
 impl CompiledTextEffect {
-    pub(crate) fn compile(resource: &Gd<Resource>, field: &str) -> Result<Self> {
-        // Each branch binds a concrete resource. Renaming a class or field is
-        // checked by Rust rather than inferred from class-name substrings.
-        macro_rules! compile {
-            ($bind:ident, [$($field:ident),*], |$r:ident| $body:expr) => {{
-                let $r = $bind.bind();
-                check_finite($r.duration, "duration")?;
-                check_finite($r.character_phase_offset, "character_phase_offset")?;
-                $(check_finite($r.$field, stringify!($field))?;)*
-                ensure!($r.duration > 0.0, "`duration` must be finite and positive; effect entry skipped.");
-
-                let timing = Timing {
-                    duration: $r.duration,
-                    ease: $r.ease,
-                    mode: $r.loop_mode,
-                    phase: $r.character_phase_offset,
+    pub(crate) fn compile(resource: &Gd<SpireTextEffect>) -> Result<Self> {
+        let r = resource.bind();
+        check_finite(r.duration, "duration")?;
+        check_finite(r.character_phase_offset, "character_phase_offset")?;
+        ensure!(r.duration > 0.0, "`duration` must be finite and positive; effect entry skipped.");
+        let timing = Timing {
+            duration: r.duration,
+            ease: r.ease,
+            mode: r.loop_mode,
+            phase: r.character_phase_offset,
+        };
+        let uses_pivot = matches!(
+            r.kind,
+            TextEffectKind::Rotation
+                | TextEffectKind::Scale
+                | TextEffectKind::PunchRotation
+                | TextEffectKind::PunchScale
+                | TextEffectKind::ShakeRotation
+                | TextEffectKind::ShakeScale
+        );
+        let pivot = if uses_pivot {
+            check_finite(r.pivot, "pivot")?;
+            r.pivot
+        } else {
+            Vector2::ZERO
+        };
+        let effect = match r.kind {
+            TextEffectKind::Color => Effect::Color(endpoint(&r.from, "from")?, endpoint(&r.to, "to")?),
+            TextEffectKind::Fade => Effect::Fade(endpoint(&r.from, "from")?, endpoint(&r.to, "to")?),
+            TextEffectKind::Offset => Effect::Offset(endpoint(&r.from, "from")?, endpoint(&r.to, "to")?),
+            TextEffectKind::Rotation => {
+                Effect::Rotation(endpoint(&r.from, "from")?, endpoint(&r.to, "to")?, r.rotate_mode)
+            }
+            TextEffectKind::Scale => Effect::Scale(endpoint(&r.from, "from")?, endpoint(&r.to, "to")?),
+            TextEffectKind::PunchOffset | TextEffectKind::PunchRotation | TextEffectKind::PunchScale => {
+                let (channel, strength) = match r.kind {
+                    TextEffectKind::PunchRotation => (Channel::Rotation, r.punch),
+                    TextEffectKind::PunchScale => (Channel::Scale, Vector3::new(r.punch.x, r.punch.y, 0.0)),
+                    _ => (Channel::Offset, Vector3::new(r.punch.x, r.punch.y, 0.0)),
                 };
-
-                let (effect, pivot) = $body;
-                return Ok(Self { timing, pivot, effect });
-            }};
-        }
-
-        match_class! { resource.clone(),
-            color @ SpireTextColorEffect => compile!(color, [from, to], |r| (Effect::Color(r.from, r.to), Vector2::ZERO)),
-            fade @ SpireTextFadeEffect => compile!(fade, [from, to], |r| (Effect::Fade(r.from, r.to), Vector2::ZERO)),
-            offset @ SpireTextOffsetEffect => compile!(offset, [from, to], |r| (Effect::Offset(r.from, r.to), Vector2::ZERO)),
-            rotation @ SpireTextRotationEffect => compile!(rotation, [from, to, pivot], |r| (Effect::Rotation(r.from, r.to, r.rotate_mode), r.pivot)),
-            scale @ SpireTextScaleEffect => compile!(scale, [from, to, pivot], |r| (Effect::Scale(r.from, r.to), r.pivot)),
-            punch_offset @ SpireTextPunchOffsetEffect => compile!(punch_offset, [punch, elasticity], |r| (
-                    punch(
-                        Channel::Offset,
-                        Vector3::new(r.punch.x, r.punch.y, 0.0),
-                        r.duration,
-                        r.vibrato,
-                        r.elasticity
-                    )?,
-                    Vector2::ZERO
-                )),
-            punch_rotation @ SpireTextPunchRotationEffect => compile!(punch_rotation, [punch, elasticity, pivot], |r| (
-                    punch(Channel::Rotation, r.punch, r.duration, r.vibrato, r.elasticity)?,
-                    r.pivot
-                )),
-            punch_scale @ SpireTextPunchScaleEffect => compile!(punch_scale, [punch, elasticity, pivot], |r| (
-                    punch(
-                        Channel::Scale,
-                        Vector3::new(r.punch.x, r.punch.y, 0.0),
-                        r.duration,
-                        r.vibrato,
-                        r.elasticity
-                    )?,
-                    r.pivot
-                )),
-            shake_offset @ SpireTextShakeOffsetEffect => compile!(shake_offset, [strength, randomness], |r| (
-                    Effect::Shake2(
-                        Channel::Offset,
-                        shake(
-                            [r.strength.x, r.strength.y],
-                            r.duration,
-                            r.vibrato,
-                            r.randomness,
-                            r.fade_out,
-                            r.randomness_mode
-                        )?
-                    ),
-                    Vector2::ZERO
-                )),
-            shake_rotation @ SpireTextShakeRotationEffect => compile!(shake_rotation, [strength, randomness, pivot], |r| (
-                    Effect::Shake3(shake(
-                        [r.strength.x, r.strength.y, r.strength.z],
+                check_finite(strength, "punch")?;
+                check_finite(r.elasticity, "elasticity")?;
+                punch(channel, strength, r.duration, r.vibrato, r.elasticity)?
+            }
+            TextEffectKind::ShakeRotation => {
+                check_finite(r.strength, "strength")?;
+                check_finite(r.randomness, "randomness")?;
+                Effect::Shake3(shake(
+                    [r.strength.x, r.strength.y, r.strength.z],
+                    r.duration,
+                    r.vibrato,
+                    r.randomness,
+                    r.fade_out,
+                    r.randomness_mode,
+                )?)
+            }
+            TextEffectKind::ShakeOffset | TextEffectKind::ShakeScale => {
+                check_finite(Vector2::new(r.strength.x, r.strength.y), "strength")?;
+                check_finite(r.randomness, "randomness")?;
+                let channel = if r.kind == TextEffectKind::ShakeOffset { Channel::Offset } else { Channel::Scale };
+                Effect::Shake2(
+                    channel,
+                    shake(
+                        [r.strength.x, r.strength.y],
                         r.duration,
                         r.vibrato,
                         r.randomness,
                         r.fade_out,
-                        r.randomness_mode
-                    )?),
-                    r.pivot
-                )),
-            shake_scale @ SpireTextShakeScaleEffect => compile!(shake_scale, [strength, randomness, pivot], |r| (
-                    Effect::Shake2(
-                        Channel::Scale,
-                        shake(
-                            [r.strength.x, r.strength.y],
-                            r.duration,
-                            r.vibrato,
-                            r.randomness,
-                            r.fade_out,
-                            r.randomness_mode
-                        )?
-                    ),
-                    r.pivot
-                )),
-        }
-
-        bail!("`{field}` contains unsupported resource `{}`; entry skipped.", resource.get_class())
+                        r.randomness_mode,
+                    )?,
+                )
+            }
+        };
+        Ok(Self { timing, pivot, effect })
     }
 }

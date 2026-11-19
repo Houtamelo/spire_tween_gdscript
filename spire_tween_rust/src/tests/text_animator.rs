@@ -168,13 +168,15 @@ impl MiscTests {
     pub(super) fn test_text_presets_rust_api(&mut self) -> PinnedTestTask {
         let n = label(&mut self.base_mut(), "[bob]A[/bob]", true);
         let plain = label(&mut self.base_mut(), "A", false);
-        let mut offset = SpireTextOffsetEffect::new_gd();
-        offset.bind_mut().set_from(Vector2::new(12.0, 0.0));
-        offset.bind_mut().set_to(Vector2::new(12.0, 0.0));
+        let mut offset = SpireTextEffect::new_gd();
+        offset.bind_mut().set_kind(TextEffectKind::Offset);
+        offset.bind_mut().set_from(Vector2::ZERO.to_variant());
+        offset.bind_mut().set_from(Vector2::new(12.0, 0.0).to_variant());
+        offset.bind_mut().set_to(Vector2::new(12.0, 0.0).to_variant());
         let mut preset = SpireRichTextEffectPreset::new_gd();
         preset.bind_mut().set_bbcode("bob".into());
-        let mut entries = VarArray::new();
-        entries.push(&offset.to_variant());
+        let mut entries = Array::<Option<Gd<SpireTextEffect>>>::new();
+        entries.push(Some(&offset));
         preset.bind_mut().set_effects(entries);
         {
             let mut label = n.clone();

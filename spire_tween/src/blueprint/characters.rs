@@ -9,7 +9,7 @@ impl TweenBlueprint {
             .text_effect
             .as_ref()
             .context("`text_effect` must be a supported text effect resource.")?;
-        CompiledTextEffect::compile(resource, "text_effect")
+        CompiledTextEffect::compile(resource)
     }
 
     pub(super) fn resolve_effect_configuration(&self) -> Result<(CompiledTextEffect, Gd<SpireRichTextLabel>)> {

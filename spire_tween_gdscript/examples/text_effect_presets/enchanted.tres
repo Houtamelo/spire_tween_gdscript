@@ -1,8 +1,9 @@
 [gd_resource type="SpireRichTextEffectPreset" format=3 uid="uid://cepslwir1vtin"]
 
-[ext_resource type="SpireTextOffsetEffect" path="res://examples/text_effect_presets/enchanted_offset.tres" id="Offset"]
+[ext_resource type="SpireTextEffect" path="res://examples/text_effect_presets/enchanted_offset.tres" id="Offset"]
 
-[sub_resource type="SpireTextColorEffect" id="Color"]
+[sub_resource type="SpireTextEffect" id="Color"]
+kind = 0
 duration = 1.8
 loop_mode = 1
 from = Color(0.3, 0.85, 1, 1)
@@ -10,4 +11,4 @@ to = Color(0.8, 0.5, 1, 1)
 
 [resource]
 bbcode = "enchanted"
-effects = [ExtResource("Offset"), SubResource("Color")]
+effects = Array[SpireTextEffect]([ExtResource("Offset"), SubResource("Color")])

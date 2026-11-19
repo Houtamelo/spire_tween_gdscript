@@ -1,5 +1,7 @@
 extends "res://examples/tests/test_base.gd"
 
+const Effects := preload("res://examples/tests/text_effect_factory.gd")
+
 const CUSTOM := preload("res://examples/tests/blueprint_custom.gd")
 const PROPERTY_TARGET := preload("res://examples/tests/blueprint_property_target.gd")
 
@@ -59,11 +61,14 @@ func play(effect: TweenBlueprint) -> SpireSequence:
 		sequences.append(sequence)
 	return sequence
 
-func character_step(parent: Node, target: RichTextLabel, resource: Resource, end: Variant) -> TweenBlueprint:
+func character_step(parent: Node, target: RichTextLabel, resource: SpireTextEffect, end: Variant) -> TweenBlueprint:
 	var result := blueprint(parent, Spire.BLUEPRINT_KIND_TEXT)
 	result.target = target
-	var type := resource.get_class()
-	resource.set("punch" if "Punch" in type else ("strength" if "Shake" in type else "to"), end)
+	if Effects.is_punch(resource.kind) or Effects.is_shake(resource.kind):
+		var strength: Vector3 = end if end is Vector3 else Vector3(end.x, end.y, 0)
+		resource.set("punch" if Effects.is_punch(resource.kind) else "strength", strength)
+	else:
+		resource.to = end
 	result.text_effect = resource
 	return result
 
@@ -73,17 +78,17 @@ func test_blueprint_character_constructors() -> bool:
 	add_child(label)
 	var animator := label
 	var cases := [
-		[SpireTextOffsetEffect.new(), Vector2(12, 8), "get_char_offset", Vector2.ZERO],
-		[SpireTextFadeEffect.new(), 0.2, "get_char_alpha", 1.0],
-		[SpireTextColorEffect.new(), Color(0.2, 0.4, 0.6), "get_char_color", Color.WHITE],
-		[SpireTextRotationEffect.new(), Vector3(0, 0, 1), "get_char_rotation", Vector3.ZERO],
-		[SpireTextScaleEffect.new(), Vector2(2, 3), "get_char_scale", Vector2.ONE],
-		[SpireTextPunchOffsetEffect.new(), Vector2(12, 8), "get_char_offset", Vector2.ZERO],
-		[SpireTextPunchRotationEffect.new(), Vector3(0.2, 0.3, 0.4), "get_char_rotation", Vector3.ZERO],
-		[SpireTextPunchScaleEffect.new(), Vector2(0.2, 0.4), "get_char_scale", Vector2.ONE],
-		[SpireTextShakeOffsetEffect.new(), Vector2(12, 8), "get_char_offset", Vector2.ZERO],
-		[SpireTextShakeRotationEffect.new(), Vector3(0.2, 0.3, 0.4), "get_char_rotation", Vector3.ZERO],
-		[SpireTextShakeScaleEffect.new(), Vector2(0.2, 0.4), "get_char_scale", Vector2.ONE],
+		[Effects.make(Spire.TEXT_EFFECT_KIND_OFFSET), Vector2(12, 8), "get_char_offset", Vector2.ZERO],
+		[Effects.make(Spire.TEXT_EFFECT_KIND_FADE), 0.2, "get_char_alpha", 1.0],
+		[Effects.make(Spire.TEXT_EFFECT_KIND_COLOR), Color(0.2, 0.4, 0.6), "get_char_color", Color.WHITE],
+		[Effects.make(Spire.TEXT_EFFECT_KIND_ROTATION), Vector3(0, 0, 1), "get_char_rotation", Vector3.ZERO],
+		[Effects.make(Spire.TEXT_EFFECT_KIND_SCALE), Vector2(2, 3), "get_char_scale", Vector2.ONE],
+		[Effects.make(Spire.TEXT_EFFECT_KIND_PUNCH_OFFSET), Vector2(12, 8), "get_char_offset", Vector2.ZERO],
+		[Effects.make(Spire.TEXT_EFFECT_KIND_PUNCH_ROTATION), Vector3(0.2, 0.3, 0.4), "get_char_rotation", Vector3.ZERO],
+		[Effects.make(Spire.TEXT_EFFECT_KIND_PUNCH_SCALE), Vector2(0.2, 0.4), "get_char_scale", Vector2.ONE],
+		[Effects.make(Spire.TEXT_EFFECT_KIND_SHAKE_OFFSET), Vector2(12, 8), "get_char_offset", Vector2.ZERO],
+		[Effects.make(Spire.TEXT_EFFECT_KIND_SHAKE_ROTATION), Vector3(0.2, 0.3, 0.4), "get_char_rotation", Vector3.ZERO],
+		[Effects.make(Spire.TEXT_EFFECT_KIND_SHAKE_SCALE), Vector2(0.2, 0.4), "get_char_scale", Vector2.ONE],
 	]
 	for item in cases:
 		animator.reset()
@@ -95,7 +100,7 @@ func test_blueprint_character_constructors() -> bool:
 			check(not same(animator.call(item[2], index), item[3]), "Character constructor must advance every selected index: %s" % item[0])
 		sequence.force_complete()
 		for index in 3:
-			var impulse: bool = "Punch" in item[0].get_class() or "Shake" in item[0].get_class()
+			var impulse: bool = Effects.is_punch(item[0].kind) or Effects.is_shake(item[0].kind)
 			check(same(animator.call(item[2], index), item[3] if impulse else item[1]), "Character completion must reach its endpoint or restore its contribution: %s" % item[0])
 		# Every supported resource must also reject invalid timing in a Blueprint.
 		animator.reset()
@@ -137,7 +142,7 @@ func test_blueprint_ease_sources_and_serialization() -> bool:
 	label.name = "Text"
 	target.add_child(label)
 	label.owner = target
-	var resource := SpireTextOffsetEffect.new()
+	var resource := Effects.make(Spire.TEXT_EFFECT_KIND_OFFSET)
 	resource.ease = Spire.EASE_IN_QUAD
 	var characters := character_step(label, label, resource, Vector2(10, 0))
 	characters.name = "Characters"
@@ -181,7 +186,7 @@ func test_blueprint_character_default_basic_curve_and_serialization() -> bool:
 	step.kind = Spire.BLUEPRINT_KIND_TEXT
 	step.target = label
 	step.tween_process_mode = Spire.PROCESS_MODE_MANUAL
-	var effect := SpireTextOffsetEffect.new()
+	var effect := Effects.make(Spire.TEXT_EFFECT_KIND_OFFSET)
 	effect.to = Vector2(10, 0)
 	step.text_effect = effect
 	label.add_child(step)
@@ -213,7 +218,7 @@ func test_blueprint_character_delay_start_loops_and_restart() -> bool:
 	label.text = "ABC"
 	add_child(label)
 	var animator := label
-	var effect := character_step(self, label, SpireTextOffsetEffect.new(), Vector2(10, 0))
+	var effect := character_step(self, label, Effects.make(Spire.TEXT_EFFECT_KIND_OFFSET), Vector2(10, 0))
 	effect.text_start_index = 1
 	effect.text_end_index = 2
 	effect.text_delay_ease_curve = delay_curve(0, 0.25)
@@ -252,7 +257,7 @@ func test_blueprint_character_delay_start_loops_and_restart() -> bool:
 	add_child(sprite)
 	var serial := blueprint(self)
 	property_step(serial, sprite, &"position:x", 10.0)
-	var later := character_step(serial, label, SpireTextOffsetEffect.new(), Vector2(10, 0))
+	var later := character_step(serial, label, Effects.make(Spire.TEXT_EFFECT_KIND_OFFSET), Vector2(10, 0))
 	later.property_start_enabled = true
 	later.text_effect.from = Vector2(2, 0)
 	var chain := play(serial)
@@ -266,7 +271,7 @@ func test_blueprint_character_build_refreshes_text() -> bool:
 	var label := SpireRichTextLabel.new()
 	label.text = "A"
 	add_child(label)
-	var step := character_step(self, label, SpireTextOffsetEffect.new(), Vector2(3, 4))
+	var step := character_step(self, label, Effects.make(Spire.TEXT_EFFECT_KIND_OFFSET), Vector2(3, 4))
 	label.text = "ABCD"
 	check(label.get_character_count() == 1, "Character getters must keep the last refreshed state")
 	var sequence := play(step)
@@ -288,12 +293,12 @@ func test_blueprint_character_invalid_configuration_and_lifetime() -> bool:
 	var invalid_cases := [
 		["target", sprite], ["target", plain_label], ["text_start_index", -1], ["text_start_index", 99], ["text_end_index", 99],
 		["text_end_index", -2], ["text_delay_ease_curve", delay_curve(-0.1, -0.1)],
-		["text_loops", 0], ["text_effect", null], ["text_effect", Resource.new()],
+		["text_loops", 0], ["text_effect", null],
 		["property_start_value", "wrong type"],
 	]
 	for item in invalid_cases:
 		var container := blueprint(self)
-		var invalid := character_step(container, label, SpireTextPunchOffsetEffect.new() if item[0] == "property_start_value" else SpireTextOffsetEffect.new(), Vector2(10, 0))
+		var invalid := character_step(container, label, Effects.make(Spire.TEXT_EFFECT_KIND_PUNCH_OFFSET) if item[0] == "property_start_value" else Effects.make(Spire.TEXT_EFFECT_KIND_OFFSET), Vector2(10, 0))
 		if item[0] == "property_start_value": invalid.property_start_enabled = true
 		invalid.set(item[0], item[1])
 		property_step(container, sprite, &"position:x", 5.0)
@@ -302,14 +307,14 @@ func test_blueprint_character_invalid_configuration_and_lifetime() -> bool:
 		check(near(sprite.position.x, 5.0), "Invalid character steps must leave valid following siblings playable: " + item[0])
 		check(animator.get_char_offset(0) == Vector2.ZERO, "Invalid character settings must not mutate the label")
 	var invalid_resources := [
-		[SpireTextRotationEffect.new(), "pivot", Vector2(INF, 0)],
-		[SpireTextOffsetEffect.new(), "duration", NAN],
-		[SpireTextOffsetEffect.new(), "to", Vector2(NAN, 0)],
-		[SpireTextPunchOffsetEffect.new(), "vibrato", 0],
-		[SpireTextPunchOffsetEffect.new(), "elasticity", NAN],
-		[SpireTextPunchOffsetEffect.new(), "elasticity", 2.0],
-		[SpireTextShakeOffsetEffect.new(), "randomness", NAN],
-		[SpireTextShakeOffsetEffect.new(), "randomness", 181.0],
+		[Effects.make(Spire.TEXT_EFFECT_KIND_ROTATION), "pivot", Vector2(INF, 0)],
+		[Effects.make(Spire.TEXT_EFFECT_KIND_OFFSET), "duration", NAN],
+		[Effects.make(Spire.TEXT_EFFECT_KIND_OFFSET), "to", Vector2(NAN, 0)],
+		[Effects.make(Spire.TEXT_EFFECT_KIND_PUNCH_OFFSET), "vibrato", 0],
+		[Effects.make(Spire.TEXT_EFFECT_KIND_PUNCH_OFFSET), "elasticity", NAN],
+		[Effects.make(Spire.TEXT_EFFECT_KIND_PUNCH_OFFSET), "elasticity", 2.0],
+		[Effects.make(Spire.TEXT_EFFECT_KIND_SHAKE_OFFSET), "randomness", NAN],
+		[Effects.make(Spire.TEXT_EFFECT_KIND_SHAKE_OFFSET), "randomness", 181.0],
 	]
 	for item in invalid_resources:
 		var container := blueprint(self)
@@ -321,7 +326,7 @@ func test_blueprint_character_invalid_configuration_and_lifetime() -> bool:
 		sprite.position = Vector2.ZERO
 		play(container).force_complete()
 		check(near(sprite.position.x, 5.0) and animator.get_char_offset(0) == Vector2.ZERO, "Invalid resource settings must leave valid siblings playable: " + item[1])
-	var delayed := character_step(self, label, SpireTextOffsetEffect.new(), Vector2(0, -24))
+	var delayed := character_step(self, label, Effects.make(Spire.TEXT_EFFECT_KIND_OFFSET), Vector2(0, -24))
 	delayed.text_start_index = 4
 	delayed.text_end_index = 4
 	delayed.delay = 0.5
@@ -345,11 +350,11 @@ func test_blueprint_character_resource_from_values() -> bool:
 	label.text = "AB"
 	add_child(label)
 	var cases := [
-		[SpireTextColorEffect.new(), Color.RED, Color.BLUE, Color(0.75, 0, 0.25), "get_char_color"],
-		[SpireTextFadeEffect.new(), 0.2, 0.6, 0.3, "get_char_alpha"],
-		[SpireTextOffsetEffect.new(), Vector2(-8, 0), Vector2(8, 4), Vector2(-4, 1), "get_char_offset"],
-		[SpireTextScaleEffect.new(), Vector2(2, 3), Vector2(4, 7), Vector2(2.5, 4), "get_char_scale"],
-		[SpireTextRotationEffect.new(), Vector3(0.2, 0, 0), Vector3(0.6, 0, 0), Vector3(0.3, 0, 0), "get_char_rotation"],
+		[Effects.make(Spire.TEXT_EFFECT_KIND_COLOR), Color.RED, Color.BLUE, Color(0.75, 0, 0.25), "get_char_color"],
+		[Effects.make(Spire.TEXT_EFFECT_KIND_FADE), 0.2, 0.6, 0.3, "get_char_alpha"],
+		[Effects.make(Spire.TEXT_EFFECT_KIND_OFFSET), Vector2(-8, 0), Vector2(8, 4), Vector2(-4, 1), "get_char_offset"],
+		[Effects.make(Spire.TEXT_EFFECT_KIND_SCALE), Vector2(2, 3), Vector2(4, 7), Vector2(2.5, 4), "get_char_scale"],
+		[Effects.make(Spire.TEXT_EFFECT_KIND_ROTATION), Vector3(0.2, 0, 0), Vector3(0.6, 0, 0), Vector3(0.3, 0, 0), "get_char_rotation"],
 	]
 	for item in cases:
 		label.reset()
@@ -369,7 +374,7 @@ func test_blueprint_character_resource_timing_and_curve() -> bool:
 	var label := SpireRichTextLabel.new()
 	label.text = "AB"
 	add_child(label)
-	var entry := SpireTextOffsetEffect.new()
+	var entry := Effects.make(Spire.TEXT_EFFECT_KIND_OFFSET)
 	entry.duration = 2.0
 	entry.ease = Spire.EASE_IN_QUAD
 	entry.character_phase_offset = 0.75
@@ -395,10 +400,10 @@ func test_blueprint_hidden_character_resource_preserves_property_values() -> boo
 	var target := Node2D.new()
 	add_child(target)
 	var step := property_step(self, target, &"position", Vector2(5, 6))
-	step.text_effect = SpireTextPunchScaleEffect.new()
+	step.text_effect = Effects.make(Spire.TEXT_EFFECT_KIND_PUNCH_SCALE)
 	check(step.property_start_value == null, "A hidden character resource must not initialize property values")
 	step.property_start_value = Vector2.ONE
-	step.text_effect = SpireTextPunchRotationEffect.new()
+	step.text_effect = Effects.make(Spire.TEXT_EFFECT_KIND_PUNCH_ROTATION)
 	check(typeof(step.property_start_value) == TYPE_VECTOR2 and step.property_start_value == Vector2.ONE, "Replacing a hidden character resource must preserve the authored property start")
 	step.property_start_value = null
 	step.kind = Spire.BLUEPRINT_KIND_TEXT
@@ -409,7 +414,7 @@ func test_blueprint_character_impulse_default_is_synchronous() -> bool:
 	var label := SpireRichTextLabel.new()
 	label.text = "A"
 	add_child(label)
-	for item in [[SpireTextPunchOffsetEffect.new(), Vector2.ZERO], [SpireTextPunchScaleEffect.new(), Vector2.ONE], [SpireTextPunchRotationEffect.new(), Vector3.ZERO]]:
+	for item in [[Effects.make(Spire.TEXT_EFFECT_KIND_PUNCH_OFFSET), Vector2.ZERO], [Effects.make(Spire.TEXT_EFFECT_KIND_PUNCH_SCALE), Vector2.ONE], [Effects.make(Spire.TEXT_EFFECT_KIND_PUNCH_ROTATION), Vector3.ZERO]]:
 		var step := blueprint(self, Spire.BLUEPRINT_KIND_TEXT)
 		step.target = label
 		step.text_effect = item[0]
@@ -423,8 +428,8 @@ func test_blueprint_character_impulse_start_and_blending() -> bool:
 	label.text = "A"
 	add_child(label)
 	for blendable in [true, false]:
-		var entry := SpireTextPunchScaleEffect.new()
-		entry.punch = Vector2(0.4, 0.2)
+		var entry := Effects.make(Spire.TEXT_EFFECT_KIND_PUNCH_SCALE)
+		entry.punch = Vector3(0.4, 0.2, 0)
 		entry.vibrato = 4
 		entry.elasticity = 0.4
 		var step := blueprint(self, Spire.BLUEPRINT_KIND_TEXT)
@@ -446,7 +451,7 @@ func test_blueprint_text_delay_ease_curve_watch_and_snapshot() -> bool:
 	label.text = "AB"
 	add_child(label)
 	var curve := delay_curve(0, 1)
-	var step := character_step(self, label, SpireTextOffsetEffect.new(), Vector2(10, 0))
+	var step := character_step(self, label, Effects.make(Spire.TEXT_EFFECT_KIND_OFFSET), Vector2(10, 0))
 	step.text_delay_ease_curve = curve
 	check(curve.get_signal_connection_list("changed").size() == 1, "The Blueprint must watch its delay curve")
 	var running := play(step)
@@ -474,7 +479,7 @@ func test_blueprint_text_delay_ease_curve_watch_and_snapshot() -> bool:
 	return failures.is_empty()
 
 func test_blueprint_character_shared_resource_and_watch_lifetime() -> bool:
-	var entry := SpireTextOffsetEffect.new()
+	var entry := Effects.make(Spire.TEXT_EFFECT_KIND_OFFSET)
 	entry.to = Vector2(10, 0)
 	entry.duration = 2.0
 	entry.ease = Spire.EASE_IN_QUAD
@@ -512,7 +517,7 @@ func test_blueprint_character_shared_resource_and_watch_lifetime() -> bool:
 	# Reassignment must not accumulate connections, including externally removed watches.
 	second.text_effect = entry
 	check(entry.get_signal_connection_list("changed").size() == 3, "Reassigning the same resource must replace its watch")
-	var replacement := SpireTextFadeEffect.new()
+	var replacement := Effects.make(Spire.TEXT_EFFECT_KIND_FADE)
 	second.text_effect = replacement
 	check(entry.get_signal_connection_list("changed").size() == 2, "Replacing a resource must disconnect the old watch")
 	var connections := replacement.get_signal_connection_list("changed")
@@ -535,7 +540,7 @@ func test_blueprint_character_rotation_pivot_and_serialization() -> bool:
 	root.add_child(label)
 	label.owner = root
 	add_child(root)
-	var effect := character_step(label, label, SpireTextRotationEffect.new(), Vector3(0, 0, TAU))
+	var effect := character_step(label, label, Effects.make(Spire.TEXT_EFFECT_KIND_ROTATION), Vector3(0, 0, TAU))
 	effect.name = "Spin"
 	effect.owner = root
 	effect.text_effect.pivot = Vector2(12, -14)
@@ -554,7 +559,7 @@ func test_blueprint_character_rotation_pivot_and_serialization() -> bool:
 	check(packed.pack(root) == OK, "Character settings must pack")
 	var copy := packed.instantiate()
 	var restored: TweenBlueprint = copy.get_node("Label/Spin")
-	check(restored.kind == Spire.BLUEPRINT_KIND_TEXT and restored.text_effect is SpireTextRotationEffect, "Character kind and resource type must serialize")
+	check(restored.kind == Spire.BLUEPRINT_KIND_TEXT and restored.text_effect is SpireTextEffect and restored.text_effect.kind == Spire.TEXT_EFFECT_KIND_ROTATION, "Character kind and resource type must serialize")
 	check(restored.text_effect.to == Vector3(0, 0, TAU) and restored.text_effect.pivot == Vector2(12, -14), "Typed resource values and pivots must serialize")
 	check(restored.text_effect.rotate_mode == Spire.ROTATE_MODE_FAST_BEYOND_360 and restored.text_loops == 2 and restored.text_effect.loop_mode == Spire.LOOP_MODE_YOYO, "Rotation and loop policies must serialize")
 	check(restored.text_delay_ease_curve is Curve and near(restored.text_delay_ease_curve.sample(1), 1), "Character start-delay curves must serialize")

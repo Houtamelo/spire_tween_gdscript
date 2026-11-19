@@ -1,6 +1,8 @@
 @tool
 extends EditorPlugin
 
+const Effects := preload("res://examples/tests/text_effect_factory.gd")
+
 const PROPERTY_TARGET := preload("res://examples/tests/blueprint_property_target.gd")
 
 var failures: Array[String] = []
@@ -193,7 +195,7 @@ func _run() -> void:
 	for _frame in 3: await get_tree().process_frame
 	check(characters.target == null and characters.get_resolved_target() == text, "Characters must support ancestor target fallback")
 	check(scene_warnings(characters).contains("text_effect"), "An unconfigured character step must warn about its missing resource")
-	var rotation := SpireTextRotationEffect.new()
+	var rotation := Effects.make(Spire.TEXT_EFFECT_KIND_ROTATION)
 	rotation.to = Vector3(0, 0, TAU)
 	rotation.pivot = Vector2(12, -14)
 	rotation.rotate_mode = Spire.ROTATE_MODE_FAST_BEYOND_360
@@ -210,8 +212,7 @@ func _run() -> void:
 	check(assigned and characters.text_effect == rotation, "The actual Inspector must assign an existing effect resource")
 	var resource_info := property_info(characters, &"text_effect")
 	check(resource_info.type == TYPE_OBJECT and resource_info.hint == PROPERTY_HINT_RESOURCE_TYPE, "Character effects must use the Inspector resource picker")
-	for effect_class_name in ["SpireTextColorEffect", "SpireTextFadeEffect", "SpireTextOffsetEffect", "SpireTextRotationEffect", "SpireTextScaleEffect", "SpireTextPunchOffsetEffect", "SpireTextPunchRotationEffect", "SpireTextPunchScaleEffect", "SpireTextShakeOffsetEffect", "SpireTextShakeRotationEffect", "SpireTextShakeScaleEffect"]:
-		check(effect_class_name in resource_info.hint_string.split(","), "The resource picker must offer " + effect_class_name)
+	check(resource_info.hint_string == "SpireTextEffect", "The resource picker must offer the unified effect type")
 	check(await wait_for_scene_warning(characters, "text_effect", false), "Assigning a valid resource must clear the warning")
 	characters.text_loops = 2
 	characters.text_start_index = 99
@@ -320,7 +321,7 @@ func _run() -> void:
 	check(await wait_for_scene_warning(characters, "text_delay_ease_curve", true), "Curve edits must refresh configuration warnings through Resource.changed")
 	start_curve.set_point_value(1, 1.0)
 	check(await wait_for_scene_warning(characters, "text_delay_ease_curve", false), "Repairing the curve must clear its configuration warning")
-	var impulse := SpireTextPunchScaleEffect.new()
+	var impulse := Effects.make(Spire.TEXT_EFFECT_KIND_PUNCH_SCALE)
 	characters.text_effect = impulse
 	characters.property_start_enabled = true
 	for _frame in 3: await get_tree().process_frame
@@ -382,7 +383,7 @@ func _run() -> void:
 	check(restored_effect.property_end_value == Vector2(8, 9), "Save/reload must preserve the endpoint")
 	check(restored_effect.target == restored, "Save/reload must preserve relative node references")
 	var restored_characters: TweenBlueprint = restored.get_node("CharacterText/Characters")
-	check(restored_characters.text_effect is SpireTextRotationEffect and restored_characters.text_effect.to.is_equal_approx(Vector3(0, 0, TAU)) and restored_characters.text_effect.pivot == Vector2(12, -14), "Editor save/reload must preserve the effect resource and its values")
+	check(restored_characters.text_effect is SpireTextEffect and restored_characters.text_effect.kind == Spire.TEXT_EFFECT_KIND_ROTATION and restored_characters.text_effect.to.is_equal_approx(Vector3(0, 0, TAU)) and restored_characters.text_effect.pivot == Vector2(12, -14), "Editor save/reload must preserve the effect resource and its values")
 	check(restored_characters.text_loops == 2 and restored_characters.text_effect.loop_mode == Spire.LOOP_MODE_YOYO and restored_characters.text_effect.duration == 2.0, "Editor save/reload must preserve resource timing and loop settings")
 	check(restored_characters.text_delay_ease_source == Spire.EASE_CURVE and restored_characters.text_delay_ease_enum == Spire.EASE_OUT_QUAD and restored_characters.text_delay_ease_curve is Curve and is_equal_approx(restored_characters.text_delay_ease_curve.sample(1), 1), "Editor save/reload must preserve the start-delay Curve")
 	restored.free()

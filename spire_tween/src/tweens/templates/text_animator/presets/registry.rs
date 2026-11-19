@@ -12,7 +12,7 @@ use super::{reserved_tags::RESERVED_TAGS, *};
 struct PresetSnapshot {
     preset:  Option<Gd<SpireRichTextEffectPreset>>,
     bbcode:  GString,
-    entries: Vec<Variant>,
+    entries: Vec<Option<Gd<SpireTextEffect>>>,
 }
 
 impl PresetSnapshot {
@@ -148,16 +148,11 @@ impl Registry {
             };
             self.watch(preset.clone().upcast());
             let mut compiled = Vec::new();
-            for entry in &entries {
-                if let Ok(resource) = entry.try_to::<Gd<Resource>>() {
-                    self.watch(resource.clone());
-                    match CompiledTextEffect::compile(&resource, "effects") {
-                        Ok(effect) => compiled.push(sample::Entry::new(effect)),
-                        Err(warning) => self.warnings.push(warning.to_string()),
-                    }
-                } else if !entry.is_nil() {
-                    self.warnings
-                        .push("`effects` must contain supported effect resources; entry skipped.".into());
+            for resource in entries.iter().flatten() {
+                self.watch(resource.clone().upcast());
+                match CompiledTextEffect::compile(resource) {
+                    Ok(effect) => compiled.push(sample::Entry::new(effect)),
+                    Err(warning) => self.warnings.push(warning.to_string()),
                 }
             }
             self.snapshots.push(PresetSnapshot {

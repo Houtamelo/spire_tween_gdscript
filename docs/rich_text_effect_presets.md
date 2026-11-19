@@ -10,8 +10,8 @@ character tweens. Rendering always applies presets first and code last.
 1. Add a `SpireRichTextLabel`, or change an existing `RichTextLabel` to that type.
 2. Enable `bbcode_enabled`.
 3. Add a `SpireRichTextEffectPreset` to `effect_presets`; set `bbcode` to `enchanted`.
-4. Add a `SpireTextOffsetEffect` to its `effects` array. Set `from` to `(0, -6)`,
-   `to` to `(0, 6)`, and `loop_mode` to Yoyo.
+4. Add a `SpireTextEffect` to its `effects` array; select `kind` Offset.
+   Set `from` to `(0, -6)`, `to` to `(0, 6)`, and `loop_mode` to Yoyo.
 5. Set `text` to `Hello [enchanted]world[/enchanted]!`.
 6. Save the preset as an external `.tres` resource to reuse it across labels.
 
@@ -25,7 +25,7 @@ The **Play shared Blueprint** button uses the same `enchanted_offset.tres`
 resource as the `enchanted` preset. **Reset** stops that Blueprint too.
 Edit the preset resources or their effect entries to change the authored animation.
 
-The individual `SpireText*Effect` resources also configure finite
+The same `SpireTextEffect` resource also configures finite
 [Blueprint character steps](tween_blueprint.md#animate-text-characters). Assign
 one to a step's `text_effect`, or share the same resource with a preset.
 Blueprints construct Char range tweens from its fields; presets continue sampling
@@ -35,23 +35,43 @@ with `text_delay_ease_enum` or `text_delay_ease_curve`, while
 
 When assigning an array held in a GDScript variable, declare it as
 `Array[SpireRichTextEffectPreset]`. You can also append presets directly to
-`label.effect_presets`.
+`label.effect_presets`. Use `Array[SpireTextEffect]` for effect-entry arrays held
+in GDScript variables.
 
-## Effect resources
+```gdscript
+var effect := SpireTextEffect.new()
+effect.kind = Spire.TEXT_EFFECT_KIND_OFFSET
+effect.from = Vector2(0, -6)
+effect.to = Vector2(0, 6)
+effect.loop_mode = Spire.LOOP_MODE_YOYO
+preset.effects = [effect]
+```
 
-| Resource | Parameters in addition to timing |
+## Effect configuration
+
+All entries use `SpireTextEffect`. Its `kind` selects the relevant Inspector
+fields and the concrete types of `from` and `to`. Changing `kind` preserves
+all stored values, including hidden fields. Incompatible endpoints keep their
+Variant editor and produce configuration warnings until repaired. The Inspector's
+Revert action supplies the selected kind's endpoint defaults: white for Color,
+0/1 for Fade, zero for Offset/Rotation, and one for Scale.
+
+The default kind is Color with white endpoints. `punch` and `strength` use
+Vector3; Offset and Scale ignore Z, including during validation.
+
+| `kind` | Parameters in addition to timing |
 |---|---|
-| `SpireTextColorEffect` | `from`, `to`: fill RGBA colors; alpha also affects outlines. |
-| `SpireTextFadeEffect` | `from`, `to`: alpha values; preserves incoming RGB. |
-| `SpireTextOffsetEffect` | `from`, `to`: additional local-pixel offsets. |
-| `SpireTextRotationEffect` | `from`, `to`: YXZ Euler vectors in radians; `rotate_mode`, `pivot`. |
-| `SpireTextScaleEffect` | `from`, `to`: scale multipliers; `pivot`. |
-| `SpireTextPunchOffsetEffect` | Pixel `punch`; `vibrato`, `elasticity`. |
-| `SpireTextPunchRotationEffect` | Euler `punch` in radians; `vibrato`, `elasticity`, `pivot`. |
-| `SpireTextPunchScaleEffect` | Additive scale `punch`; `vibrato`, `elasticity`, `pivot`. |
-| `SpireTextShakeOffsetEffect` | Pixel `strength`; `vibrato`, `randomness`, `randomness_mode`, `fade_out`. |
-| `SpireTextShakeRotationEffect` | Euler `strength` in radians; shake parameters and `pivot`. |
-| `SpireTextShakeScaleEffect` | Additive scale `strength`; shake parameters and `pivot`. |
+| `Color` | `from`, `to`: fill RGBA colors; alpha also affects outlines. |
+| `Fade` | `from`, `to`: alpha values; preserves incoming RGB. |
+| `Offset` | `from`, `to`: additional local-pixel offsets. |
+| `Rotation` | `from`, `to`: YXZ Euler vectors in radians; `rotate_mode`, `pivot`. |
+| `Scale` | `from`, `to`: scale multipliers; `pivot`. |
+| `PunchOffset` | Pixel `punch`; `vibrato`, `elasticity`. |
+| `PunchRotation` | Euler `punch` in radians; `vibrato`, `elasticity`, `pivot`. |
+| `PunchScale` | Additive scale `punch`; `vibrato`, `elasticity`, `pivot`. |
+| `ShakeOffset` | Pixel `strength`; `vibrato`, `randomness`, `randomness_mode`, `fade_out`. |
+| `ShakeRotation` | Euler `strength` in radians; shake parameters and `pivot`. |
+| `ShakeScale` | Additive scale `strength`; shake parameters and `pivot`. |
 
 `pivot` is a pixel offset from the shaped cluster's glyph pen origin. Rotation
 uses the [character API's](character_animation.md) rotation modes and orthographic
@@ -141,10 +161,12 @@ effect. Direct Rust field assignments require `emit_changed()` afterward.
 letters, digits, and underscores. Built-in tags are reserved. User-installed
 custom effects take precedence over colliding presets; otherwise the first preset
 with a tag wins. `effect_presets` is an `Array[SpireRichTextEffectPreset]`; Godot
-rejects other resource types. Invalid or unsupported entries inside a preset's
-`effects` array are skipped. Null array slots are allowed while authoring.
+rejects other resource types, as does the `Array[SpireTextEffect]` stored in
+`effects`. Invalid effect configurations are skipped. Null array slots are
+allowed while authoring.
 
-Numeric parameters must be finite. `duration` and `vibrato` must be positive;
+Active numeric parameters must be finite; hidden settings do not affect validation.
+`duration` and `vibrato` must be positive;
 `floor(vibrato * duration)` must not exceed 65536. `elasticity` must be in 0..1,
 `randomness` in 0..180, and shake `strength` components must be non-negative.
 Editor warnings appear on the label. Runtime warnings name the exact exported

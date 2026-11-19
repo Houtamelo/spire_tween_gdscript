@@ -79,7 +79,7 @@ awk '
         else if (expected && /^ERROR: Condition "!_p->typed[.]validate\(value, "(push_back|insert)"\)" is true[.]/) guards++
         else { failed = 1; print }
     }
-    END { if (failed || count != 2 || guards != 2 || expected) exit 1 }
+    END { if (failed || count != 4 || guards != 4 || expected) exit 1 }
 ' "$output/type-rejections.log"
 rg '^TEXT_PRESET_TYPE_REJECTION_RESULT failed=0$' "$output/type-rejections.log"
 mkdir -p "$project/addons/preset_probe"

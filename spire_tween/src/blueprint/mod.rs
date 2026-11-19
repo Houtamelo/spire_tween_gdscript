@@ -99,9 +99,8 @@ pub struct TweenBlueprint {
     /// Effect parameters shared with looping rich-text presets. Each play builds
     /// a fresh Char range tween from the resource's current fields.
     #[export]
-    #[var(set = set_text_effect, hint = RESOURCE_TYPE,
-        hint_string = "SpireTextColorEffect,SpireTextFadeEffect,SpireTextOffsetEffect,SpireTextRotationEffect,SpireTextScaleEffect,SpireTextPunchOffsetEffect,SpireTextPunchRotationEffect,SpireTextPunchScaleEffect,SpireTextShakeOffsetEffect,SpireTextShakeRotationEffect,SpireTextShakeScaleEffect")]
-    text_effect: Option<Gd<Resource>>,
+    #[var(set = set_text_effect)]
+    text_effect: Option<Gd<SpireTextEffect>>,
     /// First logical char index, including spaces and excluding BBCode tags.
     #[export(range = (0.0, 100.0, or_greater))]
     #[var]
@@ -225,7 +224,7 @@ impl TweenBlueprint {
     }
 
     #[func]
-    fn set_text_effect(&mut self, effect: Option<Gd<Resource>>) {
+    fn set_text_effect(&mut self, effect: Option<Gd<SpireTextEffect>>) {
         if self.kind == BlueprintKind::Text
             && let Ok(previous) = self.get_compiled_text_effect()
             && previous.impulse_start_default().as_ref() == Some(&self.property_start_value)
@@ -236,7 +235,7 @@ impl TweenBlueprint {
         self.text_effect = effect;
         self.initialize_text_start();
         if let Some(resource) = &self.text_effect {
-            self.text_effect_connection = Some(self.watch_text_configuration(resource));
+            self.text_effect_connection = Some(self.watch_text_configuration(&resource.clone().upcast()));
         }
         self.configuration_changed();
     }

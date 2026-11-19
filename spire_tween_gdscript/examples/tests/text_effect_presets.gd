@@ -1,15 +1,17 @@
 extends TestBase
 
+const Effects := preload("res://examples/tests/text_effect_factory.gd")
+
 const Waits := preload("res://examples/tests/test_waits.gd")
 
-const ENTRY_TYPES := [
-	"SpireTextColorEffect", "SpireTextFadeEffect", "SpireTextOffsetEffect",
-	"SpireTextRotationEffect", "SpireTextScaleEffect", "SpireTextPunchOffsetEffect",
-	"SpireTextPunchRotationEffect", "SpireTextPunchScaleEffect",
-	"SpireTextShakeOffsetEffect", "SpireTextShakeRotationEffect", "SpireTextShakeScaleEffect",
+const ENTRY_KINDS := [
+	Spire.TEXT_EFFECT_KIND_COLOR, Spire.TEXT_EFFECT_KIND_FADE, Spire.TEXT_EFFECT_KIND_OFFSET,
+	Spire.TEXT_EFFECT_KIND_ROTATION, Spire.TEXT_EFFECT_KIND_SCALE, Spire.TEXT_EFFECT_KIND_PUNCH_OFFSET,
+	Spire.TEXT_EFFECT_KIND_PUNCH_ROTATION, Spire.TEXT_EFFECT_KIND_PUNCH_SCALE,
+	Spire.TEXT_EFFECT_KIND_SHAKE_OFFSET, Spire.TEXT_EFFECT_KIND_SHAKE_ROTATION, Spire.TEXT_EFFECT_KIND_SHAKE_SCALE,
 ]
 
-func _preset(tag: String, entries: Array) -> SpireRichTextEffectPreset:
+func _preset(tag: String, entries: Array[SpireTextEffect]) -> SpireRichTextEffectPreset:
 	var preset := SpireRichTextEffectPreset.new()
 	preset.bbcode = tag
 	preset.effects = entries
@@ -30,7 +32,7 @@ func _draw_frames() -> void:
 	for _frame in 4: await next_frame()
 
 func test_text_presets_typed_array() -> bool:
-	var color := SpireTextColorEffect.new()
+	var color := Effects.make(Spire.TEXT_EFFECT_KIND_COLOR)
 	color.from = Color.RED
 	color.to = Color.RED
 	var preset := _preset("glow", [color])
@@ -54,10 +56,10 @@ func test_text_presets_typed_array() -> bool:
 	return true
 
 func test_text_presets_registration() -> bool:
-	var red := SpireTextColorEffect.new()
+	var red := Effects.make(Spire.TEXT_EFFECT_KIND_COLOR)
 	red.from = Color.RED
 	red.to = Color.RED
-	var green := SpireTextColorEffect.new()
+	var green := Effects.make(Spire.TEXT_EFFECT_KIND_COLOR)
 	green.from = Color.GREEN
 	green.to = Color.GREEN
 	var n := _label("[red]A[/red][green]B[/green][red]C[/red]", [_preset("red", [red]), _preset("green", [green])])
@@ -73,7 +75,7 @@ func test_text_presets_registration() -> bool:
 	return true
 
 func test_text_presets_runtime_registration() -> bool:
-	var color := SpireTextColorEffect.new()
+	var color := Effects.make(Spire.TEXT_EFFECT_KIND_COLOR)
 	color.from = Color.RED
 	color.to = Color.RED
 	var preset := _preset("glow", [color])
@@ -155,7 +157,7 @@ func test_text_presets_example_scene() -> bool:
 	return true
 
 func test_text_presets_resource_notifications() -> bool:
-	var entry := SpireTextOffsetEffect.new()
+	var entry := Effects.make(Spire.TEXT_EFFECT_KIND_OFFSET)
 	var observed: Array[float] = []
 	var callback := func(): observed.append(entry.duration)
 	entry.changed.connect(callback)
@@ -167,7 +169,7 @@ func test_text_presets_resource_notifications() -> bool:
 
 func test_text_presets_foreign_effects() -> bool:
 	var foreign := preload("res://examples/tests/text_effect_presets_foreign.gd").new()
-	var color := SpireTextColorEffect.new()
+	var color := Effects.make(Spire.TEXT_EFFECT_KIND_COLOR)
 	color.from = Color.RED
 	color.to = Color.RED
 	var preset := _preset("foreign_glow", [color])
@@ -209,7 +211,7 @@ func test_text_presets_translation() -> bool:
 	translation.set_locale("es")
 	translation.add_message("SPIRE_PRESET_TRANSLATION", "[glow]猫AB[/glow]")
 	TranslationServer.add_translation(translation)
-	var color := SpireTextColorEffect.new()
+	var color := Effects.make(Spire.TEXT_EFFECT_KIND_COLOR)
 	color.from = Color.RED
 	color.to = Color.RED
 	var n := _label("SPIRE_PRESET_TRANSLATION", [_preset("glow", [color])])
@@ -225,7 +227,7 @@ func test_text_presets_translation() -> bool:
 	return true
 
 func test_text_presets_code_last() -> bool:
-	var red := SpireTextColorEffect.new()
+	var red := Effects.make(Spire.TEXT_EFFECT_KIND_COLOR)
 	red.from = Color.RED
 	red.to = Color.RED
 	var n := _label("[glow]A[/glow]", [_preset("glow", [red])])
@@ -248,7 +250,7 @@ func test_text_presets_code_last() -> bool:
 	return true
 
 func test_text_presets_live_resource_changes() -> bool:
-	var color := SpireTextColorEffect.new()
+	var color := Effects.make(Spire.TEXT_EFFECT_KIND_COLOR)
 	color.from = Color.RED
 	color.to = Color.RED
 	var preset := _preset("glow", [color])
@@ -266,7 +268,7 @@ func test_text_presets_live_resource_changes() -> bool:
 	color.to = Color.GREEN
 	await _draw_frames()
 	assert_eq(b.get_char_color(0), Color.GREEN)
-	var fade := SpireTextFadeEffect.new()
+	var fade := Effects.make(Spire.TEXT_EFFECT_KIND_FADE)
 	fade.from = 0.25
 	fade.to = 0.25
 	preset.effects.append(fade)
@@ -277,7 +279,7 @@ func test_text_presets_live_resource_changes() -> bool:
 	return true
 
 func test_text_presets_label_lifetime() -> bool:
-	var color := SpireTextColorEffect.new()
+	var color := Effects.make(Spire.TEXT_EFFECT_KIND_COLOR)
 	color.from = Color.RED
 	color.to = Color.RED
 	var preset := _preset("glow", [color])
@@ -315,7 +317,7 @@ func test_text_presets_label_lifetime() -> bool:
 	return true
 
 func test_text_presets_disconnected_watch_cleanup() -> bool:
-	var color := SpireTextColorEffect.new()
+	var color := Effects.make(Spire.TEXT_EFFECT_KIND_COLOR)
 	var preset := _preset("glow", [color, color])
 	var n := _label("[glow]A[/glow]", [preset])
 	await _draw_frames()
@@ -334,10 +336,10 @@ func test_text_presets_disconnected_watch_cleanup() -> bool:
 	return true
 
 func test_text_presets_nested_and_disabled() -> bool:
-	var red := SpireTextColorEffect.new()
+	var red := Effects.make(Spire.TEXT_EFFECT_KIND_COLOR)
 	red.from = Color.RED
 	red.to = Color.RED
-	var blue := SpireTextColorEffect.new()
+	var blue := Effects.make(Spire.TEXT_EFFECT_KIND_COLOR)
 	blue.from = Color.BLUE
 	blue.to = Color.BLUE
 	var n := _label("[red][blue]A[/blue][/red]", [_preset("red", [red]), _preset("blue", [blue])])
@@ -354,9 +356,9 @@ func test_text_presets_nested_and_disabled() -> bool:
 	return true
 
 func test_text_presets_serialization() -> bool:
-	var entries: Array = []
-	for type in ENTRY_TYPES:
-		var entry: Resource = ClassDB.instantiate(type)
+	var entries: Array[SpireTextEffect] = []
+	for kind in ENTRY_KINDS:
+		var entry: SpireTextEffect = Effects.make(kind)
 		entry.set("duration", 1.75)
 		entry.set("ease", Spire.EASE_OUT_CUBIC)
 		entry.set("loop_mode", Spire.LOOP_MODE_YOYO)
@@ -366,10 +368,10 @@ func test_text_presets_serialization() -> bool:
 	assert_eq(ResourceSaver.save(preset, "user://text_effect_preset.tres"), OK)
 	var loaded := ResourceLoader.load("user://text_effect_preset.tres", "", ResourceLoader.CACHE_MODE_IGNORE) as SpireRichTextEffectPreset
 	assert_true(loaded != null)
-	assert_eq(loaded.effects.size(), ENTRY_TYPES.size())
-	for index in ENTRY_TYPES.size():
+	assert_eq(loaded.effects.size(), ENTRY_KINDS.size())
+	for index in ENTRY_KINDS.size():
 		var entry: Resource = loaded.effects[index]
-		assert_eq(entry.get_class(), ENTRY_TYPES[index])
+		assert_eq(entry.kind, ENTRY_KINDS[index])
 		assert_eq(entry.get("duration"), 1.75)
 		assert_eq(entry.get("ease"), Spire.EASE_OUT_CUBIC)
 		assert_eq(entry.get("loop_mode"), Spire.LOOP_MODE_YOYO)
@@ -392,10 +394,9 @@ func test_text_presets_serialization() -> bool:
 	return true
 
 func test_text_presets_invalid_configuration() -> bool:
-	var color := SpireTextColorEffect.new()
+	var color := Effects.make(Spire.TEXT_EFFECT_KIND_COLOR)
 	color.duration = 0.0
-	var unsupported := Resource.new()
-	var n := _label("[glow]A[/glow]", [_preset("glow", [null, unsupported, color]), _preset("glow", []), _preset("color", []), _preset("bad tag", [])])
+	var n := _label("[glow]A[/glow]", [_preset("glow", [null, color]), _preset("glow", []), _preset("color", []), _preset("bad tag", [])])
 	await _draw_frames()
 	assert_eq(n.custom_effects.size(), 1)
 	assert_eq(n.get_char_color(0), Color.WHITE)
@@ -411,7 +412,7 @@ func test_text_presets_invalid_configuration() -> bool:
 	return true
 
 func test_text_presets_replacement_and_duplication() -> bool:
-	var color := SpireTextColorEffect.new()
+	var color := Effects.make(Spire.TEXT_EFFECT_KIND_COLOR)
 	color.from = Color.RED
 	color.to = Color.RED
 	var preset := _preset("glow", [color])
@@ -434,4 +435,95 @@ func test_text_presets_replacement_and_duplication() -> bool:
 	assert_eq(copy.custom_effects.size(), 1)
 	copy.free()
 	n.free()
+	return true
+
+func _effect_property(effect: SpireTextEffect, name: StringName) -> Dictionary:
+	for info in effect.get_property_list():
+		if info.name == name: return info
+	return {}
+
+func test_text_effect_metadata() -> bool:
+	assert_true(ClassDB.class_get_enum_list(&"Spire").has("TextEffectKind"))
+	assert_eq(ClassDB.class_get_enum_constants(&"Spire", &"TextEffectKind").size(), 11)
+	var optional := ["from", "to", "punch", "strength", "vibrato", "elasticity", "randomness", "randomness_mode", "fade_out", "pivot", "rotate_mode"]
+	var cases := [
+		[Spire.TEXT_EFFECT_KIND_COLOR, TYPE_COLOR, ["from", "to"]],
+		[Spire.TEXT_EFFECT_KIND_FADE, TYPE_FLOAT, ["from", "to"]],
+		[Spire.TEXT_EFFECT_KIND_OFFSET, TYPE_VECTOR2, ["from", "to"]],
+		[Spire.TEXT_EFFECT_KIND_ROTATION, TYPE_VECTOR3, ["from", "to", "pivot", "rotate_mode"]],
+		[Spire.TEXT_EFFECT_KIND_SCALE, TYPE_VECTOR2, ["from", "to", "pivot"]],
+		[Spire.TEXT_EFFECT_KIND_PUNCH_OFFSET, TYPE_NIL, ["punch", "vibrato", "elasticity"]],
+		[Spire.TEXT_EFFECT_KIND_PUNCH_ROTATION, TYPE_NIL, ["punch", "vibrato", "elasticity", "pivot"]],
+		[Spire.TEXT_EFFECT_KIND_PUNCH_SCALE, TYPE_NIL, ["punch", "vibrato", "elasticity", "pivot"]],
+		[Spire.TEXT_EFFECT_KIND_SHAKE_OFFSET, TYPE_NIL, ["strength", "vibrato", "randomness", "randomness_mode", "fade_out"]],
+		[Spire.TEXT_EFFECT_KIND_SHAKE_ROTATION, TYPE_NIL, ["strength", "vibrato", "randomness", "randomness_mode", "fade_out", "pivot"]],
+		[Spire.TEXT_EFFECT_KIND_SHAKE_SCALE, TYPE_NIL, ["strength", "vibrato", "randomness", "randomness_mode", "fade_out", "pivot"]],
+	]
+	for item in cases:
+		var entry := Effects.make(item[0])
+		for name in optional:
+			var info := _effect_property(entry, name)
+			assert_true(not info.is_empty())
+			assert_true(info.usage & PROPERTY_USAGE_STORAGE != 0, "Hidden fields must remain stored: " + name)
+			assert_eq(info.usage & PROPERTY_USAGE_EDITOR != 0, name in item[2])
+		if item[1] != TYPE_NIL:
+			for name in ["from", "to"]:
+				var info := _effect_property(entry, name)
+				assert_eq(info.type, item[1])
+				assert_true(info.usage & PROPERTY_USAGE_NIL_IS_VARIANT == 0)
+		assert_true(_effect_property(entry, "kind").usage & PROPERTY_USAGE_UPDATE_ALL_IF_MODIFIED != 0)
+		assert_eq(_effect_property(entry, "punch").type, TYPE_VECTOR3)
+		assert_eq(_effect_property(entry, "strength").type, TYPE_VECTOR3)
+	return true
+
+func test_text_effect_preserves_hidden_settings() -> bool:
+	var entry := Effects.make(Spire.TEXT_EFFECT_KIND_SHAKE_OFFSET)
+	entry.from = Color.CORNFLOWER_BLUE
+	entry.to = Color.MEDIUM_ORCHID
+	entry.punch = Vector3(2, 3, 4)
+	entry.pivot = Vector2(7, 8)
+	entry.rotate_mode = Spire.ROTATE_MODE_FAST_BEYOND_360
+	entry.elasticity = 0.25
+	entry.kind = Spire.TEXT_EFFECT_KIND_COLOR
+	assert_eq(entry.from, Color.CORNFLOWER_BLUE)
+	entry.kind = Spire.TEXT_EFFECT_KIND_SHAKE_OFFSET
+	var preset := _preset("stored", [entry, null])
+	assert_true(preset.effects.is_typed())
+	assert_eq(preset.effects.get_typed_class_name(), &"SpireTextEffect")
+	assert_eq(ResourceSaver.save(preset, "user://hidden_effect_fields.tres"), OK)
+	var restored: SpireRichTextEffectPreset = ResourceLoader.load("user://hidden_effect_fields.tres", "", ResourceLoader.CACHE_MODE_IGNORE)
+	assert_eq(restored.effects.get_typed_class_name(), &"SpireTextEffect")
+	assert_eq(restored.effects.size(), 2)
+	assert_eq(restored.effects[1], null)
+	for loaded: SpireTextEffect in [restored.effects[0], entry.duplicate(true)]:
+		assert_eq(loaded.kind, Spire.TEXT_EFFECT_KIND_SHAKE_OFFSET)
+		assert_true(loaded.from.is_equal_approx(Color.CORNFLOWER_BLUE))
+		assert_true(loaded.to.is_equal_approx(Color.MEDIUM_ORCHID))
+		assert_eq(loaded.punch, Vector3(2, 3, 4))
+		assert_eq(loaded.pivot, Vector2(7, 8))
+		assert_eq(loaded.rotate_mode, Spire.ROTATE_MODE_FAST_BEYOND_360)
+		assert_eq(loaded.elasticity, 0.25)
+	return true
+
+func test_text_effect_setters_emit_changed() -> bool:
+	var entry := SpireTextEffect.new()
+	var changes := [0]
+	var metadata_changes := [0]
+	entry.changed.connect(func(): changes[0] += 1)
+	entry.property_list_changed.connect(func(): metadata_changes[0] += 1)
+	var values := {
+		"kind": Spire.TEXT_EFFECT_KIND_ROTATION, "duration": 2.0,
+		"ease": Spire.EASE_OUT_QUAD, "loop_mode": Spire.LOOP_MODE_YOYO,
+		"character_phase_offset": 0.1, "from": Vector3.ZERO, "to": Vector3.ONE,
+		"punch": Vector3.ONE, "strength": Vector3(2, 3, 4), "vibrato": 5,
+		"elasticity": 0.5, "randomness": 45.0,
+		"randomness_mode": Spire.SHAKE_RANDOMNESS_MODE_HARMONIC,
+		"fade_out": false, "pivot": Vector2.ONE,
+		"rotate_mode": Spire.ROTATE_MODE_FAST_BEYOND_360,
+	}
+	for name in values:
+		entry.set(name, values[name])
+		assert_eq(entry.get(name), values[name])
+	assert_eq(changes[0], values.size())
+	assert_eq(metadata_changes[0], 3)
 	return true

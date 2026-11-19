@@ -20,13 +20,15 @@ fn rich_text_label_api(label: Gd<SpireRichTextLabel>) {
 }
 
 fn rich_text_preset_api(mut label: Gd<SpireRichTextLabel>) {
-    let mut offset = SpireTextOffsetEffect::new_gd();
+    let mut offset = SpireTextEffect::new_gd();
+    offset.bind_mut().set_kind(TextEffectKind::Offset);
+    offset.bind_mut().set_from(Vector2::ZERO.to_variant());
     offset.bind_mut().set_duration(0.8);
-    offset.bind_mut().set_to(Vector2::new(0.0, 12.0));
+    offset.bind_mut().set_to(Vector2::new(0.0, 12.0).to_variant());
     let mut preset = SpireRichTextEffectPreset::new_gd();
     preset.bind_mut().set_bbcode("bob".into());
-    let mut entries = VarArray::new();
-    entries.push(&offset.to_variant());
+    let mut entries = Array::<Option<Gd<SpireTextEffect>>>::new();
+    entries.push(Some(&offset));
     preset.bind_mut().set_effects(entries);
     let mut presets = Array::<Option<Gd<SpireRichTextEffectPreset>>>::new();
     presets.push(None::<&Gd<SpireRichTextEffectPreset>>);

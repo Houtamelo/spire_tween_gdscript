@@ -16,7 +16,14 @@ func run_type_rejections() -> void:
 	presets.append(Resource.new())
 	var insert_result := presets.insert(0, Resource.new())
 	print("TEXT_PRESET_TYPE_REJECTION_END")
-	var valid: bool = insert_result != OK and presets.size() == 1 and presets[0] == preset and label.effect_presets[0] == preset
+	var effect := SpireTextEffect.new()
+	preset.effects = [effect]
+	var entries: Array = preset.effects
+	print("TEXT_PRESET_TYPE_REJECTION_BEGIN")
+	entries.append(Resource.new())
+	var effect_insert := entries.insert(0, Resource.new())
+	print("TEXT_PRESET_TYPE_REJECTION_END")
+	var valid: bool = effect_insert != OK and entries.size() == 1 and entries[0] == effect and insert_result != OK and presets.size() == 1 and presets[0] == preset and label.effect_presets[0] == preset
 	label.free()
 	print("TEXT_PRESET_TYPE_REJECTION_RESULT failed=", 0 if valid else 1)
 	quit(0 if valid else 1)

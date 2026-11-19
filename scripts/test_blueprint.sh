@@ -15,7 +15,7 @@ if [[ -z "$blueprint_library" ]]; then
     blueprint_library="$blueprint_repo/target/debug/libspire_tween.so"
 fi
 mkdir -p "$blueprint_fixture/examples/tests" "$blueprint_fixture/.godot" "$blueprint_fixture/addons/blueprint_probe"
-for blueprint_file in blueprint.gd blueprint.tscn blueprint_custom.gd blueprint_property_target.gd blueprint_runner.gd blueprint_editor.gd test_base.gd rich_text_label_process_override.gd rich_text_label_process_inherited.gd rich_text_label_no_process.gd; do
+for blueprint_file in text_effect_factory.gd blueprint.gd blueprint.tscn blueprint_custom.gd blueprint_property_target.gd blueprint_runner.gd blueprint_editor.gd test_base.gd rich_text_label_process_override.gd rich_text_label_process_inherited.gd rich_text_label_no_process.gd; do
     cp -- "$blueprint_repo/spire_tween_gdscript/examples/tests/$blueprint_file" "$blueprint_fixture/examples/tests/$blueprint_file"
 done
 cp -- "$blueprint_repo/spire_tween_gdscript/examples/tests/blueprint_editor_fixture.tscn" "$blueprint_fixture/blueprint_editor_fixture.tscn"
