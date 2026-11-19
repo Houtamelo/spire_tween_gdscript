@@ -32,7 +32,7 @@ pub struct SpireRichTextLabel {
 }
 
 impl SpireRichTextLabel {
-    pub fn refresh_characters(mut this: Gd<Self>, force: bool) -> bool {
+    pub fn refresh_text(mut this: Gd<Self>, force: bool) -> bool {
         if !this.is_instance_valid() {
             return false;
         }
@@ -104,7 +104,7 @@ impl IRichTextLabel for SpireRichTextLabel {
     #[func(gd_self)]
     fn ready(this: Gd<Self>) {
         if !Engine::singleton().is_editor_hint() || !this.bind().effect_presets.is_empty() {
-            Self::refresh_characters(this, false);
+            Self::refresh_text(this, false);
         }
     }
 
@@ -114,7 +114,7 @@ impl IRichTextLabel for SpireRichTextLabel {
             let bind = this.bind();
             !bind.effect_presets.is_empty() || LazyCell::get(&bind.char_renderer).is_some()
         } {
-            Self::refresh_characters(this, false);
+            Self::refresh_text(this, false);
         }
     }
 
@@ -184,7 +184,7 @@ impl SpireRichTextLabel {
     /// Text/BBCode/translation changes trigger this automatically. Active tweens
     /// retain their clocks and indices. Writes to missing indices are ignored while playback continues.
     #[func(gd_self)]
-    pub fn refresh(this: Gd<Self>) { Self::refresh_characters(this, true); }
+    pub fn refresh(this: Gd<Self>) { Self::refresh_text(this, true); }
 
     /// [b]Behavior:[/b] Resets all deformations without rebuilding text, cancelling
     /// tweens or changing their playback positions.

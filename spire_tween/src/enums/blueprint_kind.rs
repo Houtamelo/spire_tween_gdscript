@@ -11,7 +11,7 @@ register_enum! {
         [RS = "Property", GD = "BLUEPRINT_KIND_PROPERTY"]
         Property = 2,
         /// Animate selected logical characters of a RichTextLabel.
-        [RS = "Characters", GD = "BLUEPRINT_KIND_CHARACTERS"]
-        Characters = 3,
+        [RS = "Text", GD = "BLUEPRINT_KIND_TEXT"]
+        Text = 3,
     }
 }

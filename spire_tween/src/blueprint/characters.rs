@@ -4,50 +4,50 @@ use super::*;
 use crate::tweens::CompiledTextEffect;
 
 impl TweenBlueprint {
-    pub(super) fn compiled_character_effect(&self) -> Result<CompiledTextEffect> {
+    pub(super) fn get_compiled_text_effect(&self) -> Result<CompiledTextEffect> {
         let resource = self
-            .character_effect
+            .text_effect
             .as_ref()
-            .context("`character_effect` must be a supported text effect resource.")?;
-        CompiledTextEffect::compile(resource, "character_effect")
+            .context("`text_effect` must be a supported text effect resource.")?;
+        CompiledTextEffect::compile(resource, "text_effect")
     }
 
     pub(super) fn resolve_effect_configuration(&self) -> Result<(CompiledTextEffect, Gd<SpireRichTextLabel>)> {
-        let effect = self.compiled_character_effect()?;
+        let effect = self.get_compiled_text_effect()?;
         let label = self
             .resolve_target()
             .and_then(|node| node.try_cast::<SpireRichTextLabel>().ok())
-            .context("`target` must resolve to a SpireRichTextLabel for `kind` Characters.")?;
+            .context("`target` must resolve to a SpireRichTextLabel for `kind` Text.")?;
 
         ensure!(
-            self.character_first >= 0
-                && self.character_last >= -1
-                && (self.character_last == -1 || self.character_last >= self.character_first),
-            "`character_first` must be non-negative; `character_last` must be -1 or at least `character_first`."
+            self.text_start_index >= 0
+                && self.text_end_index >= -1
+                && (self.text_end_index == -1 || self.text_end_index >= self.text_start_index),
+            "`text_start_index` must be non-negative; `text_end_index` must be -1 or at least `text_start_index`."
         );
         let count = label.get_total_character_count() as i64;
         ensure!(
-            self.character_first < count && self.character_last < count,
-            "`character_first` and `character_last` must select existing logical character indices; use -1 for \
-             `character_last` to follow the text length."
+            self.text_start_index < count && self.text_end_index < count,
+            "`text_start_index` and `text_end_index` must select existing logical char indices; use -1 for \
+             `text_end_index` to follow the text length."
         );
 
-        let last = if self.character_last == -1 { count - 1 } else { self.character_last };
-        let delay_field = match self.character_delay_ease_source {
-            EaseSource::Curve if self.character_delay_ease_curve.is_some() => "character_delay_ease_curve",
-            _ => "character_delay_ease_enum",
+        let last = if self.text_end_index == -1 { count - 1 } else { self.text_end_index };
+        let delay_field = match self.text_delay_ease_source {
+            EaseSource::Curve if self.text_delay_ease_curve.is_some() => "text_delay_ease_curve",
+            _ => "text_delay_ease_enum",
         };
-        character_start_delays(self.character_first, last, effect.duration(), &self.character_delay_ease())
+        resolve_char_start_delays(self.text_start_index, last, effect.duration(), &self.get_text_delay_ease())
             .with_context(|| format!("Invalid `{delay_field}`."))?;
 
-        ensure!(self.character_loops >= 1, "`character_loops` must be at least 1.");
+        ensure!(self.text_loops >= 1, "`text_loops` must be at least 1.");
 
-        if self.start_enabled
+        if self.property_start_enabled
             && let Some(default) = effect.impulse_start_default()
         {
             ensure!(
-                tweenable_property_validation::value_matches(&self.start_value, default.get_type()),
-                "`start_value` must match `character_effect`: expected {}.",
+                tweenable_property_validation::value_matches(&self.property_start_value, default.get_type()),
+                "`property_start_value` must match `text_effect`: expected {}.",
                 default.get_type().godot_type_name()
             );
         }
@@ -55,14 +55,14 @@ impl TweenBlueprint {
         Ok((effect, label))
     }
 
-    pub(super) fn build_characters(this: Gd<Self>, sequence: Gd<SpireSequence>) {
+    pub(super) fn build_text(this: Gd<Self>, sequence: Gd<SpireSequence>) {
         let state = this.bind();
         let label = state
             .resolve_target()
             .and_then(|node| node.try_cast::<SpireRichTextLabel>().ok());
         // Range selection needs the current text; replay preserves unchanged state.
         if let Some(label) = &label {
-            SpireRichTextLabel::refresh_characters(label.clone(), false);
+            SpireRichTextLabel::refresh_text(label.clone(), false);
         }
         let (effect, label) = match state.resolve_effect_configuration() {
             Ok(configuration) => configuration,
@@ -71,14 +71,14 @@ impl TweenBlueprint {
                 return;
             }
         };
-        let first = state.character_first;
-        let last = if state.character_last == -1 {
+        let first = state.text_start_index;
+        let last = if state.text_end_index == -1 {
             SpireRichTextLabel::get_character_count(label.clone()) - 1
         } else {
-            state.character_last
+            state.text_end_index
         };
-        let start = state.start_value.clone();
-        let explicit = state.start_enabled;
+        let start = state.property_start_value.clone();
+        let explicit = state.property_start_enabled;
         let initialize = label.clone();
         // Initialize the whole selection when this step begins, before staggering.
         sequence.bind().to_mut().append_fn(move || {
@@ -93,10 +93,12 @@ impl TweenBlueprint {
         });
 
         let mut tween = effect
-            .range_tween(label, first, last, state.character_delay_ease(), state.character_blendable)
-            .with_loops(state.character_loops, effect.loop_mode());
+            .range_tween(label, first, last, state.get_text_delay_ease(), state.text_blendable)
+            .with_loops(state.text_loops, effect.loop_mode());
 
-        let ease = state.ease_source.resolve(state.ease_enum, state.ease_curve.as_ref());
+        let ease = state
+            .property_ease_source
+            .resolve(state.property_ease_enum, state.property_ease_curve.as_ref());
         if !matches!(ease, EaseKind::Basic(Ease::Default)) {
             tween = tween.with_ease(ease);
         }

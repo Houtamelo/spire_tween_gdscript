@@ -551,6 +551,11 @@ fn handle_tween_step(tween: &AnyTween, delta_time: f64, is_tree_paused: bool) ->
     }
 }
 
+enum DeferredOp {
+    Add(AnyTween),
+    Remove,
+}
+
 #[derive(GodotClass)]
 #[class(base = RefCounted, no_init, internal)]
 struct NodeLifetimeTracker {

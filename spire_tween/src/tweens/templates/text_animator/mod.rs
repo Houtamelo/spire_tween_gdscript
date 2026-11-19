@@ -9,7 +9,7 @@ mod render;
 mod testing;
 mod tween;
 
-pub(crate) use char_tween::character_start_delays;
+pub(crate) use char_tween::resolve_char_start_delays;
 pub use char_tween::{CharTweenData, SpireCharTween};
 use godot::classes::IRichTextLabel;
 pub use render::SpireCharRenderer;

@@ -37,19 +37,19 @@ func blueprint(parent: Node, kind: int = Spire.BLUEPRINT_KIND_CHAIN_BLOCK) -> Tw
 	var result := TweenBlueprint.new()
 	result.kind = kind
 	result.tween_process_mode = Spire.PROCESS_MODE_MANUAL
-	if kind == Spire.BLUEPRINT_KIND_CHARACTERS:
-		result.character_delay_ease_source = Spire.EASE_CURVE
-		result.character_delay_ease_curve = delay_curve(0, 0)
+	if kind == Spire.BLUEPRINT_KIND_TEXT:
+		result.text_delay_ease_source = Spire.EASE_CURVE
+		result.text_delay_ease_curve = delay_curve(0, 0)
 	parent.add_child(result)
 	return result
 
 func property_step(parent: Node, target: Node, property: StringName, end: Variant, duration: float = 1.0) -> TweenBlueprint:
 	var result := blueprint(parent, Spire.BLUEPRINT_KIND_PROPERTY)
 	result.target = target
-	result.animated_property = property
-	result.end_value = end
-	result.speed_or_duration = duration
-	result.ease_enum = Spire.EASE_LINEAR
+	result.property_to_animate = property
+	result.property_end_value = end
+	result.property_speed_or_duration = duration
+	result.property_ease_enum = Spire.EASE_LINEAR
 	return result
 
 func play(effect: TweenBlueprint) -> SpireSequence:
@@ -60,11 +60,11 @@ func play(effect: TweenBlueprint) -> SpireSequence:
 	return sequence
 
 func character_step(parent: Node, target: RichTextLabel, resource: Resource, end: Variant) -> TweenBlueprint:
-	var result := blueprint(parent, Spire.BLUEPRINT_KIND_CHARACTERS)
+	var result := blueprint(parent, Spire.BLUEPRINT_KIND_TEXT)
 	result.target = target
 	var type := resource.get_class()
 	resource.set("punch" if "Punch" in type else ("strength" if "Shake" in type else "to"), end)
-	result.character_effect = resource
+	result.text_effect = resource
 	return result
 
 func test_blueprint_character_constructors() -> bool:
@@ -119,19 +119,19 @@ func test_blueprint_ease_sources_and_serialization() -> bool:
 	property.name = "Property"
 	property.owner = target
 	var curve := delay_curve(0.25, 0.25)
-	property.ease_curve = curve
+	property.property_ease_curve = curve
 	play(property).custom_step(0.5)
 	check(same(target.position, Vector2(5, 0)), "Enum mode must ignore the assigned inactive Curve")
 	target.position = Vector2.ZERO
-	property.ease_source = Spire.EASE_CURVE
+	property.property_ease_source = Spire.EASE_CURVE
 	play(property).custom_step(0.5)
 	check(same(target.position, Vector2(2.5, 0)), "Curve mode must use the assigned Curve")
 	target.position = Vector2.ZERO
-	property.ease_curve = null
+	property.property_ease_curve = null
 	play(property).custom_step(0.5)
 	check(same(target.position, Vector2(5, 0)), "A missing Curve must fall back to the selected Ease")
-	property.ease_curve = curve
-	property.ease_source = Spire.EASE_ENUM
+	property.property_ease_curve = curve
+	property.property_ease_source = Spire.EASE_ENUM
 	var label := SpireRichTextLabel.new()
 	label.text = "AB"
 	label.name = "Text"
@@ -142,33 +142,33 @@ func test_blueprint_ease_sources_and_serialization() -> bool:
 	var characters := character_step(label, label, resource, Vector2(10, 0))
 	characters.name = "Characters"
 	characters.owner = target
-	characters.ease_enum = Spire.EASE_OUT_QUAD
-	characters.ease_curve = curve
+	characters.property_ease_enum = Spire.EASE_OUT_QUAD
+	characters.property_ease_curve = curve
 	play(characters).custom_step(0.5)
 	check(same(label.get_char_offset(0), Vector2(7.5, 0)), "An explicit Enum must override resource easing")
 	label.reset()
-	characters.ease_source = Spire.EASE_CURVE
+	characters.property_ease_source = Spire.EASE_CURVE
 	play(characters).custom_step(0.5)
 	check(same(label.get_char_offset(0), Vector2(2.5, 0)), "Character Curve mode must override the inactive Enum")
 	label.reset()
-	characters.ease_curve = null
+	characters.property_ease_curve = null
 	play(characters).custom_step(0.5)
 	check(same(label.get_char_offset(0), Vector2(7.5, 0)), "Characters must fall back to their selected Ease when Curve mode has no resource")
-	characters.ease_curve = curve
-	characters.ease_source = Spire.EASE_ENUM
-	characters.character_delay_ease_curve = delay_curve(0, 0.5)
-	characters.character_delay_ease_source = Spire.EASE_ENUM
-	characters.character_delay_ease_enum = Spire.EASE_OUT_QUAD
+	characters.property_ease_curve = curve
+	characters.property_ease_source = Spire.EASE_ENUM
+	characters.text_delay_ease_curve = delay_curve(0, 0.5)
+	characters.text_delay_ease_source = Spire.EASE_ENUM
+	characters.text_delay_ease_enum = Spire.EASE_OUT_QUAD
 	var packed := PackedScene.new()
 	check(packed.pack(target) == OK, "Source selectors and inactive settings must pack")
 	var restored := packed.instantiate()
 	var restored_property: TweenBlueprint = restored.get_node("Property")
-	check(restored_property.ease_source == Spire.EASE_ENUM and restored_property.ease_enum == Spire.EASE_LINEAR and restored_property.ease_curve == curve, "Packing must preserve inactive property curves")
+	check(restored_property.property_ease_source == Spire.EASE_ENUM and restored_property.property_ease_enum == Spire.EASE_LINEAR and restored_property.property_ease_curve == curve, "Packing must preserve inactive property curves")
 	var restored_characters: TweenBlueprint = restored.get_node("Text/Characters")
 	check(restored_characters != null, "The authored character Blueprint must serialize")
 	if restored_characters != null:
-		check(restored_characters.ease_source == Spire.EASE_ENUM and restored_characters.ease_enum == Spire.EASE_OUT_QUAD and restored_characters.ease_curve == curve, "Packing must preserve inactive character easing curves")
-		check(restored_characters.character_delay_ease_source == Spire.EASE_ENUM and restored_characters.character_delay_ease_enum == Spire.EASE_OUT_QUAD and restored_characters.character_delay_ease_curve is Curve and near(restored_characters.character_delay_ease_curve.sample(1), 0.5), "Packing must preserve inactive character-delay curves")
+		check(restored_characters.property_ease_source == Spire.EASE_ENUM and restored_characters.property_ease_enum == Spire.EASE_OUT_QUAD and restored_characters.property_ease_curve == curve, "Packing must preserve inactive character easing curves")
+		check(restored_characters.text_delay_ease_source == Spire.EASE_ENUM and restored_characters.text_delay_ease_enum == Spire.EASE_OUT_QUAD and restored_characters.text_delay_ease_curve is Curve and near(restored_characters.text_delay_ease_curve.sample(1), 0.5), "Packing must preserve inactive character-delay curves")
 	restored.free()
 	return failures.is_empty()
 
@@ -178,15 +178,15 @@ func test_blueprint_character_default_basic_curve_and_serialization() -> bool:
 	add_child(label)
 	var step := TweenBlueprint.new()
 	step.name = "Animation"
-	step.kind = Spire.BLUEPRINT_KIND_CHARACTERS
+	step.kind = Spire.BLUEPRINT_KIND_TEXT
 	step.target = label
 	step.tween_process_mode = Spire.PROCESS_MODE_MANUAL
 	var effect := SpireTextOffsetEffect.new()
 	effect.to = Vector2(10, 0)
-	step.character_effect = effect
+	step.text_effect = effect
 	label.add_child(step)
 	step.owner = label
-	check(step.character_delay_ease_source == Spire.EASE_ENUM and step.character_delay_ease_enum == Spire.EASE_LINEAR, "Character delays must default to the Linear Ease")
+	check(step.text_delay_ease_source == Spire.EASE_ENUM and step.text_delay_ease_enum == Spire.EASE_LINEAR, "Character delays must default to the Linear Ease")
 	var sequence := play(step)
 	sequence.custom_step(0.5)
 	check(same(label.get_char_offset(0), Vector2(5, 0)) and same(label.get_char_offset(1), Vector2.ZERO), "The default basic curve must provide linear per-character start delays")
@@ -198,13 +198,13 @@ func test_blueprint_character_default_basic_curve_and_serialization() -> bool:
 	sequence.custom_step(0.001)
 	check(sequence.is_stopped(), "The default linear delay curve must finish the range after two per-character durations")
 	label.reset()
-	step.character_delay_ease_enum = Spire.EASE_OUT_QUAD
+	step.text_delay_ease_enum = Spire.EASE_OUT_QUAD
 	play(step).custom_step(1.0)
 	check(same(label.get_char_offset(1), Vector2(2.5, 0)), "A built-in ease must define the spatial start-delay curve")
 	var packed := PackedScene.new()
 	check(packed.pack(label) == OK, "The basic curve variant must pack")
 	var restored := packed.instantiate()
-	check(restored.get_node("Animation").character_delay_ease_source == Spire.EASE_ENUM and restored.get_node("Animation").character_delay_ease_enum == Spire.EASE_OUT_QUAD, "Scene serialization must preserve the delay source and Ease")
+	check(restored.get_node("Animation").text_delay_ease_source == Spire.EASE_ENUM and restored.get_node("Animation").text_delay_ease_enum == Spire.EASE_OUT_QUAD, "Scene serialization must preserve the delay source and Ease")
 	restored.free()
 	return failures.is_empty()
 
@@ -214,12 +214,12 @@ func test_blueprint_character_delay_start_loops_and_restart() -> bool:
 	add_child(label)
 	var animator := label
 	var effect := character_step(self, label, SpireTextOffsetEffect.new(), Vector2(10, 0))
-	effect.character_first = 1
-	effect.character_last = 2
-	effect.character_delay_ease_curve = delay_curve(0, 0.25)
+	effect.text_start_index = 1
+	effect.text_end_index = 2
+	effect.text_delay_ease_curve = delay_curve(0, 0.25)
 	effect.delay = 0.5
-	effect.start_enabled = true
-	effect.character_effect.from = Vector2(2, 0)
+	effect.property_start_enabled = true
+	effect.text_effect.from = Vector2(2, 0)
 	var first := play(effect)
 	check(animator.get_char_offset(1) == Vector2.ZERO, "Building must not apply explicit character starts")
 	first.custom_step(0.25)
@@ -230,9 +230,9 @@ func test_blueprint_character_delay_start_loops_and_restart() -> bool:
 	check(same(animator.get_char_offset(1), Vector2(4.08, 0)), "The first selected character must interpolate from its explicit start")
 	check(same(animator.get_char_offset(2), Vector2(2.08, 0)), "Stagger must begin at the selected range, after that character's delay: %s" % animator.get_char_offset(2))
 	check(animator.get_char_offset(0) == Vector2.ZERO, "Unselected characters must remain untouched")
-	effect.start_enabled = false
+	effect.property_start_enabled = false
 	effect.delay = 0.0
-	effect.character_delay_ease_curve = delay_curve(0, 0)
+	effect.text_delay_ease_curve = delay_curve(0, 0)
 	var second := play(effect)
 	check(first.is_stopped() and second != first, "Character replay must stop the previous run and build a fresh sequence")
 	animator.set_char_offset(1, Vector2(6, 0))
@@ -240,8 +240,8 @@ func test_blueprint_character_delay_start_loops_and_restart() -> bool:
 	check(same(animator.get_char_offset(1), Vector2(8, 0)), "Implicit character starts must be captured when processing begins")
 	second.stop()
 	animator.reset()
-	effect.character_loops = 2
-	effect.character_effect.loop_mode = Spire.LOOP_MODE_YOYO
+	effect.text_loops = 2
+	effect.text_effect.loop_mode = Spire.LOOP_MODE_YOYO
 	var yoyo := play(effect)
 	for _tick in 3: yoyo.custom_step(0.5)
 	check(same(animator.get_char_offset(1), Vector2(5, 0)), "Character loops must support yoyo independently of sequence loops: %s" % animator.get_char_offset(1))
@@ -253,8 +253,8 @@ func test_blueprint_character_delay_start_loops_and_restart() -> bool:
 	var serial := blueprint(self)
 	property_step(serial, sprite, &"position:x", 10.0)
 	var later := character_step(serial, label, SpireTextOffsetEffect.new(), Vector2(10, 0))
-	later.start_enabled = true
-	later.character_effect.from = Vector2(2, 0)
+	later.property_start_enabled = true
+	later.text_effect.from = Vector2(2, 0)
 	var chain := play(serial)
 	chain.custom_step(0.5)
 	check(animator.get_char_offset(0) == Vector2.ZERO, "A later serial character step must not initialize its start early")
@@ -286,15 +286,15 @@ func test_blueprint_character_invalid_configuration_and_lifetime() -> bool:
 	plain_label.text = "ABCDE"
 	add_child(plain_label)
 	var invalid_cases := [
-		["target", sprite], ["target", plain_label], ["character_first", -1], ["character_first", 99], ["character_last", 99],
-		["character_last", -2], ["character_delay_ease_curve", delay_curve(-0.1, -0.1)],
-		["character_loops", 0], ["character_effect", null], ["character_effect", Resource.new()],
-		["start_value", "wrong type"],
+		["target", sprite], ["target", plain_label], ["text_start_index", -1], ["text_start_index", 99], ["text_end_index", 99],
+		["text_end_index", -2], ["text_delay_ease_curve", delay_curve(-0.1, -0.1)],
+		["text_loops", 0], ["text_effect", null], ["text_effect", Resource.new()],
+		["property_start_value", "wrong type"],
 	]
 	for item in invalid_cases:
 		var container := blueprint(self)
-		var invalid := character_step(container, label, SpireTextPunchOffsetEffect.new() if item[0] == "start_value" else SpireTextOffsetEffect.new(), Vector2(10, 0))
-		if item[0] == "start_value": invalid.start_enabled = true
+		var invalid := character_step(container, label, SpireTextPunchOffsetEffect.new() if item[0] == "property_start_value" else SpireTextOffsetEffect.new(), Vector2(10, 0))
+		if item[0] == "property_start_value": invalid.property_start_enabled = true
 		invalid.set(item[0], item[1])
 		property_step(container, sprite, &"position:x", 5.0)
 		sprite.position = Vector2.ZERO
@@ -313,17 +313,17 @@ func test_blueprint_character_invalid_configuration_and_lifetime() -> bool:
 	]
 	for item in invalid_resources:
 		var container := blueprint(self)
-		var invalid := blueprint(container, Spire.BLUEPRINT_KIND_CHARACTERS)
+		var invalid := blueprint(container, Spire.BLUEPRINT_KIND_TEXT)
 		invalid.target = label
-		invalid.character_effect = item[0]
+		invalid.text_effect = item[0]
 		item[0].set(item[1], item[2])
 		property_step(container, sprite, &"position:x", 5.0)
 		sprite.position = Vector2.ZERO
 		play(container).force_complete()
 		check(near(sprite.position.x, 5.0) and animator.get_char_offset(0) == Vector2.ZERO, "Invalid resource settings must leave valid siblings playable: " + item[1])
 	var delayed := character_step(self, label, SpireTextOffsetEffect.new(), Vector2(0, -24))
-	delayed.character_first = 4
-	delayed.character_last = 4
+	delayed.text_start_index = 4
+	delayed.text_end_index = 4
 	delayed.delay = 0.5
 	var sequence := play(delayed)
 	label.text = "HI!"
@@ -356,8 +356,8 @@ func test_blueprint_character_resource_from_values() -> bool:
 		var entry: Resource = item[0]
 		entry.set("from", item[1])
 		var step := character_step(self, label, entry, item[2])
-		step.start_enabled = true
-		step.character_delay_ease_curve = delay_curve(0, 0.5)
+		step.property_start_enabled = true
+		step.text_delay_ease_curve = delay_curve(0, 0.5)
 		var sequence := play(step)
 		sequence.custom_step(0.25)
 		check(same(label.call(item[4], 0), item[3]), "Basic resource from/to must interpolate the first selected character")
@@ -374,7 +374,7 @@ func test_blueprint_character_resource_timing_and_curve() -> bool:
 	entry.ease = Spire.EASE_IN_QUAD
 	entry.character_phase_offset = 0.75
 	var step := character_step(self, label, entry, Vector2(16, 0))
-	step.start_enabled = true
+	step.property_start_enabled = true
 	entry.from = Vector2(4, 0)
 	var sequence := play(step)
 	sequence.custom_step(1.0)
@@ -384,8 +384,8 @@ func test_blueprint_character_resource_timing_and_curve() -> bool:
 	var curve := Curve.new()
 	curve.add_point(Vector2(0, 0.25))
 	curve.add_point(Vector2(1, 0.25))
-	step.ease_source = Spire.EASE_CURVE
-	step.ease_curve = curve
+	step.property_ease_source = Spire.EASE_CURVE
+	step.property_ease_curve = curve
 	sequence = play(step)
 	sequence.custom_step(1.5)
 	check(same(label.get_char_offset(0), Vector2(7, 0)), "The Blueprint curve must override the resource's basic easing")
@@ -395,14 +395,14 @@ func test_blueprint_hidden_character_resource_preserves_property_values() -> boo
 	var target := Node2D.new()
 	add_child(target)
 	var step := property_step(self, target, &"position", Vector2(5, 6))
-	step.character_effect = SpireTextPunchScaleEffect.new()
-	check(step.start_value == null, "A hidden character resource must not initialize property values")
-	step.start_value = Vector2.ONE
-	step.character_effect = SpireTextPunchRotationEffect.new()
-	check(typeof(step.start_value) == TYPE_VECTOR2 and step.start_value == Vector2.ONE, "Replacing a hidden character resource must preserve the authored property start")
-	step.start_value = null
-	step.kind = Spire.BLUEPRINT_KIND_CHARACTERS
-	check(typeof(step.start_value) == TYPE_VECTOR3 and step.start_value == Vector3.ZERO, "Switching to Characters must initialize an unset impulse start synchronously")
+	step.text_effect = SpireTextPunchScaleEffect.new()
+	check(step.property_start_value == null, "A hidden character resource must not initialize property values")
+	step.property_start_value = Vector2.ONE
+	step.text_effect = SpireTextPunchRotationEffect.new()
+	check(typeof(step.property_start_value) == TYPE_VECTOR2 and step.property_start_value == Vector2.ONE, "Replacing a hidden character resource must preserve the authored property start")
+	step.property_start_value = null
+	step.kind = Spire.BLUEPRINT_KIND_TEXT
+	check(typeof(step.property_start_value) == TYPE_VECTOR3 and step.property_start_value == Vector3.ZERO, "Switching to Text must initialize an unset impulse start synchronously")
 	return failures.is_empty()
 
 func test_blueprint_character_impulse_default_is_synchronous() -> bool:
@@ -410,11 +410,11 @@ func test_blueprint_character_impulse_default_is_synchronous() -> bool:
 	label.text = "A"
 	add_child(label)
 	for item in [[SpireTextPunchOffsetEffect.new(), Vector2.ZERO], [SpireTextPunchScaleEffect.new(), Vector2.ONE], [SpireTextPunchRotationEffect.new(), Vector3.ZERO]]:
-		var step := blueprint(self, Spire.BLUEPRINT_KIND_CHARACTERS)
+		var step := blueprint(self, Spire.BLUEPRINT_KIND_TEXT)
 		step.target = label
-		step.character_effect = item[0]
-		step.start_enabled = true
-		check(step.start_value == item[1], "Assigning a resource must initialize its neutral impulse start before an immediate play")
+		step.text_effect = item[0]
+		step.property_start_enabled = true
+		check(step.property_start_value == item[1], "Assigning a resource must initialize its neutral impulse start before an immediate play")
 		play(step).force_complete()
 	return failures.is_empty()
 
@@ -427,12 +427,12 @@ func test_blueprint_character_impulse_start_and_blending() -> bool:
 		entry.punch = Vector2(0.4, 0.2)
 		entry.vibrato = 4
 		entry.elasticity = 0.4
-		var step := blueprint(self, Spire.BLUEPRINT_KIND_CHARACTERS)
+		var step := blueprint(self, Spire.BLUEPRINT_KIND_TEXT)
 		step.target = label
-		step.character_effect = entry
-		step.start_enabled = true
-		step.start_value = Vector2(2, 3)
-		step.character_blendable = blendable
+		step.text_effect = entry
+		step.property_start_enabled = true
+		step.property_start_value = Vector2(2, 3)
+		step.text_blendable = blendable
 		var sequence := play(step)
 		sequence.custom_step(0.1)
 		check(same(label.get_char_scale(0), Vector2(2.4, 3.2)), "Impulse resources must initialize their Blueprint start before sampling")
@@ -441,13 +441,13 @@ func test_blueprint_character_impulse_start_and_blending() -> bool:
 		check(same(label.get_char_scale(0), Vector2(3, 4) if blendable else Vector2(2, 3)), "Blendable playback must preserve external contributions; nonblendable playback restores its initial value")
 	return failures.is_empty()
 
-func test_blueprint_character_delay_ease_curve_watch_and_snapshot() -> bool:
+func test_blueprint_text_delay_ease_curve_watch_and_snapshot() -> bool:
 	var label := SpireRichTextLabel.new()
 	label.text = "AB"
 	add_child(label)
 	var curve := delay_curve(0, 1)
 	var step := character_step(self, label, SpireTextOffsetEffect.new(), Vector2(10, 0))
-	step.character_delay_ease_curve = curve
+	step.text_delay_ease_curve = curve
 	check(curve.get_signal_connection_list("changed").size() == 1, "The Blueprint must watch its delay curve")
 	var running := play(step)
 	running.custom_step(0.25)
@@ -458,15 +458,15 @@ func test_blueprint_character_delay_ease_curve_watch_and_snapshot() -> bool:
 	var next := play(step)
 	next.custom_step(0.75)
 	check(same(label.get_char_offset(1), Vector2(2.5, 0)), "A subsequent play must snapshot the edited delay curve")
-	step.character_delay_ease_curve = curve
+	step.text_delay_ease_curve = curve
 	check(curve.get_signal_connection_list("changed").size() == 1, "Reassigning a delay curve must replace its watch")
 	var replacement := delay_curve(0, 0)
-	step.character_delay_ease_curve = replacement
+	step.text_delay_ease_curve = replacement
 	check(curve.get_signal_connection_list("changed").is_empty(), "Replacing the curve must disconnect its old watch")
 	var connections := replacement.get_signal_connection_list("changed")
 	replacement.changed.disconnect(connections[0].callable)
-	step.character_delay_ease_curve = null
-	step.character_delay_ease_curve = curve
+	step.text_delay_ease_curve = null
+	step.text_delay_ease_curve = curve
 	step.free()
 	check(curve.get_signal_connection_list("changed").is_empty(), "Freeing the Blueprint must disconnect the curve watch")
 	curve.emit_changed()
@@ -489,14 +489,14 @@ func test_blueprint_character_shared_resource_and_watch_lifetime() -> bool:
 	var b := SpireRichTextLabel.new()
 	b.text = "AB"
 	add_child(b)
-	var first := blueprint(self, Spire.BLUEPRINT_KIND_CHARACTERS)
+	var first := blueprint(self, Spire.BLUEPRINT_KIND_TEXT)
 	first.target = a
-	first.character_effect = entry
-	first.start_enabled = true
-	var second := blueprint(self, Spire.BLUEPRINT_KIND_CHARACTERS)
+	first.text_effect = entry
+	first.property_start_enabled = true
+	var second := blueprint(self, Spire.BLUEPRINT_KIND_TEXT)
 	second.target = b
-	second.character_effect = entry
-	second.start_enabled = true
+	second.text_effect = entry
+	second.property_start_enabled = true
 	check(entry.get_signal_connection_list("changed").size() == 3, "Two Blueprint consumers and the preset renderer must watch the same resource independently")
 	var running := play(first)
 	running.custom_step(0.5)
@@ -510,14 +510,14 @@ func test_blueprint_character_shared_resource_and_watch_lifetime() -> bool:
 	play(second).custom_step(0.5)
 	check(same(b.get_char_offset(0), Vector2(5, 0)), "The next run must use the edited resource")
 	# Reassignment must not accumulate connections, including externally removed watches.
-	second.character_effect = entry
+	second.text_effect = entry
 	check(entry.get_signal_connection_list("changed").size() == 3, "Reassigning the same resource must replace its watch")
 	var replacement := SpireTextFadeEffect.new()
-	second.character_effect = replacement
+	second.text_effect = replacement
 	check(entry.get_signal_connection_list("changed").size() == 2, "Replacing a resource must disconnect the old watch")
 	var connections := replacement.get_signal_connection_list("changed")
 	replacement.changed.disconnect(connections[0].callable)
-	second.character_effect = null
+	second.text_effect = null
 	second.free()
 	first.free()
 	check(entry.get_signal_connection_list("changed").size() == 1, "Freeing Blueprints must leave only the label's subscription")
@@ -538,11 +538,11 @@ func test_blueprint_character_rotation_pivot_and_serialization() -> bool:
 	var effect := character_step(label, label, SpireTextRotationEffect.new(), Vector3(0, 0, TAU))
 	effect.name = "Spin"
 	effect.owner = root
-	effect.character_effect.pivot = Vector2(12, -14)
-	effect.character_effect.rotate_mode = Spire.ROTATE_MODE_FAST_BEYOND_360
-	effect.character_delay_ease_curve = delay_curve(0, 1)
-	effect.character_loops = 2
-	effect.character_effect.loop_mode = Spire.LOOP_MODE_YOYO
+	effect.text_effect.pivot = Vector2(12, -14)
+	effect.text_effect.rotate_mode = Spire.ROTATE_MODE_FAST_BEYOND_360
+	effect.text_delay_ease_curve = delay_curve(0, 1)
+	effect.text_loops = 2
+	effect.text_effect.loop_mode = Spire.LOOP_MODE_YOYO
 	var animator := label
 	var sequence := play(effect)
 	check(animator.get_char_pivot(0) == Vector2.ZERO, "Construction must not set the pivot")
@@ -554,10 +554,10 @@ func test_blueprint_character_rotation_pivot_and_serialization() -> bool:
 	check(packed.pack(root) == OK, "Character settings must pack")
 	var copy := packed.instantiate()
 	var restored: TweenBlueprint = copy.get_node("Label/Spin")
-	check(restored.kind == Spire.BLUEPRINT_KIND_CHARACTERS and restored.character_effect is SpireTextRotationEffect, "Character kind and resource type must serialize")
-	check(restored.character_effect.to == Vector3(0, 0, TAU) and restored.character_effect.pivot == Vector2(12, -14), "Typed resource values and pivots must serialize")
-	check(restored.character_effect.rotate_mode == Spire.ROTATE_MODE_FAST_BEYOND_360 and restored.character_loops == 2 and restored.character_effect.loop_mode == Spire.LOOP_MODE_YOYO, "Rotation and loop policies must serialize")
-	check(restored.character_delay_ease_curve is Curve and near(restored.character_delay_ease_curve.sample(1), 1), "Character start-delay curves must serialize")
+	check(restored.kind == Spire.BLUEPRINT_KIND_TEXT and restored.text_effect is SpireTextRotationEffect, "Character kind and resource type must serialize")
+	check(restored.text_effect.to == Vector3(0, 0, TAU) and restored.text_effect.pivot == Vector2(12, -14), "Typed resource values and pivots must serialize")
+	check(restored.text_effect.rotate_mode == Spire.ROTATE_MODE_FAST_BEYOND_360 and restored.text_loops == 2 and restored.text_effect.loop_mode == Spire.LOOP_MODE_YOYO, "Rotation and loop policies must serialize")
+	check(restored.text_delay_ease_curve is Curve and near(restored.text_delay_ease_curve.sample(1), 1), "Character start-delay curves must serialize")
 	check(restored.target == copy.get_node("Label"), "Character targets must serialize as relative references")
 	copy.free()
 	return failures.is_empty()
@@ -588,8 +588,8 @@ func test_blueprint_explicit_start_delay_and_configuration() -> bool:
 	var sprite := Node2D.new()
 	add_child(sprite)
 	var effect := property_step(self, sprite, &"position", Vector2(10, 0))
-	effect.set("start_enabled", true)
-	effect.start_value = Vector2(2, 0)
+	effect.set("property_start_enabled", true)
+	effect.property_start_value = Vector2(2, 0)
 	effect.delay = 0.5
 	effect.speed_scale = 2.0
 	effect.loops = 2
@@ -657,14 +657,14 @@ func test_blueprint_relative_speed_and_curve() -> bool:
 	for property in [&"position", &"vector2i_value", &"vector3i_value", &"rect2i_value"]:
 		var offset: Variant = {&"position": Vector2(4, 8), &"vector2i_value": Vector2i(4, 8), &"vector3i_value": Vector3i(4, 8, 12), &"rect2i_value": Rect2i(2, 4, 6, 8)}[property]
 		var effect := property_step(self, target, property, offset)
-		effect.lerp_mode = Spire.LERP_MODE_KIND_RELATIVE
+		effect.property_lerp_mode = Spire.LERP_MODE_KIND_RELATIVE
 		var sequence := play(effect)
 		if not sequence: return false
 		sequence.custom_step(0.5)
 		sequence.custom_step(0.6)
 		check(target.get(property) == offset, "Relative mode must add its full offset for " + property)
 	var speed := property_step(self, target, &"scalar", 10.0, 5.0)
-	speed.lerp_mode = Spire.LERP_MODE_KIND_SPEED_BASED
+	speed.property_lerp_mode = Spire.LERP_MODE_KIND_SPEED_BASED
 	var sequence := play(speed)
 	if not sequence: return false
 	sequence.custom_step(0.5)
@@ -674,8 +674,8 @@ func test_blueprint_relative_speed_and_curve() -> bool:
 	curve.add_point(Vector2(0, 0))
 	curve.add_point(Vector2(1, 0))
 	var curved := property_step(self, target, &"scalar", 20.0)
-	curved.ease_source = Spire.EASE_CURVE
-	curved.ease_curve = curve
+	curved.property_ease_source = Spire.EASE_CURVE
+	curved.property_ease_curve = curve
 	sequence = play(curved)
 	if not sequence: return false
 	sequence.custom_step(0.5)
@@ -693,9 +693,9 @@ func test_blueprint_independent_targets_and_fallback() -> bool:
 	var effect := blueprint(first, Spire.BLUEPRINT_KIND_PROPERTY)
 	check(not effect.has_method("play_on"), "Playback must not expose an override-target API")
 	check(not effect.get_property_list().any(func(info): return info.name == &"override_children_targets"), "The Inspector must not expose target propagation")
-	effect.animated_property = &"position"
-	effect.end_value = Vector2(6, 0)
-	effect.speed_or_duration = 1.0
+	effect.property_to_animate = &"position"
+	effect.property_end_value = Vector2(6, 0)
+	effect.property_speed_or_duration = 1.0
 	check(effect.get_resolved_target() == first, "An unset target must resolve the first non-blueprint ancestor")
 	var sequence := play(effect)
 	if not sequence: return false
@@ -707,8 +707,8 @@ func test_blueprint_independent_targets_and_fallback() -> bool:
 	var inner := blueprint(container, Spire.BLUEPRINT_KIND_PARALLEL_BLOCK)
 	inner.target = second
 	var nested := blueprint(inner, Spire.BLUEPRINT_KIND_PROPERTY)
-	nested.animated_property = &"position"
-	nested.end_value = Vector2(12, 0)
+	nested.property_to_animate = &"position"
+	nested.property_end_value = Vector2(12, 0)
 	check(child.get_resolved_target() == second, "A container must preserve each child's configured target")
 	check(nested.get_resolved_target() == first, "Fallback must skip blueprint ancestors and their targets")
 	sequence = play(container)
@@ -739,11 +739,11 @@ func test_blueprint_invalid_steps_do_not_block_siblings() -> bool:
 		var normalized := String(path).strip_edges()
 		var end: Variant = Vector2(12, 3) if normalized == "position" else 18.0
 		var padded := property_step(self, target, path, end)
-		padded.end_value = null
+		padded.property_end_value = null
 		padded.initialize_blueprint_values()
 		var expected: Variant = target.position if normalized == "position" else target.position.x
-		check(padded.start_value == expected and padded.end_value == expected, "Endpoint initialization must use the validated, trimmed property path")
-		padded.end_value = end
+		check(padded.property_start_value == expected and padded.property_end_value == expected, "Endpoint initialization must use the validated, trimmed property path")
+		padded.property_end_value = end
 		sequence = play(padded)
 		sequence.force_complete()
 		check(target.get_indexed(NodePath(normalized)) == end, "Playback must use the same trimmed property path as validation")

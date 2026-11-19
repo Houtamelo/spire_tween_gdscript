@@ -83,7 +83,7 @@ fi
 timeout 90s "$blueprint_godot" "${blueprint_editor_args[@]}" --editor --path "$blueprint_fixture" \
     --rendering-method gl_compatibility > "$blueprint_fixture/editor.log" 2>&1
 if rg -n 'SCRIPT ERROR:|^ERROR:|\[panic' "$blueprint_fixture/editor.log"; then exit 1; fi
-if rg -n 'WARNING:.*`animated_property` must be non-empty' "$blueprint_fixture/editor.log"; then
+if rg -n 'WARNING:.*`property_to_animate` must be non-empty' "$blueprint_fixture/editor.log"; then
     printf 'Incomplete Inspector configuration must not emit repeated console warnings.\n' >&2
     exit 1
 fi

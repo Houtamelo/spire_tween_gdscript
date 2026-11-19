@@ -9,7 +9,7 @@ pub(super) fn property_descriptor(target: &Gd<Node>, path: &StringName) -> Resul
     let path_string = path.to_string();
     let path = path_string.trim();
     if path.is_empty() {
-        bail!("`animated_property` must be non-empty.");
+        bail!("`property_to_animate` must be non-empty.");
     }
 
     let (property_name, indexer) = match path.split_once(':') {
@@ -20,7 +20,7 @@ pub(super) fn property_descriptor(target: &Gd<Node>, path: &StringName) -> Resul
         .get_property_list()
         .iter_shared()
         .find(|dict| dict.get("name").is_some_and(|value| value.to_string() == property_name))
-        .ok_or_else(|| anyhow!("`animated_property` (`{property_name}`) was not found on the resolved `target`."))
+        .ok_or_else(|| anyhow!("`property_to_animate` (`{property_name}`) was not found on the resolved `target`."))
         .and_then(|dict| property_info_from_dict(&dict))?;
 
     validate_property_usage(&info)?;
@@ -30,7 +30,7 @@ pub(super) fn property_descriptor(target: &Gd<Node>, path: &StringName) -> Resul
     if indexer.is_some() {
         let value = target.get_indexed(path);
         if value.is_nil() {
-            bail!("`animated_property` (`{path}`) could not be read from the resolved `target`.");
+            bail!("`property_to_animate` (`{path}`) could not be read from the resolved `target`.");
         }
 
         info = PropertyInfo {
@@ -86,7 +86,7 @@ fn validate_target(target: &Gd<Node>) -> Result<()> {
 
 fn validate_property_usage(info: &PropertyInfo) -> Result<()> {
     if info.usage.is_set(PropertyUsageFlags::READ_ONLY) {
-        bail!("`animated_property` (`{}`) is read-only.", info.property_name);
+        bail!("`property_to_animate` (`{}`) is read-only.", info.property_name);
     }
 
     Ok(())
@@ -102,7 +102,7 @@ fn validate_property_setter(info: &PropertyInfo, owner_class: &StringName, class
             .class_get_property_setter(owner_class, &info.property_name)
             .is_empty()
     {
-        bail!("`animated_property` (`{}`) must be writable.", info.property_name);
+        bail!("`property_to_animate` (`{}`) must be writable.", info.property_name);
     }
 
     Ok(())
@@ -111,7 +111,7 @@ fn validate_property_setter(info: &PropertyInfo, owner_class: &StringName, class
 fn validate_property_type(info: &PropertyInfo) -> Result<()> {
     if !property_is_type_lerpable(info.variant_type) {
         bail!(
-            "`animated_property` (`{}`) has unsupported type `{}`.",
+            "`property_to_animate` (`{}`) has unsupported type `{}`.",
             info.property_name,
             info.variant_type.godot_type_name()
         );

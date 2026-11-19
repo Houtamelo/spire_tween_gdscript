@@ -124,7 +124,7 @@ func test_text_presets_example_scene() -> bool:
 	var label: SpireRichTextLabel = example.get_node("Text")
 	assert_true(not label.get_parsed_text().contains("[enchanted]"))
 	var blueprint: TweenBlueprint = label.get_node("SharedEffect")
-	assert_eq(blueprint.character_effect, label.effect_presets[0].effects[0])
+	assert_eq(blueprint.text_effect, label.effect_presets[0].effects[0])
 	blueprint.tween_process_mode = Spire.PROCESS_MODE_MANUAL
 	var spawned: Array[SpireSequence] = []
 	blueprint.tween_spawned.connect(func(sequence: SpireSequence): spawned.append(sequence))

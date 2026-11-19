@@ -134,7 +134,7 @@ fn compile() {
         #[cfg(feature = "include_gdscript_bridge")]
         let _: fn(Gd<TweenBlueprint>) -> Gd<SpireSequence> = TweenBlueprint::play;
         let _: fn(Gd<TweenBlueprint>) = TweenBlueprint::stop;
-        let _ = (BlueprintKind::Property, BlueprintKind::Characters, LerpModeKind::Relative, TriggerCondition::Manual);
+        let _ = (BlueprintKind::Property, BlueprintKind::Text, LerpModeKind::Relative, TriggerCondition::Manual);
     }
     {
         let ease = Ease::get_global_default();

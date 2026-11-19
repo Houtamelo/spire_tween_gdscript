@@ -21,11 +21,11 @@ pub struct TweenBlueprint {
     target: Option<Gd<Node>>,
     current_tween: Option<Gd<SpireSequence>>,
     trigger_connection: Option<triggers::TriggerConnection>,
-    character_effect_connection: Option<ConnectHandle>,
-    character_delay_curve_connection: Option<ConnectHandle>,
+    text_effect_connection: Option<ConnectHandle>,
+    text_delay_curve_connection: Option<ConnectHandle>,
     enter_trigger_pending: bool,
 
-    // <-------------------------- General Configuration
+    // General Configuration
     #[export]
     #[var(set = set_trigger_condition)]
     trigger_condition: TriggerCondition,
@@ -61,82 +61,80 @@ pub struct TweenBlueprint {
     #[var(set = set_kind)]
     kind: BlueprintKind,
 
-    // General Configuration -------------------------->
-
-    // <-------------------------- Tween Property Configuration
-    #[export_group(name = "Animation Values")]
+    // Tween Property Configuration
+    #[export_group(name = "Property Animation", prefix = "property_")]
     #[export]
-    #[var(set = set_animated_property)]
-    animated_property: StringName,
+    #[var(set = set_property_to_animate)]
+    property_to_animate: StringName,
     #[export]
     #[var]
     #[init(val = 1.0)]
-    speed_or_duration: f64,
+    property_speed_or_duration: f64,
     #[export]
     #[var]
     /// Initialize before playback. Basic character effects use the resource's
-    /// `from`; property and punch/shake steps use `start_value`.
-    start_enabled: bool,
+    /// `from`; property and punch/shake steps use `property_start_value`.
+    property_start_enabled: bool,
     #[export]
     #[var]
-    start_value: Variant,
+    property_start_value: Variant,
     #[export]
     #[var]
-    end_value: Variant,
+    property_end_value: Variant,
     #[export]
     #[var]
-    lerp_mode: LerpModeKind,
-    #[export_subgroup(name = "Ease")]
+    property_lerp_mode: LerpModeKind,
+    #[export_subgroup(name = "Ease", prefix = "property_ease_")]
     #[export]
     #[var]
-    ease_source: EaseSource,
+    property_ease_source: EaseSource,
     #[export]
     #[var]
-    ease_enum: Ease,
+    property_ease_enum: Ease,
     #[export]
     #[var]
-    ease_curve: Option<Gd<Curve>>,
+    property_ease_curve: Option<Gd<Curve>>,
 
-    // Tween Property Configuration -------------------------->
-    #[export_group(name = "Character Animation")]
+    #[export_group(name = "Text Animation", prefix = "text_")]
     /// Effect parameters shared with looping rich-text presets. Each play builds
     /// a fresh Char range tween from the resource's current fields.
     #[export]
-    #[var(set = set_character_effect, hint = RESOURCE_TYPE,
+    #[var(set = set_text_effect, hint = RESOURCE_TYPE,
         hint_string = "SpireTextColorEffect,SpireTextFadeEffect,SpireTextOffsetEffect,SpireTextRotationEffect,SpireTextScaleEffect,SpireTextPunchOffsetEffect,SpireTextPunchRotationEffect,SpireTextPunchScaleEffect,SpireTextShakeOffsetEffect,SpireTextShakeRotationEffect,SpireTextShakeScaleEffect")]
-    character_effect: Option<Gd<Resource>>,
-    /// First logical character index, including spaces and excluding BBCode tags.
+    text_effect: Option<Gd<Resource>>,
+    /// First logical char index, including spaces and excluding BBCode tags.
     #[export(range = (0.0, 100.0, or_greater))]
     #[var]
-    character_first: i64,
+    text_start_index: i64,
     /// Inclusive last index; -1 selects through the end of the text.
     #[export(range = (-1.0, 100.0, or_greater))]
     #[var]
     #[init(val = -1)]
-    character_last: i64,
-    /// Start delay for each selected character as a multiple of the effect's
-    /// per-character duration. Samples must be finite and non-negative. The
-    /// range finishes when the last character completes its delay and loops.
+    text_end_index: i64,
+    /// Start delay for each selected char as a multiple of the effect's
+    /// per-char duration. Samples must be finite and non-negative. The
+    /// range finishes when the last char completes its delay and loops.
+    #[export_subgroup(name = "Delay Ease", prefix = "text_delay_ease_")]
     #[export]
-    #[var(set = set_character_delay_ease_source)]
-    character_delay_ease_source: EaseSource,
+    #[var(set = set_text_delay_ease_source)]
+    text_delay_ease_source: EaseSource,
     #[export]
-    #[var(set = set_character_delay_ease_enum)]
+    #[var(set = set_text_delay_ease_enum)]
     #[init(val = Ease::Linear)]
-    character_delay_ease_enum: Ease,
+    text_delay_ease_enum: Ease,
     #[export]
-    #[var(set = set_character_delay_ease_curve)]
-    character_delay_ease_curve: Option<Gd<Curve>>,
+    #[var(set = set_text_delay_ease_curve)]
+    text_delay_ease_curve: Option<Gd<Curve>>,
     /// Animation legs per character, independently of the containing sequence.
     #[export(range = (1.0, 10.0, or_greater))]
     #[var]
     #[init(val = 1)]
-    character_loops: i64,
+    text_loops: i64,
     #[export]
     #[var]
     #[init(val = true)]
     /// Preserve other additive contributions during punch/shake playback.
-    character_blendable: bool,
+    text_blendable: bool,
 }
 
 #[godot_api]
@@ -208,8 +206,8 @@ impl TweenBlueprint {
     pub fn get_resolved_target(&self) -> Option<Gd<Node>> { self.resolve_target() }
 
     #[func]
-    fn set_animated_property(&mut self, name: StringName) {
-        self.animated_property = name;
+    fn set_property_to_animate(&mut self, name: StringName) {
+        self.property_to_animate = name;
         self.configuration_changed();
     }
 
@@ -222,55 +220,55 @@ impl TweenBlueprint {
     #[func]
     fn set_kind(&mut self, kind: BlueprintKind) {
         self.kind = kind;
-        self.initialize_character_start();
+        self.initialize_text_start();
         self.configuration_changed();
     }
 
     #[func]
-    fn set_character_effect(&mut self, effect: Option<Gd<Resource>>) {
-        if self.kind == BlueprintKind::Characters
-            && let Ok(previous) = self.compiled_character_effect()
-            && previous.impulse_start_default().as_ref() == Some(&self.start_value)
+    fn set_text_effect(&mut self, effect: Option<Gd<Resource>>) {
+        if self.kind == BlueprintKind::Text
+            && let Ok(previous) = self.get_compiled_text_effect()
+            && previous.impulse_start_default().as_ref() == Some(&self.property_start_value)
         {
-            self.start_value = Variant::nil();
+            self.property_start_value = Variant::nil();
         }
-        self.disconnect_character_effect();
-        self.character_effect = effect;
-        self.initialize_character_start();
-        if let Some(resource) = &self.character_effect {
-            self.character_effect_connection = Some(self.watch_character_configuration(resource));
+        self.disconnect_text_effect();
+        self.text_effect = effect;
+        self.initialize_text_start();
+        if let Some(resource) = &self.text_effect {
+            self.text_effect_connection = Some(self.watch_text_configuration(resource));
         }
         self.configuration_changed();
     }
 
     #[func]
-    fn set_character_delay_ease_source(&mut self, source: EaseSource) {
-        self.character_delay_ease_source = source;
+    fn set_text_delay_ease_source(&mut self, source: EaseSource) {
+        self.text_delay_ease_source = source;
         self.configuration_changed();
     }
 
     #[func]
-    fn set_character_delay_ease_enum(&mut self, ease: Ease) {
-        self.character_delay_ease_enum = ease;
+    fn set_text_delay_ease_enum(&mut self, ease: Ease) {
+        self.text_delay_ease_enum = ease;
         self.configuration_changed();
     }
 
     #[func]
-    fn set_character_delay_ease_curve(&mut self, curve: Option<Gd<Curve>>) {
-        Self::disconnect_configuration_watch(&mut self.character_delay_curve_connection);
-        self.character_delay_ease_curve = curve;
-        if let Some(curve) = &self.character_delay_ease_curve {
-            self.character_delay_curve_connection = Some(self.watch_character_configuration(&curve.clone().upcast()));
+    fn set_text_delay_ease_curve(&mut self, curve: Option<Gd<Curve>>) {
+        Self::disconnect_configuration_watch(&mut self.text_delay_curve_connection);
+        self.text_delay_ease_curve = curve;
+        if let Some(curve) = &self.text_delay_ease_curve {
+            self.text_delay_curve_connection = Some(self.watch_text_configuration(&curve.clone().upcast()));
         }
         self.configuration_changed();
     }
 
-    fn character_delay_ease(&self) -> EaseKind {
-        self.character_delay_ease_source
-            .resolve(self.character_delay_ease_enum, self.character_delay_ease_curve.as_ref())
+    fn get_text_delay_ease(&self) -> EaseKind {
+        self.text_delay_ease_source
+            .resolve(self.text_delay_ease_enum, self.text_delay_ease_curve.as_ref())
     }
 
-    fn watch_character_configuration(&self, resource: &Gd<Resource>) -> ConnectHandle {
+    fn watch_text_configuration(&self, resource: &Gd<Resource>) -> ConnectHandle {
         // Resource setters emit while their Rust state is borrowed.
         let warnings = self.base().callable("update_configuration_warnings");
         let inspector = self.base().callable("notify_property_list_changed");
@@ -280,19 +278,17 @@ impl TweenBlueprint {
         })
     }
 
-    fn initialize_character_start(&mut self) {
-        if self.kind == BlueprintKind::Characters
-            && self.start_value.is_nil()
-            && let Ok(effect) = self.compiled_character_effect()
+    fn initialize_text_start(&mut self) {
+        if self.kind == BlueprintKind::Text
+            && self.property_start_value.is_nil()
+            && let Ok(effect) = self.get_compiled_text_effect()
             && let Some(value) = effect.impulse_start_default()
         {
-            self.start_value = value;
+            self.property_start_value = value;
         }
     }
 
-    fn disconnect_character_effect(&mut self) {
-        Self::disconnect_configuration_watch(&mut self.character_effect_connection);
-    }
+    fn disconnect_text_effect(&mut self) { Self::disconnect_configuration_watch(&mut self.text_effect_connection); }
 
     fn disconnect_configuration_watch(connection: &mut Option<ConnectHandle>) {
         if let Some(handle) = connection.take()

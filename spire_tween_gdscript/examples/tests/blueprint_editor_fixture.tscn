@@ -9,10 +9,10 @@ position = Vector2(3, 4)
 target = NodePath("..")
 trigger_condition = 1
 kind = 2
-animated_property = &"position"
-speed_or_duration = 0.75
-start_value = Vector2(1, 2)
-end_value = Vector2(6, 7)
+property_to_animate = &"position"
+property_speed_or_duration = 0.75
+property_start_value = Vector2(1, 2)
+property_end_value = Vector2(6, 7)
 
 [node name="Custom" type="TweenBlueprint" parent="."]
 script = ExtResource("1")

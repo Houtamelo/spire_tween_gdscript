@@ -3,13 +3,10 @@ use super::*;
 
 #[cfg(feature = "include_gdscript_bridge")]
 mod cfg;
-mod deferred_op;
-mod node_lifetime_tracker;
 mod node_status;
 mod tweens_map;
 
 use anyhow::Result;
-use deferred_op::*;
 
 pub use self::{node_status::*, tweens_map::*};
 

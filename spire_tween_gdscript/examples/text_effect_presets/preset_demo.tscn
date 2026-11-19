@@ -62,11 +62,11 @@ text = "[enchanted]Characters in motion[/enchanted]
 
 [node name="SharedEffect" type="TweenBlueprint" parent="Text" unique_id=1587638949]
 kind = 3
-start_enabled = true
-character_effect = ExtResource("4")
-character_delay_ease_source = 1
-character_delay_ease_curve = SubResource("Delay")
-character_loops = 2
+property_start_enabled = true
+text_effect = ExtResource("4")
+text_delay_ease_source = 1
+text_delay_ease_curve = SubResource("Delay")
+text_loops = 2
 
 [node name="Buttons" type="HBoxContainer" parent="." unique_id=1659778220]
 layout_mode = 0

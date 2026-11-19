@@ -29,25 +29,25 @@ fn blueprint_configuration_warnings(parent: &mut Gd<Node>) -> PinnedTestTask {
     let mut blueprint = TweenBlueprint::new_alloc();
     blueprint.set("kind", &BlueprintKind::Property.to_variant());
     blueprint.set("target", &target.to_variant());
-    blueprint.set("animated_property", &StringName::from("position").to_variant());
-    blueprint.set("end_value", &Vector2::ONE.to_variant());
+    blueprint.set("property_to_animate", &StringName::from("position").to_variant());
+    blueprint.set("property_end_value", &Vector2::ONE.to_variant());
     parent.add_child(&blueprint);
 
     for mode in [LerpModeKind::Absolute, LerpModeKind::Relative, LerpModeKind::SpeedBased] {
-        blueprint.set("lerp_mode", &mode.to_variant());
+        blueprint.set("property_lerp_mode", &mode.to_variant());
         for duration in [0.0_f64, 1.0, -1.0, f64::NAN, f64::INFINITY] {
-            blueprint.set("speed_or_duration", &duration.to_variant());
+            blueprint.set("property_speed_or_duration", &duration.to_variant());
             let warnings = INode::get_configuration_warnings(&*blueprint.bind());
             let valid = duration.is_finite() && duration > 0.0;
             assert_eq!(warnings.is_empty(), valid, "mode={mode:?}, duration={duration}, warnings={warnings}");
             if !valid {
-                assert_warning_fields(&blueprint, &["speed_or_duration"]);
+                assert_warning_fields(&blueprint, &["property_speed_or_duration"]);
             }
         }
     }
 
-    blueprint.set("speed_or_duration", &1.0.to_variant());
-    blueprint.set("lerp_mode", &LerpModeKind::Absolute.to_variant());
+    blueprint.set("property_speed_or_duration", &1.0.to_variant());
+    blueprint.set("property_lerp_mode", &LerpModeKind::Absolute.to_variant());
     for (field, valid) in [("delay", 0.0), ("speed_scale", 1.0)] {
         blueprint.set(field, &(-1.0).to_variant());
         assert_warning_fields(&blueprint, &[field]);
@@ -55,23 +55,23 @@ fn blueprint_configuration_warnings(parent: &mut Gd<Node>) -> PinnedTestTask {
         assert!(INode::get_configuration_warnings(&*blueprint.bind()).is_empty());
     }
 
-    blueprint.set("start_enabled", &true.to_variant());
-    blueprint.set("start_value", &Vector2::ZERO.to_variant());
-    for field in ["start_value", "end_value"] {
+    blueprint.set("property_start_enabled", &true.to_variant());
+    blueprint.set("property_start_value", &Vector2::ZERO.to_variant());
+    for field in ["property_start_value", "property_end_value"] {
         blueprint.set(field, &"incompatible".to_variant());
-        assert_warning_fields(&blueprint, &[field, "animated_property"]);
+        assert_warning_fields(&blueprint, &[field, "property_to_animate"]);
         blueprint.set(field, &Vector2::ONE.to_variant());
         assert!(INode::get_configuration_warnings(&*blueprint.bind()).is_empty());
     }
     for (property, fields) in [
-        ("", &["animated_property"][..]),
-        ("missing_property", &["animated_property", "target"][..]),
-        ("visible", &["animated_property"][..]),
+        ("", &["property_to_animate"][..]),
+        ("missing_property", &["property_to_animate", "target"][..]),
+        ("visible", &["property_to_animate"][..]),
     ] {
-        blueprint.set("animated_property", &StringName::from(property).to_variant());
+        blueprint.set("property_to_animate", &StringName::from(property).to_variant());
         assert_warning_fields(&blueprint, fields);
     }
-    blueprint.set("animated_property", &StringName::from("position").to_variant());
+    blueprint.set("property_to_animate", &StringName::from("position").to_variant());
 
     let mut control = Control::new_alloc();
     parent.add_child(&control);

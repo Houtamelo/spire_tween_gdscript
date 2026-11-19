@@ -12,7 +12,7 @@ mod spiral_3d;
 mod text_animator;
 mod ui_normalized;
 mod waypoint_path;
-pub(crate) use text_animator::character_start_delays;
+pub(crate) use text_animator::resolve_char_start_delays;
 pub use text_animator::{
     CharTweenData,
     SpireCharRenderer,

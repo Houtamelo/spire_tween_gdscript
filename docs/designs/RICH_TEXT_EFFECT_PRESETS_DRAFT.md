@@ -62,7 +62,7 @@ references, mutable playback clocks, character state, or mutable random generato
 inside shared authoring resources. Two labels can reference the same preset
 without sharing playback state.
 
-The same effect-entry resources also configure `TweenBlueprint.character_effect`.
+The same effect-entry resources also configure `TweenBlueprint.text_effect`.
 Each Blueprint play validates and copies the resource fields into ordinary
 Char range tweens; range selection, start-delay curves, and finite loop counts stay on the
 Blueprint. Preset rendering and Blueprint playback share resource compilation.

@@ -205,17 +205,17 @@ impl ShakeSettings<2> {
 
 /// Validate and snapshot the curve at the selected indices. The curve supplies
 /// non-negative start delays in multiples of each character's duration.
-pub(crate) fn character_start_delays(first: i64, last: i64, duration: f64, curve: &EaseKind) -> Result<Vec<f64>> {
+pub(crate) fn resolve_char_start_delays(first: i64, last: i64, duration: f64, curve: &EaseKind) -> Result<Vec<f64>> {
     ensure!(
         first == last || first >= 0 && last >= first,
-        "`character_first` and `character_last` must form a non-empty range."
+        "`first` and `last` must form a non-empty range."
     );
     ensure!(duration.is_finite() && duration > 0.0, "`duration` must be finite and positive.");
     let count = last
         .checked_sub(first)
         .and_then(|n| n.checked_add(1))
         .and_then(|n| usize::try_from(n).ok())
-        .ok_or_else(|| anyhow::anyhow!("`character_first` and `character_last` must form a representable range."))?;
+        .ok_or_else(|| anyhow::anyhow!("`first` and `last` must form a representable range."))?;
     let mut delays = Vec::new();
     delays.try_reserve_exact(count)?;
     for ordinal in 0..count {
@@ -256,10 +256,10 @@ impl CharTweenData {
             if first != last {
                 ensure!(
                     last < target.upcast_ref::<RichTextLabel>().get_total_character_count() as i64,
-                    "`character_last` must select an existing character or be -1."
+                    "`last` must select an existing character or be -1."
                 );
             }
-            character_start_delays(first, last, duration, &curve)
+            resolve_char_start_delays(first, last, duration, &curve)
         })();
         let characters = match result {
             Ok(delays) => delays

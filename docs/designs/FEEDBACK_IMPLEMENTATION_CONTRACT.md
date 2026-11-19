@@ -25,24 +25,24 @@ Preserve `BlueprintKind` values `ChainBlock=0`, `ParallelBlock=1`, and `Property
 
 ## 2. Serialized configuration and defaults
 
-Keep the prototype's existing serialized field names and enum ordinals. In particular, the Property field remains `animated_property`; `property_name` in the conceptual draft maps to that field. Do not introduce a second persistent dictionary mirroring the same values.
+Store configuration directly in Blueprint's exported fields and preserve enum ordinals. The Property field is `property_to_animate`; `property_name` in the conceptual draft maps to that field. Do not introduce a second persistent dictionary mirroring the same values.
 
 | Field or field group | Contract |
 |---|---|
 | `target` | Optional scene-node reference; null enables fallback resolution. Replace reliance on an invalid `OnEditor` value with explicit optional access. Saved references use Godot's scene mechanism. |
 | `delay` | Finite, non-negative seconds; default 0. |
 | `kind` | Existing native kind; the four supplied scripts choose their fixed kind. |
-| `animated_property` | Direct property StringName, initially empty. |
-| `start_enabled` | New Boolean, default false. |
-| `start_value`, `end_value` | Sole stored Variant payloads; retain their actual types even when hidden, disabled, unresolved, or incompatible. |
-| `speed_or_duration`, `lerp_mode`, `ease_source`, `ease_enum`, `ease_curve` | Preserve authored mode and easing settings. The first-release authoring roles use Absolute mode and duration semantics; unsupported stored authoring modes diagnose and skip without changing the saved value. Existing native tween APIs keep all their modes. |
+| `property_to_animate` | Direct property StringName, initially empty. |
+| `property_start_enabled` | New Boolean, default false. |
+| `property_start_value`, `property_end_value` | Sole stored Variant payloads; retain their actual types even when hidden, disabled, unresolved, or incompatible. |
+| `property_speed_or_duration`, `property_lerp_mode`, `property_ease_source`, `property_ease_enum`, `property_ease_curve` | Preserve authored mode and easing settings. The first-release authoring roles use Absolute mode and duration semantics; unsupported stored authoring modes diagnose and skip without changing the saved value. Existing native tween APIs keep all their modes. |
 | `method_name` | New StringName, initially empty; relevant to MethodCaller. |
 | `trigger_source` | Optional mouse-event source node; otherwise use the resolved target. |
 | Existing native speed/process/pause/loop fields | Preserve and forward to native tween configuration. No additional preview speed/loop controls are introduced. |
 
 The updated prototype uses `TriggerCondition` ordinals `Manual=0`, `AfterReady=1`, `AfterEnterTree=2`, mouse enter/exit 3/4, and left/right click 5/6. Preserve the prototype's Manual default and these ordinals. Other signal-driven playback uses Godot's native scene connections to `play()` in Manual mode; no addon signal-trigger mode is provided.
 
-New instances use native operational defaults: speed_scale 1, loops 1, ignore_time_scale false, and native default pause/process/loop modes. Supplied Property feedbacks default to duration 1 and Linear easing, with no explicit start. Preserve explicitly serialized values, including zero speed, instead of rewriting existing data to those defaults. Basic easing applies unless a configured valid ease_curve selects native curve easing; editing its graph is not a new custom curve editor in this release.
+New instances use native operational defaults: speed_scale 1, loops 1, ignore_time_scale false, and native default pause/process/loop modes. Supplied Property feedbacks default to duration 1 and Linear easing, with no explicit start. Preserve explicitly serialized values, including zero speed, instead of rewriting existing data to those defaults. Basic easing applies unless a configured valid property_ease_curve selects native curve easing; editing its graph is not a new custom curve editor in this release.
 
 Every configurable property retains STORAGE usage independently of its EDITOR visibility. A refresh never erases typed payloads. If both stored values are nil on first property selection, that one authored action initializes them from a readable selected value or its supported type default. Changing an already configured incompatible type retains the old payload and requires the explicit repair action specified in the editor draft.
 
@@ -59,7 +59,7 @@ TweenBlueprint:
     stop: "() -> void"
     get_authoring_model: "() -> Dictionary"
     get_preview_description: "() -> Dictionary"
-    append_property_step: "(sequence: SpireSequence, target: Node, property: StringName, start_enabled: bool, start: Variant, end: Variant, duration: float, ease: int) -> void"
+    append_property_step: "(sequence: SpireSequence, target: Node, property: StringName, property_start_enabled: bool, start: Variant, end: Variant, duration: float, ease: int) -> void"
     append_method_step: "(sequence: SpireSequence, target: Node, method: StringName) -> void"
   script_virtuals:
     _reset_state: "() -> void; default no-op"

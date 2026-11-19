@@ -47,7 +47,7 @@ impl TweenBlueprint {
             sequence.ignore_time_scale = state.ignore_time_scale;
             // Built-in containers do not animate their own target; their children
             // own independent target bindings.
-            if matches!(state.kind, BlueprintKind::Property | BlueprintKind::Characters)
+            if matches!(state.kind, BlueprintKind::Property | BlueprintKind::Text)
                 || state.base().get_script().is_some()
             {
                 if let Some(target) = state.resolve_target() {
@@ -103,7 +103,7 @@ impl TweenBlueprint {
             (state.kind, state.get_resolved_target())
         };
         match kind {
-            BlueprintKind::Characters => Self::build_characters(this, sequence),
+            BlueprintKind::Text => Self::build_text(this, sequence),
             BlueprintKind::ChainBlock | BlueprintKind::ParallelBlock => {
                 for node in this.get_children().iter_shared() {
                     let Ok(child) = node.try_cast::<Self>() else { continue };
@@ -126,15 +126,17 @@ impl TweenBlueprint {
                 let (path, end, start, start_enabled, duration, mode, ease) = {
                     let state = this.bind();
 
-                    let ease = state.ease_source.resolve(state.ease_enum, state.ease_curve.as_ref());
+                    let ease = state
+                        .property_ease_source
+                        .resolve(state.property_ease_enum, state.property_ease_curve.as_ref());
 
                     (
-                        state.animated_property.clone(),
-                        state.end_value.clone(),
-                        state.start_value.clone(),
-                        state.start_enabled,
-                        state.speed_or_duration,
-                        state.lerp_mode,
+                        state.property_to_animate.clone(),
+                        state.property_end_value.clone(),
+                        state.property_start_value.clone(),
+                        state.property_start_enabled,
+                        state.property_speed_or_duration,
+                        state.property_lerp_mode,
                         ease,
                     )
                 };
@@ -148,8 +150,8 @@ impl TweenBlueprint {
 
                 if !duration.is_finite() || duration < 0.0 || (mode == LerpModeKind::SpeedBased && duration == 0.0) {
                     godot_warn!(
-                        "TweenBlueprint: `speed_or_duration` must be finite and non-negative; speed-based `lerp_mode` \
-                         requires a positive value."
+                        "TweenBlueprint: `property_speed_or_duration` must be finite and non-negative; speed-based \
+                         `property_lerp_mode` requires a positive value."
                     );
                     return;
                 }
@@ -159,7 +161,8 @@ impl TweenBlueprint {
                     ($ty:ty) => {{
                         let Ok(end) = end.try_to_relaxed::<$ty>() else {
                             godot_warn!(
-                                "TweenBlueprint: `end_value` is incompatible with `animated_property` (`{path}`)."
+                                "TweenBlueprint: `property_end_value` is incompatible with `property_to_animate` \
+                                 (`{path}`)."
                             );
                             return;
                         };
@@ -170,8 +173,8 @@ impl TweenBlueprint {
                             LerpModeKind::Absolute if start_enabled => {
                                 let Ok(start) = start.try_to_relaxed::<$ty>() else {
                                     godot_warn!(
-                                        "TweenBlueprint: `start_value` is incompatible with `animated_property` \
-                                         (`{path}`)."
+                                        "TweenBlueprint: `property_start_value` is incompatible with \
+                                         `property_to_animate` (`{path}`)."
                                     );
                                     return;
                                 };
@@ -221,7 +224,7 @@ impl TweenBlueprint {
                     }
                     invalid_ty => {
                         godot_warn!(
-                            "[TweenBlueprint] `animated_property` (`{path}`) has unsupported type `{}`.",
+                            "[TweenBlueprint] `property_to_animate` (`{path}`) has unsupported type `{}`.",
                             invalid_ty.godot_type_name()
                         );
                     }
@@ -242,7 +245,7 @@ impl TweenBlueprint {
         ease: EaseKind,
     ) {
         let Ok(end) = end.try_to::<Rect2i>() else {
-            godot_warn!("TweenBlueprint: `end_value` must be a Rect2i to match `animated_property`.");
+            godot_warn!("TweenBlueprint: `property_end_value` must be a Rect2i to match `property_to_animate`.");
             return;
         };
         let getter_target = target.clone();
@@ -269,7 +272,9 @@ impl TweenBlueprint {
         match mode {
             LerpModeKind::Absolute if start_enabled => {
                 let Ok(start) = start.try_to::<Rect2i>() else {
-                    godot_warn!("TweenBlueprint: `start_value` must be a Rect2i to match `animated_property`.");
+                    godot_warn!(
+                        "TweenBlueprint: `property_start_value` must be a Rect2i to match `property_to_animate`."
+                    );
                     return;
                 };
                 tween.set_begin_value(Rect2::new(start.position.to_vector2(), start.size.to_vector2()));
@@ -292,8 +297,8 @@ impl TweenBlueprint {
 
 impl Drop for TweenBlueprint {
     fn drop(&mut self) {
-        self.disconnect_character_effect();
-        Self::disconnect_configuration_watch(&mut self.character_delay_curve_connection);
+        self.disconnect_text_effect();
+        Self::disconnect_configuration_watch(&mut self.text_delay_curve_connection);
         if let Some(sequence) = self.current_tween.take() {
             sequence.bind().to_mut().stop();
         }

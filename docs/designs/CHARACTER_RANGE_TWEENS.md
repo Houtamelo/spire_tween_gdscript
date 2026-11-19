@@ -3,8 +3,8 @@
 Status: implemented. The start-delay curve replaces Blueprint's
 `character_stagger`. Runtime constructors accept `EaseKind`: a built-in Ease,
 a scalar Godot Curve, a Callable, or a Rust easing implementation. Blueprint
-authoring uses the native `character_delay_ease_source`,
-`character_delay_ease_enum`, and `character_delay_ease_curve` fields, defaulting
+authoring uses the native `text_delay_ease_source`,
+`text_delay_ease_enum`, and `text_delay_ease_curve` fields, defaulting
 to Enum with Linear. Inactive settings stay serialized.
 
 Character animation constructors target a range and update its characters
