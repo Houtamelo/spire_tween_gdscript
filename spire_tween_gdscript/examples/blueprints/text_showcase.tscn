@@ -1,0 +1,137 @@
+[gd_scene format=3 uid="uid://ct1tm1ly4sht3"]
+
+[sub_resource type="StyleBoxFlat" id="Style_card"]
+bg_color = Color(0.065, 0.085, 0.13, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.16, 0.22, 0.32, 1)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+
+[sub_resource type="SpireTextEffect" id="SpireTextEffect_8v5rg"]
+kind = 1
+duration = 0.8
+from = 0.0
+to = 1.0
+
+[sub_resource type="SpireTextEffect" id="SpireTextEffect_rpmln"]
+kind = 2
+duration = 0.8
+ease = 28
+from = Vector2(0, 60)
+to = Vector2(0, 0)
+
+[sub_resource type="SpireTextEffect" id="SpireTextEffect_a6sll"]
+kind = 7
+duration = 0.9
+punch = Vector3(0.55, 0.55, 0)
+vibrato = 3
+elasticity = 0.7
+pivot = Vector2(22, -28)
+
+[node name="TextShowcase" type="Control" unique_id=1081222080]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1040.0
+offset_bottom = 640.0
+
+[node name="Background" type="ColorRect" parent="." unique_id=1268690704]
+layout_mode = 0
+offset_right = 1040.0
+offset_bottom = 640.0
+mouse_filter = 2
+color = Color(0.035, 0.047, 0.078, 1)
+
+[node name="Card" type="Panel" parent="." unique_id=903437874]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 142.0
+offset_right = 992.0
+offset_bottom = 506.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("Style_card")
+
+[node name="Eyebrow" type="Label" parent="." unique_id=370442620]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 38.0
+offset_right = 960.0
+offset_bottom = 65.0
+theme_override_colors/font_color = Color(0.31, 0.94, 0.79, 1)
+theme_override_font_sizes/font_size = 17
+text = "SPIRE TWEEN    /    EDITOR PLAYGROUND"
+
+[node name="Heading" type="Label" parent="." unique_id=712735623]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 72.0
+offset_right = 960.0
+offset_bottom = 120.0
+theme_override_font_sizes/font_size = 32
+text = "Characters in motion"
+
+[node name="CardCaption" type="Label" parent="." unique_id=988662222]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 170.0
+offset_right = 900.0
+offset_bottom = 200.0
+theme_override_colors/font_color = Color(0.54, 0.64, 0.78, 1)
+theme_override_font_sizes/font_size = 16
+text = "01   STAGGERED REVEAL    +    02   CHARACTER PUNCH"
+
+[node name="Guide" type="Label" parent="." unique_id=2007913581]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 446.0
+offset_right = 960.0
+offset_bottom = 478.0
+theme_override_colors/font_color = Color(0.54, 0.64, 0.78, 1)
+theme_override_font_sizes/font_size = 17
+text = "Native character tweens. Composed with TweenBlueprint."
+
+[node name="Footer" type="Label" parent="." unique_id=2055997490]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 556.0
+offset_right = 980.0
+offset_bottom = 598.0
+theme_override_colors/font_color = Color(0.31, 0.94, 0.79, 1)
+theme_override_font_sizes/font_size = 16
+text = "NO CODE    /    LIVE EDITOR PREVIEW    /    RESTORES ON STOP"
+
+[node name="Headline" type="SpireRichTextLabel" parent="." unique_id=1233290598]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 240.0
+offset_right = 960.0
+offset_bottom = 410.0
+theme_override_colors/default_color = Color(0.32156864, 0.9411765, 0.80784315, 1)
+theme_override_font_sizes/normal_font_size = 72
+text = "SPIRE TWEEN"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Showcase" type="TweenBlueprint" parent="Headline" unique_id=65483692]
+
+[node name="Reveal" type="TweenBlueprint" parent="Headline/Showcase" unique_id=613183114]
+kind = 1
+
+[node name="FadeIn" type="TweenBlueprint" parent="Headline/Showcase/Reveal" unique_id=1501860799]
+kind = 3
+property_start_enabled = true
+text_effect = SubResource("SpireTextEffect_8v5rg")
+
+[node name="SlideUp" type="TweenBlueprint" parent="Headline/Showcase/Reveal" unique_id=249356003]
+kind = 3
+property_start_enabled = true
+text_effect = SubResource("SpireTextEffect_rpmln")
+
+[node name="Punch" type="TweenBlueprint" parent="Headline/Showcase" unique_id=1014972117]
+kind = 3
+text_effect = SubResource("SpireTextEffect_a6sll")

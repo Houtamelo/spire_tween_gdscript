@@ -6,6 +6,8 @@ For ready-made effects, use the [33 supplied GDScript template scenes](effect_te
 
 [Watch the editor authoring walkthrough](../readme_images/blueprint_authoring.mp4) (1:44). It shows creating a two-step animation without code, connecting a Button signal, using Undo/Redo, and saving and reopening the scene.
 
+[Watch the text animation and preview walkthrough](../readme_images/blueprint_text_preview.mp4) (1:58). It authors a staggered Fade and Offset reveal followed by a character PunchScale, then demonstrates looping editor playback, Stop restoration, and saving during playback. Open the [editable showcase scene](../spire_tween_gdscript/examples/blueprints/text_showcase.tscn) and select `Headline/Showcase` to preview the same animation.
+
 ## Animate a property
 
 1. Add a `TweenBlueprint` under the node to animate and set **Kind** to **Property**.
