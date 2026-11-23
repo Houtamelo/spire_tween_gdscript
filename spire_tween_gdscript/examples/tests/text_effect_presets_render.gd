@@ -166,6 +166,31 @@ func test_text_observation_does_not_refresh() -> bool:
 	n.free()
 	return true
 
+func test_scroll_changes_preserve_character_rendering() -> bool:
+	for with_preset in [false, true]:
+		var offset := Effects.make(Spire.TEXT_EFFECT_KIND_OFFSET)
+		offset.from = Vector2(10, 20)
+		offset.to = offset.from
+		var presets: Array[SpireRichTextEffectPreset] = []
+		if with_preset:
+			presets.append(_preset("test", [offset]))
+		var n := _label("[test]A[/test]" if with_preset else "A", presets)
+		await _draw_frames()
+		var original: Dictionary = n.render_sample_for_test(0)
+		assert_true(not original.is_empty(), "The original glyph must render")
+		for scrolling in [false, true]:
+			n.scroll_active = scrolling
+			var delta := Vector2(3, 7) if scrolling else Vector2(11, 13)
+			n.set_char_offset(0, delta)
+			await _draw_frames()
+			assert_true(n.get_char_offset(0) == delta, "Rebuilding the stack must preserve character state")
+			var sample: Dictionary = n.render_sample_for_test(0)
+			assert_true(not sample.is_empty(), "Changing scroll_active must retain real glyph callbacks")
+			if not original.is_empty() and not sample.is_empty():
+				assert_true(sample.transform.origin.is_equal_approx(original.transform.origin + delta), "Scrolling changes must preserve presets and render new character offsets")
+		n.free()
+	return true
+
 func test_text_presets_pause() -> bool:
 	var color := Effects.make(Spire.TEXT_EFFECT_KIND_COLOR)
 	color.from = Color.RED

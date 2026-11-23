@@ -57,6 +57,15 @@ func _run() -> void:
 	await frames()
 	var next_sample: Dictionary = label.call("render_sample_for_test", 0)
 	check(sample != next_sample, "Editor preview must animate")
+	for scrolling in [false, true]:
+		label.scroll_active = scrolling
+		var alpha := 0.25 if scrolling else 0.75
+		label.set_char_alpha(0, alpha)
+		await frames()
+		var rendered: Dictionary = label.render_sample_for_test(0)
+		check(is_equal_approx(label.get_char_alpha(0), alpha), "Scrolling edits must preserve authored character state")
+		check(not rendered.is_empty() and is_equal_approx(rendered.color.a, alpha), "Scrolling edits must preserve the live character renderer")
+	label.reset()
 	EditorInterface.inspect_object(label)
 	await frames()
 	var array_edited := false

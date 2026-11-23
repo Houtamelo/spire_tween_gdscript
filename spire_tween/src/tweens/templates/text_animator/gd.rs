@@ -25,6 +25,9 @@ pub struct SpireRichTextLabel {
     pub char_renderer: LazyCell<Gd<SpireCharRenderer>>,
     source: Option<GString>,
     bbcode: bool,
+    // RichTextLabel rebuilds its parsed stack when scrolling changes, even if
+    // the source text is unchanged. Reinstall our outer effect on the next refresh.
+    scroll_active: bool,
     presets: presets::Registry,
     /// Reusable looping effects selected by BBCode tags. Presets render before code-controlled state.
     #[export]
@@ -40,19 +43,20 @@ impl SpireRichTextLabel {
         let mut label = this.clone().upcast::<RichTextLabel>();
         let source = label.get_text();
         let bbcode = label.is_using_bbcode();
+        let scroll_active = label.is_scroll_active();
         let installed_effects = label.get_effects();
-        let (source_changed, presets_changed, mut effect) = {
+        let (source_changed, scrolling_changed, presets_changed, mut effect) = {
             let state = &mut *this.bind_mut();
             let source_changed = state.source.as_ref() != Some(&source) || state.bbcode != bbcode;
             let presets_changed = state.presets.sync(&installed_effects, &state.effect_presets);
-            (source_changed, presets_changed, state.char_renderer.clone())
+            (source_changed, state.scroll_active != scroll_active, presets_changed, state.char_renderer.clone())
         };
 
         if presets_changed && Engine::singleton().is_editor_hint() {
             label.call_deferred("update_configuration_warnings", &[]);
         }
 
-        if !force && !source_changed && !presets_changed {
+        if !force && !source_changed && !scrolling_changed && !presets_changed {
             return true;
         }
 
@@ -93,6 +97,7 @@ impl SpireRichTextLabel {
             let mut state = this.bind_mut();
             state.source = Some(source);
             state.bbcode = bbcode;
+            state.scroll_active = scroll_active;
         }
         label.queue_redraw();
         true
