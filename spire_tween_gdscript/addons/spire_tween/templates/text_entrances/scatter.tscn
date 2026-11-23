@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://addons/spire_tween/templates/text/entrance.gd" id="1"]
+
+[node name="Scatter" type="TweenBlueprint"]
+editor_description = "Seeded glyph displacement and rotation assemble or scatter."
+script = ExtResource("1")
+style = 6
+offset = Vector2(70, 35)
+rotation = Vector3(0, 0, 0.8)

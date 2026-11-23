@@ -21,9 +21,78 @@ fn quat(a: Quaternion, b: Quaternion) {
 }
 const FULL: ShakeRandomnessMode = ShakeRandomnessMode::Full;
 
+fn assert_pop_bounce_easing(node: &mut Gd<Node2D>) {
+    let fixtures = [
+        (Ease::InPop, [-0.139938491861040, -0.095, 0.266311508138960]),
+        (Ease::OutPop, [0.733688491861040, 1.095, 1.139938491861040]),
+        (Ease::InOutPop, [-0.0475, 0.5, 1.0475]),
+        (Ease::InBounce, [0.023917714522818, 0.176776695296637, 0.519682237037599]),
+        (Ease::OutBounce, [0.480317762962401, 0.823223304703363, 0.976082285477182]),
+        (Ease::InOutBounce, [0.088388347648318, 0.5, 0.911611652351682]),
+    ];
+    assert_eq!(Ease::Punch as i32, 23);
+    assert_eq!(Ease::Linear as i32, 1);
+    for (index, (ease, expected)) in fixtures.into_iter().enumerate() {
+        assert_eq!(ease as i32, 24 + index as i32);
+        assert_eq!(ease.to_variant().to::<Ease>(), ease);
+        assert!(matches!(ease.to_variant().to::<EaseKind>(), EaseKind::Basic(value) if value == ease));
+        assert!(ease.sample(0.0).abs() < 1e-12);
+        assert!((ease.sample(1.0) - 1.0).abs() < 1e-12);
+        for (p, value) in [0.25, 0.5, 0.75].into_iter().zip(expected) {
+            assert!((ease.sample(p) - value).abs() < 1e-12, "{ease:?} at {p}");
+        }
+        for p in [-0.25, 1.25] {
+            assert!(ease.sample(p).is_finite(), "unclamped extrapolation for {ease:?}");
+        }
+
+        node.set_position(Vector2::ZERO);
+        node.set_rotation(0.0);
+        let property = TweenPtr::new(
+            node.do_position(Vector2::new(10.0, -20.0), 1.0)
+                .with_ease(EaseKind::Basic(ease))
+                .with_process_mode(ProcessMode::Manual),
+        );
+        let method = TweenPtr::new(
+            node.do_method("set_rotation", 0.0_f64, 1.0, 1.0)
+                .with_ease(EaseKind::Basic(ease))
+                .with_process_mode(ProcessMode::Manual),
+        );
+        for value in expected {
+            let _ = property.custom_step(0.25, false);
+            let _ = method.custom_step(0.25, false);
+            v2(node.get_position(), Vector2::new(10.0, -20.0) * value as f32);
+            near(node.get_rotation() as f64, value);
+        }
+        let _ = property.custom_step(0.25, false);
+        let _ = method.custom_step(0.25, false);
+        assert!(property.is_stopped() && method.is_stopped());
+        v2(node.get_position(), Vector2::new(10.0, -20.0));
+        near(node.get_rotation() as f64, 1.0);
+    }
+    for invalid in [-1_i32, 30, 999] {
+        assert!(invalid.to_variant().try_to::<Ease>().is_err());
+        assert!(invalid.to_variant().try_to::<EaseKind>().is_err());
+    }
+    for (ease_in, ease_out, ease_in_out) in [
+        (Ease::InPop, Ease::OutPop, Ease::InOutPop),
+        (Ease::InBounce, Ease::OutBounce, Ease::InOutBounce),
+    ] {
+        for tick in 0..=1000 {
+            let p = tick as f64 / 1000.0;
+            assert!((ease_in.sample(p) + ease_out.sample(1.0 - p) - 1.0).abs() < 1e-12);
+            assert!((ease_in_out.sample(p) + ease_in_out.sample(1.0 - p) - 1.0).abs() < 1e-12);
+            if ease_out == Ease::OutBounce {
+                for ease in [ease_in, ease_out, ease_in_out] {
+                    assert!((0.0..=1.0).contains(&ease.sample(p)));
+                }
+            }
+        }
+    }
+}
+
 impl MiscTests {
     pub(super) fn test_group3_global_easing(&mut self) -> PinnedTestTask {
-        let n = Node2D::new_alloc();
+        let mut n = Node2D::new_alloc();
         self.base_mut().add_child(&n);
         let original = Ease::get_global_default();
         Ease::set_global_default(Ease::OutQuad);
@@ -58,6 +127,7 @@ impl MiscTests {
         near(overridden as f64, 2.5);
         near(punch_eased as f64, 7.8);
         near(punch_changed as f64, 8.0);
+        assert_pop_bounce_easing(&mut n);
         n.free();
         Box::pin(async {})
     }

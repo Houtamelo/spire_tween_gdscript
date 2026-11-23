@@ -1,5 +1,6 @@
 mod characters;
 mod inspector;
+mod preview;
 mod runtime;
 mod triggers;
 mod tweenable_property_validation;
@@ -20,6 +21,11 @@ pub struct TweenBlueprint {
     #[var(set = set_target)]
     target: Option<Gd<Node>>,
     current_tween: Option<Gd<SpireSequence>>,
+    preview: Option<preview::PreviewRun>,
+    #[export_tool_button(fn = Self::preview_play_button, name = "Play Animation Preview", icon = "Play")]
+    play_preview_button: PhantomVar<Callable>,
+    #[export_tool_button(fn = Self::preview_stop_button, name = "Stop Animation Preview", icon = "Stop")]
+    stop_preview_button: PhantomVar<Callable>,
     trigger_connection: Option<triggers::TriggerConnection>,
     text_effect_connection: Option<ConnectHandle>,
     text_delay_curve_connection: Option<ConnectHandle>,
@@ -162,6 +168,15 @@ impl INode for TweenBlueprint {
         Self::stop(this);
     }
 
+    fn on_notification(&mut self, what: notify::NodeNotification) {
+        if what == notify::NodeNotification::EDITOR_PRE_SAVE && self.preview.is_some() {
+            // BaseMut permits synchronous re-entry without holding a Rust borrow.
+            let this_gd = self.to_gd();
+            let _guard = self.base_mut();
+            Self::stop_animation_preview(this_gd);
+        }
+    }
+
     fn on_validate_property(&self, property: &mut PropertyInfo) { inspector::on_validate_property(self, property); }
 
     fn get_configuration_warnings(&self) -> PackedStringArray { inspector::get_configuration_warnings(self) }
@@ -198,6 +213,7 @@ impl TweenBlueprint {
         if let Some(sequence) = sequence {
             sequence.bind().to_mut().stop();
         }
+        preview::restore(this);
     }
 
     /// Returns this blueprint's configured target or first non-blueprint ancestor.

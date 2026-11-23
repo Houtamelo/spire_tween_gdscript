@@ -43,8 +43,72 @@ func test_group3_global_easing() -> bool:
 	_near(overridden, 2.5)
 	_near(punch_eased, 7.8)
 	_near(punch_changed, 8)
+	_check_pop_bounce_easing(n)
 	n.free()
 	return true
+
+func _check_pop_bounce_easing(node: Node2D) -> void:
+	var fixtures := [
+		[Spire.EASE_IN_POP, [-0.139938491861040, -0.095, 0.266311508138960]],
+		[Spire.EASE_OUT_POP, [0.733688491861040, 1.095, 1.139938491861040]],
+		[Spire.EASE_IN_OUT_POP, [-0.0475, 0.5, 1.0475]],
+		[Spire.EASE_IN_BOUNCE, [0.023917714522818, 0.176776695296637, 0.519682237037599]],
+		[Spire.EASE_OUT_BOUNCE, [0.480317762962401, 0.823223304703363, 0.976082285477182]],
+		[Spire.EASE_IN_OUT_BOUNCE, [0.088388347648318, 0.5, 0.911611652351682]],
+	]
+	var label := SpireRichTextLabel.new()
+	label.text = "ABC"
+	add_child(label)
+	var registered := ClassDB.class_get_enum_constants(&"Spire", &"Ease")
+	assert_eq(registered.size(), 30)
+	for name in ["EASE_IN_POP", "EASE_OUT_POP", "EASE_IN_OUT_POP", "EASE_IN_BOUNCE", "EASE_OUT_BOUNCE", "EASE_IN_OUT_BOUNCE"]:
+		assert_true(registered.has(name), name + " must be registered")
+	assert_eq(Spire.EASE_PUNCH, 23)
+	for index in fixtures.size():
+		var selected: int = fixtures[index][0]
+		var expected: Array = fixtures[index][1]
+		assert_eq(selected, 24 + index)
+		node.position = Vector2.ZERO
+		label.reset()
+		var property := DoNode2D.position(node, Vector2(10, -20), 1.0).set_process_mode(Spire.PROCESS_MODE_MANUAL).set_ease(selected)
+		var samples := [0.0]
+		var method := Spire.do_call_float(func(value: float): samples[0] = value, 0.0, 1.0, 1.0).set_process_mode(Spire.PROCESS_MODE_MANUAL).set_ease(selected)
+		var characters := label.offset_chars(0, -1, Vector2(10, -20), 1.0, func(_x: float) -> float: return 0.0).set_process_mode(Spire.PROCESS_MODE_MANUAL).set_ease(selected)
+		for value: float in expected:
+			property.custom_step(0.25)
+			method.custom_step(0.25)
+			characters.custom_step(0.25)
+			_v(node.position, Vector2(10, -20) * value)
+			_near(samples[0], value)
+			_v(label.get_char_offset(1), Vector2(10, -20) * value)
+		property.custom_step(0.25)
+		method.custom_step(0.25)
+		characters.custom_step(0.25)
+		assert_eq(property.get_state(), Spire.STATE_STOPPED)
+		assert_eq(method.get_state(), Spire.STATE_STOPPED)
+		assert_eq(characters.get_state(), Spire.STATE_STOPPED)
+		# The same enum values must survive actual Resource and scene persistence.
+		var resource := SpireTextEffect.new()
+		resource.ease = selected
+		var resource_path := "user://pop-bounce-%d.tres" % index
+		assert_eq(ResourceSaver.save(resource, resource_path), OK)
+		assert_eq(ResourceLoader.load(resource_path, "SpireTextEffect", ResourceLoader.CACHE_MODE_IGNORE).ease, selected)
+		var blueprint := TweenBlueprint.new()
+		blueprint.property_ease_enum = selected
+		var packed := PackedScene.new()
+		assert_eq(packed.pack(blueprint), OK)
+		var scene_path := "user://pop-bounce-%d.tscn" % index
+		assert_eq(ResourceSaver.save(packed, scene_path), OK)
+		var reloaded := (ResourceLoader.load(scene_path, "PackedScene", ResourceLoader.CACHE_MODE_IGNORE) as PackedScene).instantiate() as TweenBlueprint
+		assert_eq(reloaded.property_ease_enum, selected)
+		reloaded.free()
+		blueprint.free()
+	# Pop's negative start-delay samples are invalid for range staggering.
+	label.reset()
+	var invalid := label.offset_chars(0, -1, Vector2.ONE, 1.0, Spire.EASE_IN_POP).set_process_mode(Spire.PROCESS_MODE_MANUAL)
+	assert_true(not invalid.custom_step(0.25))
+	_v(label.get_char_offset(0), Vector2.ZERO)
+	label.free()
 
 func test_group3_punch_2d() -> bool:
 	var n := Node2D.new()

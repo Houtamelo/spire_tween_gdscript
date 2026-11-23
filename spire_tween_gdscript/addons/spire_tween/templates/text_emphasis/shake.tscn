@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://addons/spire_tween/templates/text/emphasis.gd" id="1"]
+
+[node name="Shake" type="TweenBlueprint"]
+editor_description = "Decaying offset, rotation, or scale shake."
+script = ExtResource("1")
+style = 3
+strength = Vector3(6, 6, 0)

@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://addons/spire_tween/templates/canvas/interaction.gd" id="1"]
+
+[node name="Selection" type="TweenBlueprint"]
+editor_description = "Enlarge and spring back."
+script = ExtResource("1")
+style = 2
+duration = 0.3
+scale_multiplier = Vector2(1.12, 1.12)

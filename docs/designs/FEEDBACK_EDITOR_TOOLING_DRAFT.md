@@ -2,6 +2,8 @@
 
 Status: **draft specification for review**. This document describes the editor experience SpireTween should provide so artists can configure, compose, reuse, and test feedback animations without writing code. Custom effects may use GDScript; using the supplied effects must not require Rust or a local compilation step.
 
+Preview update (2026-11-20): [Blueprint editor preview](BLUEPRINT_EDITOR_PREVIEW.md) supersedes this draft's preview API, controls and lifecycle rules. The approved implementation uses synchronous restoration Callables, native Play/Stop tool buttons, automatic restoration on completion/save/scene exit, and no interception of edits or Undo/Redo during playback.
+
 This is a sibling of [the feedback-system draft](FEEDBACK_SYSTEM_DRAFT.md). That document defines runtime behavior. This document defines editor controls, persistence, preview behavior, and acceptance criteria. Requirements below are proposed editor scope, rather than claims about functionality already implemented.
 
 The latest runtime decision is binding: **there is no retrigger-mode enum or setting in the first implementation**. Every feedback `play()` stops its previous run, invokes its reset hook, and builds a fresh sequence. Editor tooling must not reintroduce alternative policies or inheritance controls.

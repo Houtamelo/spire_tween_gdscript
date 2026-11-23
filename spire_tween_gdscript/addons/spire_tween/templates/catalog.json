@@ -1,0 +1,266 @@
+[
+  {
+    "scene": "text_entrances/typewriter.tscn",
+    "title": "Typewriter",
+    "family": "text_entrances",
+    "looping": false,
+    "text": true,
+    "description": "Reveal logical characters one at a time."
+  },
+  {
+    "scene": "text_entrances/fade.tscn",
+    "title": "Text fade",
+    "family": "text_entrances",
+    "looping": false,
+    "text": true,
+    "description": "Staggered alpha entrance or exit."
+  },
+  {
+    "scene": "text_entrances/slide.tscn",
+    "title": "Text slide",
+    "family": "text_entrances",
+    "looping": false,
+    "text": true,
+    "description": "Staggered offset and alpha entrance or exit."
+  },
+  {
+    "scene": "text_entrances/pop.tscn",
+    "title": "Text pop",
+    "family": "text_entrances",
+    "looping": false,
+    "text": true,
+    "description": "Scale overshoot with an alpha entrance or exit."
+  },
+  {
+    "scene": "text_entrances/bounce.tscn",
+    "title": "Text bounce",
+    "family": "text_entrances",
+    "looping": false,
+    "text": true,
+    "description": "Bouncing scale with an alpha entrance or exit."
+  },
+  {
+    "scene": "text_entrances/flip.tscn",
+    "title": "Text flip",
+    "family": "text_entrances",
+    "looping": false,
+    "text": true,
+    "description": "Projected glyph rotation with an alpha entrance or exit."
+  },
+  {
+    "scene": "text_entrances/scatter.tscn",
+    "title": "Scatter / assemble",
+    "family": "text_entrances",
+    "looping": false,
+    "text": true,
+    "description": "Seeded glyph displacement and rotation assemble or scatter."
+  },
+  {
+    "scene": "text_continuous/wave.tscn",
+    "title": "Traveling wave",
+    "family": "text_continuous",
+    "looping": true,
+    "text": true,
+    "description": "Traveling vertical glyph wave."
+  },
+  {
+    "scene": "text_continuous/bob.tscn",
+    "title": "Floating bob",
+    "family": "text_continuous",
+    "looping": true,
+    "text": true,
+    "description": "All selected glyphs float together."
+  },
+  {
+    "scene": "text_continuous/breathing.tscn",
+    "title": "Scale breathing",
+    "family": "text_continuous",
+    "looping": true,
+    "text": true,
+    "description": "Centered glyph scale breathing."
+  },
+  {
+    "scene": "text_continuous/wobble.tscn",
+    "title": "Rotation wobble",
+    "family": "text_continuous",
+    "looping": true,
+    "text": true,
+    "description": "Traveling glyph rotation."
+  },
+  {
+    "scene": "text_continuous/trembling.tscn",
+    "title": "Trembling",
+    "family": "text_continuous",
+    "looping": true,
+    "text": true,
+    "description": "Continuous random glyph tremble."
+  },
+  {
+    "scene": "text_continuous/color_cycle.tscn",
+    "title": "Text color cycle",
+    "family": "text_continuous",
+    "looping": true,
+    "text": true,
+    "description": "Traveling transition between two colors."
+  },
+  {
+    "scene": "text_continuous/alpha_pulse.tscn",
+    "title": "Alpha pulse",
+    "family": "text_continuous",
+    "looping": true,
+    "text": true,
+    "description": "Selected glyph alpha oscillation."
+  },
+  {
+    "scene": "text_emphasis/punch_offset.tscn",
+    "title": "Punch offset",
+    "family": "text_emphasis",
+    "looping": false,
+    "text": true,
+    "description": "Restoring glyph offset impulse."
+  },
+  {
+    "scene": "text_emphasis/punch_rotation.tscn",
+    "title": "Punch rotation",
+    "family": "text_emphasis",
+    "looping": false,
+    "text": true,
+    "description": "Restoring glyph rotation impulse."
+  },
+  {
+    "scene": "text_emphasis/punch_scale.tscn",
+    "title": "Punch scale",
+    "family": "text_emphasis",
+    "looping": false,
+    "text": true,
+    "description": "Restoring glyph scale impulse."
+  },
+  {
+    "scene": "text_emphasis/shake.tscn",
+    "title": "Text shake",
+    "family": "text_emphasis",
+    "looping": false,
+    "text": true,
+    "description": "Decaying offset, rotation, or scale shake."
+  },
+  {
+    "scene": "text_emphasis/color_flash.tscn",
+    "title": "Color flash",
+    "family": "text_emphasis",
+    "looping": false,
+    "text": true,
+    "description": "Flash to a color and return to each glyph’s original color."
+  },
+  {
+    "scene": "canvas_entrances/fade.tscn",
+    "title": "Fade",
+    "family": "canvas_entrances",
+    "looping": false,
+    "text": false,
+    "description": "Whole-target alpha entrance or exit."
+  },
+  {
+    "scene": "canvas_entrances/slide.tscn",
+    "title": "Slide",
+    "family": "canvas_entrances",
+    "looping": false,
+    "text": false,
+    "description": "Whole-target position and alpha entrance or exit."
+  },
+  {
+    "scene": "canvas_entrances/pop.tscn",
+    "title": "Pop",
+    "family": "canvas_entrances",
+    "looping": false,
+    "text": false,
+    "description": "Whole-target scale overshoot and alpha."
+  },
+  {
+    "scene": "canvas_entrances/bounce.tscn",
+    "title": "Bounce",
+    "family": "canvas_entrances",
+    "looping": false,
+    "text": false,
+    "description": "Whole-target bouncing scale and alpha."
+  },
+  {
+    "scene": "canvas_entrances/flip.tscn",
+    "title": "Flip",
+    "family": "canvas_entrances",
+    "looping": false,
+    "text": false,
+    "description": "Horizontal or vertical 2D squash flip and alpha."
+  },
+  {
+    "scene": "canvas_entrances/spin.tscn",
+    "title": "Spin entrance / exit",
+    "family": "canvas_entrances",
+    "looping": false,
+    "text": false,
+    "description": "Rotating scale and alpha entrance or exit."
+  },
+  {
+    "scene": "interaction/hover_focus.tscn",
+    "title": "Hover / focus emphasis",
+    "family": "interaction",
+    "looping": false,
+    "text": false,
+    "description": "Scale and tint emphasis; restore on exit or focus loss."
+  },
+  {
+    "scene": "interaction/press.tscn",
+    "title": "Press compression",
+    "family": "interaction",
+    "looping": false,
+    "text": false,
+    "description": "Squash and recover."
+  },
+  {
+    "scene": "interaction/selection.tscn",
+    "title": "Selection bump",
+    "family": "interaction",
+    "looping": false,
+    "text": false,
+    "description": "Enlarge and spring back."
+  },
+  {
+    "scene": "canvas_continuous/pulse.tscn",
+    "title": "Pulse",
+    "family": "canvas_continuous",
+    "looping": true,
+    "text": false,
+    "description": "Whole-target scale pulse."
+  },
+  {
+    "scene": "canvas_continuous/float.tscn",
+    "title": "Float",
+    "family": "canvas_continuous",
+    "looping": true,
+    "text": false,
+    "description": "Whole-target floating motion."
+  },
+  {
+    "scene": "canvas_continuous/sway.tscn",
+    "title": "Sway",
+    "family": "canvas_continuous",
+    "looping": true,
+    "text": false,
+    "description": "Whole-target rotation sway."
+  },
+  {
+    "scene": "canvas_continuous/spin.tscn",
+    "title": "Spin",
+    "family": "canvas_continuous",
+    "looping": true,
+    "text": false,
+    "description": "Continuous full turns."
+  },
+  {
+    "scene": "canvas_continuous/color_cycle.tscn",
+    "title": "Color cycle",
+    "family": "canvas_continuous",
+    "looping": true,
+    "text": false,
+    "description": "Whole-target transition between two tint colors."
+  }
+]

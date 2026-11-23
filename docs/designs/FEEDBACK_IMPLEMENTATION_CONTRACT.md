@@ -127,6 +127,8 @@ These are transient transport dictionaries, not a second serialization format. P
 
 ## 6. Preview interface and restoration
 
+Superseded by the approved [Blueprint editor preview design](BLUEPRINT_EDITOR_PREVIEW.md). The service and Dictionary-based descriptions below are historical proposals; the implementation uses `_capture_rest_state() -> Callable` on TweenBlueprint and synchronous restoration.
+
 ```yaml
 BlueprintPreviewService:
   methods:

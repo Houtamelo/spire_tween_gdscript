@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://addons/spire_tween/templates/text/emphasis.gd" id="1"]
+
+[node name="PunchRotation" type="TweenBlueprint"]
+editor_description = "Restoring glyph rotation impulse."
+script = ExtResource("1")
+style = 1
+strength = Vector3(0, 0, 0.3)

@@ -2,6 +2,8 @@
 
 Add `TweenBlueprint` nodes to a scene to store animation configuration in the Inspector. Each call to `play()` builds a fresh native `SpireSequence`. Property, character, serial, and parallel animations require no script; GDScript supplies custom builders.
 
+For ready-made effects, use the [33 supplied GDScript template scenes](effect_templates.md).
+
 [Watch the editor authoring walkthrough](../readme_images/blueprint_authoring.mp4) (1:44). It shows creating a two-step animation without code, connecting a Button signal, using Undo/Redo, and saving and reopening the scene.
 
 ## Animate a property
@@ -40,7 +42,7 @@ The same effect resource can be shared across multiple Blueprints and preset col
 
 Combine Offset and Fade children in a Parallel Block for a staggered reveal. Combine Offset, Rotation, Scale, and Color children for a composed effect. Use Property steps on the label's `text` for text replacement: writes to an active character which disappears are ignored while playback continues, without redirecting to another index. A fresh `play()` explicitly synchronizes the label before selecting its range against the current text.
 
-The label initializes its character state at runtime without animating. For BBCode start colors, trigger after the label's first draw; a manually connected Button naturally does this. If playing immediately from After Ready or After Enter Tree, supply a delay allowing the first draw, as required by the underlying character constructors. Editor inspection never initializes runtime character state or writes to the target.
+The label initializes its character rendering state in both the editor and runtime without animating. For BBCode start colors, trigger after the label's first draw; a manually connected Button naturally does this. If playing immediately from After Ready or After Enter Tree, supply a delay allowing the first draw, as required by the underlying character constructors. Inspector queries do not reset character state or write animation values to the target.
 
 Each blueprint resolves its own target independently: its configured Target, then its first non-blueprint ancestor. Containers do not pass targets to their children. A nested child's fallback skips all blueprint ancestors, including their configured targets. The Inspector uses the same resolution as runtime playback.
 
@@ -112,7 +114,32 @@ func _play_internal(sequence: SpireSequence) -> void:
 
 `_reset_state()` is optional and may reset custom local state before construction. Hooks run with native blueprint borrows released, so they can access script and exported fields. Native virtual defaults cannot be called through GDScript `super`.
 
-This implementation covers runtime authoring and the built-in Inspector. Editor preview/restoration, supplied presets, and a dedicated Method Caller kind belong to the separate tooling plan; custom GDScript builders can already append native callbacks.
+Custom GDScript builders can append native callbacks. A dedicated Method Caller kind remains outside this implementation.
+
+## Preview in the editor
+
+Select an outermost Blueprint and press **Play Animation Preview** in the Inspector. **Stop Animation Preview** stops it and invokes its restoration callback when valid. A parent-managed child cannot start an independent preview; preview its outermost composition instead. Native Property, Text, Chain Block and Parallel Block kinds and all supplied template scenes support preview.
+
+Only one preview runs at a time. Starting another first stops the previous preview and invokes any restoration callback. Capture, playback and restoration are synchronous, with no frame delays. Natural completion also invokes restoration. Saving performs cleanup before scene serialization; switching scenes or removing the preview root cleans up the outgoing preview. Normal runtime `play()`/`stop()` behavior remains unchanged.
+
+All participating children capture before any reset/build/play hook runs. Containers invoke captured child callbacks in reverse child order when the root stops. Intermediate child completion does not restore the composition. Native property capture handles overlapping Node2D/Node3D transforms and Control layout/transform properties through local rest values. Character capture preserves exact channel overrides, including inherited BBCode colors.
+
+A custom script can provide restoration by overriding `_capture_rest_state() -> Callable`. Capture must not change targets. Its returned Callable must restore synchronously; it must not await signals or rely on `set_deferred()`/`call_deferred()`. An invalid Callable means there is nothing to restore and does not prevent playback. This is also the default for scripts that do not override the capture hook. Containers still play every child, invoking only valid restoration callbacks in reverse child order. Previews with no restoration action still participate in Stop, completion, replacement, saving and scene-exit cleanup.
+
+```gdscript
+func _capture_rest_state() -> Callable:
+    var node := get_resolved_target() as Node2D
+    if node == null:
+        return Callable()
+    var rest_transform := node.transform
+    return func() -> void:
+        if is_instance_valid(node):
+            node.transform = rest_transform
+```
+
+For custom character effects, `SpireRichTextLabel.capture_character_rest_state(first, last)` returns a synchronous restoration Callable for an inclusive range; -1 selects through the end. Explicit character ranges require initialized, synchronized state. Whole-label capture `(0, -1)` also supports empty or uninitialized data without initializing it during capture; its callback rebuilds default state when no current snapshot was available. The callback owns refreshing, skips a freed label or different text/BBCode, and can restore channels after the captured source has been restored and rebuilt. Native Property previews of a label's `text` invoke that same callback, so composing text replacement and character animations restores both.
+
+Custom implementors decide how to capture targets, mutable Resources and other state. Capturing a Resource reference does not copy its contents. Supplied templates also clear their lazy runtime snapshots during preview restoration, preventing an interrupted preview from affecting later runs. Editing animated properties during preview and Undo/Redo interception are outside this workflow.
 
 ## Verify the workflow
 
@@ -121,6 +148,7 @@ On Linux, run the isolated runtime and editor tests without changing development
 ```bash
 bash scripts/test_blueprint.sh godot
 bash scripts/test_blueprint.sh /path/to/godot --rendered
+bash scripts/test_blueprint_preview.sh /path/to/godot /tmp/spire-preview-evidence
 ```
 
 The rendered run uses Xvfb and saves an Inspector screenshot. Both modes retain their fixture and logs under the printed temporary path and reject engine errors in addition to failed assertions. `SPIRE_BLUEPRINT_LIBRARY` reuses an already built API-4.4-compatible library, and `SPIRE_BLUEPRINT_TEST_DIR` chooses the evidence directory. The runtime tests also participate in the aggregate GDScript runner.

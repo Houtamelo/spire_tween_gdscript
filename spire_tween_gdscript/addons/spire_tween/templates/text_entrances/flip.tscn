@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://addons/spire_tween/templates/text/entrance.gd" id="1"]
+
+[node name="Flip" type="TweenBlueprint"]
+editor_description = "Projected glyph rotation with an alpha entrance or exit."
+script = ExtResource("1")
+style = 5

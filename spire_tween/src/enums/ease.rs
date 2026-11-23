@@ -563,6 +563,32 @@ register_enum! {
         /// ```
         [RS = "Punch", GD = "EASE_PUNCH"]
         Punch = 23,
+        /// Anticipates below the starting value before reaching the destination.
+        /// Time-reversed [constant Spire.EASE_OUT_POP]: `1 - out_pop(1 - x)`.
+        [RS = "InPop", GD = "EASE_IN_POP"]
+        InPop = 24,
+        /// Overshoots the destination, then returns to it.
+        /// `f(x) = 1 - (1 - x)^3 + 0.22 * sin(pi * x)`.
+        /// Peaks near 1.154; values are not clamped.
+        [RS = "OutPop", GD = "EASE_OUT_POP"]
+        OutPop = 25,
+        /// Combines InPop in the first half with OutPop in the second half.
+        /// Starts at 0, crosses 0.5 halfway, and ends at 1, with anticipation and overshoot.
+        [RS = "InOutPop", GD = "EASE_IN_OUT_POP"]
+        InOutPop = 26,
+        /// Bounces away from the starting value before reaching the destination.
+        /// Time-reversed [constant Spire.EASE_OUT_BOUNCE]: `1 - out_bounce(1 - x)`.
+        [RS = "InBounce", GD = "EASE_IN_BOUNCE"]
+        InBounce = 27,
+        /// Repeatedly reaches the destination with decreasing rebounds.
+        /// `f(x) = 1 - abs(cos(3.5 * pi * x)) * (1 - x)^2`.
+        /// Remains within 0..1 for progress within 0..1.
+        [RS = "OutBounce", GD = "EASE_OUT_BOUNCE"]
+        OutBounce = 28,
+        /// Combines InBounce in the first half with OutBounce in the second half.
+        /// Starts at 0, crosses 0.5 halfway, and ends at 1.
+        [RS = "InOutBounce", GD = "EASE_IN_OUT_BOUNCE"]
+        InOutBounce = 29,
     }
 }
 
@@ -655,6 +681,24 @@ impl Ease {
 
                 A * f64::sin(x * x * PI * F) * f64::exp(D * x)
             }
+            Ease::InPop => 1.0 - out_pop(1.0 - x),
+            Ease::OutPop => out_pop(x),
+            Ease::InOutPop => {
+                if x < 0.5 {
+                    0.5 * (1.0 - out_pop(1.0 - 2.0 * x))
+                } else {
+                    0.5 + 0.5 * out_pop(2.0 * x - 1.0)
+                }
+            }
+            Ease::InBounce => 1.0 - out_bounce(1.0 - x),
+            Ease::OutBounce => out_bounce(x),
+            Ease::InOutBounce => {
+                if x < 0.5 {
+                    0.5 * (1.0 - out_bounce(1.0 - 2.0 * x))
+                } else {
+                    0.5 + 0.5 * out_bounce(2.0 * x - 1.0)
+                }
+            }
         }
     }
 
@@ -667,6 +711,10 @@ impl Ease {
     /// The default value for this setting is [constant Spire.EASE_LINEAR].
     pub fn set_global_default(ease: Self) { unsafe { DEFAULT_EASE = ease } }
 }
+
+fn out_pop(x: f64) -> f64 { 1.0 - (1.0 - x).powi(3) + 0.22 * (PI * x).sin() }
+
+fn out_bounce(x: f64) -> f64 { 1.0 - (3.5 * PI * x).cos().abs() * (1.0 - x).powi(2) }
 
 register_enum! {
     [GD = "EaseSource"]

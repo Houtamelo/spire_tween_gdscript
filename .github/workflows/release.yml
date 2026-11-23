@@ -123,6 +123,16 @@ jobs:
         run: |
           cargo run --locked -p spire_release -- test --stage dist/stage --godot "$(cat dist/engine/godot-path)" --templates "$PWD/dist/engine/export/templates" --out dist/validation
           SPIRE_RELEASE_STAGE="$PWD/dist/stage" SPIRE_RELEASE_GODOT="$(cat dist/engine/godot-path)" cargo test --locked -p spire_release --test pipeline -- --ignored
+      - name: Validate GDScript effect scenes with a private virtual display
+        if: matrix.host.platform == 'linux'
+        env:
+          SPIRE_TEMPLATE_LIBRARY: ${{ github.workspace }}/dist/stage/addon/lib/x86_64-unknown-linux-gnu/debug/libspire_tween.so
+        run: bash scripts/test_scene_templates.sh "$(cat dist/engine/godot-path)" dist/template-validation
+      - name: Validate Blueprint preview and restoration in the real editor
+        if: matrix.host.platform == 'linux'
+        env:
+          SPIRE_PREVIEW_LIBRARY: ${{ github.workspace }}/dist/stage/addon/lib/x86_64-unknown-linux-gnu/debug/libspire_tween.so
+        run: bash scripts/test_blueprint_preview.sh "$(cat dist/engine/godot-path)" dist/preview-validation
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
         with:
@@ -131,6 +141,10 @@ jobs:
             dist/validation/*.json
             dist/validation/*.log
             dist/validation/*-prepare/*.log
+            dist/template-validation/*.log
+            dist/template-validation/screenshots/*.png
+            dist/preview-validation/*.log
+            dist/preview-validation/xdg/data/godot/app_userdata/Spire Blueprint preview integration/*.png
           if-no-files-found: error
           retention-days: 14
 

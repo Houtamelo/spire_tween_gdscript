@@ -103,9 +103,9 @@ impl SpireRichTextLabel {
 impl IRichTextLabel for SpireRichTextLabel {
     #[func(gd_self)]
     fn ready(this: Gd<Self>) {
-        if !Engine::singleton().is_editor_hint() || !this.bind().effect_presets.is_empty() {
-            Self::refresh_text(this, false);
-        }
+        // Prepare the editor's code layer before a preview captures rest state.
+        // Capture itself must never refresh/reset the characters it is reading.
+        Self::refresh_text(this, false);
     }
 
     #[func(gd_self)]
@@ -163,6 +163,79 @@ impl IRichTextLabel for SpireRichTextLabel {
 // Character accessors and registered constructors exposed to Godot.
 #[godot_api]
 impl SpireRichTextLabel {
+    /// Captures an inclusive character range without changing it. `last = -1`
+    /// selects through the end. The returned Callable restores exact channel
+    /// override state synchronously, including BBCode color inheritance, and
+    /// queues a redraw. Invalid ranges return an invalid Callable. Whole-label
+    /// capture (`first = 0`, `last = -1`) also supports empty/uninitialized data:
+    /// with no current state to save, its callback rebuilds default character state.
+    /// Other ranges require initialized, synchronized character data.
+    /// The callback ignores a freed label or different text/BBCode. If the
+    /// captured text has been restored, it synchronizes rebuilt character data
+    /// before restoring the channels.
+    #[func(gd_self)]
+    pub fn capture_character_rest_state(this: Gd<Self>, first: i64, last: i64) -> Callable {
+        if first < 0 || last < -1 || (last != -1 && last < first) {
+            return Callable::invalid();
+        }
+        let source = this.get_text();
+        let bbcode = this.is_using_bbcode();
+        let whole_label = first == 0 && last == -1;
+        let snapshot = {
+            let state = this.bind();
+            let renderer = LazyCell::get(&state.char_renderer)
+                .filter(|_| state.source.as_ref() == Some(&source) && state.bbcode == bbcode);
+            if let Some(renderer) = renderer {
+                let renderer_id = renderer.instance_id();
+                let renderer = renderer.bind();
+                let count = renderer.chars.len();
+                if !(whole_label && count == 0) && (first >= count as i64 || last >= count as i64) {
+                    return Callable::invalid();
+                }
+                let end = if last == -1 { count } else { last as usize + 1 };
+                let selection = first as usize..end;
+                let mut snapshots = Vec::new();
+                for index in selection.clone() {
+                    // Preserve raw aliases and shared glyph roots outside the selection.
+                    snapshots.push((index, renderer.chars[index]));
+                    let cluster = renderer.chars[index].cluster;
+                    if !selection.contains(&cluster) {
+                        snapshots.push((cluster, renderer.chars[cluster]));
+                    }
+                }
+                Some((renderer_id, count, snapshots))
+            } else {
+                None
+            }
+        };
+        if snapshot.is_none() && !whole_label {
+            return Callable::invalid();
+        }
+        let label_id = this.instance_id();
+        Callable::from_fn("restore_character_state", move |_| {
+            let Ok(mut label) = Gd::<Self>::try_from_instance_id(label_id) else { return };
+            if label.get_text() != source || label.is_using_bbcode() != bbcode {
+                return;
+            }
+            // With no initialized state at capture, the rest pose is the new
+            // source's defaults; do not retain deformations created by playback.
+            Self::refresh_text(label.clone(), snapshot.is_none());
+            if let Some((renderer_id, count, snapshots)) = &snapshot {
+                let Ok(mut renderer) = Gd::<SpireCharRenderer>::try_from_instance_id(*renderer_id) else { return };
+                let mut renderer = renderer.bind_mut();
+                if renderer.chars.len() != *count {
+                    return;
+                }
+                for (index, state) in snapshots {
+                    if let Some(character) = renderer.chars.get_mut(*index) {
+                        *character = *state;
+                    }
+                }
+            }
+            label.queue_redraw();
+        })
+    }
+
     #[cfg(feature = "integration-tests")]
     #[func(gd_self)]
     fn preset_adapter_for_test(this: Gd<Self>, index: i64) -> Option<Gd<SpireRichTextEffect>> {

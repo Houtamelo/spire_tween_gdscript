@@ -1,0 +1,1648 @@
+[gd_scene load_steps=35 format=3]
+
+[ext_resource type="Script" path="res://examples/effect_templates/gallery.gd" id="1"]
+[ext_resource type="PackedScene" path="res://addons/spire_tween/templates/text_entrances/typewriter.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://addons/spire_tween/templates/text_entrances/fade.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://addons/spire_tween/templates/text_entrances/slide.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://addons/spire_tween/templates/text_entrances/pop.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://addons/spire_tween/templates/text_entrances/bounce.tscn" id="6"]
+[ext_resource type="PackedScene" path="res://addons/spire_tween/templates/text_entrances/flip.tscn" id="7"]
+[ext_resource type="PackedScene" path="res://addons/spire_tween/templates/text_entrances/scatter.tscn" id="8"]
+[ext_resource type="PackedScene" path="res://addons/spire_tween/templates/text_continuous/wave.tscn" id="9"]
+[ext_resource type="PackedScene" path="res://addons/spire_tween/templates/text_continuous/bob.tscn" id="10"]
+[ext_resource type="PackedScene" path="res://addons/spire_tween/templates/text_continuous/breathing.tscn" id="11"]
+[ext_resource type="PackedScene" path="res://addons/spire_tween/templates/text_continuous/wobble.tscn" id="12"]
+[ext_resource type="PackedScene" path="res://addons/spire_tween/templates/text_continuous/trembling.tscn" id="13"]
+[ext_resource type="PackedScene" path="res://addons/spire_tween/templates/text_continuous/color_cycle.tscn" id="14"]
+[ext_resource type="PackedScene" path="res://addons/spire_tween/templates/text_continuous/alpha_pulse.tscn" id="15"]
+[ext_resource type="PackedScene" path="res://addons/spire_tween/templates/text_emphasis/punch_offset.tscn" id="16"]
+[ext_resource type="PackedScene" path="res://addons/spire_tween/templates/text_emphasis/punch_rotation.tscn" id="17"]
+[ext_resource type="PackedScene" path="res://addons/spire_tween/templates/text_emphasis/punch_scale.tscn" id="18"]
+[ext_resource type="PackedScene" path="res://addons/spire_tween/templates/text_emphasis/shake.tscn" id="19"]
+[ext_resource type="PackedScene" path="res://addons/spire_tween/templates/text_emphasis/color_flash.tscn" id="20"]
+[ext_resource type="PackedScene" path="res://addons/spire_tween/templates/canvas_entrances/fade.tscn" id="21"]
+[ext_resource type="PackedScene" path="res://addons/spire_tween/templates/canvas_entrances/slide.tscn" id="22"]
+[ext_resource type="PackedScene" path="res://addons/spire_tween/templates/canvas_entrances/pop.tscn" id="23"]
+[ext_resource type="PackedScene" path="res://addons/spire_tween/templates/canvas_entrances/bounce.tscn" id="24"]
+[ext_resource type="PackedScene" path="res://addons/spire_tween/templates/canvas_entrances/flip.tscn" id="25"]
+[ext_resource type="PackedScene" path="res://addons/spire_tween/templates/canvas_entrances/spin.tscn" id="26"]
+[ext_resource type="PackedScene" path="res://addons/spire_tween/templates/interaction/hover_focus.tscn" id="27"]
+[ext_resource type="PackedScene" path="res://addons/spire_tween/templates/interaction/press.tscn" id="28"]
+[ext_resource type="PackedScene" path="res://addons/spire_tween/templates/interaction/selection.tscn" id="29"]
+[ext_resource type="PackedScene" path="res://addons/spire_tween/templates/canvas_continuous/pulse.tscn" id="30"]
+[ext_resource type="PackedScene" path="res://addons/spire_tween/templates/canvas_continuous/float.tscn" id="31"]
+[ext_resource type="PackedScene" path="res://addons/spire_tween/templates/canvas_continuous/sway.tscn" id="32"]
+[ext_resource type="PackedScene" path="res://addons/spire_tween/templates/canvas_continuous/spin.tscn" id="33"]
+[ext_resource type="PackedScene" path="res://addons/spire_tween/templates/canvas_continuous/color_cycle.tscn" id="34"]
+
+[node name="EffectTemplates" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+
+[node name="Scroll" type="ScrollContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = -24.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Grid" type="GridContainer" parent="Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 24
+theme_override_constants/v_separation = 20
+columns = 3
+
+[node name="Card00" type="PanelContainer" parent="Scroll/Grid" groups=["effect_template_card"]]
+custom_minimum_size = Vector2(330, 190)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Content" type="VBoxContainer" parent="Scroll/Grid/Card00"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Scroll/Grid/Card00/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Typewriter"
+horizontal_alignment = 1
+
+[node name="TargetSlot" type="Control" parent="Scroll/Grid/Card00/Content"]
+custom_minimum_size = Vector2(300, 85)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Target" type="SpireRichTextLabel" parent="Scroll/Grid/Card00/Content/TargetSlot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(150, 42)
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[center][color=#67e8c2]Hello[/color] Spire![/center]"
+scroll_active = false
+
+[node name="Effect" parent="Scroll/Grid/Card00/Content/TargetSlot/Target" instance=ExtResource("2")]
+
+[node name="Buttons" type="HBoxContainer" parent="Scroll/Grid/Card00/Content"]
+layout_mode = 2
+alignment = 1
+
+[node name="Play" type="Button" parent="Scroll/Grid/Card00/Content/Buttons"]
+layout_mode = 2
+text = "Play / Restart"
+
+[node name="Restore" type="Button" parent="Scroll/Grid/Card00/Content/Buttons"]
+layout_mode = 2
+text = "Stop & Restore"
+
+[node name="Card01" type="PanelContainer" parent="Scroll/Grid" groups=["effect_template_card"]]
+custom_minimum_size = Vector2(330, 190)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Content" type="VBoxContainer" parent="Scroll/Grid/Card01"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Scroll/Grid/Card01/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Text fade"
+horizontal_alignment = 1
+
+[node name="TargetSlot" type="Control" parent="Scroll/Grid/Card01/Content"]
+custom_minimum_size = Vector2(300, 85)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Target" type="SpireRichTextLabel" parent="Scroll/Grid/Card01/Content/TargetSlot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(150, 42)
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[center][color=#67e8c2]Hello[/color] Spire![/center]"
+scroll_active = false
+
+[node name="Effect" parent="Scroll/Grid/Card01/Content/TargetSlot/Target" instance=ExtResource("3")]
+
+[node name="Buttons" type="HBoxContainer" parent="Scroll/Grid/Card01/Content"]
+layout_mode = 2
+alignment = 1
+
+[node name="Play" type="Button" parent="Scroll/Grid/Card01/Content/Buttons"]
+layout_mode = 2
+text = "Play / Restart"
+
+[node name="Restore" type="Button" parent="Scroll/Grid/Card01/Content/Buttons"]
+layout_mode = 2
+text = "Stop & Restore"
+
+[node name="Card02" type="PanelContainer" parent="Scroll/Grid" groups=["effect_template_card"]]
+custom_minimum_size = Vector2(330, 190)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Content" type="VBoxContainer" parent="Scroll/Grid/Card02"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Scroll/Grid/Card02/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Text slide"
+horizontal_alignment = 1
+
+[node name="TargetSlot" type="Control" parent="Scroll/Grid/Card02/Content"]
+custom_minimum_size = Vector2(300, 85)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Target" type="SpireRichTextLabel" parent="Scroll/Grid/Card02/Content/TargetSlot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(150, 42)
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[center][color=#67e8c2]Hello[/color] Spire![/center]"
+scroll_active = false
+
+[node name="Effect" parent="Scroll/Grid/Card02/Content/TargetSlot/Target" instance=ExtResource("4")]
+
+[node name="Buttons" type="HBoxContainer" parent="Scroll/Grid/Card02/Content"]
+layout_mode = 2
+alignment = 1
+
+[node name="Play" type="Button" parent="Scroll/Grid/Card02/Content/Buttons"]
+layout_mode = 2
+text = "Play / Restart"
+
+[node name="Restore" type="Button" parent="Scroll/Grid/Card02/Content/Buttons"]
+layout_mode = 2
+text = "Stop & Restore"
+
+[node name="Card03" type="PanelContainer" parent="Scroll/Grid" groups=["effect_template_card"]]
+custom_minimum_size = Vector2(330, 190)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Content" type="VBoxContainer" parent="Scroll/Grid/Card03"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Scroll/Grid/Card03/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Text pop"
+horizontal_alignment = 1
+
+[node name="TargetSlot" type="Control" parent="Scroll/Grid/Card03/Content"]
+custom_minimum_size = Vector2(300, 85)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Target" type="SpireRichTextLabel" parent="Scroll/Grid/Card03/Content/TargetSlot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(150, 42)
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[center][color=#67e8c2]Hello[/color] Spire![/center]"
+scroll_active = false
+
+[node name="Effect" parent="Scroll/Grid/Card03/Content/TargetSlot/Target" instance=ExtResource("5")]
+
+[node name="Buttons" type="HBoxContainer" parent="Scroll/Grid/Card03/Content"]
+layout_mode = 2
+alignment = 1
+
+[node name="Play" type="Button" parent="Scroll/Grid/Card03/Content/Buttons"]
+layout_mode = 2
+text = "Play / Restart"
+
+[node name="Restore" type="Button" parent="Scroll/Grid/Card03/Content/Buttons"]
+layout_mode = 2
+text = "Stop & Restore"
+
+[node name="Card04" type="PanelContainer" parent="Scroll/Grid" groups=["effect_template_card"]]
+custom_minimum_size = Vector2(330, 190)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Content" type="VBoxContainer" parent="Scroll/Grid/Card04"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Scroll/Grid/Card04/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Text bounce"
+horizontal_alignment = 1
+
+[node name="TargetSlot" type="Control" parent="Scroll/Grid/Card04/Content"]
+custom_minimum_size = Vector2(300, 85)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Target" type="SpireRichTextLabel" parent="Scroll/Grid/Card04/Content/TargetSlot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(150, 42)
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[center][color=#67e8c2]Hello[/color] Spire![/center]"
+scroll_active = false
+
+[node name="Effect" parent="Scroll/Grid/Card04/Content/TargetSlot/Target" instance=ExtResource("6")]
+
+[node name="Buttons" type="HBoxContainer" parent="Scroll/Grid/Card04/Content"]
+layout_mode = 2
+alignment = 1
+
+[node name="Play" type="Button" parent="Scroll/Grid/Card04/Content/Buttons"]
+layout_mode = 2
+text = "Play / Restart"
+
+[node name="Restore" type="Button" parent="Scroll/Grid/Card04/Content/Buttons"]
+layout_mode = 2
+text = "Stop & Restore"
+
+[node name="Card05" type="PanelContainer" parent="Scroll/Grid" groups=["effect_template_card"]]
+custom_minimum_size = Vector2(330, 190)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Content" type="VBoxContainer" parent="Scroll/Grid/Card05"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Scroll/Grid/Card05/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Text flip"
+horizontal_alignment = 1
+
+[node name="TargetSlot" type="Control" parent="Scroll/Grid/Card05/Content"]
+custom_minimum_size = Vector2(300, 85)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Target" type="SpireRichTextLabel" parent="Scroll/Grid/Card05/Content/TargetSlot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(150, 42)
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[center][color=#67e8c2]Hello[/color] Spire![/center]"
+scroll_active = false
+
+[node name="Effect" parent="Scroll/Grid/Card05/Content/TargetSlot/Target" instance=ExtResource("7")]
+
+[node name="Buttons" type="HBoxContainer" parent="Scroll/Grid/Card05/Content"]
+layout_mode = 2
+alignment = 1
+
+[node name="Play" type="Button" parent="Scroll/Grid/Card05/Content/Buttons"]
+layout_mode = 2
+text = "Play / Restart"
+
+[node name="Restore" type="Button" parent="Scroll/Grid/Card05/Content/Buttons"]
+layout_mode = 2
+text = "Stop & Restore"
+
+[node name="Card06" type="PanelContainer" parent="Scroll/Grid" groups=["effect_template_card"]]
+custom_minimum_size = Vector2(330, 190)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Content" type="VBoxContainer" parent="Scroll/Grid/Card06"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Scroll/Grid/Card06/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Scatter / assemble"
+horizontal_alignment = 1
+
+[node name="TargetSlot" type="Control" parent="Scroll/Grid/Card06/Content"]
+custom_minimum_size = Vector2(300, 85)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Target" type="SpireRichTextLabel" parent="Scroll/Grid/Card06/Content/TargetSlot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(150, 42)
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[center][color=#67e8c2]Hello[/color] Spire![/center]"
+scroll_active = false
+
+[node name="Effect" parent="Scroll/Grid/Card06/Content/TargetSlot/Target" instance=ExtResource("8")]
+
+[node name="Buttons" type="HBoxContainer" parent="Scroll/Grid/Card06/Content"]
+layout_mode = 2
+alignment = 1
+
+[node name="Play" type="Button" parent="Scroll/Grid/Card06/Content/Buttons"]
+layout_mode = 2
+text = "Play / Restart"
+
+[node name="Restore" type="Button" parent="Scroll/Grid/Card06/Content/Buttons"]
+layout_mode = 2
+text = "Stop & Restore"
+
+[node name="Card07" type="PanelContainer" parent="Scroll/Grid" groups=["effect_template_card"]]
+custom_minimum_size = Vector2(330, 190)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Content" type="VBoxContainer" parent="Scroll/Grid/Card07"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Scroll/Grid/Card07/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Traveling wave  ·  LOOP"
+horizontal_alignment = 1
+
+[node name="TargetSlot" type="Control" parent="Scroll/Grid/Card07/Content"]
+custom_minimum_size = Vector2(300, 85)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Target" type="SpireRichTextLabel" parent="Scroll/Grid/Card07/Content/TargetSlot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(150, 42)
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[center][color=#67e8c2]Hello[/color] Spire![/center]"
+scroll_active = false
+
+[node name="Effect" parent="Scroll/Grid/Card07/Content/TargetSlot/Target" instance=ExtResource("9")]
+
+[node name="Buttons" type="HBoxContainer" parent="Scroll/Grid/Card07/Content"]
+layout_mode = 2
+alignment = 1
+
+[node name="Play" type="Button" parent="Scroll/Grid/Card07/Content/Buttons"]
+layout_mode = 2
+text = "Play / Restart"
+
+[node name="Restore" type="Button" parent="Scroll/Grid/Card07/Content/Buttons"]
+layout_mode = 2
+text = "Stop & Restore"
+
+[node name="Card08" type="PanelContainer" parent="Scroll/Grid" groups=["effect_template_card"]]
+custom_minimum_size = Vector2(330, 190)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Content" type="VBoxContainer" parent="Scroll/Grid/Card08"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Scroll/Grid/Card08/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Floating bob  ·  LOOP"
+horizontal_alignment = 1
+
+[node name="TargetSlot" type="Control" parent="Scroll/Grid/Card08/Content"]
+custom_minimum_size = Vector2(300, 85)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Target" type="SpireRichTextLabel" parent="Scroll/Grid/Card08/Content/TargetSlot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(150, 42)
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[center][color=#67e8c2]Hello[/color] Spire![/center]"
+scroll_active = false
+
+[node name="Effect" parent="Scroll/Grid/Card08/Content/TargetSlot/Target" instance=ExtResource("10")]
+
+[node name="Buttons" type="HBoxContainer" parent="Scroll/Grid/Card08/Content"]
+layout_mode = 2
+alignment = 1
+
+[node name="Play" type="Button" parent="Scroll/Grid/Card08/Content/Buttons"]
+layout_mode = 2
+text = "Play / Restart"
+
+[node name="Restore" type="Button" parent="Scroll/Grid/Card08/Content/Buttons"]
+layout_mode = 2
+text = "Stop & Restore"
+
+[node name="Card09" type="PanelContainer" parent="Scroll/Grid" groups=["effect_template_card"]]
+custom_minimum_size = Vector2(330, 190)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Content" type="VBoxContainer" parent="Scroll/Grid/Card09"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Scroll/Grid/Card09/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Scale breathing  ·  LOOP"
+horizontal_alignment = 1
+
+[node name="TargetSlot" type="Control" parent="Scroll/Grid/Card09/Content"]
+custom_minimum_size = Vector2(300, 85)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Target" type="SpireRichTextLabel" parent="Scroll/Grid/Card09/Content/TargetSlot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(150, 42)
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[center][color=#67e8c2]Hello[/color] Spire![/center]"
+scroll_active = false
+
+[node name="Effect" parent="Scroll/Grid/Card09/Content/TargetSlot/Target" instance=ExtResource("11")]
+
+[node name="Buttons" type="HBoxContainer" parent="Scroll/Grid/Card09/Content"]
+layout_mode = 2
+alignment = 1
+
+[node name="Play" type="Button" parent="Scroll/Grid/Card09/Content/Buttons"]
+layout_mode = 2
+text = "Play / Restart"
+
+[node name="Restore" type="Button" parent="Scroll/Grid/Card09/Content/Buttons"]
+layout_mode = 2
+text = "Stop & Restore"
+
+[node name="Card10" type="PanelContainer" parent="Scroll/Grid" groups=["effect_template_card"]]
+custom_minimum_size = Vector2(330, 190)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Content" type="VBoxContainer" parent="Scroll/Grid/Card10"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Scroll/Grid/Card10/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Rotation wobble  ·  LOOP"
+horizontal_alignment = 1
+
+[node name="TargetSlot" type="Control" parent="Scroll/Grid/Card10/Content"]
+custom_minimum_size = Vector2(300, 85)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Target" type="SpireRichTextLabel" parent="Scroll/Grid/Card10/Content/TargetSlot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(150, 42)
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[center][color=#67e8c2]Hello[/color] Spire![/center]"
+scroll_active = false
+
+[node name="Effect" parent="Scroll/Grid/Card10/Content/TargetSlot/Target" instance=ExtResource("12")]
+
+[node name="Buttons" type="HBoxContainer" parent="Scroll/Grid/Card10/Content"]
+layout_mode = 2
+alignment = 1
+
+[node name="Play" type="Button" parent="Scroll/Grid/Card10/Content/Buttons"]
+layout_mode = 2
+text = "Play / Restart"
+
+[node name="Restore" type="Button" parent="Scroll/Grid/Card10/Content/Buttons"]
+layout_mode = 2
+text = "Stop & Restore"
+
+[node name="Card11" type="PanelContainer" parent="Scroll/Grid" groups=["effect_template_card"]]
+custom_minimum_size = Vector2(330, 190)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Content" type="VBoxContainer" parent="Scroll/Grid/Card11"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Scroll/Grid/Card11/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Trembling  ·  LOOP"
+horizontal_alignment = 1
+
+[node name="TargetSlot" type="Control" parent="Scroll/Grid/Card11/Content"]
+custom_minimum_size = Vector2(300, 85)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Target" type="SpireRichTextLabel" parent="Scroll/Grid/Card11/Content/TargetSlot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(150, 42)
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[center][color=#67e8c2]Hello[/color] Spire![/center]"
+scroll_active = false
+
+[node name="Effect" parent="Scroll/Grid/Card11/Content/TargetSlot/Target" instance=ExtResource("13")]
+
+[node name="Buttons" type="HBoxContainer" parent="Scroll/Grid/Card11/Content"]
+layout_mode = 2
+alignment = 1
+
+[node name="Play" type="Button" parent="Scroll/Grid/Card11/Content/Buttons"]
+layout_mode = 2
+text = "Play / Restart"
+
+[node name="Restore" type="Button" parent="Scroll/Grid/Card11/Content/Buttons"]
+layout_mode = 2
+text = "Stop & Restore"
+
+[node name="Card12" type="PanelContainer" parent="Scroll/Grid" groups=["effect_template_card"]]
+custom_minimum_size = Vector2(330, 190)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Content" type="VBoxContainer" parent="Scroll/Grid/Card12"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Scroll/Grid/Card12/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Text color cycle  ·  LOOP"
+horizontal_alignment = 1
+
+[node name="TargetSlot" type="Control" parent="Scroll/Grid/Card12/Content"]
+custom_minimum_size = Vector2(300, 85)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Target" type="SpireRichTextLabel" parent="Scroll/Grid/Card12/Content/TargetSlot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(150, 42)
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[center][color=#67e8c2]Hello[/color] Spire![/center]"
+scroll_active = false
+
+[node name="Effect" parent="Scroll/Grid/Card12/Content/TargetSlot/Target" instance=ExtResource("14")]
+
+[node name="Buttons" type="HBoxContainer" parent="Scroll/Grid/Card12/Content"]
+layout_mode = 2
+alignment = 1
+
+[node name="Play" type="Button" parent="Scroll/Grid/Card12/Content/Buttons"]
+layout_mode = 2
+text = "Play / Restart"
+
+[node name="Restore" type="Button" parent="Scroll/Grid/Card12/Content/Buttons"]
+layout_mode = 2
+text = "Stop & Restore"
+
+[node name="Card13" type="PanelContainer" parent="Scroll/Grid" groups=["effect_template_card"]]
+custom_minimum_size = Vector2(330, 190)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Content" type="VBoxContainer" parent="Scroll/Grid/Card13"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Scroll/Grid/Card13/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Alpha pulse  ·  LOOP"
+horizontal_alignment = 1
+
+[node name="TargetSlot" type="Control" parent="Scroll/Grid/Card13/Content"]
+custom_minimum_size = Vector2(300, 85)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Target" type="SpireRichTextLabel" parent="Scroll/Grid/Card13/Content/TargetSlot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(150, 42)
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[center][color=#67e8c2]Hello[/color] Spire![/center]"
+scroll_active = false
+
+[node name="Effect" parent="Scroll/Grid/Card13/Content/TargetSlot/Target" instance=ExtResource("15")]
+
+[node name="Buttons" type="HBoxContainer" parent="Scroll/Grid/Card13/Content"]
+layout_mode = 2
+alignment = 1
+
+[node name="Play" type="Button" parent="Scroll/Grid/Card13/Content/Buttons"]
+layout_mode = 2
+text = "Play / Restart"
+
+[node name="Restore" type="Button" parent="Scroll/Grid/Card13/Content/Buttons"]
+layout_mode = 2
+text = "Stop & Restore"
+
+[node name="Card14" type="PanelContainer" parent="Scroll/Grid" groups=["effect_template_card"]]
+custom_minimum_size = Vector2(330, 190)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Content" type="VBoxContainer" parent="Scroll/Grid/Card14"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Scroll/Grid/Card14/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Punch offset"
+horizontal_alignment = 1
+
+[node name="TargetSlot" type="Control" parent="Scroll/Grid/Card14/Content"]
+custom_minimum_size = Vector2(300, 85)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Target" type="SpireRichTextLabel" parent="Scroll/Grid/Card14/Content/TargetSlot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(150, 42)
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[center][color=#67e8c2]Hello[/color] Spire![/center]"
+scroll_active = false
+
+[node name="Effect" parent="Scroll/Grid/Card14/Content/TargetSlot/Target" instance=ExtResource("16")]
+
+[node name="Buttons" type="HBoxContainer" parent="Scroll/Grid/Card14/Content"]
+layout_mode = 2
+alignment = 1
+
+[node name="Play" type="Button" parent="Scroll/Grid/Card14/Content/Buttons"]
+layout_mode = 2
+text = "Play / Restart"
+
+[node name="Restore" type="Button" parent="Scroll/Grid/Card14/Content/Buttons"]
+layout_mode = 2
+text = "Stop & Restore"
+
+[node name="Card15" type="PanelContainer" parent="Scroll/Grid" groups=["effect_template_card"]]
+custom_minimum_size = Vector2(330, 190)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Content" type="VBoxContainer" parent="Scroll/Grid/Card15"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Scroll/Grid/Card15/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Punch rotation"
+horizontal_alignment = 1
+
+[node name="TargetSlot" type="Control" parent="Scroll/Grid/Card15/Content"]
+custom_minimum_size = Vector2(300, 85)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Target" type="SpireRichTextLabel" parent="Scroll/Grid/Card15/Content/TargetSlot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(150, 42)
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[center][color=#67e8c2]Hello[/color] Spire![/center]"
+scroll_active = false
+
+[node name="Effect" parent="Scroll/Grid/Card15/Content/TargetSlot/Target" instance=ExtResource("17")]
+
+[node name="Buttons" type="HBoxContainer" parent="Scroll/Grid/Card15/Content"]
+layout_mode = 2
+alignment = 1
+
+[node name="Play" type="Button" parent="Scroll/Grid/Card15/Content/Buttons"]
+layout_mode = 2
+text = "Play / Restart"
+
+[node name="Restore" type="Button" parent="Scroll/Grid/Card15/Content/Buttons"]
+layout_mode = 2
+text = "Stop & Restore"
+
+[node name="Card16" type="PanelContainer" parent="Scroll/Grid" groups=["effect_template_card"]]
+custom_minimum_size = Vector2(330, 190)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Content" type="VBoxContainer" parent="Scroll/Grid/Card16"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Scroll/Grid/Card16/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Punch scale"
+horizontal_alignment = 1
+
+[node name="TargetSlot" type="Control" parent="Scroll/Grid/Card16/Content"]
+custom_minimum_size = Vector2(300, 85)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Target" type="SpireRichTextLabel" parent="Scroll/Grid/Card16/Content/TargetSlot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(150, 42)
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[center][color=#67e8c2]Hello[/color] Spire![/center]"
+scroll_active = false
+
+[node name="Effect" parent="Scroll/Grid/Card16/Content/TargetSlot/Target" instance=ExtResource("18")]
+
+[node name="Buttons" type="HBoxContainer" parent="Scroll/Grid/Card16/Content"]
+layout_mode = 2
+alignment = 1
+
+[node name="Play" type="Button" parent="Scroll/Grid/Card16/Content/Buttons"]
+layout_mode = 2
+text = "Play / Restart"
+
+[node name="Restore" type="Button" parent="Scroll/Grid/Card16/Content/Buttons"]
+layout_mode = 2
+text = "Stop & Restore"
+
+[node name="Card17" type="PanelContainer" parent="Scroll/Grid" groups=["effect_template_card"]]
+custom_minimum_size = Vector2(330, 190)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Content" type="VBoxContainer" parent="Scroll/Grid/Card17"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Scroll/Grid/Card17/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Text shake"
+horizontal_alignment = 1
+
+[node name="TargetSlot" type="Control" parent="Scroll/Grid/Card17/Content"]
+custom_minimum_size = Vector2(300, 85)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Target" type="SpireRichTextLabel" parent="Scroll/Grid/Card17/Content/TargetSlot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(150, 42)
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[center][color=#67e8c2]Hello[/color] Spire![/center]"
+scroll_active = false
+
+[node name="Effect" parent="Scroll/Grid/Card17/Content/TargetSlot/Target" instance=ExtResource("19")]
+
+[node name="Buttons" type="HBoxContainer" parent="Scroll/Grid/Card17/Content"]
+layout_mode = 2
+alignment = 1
+
+[node name="Play" type="Button" parent="Scroll/Grid/Card17/Content/Buttons"]
+layout_mode = 2
+text = "Play / Restart"
+
+[node name="Restore" type="Button" parent="Scroll/Grid/Card17/Content/Buttons"]
+layout_mode = 2
+text = "Stop & Restore"
+
+[node name="Card18" type="PanelContainer" parent="Scroll/Grid" groups=["effect_template_card"]]
+custom_minimum_size = Vector2(330, 190)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Content" type="VBoxContainer" parent="Scroll/Grid/Card18"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Scroll/Grid/Card18/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Color flash"
+horizontal_alignment = 1
+
+[node name="TargetSlot" type="Control" parent="Scroll/Grid/Card18/Content"]
+custom_minimum_size = Vector2(300, 85)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Target" type="SpireRichTextLabel" parent="Scroll/Grid/Card18/Content/TargetSlot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(150, 42)
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[center][color=#67e8c2]Hello[/color] Spire![/center]"
+scroll_active = false
+
+[node name="Effect" parent="Scroll/Grid/Card18/Content/TargetSlot/Target" instance=ExtResource("20")]
+
+[node name="Buttons" type="HBoxContainer" parent="Scroll/Grid/Card18/Content"]
+layout_mode = 2
+alignment = 1
+
+[node name="Play" type="Button" parent="Scroll/Grid/Card18/Content/Buttons"]
+layout_mode = 2
+text = "Play / Restart"
+
+[node name="Restore" type="Button" parent="Scroll/Grid/Card18/Content/Buttons"]
+layout_mode = 2
+text = "Stop & Restore"
+
+[node name="Card19" type="PanelContainer" parent="Scroll/Grid" groups=["effect_template_card"]]
+custom_minimum_size = Vector2(330, 190)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Content" type="VBoxContainer" parent="Scroll/Grid/Card19"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Scroll/Grid/Card19/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Fade"
+horizontal_alignment = 1
+
+[node name="TargetSlot" type="Control" parent="Scroll/Grid/Card19/Content"]
+custom_minimum_size = Vector2(300, 85)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Target" type="Label" parent="Scroll/Grid/Card19/Content/TargetSlot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(150, 42)
+theme_override_colors/font_color = Color(0.404, 0.91, 0.761, 1)
+theme_override_font_sizes/font_size = 30
+text = "Spire Tween"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Effect" parent="Scroll/Grid/Card19/Content/TargetSlot/Target" instance=ExtResource("21")]
+
+[node name="Buttons" type="HBoxContainer" parent="Scroll/Grid/Card19/Content"]
+layout_mode = 2
+alignment = 1
+
+[node name="Play" type="Button" parent="Scroll/Grid/Card19/Content/Buttons"]
+layout_mode = 2
+text = "Play / Restart"
+
+[node name="Restore" type="Button" parent="Scroll/Grid/Card19/Content/Buttons"]
+layout_mode = 2
+text = "Stop & Restore"
+
+[node name="Card20" type="PanelContainer" parent="Scroll/Grid" groups=["effect_template_card"]]
+custom_minimum_size = Vector2(330, 190)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Content" type="VBoxContainer" parent="Scroll/Grid/Card20"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Scroll/Grid/Card20/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Slide"
+horizontal_alignment = 1
+
+[node name="TargetSlot" type="Control" parent="Scroll/Grid/Card20/Content"]
+custom_minimum_size = Vector2(300, 85)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Target" type="Label" parent="Scroll/Grid/Card20/Content/TargetSlot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(150, 42)
+theme_override_colors/font_color = Color(0.404, 0.91, 0.761, 1)
+theme_override_font_sizes/font_size = 30
+text = "Spire Tween"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Effect" parent="Scroll/Grid/Card20/Content/TargetSlot/Target" instance=ExtResource("22")]
+
+[node name="Buttons" type="HBoxContainer" parent="Scroll/Grid/Card20/Content"]
+layout_mode = 2
+alignment = 1
+
+[node name="Play" type="Button" parent="Scroll/Grid/Card20/Content/Buttons"]
+layout_mode = 2
+text = "Play / Restart"
+
+[node name="Restore" type="Button" parent="Scroll/Grid/Card20/Content/Buttons"]
+layout_mode = 2
+text = "Stop & Restore"
+
+[node name="Card21" type="PanelContainer" parent="Scroll/Grid" groups=["effect_template_card"]]
+custom_minimum_size = Vector2(330, 190)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Content" type="VBoxContainer" parent="Scroll/Grid/Card21"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Scroll/Grid/Card21/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Pop"
+horizontal_alignment = 1
+
+[node name="TargetSlot" type="Control" parent="Scroll/Grid/Card21/Content"]
+custom_minimum_size = Vector2(300, 85)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Target" type="Label" parent="Scroll/Grid/Card21/Content/TargetSlot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(150, 42)
+theme_override_colors/font_color = Color(0.404, 0.91, 0.761, 1)
+theme_override_font_sizes/font_size = 30
+text = "Spire Tween"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Effect" parent="Scroll/Grid/Card21/Content/TargetSlot/Target" instance=ExtResource("23")]
+
+[node name="Buttons" type="HBoxContainer" parent="Scroll/Grid/Card21/Content"]
+layout_mode = 2
+alignment = 1
+
+[node name="Play" type="Button" parent="Scroll/Grid/Card21/Content/Buttons"]
+layout_mode = 2
+text = "Play / Restart"
+
+[node name="Restore" type="Button" parent="Scroll/Grid/Card21/Content/Buttons"]
+layout_mode = 2
+text = "Stop & Restore"
+
+[node name="Card22" type="PanelContainer" parent="Scroll/Grid" groups=["effect_template_card"]]
+custom_minimum_size = Vector2(330, 190)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Content" type="VBoxContainer" parent="Scroll/Grid/Card22"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Scroll/Grid/Card22/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Bounce"
+horizontal_alignment = 1
+
+[node name="TargetSlot" type="Control" parent="Scroll/Grid/Card22/Content"]
+custom_minimum_size = Vector2(300, 85)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Target" type="Label" parent="Scroll/Grid/Card22/Content/TargetSlot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(150, 42)
+theme_override_colors/font_color = Color(0.404, 0.91, 0.761, 1)
+theme_override_font_sizes/font_size = 30
+text = "Spire Tween"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Effect" parent="Scroll/Grid/Card22/Content/TargetSlot/Target" instance=ExtResource("24")]
+
+[node name="Buttons" type="HBoxContainer" parent="Scroll/Grid/Card22/Content"]
+layout_mode = 2
+alignment = 1
+
+[node name="Play" type="Button" parent="Scroll/Grid/Card22/Content/Buttons"]
+layout_mode = 2
+text = "Play / Restart"
+
+[node name="Restore" type="Button" parent="Scroll/Grid/Card22/Content/Buttons"]
+layout_mode = 2
+text = "Stop & Restore"
+
+[node name="Card23" type="PanelContainer" parent="Scroll/Grid" groups=["effect_template_card"]]
+custom_minimum_size = Vector2(330, 190)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Content" type="VBoxContainer" parent="Scroll/Grid/Card23"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Scroll/Grid/Card23/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Flip"
+horizontal_alignment = 1
+
+[node name="TargetSlot" type="Control" parent="Scroll/Grid/Card23/Content"]
+custom_minimum_size = Vector2(300, 85)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Target" type="Label" parent="Scroll/Grid/Card23/Content/TargetSlot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(150, 42)
+theme_override_colors/font_color = Color(0.404, 0.91, 0.761, 1)
+theme_override_font_sizes/font_size = 30
+text = "Spire Tween"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Effect" parent="Scroll/Grid/Card23/Content/TargetSlot/Target" instance=ExtResource("25")]
+
+[node name="Buttons" type="HBoxContainer" parent="Scroll/Grid/Card23/Content"]
+layout_mode = 2
+alignment = 1
+
+[node name="Play" type="Button" parent="Scroll/Grid/Card23/Content/Buttons"]
+layout_mode = 2
+text = "Play / Restart"
+
+[node name="Restore" type="Button" parent="Scroll/Grid/Card23/Content/Buttons"]
+layout_mode = 2
+text = "Stop & Restore"
+
+[node name="Card24" type="PanelContainer" parent="Scroll/Grid" groups=["effect_template_card"]]
+custom_minimum_size = Vector2(330, 190)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Content" type="VBoxContainer" parent="Scroll/Grid/Card24"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Scroll/Grid/Card24/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Spin entrance / exit"
+horizontal_alignment = 1
+
+[node name="TargetSlot" type="Control" parent="Scroll/Grid/Card24/Content"]
+custom_minimum_size = Vector2(300, 85)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Target" type="Label" parent="Scroll/Grid/Card24/Content/TargetSlot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(150, 42)
+theme_override_colors/font_color = Color(0.404, 0.91, 0.761, 1)
+theme_override_font_sizes/font_size = 30
+text = "Spire Tween"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Effect" parent="Scroll/Grid/Card24/Content/TargetSlot/Target" instance=ExtResource("26")]
+
+[node name="Buttons" type="HBoxContainer" parent="Scroll/Grid/Card24/Content"]
+layout_mode = 2
+alignment = 1
+
+[node name="Play" type="Button" parent="Scroll/Grid/Card24/Content/Buttons"]
+layout_mode = 2
+text = "Play / Restart"
+
+[node name="Restore" type="Button" parent="Scroll/Grid/Card24/Content/Buttons"]
+layout_mode = 2
+text = "Stop & Restore"
+
+[node name="Card25" type="PanelContainer" parent="Scroll/Grid" groups=["effect_template_card"]]
+custom_minimum_size = Vector2(330, 190)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Content" type="VBoxContainer" parent="Scroll/Grid/Card25"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Scroll/Grid/Card25/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Hover / focus emphasis"
+horizontal_alignment = 1
+
+[node name="TargetSlot" type="Control" parent="Scroll/Grid/Card25/Content"]
+custom_minimum_size = Vector2(300, 85)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Target" type="Label" parent="Scroll/Grid/Card25/Content/TargetSlot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(150, 42)
+theme_override_colors/font_color = Color(0.404, 0.91, 0.761, 1)
+theme_override_font_sizes/font_size = 30
+text = "Spire Tween"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Effect" parent="Scroll/Grid/Card25/Content/TargetSlot/Target" instance=ExtResource("27")]
+
+[node name="Buttons" type="HBoxContainer" parent="Scroll/Grid/Card25/Content"]
+layout_mode = 2
+alignment = 1
+
+[node name="Play" type="Button" parent="Scroll/Grid/Card25/Content/Buttons"]
+layout_mode = 2
+text = "Play / Restart"
+
+[node name="Restore" type="Button" parent="Scroll/Grid/Card25/Content/Buttons"]
+layout_mode = 2
+text = "Stop & Restore"
+
+[node name="Card26" type="PanelContainer" parent="Scroll/Grid" groups=["effect_template_card"]]
+custom_minimum_size = Vector2(330, 190)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Content" type="VBoxContainer" parent="Scroll/Grid/Card26"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Scroll/Grid/Card26/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Press compression"
+horizontal_alignment = 1
+
+[node name="TargetSlot" type="Control" parent="Scroll/Grid/Card26/Content"]
+custom_minimum_size = Vector2(300, 85)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Target" type="Label" parent="Scroll/Grid/Card26/Content/TargetSlot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(150, 42)
+theme_override_colors/font_color = Color(0.404, 0.91, 0.761, 1)
+theme_override_font_sizes/font_size = 30
+text = "Spire Tween"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Effect" parent="Scroll/Grid/Card26/Content/TargetSlot/Target" instance=ExtResource("28")]
+
+[node name="Buttons" type="HBoxContainer" parent="Scroll/Grid/Card26/Content"]
+layout_mode = 2
+alignment = 1
+
+[node name="Play" type="Button" parent="Scroll/Grid/Card26/Content/Buttons"]
+layout_mode = 2
+text = "Play / Restart"
+
+[node name="Restore" type="Button" parent="Scroll/Grid/Card26/Content/Buttons"]
+layout_mode = 2
+text = "Stop & Restore"
+
+[node name="Card27" type="PanelContainer" parent="Scroll/Grid" groups=["effect_template_card"]]
+custom_minimum_size = Vector2(330, 190)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Content" type="VBoxContainer" parent="Scroll/Grid/Card27"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Scroll/Grid/Card27/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Selection bump"
+horizontal_alignment = 1
+
+[node name="TargetSlot" type="Control" parent="Scroll/Grid/Card27/Content"]
+custom_minimum_size = Vector2(300, 85)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Target" type="Label" parent="Scroll/Grid/Card27/Content/TargetSlot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(150, 42)
+theme_override_colors/font_color = Color(0.404, 0.91, 0.761, 1)
+theme_override_font_sizes/font_size = 30
+text = "Spire Tween"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Effect" parent="Scroll/Grid/Card27/Content/TargetSlot/Target" instance=ExtResource("29")]
+
+[node name="Buttons" type="HBoxContainer" parent="Scroll/Grid/Card27/Content"]
+layout_mode = 2
+alignment = 1
+
+[node name="Play" type="Button" parent="Scroll/Grid/Card27/Content/Buttons"]
+layout_mode = 2
+text = "Play / Restart"
+
+[node name="Restore" type="Button" parent="Scroll/Grid/Card27/Content/Buttons"]
+layout_mode = 2
+text = "Stop & Restore"
+
+[node name="Card28" type="PanelContainer" parent="Scroll/Grid" groups=["effect_template_card"]]
+custom_minimum_size = Vector2(330, 190)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Content" type="VBoxContainer" parent="Scroll/Grid/Card28"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Scroll/Grid/Card28/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Pulse  ·  LOOP"
+horizontal_alignment = 1
+
+[node name="TargetSlot" type="Control" parent="Scroll/Grid/Card28/Content"]
+custom_minimum_size = Vector2(300, 85)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Target" type="Label" parent="Scroll/Grid/Card28/Content/TargetSlot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(150, 42)
+theme_override_colors/font_color = Color(0.404, 0.91, 0.761, 1)
+theme_override_font_sizes/font_size = 30
+text = "Spire Tween"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Effect" parent="Scroll/Grid/Card28/Content/TargetSlot/Target" instance=ExtResource("30")]
+
+[node name="Buttons" type="HBoxContainer" parent="Scroll/Grid/Card28/Content"]
+layout_mode = 2
+alignment = 1
+
+[node name="Play" type="Button" parent="Scroll/Grid/Card28/Content/Buttons"]
+layout_mode = 2
+text = "Play / Restart"
+
+[node name="Restore" type="Button" parent="Scroll/Grid/Card28/Content/Buttons"]
+layout_mode = 2
+text = "Stop & Restore"
+
+[node name="Card29" type="PanelContainer" parent="Scroll/Grid" groups=["effect_template_card"]]
+custom_minimum_size = Vector2(330, 190)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Content" type="VBoxContainer" parent="Scroll/Grid/Card29"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Scroll/Grid/Card29/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Float  ·  LOOP"
+horizontal_alignment = 1
+
+[node name="TargetSlot" type="Control" parent="Scroll/Grid/Card29/Content"]
+custom_minimum_size = Vector2(300, 85)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Target" type="Label" parent="Scroll/Grid/Card29/Content/TargetSlot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(150, 42)
+theme_override_colors/font_color = Color(0.404, 0.91, 0.761, 1)
+theme_override_font_sizes/font_size = 30
+text = "Spire Tween"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Effect" parent="Scroll/Grid/Card29/Content/TargetSlot/Target" instance=ExtResource("31")]
+
+[node name="Buttons" type="HBoxContainer" parent="Scroll/Grid/Card29/Content"]
+layout_mode = 2
+alignment = 1
+
+[node name="Play" type="Button" parent="Scroll/Grid/Card29/Content/Buttons"]
+layout_mode = 2
+text = "Play / Restart"
+
+[node name="Restore" type="Button" parent="Scroll/Grid/Card29/Content/Buttons"]
+layout_mode = 2
+text = "Stop & Restore"
+
+[node name="Card30" type="PanelContainer" parent="Scroll/Grid" groups=["effect_template_card"]]
+custom_minimum_size = Vector2(330, 190)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Content" type="VBoxContainer" parent="Scroll/Grid/Card30"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Scroll/Grid/Card30/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Sway  ·  LOOP"
+horizontal_alignment = 1
+
+[node name="TargetSlot" type="Control" parent="Scroll/Grid/Card30/Content"]
+custom_minimum_size = Vector2(300, 85)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Target" type="Label" parent="Scroll/Grid/Card30/Content/TargetSlot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(150, 42)
+theme_override_colors/font_color = Color(0.404, 0.91, 0.761, 1)
+theme_override_font_sizes/font_size = 30
+text = "Spire Tween"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Effect" parent="Scroll/Grid/Card30/Content/TargetSlot/Target" instance=ExtResource("32")]
+
+[node name="Buttons" type="HBoxContainer" parent="Scroll/Grid/Card30/Content"]
+layout_mode = 2
+alignment = 1
+
+[node name="Play" type="Button" parent="Scroll/Grid/Card30/Content/Buttons"]
+layout_mode = 2
+text = "Play / Restart"
+
+[node name="Restore" type="Button" parent="Scroll/Grid/Card30/Content/Buttons"]
+layout_mode = 2
+text = "Stop & Restore"
+
+[node name="Card31" type="PanelContainer" parent="Scroll/Grid" groups=["effect_template_card"]]
+custom_minimum_size = Vector2(330, 190)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Content" type="VBoxContainer" parent="Scroll/Grid/Card31"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Scroll/Grid/Card31/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Spin  ·  LOOP"
+horizontal_alignment = 1
+
+[node name="TargetSlot" type="Control" parent="Scroll/Grid/Card31/Content"]
+custom_minimum_size = Vector2(300, 85)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Target" type="Label" parent="Scroll/Grid/Card31/Content/TargetSlot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(150, 42)
+theme_override_colors/font_color = Color(0.404, 0.91, 0.761, 1)
+theme_override_font_sizes/font_size = 30
+text = "Spire Tween"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Effect" parent="Scroll/Grid/Card31/Content/TargetSlot/Target" instance=ExtResource("33")]
+
+[node name="Buttons" type="HBoxContainer" parent="Scroll/Grid/Card31/Content"]
+layout_mode = 2
+alignment = 1
+
+[node name="Play" type="Button" parent="Scroll/Grid/Card31/Content/Buttons"]
+layout_mode = 2
+text = "Play / Restart"
+
+[node name="Restore" type="Button" parent="Scroll/Grid/Card31/Content/Buttons"]
+layout_mode = 2
+text = "Stop & Restore"
+
+[node name="Card32" type="PanelContainer" parent="Scroll/Grid" groups=["effect_template_card"]]
+custom_minimum_size = Vector2(330, 190)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Content" type="VBoxContainer" parent="Scroll/Grid/Card32"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Scroll/Grid/Card32/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Color cycle  ·  LOOP"
+horizontal_alignment = 1
+
+[node name="TargetSlot" type="Control" parent="Scroll/Grid/Card32/Content"]
+custom_minimum_size = Vector2(300, 85)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Target" type="Label" parent="Scroll/Grid/Card32/Content/TargetSlot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(150, 42)
+theme_override_colors/font_color = Color(0.404, 0.91, 0.761, 1)
+theme_override_font_sizes/font_size = 30
+text = "Spire Tween"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Effect" parent="Scroll/Grid/Card32/Content/TargetSlot/Target" instance=ExtResource("34")]
+
+[node name="Buttons" type="HBoxContainer" parent="Scroll/Grid/Card32/Content"]
+layout_mode = 2
+alignment = 1
+
+[node name="Play" type="Button" parent="Scroll/Grid/Card32/Content/Buttons"]
+layout_mode = 2
+text = "Play / Restart"
+
+[node name="Restore" type="Button" parent="Scroll/Grid/Card32/Content/Buttons"]
+layout_mode = 2
+text = "Stop & Restore"

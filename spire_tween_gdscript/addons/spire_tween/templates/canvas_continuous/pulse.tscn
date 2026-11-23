@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://addons/spire_tween/templates/canvas/continuous.gd" id="1"]
+
+[node name="Pulse" type="TweenBlueprint"]
+editor_description = "Whole-target scale pulse."
+script = ExtResource("1")
+style = 0
+ease = 16
+duration = 0.9

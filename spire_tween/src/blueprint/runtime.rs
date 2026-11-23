@@ -59,6 +59,9 @@ impl TweenBlueprint {
         // Register after configuration, before the builder, so script-created children can
         // use the normal append/join adoption path. No ticks run during this synchronous call.
         let (_, handle) = sequence.register_with_gd_handle();
+        if let Some(preview) = this.bind_mut().preview.as_mut() {
+            preview.sequence = Some(handle.instance_id());
+        }
         Self::forward_lifecycle(&this, &handle);
         this.signals().tween_spawned().emit(&handle);
         Self::play_internal(this.clone(), handle.clone());
@@ -78,6 +81,7 @@ impl TweenBlueprint {
             if let (Ok(node), Ok(sequence)) =
                 (Gd::<Self>::try_from_instance_id(node_id), Gd::<SpireSequence>::try_from_instance_id(sequence_id))
             {
+                preview::sequence_stopped(node.clone(), sequence_id);
                 node.signals().tween_stopped().emit(&sequence);
             }
         });

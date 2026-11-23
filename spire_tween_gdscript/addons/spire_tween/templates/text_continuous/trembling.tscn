@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://addons/spire_tween/templates/text/continuous.gd" id="1"]
+
+[node name="Trembling" type="TweenBlueprint"]
+editor_description = "Continuous random glyph tremble."
+script = ExtResource("1")
+style = 4
+ease = 16
+duration = 0.8
+amplitude = Vector2(2, 2)

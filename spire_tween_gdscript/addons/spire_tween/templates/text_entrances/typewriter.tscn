@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://addons/spire_tween/templates/text/entrance.gd" id="1"]
+
+[node name="Typewriter" type="TweenBlueprint"]
+editor_description = "Reveal logical characters one at a time."
+script = ExtResource("1")
+style = 0
+duration = 0.045

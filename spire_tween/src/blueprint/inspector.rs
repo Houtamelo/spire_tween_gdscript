@@ -113,6 +113,12 @@ pub(super) fn on_validate_property(bp: &TweenBlueprint, property: &mut PropertyI
     let name = property.property_name.to_string();
     let name = name.as_str();
 
+    if name == "play_preview_button" && bp.is_managed_by_parent()
+        || name == "stop_preview_button" && bp.preview.is_none()
+    {
+        property.usage = property.usage.with(PropertyUsageFlags::READ_ONLY);
+    }
+
     if let "kind"
     | "target"
     | "property_to_animate"
