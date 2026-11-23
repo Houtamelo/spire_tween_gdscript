@@ -68,13 +68,16 @@ func _capture(label: SpireRichTextLabel, channels: Array[StringName]) -> void:
 	for index in range(first_character, _last(label) + 1):
 		var values := {&"index": index}
 		for channel in channels:
-			values[channel] = label.call("get_char_" + channel, index)
+			var value: Variant = _get_channel_value(label, index, channel)
+			if value == null:
+				return
+			values[channel] = value
 		_saved_characters.append(values)
 
 
 func _initialize(label: SpireRichTextLabel, channel: StringName, value: Variant) -> void:
 	for index in range(first_character, _last(label) + 1):
-		label.call("set_char_" + channel, index, value)
+		_set_channel_value(label, index, channel, value)
 
 
 func _restore_saved() -> void:
@@ -90,7 +93,30 @@ func _restore_saved() -> void:
 			continue
 		for channel: StringName in values:
 			if channel != &"index":
-				label.call("set_char_" + channel, index, values[channel])
+				_set_channel_value(label, index, channel, values[channel])
+
+
+func _get_channel_value(label: SpireRichTextLabel, index: int, channel: StringName) -> Variant:
+	match channel:
+		&"offset": return label.get_char_offset(index)
+		&"rotation": return label.get_char_rotation(index)
+		&"scale": return label.get_char_scale(index)
+		&"color": return label.get_char_color(index)
+		&"alpha": return label.get_char_alpha(index)
+		&"pivot": return label.get_char_pivot(index)
+	push_warning("Unsupported character `channel`: %s." % channel)
+	return null
+
+
+func _set_channel_value(label: SpireRichTextLabel, index: int, channel: StringName, value: Variant) -> void:
+	match channel:
+		&"offset": label.set_char_offset(index, value)
+		&"rotation": label.set_char_rotation(index, value)
+		&"scale": label.set_char_scale(index, value)
+		&"color": label.set_char_color(index, value)
+		&"alpha": label.set_char_alpha(index, value)
+		&"pivot": label.set_char_pivot(index, value)
+		_: push_warning("Unsupported character `channel`: %s." % channel)
 
 
 func _clear_saved_state() -> void:

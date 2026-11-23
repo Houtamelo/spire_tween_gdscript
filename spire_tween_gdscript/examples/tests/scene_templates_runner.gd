@@ -29,8 +29,13 @@ func _snapshot(node: Node) -> Dictionary:
 	if node is SpireRichTextLabel:
 		var values := {}
 		for index in node.get_character_count():
-			for channel in [&"offset", &"scale", &"rotation", &"pivot", &"alpha", &"color"]:
-				values[str(index) + "/" + channel] = node.call("get_char_" + channel, index)
+			var prefix := str(index) + "/"
+			values[prefix + "offset"] = node.get_char_offset(index)
+			values[prefix + "scale"] = node.get_char_scale(index)
+			values[prefix + "rotation"] = node.get_char_rotation(index)
+			values[prefix + "pivot"] = node.get_char_pivot(index)
+			values[prefix + "alpha"] = node.get_char_alpha(index)
+			values[prefix + "color"] = node.get_char_color(index)
 		return values
 	return {"position": node.position, "scale": node.scale, "rotation": node.rotation, "modulate": node.modulate}
 
@@ -177,6 +182,43 @@ func _special_cases() -> void:
 	var effect := text_scene.instantiate()
 	label.add_child(effect)
 	await _draw()
+	# Exercise every channel with a non-default value, using the real label as
+	# an independent oracle for capture/initialize/restore and range boundaries.
+	effect.first_character = 1
+	effect.last_character = 2
+	label.set_char_offset(1, Vector2(2, 4))
+	label.set_char_rotation(1, Vector3(0.1, 0.2, 0.3))
+	label.set_char_scale(1, Vector2(1.2, 0.8))
+	label.set_char_pivot(1, Vector2(4, 6))
+	label.set_char_color(1, Color(0.2, 0.3, 0.4, 0.7))
+	var rest := _snapshot(label)
+	var channels: Array[StringName] = [&"offset", &"rotation", &"scale", &"pivot", &"color", &"alpha"]
+	effect._saved_target = weakref(label)
+	effect._capture(label, channels)
+	var changed := {
+		&"offset": Vector2(-10, 12), &"rotation": Vector3(0.4, 0.5, 0.6),
+		&"scale": Vector2(0.5, 1.5), &"pivot": Vector2(-4, 9),
+		&"color": Color(0.9, 0.1, 0.2, 0.4), &"alpha": 0.15,
+	}
+	for channel: StringName in channels:
+		effect._initialize(label, channel, changed[channel])
+		var current := _snapshot(label)
+		for index in [1, 2]:
+			var key := str(index) + "/" + channel
+			check(_same({key: current[key]}, {key: changed[channel]}), "Explicit channel setter updates selected characters: " + channel)
+	var initialized := _snapshot(label)
+	for key: String in rest:
+		if not key.begins_with("1/") and not key.begins_with("2/"):
+			check(_same({key: rest[key]}, {key: initialized[key]}), "Channel initialization preserves unselected characters")
+	effect.restore()
+	check(_same(rest, _snapshot(label)), "Explicit channel getters and setters restore all six captured values")
+	check(effect._get_channel_value(label, 1, &"missing") == null, "Unknown character channel has no value")
+	effect._initialize(label, &"missing", Vector2.ONE)
+	check(_same(rest, _snapshot(label)), "Unknown character channel initialization leaves all values unchanged")
+	var unsupported_channels: Array[StringName] = [&"missing"]
+	effect._capture(label, unsupported_channels)
+	check(effect._saved_characters.is_empty(), "Unknown character channel does not create a partial snapshot")
+	label.reset()
 	effect.first_character = 3
 	effect.last_character = 1
 	check(str(effect.get_template_warnings()).contains("`first_character`"), "Invalid character range is reported")
