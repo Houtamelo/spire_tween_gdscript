@@ -57,6 +57,13 @@ fn desktop_archive_accepts_ad_hoc_macos_and_requires_full_validation() {
         .find(|p| p.extension().is_some_and(|s| s == "zip"))
         .unwrap();
     let mut zip = zip::ZipArchive::new(fs::File::open(archive).unwrap()).unwrap();
+    assert_eq!(
+        (0..zip.len())
+            .filter(|&index| zip.by_index(index).unwrap().name() == "addons/spire_tween/templates/catalog.json")
+            .count(),
+        1,
+        "shared template assets must be packaged once across desktop platforms"
+    );
     let record: Value = serde_json::from_reader(zip.by_name("release.json").unwrap()).unwrap();
     assert_eq!(record["candidate"], false);
     let macos = record["platforms"]

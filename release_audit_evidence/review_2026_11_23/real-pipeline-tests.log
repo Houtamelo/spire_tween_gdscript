@@ -1,0 +1,11 @@
+   Compiling spire_release v0.1.0 (/tmp/spire-release-review-20261123/clean-checkout/release/tools)
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.71s
+     Running tests/pipeline.rs (target/debug/build/spire_release/e83980c5bf1e333f/out/pipeline-e83980c5bf1e333f)
+
+running 3 tests
+test verifies_real_artifacts_and_rejects_tampering_missing_files_and_build_debris ... ok
+test candidate_archive_installs_and_rejects_extra_files ... ok
+test installed_smoke_passes_and_missing_library_cannot_false_pass ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 30.77s
+

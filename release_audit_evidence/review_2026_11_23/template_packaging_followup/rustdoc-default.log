@@ -1,0 +1,2949 @@
+ Documenting spire_tween v1.4.0 (/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween)
+warning: public documentation for `TweenBlueprint` links to private item `SpireSequence`
+  --> spire_tween/src/blueprint/mod.rs:12:54
+   |
+12 | /// Stores an editable animation and builds a fresh [SpireSequence] on every [method play].
+   |                                                      ^^^^^^^^^^^^^ this item is private
+   |
+   = note: this link will resolve properly if you pass `--document-private-items`
+   = note: `#[warn(rustdoc::private_intra_doc_links)]` on by default
+
+warning: public documentation for `absolute` links to private item `FromValue::PendingEvaluation`
+  --> spire_tween/src/tweens/lerping/lerp_mode.rs:48:11
+   |
+48 |     /// [`FromValue::PendingEvaluation`] (read from the property on first tick).
+   |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ this item is private
+   |
+   = note: this link will resolve properly if you pass `--document-private-items`
+
+warning: public documentation for `reset_state` links to private item `FromValue::Explicit`
+  --> spire_tween/src/tweens/lerping/lerp_mode.rs:81:41
+   |
+81 |     /// re-evaluates `from` (when not [`FromValue::Explicit`]), clears
+   |                                         ^^^^^^^^^^^^^^^^^^^ this item is private
+   |
+   = note: this link will resolve properly if you pass `--document-private-items`
+
+warning: public documentation for `spire_step` links to private item `StepResult`
+   --> spire_tween/src/tweens/lerping/mod.rs:121:32
+    |
+121 |     /// the new value plus a [`StepResult`] indicating whether the target was reached.
+    |                                ^^^^^^^^^^ this item is private
+    |
+    = note: this link will resolve properly if you pass `--document-private-items`
+
+warning: public documentation for `spire_step` links to private item `StepResult::Unfinished::accumulated_time`
+   --> spire_tween/src/tweens/lerping/mod.rs:126:61
+    |
+126 |     /// "fuel" that callers can save up between ticks via [`StepResult::Unfinished::accumulated_time`]
+    |                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ this item is private
+    |
+    = note: this link will resolve properly if you pass `--document-private-items`
+
+warning: public documentation for `spire_step` links to private item `StepResult::Finished`
+   --> spire_tween/src/tweens/lerping/mod.rs:131:49
+    |
+131 |     /// - When the result equals `to`, return [`StepResult::Finished`] with the unspent
+    |                                                 ^^^^^^^^^^^^^^^^^^^^ this item is private
+    |
+    = note: this link will resolve properly if you pass `--document-private-items`
+
+warning: public documentation for `spire_step` links to private item `StepResult::Unfinished`
+   --> spire_tween/src/tweens/lerping/mod.rs:134:30
+    |
+134 |     /// - Otherwise return [`StepResult::Unfinished`] with the saved-up fuel as
+    |                              ^^^^^^^^^^^^^^^^^^^^^^ this item is private
+    |
+    = note: this link will resolve properly if you pass `--document-private-items`
+
+warning: public documentation for `lerper` links to private item `CustomBasicLerper`
+  --> spire_tween/src/tweens/method/data.rs:29:62
+   |
+29 |     /// The lerping math itself — `()` for built-in types, [`CustomBasicLerper`] for
+   |                                                              ^^^^^^^^^^^^^^^^^ this item is private
+   |
+   = note: this link will resolve properly if you pass `--document-private-items`
+
+warning: public documentation for `DoVarMethod` links to private item `CustomBasicLerper`
+  --> spire_tween/src/tweens/method/do_method.rs:92:7
+   |
+92 | /// [`CustomBasicLerper`].
+   |       ^^^^^^^^^^^^^^^^^ this item is private
+   |
+   = note: this link will resolve properly if you pass `--document-private-items`
+
+warning: public documentation for `append_ctor_callable` links to private item `SpireSequence`
+   --> spire_tween/src/tweens/sequence/data.rs:672:13
+    |
+672 |     /// a [`SpireSequence`]. It is called at most once. Invalid callables, nil or
+    |             ^^^^^^^^^^^^^ this item is private
+    |
+    = note: this link will resolve properly if you pass `--document-private-items`
+
+warning: unresolved link to `b`
+  --> spire_tween/src/tweens/templates/text_animator/gd.rs:11:6
+   |
+11 | /// [b]Initialization:[/b] Wait for the label's first [signal CanvasItem.draw]
+   |      ^ no item named `b` in scope
+   |
+   = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+   = note: `#[warn(rustdoc::broken_intra_doc_links)]` on by default
+
+warning: unresolved link to `b`
+  --> spire_tween/src/tweens/templates/text_animator/gd.rs:16:6
+   |
+16 | /// [b]Transforms:[/b] Rotation is a three-axis YXZ Euler vector in radians with
+   |      ^ no item named `b` in scope
+   |
+   = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:261:5
+    |
+261 | /     /// [b]Behavior:[/b] Rebuilds character data and resets all transformations.
+262 | |     /// Text/BBCode/translation changes trigger this automatically. Active tweens
+263 | |     /// retain their clocks and indices. Writes to missing indices are ignored while playback continues.
+    | |________________________________________________________________________________________________________^
+    |
+    = note: the link appears in this line:
+            
+            [b]Behavior:[/b] Rebuilds character data and resets all transformations.
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:267:5
+    |
+267 | /     /// [b]Behavior:[/b] Resets all deformations without rebuilding text, cancelling
+268 | |     /// tweens or changing their playback positions.
+    | |____________________________________________________^
+    |
+    = note: the link appears in this line:
+            
+            [b]Behavior:[/b] Resets all deformations without rebuilding text, cancelling
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:276:5
+    |
+276 | /     /// [b]Returns:[/b] The logical character count, including spaces and newlines,
+277 | |     /// excluding BBCode syntax, from the last refresh. Call [method refresh] for current text synchronously.
+278 | |     /// Indices follow parsed text order, not visual order.
+    | |___________________________________________________________^
+    |
+    = note: the link appears in this line:
+            
+            [b]Returns:[/b] The logical character count, including spaces and newlines,
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:282:5
+    |
+282 | /     /// [b]Returns:[/b] Whether [param index] exists in the current parsed text.
+283 | |     /// Uses the last refreshed state. Visibility, clipping and visible_characters do not remove indices.
+    | |_________________________________________________________________________________________________________^
+    |
+    = note: the link appears in this line:
+            
+            [b]Returns:[/b] Whether [param index] exists in the current parsed text.
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:287:5
+    |
+287 |     /// [b]Returns:[/b] The character's additional offset in pixels.
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: the link appears in this line:
+            
+            [b]Returns:[/b] The character's additional offset in pixels.
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:293:5
+    |
+293 | /     /// [b]Behavior:[/b] Sets the character's additional offset in pixels.
+294 | |     /// Invalid indices warn and do nothing. Nonfinite values warn and normalize.
+    | |_________________________________________________________________________________^
+    |
+    = note: the link appears in this line:
+            
+            [b]Behavior:[/b] Sets the character's additional offset in pixels.
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:302:5
+    |
+302 |     /// [b]Returns:[/b] The character's YXZ Euler rotation in radians, projected orthographically.
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: the link appears in this line:
+            
+            [b]Returns:[/b] The character's YXZ Euler rotation in radians, projected orthographically.
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:308:5
+    |
+308 | /     /// [b]Behavior:[/b] Sets the character's YXZ Euler rotation in radians, projected orthographically.
+309 | |     /// Invalid indices warn and do nothing. Nonfinite values warn and normalize.
+    | |_________________________________________________________________________________^
+    |
+    = note: the link appears in this line:
+            
+            [b]Behavior:[/b] Sets the character's YXZ Euler rotation in radians, projected orthographically.
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:317:5
+    |
+317 |     /// [b]Returns:[/b] The character's per-axis scale multiplier.
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: the link appears in this line:
+            
+            [b]Returns:[/b] The character's per-axis scale multiplier.
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:323:5
+    |
+323 | /     /// [b]Behavior:[/b] Sets the character's per-axis scale multiplier.
+324 | |     /// Invalid indices warn and do nothing. Nonfinite values warn and normalize.
+    | |_________________________________________________________________________________^
+    |
+    = note: the link appears in this line:
+            
+            [b]Behavior:[/b] Sets the character's per-axis scale multiplier.
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:332:5
+    |
+332 | /     /// [b]Returns:[/b] The character's fill color and alpha.
+333 | |     /// Before the first draw the theme default is used; drawing captures BBCode
+334 | |     /// and preceding-effect colors.
+    | |____________________________________^
+    |
+    = note: the link appears in this line:
+            
+            [b]Returns:[/b] The character's fill color and alpha.
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:340:5
+    |
+340 | /     /// [b]Behavior:[/b] Sets the character's fill color and alpha.
+341 | |     /// Invalid indices warn and do nothing. Nonfinite values warn and normalize.
+    | |_________________________________________________________________________________^
+    |
+    = note: the link appears in this line:
+            
+            [b]Behavior:[/b] Sets the character's fill color and alpha.
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:349:5
+    |
+349 | /     /// [b]Returns:[/b] The character's alpha. Easing/Incremental playback may overshoot.
+350 | |     /// Before the first draw this reads the theme default's alpha.
+    | |___________________________________________________________________^
+    |
+    = note: the link appears in this line:
+            
+            [b]Returns:[/b] The character's alpha. Easing/Incremental playback may overshoot.
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:354:5
+    |
+354 | /     /// [b]Behavior:[/b] Sets the character's alpha in [0,1], preserving RGB.
+355 | |     /// Invalid indices warn and do nothing. Nonfinite values warn and normalize.
+    | |_________________________________________________________________________________^
+    |
+    = note: the link appears in this line:
+            
+            [b]Behavior:[/b] Sets the character's alpha in [0,1], preserving RGB.
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: unresolved link to `0,1`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:354:57
+    |
+354 |     /// [b]Behavior:[/b] Sets the character's alpha in [0,1], preserving RGB.
+    |                                                         ^^^ no item named `0,1` in scope
+    |
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:363:5
+    |
+363 |     /// [b]Returns:[/b] The character's pivot offset in pixels from the glyph pen origin.
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: the link appears in this line:
+            
+            [b]Returns:[/b] The character's pivot offset in pixels from the glyph pen origin.
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:369:5
+    |
+369 | /     /// [b]Behavior:[/b] Sets the character's pivot offset in pixels from the glyph pen origin.
+370 | |     /// Invalid indices warn and do nothing. Nonfinite values warn and normalize.
+    | |_________________________________________________________________________________^
+    |
+    = note: the link appears in this line:
+            
+            [b]Behavior:[/b] Sets the character's pivot offset in pixels from the glyph pen origin.
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:378:5
+    |
+378 | /     /// [b]Behavior:[/b] Tweens the additional character offset in pixels. Captures the start on first processing.
+379 | |     /// Missing character indices are ignored without stopping playback. Invalid duration becomes
+380 | |     /// one second. Text edits reset deformations; surviving indices continue.
+381 | |     ///
+382 | |     /// [b]Returns:[/b] A registered [SpireCharTween] for one character.
+    | |________________________________________________________________________^
+    |
+    = note: the link appears in this line:
+            
+            [b]Behavior:[/b] Tweens the additional character offset in pixels. Captures the start on first processing.
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:378:5
+    |
+378 | /     /// [b]Behavior:[/b] Tweens the additional character offset in pixels. Captures the start on first processing.
+379 | |     /// Missing character indices are ignored without stopping playback. Invalid duration becomes
+380 | |     /// one second. Text edits reset deformations; surviving indices continue.
+381 | |     ///
+382 | |     /// [b]Returns:[/b] A registered [SpireCharTween] for one character.
+    | |________________________________________________________________________^
+    |
+    = note: the link appears in this line:
+            
+            [b]Returns:[/b] A registered [SpireCharTween] for one character.
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: public documentation for `offset_char` links to private item `SpireCharTween`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:382:39
+    |
+382 |     /// [b]Returns:[/b] A registered [SpireCharTween] for one character.
+    |                                       ^^^^^^^^^^^^^^ this item is private
+    |
+    = note: this link will resolve properly if you pass `--document-private-items`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:388:5
+    |
+388 | /     /// [b]Behavior:[/b] Tweens per-axis character scale multipliers. Negative values mirror. Captures the start on first process...
+389 | |     /// Missing character indices are ignored without stopping playback. Invalid duration becomes
+390 | |     /// one second. Text edits reset deformations; surviving indices continue.
+391 | |     ///
+392 | |     /// [b]Returns:[/b] A registered [SpireCharTween] for one character.
+    | |________________________________________________________________________^
+    |
+    = note: the link appears in this line:
+            
+            [b]Behavior:[/b] Tweens per-axis character scale multipliers. Negative values mirror. Captures the start on first processing.
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:388:5
+    |
+388 | /     /// [b]Behavior:[/b] Tweens per-axis character scale multipliers. Negative values mirror. Captures the start on first process...
+389 | |     /// Missing character indices are ignored without stopping playback. Invalid duration becomes
+390 | |     /// one second. Text edits reset deformations; surviving indices continue.
+391 | |     ///
+392 | |     /// [b]Returns:[/b] A registered [SpireCharTween] for one character.
+    | |________________________________________________________________________^
+    |
+    = note: the link appears in this line:
+            
+            [b]Returns:[/b] A registered [SpireCharTween] for one character.
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: public documentation for `scale_char` links to private item `SpireCharTween`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:392:39
+    |
+392 |     /// [b]Returns:[/b] A registered [SpireCharTween] for one character.
+    |                                       ^^^^^^^^^^^^^^ this item is private
+    |
+    = note: this link will resolve properly if you pass `--document-private-items`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:398:5
+    |
+398 | /     /// [b]Behavior:[/b] Tweens character fill RGBA. Target alpha clamps to [0,1]; RGB allows HDR. Captures the start on first pr...
+399 | |     /// Wait for the label's first draw to capture its effective BBCode color.
+400 | |     /// Missing character indices are ignored without stopping playback. Invalid duration becomes
+401 | |     /// one second. Text edits reset deformations; surviving indices continue.
+402 | |     ///
+403 | |     /// [b]Returns:[/b] A registered [SpireCharTween] for one character.
+    | |________________________________________________________________________^
+    |
+    = note: the link appears in this line:
+            
+            [b]Behavior:[/b] Tweens character fill RGBA. Target alpha clamps to [0,1]; RGB allows HDR. Captures the start on first processing.
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: unresolved link to `0,1`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:398:78
+    |
+398 |     /// [b]Behavior:[/b] Tweens character fill RGBA. Target alpha clamps to [0,1]; RGB allows HDR. Captures the start on first proc...
+    |                                                                              ^^^ no item named `0,1` in scope
+    |
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:398:5
+    |
+398 | /     /// [b]Behavior:[/b] Tweens character fill RGBA. Target alpha clamps to [0,1]; RGB allows HDR. Captures the start on first pr...
+399 | |     /// Wait for the label's first draw to capture its effective BBCode color.
+400 | |     /// Missing character indices are ignored without stopping playback. Invalid duration becomes
+401 | |     /// one second. Text edits reset deformations; surviving indices continue.
+402 | |     ///
+403 | |     /// [b]Returns:[/b] A registered [SpireCharTween] for one character.
+    | |________________________________________________________________________^
+    |
+    = note: the link appears in this line:
+            
+            [b]Returns:[/b] A registered [SpireCharTween] for one character.
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: public documentation for `color_char` links to private item `SpireCharTween`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:403:39
+    |
+403 |     /// [b]Returns:[/b] A registered [SpireCharTween] for one character.
+    |                                       ^^^^^^^^^^^^^^ this item is private
+    |
+    = note: this link will resolve properly if you pass `--document-private-items`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:409:5
+    |
+409 | /     /// [b]Behavior:[/b] Tweens toward a character alpha target in [0,1], preserving RGB. Captures the start on first processing.
+410 | |     /// Interpolated values may overshoot with easing or Incremental loops.
+411 | |     /// Wait for the label's first draw to capture its effective BBCode alpha.
+412 | |     /// Missing character indices are ignored without stopping playback. Invalid duration becomes
+413 | |     /// one second. Text edits reset deformations; surviving indices continue.
+414 | |     ///
+415 | |     /// [b]Returns:[/b] A registered [SpireCharTween] for one character.
+    | |________________________________________________________________________^
+    |
+    = note: the link appears in this line:
+            
+            [b]Behavior:[/b] Tweens toward a character alpha target in [0,1], preserving RGB. Captures the start on first processing.
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: unresolved link to `0,1`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:409:69
+    |
+409 |     /// [b]Behavior:[/b] Tweens toward a character alpha target in [0,1], preserving RGB. Captures the start on first processing.
+    |                                                                     ^^^ no item named `0,1` in scope
+    |
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:409:5
+    |
+409 | /     /// [b]Behavior:[/b] Tweens toward a character alpha target in [0,1], preserving RGB. Captures the start on first processing.
+410 | |     /// Interpolated values may overshoot with easing or Incremental loops.
+411 | |     /// Wait for the label's first draw to capture its effective BBCode alpha.
+412 | |     /// Missing character indices are ignored without stopping playback. Invalid duration becomes
+413 | |     /// one second. Text edits reset deformations; surviving indices continue.
+414 | |     ///
+415 | |     /// [b]Returns:[/b] A registered [SpireCharTween] for one character.
+    | |________________________________________________________________________^
+    |
+    = note: the link appears in this line:
+            
+            [b]Returns:[/b] A registered [SpireCharTween] for one character.
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: public documentation for `fade_char` links to private item `SpireCharTween`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:415:39
+    |
+415 |     /// [b]Returns:[/b] A registered [SpireCharTween] for one character.
+    |                                       ^^^^^^^^^^^^^^ this item is private
+    |
+    = note: this link will resolve properly if you pass `--document-private-items`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:421:5
+    |
+421 | /     /// [b]Behavior:[/b] Tweens three-axis YXZ Euler rotation in radians, projected
+422 | |     /// orthographically. Fast uses shortest per-axis deltas; FastBeyond360 retains
+423 | |     /// turns. WorldAxisAdd/LocalAxisAdd compose before/after the initial rotation.
+424 | |     /// Missing character indices are ignored; invalid duration becomes one second.
+425 | |     ///
+426 | |     /// [b]Returns:[/b] A registered [SpireCharTween] for one character.
+    | |________________________________________________________________________^
+    |
+    = note: the link appears in this line:
+            
+            [b]Behavior:[/b] Tweens three-axis YXZ Euler rotation in radians, projected
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:421:5
+    |
+421 | /     /// [b]Behavior:[/b] Tweens three-axis YXZ Euler rotation in radians, projected
+422 | |     /// orthographically. Fast uses shortest per-axis deltas; FastBeyond360 retains
+423 | |     /// turns. WorldAxisAdd/LocalAxisAdd compose before/after the initial rotation.
+424 | |     /// Missing character indices are ignored; invalid duration becomes one second.
+425 | |     ///
+426 | |     /// [b]Returns:[/b] A registered [SpireCharTween] for one character.
+    | |________________________________________________________________________^
+    |
+    = note: the link appears in this line:
+            
+            [b]Returns:[/b] A registered [SpireCharTween] for one character.
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: public documentation for `rotate_char` links to private item `SpireCharTween`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:426:39
+    |
+426 |     /// [b]Returns:[/b] A registered [SpireCharTween] for one character.
+    |                                       ^^^^^^^^^^^^^^ this item is private
+    |
+    = note: this link will resolve properly if you pass `--document-private-items`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:438:5
+    |
+438 | /     /// [b]Behavior:[/b] Punches the character's additional pixel offset.
+439 | |     /// Uses Spire's existing punch math. Stop leaves the last deformation;
+440 | |     /// successful completion removes this effect's contribution.
+441 | |     ///
+442 | |     /// [b]Returns:[/b] A registered [SpireCharTween] for one character.
+    | |________________________________________________________________________^
+    |
+    = note: the link appears in this line:
+            
+            [b]Behavior:[/b] Punches the character's additional pixel offset.
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:438:5
+    |
+438 | /     /// [b]Behavior:[/b] Punches the character's additional pixel offset.
+439 | |     /// Uses Spire's existing punch math. Stop leaves the last deformation;
+440 | |     /// successful completion removes this effect's contribution.
+441 | |     ///
+442 | |     /// [b]Returns:[/b] A registered [SpireCharTween] for one character.
+    | |________________________________________________________________________^
+    |
+    = note: the link appears in this line:
+            
+            [b]Returns:[/b] A registered [SpireCharTween] for one character.
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: public documentation for `punch_char_offset` links to private item `SpireCharTween`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:442:39
+    |
+442 |     /// [b]Returns:[/b] A registered [SpireCharTween] for one character.
+    |                                       ^^^^^^^^^^^^^^ this item is private
+    |
+    = note: this link will resolve properly if you pass `--document-private-items`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:459:5
+    |
+459 | /     /// [b]Behavior:[/b] Shakes the character's additional pixel offset.
+460 | |     /// Uses Spire's interpolated waypoint sampler. Stop leaves the last
+461 | |     /// deformation; successful completion removes this effect's contribution.
+462 | |     /// Invalid inputs warn with rejected values and normalize.
+463 | |     ///
+464 | |     /// [b]Returns:[/b] A registered [SpireCharTween] for one character.
+    | |________________________________________________________________________^
+    |
+    = note: the link appears in this line:
+            
+            [b]Behavior:[/b] Shakes the character's additional pixel offset.
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:459:5
+    |
+459 | /     /// [b]Behavior:[/b] Shakes the character's additional pixel offset.
+460 | |     /// Uses Spire's interpolated waypoint sampler. Stop leaves the last
+461 | |     /// deformation; successful completion removes this effect's contribution.
+462 | |     /// Invalid inputs warn with rejected values and normalize.
+463 | |     ///
+464 | |     /// [b]Returns:[/b] A registered [SpireCharTween] for one character.
+    | |________________________________________________________________________^
+    |
+    = note: the link appears in this line:
+            
+            [b]Returns:[/b] A registered [SpireCharTween] for one character.
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: public documentation for `shake_char_offset` links to private item `SpireCharTween`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:464:39
+    |
+464 |     /// [b]Returns:[/b] A registered [SpireCharTween] for one character.
+    |                                       ^^^^^^^^^^^^^^ this item is private
+    |
+    = note: this link will resolve properly if you pass `--document-private-items`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:492:5
+    |
+492 | /     /// [b]Behavior:[/b] Punches the character's Euler rotation in radians.
+493 | |     /// Uses Spire's existing punch math. Stop leaves the last deformation;
+494 | |     /// successful completion removes this effect's contribution.
+495 | |     ///
+496 | |     /// [b]Returns:[/b] A registered [SpireCharTween] for one character.
+    | |________________________________________________________________________^
+    |
+    = note: the link appears in this line:
+            
+            [b]Behavior:[/b] Punches the character's Euler rotation in radians.
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:492:5
+    |
+492 | /     /// [b]Behavior:[/b] Punches the character's Euler rotation in radians.
+493 | |     /// Uses Spire's existing punch math. Stop leaves the last deformation;
+494 | |     /// successful completion removes this effect's contribution.
+495 | |     ///
+496 | |     /// [b]Returns:[/b] A registered [SpireCharTween] for one character.
+    | |________________________________________________________________________^
+    |
+    = note: the link appears in this line:
+            
+            [b]Returns:[/b] A registered [SpireCharTween] for one character.
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: public documentation for `punch_char_rotation` links to private item `SpireCharTween`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:496:39
+    |
+496 |     /// [b]Returns:[/b] A registered [SpireCharTween] for one character.
+    |                                       ^^^^^^^^^^^^^^ this item is private
+    |
+    = note: this link will resolve properly if you pass `--document-private-items`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:513:5
+    |
+513 | /     /// [b]Behavior:[/b] Shakes the character's Euler rotation in radians.
+514 | |     /// Uses Spire's interpolated waypoint sampler. Stop leaves the last
+515 | |     /// deformation; successful completion removes this effect's contribution.
+516 | |     /// Invalid inputs warn with rejected values and normalize.
+517 | |     ///
+518 | |     /// [b]Returns:[/b] A registered [SpireCharTween] for one character.
+    | |________________________________________________________________________^
+    |
+    = note: the link appears in this line:
+            
+            [b]Behavior:[/b] Shakes the character's Euler rotation in radians.
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:513:5
+    |
+513 | /     /// [b]Behavior:[/b] Shakes the character's Euler rotation in radians.
+514 | |     /// Uses Spire's interpolated waypoint sampler. Stop leaves the last
+515 | |     /// deformation; successful completion removes this effect's contribution.
+516 | |     /// Invalid inputs warn with rejected values and normalize.
+517 | |     ///
+518 | |     /// [b]Returns:[/b] A registered [SpireCharTween] for one character.
+    | |________________________________________________________________________^
+    |
+    = note: the link appears in this line:
+            
+            [b]Returns:[/b] A registered [SpireCharTween] for one character.
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: public documentation for `shake_char_rotation` links to private item `SpireCharTween`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:518:39
+    |
+518 |     /// [b]Returns:[/b] A registered [SpireCharTween] for one character.
+    |                                       ^^^^^^^^^^^^^^ this item is private
+    |
+    = note: this link will resolve properly if you pass `--document-private-items`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:546:5
+    |
+546 | /     /// [b]Behavior:[/b] Punches the character's scale using additive per-axis deltas.
+547 | |     /// Uses Spire's existing punch math. Stop leaves the last deformation;
+548 | |     /// successful completion removes this effect's contribution.
+549 | |     ///
+550 | |     /// [b]Returns:[/b] A registered [SpireCharTween] for one character.
+    | |________________________________________________________________________^
+    |
+    = note: the link appears in this line:
+            
+            [b]Behavior:[/b] Punches the character's scale using additive per-axis deltas.
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:546:5
+    |
+546 | /     /// [b]Behavior:[/b] Punches the character's scale using additive per-axis deltas.
+547 | |     /// Uses Spire's existing punch math. Stop leaves the last deformation;
+548 | |     /// successful completion removes this effect's contribution.
+549 | |     ///
+550 | |     /// [b]Returns:[/b] A registered [SpireCharTween] for one character.
+    | |________________________________________________________________________^
+    |
+    = note: the link appears in this line:
+            
+            [b]Returns:[/b] A registered [SpireCharTween] for one character.
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: public documentation for `punch_char_scale` links to private item `SpireCharTween`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:550:39
+    |
+550 |     /// [b]Returns:[/b] A registered [SpireCharTween] for one character.
+    |                                       ^^^^^^^^^^^^^^ this item is private
+    |
+    = note: this link will resolve properly if you pass `--document-private-items`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:567:5
+    |
+567 | /     /// [b]Behavior:[/b] Shakes the character's scale using additive per-axis deltas.
+568 | |     /// Uses Spire's interpolated waypoint sampler. Stop leaves the last
+569 | |     /// deformation; successful completion removes this effect's contribution.
+570 | |     /// Invalid inputs warn with rejected values and normalize.
+571 | |     ///
+572 | |     /// [b]Returns:[/b] A registered [SpireCharTween] for one character.
+    | |________________________________________________________________________^
+    |
+    = note: the link appears in this line:
+            
+            [b]Behavior:[/b] Shakes the character's scale using additive per-axis deltas.
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:567:5
+    |
+567 | /     /// [b]Behavior:[/b] Shakes the character's scale using additive per-axis deltas.
+568 | |     /// Uses Spire's interpolated waypoint sampler. Stop leaves the last
+569 | |     /// deformation; successful completion removes this effect's contribution.
+570 | |     /// Invalid inputs warn with rejected values and normalize.
+571 | |     ///
+572 | |     /// [b]Returns:[/b] A registered [SpireCharTween] for one character.
+    | |________________________________________________________________________^
+    |
+    = note: the link appears in this line:
+            
+            [b]Returns:[/b] A registered [SpireCharTween] for one character.
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: public documentation for `shake_char_scale` links to private item `SpireCharTween`
+   --> spire_tween/src/tweens/templates/text_animator/gd.rs:572:39
+    |
+572 |     /// [b]Returns:[/b] A registered [SpireCharTween] for one character.
+    |                                       ^^^^^^^^^^^^^^ this item is private
+    |
+    = note: this link will resolve properly if you pass `--document-private-items`
+
+warning: unresolved link to `b`
+  --> spire_tween/src/tweens/templates/text_animator/ranges_gd.rs:5:5
+   |
+ 5 | /     /// Animate an inclusive range of logical character indices; last = -1 selects through the text end.
+ 6 | |     /// [param duration] is seconds per character per leg. The Char tween finishes
+ 7 | |     /// when the last character finishes, including its start delay and requested loops.
+ 8 | |     /// [param delay_curve] supplies finite non-negative start delays in multiples
+ 9 | |     /// of duration. Its samples are captured when constructing this tween.
+10 | |     /// Missing indices ignore writes while playback continues.
+11 | |     /// [b]Returns:[/b] One registered [SpireCharTween] for the whole range.
+   | |____________________________________________________________________________^
+   |
+   = note: the link appears in this line:
+           
+           [b]Returns:[/b] One registered [SpireCharTween] for the whole range.
+            ^
+   = note: no item named `b` in scope
+   = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: public documentation for `offset_chars` links to private item `SpireCharTween`
+  --> spire_tween/src/tweens/templates/text_animator/ranges_gd.rs:11:41
+   |
+11 |     /// [b]Returns:[/b] One registered [SpireCharTween] for the whole range.
+   |                                         ^^^^^^^^^^^^^^ this item is private
+   |
+   = note: this link will resolve properly if you pass `--document-private-items`
+
+warning: unresolved link to `b`
+  --> spire_tween/src/tweens/templates/text_animator/ranges_gd.rs:24:5
+   |
+24 | /     /// Animate an inclusive range of logical character indices; last = -1 selects through the text end.
+25 | |     /// [param duration] is seconds per character per leg. The Char tween finishes
+26 | |     /// when the last character finishes, including its start delay and requested loops.
+27 | |     /// [param delay_curve] supplies finite non-negative start delays in multiples
+28 | |     /// of duration. Its samples are captured when constructing this tween.
+29 | |     /// Missing indices ignore writes while playback continues.
+30 | |     /// [b]Returns:[/b] One registered [SpireCharTween] for the whole range.
+   | |____________________________________________________________________________^
+   |
+   = note: the link appears in this line:
+           
+           [b]Returns:[/b] One registered [SpireCharTween] for the whole range.
+            ^
+   = note: no item named `b` in scope
+   = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: public documentation for `scale_chars` links to private item `SpireCharTween`
+  --> spire_tween/src/tweens/templates/text_animator/ranges_gd.rs:30:41
+   |
+30 |     /// [b]Returns:[/b] One registered [SpireCharTween] for the whole range.
+   |                                         ^^^^^^^^^^^^^^ this item is private
+   |
+   = note: this link will resolve properly if you pass `--document-private-items`
+
+warning: unresolved link to `b`
+  --> spire_tween/src/tweens/templates/text_animator/ranges_gd.rs:43:5
+   |
+43 | /     /// Animate an inclusive range of logical character indices; last = -1 selects through the text end.
+44 | |     /// [param duration] is seconds per character per leg. The Char tween finishes
+45 | |     /// when the last character finishes, including its start delay and requested loops.
+46 | |     /// [param delay_curve] supplies finite non-negative start delays in multiples
+47 | |     /// of duration. Its samples are captured when constructing this tween.
+48 | |     /// Missing indices ignore writes while playback continues.
+49 | |     /// [b]Returns:[/b] One registered [SpireCharTween] for the whole range.
+   | |____________________________________________________________________________^
+   |
+   = note: the link appears in this line:
+           
+           [b]Returns:[/b] One registered [SpireCharTween] for the whole range.
+            ^
+   = note: no item named `b` in scope
+   = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: public documentation for `color_chars` links to private item `SpireCharTween`
+  --> spire_tween/src/tweens/templates/text_animator/ranges_gd.rs:49:41
+   |
+49 |     /// [b]Returns:[/b] One registered [SpireCharTween] for the whole range.
+   |                                         ^^^^^^^^^^^^^^ this item is private
+   |
+   = note: this link will resolve properly if you pass `--document-private-items`
+
+warning: unresolved link to `b`
+  --> spire_tween/src/tweens/templates/text_animator/ranges_gd.rs:62:5
+   |
+62 | /     /// Animate an inclusive range of logical character indices; last = -1 selects through the text end.
+63 | |     /// [param duration] is seconds per character per leg. The Char tween finishes
+64 | |     /// when the last character finishes, including its start delay and requested loops.
+65 | |     /// [param delay_curve] supplies finite non-negative start delays in multiples
+66 | |     /// of duration. Its samples are captured when constructing this tween.
+67 | |     /// Missing indices ignore writes while playback continues.
+68 | |     /// [b]Returns:[/b] One registered [SpireCharTween] for the whole range.
+   | |____________________________________________________________________________^
+   |
+   = note: the link appears in this line:
+           
+           [b]Returns:[/b] One registered [SpireCharTween] for the whole range.
+            ^
+   = note: no item named `b` in scope
+   = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: public documentation for `fade_chars` links to private item `SpireCharTween`
+  --> spire_tween/src/tweens/templates/text_animator/ranges_gd.rs:68:41
+   |
+68 |     /// [b]Returns:[/b] One registered [SpireCharTween] for the whole range.
+   |                                         ^^^^^^^^^^^^^^ this item is private
+   |
+   = note: this link will resolve properly if you pass `--document-private-items`
+
+warning: unresolved link to `b`
+  --> spire_tween/src/tweens/templates/text_animator/ranges_gd.rs:81:5
+   |
+81 | /     /// Animate an inclusive range of logical character indices; last = -1 selects through the text end.
+82 | |     /// [param duration] is seconds per character per leg. The Char tween finishes
+83 | |     /// when the last character finishes, including its start delay and requested loops.
+84 | |     /// [param delay_curve] supplies finite non-negative start delays in multiples
+85 | |     /// of duration. Its samples are captured when constructing this tween.
+86 | |     /// Missing indices ignore writes while playback continues.
+87 | |     /// [b]Returns:[/b] One registered [SpireCharTween] for the whole range.
+   | |____________________________________________________________________________^
+   |
+   = note: the link appears in this line:
+           
+           [b]Returns:[/b] One registered [SpireCharTween] for the whole range.
+            ^
+   = note: no item named `b` in scope
+   = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: public documentation for `rotate_chars` links to private item `SpireCharTween`
+  --> spire_tween/src/tweens/templates/text_animator/ranges_gd.rs:87:41
+   |
+87 |     /// [b]Returns:[/b] One registered [SpireCharTween] for the whole range.
+   |                                         ^^^^^^^^^^^^^^ this item is private
+   |
+   = note: this link will resolve properly if you pass `--document-private-items`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/templates/text_animator/ranges_gd.rs:104:5
+    |
+104 | /     /// Animate an inclusive range of logical character indices; last = -1 selects through the text end.
+105 | |     /// [param duration] is seconds per character per leg. The Char tween finishes
+106 | |     /// when the last character finishes, including its start delay and requested loops.
+107 | |     /// [param delay_curve] supplies finite non-negative start delays in multiples
+108 | |     /// of duration. Its samples are captured when constructing this tween.
+109 | |     /// Missing indices ignore writes while playback continues.
+110 | |     /// [b]Returns:[/b] One registered [SpireCharTween] for the whole range.
+    | |____________________________________________________________________________^
+    |
+    = note: the link appears in this line:
+            
+            [b]Returns:[/b] One registered [SpireCharTween] for the whole range.
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: public documentation for `punch_chars_offset` links to private item `SpireCharTween`
+   --> spire_tween/src/tweens/templates/text_animator/ranges_gd.rs:110:41
+    |
+110 |     /// [b]Returns:[/b] One registered [SpireCharTween] for the whole range.
+    |                                         ^^^^^^^^^^^^^^ this item is private
+    |
+    = note: this link will resolve properly if you pass `--document-private-items`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/templates/text_animator/ranges_gd.rs:129:5
+    |
+129 | /     /// Animate an inclusive range of logical character indices; last = -1 selects through the text end.
+130 | |     /// [param duration] is seconds per character per leg. The Char tween finishes
+131 | |     /// when the last character finishes, including its start delay and requested loops.
+132 | |     /// [param delay_curve] supplies finite non-negative start delays in multiples
+133 | |     /// of duration. Its samples are captured when constructing this tween.
+134 | |     /// Missing indices ignore writes while playback continues.
+135 | |     /// [b]Returns:[/b] One registered [SpireCharTween] for the whole range.
+    | |____________________________________________________________________________^
+    |
+    = note: the link appears in this line:
+            
+            [b]Returns:[/b] One registered [SpireCharTween] for the whole range.
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: public documentation for `punch_chars_rotation` links to private item `SpireCharTween`
+   --> spire_tween/src/tweens/templates/text_animator/ranges_gd.rs:135:41
+    |
+135 |     /// [b]Returns:[/b] One registered [SpireCharTween] for the whole range.
+    |                                         ^^^^^^^^^^^^^^ this item is private
+    |
+    = note: this link will resolve properly if you pass `--document-private-items`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/templates/text_animator/ranges_gd.rs:154:5
+    |
+154 | /     /// Animate an inclusive range of logical character indices; last = -1 selects through the text end.
+155 | |     /// [param duration] is seconds per character per leg. The Char tween finishes
+156 | |     /// when the last character finishes, including its start delay and requested loops.
+157 | |     /// [param delay_curve] supplies finite non-negative start delays in multiples
+158 | |     /// of duration. Its samples are captured when constructing this tween.
+159 | |     /// Missing indices ignore writes while playback continues.
+160 | |     /// [b]Returns:[/b] One registered [SpireCharTween] for the whole range.
+    | |____________________________________________________________________________^
+    |
+    = note: the link appears in this line:
+            
+            [b]Returns:[/b] One registered [SpireCharTween] for the whole range.
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: public documentation for `punch_chars_scale` links to private item `SpireCharTween`
+   --> spire_tween/src/tweens/templates/text_animator/ranges_gd.rs:160:41
+    |
+160 |     /// [b]Returns:[/b] One registered [SpireCharTween] for the whole range.
+    |                                         ^^^^^^^^^^^^^^ this item is private
+    |
+    = note: this link will resolve properly if you pass `--document-private-items`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/templates/text_animator/ranges_gd.rs:179:5
+    |
+179 | /     /// Animate an inclusive range of logical character indices; last = -1 selects through the text end.
+180 | |     /// [param duration] is seconds per character per leg. The Char tween finishes
+181 | |     /// when the last character finishes, including its start delay and requested loops.
+182 | |     /// [param delay_curve] supplies finite non-negative start delays in multiples
+183 | |     /// of duration. Its samples are captured when constructing this tween.
+184 | |     /// Missing indices ignore writes while playback continues.
+185 | |     /// [b]Returns:[/b] One registered [SpireCharTween] for the whole range.
+    | |____________________________________________________________________________^
+    |
+    = note: the link appears in this line:
+            
+            [b]Returns:[/b] One registered [SpireCharTween] for the whole range.
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: public documentation for `shake_chars_offset` links to private item `SpireCharTween`
+   --> spire_tween/src/tweens/templates/text_animator/ranges_gd.rs:185:41
+    |
+185 |     /// [b]Returns:[/b] One registered [SpireCharTween] for the whole range.
+    |                                         ^^^^^^^^^^^^^^ this item is private
+    |
+    = note: this link will resolve properly if you pass `--document-private-items`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/templates/text_animator/ranges_gd.rs:217:5
+    |
+217 | /     /// Animate an inclusive range of logical character indices; last = -1 selects through the text end.
+218 | |     /// [param duration] is seconds per character per leg. The Char tween finishes
+219 | |     /// when the last character finishes, including its start delay and requested loops.
+220 | |     /// [param delay_curve] supplies finite non-negative start delays in multiples
+221 | |     /// of duration. Its samples are captured when constructing this tween.
+222 | |     /// Missing indices ignore writes while playback continues.
+223 | |     /// [b]Returns:[/b] One registered [SpireCharTween] for the whole range.
+    | |____________________________________________________________________________^
+    |
+    = note: the link appears in this line:
+            
+            [b]Returns:[/b] One registered [SpireCharTween] for the whole range.
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: public documentation for `shake_chars_rotation` links to private item `SpireCharTween`
+   --> spire_tween/src/tweens/templates/text_animator/ranges_gd.rs:223:41
+    |
+223 |     /// [b]Returns:[/b] One registered [SpireCharTween] for the whole range.
+    |                                         ^^^^^^^^^^^^^^ this item is private
+    |
+    = note: this link will resolve properly if you pass `--document-private-items`
+
+warning: unresolved link to `b`
+   --> spire_tween/src/tweens/templates/text_animator/ranges_gd.rs:255:5
+    |
+255 | /     /// Animate an inclusive range of logical character indices; last = -1 selects through the text end.
+256 | |     /// [param duration] is seconds per character per leg. The Char tween finishes
+257 | |     /// when the last character finishes, including its start delay and requested loops.
+258 | |     /// [param delay_curve] supplies finite non-negative start delays in multiples
+259 | |     /// of duration. Its samples are captured when constructing this tween.
+260 | |     /// Missing indices ignore writes while playback continues.
+261 | |     /// [b]Returns:[/b] One registered [SpireCharTween] for the whole range.
+    | |____________________________________________________________________________^
+    |
+    = note: the link appears in this line:
+            
+            [b]Returns:[/b] One registered [SpireCharTween] for the whole range.
+             ^
+    = note: no item named `b` in scope
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: public documentation for `shake_chars_scale` links to private item `SpireCharTween`
+   --> spire_tween/src/tweens/templates/text_animator/ranges_gd.rs:261:41
+    |
+261 |     /// [b]Returns:[/b] One registered [SpireCharTween] for the whole range.
+    |                                         ^^^^^^^^^^^^^^ this item is private
+    |
+    = note: this link will resolve properly if you pass `--document-private-items`
+
+warning: could not parse code block as Rust code
+  --> spire_tween/src/enums/ease.rs:17:9
+   |
+17 | /         /// f(x) = x
+18 | |         ///
+19 | |         /// ```ignore
+20 | |         /// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░████
+...  |
+34 | |         /// ████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+35 | |         /// ```
+   | |_______________^
+   |
+   = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2593}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2593}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: `#[warn(rustdoc::invalid_rust_codeblocks)]` on by default
+   = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: could not parse code block as Rust code
+  --> spire_tween/src/enums/ease.rs:38:9
+   |
+38 | /         /// f(x) = sin((x - 1.0)π/2) + 1
+39 | |         ///
+40 | |         /// ```ignore
+41 | |         /// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▓██
+...  |
+57 | |         /// ▓▓▓▓▓█████████▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+58 | |         /// ```
+   | |_______________^
+   |
+   = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2593}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2592}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2592}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2592}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2592}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2593}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2593}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2592}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2592}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2592}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2593}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2592}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2593}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2593}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2592}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: could not parse code block as Rust code
+  --> spire_tween/src/enums/ease.rs:61:9
+   |
+61 | /         /// f(x) = x^2
+62 | |         ///
+63 | |         /// ```ignore
+64 | |         /// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+...  |
+80 | |         /// ▓▓▓▓▓██████████▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+81 | |         /// ```
+   | |_______________^
+   |
+   = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2593}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2593}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2593}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2592}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2592}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2593}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2593}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2592}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2593}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2593}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2593}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2593}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2593}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2593}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2593}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: error from rustc: unknown start of token: \u{2593}
+   = note: error from rustc: unknown start of token: \u{2588}
+   = note: error from rustc: unknown start of token: \u{2593}
+   = note: error from rustc: unknown start of token: \u{2591}
+   = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: could not parse code block as Rust code
+   --> spire_tween/src/enums/ease.rs:84:9
+    |
+ 84 | /         /// f(x) = x^3
+ 85 | |         ///
+ 86 | |         /// ```ignore
+ 87 | |         /// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+...   |
+103 | |         /// ▓▓▓▓▓▓▓▓▓▓██████████████▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+104 | |         /// ```
+    | |_______________^
+    |
+    = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: could not parse code block as Rust code
+   --> spire_tween/src/enums/ease.rs:107:9
+    |
+107 | /         /// f(x) = x^4
+108 | |         ///
+109 | |         /// ```ignore
+110 | |         /// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▓█
+...   |
+126 | |         /// ▓▓▓▓▓▓▓▓▓▓▓▓▓▓████████████████▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+127 | |         /// ```
+    | |_______________^
+    |
+    = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: could not parse code block as Rust code
+   --> spire_tween/src/enums/ease.rs:130:9
+    |
+130 | /         /// f(x) = x^5
+131 | |         ///
+132 | |         /// ```ignore
+133 | |         /// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒█
+...   |
+149 | |         /// ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓█████████████████▓▒░░░░░░░░░░░░░░░░░░░░░░░░░░░
+150 | |         /// ```
+    | |_______________^
+    |
+    = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: could not parse code block as Rust code
+   --> spire_tween/src/enums/ease.rs:153:9
+    |
+153 | /         /// f(x) = 1 - sqrt(1 - x^2)
+154 | |         ///
+155 | |         /// ```ignore
+156 | |         /// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░█
+...   |
+172 | |         /// ▓▓▓▓▓▓▓████████████████▓▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+173 | |         /// ```
+    | |_______________^
+    |
+    = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: could not parse code block as Rust code
+   --> spire_tween/src/enums/ease.rs:176:9
+    |
+176 | /         /// f(x) = 2^(10x - 10)
+177 | |         ///
+178 | |         /// ```ignore
+179 | |         /// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░█
+...   |
+195 | |         /// ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓█████████████████▓░░░░░░░░░░░░░░░░░░░░░░░░░
+196 | |         /// ```
+    | |_______________^
+    |
+    = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: could not parse code block as Rust code
+   --> spire_tween/src/enums/ease.rs:199:9
+    |
+199 | /         /// f(x) = sin(xπ / 3)
+200 | |         ///
+201 | |         /// ```ignore
+202 | |         /// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒█████████▓▓▓▓▓
+...   |
+218 | |         /// ███░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+219 | |         /// ```
+    | |_______________^
+    |
+    = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: could not parse code block as Rust code
+   --> spire_tween/src/enums/ease.rs:222:9
+    |
+222 | /         /// f(x) = x(3 - x)
+223 | |         ///
+224 | |         /// ```ignore
+225 | |         /// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒██████████▓▓▓▓▓
+...   |
+241 | |         /// ██▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+242 | |         /// ```
+    | |_______________^
+    |
+    = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: could not parse code block as Rust code
+   --> spire_tween/src/enums/ease.rs:245:9
+    |
+245 | /         /// f(x) = 2 + (x - 2)^4
+246 | |         ///
+247 | |         /// ```ignore
+248 | |         /// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒██████████████▓▓▓▓▓▓▓▓▓▓
+...   |
+264 | |         /// ██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+265 | |         /// ```
+    | |_______________^
+    |
+    = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: could not parse code block as Rust code
+   --> spire_tween/src/enums/ease.rs:268:9
+    |
+268 | /         /// f(x) = 2 - (x - 2)^5
+269 | |         ///
+270 | |         /// ```ignore
+271 | |         /// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▓████████████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+...   |
+287 | |         /// █▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+288 | |         /// ```
+    | |_______________^
+    |
+    = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: could not parse code block as Rust code
+   --> spire_tween/src/enums/ease.rs:291:9
+    |
+291 | /         /// f(x) = 2 + (x - 2)^6
+292 | |         ///
+293 | |         /// ```ignore
+294 | |         /// ░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▓██████████████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+...   |
+310 | |         /// █▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+311 | |         /// ```
+    | |_______________^
+    |
+    = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: could not parse code block as Rust code
+   --> spire_tween/src/enums/ease.rs:314:9
+    |
+314 | /         /// f(x) = sqrt(2 - (x - 2)^3)
+315 | |         ///
+316 | |         /// ```ignore
+317 | |         /// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒█████████████████▓▓▓▓▓▓
+...   |
+333 | |         /// █░░░░░░░░░░░░░░░░░░░░░░░░ ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+334 | |         /// ```
+    | |_______________^
+    |
+    = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: could not parse code block as Rust code
+   --> spire_tween/src/enums/ease.rs:337:9
+    |
+337 | /         /// f(x) = 2 - 3^(-9x)
+338 | |         ///
+339 | |         /// ```ignore
+340 | |         /// ░░░░░░░░░░░░░░░░░░░░░░░░░▓██████████████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+...   |
+356 | |         /// █░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+357 | |         /// ```
+    | |_______________^
+    |
+    = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: could not parse code block as Rust code
+   --> spire_tween/src/enums/ease.rs:360:9
+    |
+360 | /         /// f(x) = 0.6 * (2 - cos(πx))
+361 | |         ///
+362 | |         /// ```ignore
+363 | |         /// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒████████▓▓
+...   |
+379 | |         /// ▓▓▓███████▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+380 | |         /// ```
+    | |_______________^
+    |
+    = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: could not parse code block as Rust code
+   --> spire_tween/src/enums/ease.rs:383:9
+    |
+383 | /         /// ```ignore
+384 | |         /// if x < 0.6: f(x) = 3 * x^3
+385 | |         /// else:       f(x) = 0 + x * (5 - 3x)
+386 | |         /// ```
+...   |
+405 | |         /// ▓▓▓████████▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+406 | |         /// ```
+    | |_______________^
+    |
+    = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: could not parse code block as Rust code
+   --> spire_tween/src/enums/ease.rs:409:9
+    |
+409 | /         /// ```ignore
+410 | |         /// if x < 0.6: f(x) = 5 * x^4
+411 | |         /// else:       f(x) = 2 + (x - 2) * (3x - 3)^3
+412 | |         /// ```
+...   |
+431 | |         /// ▓▓▓▓██████████▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+432 | |         /// ```
+    | |_______________^
+    |
+    = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: could not parse code block as Rust code
+   --> spire_tween/src/enums/ease.rs:435:9
+    |
+435 | /         /// ```ignore
+436 | |         /// if x < 0.6: f(x) = 9 * x^5
+437 | |         /// else:       f(x) = 2 - 9 * (x - 2)^5
+438 | |         /// ```
+...   |
+457 | |         /// ▓▓▓▓▓███████████▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+458 | |         /// ```
+    | |_______________^
+    |
+    = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: could not parse code block as Rust code
+   --> spire_tween/src/enums/ease.rs:461:9
+    |
+461 | /         /// ```ignore
+462 | |         /// if x < 0.6: f(x) = 17 * x^6
+463 | |         /// else:       f(x) = 2 + 17 * (x - 2)^6
+464 | |         /// ```
+...   |
+482 | |         /// ░░░░░░░░░░░░░░░░░▓█████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+483 | |         /// ▓▓▓▓▓▓███████████▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+    | |___________________________________________________________________________^
+    |
+    = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: could not parse code block as Rust code
+   --> spire_tween/src/enums/ease.rs:486:9
+    |
+486 | /         /// ```ignore
+487 | |         /// if x < 0.6: f(x) = (2 - sqrt(2 - 5x^3)) / 3
+488 | |         /// else:       f(x) = (2 + sqrt(2 - (3 - 3x)^3)) / 3
+489 | |         /// ```
+...   |
+508 | |         /// ▓▓▓▓▓▓████████████▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+509 | |         /// ```
+    | |_______________^
+    |
+    = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: could not parse code block as Rust code
+   --> spire_tween/src/enums/ease.rs:512:9
+    |
+512 | /         /// ```ignore
+513 | |         /// if x < 0.6: f(x) = (3^(21x - 11)) / 3
+514 | |         /// else:       f(x) = (3 - 3^(11 - 21x)) / 3
+515 | |         /// ```
+...   |
+534 | |         /// ▓▓▓▓▓▓████████████▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+535 | |         /// ```
+    | |_______________^
+    |
+    = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: could not parse code block as Rust code
+   --> spire_tween/src/enums/ease.rs:538:9
+    |
+538 | /         /// f(x) = 5.9 * sin(x * π * 9) * exp(-7 * x)
+539 | |         ///
+540 | |         /// A punch effect that does not overshoot the target, but
+541 | |         /// does slightly undershoot the starting position midway through the tween.
+...   |
+562 | |         /// ░░░░░░░░░░░░░░░░░░░░░░░░█████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+563 | |         /// ```
+    | |_______________^
+    |
+    = help: `ignore` code blocks require valid Rust code for syntax highlighting; mark blocks that do not contain Rust code as text: ```text
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2593}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2592}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: error from rustc: unknown start of token: \u{2588}
+    = note: error from rustc: unknown start of token: \u{2591}
+    = note: this warning originates in the macro `register_enum` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: `spire_tween` (lib doc) generated 109 warnings
+    Finished `dev` profile [optimized + debuginfo] target(s) in 3.88s
+   Generated /home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/target/doc/spire_tween/index.html

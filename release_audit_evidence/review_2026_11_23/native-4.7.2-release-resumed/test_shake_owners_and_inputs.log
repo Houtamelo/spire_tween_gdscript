@@ -1,0 +1,51 @@
+Initialize godot-rust (API v4.4.stable.official, runtime v4.7.2.stable.official, safeguards balanced)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+=== SpireTween Rust Test Runner ===
+Test Started: res://examples/tests/templates.tscn::test_shake_owners_and_inputs
+WARNING: [do_shake] invalid segment count -1 from vibrato -1; using 2 (allowed 2 to 65536).
+     at: spire_tween::tweens::templates::do_shake::do_shake_internal (spire_tween/src/tweens/templates/do_shake.rs:209)
+WARNING: [do_shake] invalid segment count 0 from vibrato 0; using 2 (allowed 2 to 65536).
+     at: spire_tween::tweens::templates::do_shake::do_shake_internal (spire_tween/src/tweens/templates/do_shake.rs:209)
+WARNING: [do_shake] invalid segment count 131072 from vibrato 131072; using 65536 (allowed 2 to 65536).
+     at: spire_tween::tweens::templates::do_shake::do_shake_internal (spire_tween/src/tweens/templates/do_shake.rs:209)
+WARNING: [do_shake] duration must be finite and positive; using 1 second instead of 0.
+     at: spire_tween::tweens::templates::do_shake::do_shake_internal (spire_tween/src/tweens/templates/do_shake.rs:178)
+WARNING: [do_shake] duration must be finite and positive; using 1 second instead of -1.
+     at: spire_tween::tweens::templates::do_shake::do_shake_internal (spire_tween/src/tweens/templates/do_shake.rs:178)
+WARNING: [do_shake] duration must be finite and positive; using 1 second instead of NaN.
+     at: spire_tween::tweens::templates::do_shake::do_shake_internal (spire_tween/src/tweens/templates/do_shake.rs:178)
+WARNING: [do_shake] duration must be finite and positive; using 1 second instead of inf.
+     at: spire_tween::tweens::templates::do_shake::do_shake_internal (spire_tween/src/tweens/templates/do_shake.rs:178)
+WARNING: [do_shake] duration must be finite and positive; using 1 second instead of -inf.
+     at: spire_tween::tweens::templates::do_shake::do_shake_internal (spire_tween/src/tweens/templates/do_shake.rs:178)
+WARNING: [do_shake] strength must be finite and nonnegative; replacing invalid components of (-1, 4) with zero.
+     at: spire_tween::tweens::templates::do_shake::do_shake_internal (spire_tween/src/tweens/templates/do_shake.rs:185)
+WARNING: [do_shake] strength must be finite and nonnegative; replacing invalid components of (3, -1) with zero.
+     at: spire_tween::tweens::templates::do_shake::do_shake_internal (spire_tween/src/tweens/templates/do_shake.rs:185)
+WARNING: [do_shake] strength must be finite and nonnegative; replacing invalid components of (NaN, 4) with zero.
+     at: spire_tween::tweens::templates::do_shake::do_shake_internal (spire_tween/src/tweens/templates/do_shake.rs:185)
+WARNING: [do_shake] strength must be finite and nonnegative; replacing invalid components of (3, inf) with zero.
+     at: spire_tween::tweens::templates::do_shake::do_shake_internal (spire_tween/src/tweens/templates/do_shake.rs:185)
+WARNING: [do_shake] strength must be finite and nonnegative; replacing invalid components of (-inf, NaN) with zero.
+     at: spire_tween::tweens::templates::do_shake::do_shake_internal (spire_tween/src/tweens/templates/do_shake.rs:185)
+WARNING: [do_shake] randomness must be between 0 and 180 degrees; using 0 instead of -1.
+     at: spire_tween::tweens::templates::do_shake::do_shake_internal (spire_tween/src/tweens/templates/do_shake.rs:198)
+WARNING: [do_shake] randomness must be between 0 and 180 degrees; using 180 instead of 181.
+     at: spire_tween::tweens::templates::do_shake::do_shake_internal (spire_tween/src/tweens/templates/do_shake.rs:198)
+WARNING: [do_shake] randomness must be between 0 and 180 degrees; using 90 instead of NaN.
+     at: spire_tween::tweens::templates::do_shake::do_shake_internal (spire_tween/src/tweens/templates/do_shake.rs:198)
+WARNING: [do_shake] randomness must be between 0 and 180 degrees; using 90 instead of inf.
+     at: spire_tween::tweens::templates::do_shake::do_shake_internal (spire_tween/src/tweens/templates/do_shake.rs:198)
+WARNING: [do_shake] randomness must be between 0 and 180 degrees; using 90 instead of -inf.
+     at: spire_tween::tweens::templates::do_shake::do_shake_internal (spire_tween/src/tweens/templates/do_shake.rs:198)
+WARNING: [do_shake] duration must be finite and positive; using 1 second instead of -1.
+     at: spire_tween::tweens::templates::do_shake::do_shake_internal (spire_tween/src/tweens/templates/do_shake.rs:178)
+WARNING: [do_shake] strength must be finite and nonnegative; replacing invalid components of (-1, 4) with zero.
+     at: spire_tween::tweens::templates::do_shake::do_shake_internal (spire_tween/src/tweens/templates/do_shake.rs:185)
+WARNING: [do_shake] randomness must be between 0 and 180 degrees; using 90 instead of NaN.
+     at: spire_tween::tweens::templates::do_shake::do_shake_internal (spire_tween/src/tweens/templates/do_shake.rs:198)
+WARNING: [do_shake] invalid segment count -1 from vibrato -1; using 2 (allowed 2 to 65536).
+     at: spire_tween::tweens::templates::do_shake::do_shake_internal (spire_tween/src/tweens/templates/do_shake.rs:209)
+TEST_PASS res://examples/tests/templates.tscn::test_shake_owners_and_inputs
+NATIVE_TEST_RESULT total=1 failed=0

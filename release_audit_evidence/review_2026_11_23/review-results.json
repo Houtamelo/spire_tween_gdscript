@@ -1,0 +1,91 @@
+{
+  "source_revision": "d3d993e754e48630150624a4f4a76675e18a0305",
+  "purpose": "release review observations; not release-tool validation",
+  "engines": {
+    "4.4": {
+      "gdscript": {
+        "debug": 343,
+        "release": 343,
+        "failed": 0
+      },
+      "native": {
+        "debug_complete_aggregate": 189,
+        "release_completed_before_restart": 148,
+        "release_resumed_individually": 41,
+        "release_complete_single_process_aggregate": false,
+        "focused": {
+          "debug": 67,
+          "release": 67
+        },
+        "failed": 0
+      },
+      "additional_customer_feature_probe_checks_per_process": 12,
+      "archive_native_smoke_and_exports": true
+    },
+    "4.7.2": {
+      "gdscript": {
+        "debug": 343,
+        "release": 343,
+        "failed": 0
+      },
+      "native": {
+        "debug_complete_aggregate": 189,
+        "release_completed_before_restart": 144,
+        "release_resumed_individually": 45,
+        "release_complete_single_process_aggregate": false,
+        "focused": {
+          "debug": 67,
+          "release": 67
+        },
+        "failed": 0
+      },
+      "additional_customer_feature_probe_checks_per_process": 12,
+      "archive_native_smoke_and_exports": true
+    }
+  },
+  "complete_desktop_pipeline": false,
+  "production_rust_changed": false,
+  "archive": {
+    "sha256": "8e1f0f3c0f1b9d4dbf79c8a926c6f9ff0a177eef09354ee2eb030790e40bf8d0",
+    "candidate": true,
+    "platforms": [
+      "linux"
+    ],
+    "entries": 449,
+    "template_files": 0,
+    "source_template_scenes": 33,
+    "glibc_minimum": "2.35"
+  },
+  "ci": {
+    "conclusion": "cancelled",
+    "status": "completed",
+    "url": "https://github.com/Houtamelo/spire_tween_gdscript/actions/runs/45291109254"
+  },
+  "findings_disposition": {
+    "R1": "resolved; see packaging_followup",
+    "R2": "accepted architecture; withdrawn as a blocker",
+    "R3": "release validation checklist; not a runtime defect",
+    "R4": "withdrawn; intentional Godot BBCode requires no formatting changes or follow-up"
+  },
+  "packaging_followup": {
+    "candidate_sha256": "1fef3cec5b704914000da6a8c0c833571e2dd047f5918b956f3bbf627000cfb7",
+    "source_sha256": "d7e8381a02afe429080accb6fc0556a8e58257cce1a5a6a3cb2a0a9ba1b21380",
+    "source_dirty": true,
+    "release_tooling_changed": true,
+    "addon_runtime_rust_changed": false,
+    "template_files": 55,
+    "template_scenes": 33,
+    "archive_files": 504,
+    "engines": [
+      "4.4",
+      "4.7.2"
+    ],
+    "profiles": [
+      "debug",
+      "release"
+    ],
+    "exports_passed": true,
+    "integration_tests_passed_per_engine": 3,
+    "complete_desktop_pipeline": false
+  }
+}

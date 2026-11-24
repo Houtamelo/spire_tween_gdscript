@@ -1,0 +1,40 @@
+Initialize godot-rust (API v4.4.stable.official, runtime v4.7.2.stable.official, safeguards strict)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+TEXT_PRESET_TYPE_REJECTION_BEGIN
+ERROR: Attempted to push_back an object of type 'Resource' into a TypedArray, which does not inherit from 'SpireRichTextEffectPreset'.
+   at: _internal_validate_object (./core/variant/container_type_validate.h:115)
+   GDScript backtrace (most recent call first):
+       [0] run_type_rejections (res://examples/tests/text_effect_presets_runner.gd:16)
+ERROR: Condition "!_p->typed.validate(value, "push_back")" is true.
+   at: push_back (core/variant/array.cpp:285)
+   GDScript backtrace (most recent call first):
+       [0] run_type_rejections (res://examples/tests/text_effect_presets_runner.gd:16)
+ERROR: Attempted to insert an object of type 'Resource' into a TypedArray, which does not inherit from 'SpireRichTextEffectPreset'.
+   at: _internal_validate_object (./core/variant/container_type_validate.h:115)
+   GDScript backtrace (most recent call first):
+       [0] run_type_rejections (res://examples/tests/text_effect_presets_runner.gd:17)
+ERROR: Condition "!_p->typed.validate(value, "insert")" is true. Returning: ERR_INVALID_PARAMETER
+   at: insert (core/variant/array.cpp:328)
+   GDScript backtrace (most recent call first):
+       [0] run_type_rejections (res://examples/tests/text_effect_presets_runner.gd:17)
+TEXT_PRESET_TYPE_REJECTION_END
+TEXT_PRESET_TYPE_REJECTION_BEGIN
+ERROR: Attempted to push_back an object of type 'Resource' into a TypedArray, which does not inherit from 'SpireTextEffect'.
+   at: _internal_validate_object (./core/variant/container_type_validate.h:115)
+   GDScript backtrace (most recent call first):
+       [0] run_type_rejections (res://examples/tests/text_effect_presets_runner.gd:23)
+ERROR: Condition "!_p->typed.validate(value, "push_back")" is true.
+   at: push_back (core/variant/array.cpp:285)
+   GDScript backtrace (most recent call first):
+       [0] run_type_rejections (res://examples/tests/text_effect_presets_runner.gd:23)
+ERROR: Attempted to insert an object of type 'Resource' into a TypedArray, which does not inherit from 'SpireTextEffect'.
+   at: _internal_validate_object (./core/variant/container_type_validate.h:115)
+   GDScript backtrace (most recent call first):
+       [0] run_type_rejections (res://examples/tests/text_effect_presets_runner.gd:24)
+ERROR: Condition "!_p->typed.validate(value, "insert")" is true. Returning: ERR_INVALID_PARAMETER
+   at: insert (core/variant/array.cpp:328)
+   GDScript backtrace (most recent call first):
+       [0] run_type_rejections (res://examples/tests/text_effect_presets_runner.gd:24)
+TEXT_PRESET_TYPE_REJECTION_END
+TEXT_PRESET_TYPE_REJECTION_RESULT failed=0

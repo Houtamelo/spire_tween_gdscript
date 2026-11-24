@@ -1,0 +1,92 @@
+    Checking spire_tween v1.4.0 (/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween)
+    Checking spire_tween_rust v0.1.0 (/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/spire_tween_rust)
+warning: use of deprecated method `godot::prelude::Node::duplicate`: Use `Gd::duplicate_node()` or `Gd::duplicate_node_ex()`.
+  --> spire_tween_rust/src/examples/readme/custom_property.rs:86:52
+   |
+86 |                 let trail: Gd<Sprite2D> = particle.duplicate().unwrap().cast();
+   |                                                    ^^^^^^^^^
+   |
+   = note: `#[warn(deprecated)]` on by default
+
+warning: use of deprecated method `godot::prelude::Node::duplicate`: Use `Gd::duplicate_node()` or `Gd::duplicate_node_ex()`.
+   --> spire_tween_rust/src/tests/text_animator.rs:368:14
+    |
+368 |             .duplicate()
+    |              ^^^^^^^^^
+
+warning: variable does not need to be mutable
+   --> spire_tween_rust/src/tests/group4.rs:525:13
+    |
+525 |         let mut n = Control::new_alloc();
+    |             ----^
+    |             |
+    |             help: remove this `mut`
+    |
+    = note: `#[warn(unused_mut)]` (part of `#[warn(unused)]`) on by default
+
+warning: variable does not need to be mutable
+   --> spire_tween_rust/src/tests/group4.rs:541:13
+    |
+541 |         let mut n = Node2D::new_alloc();
+    |             ----^
+    |             |
+    |             help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> spire_tween_rust/src/tests/group4.rs:575:13
+    |
+575 |         let mut t = manual!(n.do_path(vec![Vector3::new(20.0, 0.0, 0.0)], 1.0, PathOptions {
+    |             ----^
+    |             |
+    |             help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> spire_tween_rust/src/tests/misc.rs:338:13
+    |
+338 |         let mut tween = TweenPtr::new(node.do_fade(0.0, 1.0));
+    |             ----^^^^^
+    |             |
+    |             help: remove this `mut`
+
+warning: variable does not need to be mutable
+  --> spire_tween_rust/src/tests/register_unregister.rs:72:14
+   |
+72 |         let (mut handle, gd) = shape.do_scale(final_scale, 5.0).register_with_gd_handle();
+   |              ----^^^^^^
+   |              |
+   |              help: remove this `mut`
+
+warning: struct `TestConfig` is never constructed
+ --> spire_tween_rust/src/benchmarks/test_config.rs:8:12
+  |
+8 | pub struct TestConfig {
+  |            ^^^^^^^^^^
+  |
+  = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: associated function `from_env` is never used
+  --> spire_tween_rust/src/benchmarks/test_config.rs:15:12
+   |
+14 | impl TestConfig {
+   | --------------- associated function in this implementation
+15 |     pub fn from_env() -> Self {
+   |            ^^^^^^^^
+
+warning: variant `None` is never constructed
+  --> spire_tween_rust/src/benchmarks/tween_setups.rs:69:5
+   |
+66 | pub enum Tweeners {
+   |          -------- variant in this enum
+...
+69 |     None,
+   |     ^^^^
+
+warning: function `snapshot_on_signal` is never used
+   --> spire_tween_rust/src/tests/util.rs:285:8
+    |
+285 | pub fn snapshot_on_signal<T: 'static>(signal: &Signal, capture_fn: impl Fn() -> T + 'static) -> RcPtr<Option<T>> {
+    |        ^^^^^^^^^^^^^^^^^^
+
+warning: `spire_tween_rust` (lib test) generated 11 warnings (run `cargo fix --lib -p spire_tween_rust --tests` to apply 5 suggestions)
+warning: `spire_tween_rust` (lib) generated 11 warnings (11 duplicates)
+    Finished `dev` profile [optimized + debuginfo] target(s) in 9.14s

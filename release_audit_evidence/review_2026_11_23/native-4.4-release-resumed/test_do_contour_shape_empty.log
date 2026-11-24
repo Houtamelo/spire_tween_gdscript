@@ -1,0 +1,9 @@
+Initialize godot-rust (API v4.4.stable.official, runtime v4.4.stable.official, safeguards balanced)
+Godot Engine v4.4.stable.official.4c311cbee - https://godotengine.org
+
+=== SpireTween Rust Test Runner ===
+Test Started: res://examples/tests/templates.tscn::test_do_contour_shape_empty
+ERROR: Contour shape has zero length, returning empty sequence.
+   at: <godot_core::obj::gd::Gd<_> as spire_tween::tweens::templates::do_contour_shape::DoContourShape2D>::do_contour_shape (spire_tween/src/tweens/templates/do_contour_shape.rs:46)
+TEST_PASS res://examples/tests/templates.tscn::test_do_contour_shape_empty
+NATIVE_TEST_RESULT total=1 failed=0

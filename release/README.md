@@ -27,7 +27,7 @@ ANDROID_NDK_HOME=/path/to/ndk ./build_scripts/build_android.sh
 
 Scripts stage only intended addon libraries, native test libraries, license/source notices, provenance, and logs in `dist/staging/<platform>`. Existing output directories are rejected to prevent mixing old/new artifacts. Set `SPIRE_RELEASE_OUT` to choose another empty directory.
 
-macOS builds compile ARM64 and Intel in both profiles, merge each pair with `lipo`, package universal frameworks, and ad-hoc sign them. Their deployment target is macOS 11.0; the workflow's macOS 14/15 runners do not establish runtime compatibility with macOS 11.0. Linux runtime requirements must be measured from the actual linked artifacts, not inferred from the Rust target name.
+macOS builds compile ARM64 and Intel in both profiles, merge each pair with `lipo`, package universal frameworks, and ad-hoc sign them. Their deployment target is macOS 11.0; the workflow's macOS 15 runners do not establish runtime compatibility with macOS 11.0. Linux runtime requirements must be measured from the actual linked artifacts, not inferred from the Rust target name.
 
 Windows release builds statically link the Visual C++ runtime. Artifact verification reads the actual PE import tables and rejects a remaining `VCRUNTIME`/`MSVCP` DLL dependency. This avoids requiring a separate Visual C++ runtime installation for the addon.
 
@@ -48,7 +48,7 @@ Godot/editor/template downloads are checked against committed upstream SHA-512 c
 
 Tests copy project source into isolated fixtures. Asset import runs in a separate project containing no extension or scripts; the runtime project receives asset caches, explicit resource paths, the script class list, and the extension list. This avoids the known cold headless GDExtension import crash and never relies on checked-in editor caches. Native aggregate tests use real time; GDScript aggregate tests use fixed 120 FPS. Every child has a wall-clock deadline and must emit its expected completion marker as well as the expected exit code. Intentional failure controls must exit nonzero.
 
-The aggregate GDScript suite previously reported shutdown resource warnings despite passing functional assertions. Those warnings remain a separate audit item; successful CI does not automatically resolve them.
+The Linux validation jobs also run the scene-template, Blueprint-preview, and rendered text/preset suites in isolated graphical editor sessions. Glyph observation uses the native test extension; those helpers are excluded from customer addon libraries. Historical aggregate shutdown warnings were repaired in the test suite; new shutdown diagnostics still require investigation.
 
 ## Assemble the customer archive
 
@@ -61,12 +61,12 @@ cargo run --locked -p spire_release -- test-archive \
   --templates "$PWD/dist/engine/export/templates" --out dist/archive-validation
 ```
 
-The package uses an allowlist: addon runtime binaries/manifest, project license, README/release instructions, dependency notices, unmodified MPL dependency sources, provenance and SHA-256 manifests. It excludes example assets (including Girl Knight), native test libraries, caches, Rust intermediates, PDBs and import libraries. Debug runtime libraries remain included because the editor needs them.
+The package uses an allowlist: addon runtime binaries/manifest, the supplied GDScript scene templates with their shared scripts, UID sidecars, catalog and README, project license, README/release instructions, dependency notices, unmodified MPL dependency sources, provenance and SHA-256 manifests. Template files are staged and checksummed on each platform, verified against the source inventory, and included once in the assembled archive. It excludes example assets (including Girl Knight), native test libraries, caches, Rust intermediates, PDBs and import libraries. Debug runtime libraries remain included because the editor needs them.
 
 For a local development candidate without the complete validation matrix, add `--candidate`. Pass `--platforms linux` or `--platforms linux,windows` together with `--candidate` for a partial archive; its filename and manifest identify only the included platforms. Commercial packaging always requires all three desktop platforms. Rust standard-library copyright/license notices are included alongside the Cargo dependency inventory.
 
 Without `--candidate`, packaging additionally requires a clean common source revision and matching successful full-suite/export reports for every configured engine/platform/architecture. The package job runs a real-artifact integration test that accepts ad-hoc macOS frameworks and rejects missing Mac validation evidence. Run it locally with `SPIRE_RELEASE_STAGING` and `SPIRE_RELEASE_REPORTS` pointing to the complete build/report directories: `cargo test --locked -p spire_release --test desktop -- --ignored`.
 
-Archive extraction verifies every internal checksum and rejects extra files, then installs and runs both library profiles and exported games. The workflow delivers the exact archive that passed those checks. Toolchain/dependency/source pinning records reproducible inputs; bit-identical compilation across different machines is not claimed.
+Archive extraction verifies every internal checksum and rejects extra files, then installs and runs both library profiles and exported games. Each smoke run loads every scene in the installed template catalog, checks its script, plays it, and verifies restoration. The integration failure control removes a shared script while updating the checksums, and requires the runtime check to reject the incomplete addon. The workflow delivers the exact archive that passed those checks. Toolchain/dependency/source pinning records reproducible inputs; bit-identical compilation across different machines is not claimed.
 
 The storefront URL, commercial version/changelog, and support terms remain separate release decisions.

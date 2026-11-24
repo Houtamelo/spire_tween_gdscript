@@ -1,5 +1,8 @@
 # Commercial release review — 2026-10-11
 
+**Current review:** [the 2026-11-23 review](release_audit_round3.md) supersedes this
+historical readiness verdict and records current findings and verification.
+
 **The current candidate still needs runtime fixes and a verified distribution before sale.** This review starts from `cc35c19` (SpireTween 1.4.0). The earlier wrapper-cycle, explicit-binding,
 supported-API sequence-cycle, delayed-call, and Restart-only shake repairs remain in place. The remaining problems below come from current source and fresh real-engine checks.
 

@@ -1,8 +1,9 @@
 //! Requires the actual built platform libraries and Godot. CI runs these after
 //! the full suites; local use is documented in release/README.md.
 use std::{
+    collections::{BTreeMap, BTreeSet},
     fs,
-    io::Write,
+    io::{Read, Write},
     path::{Path, PathBuf},
     process::Command,
     time::{SystemTime, UNIX_EPOCH},
@@ -49,6 +50,61 @@ fn run(args: &[&str], success: bool) -> String {
     assert_eq!(output.status.success(), success, "{args:?}\n{text}");
     text
 }
+
+fn assert_template_payload(zip: &mut zip::ZipArchive<fs::File>) {
+    let mut names = BTreeSet::new();
+    for index in 0..zip.len() {
+        assert!(names.insert(zip.by_index(index).unwrap().name().to_owned()), "duplicate archive entry");
+    }
+    let source = Path::new(env!("CARGO_MANIFEST_DIR")).join("../../spire_tween_gdscript/addons/spire_tween/templates");
+    fn visit(source: &Path, relative: &Path, zip: &mut zip::ZipArchive<fs::File>) {
+        for entry in fs::read_dir(source.join(relative)).unwrap() {
+            let path = entry.unwrap().path();
+            let relative = relative.join(path.file_name().unwrap());
+            if path.is_dir() {
+                visit(source, &relative, zip);
+            } else {
+                let name = format!("addons/spire_tween/templates/{}", relative.to_string_lossy().replace('\\', "/"));
+                let mut actual = Vec::new();
+                zip.by_name(&name).unwrap().read_to_end(&mut actual).unwrap();
+                assert_eq!(actual, fs::read(&path).unwrap(), "template bytes differ: {name}");
+            }
+        }
+    }
+    visit(&source, Path::new(""), zip);
+}
+
+fn archive_without_script(source: &Path, destination: &Path) {
+    let mut zip = zip::ZipArchive::new(fs::File::open(source).unwrap()).unwrap();
+    let mut payload = BTreeMap::new();
+    for index in 0..zip.len() {
+        let mut file = zip.by_index(index).unwrap();
+        let mut data = Vec::new();
+        file.read_to_end(&mut data).unwrap();
+        payload.insert(file.name().to_owned(), (data, file.unix_mode().unwrap_or(0o644)));
+    }
+    assert!(
+        payload
+            .remove("addons/spire_tween/templates/common/template.gd")
+            .is_some()
+    );
+    payload.remove("SHA256SUMS");
+    // Keep integrity checks valid: the installed runtime must reject the
+    // incomplete script dependency rather than relying on a stale checksum.
+    let sums = payload
+        .iter()
+        .map(|(name, (data, _))| format!("{:x}  {name}\n", Sha256::digest(data)))
+        .collect::<String>();
+    payload.insert("SHA256SUMS".into(), (sums.into_bytes(), 0o644));
+    let mut writer = zip::ZipWriter::new(fs::File::create(destination).unwrap());
+    for (name, (data, mode)) in payload {
+        writer
+            .start_file(name, zip::write::SimpleFileOptions::default().unix_permissions(mode))
+            .unwrap();
+        writer.write_all(&data).unwrap();
+    }
+    writer.finish().unwrap();
+}
 #[test]
 #[ignore = "requires SPIRE_RELEASE_STAGE and SPIRE_RELEASE_GODOT; runs actual Godot"]
 fn verifies_real_artifacts_and_rejects_tampering_missing_files_and_build_debris() {
@@ -89,12 +145,21 @@ fn verifies_real_artifacts_and_rejects_tampering_missing_files_and_build_debris(
     let original = fs::read(&manifest).unwrap();
     fs::write(&manifest, b"tampered").unwrap();
     assert!(run(&["verify", "--stage", stage.to_str().unwrap()], false).contains("hash mismatch"));
-    fs::write(&manifest, original).unwrap();
+    fs::write(&manifest, &original).unwrap();
     fs::write(stage.join("addon/stale.rlib"), b"build debris").unwrap();
     assert!(run(&["verify", "--stage", stage.to_str().unwrap()], false).contains("unrecorded artifact"));
     fs::remove_file(stage.join("addon/stale.rlib")).unwrap();
-    fs::remove_file(manifest).unwrap();
+    fs::remove_file(&manifest).unwrap();
     run(&["verify", "--stage", stage.to_str().unwrap()], false);
+    fs::write(&manifest, original).unwrap();
+    let missing = "addon/templates/common/template.gd";
+    fs::remove_file(stage.join(missing)).unwrap();
+    let mut metadata: Value = serde_json::from_slice(&fs::read(stage.join("build.json")).unwrap()).unwrap();
+    metadata["files"].as_object_mut().unwrap().remove(missing);
+    fs::write(stage.join("build.json"), serde_json::to_vec(&metadata).unwrap()).unwrap();
+    assert!(
+        run(&["verify", "--stage", stage.to_str().unwrap()], false).contains("missing or mismatched staged template")
+    );
     fs::remove_dir_all(stage).unwrap();
 }
 #[test]
@@ -185,6 +250,7 @@ fn candidate_archive_installs_and_rejects_extra_files() {
         zip.by_name("addons/spire_tween/spire_tween.gdextension").unwrap();
         zip.by_name("build/Cargo.lock").unwrap();
         zip.by_name("SHA256SUMS").unwrap();
+        assert_template_payload(&mut zip);
     }
     run(
         &[
@@ -198,6 +264,27 @@ fn candidate_archive_installs_and_rejects_extra_files() {
         ],
         true,
     );
+    let missing_script = directory.join("missing-script.zip");
+    archive_without_script(&archive, &missing_script);
+    let bad_script_output = directory.join("missing-script");
+    run(
+        &[
+            "test-archive",
+            "--archive",
+            missing_script.to_str().unwrap(),
+            "--godot",
+            &godot,
+            "--out",
+            bad_script_output.to_str().unwrap(),
+        ],
+        false,
+    );
+    assert!(
+        fs::read_to_string(bad_script_output.join("smoke-debug.log"))
+            .unwrap()
+            .contains("SPIRE_RELEASE_SMOKE_FAILED template script cannot load")
+    );
+    assert!(!bad_script_output.join("archive-validation.json").exists());
     let file = fs::OpenOptions::new().read(true).write(true).open(&archive).unwrap();
     let mut zip = zip::ZipWriter::new_append(file).unwrap();
     zip.start_file("unexpected.rlib", zip::write::SimpleFileOptions::default())

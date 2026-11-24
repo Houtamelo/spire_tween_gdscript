@@ -1,5 +1,8 @@
 # Commercial release audit — SpireTween 1.4.0
 
+**Current review:** [the 2026-11-23 review](release_audit_round3.md) supersedes this
+historical readiness verdict and records current findings and verification.
+
 **2026-10-11 current review:** [the second round-trip review](release_audit_round2.md) supersedes the original readiness verdict below. It confirms new sequence time-unit, template lifetime/geometry,
 native-bookkeeping, cancellation-state, and startup issues, while preserving the earlier focused repairs. Fresh builds and real-engine evidence are recorded separately from old artifacts and
 unresolved distribution decisions.

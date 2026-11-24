@@ -1,0 +1,7 @@
+Initialize godot-rust (API v4.4.stable.official, runtime v4.4.stable.official, safeguards balanced)
+Godot Engine v4.4.stable.official.4c311cbee - https://godotengine.org
+
+=== SpireTween Rust Test Runner ===
+Test Started: res://examples/tests/gd_handle_path.tscn::test_is_registered_via_gd_handle
+TEST_PASS res://examples/tests/gd_handle_path.tscn::test_is_registered_via_gd_handle
+NATIVE_TEST_RESULT total=1 failed=0

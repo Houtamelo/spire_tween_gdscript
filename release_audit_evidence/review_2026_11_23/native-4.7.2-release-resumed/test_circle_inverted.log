@@ -1,0 +1,8 @@
+Initialize godot-rust (API v4.4.stable.official, runtime v4.7.2.stable.official, safeguards balanced)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+=== SpireTween Rust Test Runner ===
+Test Started: res://examples/tests/ellipsis.tscn::test_circle_inverted
+[000483f, 4.0068s] Finished
+TEST_PASS res://examples/tests/ellipsis.tscn::test_circle_inverted
+NATIVE_TEST_RESULT total=1 failed=0

@@ -1,0 +1,24 @@
+Initialize godot-rust (API v4.4.stable.official, runtime v4.4.stable.official, safeguards strict)
+Godot Engine v4.4.stable.official.4c311cbee - https://godotengine.org
+
+TEXT_PRESET_TYPE_REJECTION_BEGIN
+ERROR: Attempted to push_back an object of type 'Resource' into a TypedArray, which does not inherit from 'SpireRichTextEffectPreset'.
+   at: validate_object (core/variant/container_type_validate.h:135)
+ERROR: Condition "!_p->typed.validate(value, "push_back")" is true.
+   at: push_back (core/variant/array.cpp:283)
+ERROR: Attempted to insert an object of type 'Resource' into a TypedArray, which does not inherit from 'SpireRichTextEffectPreset'.
+   at: validate_object (core/variant/container_type_validate.h:135)
+ERROR: Condition "!_p->typed.validate(value, "insert")" is true. Returning: ERR_INVALID_PARAMETER
+   at: insert (core/variant/array.cpp:314)
+TEXT_PRESET_TYPE_REJECTION_END
+TEXT_PRESET_TYPE_REJECTION_BEGIN
+ERROR: Attempted to push_back an object of type 'Resource' into a TypedArray, which does not inherit from 'SpireTextEffect'.
+   at: validate_object (core/variant/container_type_validate.h:135)
+ERROR: Condition "!_p->typed.validate(value, "push_back")" is true.
+   at: push_back (core/variant/array.cpp:283)
+ERROR: Attempted to insert an object of type 'Resource' into a TypedArray, which does not inherit from 'SpireTextEffect'.
+   at: validate_object (core/variant/container_type_validate.h:135)
+ERROR: Condition "!_p->typed.validate(value, "insert")" is true. Returning: ERR_INVALID_PARAMETER
+   at: insert (core/variant/array.cpp:314)
+TEXT_PRESET_TYPE_REJECTION_END
+TEXT_PRESET_TYPE_REJECTION_RESULT failed=0

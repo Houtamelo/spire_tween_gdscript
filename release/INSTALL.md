@@ -19,6 +19,8 @@ SpireTween requires an installed `SceneTree` with an available root before the m
 
 Godot selects the appropriate library during export. Keep the whole addon directory, including its debug library, in your project. Public classes and methods include documentation in the editor's built-in help.
 
+Reusable scene templates are included under `addons/spire_tween/templates/`. See their [catalog and authoring guide](addons/spire_tween/templates/README.md), and instance a template scene beneath its target or assign its `target`. Keep the shared scripts and UID sidecars with those scenes.
+
 See the [project documentation and examples](https://github.com/Houtamelo/spire_tween_gdscript) for usage. The exact source revision and file hashes are in `release.json`; the build lockfile/toolchain snapshot is in `build/`. Examples and third-party art are not part of this archive.
 
 `SHA256SUMS` records the SHA-256 hash of each delivered file except the checksum manifest itself. The project is MIT licensed; see `LICENSE`. Dependency notices, original license files and unmodified MPL dependency sources are under `third_party/<platform>/`.

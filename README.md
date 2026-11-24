@@ -65,12 +65,7 @@ These are the priorities of SpireTween:
 
 Extract the `spire_tween` directory into your project's `addons` directory. The resulting layout should include `res://addons/spire_tween/spire_tween.gdextension` and its `lib` directory. Open or reopen the project in Godot so it discovers the extension.
 
-You can acquire a copy of SpireTween through 3 means:
-
-- Purchase it at [Itch.io](http://www.itch.io/placeholder_link), it includes binaries for most mainstream platforms (see section [Platform Support](#platform-support)).
-- A demo version is available in the [releases](https://github.com/Houtamelo/spire_tween_gdscript/releases) page of this repository. The only "limitation" of the demo is that it only includes binaries
-  for Windows and Linux platforms. Binaries for additional platforms can be acquired by purchasing the plugin or compiling it yourself.
-- Compile from source (see [Building from source](#building-from-source)).
+Until the first packaged release is published, [build from source](#building-from-source). Purchase and demo links will be added when those downloads are available. The [release workflow](release/README.md) describes the desktop archive being prepared; see [Platform Support](#platform-support) for its validation boundaries.
 
 When exporting, Godot will automatically include the necessary binary for the chosen target platform.
 
@@ -227,7 +222,7 @@ SpireTween is made with [Godot-Rust](https://github.com/godot-rust/gdext), a GdE
 
 I simply don't have the hardware needed to test on all platforms, I'll be updating this table as users report their testing results.
 
-Binaries for all platforms which I successfully compiled-to are included in the releases sold at Itch.io.
+The customer archive targets Windows/Linux x86_64 and universal macOS. Android builds are experimental and excluded from that archive; Web and iOS are outside its scope.
 
 | Platform           | Compiled | Tested | Notes                                                               |
 |--------------------|:--------:|:------:|---------------------------------------------------------------------|
@@ -241,7 +236,7 @@ Binaries for all platforms which I successfully compiled-to are included in the 
 | macos.arm64/x86_64 |    ❌    |   ❌   | Universal framework build/test CI configured; first verified run pending. |
 | ios                |    ❌    |   ❌   | Outside the initial release scope.                                  |
 
-The current Linux x86_64 debug and release libraries require **GLIBC 2.34 or newer**, measured with `readelf --version-info`. An older Linux userspace has not been tested.
+The reviewed desktop CI Linux x86_64 debug and release libraries require **GLIBC 2.35 or newer**, measured with `readelf --version-info`. Each archive records its measured requirement as `glibc_minimum` in `release.json`. An older Linux userspace has not been tested.
 
 If a platform you're targeting is not listed here, please open an issue.
 

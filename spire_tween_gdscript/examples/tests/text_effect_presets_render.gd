@@ -15,6 +15,28 @@ func _sample(n: SpireRichTextLabel, time: float, index: int = 0, outline: bool =
 func _near(actual: float, expected: float) -> void:
 	assert_true(absf(actual - expected) < 0.0003, "%s != %s" % [actual, expected])
 
+func test_character_ranges_real_rendering() -> bool:
+	# Glyph samples exist only in integration-test libraries. Keep this check in
+	# the rendered suite so production addons can load the ordinary test catalog.
+	var n := _label("AB", [])
+	await _draw_frames()
+	var before_first: Dictionary = n.render_sample_for_test(0)
+	var before_last: Dictionary = n.render_sample_for_test(1)
+	assert_true(not before_first.is_empty() and not before_last.is_empty())
+	var delay := Curve.new()
+	delay.add_point(Vector2.ZERO, 0.0, 0.5)
+	delay.add_point(Vector2(1, 0.5), 0.5, 0.0)
+	var tween := n.offset_chars(0, 1, Vector2(10, 0), 1, delay)
+	tween.set_process_mode(Spire.PROCESS_MODE_MANUAL).set_ease(Spire.EASE_LINEAR)
+	tween.custom_step(0.25)
+	await _draw_frames()
+	var first: Dictionary = n.render_sample_for_test(0)
+	var last: Dictionary = n.render_sample_for_test(1)
+	_near((first.transform.origin - before_first.transform.origin).distance_to(Vector2(2.5, 0)), 0)
+	_near((last.transform.origin - before_last.transform.origin).length(), 0)
+	n.free()
+	return true
+
 func test_text_presets_independent_timing() -> bool:
 	var offset := Effects.make(Spire.TEXT_EFFECT_KIND_OFFSET)
 	offset.to = Vector2(10, 0)

@@ -1,0 +1,10 @@
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.02s
+     Running tests/pipeline.rs (target/debug/build/spire_release/5826c1144f88137e/out/pipeline-5826c1144f88137e)
+
+running 3 tests
+test verifies_real_artifacts_and_rejects_tampering_missing_files_and_build_debris ... ok
+test candidate_archive_installs_and_rejects_extra_files ... ok
+test installed_smoke_passes_and_missing_library_cannot_false_pass ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 32.90s
+

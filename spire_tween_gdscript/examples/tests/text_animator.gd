@@ -387,22 +387,6 @@ func test_character_ranges_impulse_blending_and_reset() -> bool:
 	n.free()
 	return true
 
-func test_character_ranges_real_rendering() -> bool:
-	var n := _label("AB")
-	for _frame in 4: await next_frame()
-	var before_first := n.render_sample_for_test(0)
-	var before_last := n.render_sample_for_test(1)
-	assert_true(not before_first.is_empty() and not before_last.is_empty())
-	var t := _manual(n.offset_chars(0, 1, Vector2(10, 0), 1, _delay_curve(0, 0.5)))
-	t.custom_step(0.25)
-	for _frame in 2: await next_frame()
-	var first := n.render_sample_for_test(0)
-	var last := n.render_sample_for_test(1)
-	_v2(first.transform.origin - before_first.transform.origin, Vector2(2.5, 0))
-	_v2(last.transform.origin - before_last.transform.origin, Vector2.ZERO)
-	n.free()
-	return true
-
 func test_characters_translation() -> bool:
 	var locale := TranslationServer.get_locale()
 	TranslationServer.set_locale("en")

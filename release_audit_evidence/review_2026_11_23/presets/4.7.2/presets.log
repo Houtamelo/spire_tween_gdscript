@@ -1,0 +1,1447 @@
+Initialize godot-rust (API v4.4.stable.official, runtime v4.7.2.stable.official, safeguards strict)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+WARNING: Failed to create wd.xic as the input method or its xim server may not have started yet.
+     at: _create_xic (platform/linuxbsd/x11/display_server_x11.cpp:6347)
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:372)
+OpenGL API 4.6 (Core Profile) Mesa 26.2.5 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 23.1.3, 256 bits)
+
+TEXT_PRESET_START test_character_ranges_real_rendering
+---------------------------------
+Test Started: test_character_ranges_real_rendering
+Test Finished: test_character_ranges_real_rendering
+TEXT_PRESET_PASS test_character_ranges_real_rendering
+TEXT_PRESET_START test_scroll_changes_preserve_character_rendering
+---------------------------------
+Test Started: test_scroll_changes_preserve_character_rendering
+Test Finished: test_scroll_changes_preserve_character_rendering
+TEXT_PRESET_PASS test_scroll_changes_preserve_character_rendering
+TEXT_PRESET_START test_text_effect_endpoint_type_repair
+---------------------------------
+Test Started: test_text_effect_endpoint_type_repair
+WARNING: [spire text preset] `from` must match `kind`: cannot convert from COLOR to VECTOR2: Color { r: 1.0, g: 0.0, b: 0.0, a: 1.0 }; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] _label (res://examples/tests/text_effect_presets.gd:28)
+         [1] test_text_effect_endpoint_type_repair (res://examples/tests/text_effect_presets_render.gd:370)
+         [2] run_test (res://examples/tests/test_base.gd:34)
+         [3] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `from` must match `kind`: cannot convert from NIL to VECTOR2: null; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_effect_endpoint_type_repair (res://examples/tests/text_effect_presets_render.gd:380)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+Test Finished: test_text_effect_endpoint_type_repair
+TEXT_PRESET_PASS test_text_effect_endpoint_type_repair
+TEXT_PRESET_START test_text_effect_ignores_inactive_fields_and_z
+---------------------------------
+Test Started: test_text_effect_ignores_inactive_fields_and_z
+WARNING: [spire text preset] `punch` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] _label (res://examples/tests/text_effect_presets.gd:28)
+         [1] test_text_effect_ignores_inactive_fields_and_z (res://examples/tests/text_effect_presets_render.gd:418)
+         [2] run_test (res://examples/tests/test_base.gd:34)
+         [3] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `strength` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] _label (res://examples/tests/text_effect_presets.gd:28)
+         [1] test_text_effect_ignores_inactive_fields_and_z (res://examples/tests/text_effect_presets_render.gd:418)
+         [2] run_test (res://examples/tests/test_base.gd:34)
+         [3] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+Test Finished: test_text_effect_ignores_inactive_fields_and_z
+TEXT_PRESET_PASS test_text_effect_ignores_inactive_fields_and_z
+TEXT_PRESET_START test_text_effect_metadata
+---------------------------------
+Test Started: test_text_effect_metadata
+Test Finished: test_text_effect_metadata
+TEXT_PRESET_PASS test_text_effect_metadata
+TEXT_PRESET_START test_text_effect_preserves_hidden_settings
+---------------------------------
+Test Started: test_text_effect_preserves_hidden_settings
+Test Finished: test_text_effect_preserves_hidden_settings
+TEXT_PRESET_PASS test_text_effect_preserves_hidden_settings
+TEXT_PRESET_START test_text_effect_setters_emit_changed
+---------------------------------
+Test Started: test_text_effect_setters_emit_changed
+Test Finished: test_text_effect_setters_emit_changed
+TEXT_PRESET_PASS test_text_effect_setters_emit_changed
+TEXT_PRESET_START test_text_observation_does_not_refresh
+---------------------------------
+Test Started: test_text_observation_does_not_refresh
+Test Finished: test_text_observation_does_not_refresh
+TEXT_PRESET_PASS test_text_observation_does_not_refresh
+TEXT_PRESET_START test_text_presets_all_basic_channels
+---------------------------------
+Test Started: test_text_presets_all_basic_channels
+Test Finished: test_text_presets_all_basic_channels
+TEXT_PRESET_PASS test_text_presets_all_basic_channels
+TEXT_PRESET_START test_text_presets_code_last
+---------------------------------
+Test Started: test_text_presets_code_last
+Test Finished: test_text_presets_code_last
+TEXT_PRESET_PASS test_text_presets_code_last
+TEXT_PRESET_START test_text_presets_disconnected_watch_cleanup
+---------------------------------
+Test Started: test_text_presets_disconnected_watch_cleanup
+Test Finished: test_text_presets_disconnected_watch_cleanup
+TEXT_PRESET_PASS test_text_presets_disconnected_watch_cleanup
+TEXT_PRESET_START test_text_presets_example_scene
+---------------------------------
+Test Started: test_text_presets_example_scene
+WARNING: res://examples/text_effect_presets/preset_demo.tscn:3 - ext_resource, invalid UID: uid://b2eh4lv0dont0 - using text path instead: res://examples/text_effect_presets/preset_demo.gd
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_example_scene (res://examples/tests/text_effect_presets.gd:122)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: res://examples/text_effect_presets/preset_demo.tscn:4 - ext_resource, invalid UID: uid://cepslwir1vtin - using text path instead: res://examples/text_effect_presets/enchanted.tres
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_example_scene (res://examples/tests/text_effect_presets.gd:122)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: res://examples/text_effect_presets/preset_demo.tscn:5 - ext_resource, invalid UID: uid://c1wygytjxc8oc - using text path instead: res://examples/text_effect_presets/warning.tres
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_example_scene (res://examples/tests/text_effect_presets.gd:122)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+Test Finished: test_text_presets_example_scene
+TEXT_PRESET_PASS test_text_presets_example_scene
+TEXT_PRESET_START test_text_presets_extended_resource_metadata
+---------------------------------
+Test Started: test_text_presets_extended_resource_metadata
+WARNING: [spire text preset] `to` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_extended_resource_metadata (res://examples/tests/text_effect_presets_render.gd:303)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+Test Finished: test_text_presets_extended_resource_metadata
+TEXT_PRESET_PASS test_text_presets_extended_resource_metadata
+TEXT_PRESET_START test_text_presets_foreign_effects
+---------------------------------
+Test Started: test_text_presets_foreign_effects
+WARNING: [spire text preset] `bbcode` `foreign_glow` is already registered; the first registration is used.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_foreign_effects (res://examples/tests/text_effect_presets.gd:182)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+Test Finished: test_text_presets_foreign_effects
+TEXT_PRESET_PASS test_text_presets_foreign_effects
+TEXT_PRESET_START test_text_presets_independent_timing
+---------------------------------
+Test Started: test_text_presets_independent_timing
+Test Finished: test_text_presets_independent_timing
+TEXT_PRESET_PASS test_text_presets_independent_timing
+TEXT_PRESET_START test_text_presets_invalid_configuration
+---------------------------------
+Test Started: test_text_presets_invalid_configuration
+WARNING: [spire text preset] `duration` must be finite and positive; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] _label (res://examples/tests/text_effect_presets.gd:28)
+         [1] test_text_presets_invalid_configuration (res://examples/tests/text_effect_presets.gd:399)
+         [2] run_test (res://examples/tests/test_base.gd:34)
+         [3] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `bbcode` `glow` is already registered; the first registration is used.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] _label (res://examples/tests/text_effect_presets.gd:28)
+         [1] test_text_presets_invalid_configuration (res://examples/tests/text_effect_presets.gd:399)
+         [2] run_test (res://examples/tests/test_base.gd:34)
+         [3] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `bbcode` must be an identifier distinct from built-in tags; got `color`. Preset skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] _label (res://examples/tests/text_effect_presets.gd:28)
+         [1] test_text_presets_invalid_configuration (res://examples/tests/text_effect_presets.gd:399)
+         [2] run_test (res://examples/tests/test_base.gd:34)
+         [3] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `bbcode` must be an identifier distinct from built-in tags; got `bad tag`. Preset skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] _label (res://examples/tests/text_effect_presets.gd:28)
+         [1] test_text_presets_invalid_configuration (res://examples/tests/text_effect_presets.gd:399)
+         [2] run_test (res://examples/tests/test_base.gd:34)
+         [3] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `bbcode` `glow` is already registered; the first registration is used.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+WARNING: [spire text preset] `bbcode` must be an identifier distinct from built-in tags; got `color`. Preset skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+WARNING: [spire text preset] `bbcode` must be an identifier distinct from built-in tags; got `bad tag`. Preset skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+WARNING: [spire text preset] `to` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+WARNING: [spire text preset] `bbcode` `glow` is already registered; the first registration is used.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+WARNING: [spire text preset] `bbcode` must be an identifier distinct from built-in tags; got `color`. Preset skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+WARNING: [spire text preset] `bbcode` must be an identifier distinct from built-in tags; got `bad tag`. Preset skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+Test Finished: test_text_presets_invalid_configuration
+TEXT_PRESET_PASS test_text_presets_invalid_configuration
+TEXT_PRESET_START test_text_presets_invalid_entries_preserve_valid_entries
+---------------------------------
+Test Started: test_text_presets_invalid_entries_preserve_valid_entries
+WARNING: [spire text preset] `duration` must be finite and positive; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] _label (res://examples/tests/text_effect_presets.gd:28)
+         [1] test_text_presets_invalid_entries_preserve_valid_entries (res://examples/tests/text_effect_presets_render.gd:320)
+         [2] run_test (res://examples/tests/test_base.gd:34)
+         [3] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+Test Finished: test_text_presets_invalid_entries_preserve_valid_entries
+TEXT_PRESET_PASS test_text_presets_invalid_entries_preserve_valid_entries
+TEXT_PRESET_START test_text_presets_invalid_parameters
+---------------------------------
+Test Started: test_text_presets_invalid_parameters
+WARNING: [spire text preset] `character_phase_offset` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] _label (res://examples/tests/text_effect_presets.gd:28)
+         [1] test_text_presets_invalid_parameters (res://examples/tests/text_effect_presets_render.gd:247)
+         [2] run_test (res://examples/tests/test_base.gd:34)
+         [3] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `elasticity` must be between 0 and 1; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] _label (res://examples/tests/text_effect_presets.gd:28)
+         [1] test_text_presets_invalid_parameters (res://examples/tests/text_effect_presets_render.gd:247)
+         [2] run_test (res://examples/tests/test_base.gd:34)
+         [3] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `vibrato` must be positive and produce at most 65536 segments; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] _label (res://examples/tests/text_effect_presets.gd:28)
+         [1] test_text_presets_invalid_parameters (res://examples/tests/text_effect_presets_render.gd:247)
+         [2] run_test (res://examples/tests/test_base.gd:34)
+         [3] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `randomness` must be between 0 and 180; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] _label (res://examples/tests/text_effect_presets.gd:28)
+         [1] test_text_presets_invalid_parameters (res://examples/tests/text_effect_presets_render.gd:247)
+         [2] run_test (res://examples/tests/test_base.gd:34)
+         [3] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `strength` must be non-negative; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] _label (res://examples/tests/text_effect_presets.gd:28)
+         [1] test_text_presets_invalid_parameters (res://examples/tests/text_effect_presets_render.gd:247)
+         [2] run_test (res://examples/tests/test_base.gd:34)
+         [3] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `strength` must be non-negative; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] _label (res://examples/tests/text_effect_presets.gd:28)
+         [1] test_text_presets_invalid_parameters (res://examples/tests/text_effect_presets_render.gd:247)
+         [2] run_test (res://examples/tests/test_base.gd:34)
+         [3] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+Test Finished: test_text_presets_invalid_parameters
+TEXT_PRESET_PASS test_text_presets_invalid_parameters
+TEXT_PRESET_START test_text_presets_label_lifetime
+---------------------------------
+Test Started: test_text_presets_label_lifetime
+Test Finished: test_text_presets_label_lifetime
+TEXT_PRESET_PASS test_text_presets_label_lifetime
+TEXT_PRESET_START test_text_presets_live_resource_changes
+---------------------------------
+Test Started: test_text_presets_live_resource_changes
+Test Finished: test_text_presets_live_resource_changes
+TEXT_PRESET_PASS test_text_presets_live_resource_changes
+TEXT_PRESET_START test_text_presets_loop_boundaries
+---------------------------------
+Test Started: test_text_presets_loop_boundaries
+Test Finished: test_text_presets_loop_boundaries
+TEXT_PRESET_PASS test_text_presets_loop_boundaries
+TEXT_PRESET_START test_text_presets_nested_and_disabled
+---------------------------------
+Test Started: test_text_presets_nested_and_disabled
+Test Finished: test_text_presets_nested_and_disabled
+TEXT_PRESET_PASS test_text_presets_nested_and_disabled
+TEXT_PRESET_START test_text_presets_nested_clusters
+---------------------------------
+Test Started: test_text_presets_nested_clusters
+Test Finished: test_text_presets_nested_clusters
+TEXT_PRESET_PASS test_text_presets_nested_clusters
+TEXT_PRESET_START test_text_presets_pause
+---------------------------------
+Test Started: test_text_presets_pause
+Test Finished: test_text_presets_pause
+TEXT_PRESET_PASS test_text_presets_pause
+TEXT_PRESET_START test_text_presets_punch_and_shake
+---------------------------------
+Test Started: test_text_presets_punch_and_shake
+Test Finished: test_text_presets_punch_and_shake
+TEXT_PRESET_PASS test_text_presets_punch_and_shake
+TEXT_PRESET_START test_text_presets_registration
+---------------------------------
+Test Started: test_text_presets_registration
+Test Finished: test_text_presets_registration
+TEXT_PRESET_PASS test_text_presets_registration
+TEXT_PRESET_START test_text_presets_rendered_order
+---------------------------------
+Test Started: test_text_presets_rendered_order
+Test Finished: test_text_presets_rendered_order
+TEXT_PRESET_PASS test_text_presets_rendered_order
+TEXT_PRESET_START test_text_presets_replacement_and_duplication
+---------------------------------
+Test Started: test_text_presets_replacement_and_duplication
+Test Finished: test_text_presets_replacement_and_duplication
+TEXT_PRESET_PASS test_text_presets_replacement_and_duplication
+TEXT_PRESET_START test_text_presets_resource_notifications
+---------------------------------
+Test Started: test_text_presets_resource_notifications
+Test Finished: test_text_presets_resource_notifications
+TEXT_PRESET_PASS test_text_presets_resource_notifications
+TEXT_PRESET_START test_text_presets_runtime_registration
+---------------------------------
+Test Started: test_text_presets_runtime_registration
+Test Finished: test_text_presets_runtime_registration
+TEXT_PRESET_PASS test_text_presets_runtime_registration
+TEXT_PRESET_START test_text_presets_serialization
+---------------------------------
+Test Started: test_text_presets_serialization
+Test Finished: test_text_presets_serialization
+TEXT_PRESET_PASS test_text_presets_serialization
+TEXT_PRESET_START test_text_presets_translation
+---------------------------------
+Test Started: test_text_presets_translation
+Test Finished: test_text_presets_translation
+TEXT_PRESET_PASS test_text_presets_translation
+TEXT_PRESET_START test_text_presets_typed_array
+---------------------------------
+Test Started: test_text_presets_typed_array
+Test Finished: test_text_presets_typed_array
+TEXT_PRESET_PASS test_text_presets_typed_array
+TEXT_PRESET_START test_text_presets_typed_compilation_and_recovery
+---------------------------------
+Test Started: test_text_presets_typed_compilation_and_recovery
+WARNING: [spire text preset] `duration` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `duration` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `duration` must be finite and positive; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `duration` must be finite and positive; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `character_phase_offset` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `character_phase_offset` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `from` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `to` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `duration` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `duration` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `duration` must be finite and positive; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `duration` must be finite and positive; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `character_phase_offset` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `character_phase_offset` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `from` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `from` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `to` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `to` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `duration` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `duration` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `duration` must be finite and positive; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `duration` must be finite and positive; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `character_phase_offset` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `character_phase_offset` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `from` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `to` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `duration` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `duration` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `duration` must be finite and positive; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `duration` must be finite and positive; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `character_phase_offset` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `character_phase_offset` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `from` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `to` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `pivot` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `duration` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `duration` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `duration` must be finite and positive; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `duration` must be finite and positive; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `character_phase_offset` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `character_phase_offset` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `from` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `to` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `pivot` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `duration` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `duration` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `duration` must be finite and positive; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `duration` must be finite and positive; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `character_phase_offset` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `character_phase_offset` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `punch` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `vibrato` must be positive and produce at most 65536 segments; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `vibrato` must be positive and produce at most 65536 segments; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `elasticity` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `elasticity` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `elasticity` must be between 0 and 1; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `elasticity` must be between 0 and 1; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `duration` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `duration` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `duration` must be finite and positive; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `duration` must be finite and positive; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `character_phase_offset` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `character_phase_offset` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `punch` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `vibrato` must be positive and produce at most 65536 segments; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `vibrato` must be positive and produce at most 65536 segments; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `elasticity` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `elasticity` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `elasticity` must be between 0 and 1; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `elasticity` must be between 0 and 1; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `pivot` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `duration` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `duration` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `duration` must be finite and positive; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `duration` must be finite and positive; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `character_phase_offset` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `character_phase_offset` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `punch` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `vibrato` must be positive and produce at most 65536 segments; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `vibrato` must be positive and produce at most 65536 segments; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `elasticity` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `elasticity` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `elasticity` must be between 0 and 1; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `elasticity` must be between 0 and 1; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `pivot` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `duration` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `duration` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `duration` must be finite and positive; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `duration` must be finite and positive; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `character_phase_offset` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `character_phase_offset` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `strength` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `strength` must be non-negative; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `vibrato` must be positive and produce at most 65536 segments; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `vibrato` must be positive and produce at most 65536 segments; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `randomness` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `randomness` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `randomness` must be between 0 and 180; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `randomness` must be between 0 and 180; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `duration` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `duration` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `duration` must be finite and positive; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `duration` must be finite and positive; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `character_phase_offset` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `character_phase_offset` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `strength` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `strength` must be non-negative; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `vibrato` must be positive and produce at most 65536 segments; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `vibrato` must be positive and produce at most 65536 segments; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `randomness` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `randomness` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `randomness` must be between 0 and 180; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `randomness` must be between 0 and 180; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `pivot` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `duration` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `duration` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `duration` must be finite and positive; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `duration` must be finite and positive; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `character_phase_offset` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `character_phase_offset` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `strength` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `strength` must be non-negative; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `vibrato` must be positive and produce at most 65536 segments; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `vibrato` must be positive and produce at most 65536 segments; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `randomness` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `randomness` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `randomness` must be between 0 and 180; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `randomness` must be between 0 and 180; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire text preset] `pivot` must be finite; effect entry skipped.
+     at: spire_tween::tweens::templates::text_animator::presets::registry::Registry::sync (spire_tween/src/tweens/templates/text_animator/presets/registry.rs:191)
+     GDScript backtrace (most recent call first):
+         [0] test_text_presets_typed_compilation_and_recovery (res://examples/tests/text_effect_presets_render.gd:285)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+Test Finished: test_text_presets_typed_compilation_and_recovery
+TEXT_PRESET_PASS test_text_presets_typed_compilation_and_recovery
+TEXT_PRESET_START test_character_ranges_all_effects
+---------------------------------
+Test Started: test_character_ranges_all_effects
+Test Finished: test_character_ranges_all_effects
+TEXT_PRESET_PASS test_character_ranges_all_effects
+TEXT_PRESET_START test_character_ranges_basic_curves
+---------------------------------
+Test Started: test_character_ranges_basic_curves
+WARNING: [spire characters] `delay_curve` samples must be finite and non-negative and produce finite completion times.
+     at: spire_tween::tweens::templates::text_animator::char_tween::CharTweenData::build (spire_tween/src/tweens/templates/text_animator/char_tween.rs:271)
+     GDScript backtrace (most recent call first):
+         [0] test_character_ranges_basic_curves (res://examples/tests/text_animator.gd:53)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+Test Finished: test_character_ranges_basic_curves
+TEXT_PRESET_PASS test_character_ranges_basic_curves
+TEXT_PRESET_START test_character_ranges_callable_delay_curve
+---------------------------------
+Test Started: test_character_ranges_callable_delay_curve
+WARNING: [spire characters] `delay_curve` samples must be finite and non-negative and produce finite completion times.
+     at: spire_tween::tweens::templates::text_animator::char_tween::CharTweenData::build (spire_tween/src/tweens/templates/text_animator/char_tween.rs:271)
+     GDScript backtrace (most recent call first):
+         [0] test_character_ranges_callable_delay_curve (res://examples/tests/text_animator.gd:281)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire characters] `delay_curve` samples must be finite and non-negative and produce finite completion times.
+     at: spire_tween::tweens::templates::text_animator::char_tween::CharTweenData::build (spire_tween/src/tweens/templates/text_animator/char_tween.rs:271)
+     GDScript backtrace (most recent call first):
+         [0] test_character_ranges_callable_delay_curve (res://examples/tests/text_animator.gd:281)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire characters] `delay_curve` samples must be finite and non-negative and produce finite completion times.
+     at: spire_tween::tweens::templates::text_animator::char_tween::CharTweenData::build (spire_tween/src/tweens/templates/text_animator/char_tween.rs:271)
+     GDScript backtrace (most recent call first):
+         [0] test_character_ranges_callable_delay_curve (res://examples/tests/text_animator.gd:281)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+Test Finished: test_character_ranges_callable_delay_curve
+TEXT_PRESET_PASS test_character_ranges_callable_delay_curve
+TEXT_PRESET_START test_character_ranges_continuous_loops_and_collective_events
+---------------------------------
+Test Started: test_character_ranges_continuous_loops_and_collective_events
+Test Finished: test_character_ranges_continuous_loops_and_collective_events
+TEXT_PRESET_PASS test_character_ranges_continuous_loops_and_collective_events
+TEXT_PRESET_START test_character_ranges_duration_and_snapshot
+---------------------------------
+Test Started: test_character_ranges_duration_and_snapshot
+Test Finished: test_character_ranges_duration_and_snapshot
+TEXT_PRESET_PASS test_character_ranges_duration_and_snapshot
+TEXT_PRESET_START test_character_ranges_force_completion_and_extended_loops
+---------------------------------
+Test Started: test_character_ranges_force_completion_and_extended_loops
+Test Finished: test_character_ranges_force_completion_and_extended_loops
+TEXT_PRESET_PASS test_character_ranges_force_completion_and_extended_loops
+TEXT_PRESET_START test_character_ranges_impulse_blending_and_reset
+---------------------------------
+Test Started: test_character_ranges_impulse_blending_and_reset
+Test Finished: test_character_ranges_impulse_blending_and_reset
+TEXT_PRESET_PASS test_character_ranges_impulse_blending_and_reset
+TEXT_PRESET_START test_character_ranges_invalid_samples_and_ranges
+---------------------------------
+Test Started: test_character_ranges_invalid_samples_and_ranges
+WARNING: [spire characters] `delay_curve` samples must be finite and non-negative and produce finite completion times.
+     at: spire_tween::tweens::templates::text_animator::char_tween::CharTweenData::build (spire_tween/src/tweens/templates/text_animator/char_tween.rs:271)
+     GDScript backtrace (most recent call first):
+         [0] test_character_ranges_invalid_samples_and_ranges (res://examples/tests/text_animator.gd:294)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire characters] `delay_curve` samples must be finite and non-negative and produce finite completion times.
+     at: spire_tween::tweens::templates::text_animator::char_tween::CharTweenData::build (spire_tween/src/tweens/templates/text_animator/char_tween.rs:271)
+     GDScript backtrace (most recent call first):
+         [0] test_character_ranges_invalid_samples_and_ranges (res://examples/tests/text_animator.gd:294)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire characters] `delay_curve` samples must be finite and non-negative and produce finite completion times.
+     at: spire_tween::tweens::templates::text_animator::char_tween::CharTweenData::build (spire_tween/src/tweens/templates/text_animator/char_tween.rs:271)
+     GDScript backtrace (most recent call first):
+         [0] test_character_ranges_invalid_samples_and_ranges (res://examples/tests/text_animator.gd:301)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire characters] `first` and `last` must form a non-empty range.
+     at: spire_tween::tweens::templates::text_animator::char_tween::CharTweenData::build (spire_tween/src/tweens/templates/text_animator/char_tween.rs:271)
+     GDScript backtrace (most recent call first):
+         [0] test_character_ranges_invalid_samples_and_ranges (res://examples/tests/text_animator.gd:304)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire characters] `first` and `last` must form a non-empty range.
+     at: spire_tween::tweens::templates::text_animator::char_tween::CharTweenData::build (spire_tween/src/tweens/templates/text_animator/char_tween.rs:271)
+     GDScript backtrace (most recent call first):
+         [0] test_character_ranges_invalid_samples_and_ranges (res://examples/tests/text_animator.gd:304)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire characters] `last` must select an existing character or be -1.
+     at: spire_tween::tweens::templates::text_animator::char_tween::CharTweenData::build (spire_tween/src/tweens/templates/text_animator/char_tween.rs:271)
+     GDScript backtrace (most recent call first):
+         [0] test_character_ranges_invalid_samples_and_ranges (res://examples/tests/text_animator.gd:304)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+Test Finished: test_character_ranges_invalid_samples_and_ranges
+TEXT_PRESET_PASS test_character_ranges_invalid_samples_and_ranges
+TEXT_PRESET_START test_character_ranges_lifecycle_and_scaled_sequence_excess
+---------------------------------
+Test Started: test_character_ranges_lifecycle_and_scaled_sequence_excess
+Test Finished: test_character_ranges_lifecycle_and_scaled_sequence_excess
+TEXT_PRESET_PASS test_character_ranges_lifecycle_and_scaled_sequence_excess
+TEXT_PRESET_START test_character_ranges_local_easing_and_implicit_starts
+---------------------------------
+Test Started: test_character_ranges_local_easing_and_implicit_starts
+Test Finished: test_character_ranges_local_easing_and_implicit_starts
+TEXT_PRESET_PASS test_character_ranges_local_easing_and_implicit_starts
+TEXT_PRESET_START test_character_ranges_missing_indices_and_target_lifetime
+---------------------------------
+Test Started: test_character_ranges_missing_indices_and_target_lifetime
+Test Finished: test_character_ranges_missing_indices_and_target_lifetime
+TEXT_PRESET_PASS test_character_ranges_missing_indices_and_target_lifetime
+TEXT_PRESET_START test_character_ranges_singleton_reverse_and_middle_delays
+---------------------------------
+Test Started: test_character_ranges_singleton_reverse_and_middle_delays
+Test Finished: test_character_ranges_singleton_reverse_and_middle_delays
+TEXT_PRESET_PASS test_character_ranges_singleton_reverse_and_middle_delays
+TEXT_PRESET_START test_character_ranges_small_positive_durations
+---------------------------------
+Test Started: test_character_ranges_small_positive_durations
+Test Finished: test_character_ranges_small_positive_durations
+TEXT_PRESET_PASS test_character_ranges_small_positive_durations
+TEXT_PRESET_START test_character_ranges_yoyo_incremental_and_large_steps
+---------------------------------
+Test Started: test_character_ranges_yoyo_incremental_and_large_steps
+Test Finished: test_character_ranges_yoyo_incremental_and_large_steps
+TEXT_PRESET_PASS test_character_ranges_yoyo_incremental_and_large_steps
+TEXT_PRESET_START test_characters_automatic
+---------------------------------
+Test Started: test_characters_automatic
+Test Finished: test_characters_automatic
+TEXT_PRESET_PASS test_characters_automatic
+TEXT_PRESET_START test_characters_channels
+---------------------------------
+Test Started: test_characters_channels
+Test Finished: test_characters_channels
+TEXT_PRESET_PASS test_characters_channels
+TEXT_PRESET_START test_characters_color_input_normalization
+---------------------------------
+Test Started: test_characters_color_input_normalization
+WARNING: [spire template] alpha must be in [0, 1], got -2; clamping.
+     at: spire_tween::tweens::templates::effect::unit (spire_tween/src/tweens/templates/effect.rs:65)
+     GDScript backtrace (most recent call first):
+         [0] test_characters_color_input_normalization (res://examples/tests/text_animator.gd:794)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire template] alpha must be in [0, 1], got -2; clamping.
+     at: spire_tween::tweens::templates::effect::unit (spire_tween/src/tweens/templates/effect.rs:65)
+     GDScript backtrace (most recent call first):
+         [0] test_characters_color_input_normalization (res://examples/tests/text_animator.gd:797)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire template] alpha must be in [0, 1], got 3; clamping.
+     at: spire_tween::tweens::templates::effect::unit (spire_tween/src/tweens/templates/effect.rs:65)
+     GDScript backtrace (most recent call first):
+         [0] test_characters_color_input_normalization (res://examples/tests/text_animator.gd:794)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire template] alpha must be in [0, 1], got 3; clamping.
+     at: spire_tween::tweens::templates::effect::unit (spire_tween/src/tweens/templates/effect.rs:65)
+     GDScript backtrace (most recent call first):
+         [0] test_characters_color_input_normalization (res://examples/tests/text_animator.gd:797)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire template] red must be finite, got NaN; using 1.
+     at: spire_tween::tweens::templates::effect::finite (spire_tween/src/tweens/templates/effect.rs:57)
+     GDScript backtrace (most recent call first):
+         [0] test_characters_color_input_normalization (res://examples/tests/text_animator.gd:794)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire template] green must be finite, got inf; using 1.
+     at: spire_tween::tweens::templates::effect::finite (spire_tween/src/tweens/templates/effect.rs:57)
+     GDScript backtrace (most recent call first):
+         [0] test_characters_color_input_normalization (res://examples/tests/text_animator.gd:794)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire template] blue must be finite, got -inf; using 1.
+     at: spire_tween::tweens::templates::effect::finite (spire_tween/src/tweens/templates/effect.rs:57)
+     GDScript backtrace (most recent call first):
+         [0] test_characters_color_input_normalization (res://examples/tests/text_animator.gd:794)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire template] alpha must be finite, got NaN; using 1.
+     at: spire_tween::tweens::templates::effect::finite (spire_tween/src/tweens/templates/effect.rs:57)
+     GDScript backtrace (most recent call first):
+         [0] test_characters_color_input_normalization (res://examples/tests/text_animator.gd:794)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire template] red must be finite, got NaN; using 1.
+     at: spire_tween::tweens::templates::effect::finite (spire_tween/src/tweens/templates/effect.rs:57)
+     GDScript backtrace (most recent call first):
+         [0] test_characters_color_input_normalization (res://examples/tests/text_animator.gd:797)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire template] green must be finite, got inf; using 1.
+     at: spire_tween::tweens::templates::effect::finite (spire_tween/src/tweens/templates/effect.rs:57)
+     GDScript backtrace (most recent call first):
+         [0] test_characters_color_input_normalization (res://examples/tests/text_animator.gd:797)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire template] blue must be finite, got -inf; using 1.
+     at: spire_tween::tweens::templates::effect::finite (spire_tween/src/tweens/templates/effect.rs:57)
+     GDScript backtrace (most recent call first):
+         [0] test_characters_color_input_normalization (res://examples/tests/text_animator.gd:797)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire template] alpha must be finite, got NaN; using 1.
+     at: spire_tween::tweens::templates::effect::finite (spire_tween/src/tweens/templates/effect.rs:57)
+     GDScript backtrace (most recent call first):
+         [0] test_characters_color_input_normalization (res://examples/tests/text_animator.gd:797)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+Test Finished: test_characters_color_input_normalization
+TEXT_PRESET_PASS test_characters_color_input_normalization
+TEXT_PRESET_START test_characters_effect_refresh
+---------------------------------
+Test Started: test_characters_effect_refresh
+Test Finished: test_characters_effect_refresh
+TEXT_PRESET_PASS test_characters_effect_refresh
+TEXT_PRESET_START test_characters_effects
+---------------------------------
+Test Started: test_characters_effects
+Test Finished: test_characters_effects
+TEXT_PRESET_PASS test_characters_effects
+TEXT_PRESET_START test_characters_explicit_refresh
+---------------------------------
+Test Started: test_characters_explicit_refresh
+Test Finished: test_characters_explicit_refresh
+TEXT_PRESET_PASS test_characters_explicit_refresh
+TEXT_PRESET_START test_characters_invalid
+---------------------------------
+Test Started: test_characters_invalid
+WARNING: [spire effect] duration must be finite and positive, got NaN; using 1 second.
+     at: spire_tween::tweens::templates::effect::duration_or_default (spire_tween/src/tweens/templates/effect.rs:39)
+     GDScript backtrace (most recent call first):
+         [0] test_characters_invalid (res://examples/tests/text_animator.gd:757)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire effect] invalid vector component NaN; using zero.
+     at: spire_tween::tweens::templates::punch::clean_component (spire_tween/src/tweens/templates/punch.rs:77)
+     GDScript backtrace (most recent call first):
+         [0] test_characters_invalid (res://examples/tests/text_animator.gd:757)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire template] alpha must be in [0, 1], got 3; clamping.
+     at: spire_tween::tweens::templates::effect::unit (spire_tween/src/tweens/templates/effect.rs:65)
+     GDScript backtrace (most recent call first):
+         [0] test_characters_invalid (res://examples/tests/text_animator.gd:761)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire characters] invalid character index -1; character count is 1.
+     at: spire_tween::tweens::templates::text_animator::render::SpireCharRenderer::check (spire_tween/src/tweens/templates/text_animator/render.rs:119)
+     GDScript backtrace (most recent call first):
+         [0] test_characters_invalid (res://examples/tests/text_animator.gd:763)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire effect] invalid vector component NaN; using zero.
+     at: spire_tween::tweens::templates::punch::clean_component (spire_tween/src/tweens/templates/punch.rs:77)
+     GDScript backtrace (most recent call first):
+         [0] test_characters_invalid (res://examples/tests/text_animator.gd:767)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [do_shake] randomness must be in [0,180], got -5; clamping.
+     at: spire_tween::tweens::templates::shake_variants::angle (spire_tween/src/tweens/templates/shake_variants.rs:19)
+     GDScript backtrace (most recent call first):
+         [0] test_characters_invalid (res://examples/tests/text_animator.gd:770)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [do_shake] randomness must be in [0,180], got 250; clamping.
+     at: spire_tween::tweens::templates::shake_variants::angle (spire_tween/src/tweens/templates/shake_variants.rs:19)
+     GDScript backtrace (most recent call first):
+         [0] test_characters_invalid (res://examples/tests/text_animator.gd:770)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire effect] invalid segment count 0; using 2 (allowed 2 to 65536).
+     at: spire_tween::tweens::templates::effect::segment_count (spire_tween/src/tweens/templates/effect.rs:48)
+     GDScript backtrace (most recent call first):
+         [0] test_characters_invalid (res://examples/tests/text_animator.gd:775)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+WARNING: [spire template] randomness must be finite, got NaN; using 90.
+     at: spire_tween::tweens::templates::effect::finite (spire_tween/src/tweens/templates/effect.rs:57)
+     GDScript backtrace (most recent call first):
+         [0] test_characters_invalid (res://examples/tests/text_animator.gd:775)
+         [1] run_test (res://examples/tests/test_base.gd:34)
+         [2] run_tests (res://examples/tests/text_effect_presets_runner.gd:49)
+Test Finished: test_characters_invalid
+TEXT_PRESET_PASS test_characters_invalid
+TEXT_PRESET_START test_characters_label
+---------------------------------
+Test Started: test_characters_label
+Test Finished: test_characters_label
+TEXT_PRESET_PASS test_characters_label
+TEXT_PRESET_START test_characters_lifecycle
+---------------------------------
+Test Started: test_characters_lifecycle
+Test Finished: test_characters_lifecycle
+TEXT_PRESET_PASS test_characters_lifecycle
+TEXT_PRESET_START test_characters_loops_sequence
+---------------------------------
+Test Started: test_characters_loops_sequence
+Test Finished: test_characters_loops_sequence
+TEXT_PRESET_PASS test_characters_loops_sequence
+TEXT_PRESET_START test_characters_missing_indices_keep_playing
+---------------------------------
+Test Started: test_characters_missing_indices_keep_playing
+Test Finished: test_characters_missing_indices_keep_playing
+TEXT_PRESET_PASS test_characters_missing_indices_keep_playing
+TEXT_PRESET_START test_characters_process_mode_and_pause
+---------------------------------
+Test Started: test_characters_process_mode_and_pause
+Test Finished: test_characters_process_mode_and_pause
+TEXT_PRESET_PASS test_characters_process_mode_and_pause
+TEXT_PRESET_START test_characters_refresh
+---------------------------------
+Test Started: test_characters_refresh
+Test Finished: test_characters_refresh
+TEXT_PRESET_PASS test_characters_refresh
+TEXT_PRESET_START test_characters_render
+---------------------------------
+Test Started: test_characters_render
+Test Finished: test_characters_render
+TEXT_PRESET_PASS test_characters_render
+TEXT_PRESET_START test_characters_rotation
+---------------------------------
+Test Started: test_characters_rotation
+Test Finished: test_characters_rotation
+TEXT_PRESET_PASS test_characters_rotation
+TEXT_PRESET_START test_characters_script_process_override
+---------------------------------
+Test Started: test_characters_script_process_override
+Test Finished: test_characters_script_process_override
+TEXT_PRESET_PASS test_characters_script_process_override
+TEXT_PRESET_START test_characters_translation
+---------------------------------
+Test Started: test_characters_translation
+Test Finished: test_characters_translation
+TEXT_PRESET_PASS test_characters_translation
+TEXT_PRESET_START test_characters_unicode_render
+---------------------------------
+Test Started: test_characters_unicode_render
+Test Finished: test_characters_unicode_render
+TEXT_PRESET_PASS test_characters_unicode_render
+TEXT_PRESET_RESULT total=66 failed=0

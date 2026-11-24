@@ -1,0 +1,120 @@
+Initialize godot-rust (API v4.4.stable.official, runtime v4.4.stable.official, safeguards strict)
+Godot Engine v4.4.stable.official.4c311cbee - https://godotengine.org
+WARNING: XOpenIM failed
+     at: DisplayServerX11 (platform/linuxbsd/x11/display_server_x11.cpp:6709)
+WARNING: XCreateIC couldn't create wd.xic
+     at: _create_window (platform/linuxbsd/x11/display_server_x11.cpp:6308)
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:360)
+OpenGL API 4.6 (Core Profile) Mesa 26.2.5 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 23.1.3, 256 bits)
+
+WARNING: Typewriter: `duration` must be finite and positive.
+     at: push_warning (core/variant/variant_utility.cpp:1118)
+SCENE_TEMPLATE_CASE text_entrances/typewriter.tscn failed=0
+WARNING: Fade: `duration` must be finite and positive.
+     at: push_warning (core/variant/variant_utility.cpp:1118)
+SCENE_TEMPLATE_CASE text_entrances/fade.tscn failed=0
+WARNING: Slide: `duration` must be finite and positive.
+     at: push_warning (core/variant/variant_utility.cpp:1118)
+SCENE_TEMPLATE_CASE text_entrances/slide.tscn failed=0
+WARNING: Pop: `duration` must be finite and positive.
+     at: push_warning (core/variant/variant_utility.cpp:1118)
+SCENE_TEMPLATE_CASE text_entrances/pop.tscn failed=0
+WARNING: Bounce: `duration` must be finite and positive.
+     at: push_warning (core/variant/variant_utility.cpp:1118)
+SCENE_TEMPLATE_CASE text_entrances/bounce.tscn failed=0
+WARNING: Flip: `duration` must be finite and positive.
+     at: push_warning (core/variant/variant_utility.cpp:1118)
+SCENE_TEMPLATE_CASE text_entrances/flip.tscn failed=0
+WARNING: Scatter: `duration` must be finite and positive.
+     at: push_warning (core/variant/variant_utility.cpp:1118)
+SCENE_TEMPLATE_CASE text_entrances/scatter.tscn failed=0
+WARNING: Wave: `duration` must be finite and positive.
+     at: push_warning (core/variant/variant_utility.cpp:1118)
+SCENE_TEMPLATE_CASE text_continuous/wave.tscn failed=0
+WARNING: Bob: `duration` must be finite and positive.
+     at: push_warning (core/variant/variant_utility.cpp:1118)
+SCENE_TEMPLATE_CASE text_continuous/bob.tscn failed=0
+WARNING: Breathing: `duration` must be finite and positive.
+     at: push_warning (core/variant/variant_utility.cpp:1118)
+SCENE_TEMPLATE_CASE text_continuous/breathing.tscn failed=0
+WARNING: Wobble: `duration` must be finite and positive.
+     at: push_warning (core/variant/variant_utility.cpp:1118)
+SCENE_TEMPLATE_CASE text_continuous/wobble.tscn failed=0
+WARNING: Trembling: `duration` must be finite and positive.
+     at: push_warning (core/variant/variant_utility.cpp:1118)
+SCENE_TEMPLATE_CASE text_continuous/trembling.tscn failed=0
+WARNING: ColorCycle: `duration` must be finite and positive.
+     at: push_warning (core/variant/variant_utility.cpp:1118)
+SCENE_TEMPLATE_CASE text_continuous/color_cycle.tscn failed=0
+WARNING: AlphaPulse: `duration` must be finite and positive.
+     at: push_warning (core/variant/variant_utility.cpp:1118)
+SCENE_TEMPLATE_CASE text_continuous/alpha_pulse.tscn failed=0
+WARNING: PunchOffset: `duration` must be finite and positive.
+     at: push_warning (core/variant/variant_utility.cpp:1118)
+SCENE_TEMPLATE_CASE text_emphasis/punch_offset.tscn failed=0
+WARNING: PunchRotation: `duration` must be finite and positive.
+     at: push_warning (core/variant/variant_utility.cpp:1118)
+SCENE_TEMPLATE_CASE text_emphasis/punch_rotation.tscn failed=0
+WARNING: PunchScale: `duration` must be finite and positive.
+     at: push_warning (core/variant/variant_utility.cpp:1118)
+SCENE_TEMPLATE_CASE text_emphasis/punch_scale.tscn failed=0
+WARNING: Shake: `duration` must be finite and positive.
+     at: push_warning (core/variant/variant_utility.cpp:1118)
+SCENE_TEMPLATE_CASE text_emphasis/shake.tscn failed=0
+WARNING: ColorFlash: `duration` must be finite and positive.
+     at: push_warning (core/variant/variant_utility.cpp:1118)
+SCENE_TEMPLATE_CASE text_emphasis/color_flash.tscn failed=0
+WARNING: Fade: `duration` must be finite and positive.
+     at: push_warning (core/variant/variant_utility.cpp:1118)
+SCENE_TEMPLATE_CASE canvas_entrances/fade.tscn failed=0
+WARNING: Slide: `duration` must be finite and positive.
+     at: push_warning (core/variant/variant_utility.cpp:1118)
+SCENE_TEMPLATE_CASE canvas_entrances/slide.tscn failed=0
+WARNING: Pop: `duration` must be finite and positive.
+     at: push_warning (core/variant/variant_utility.cpp:1118)
+SCENE_TEMPLATE_CASE canvas_entrances/pop.tscn failed=0
+WARNING: Bounce: `duration` must be finite and positive.
+     at: push_warning (core/variant/variant_utility.cpp:1118)
+SCENE_TEMPLATE_CASE canvas_entrances/bounce.tscn failed=0
+WARNING: Flip: `duration` must be finite and positive.
+     at: push_warning (core/variant/variant_utility.cpp:1118)
+SCENE_TEMPLATE_CASE canvas_entrances/flip.tscn failed=0
+WARNING: Spin: `duration` must be finite and positive.
+     at: push_warning (core/variant/variant_utility.cpp:1118)
+SCENE_TEMPLATE_CASE canvas_entrances/spin.tscn failed=0
+WARNING: HoverFocus: `duration` must be finite and positive.
+     at: push_warning (core/variant/variant_utility.cpp:1118)
+SCENE_TEMPLATE_CASE interaction/hover_focus.tscn failed=0
+WARNING: Press: `duration` must be finite and positive.
+     at: push_warning (core/variant/variant_utility.cpp:1118)
+SCENE_TEMPLATE_CASE interaction/press.tscn failed=0
+WARNING: Selection: `duration` must be finite and positive.
+     at: push_warning (core/variant/variant_utility.cpp:1118)
+SCENE_TEMPLATE_CASE interaction/selection.tscn failed=0
+WARNING: Pulse: `duration` must be finite and positive.
+     at: push_warning (core/variant/variant_utility.cpp:1118)
+SCENE_TEMPLATE_CASE canvas_continuous/pulse.tscn failed=0
+WARNING: Float: `duration` must be finite and positive.
+     at: push_warning (core/variant/variant_utility.cpp:1118)
+SCENE_TEMPLATE_CASE canvas_continuous/float.tscn failed=0
+WARNING: Sway: `duration` must be finite and positive.
+     at: push_warning (core/variant/variant_utility.cpp:1118)
+SCENE_TEMPLATE_CASE canvas_continuous/sway.tscn failed=0
+WARNING: Spin: `duration` must be finite and positive.
+     at: push_warning (core/variant/variant_utility.cpp:1118)
+SCENE_TEMPLATE_CASE canvas_continuous/spin.tscn failed=0
+WARNING: ColorCycle: `duration` must be finite and positive.
+     at: push_warning (core/variant/variant_utility.cpp:1118)
+SCENE_TEMPLATE_CASE canvas_continuous/color_cycle.tscn failed=0
+WARNING: Unsupported character `channel`: missing.
+     at: push_warning (core/variant/variant_utility.cpp:1118)
+WARNING: Unsupported character `channel`: missing.
+     at: push_warning (core/variant/variant_utility.cpp:1118)
+WARNING: Unsupported character `channel`: missing.
+     at: push_warning (core/variant/variant_utility.cpp:1118)
+WARNING: Unsupported character `channel`: missing.
+     at: push_warning (core/variant/variant_utility.cpp:1118)
+WARNING: Slide: `duration` must be finite and positive.
+     at: push_warning (core/variant/variant_utility.cpp:1118)
+SCENE_TEMPLATE_RESULT total=33 failed=0

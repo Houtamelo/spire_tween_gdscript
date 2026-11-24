@@ -1,0 +1,6 @@
+Initialize godot-rust (API v4.4.stable.official, runtime v4.4.stable.official, safeguards strict)
+Godot Engine v4.4.stable.official.4c311cbee - https://godotengine.org
+
+WARNING: [TweenBlueprint] `play_animation_preview()` only works in Editor mode.
+     at: spire_tween::blueprint::preview::<impl spire_tween::blueprint::TweenBlueprint>::play_animation_preview (spire_tween/src/blueprint/preview.rs:25)
+BLUEPRINT_PREVIEW_RUNTIME_RESULT checks=2 failed=0

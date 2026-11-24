@@ -1,0 +1,113 @@
+Initialize godot-rust (API v4.4.stable.official, runtime v4.7.2.stable.official, safeguards strict)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Started Project initialization (5 steps)[39m[0m
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Scanning file structure...[39m[0m
+[  16% ] [90m[1mfirst_scan_filesystem[22m | Loading global class names...[39m[0m
+[  33% ] [90m[1mfirst_scan_filesystem[22m | Verifying GDExtensions...[39m[0m
+[  50% ] [90m[1mfirst_scan_filesystem[22m | Creating autoload scripts...[39m[0m
+[  66% ] [90m[1mfirst_scan_filesystem[22m | Initializing plugins...[39m[0m
+[  83% ] [90m[1mfirst_scan_filesystem[22m | Starting file scan...[39m[0m
+[92m[ DONE ][39m [1mfirst_scan_filesystem[22m
+[0m
+[   0% ] [90m[1msavepack[22m | Started Packing (102 steps)[39m[0m
+[   1% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/canvas/continuous.gdc[39m[0m
+[   3% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/canvas/entrance.gdc[39m[0m
+[   5% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/canvas/interaction.gdc[39m[0m
+[   7% ] [90m[1msavepack[22m | Storing File: res://godot/exported/133200997/export-04648ca85dbd112bb61c9a0e9f7a8ea0-color_cycle.scn[39m[0m
+[   9% ] [90m[1msavepack[22m | Storing File: res://godot/exported/133200997/export-4c2950605cb6ee855f69f357301f3710-float.scn[39m[0m
+[  11% ] [90m[1msavepack[22m | Storing File: res://godot/exported/133200997/export-394c97bc8548ac96b46cc3f72957ce67-pulse.scn[39m[0m
+[  13% ] [90m[1msavepack[22m | Storing File: res://godot/exported/133200997/export-b98b68431d953e1f5bb59a2f94085d5f-spin.scn[39m[0m
+[  15% ] [90m[1msavepack[22m | Storing File: res://godot/exported/133200997/export-83315dd85119681730f930e854fc9e94-sway.scn[39m[0m
+[  17% ] [90m[1msavepack[22m | Storing File: res://godot/exported/133200997/export-3ac6ced3744f0065ae0a6393ab93b725-bounce.scn[39m[0m
+[  19% ] [90m[1msavepack[22m | Storing File: res://godot/exported/133200997/export-833e01e567e7275ccf62c0f7cc6875c3-fade.scn[39m[0m
+[  21% ] [90m[1msavepack[22m | Storing File: res://godot/exported/133200997/export-c2f75546784caf264b9f9e6792cdd640-flip.scn[39m[0m
+[  23% ] [90m[1msavepack[22m | Storing File: res://godot/exported/133200997/export-2aed5c62c1949caf2ea25f446d8258de-pop.scn[39m[0m
+[  26% ] [90m[1msavepack[22m | Storing File: res://godot/exported/133200997/export-986f4579e52f536088731733f3894a37-slide.scn[39m[0m
+[  28% ] [90m[1msavepack[22m | Storing File: res://godot/exported/133200997/export-86494cf29474fc83379f306928a5488b-spin.scn[39m[0m
+[  30% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/common/canvas_template.gdc[39m[0m
+[  32% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/common/easing.gdc[39m[0m
+[  33% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/common/template.gdc[39m[0m
+[  35% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/common/text_template.gdc[39m[0m
+[  37% ] [90m[1msavepack[22m | Storing File: res://godot/exported/133200997/export-659194b5b52067e28ba0affd4c528388-hover_focus.scn[39m[0m
+[  39% ] [90m[1msavepack[22m | Storing File: res://godot/exported/133200997/export-7886a2b56377c5c807353ce145154445-press.scn[39m[0m
+[  41% ] [90m[1msavepack[22m | Storing File: res://godot/exported/133200997/export-cdb1f29236021b44c865eeda198f0a4e-selection.scn[39m[0m
+[  43% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/text/continuous.gdc[39m[0m
+[  45% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/text/emphasis.gdc[39m[0m
+[  47% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/text/entrance.gdc[39m[0m
+[  50% ] [90m[1msavepack[22m | Storing File: res://godot/exported/133200997/export-fd324ea6352e366d7501857d86b8b9a4-alpha_pulse.scn[39m[0m
+[  52% ] [90m[1msavepack[22m | Storing File: res://godot/exported/133200997/export-7371644a93caab1c174bfa3f49f25d77-bob.scn[39m[0m
+[  54% ] [90m[1msavepack[22m | Storing File: res://godot/exported/133200997/export-58f9666d44bcb7f71f8c38331b71dc77-breathing.scn[39m[0m
+[  56% ] [90m[1msavepack[22m | Storing File: res://godot/exported/133200997/export-39d8009fd13e783537b62bca7dca9a7e-color_cycle.scn[39m[0m
+[  58% ] [90m[1msavepack[22m | Storing File: res://godot/exported/133200997/export-407485a9a3679cbcecb754e63d6599de-trembling.scn[39m[0m
+[  60% ] [90m[1msavepack[22m | Storing File: res://godot/exported/133200997/export-7fde99872165ae2cfe3e70a920fe97f8-wave.scn[39m[0m
+[  62% ] [90m[1msavepack[22m | Storing File: res://godot/exported/133200997/export-30771cf47c262ad38b2cf7811e0d7ac9-wobble.scn[39m[0m
+[  64% ] [90m[1msavepack[22m | Storing File: res://godot/exported/133200997/export-ee8a42bc3aed900e9e89bc88a9c4506a-color_flash.scn[39m[0m
+[  66% ] [90m[1msavepack[22m | Storing File: res://godot/exported/133200997/export-122d86312c67f8dd1c9789fa6a0a5d93-punch_offset.scn[39m[0m
+[  67% ] [90m[1msavepack[22m | Storing File: res://godot/exported/133200997/export-5195b0650cc8841ff51b5071879fa6bc-punch_rotation.scn[39m[0m
+[  69% ] [90m[1msavepack[22m | Storing File: res://godot/exported/133200997/export-71ee375603d27dc86c0b898441c867dc-punch_scale.scn[39m[0m
+[  71% ] [90m[1msavepack[22m | Storing File: res://godot/exported/133200997/export-ba2cd1d944d1887e2352972636d7af29-shake.scn[39m[0m
+[  74% ] [90m[1msavepack[22m | Storing File: res://godot/exported/133200997/export-093add3868b7dc980b866a332a4261a7-bounce.scn[39m[0m
+[  76% ] [90m[1msavepack[22m | Storing File: res://godot/exported/133200997/export-22a1cbfe95021283dbd3823a36e9276f-fade.scn[39m[0m
+[  78% ] [90m[1msavepack[22m | Storing File: res://godot/exported/133200997/export-36ad41041048710e32e2493e02772b48-flip.scn[39m[0m
+[  80% ] [90m[1msavepack[22m | Storing File: res://godot/exported/133200997/export-0517314643f434f352d589166a987de0-pop.scn[39m[0m
+[  82% ] [90m[1msavepack[22m | Storing File: res://godot/exported/133200997/export-6e471faa69ecd4221abe4726eedb2095-scatter.scn[39m[0m
+[  84% ] [90m[1msavepack[22m | Storing File: res://godot/exported/133200997/export-20fe49d732fe7d2f14e619f2d9f6c8dd-slide.scn[39m[0m
+[  86% ] [90m[1msavepack[22m | Storing File: res://godot/exported/133200997/export-314590d0721ca62a264f8fe42bebeb96-typewriter.scn[39m[0m
+[  88% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/catalog.json[39m[0m
+[  90% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/spire_tween.gdextension[39m[0m
+[  92% ] [90m[1msavepack[22m | Storing File: res://smoke.gdc[39m[0m
+[  94% ] [90m[1msavepack[22m | Storing File: res://godot/exported/133200997/export-07e53eed4c67b9f8a8c210331b42b5d2-smoke.scn[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://smoke_templates.gdc[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/canvas/continuous.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/canvas/entrance.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/canvas/interaction.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/canvas_continuous/color_cycle.tscn.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/canvas_continuous/float.tscn.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/canvas_continuous/pulse.tscn.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/canvas_continuous/spin.tscn.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/canvas_continuous/sway.tscn.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/canvas_entrances/bounce.tscn.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/canvas_entrances/fade.tscn.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/canvas_entrances/flip.tscn.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/canvas_entrances/pop.tscn.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/canvas_entrances/slide.tscn.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/canvas_entrances/spin.tscn.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/common/canvas_template.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/common/easing.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/common/template.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/common/text_template.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/interaction/hover_focus.tscn.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/interaction/press.tscn.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/interaction/selection.tscn.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/text/continuous.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/text/emphasis.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/text/entrance.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/text_continuous/alpha_pulse.tscn.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/text_continuous/bob.tscn.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/text_continuous/breathing.tscn.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/text_continuous/color_cycle.tscn.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/text_continuous/trembling.tscn.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/text_continuous/wave.tscn.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/text_continuous/wobble.tscn.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/text_emphasis/color_flash.tscn.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/text_emphasis/punch_offset.tscn.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/text_emphasis/punch_rotation.tscn.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/text_emphasis/punch_scale.tscn.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/text_emphasis/shake.tscn.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/text_entrances/bounce.tscn.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/text_entrances/fade.tscn.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/text_entrances/flip.tscn.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/text_entrances/pop.tscn.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/text_entrances/scatter.tscn.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/text_entrances/slide.tscn.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://addons/spire_tween/templates/text_entrances/typewriter.tscn.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://smoke.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://smoke.tscn.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://smoke_templates.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://godot/global_script_class_cache.cfg[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://godot/extension_list.cfg[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://godot/uid_cache.bin[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://project.binary[39m[0m
+[92m[ DONE ][39m [1msavepack[22m
+[0m

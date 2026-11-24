@@ -61,6 +61,38 @@ fn copy_tree(source: &Path, destination: &Path) -> Result<()> {
     }
     Ok(())
 }
+const TEMPLATE_SOURCE: &str = "spire_tween_gdscript/addons/spire_tween/templates/";
+
+fn stage_templates(stage: &Path) -> Result<()> {
+    let source = root().join(TEMPLATE_SOURCE);
+    ensure!(source.join("catalog.json").is_file(), "missing template catalog");
+    for path in files(&source)? {
+        ensure!(
+            matches!(path.extension().and_then(|ext| ext.to_str()), Some("gd" | "tscn" | "uid" | "json" | "md")),
+            "unexpected template asset: {}",
+            path.display()
+        );
+        copy(&path, &stage.join("addon/templates").join(path.strip_prefix(&source)?))?;
+    }
+    Ok(())
+}
+
+fn verify_templates(record: &Value) -> Result<()> {
+    let sources = record["source"]["files"]
+        .as_object()
+        .context("missing source inventory")?;
+    ensure!(sources.contains_key(&format!("{TEMPLATE_SOURCE}catalog.json")), "missing template source inventory");
+    for (name, expected) in sources {
+        if let Some(relative) = name.strip_prefix(TEMPLATE_SOURCE) {
+            ensure!(
+                record["files"].get(format!("addon/templates/{relative}")) == Some(expected),
+                "missing or mismatched staged template: {relative}"
+            );
+        }
+    }
+    Ok(())
+}
+
 fn source_identity() -> Result<Value> {
     let repo = root();
     let paths = output(Command::new("git").current_dir(&repo).args([
@@ -409,6 +441,7 @@ fn build(platform: &str, stage: &Path) -> Result<()> {
     }
     fs::write(stage.join("addon/spire_tween.gdextension"), manifest(&[platform.into()], false))?;
     copy(&root().join("LICENSE"), &stage.join("addon/LICENSE"))?;
+    stage_templates(stage)?;
     notices(&stage.join("notices"), &packages)?;
     ensure!(
         source_identity()?["sha256"] == source["sha256"],
@@ -451,6 +484,7 @@ fn verify(stage: &Path) -> Result<Value> {
             ensure!(record["files"].get(&name).is_some(), "unrecorded artifact: {name}");
         }
     }
+    verify_templates(&record)?;
     if record["platform"] == "windows" {
         for directory in ["addon", "tests"] {
             for path in files(&stage.join(directory))?
@@ -765,6 +799,11 @@ renderer/rendering_method="gl_compatibility"
 "#,
     )?;
     fs::write(project.join("godot/extension_list.cfg"), "res://addons/spire_tween/spire_tween.gdextension\n")?;
+    let catalog = read_json(&stage.join("addon/templates/catalog.json"))?;
+    ensure!(catalog.as_array().is_some_and(|entries| !entries.is_empty()), "empty or invalid template catalog");
+    // Embed test enumeration in a script so exported checks do not depend on
+    // export filters for non-resource JSON files.
+    fs::write(project.join("smoke_templates.gd"), format!("const ENTRIES = {}\n", serde_json::to_string(&catalog)?))?;
     copy(&root().join("release/smoke.gd"), &project.join("smoke.gd"))?;
     copy(&root().join("release/smoke.tscn"), &project.join("smoke.tscn"))?;
     run_logged(
@@ -1045,6 +1084,16 @@ fn package(staging: &Path, reports: &Path, out: &Path, candidate: bool, platform
             }
         }
         records.push(record);
+    }
+    // Shared authored assets are identical across verified source snapshots;
+    // include them once, independently of the number of platform libraries.
+    let templates = staging.join(&platforms[0]).join("addon/templates");
+    for path in files(&templates)? {
+        let name = format!(
+            "addons/spire_tween/templates/{}",
+            path.strip_prefix(&templates)?.to_string_lossy().replace('\\', "/")
+        );
+        payload.insert(name, fs::read(path)?);
     }
     ensure!(
         source_identity()?["sha256"] == source["sha256"],
