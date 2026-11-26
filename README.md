@@ -51,6 +51,7 @@ These are the priorities of SpireTween:
 
 # Summary
 
+- [Changelog and migration notes](CHANGELOG.md)
 - [Installation](#installation)
 - [Platform Support](#platform-support)
 - [Running integration tests](#running-integration-tests)

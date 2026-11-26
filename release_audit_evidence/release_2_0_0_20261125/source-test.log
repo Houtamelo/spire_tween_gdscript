@@ -1,0 +1,8 @@
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.01s
+     Running tests/source.rs (target/debug/build/spire_release/a7b9459082489a87/out/source-a7b9459082489a87)
+
+running 1 test
+test source_archive_compiles_and_rejects_a_missing_core_file ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 28.72s
+

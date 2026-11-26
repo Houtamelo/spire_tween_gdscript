@@ -237,8 +237,20 @@ fn candidate_archive_installs_and_rejects_extra_files() {
     let archive = fs::read_dir(&archive_dir)
         .unwrap()
         .map(|e| e.unwrap().path())
-        .find(|p| p.extension().is_some_and(|s| s == "zip"))
+        .find(|p| p.extension().is_some_and(|s| s == "zip") && !p.to_string_lossy().ends_with("-source.zip"))
         .unwrap();
+    let sources = fs::read_dir(&archive_dir)
+        .unwrap()
+        .map(|entry| entry.unwrap().path())
+        .find(|path| path.to_string_lossy().ends_with("-source.zip"))
+        .unwrap();
+    let mut source_zip = zip::ZipArchive::new(fs::File::open(sources).unwrap()).unwrap();
+    source_zip.by_name("spire_tween/src/lib.rs").unwrap();
+    source_zip.by_name("SOURCE_README.md").unwrap();
+    for index in 0..source_zip.len() {
+        let name = source_zip.by_index(index).unwrap().name().to_owned();
+        assert!(!name.contains("/lib/") && !name.contains("GirlKnight") && !name.ends_with(".png"));
+    }
     {
         let mut zip = zip::ZipArchive::new(fs::File::open(&archive).unwrap()).unwrap();
         assert!(!zip.is_empty());
@@ -250,6 +262,12 @@ fn candidate_archive_installs_and_rejects_extra_files() {
         zip.by_name("addons/spire_tween/spire_tween.gdextension").unwrap();
         zip.by_name("build/Cargo.lock").unwrap();
         zip.by_name("SHA256SUMS").unwrap();
+        let mut changelog = Vec::new();
+        zip.by_name("CHANGELOG.md")
+            .unwrap()
+            .read_to_end(&mut changelog)
+            .unwrap();
+        assert_eq!(changelog, fs::read(Path::new(env!("CARGO_MANIFEST_DIR")).join("../../CHANGELOG.md")).unwrap());
         assert_template_payload(&mut zip);
     }
     run(

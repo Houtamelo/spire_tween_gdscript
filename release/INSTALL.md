@@ -1,5 +1,7 @@
 # SpireTween
 
+See [the changelog](CHANGELOG.md) for release changes and migration notes.
+
 Copy the archive's `addons/spire_tween` directory into your Godot project's `addons` directory. Open or reopen the project. No plugin switch or autoload is needed.
 
 The desktop release targets Godot 4.4 and newer supported Godot 4.x versions, Windows/Linux x86_64, and macOS Apple Silicon/Intel. A partial development candidate contains only the platforms named in its filename and extension manifest. Both editor/debug and exported release libraries are included for each packaged platform. `release.json` records the configured validation versions, available validation reports, source revision, Linux GLIBC requirement, macOS deployment target, and signing status. An archive with `candidate` in its name is a development candidate; consult its validation evidence before release.
@@ -22,5 +24,11 @@ Godot selects the appropriate library during export. Keep the whole addon direct
 Reusable scene templates are included under `addons/spire_tween/templates/`. See their [catalog and authoring guide](addons/spire_tween/templates/README.md), and instance a template scene beneath its target or assign its `target`. Keep the shared scripts and UID sidecars with those scenes.
 
 See the [project documentation and examples](https://github.com/Houtamelo/spire_tween_gdscript) for usage. The exact source revision and file hashes are in `release.json`; the build lockfile/toolchain snapshot is in `build/`. Examples and third-party art are not part of this archive.
+
+One purchase includes a lifetime license and all future SpireTween updates, including major versions, at no additional charge.
+
+For bug reports and usage questions, use [GitHub Issues](https://github.com/Houtamelo/spire_tween_gdscript/issues). The itch.io community is also checked from time to time.
+
+The author checks GitHub daily and prioritizes bug fixes over all other SpireTween work. Most issues are expected to be resolved within 72 hours, though the author reserves the right to take up to 14 days.
 
 `SHA256SUMS` records the SHA-256 hash of each delivered file except the checksum manifest itself. The project is MIT licensed; see `LICENSE`. Dependency notices, original license files and unmodified MPL dependency sources are under `third_party/<platform>/`.

@@ -13,6 +13,9 @@ use regex::Regex;
 use serde_json::{Value, json};
 use sha2::{Digest, Sha256, Sha512};
 
+mod demo;
+mod source_archive;
+
 fn root() -> PathBuf {
     Path::new(env!("CARGO_MANIFEST_DIR"))
         .join("../..")
@@ -805,6 +808,7 @@ renderer/rendering_method="gl_compatibility"
     // export filters for non-resource JSON files.
     fs::write(project.join("smoke_templates.gd"), format!("const ENTRIES = {}\n", serde_json::to_string(&catalog)?))?;
     copy(&root().join("release/smoke.gd"), &project.join("smoke.gd"))?;
+    copy(&root().join("release/template_state.gd"), &project.join("template_state.gd"))?;
     copy(&root().join("release/smoke.tscn"), &project.join("smoke.tscn"))?;
     run_logged(
         &mut engine_command(godot, &project),
@@ -931,15 +935,45 @@ fn test(stage: &Path, godot: &Path, out: &Path, smoke_only: bool, templates: Opt
             select_profile(&project.join("addons/spire_tween/spire_tween.gdextension"), profile)?;
             let mut command = engine_command(godot, &project);
             command
-                .args(if kind == "native" { ["--max-fps", "120"] } else { ["--fixed-fps", "120"] })
+                .args(["--fixed-fps", "120"])
                 .arg(entry)
                 .args(["--", "--all-tests", "--no-cache"]);
+            // Ordinary assertions use simulation time. The unscaled-time test
+            // deliberately reads wall time and runs separately with real pacing.
+            let total = config()["expected_results"][kind]
+                .as_u64()
+                .context("missing suite count")?;
+            if kind == "native" {
+                command.arg("--exclude-test=test_ignore_time_scale");
+            }
             let marker = format!(
                 "{}_TEST_RESULT total={} failed=0",
                 kind.to_ascii_uppercase(),
-                config()["expected_results"][kind]
+                total - u64::from(kind == "native")
             );
             run_logged(&mut command, &out.join(format!("{kind}-{profile}.log")), 1000, 0, &marker)?;
+            if kind == "native" {
+                run_logged(
+                    engine_command(godot, &project)
+                        .args(["--max-fps", "120"])
+                        .arg(entry)
+                        .args(["--", "--no-cache", "--test=test_ignore_time_scale"]),
+                    &out.join(format!("native-{profile}-realtime.log")),
+                    60,
+                    0,
+                    "NATIVE_TEST_RESULT total=1 failed=0",
+                )?;
+                run_logged(
+                    engine_command(godot, &project)
+                        .args(["--fixed-fps", "120"])
+                        .arg(entry)
+                        .args(["--", "--test=test_ignore_time_scale", "--exclude-test=test_ignore_time_scale"]),
+                    &out.join(format!("native-{profile}-empty-filter.log")),
+                    30,
+                    1,
+                    "NATIVE_TEST_RESULT total=0 failed=1",
+                )?;
+            }
             for (case, code) in [
                 ("async_pass", 0),
                 (if kind == "native" { "async_panic" } else { "helper_failure" }, 1),
@@ -1103,6 +1137,7 @@ fn package(staging: &Path, reports: &Path, out: &Path, candidate: bool, platform
     for (file, name) in [
         ("LICENSE", "LICENSE"),
         ("LICENSE", "addons/spire_tween/LICENSE"),
+        ("CHANGELOG.md", "CHANGELOG.md"),
         ("release/INSTALL.md", "README.md"),
         ("release/README.md", "RELEASE.md"),
         ("Cargo.lock", "build/Cargo.lock"),
@@ -1143,9 +1178,27 @@ fn package(staging: &Path, reports: &Path, out: &Path, candidate: bool, platform
         label
     );
     let archive = out.join(name);
-    let mut zip = zip::ZipWriter::new(fs::File::create(&archive)?);
+    write_archive(&archive, payload)?;
+    let sources = source_archive::package(out, &source, package["package"]["version"].as_str().unwrap(), candidate)?;
+    fs::write(
+        out.join("SHA256SUMS"),
+        [&archive, &sources]
+            .into_iter()
+            .map(|path| Ok(format!("{}  {}\n", hash(path)?, path.file_name().unwrap().to_string_lossy())))
+            .collect::<Result<String>>()?,
+    )?;
+    eprintln!("Packaged {}", archive.display());
+    Ok(())
+}
+fn write_archive(archive: &Path, payload: BTreeMap<String, Vec<u8>>) -> Result<()> {
+    let mut zip = zip::ZipWriter::new(fs::File::create(archive)?);
     for (name, data) in payload {
-        let executable = name.ends_with(".so") || name.ends_with(".dll") || name.ends_with("/spire_tween");
+        let executable = name.ends_with(".so")
+            || name.ends_with(".dll")
+            || name.ends_with("/spire_tween")
+            || name.ends_with(".sh")
+            || name.ends_with(".x86_64")
+            || name.contains("/Contents/MacOS/");
         zip.start_file(
             name,
             zip::write::SimpleFileOptions::default()
@@ -1155,17 +1208,18 @@ fn package(staging: &Path, reports: &Path, out: &Path, candidate: bool, platform
         zip.write_all(&data)?;
     }
     zip.finish()?;
-    fs::write(
-        out.join("SHA256SUMS"),
-        format!("{}  {}\n", hash(&archive)?, archive.file_name().unwrap().to_string_lossy()),
-    )?;
-    eprintln!("Packaged {}", archive.display());
     Ok(())
 }
-fn archive_test(archive: &Path, godot: &Path, out: &Path, templates: Option<&Path>) -> Result<()> {
-    let extracted = out.join("extracted");
+fn extract_archive(archive: &Path, extracted: &Path) -> Result<()> {
     ensure!(!extracted.exists(), "archive test output already exists");
-    zip::ZipArchive::new(fs::File::open(archive)?)?.extract(&extracted)?;
+    let mut zip = zip::ZipArchive::new(fs::File::open(archive)?)?;
+    let mut names = BTreeSet::new();
+    for index in 0..zip.len() {
+        let file = zip.by_index(index)?;
+        ensure!(file.enclosed_name().is_some(), "unsafe archive path");
+        ensure!(names.insert(file.name().to_owned()), "duplicate archive entry: {}", file.name());
+    }
+    zip.extract(extracted)?;
     let sums = fs::read_to_string(extracted.join("SHA256SUMS"))?;
     let mut expected = BTreeSet::new();
     for line in sums.lines() {
@@ -1183,6 +1237,11 @@ fn archive_test(archive: &Path, godot: &Path, out: &Path, templates: Option<&Pat
         let name = file.strip_prefix(&extracted)?.to_string_lossy().replace('\\', "/");
         ensure!(name == "SHA256SUMS" || expected.contains(name.as_str()), "unrecorded archive file: {name}");
     }
+    Ok(())
+}
+fn archive_test(archive: &Path, godot: &Path, out: &Path, templates: Option<&Path>) -> Result<()> {
+    let extracted = out.join("extracted");
+    extract_archive(archive, &extracted)?;
     let stage = out.join("installed");
     copy_tree(&extracted.join("addons/spire_tween"), &stage.join("addon"))?;
     for profile in ["debug", "release"] {
@@ -1220,6 +1279,9 @@ fn main() -> Result<()> {
         "build" => &["--platform", "--out"],
         "test" => &["--stage", "--godot", "--out", "--templates", "--smoke-only"],
         "test-archive" => &["--archive", "--godot", "--out", "--templates"],
+        "test-source" => &["--archive", "--out"],
+        "demo" => &["--stage", "--godot", "--templates", "--out"],
+        "test-demo" => &["--archive", "--out"],
         "verify" => &["--stage"],
         "download" => &["--version", "--out", "--download-templates"],
         "package" => &["--staging", "--reports", "--out", "--candidate", "--platforms"],
@@ -1261,6 +1323,14 @@ fn main() -> Result<()> {
             verify(Path::new(get("--stage")?))?;
             Ok(())
         }
+        "test-source" => source_archive::test(Path::new(get("--archive")?), Path::new(get("--out")?)),
+        "demo" => demo::build(
+            Path::new(get("--stage")?),
+            Path::new(get("--godot")?),
+            Path::new(get("--templates")?),
+            Path::new(get("--out")?),
+        ),
+        "test-demo" => demo::test(Path::new(get("--archive")?), Path::new(get("--out")?)),
         "download" => download(get("--version")?, Path::new(get("--out")?), flags.contains("--download-templates")),
         "package" => package(
             Path::new(get("--staging")?),

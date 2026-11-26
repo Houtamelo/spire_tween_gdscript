@@ -206,13 +206,18 @@ impl INode for TestRunner {
 }
 
 async fn run_tests_from_class<T: ITestClass>(parent: &mut Gd<Node>, filter: &str, timeout: Duration) -> (usize, usize) {
+    let excluded = Os::singleton()
+        .get_cmdline_user_args()
+        .to_vec()
+        .into_iter()
+        .find_map(|argument| argument.to_string().strip_prefix("--exclude-test=").map(str::to_owned));
     let prefab: Gd<PackedScene> = load(T::PREFAB_PATH);
     let mut total = 0;
     let mut failed = 0;
 
     // Fresh scene instance per test, matching GDScript runner behavior.
     for (name, test_fn) in T::test_list() {
-        if !filter.is_empty() && filter != name {
+        if (!filter.is_empty() && filter != name) || excluded.as_deref() == Some(name) {
             continue;
         }
         total += 1;

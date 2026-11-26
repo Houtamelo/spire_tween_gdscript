@@ -1,0 +1,3 @@
+BLUEPRINT_PREVIEW_RUNTIME_RESULT checks=2 failed=0
+BLUEPRINT_PREVIEW_EDITOR_RESULT checks=228 failed=0
+Blueprint preview evidence: /tmp/spire-release-work/preview-4.4

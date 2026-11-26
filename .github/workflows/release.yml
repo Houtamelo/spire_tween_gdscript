@@ -115,6 +115,11 @@ jobs:
         with:
           name: build-${{ matrix.host.platform }}
           path: dist/stage/
+      - name: Install graphical validation dependencies
+        if: matrix.host.platform == 'linux'
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install --yes --no-install-recommends ripgrep xvfb libgl1-mesa-dri
       - name: Download pinned Godot and templates
         env:
           VERSION: ${{ matrix.version }}
@@ -156,6 +161,46 @@ jobs:
           if-no-files-found: error
           retention-days: 14
 
+  showcase:
+    needs: build
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {platform: linux, runner: ubuntu-22.04}
+          - {platform: windows, runner: windows-2022}
+          - {platform: macos, runner: macos-15}
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: build-${{ matrix.platform }}
+          path: dist/stage/
+      - name: Export and exercise the standalone showcase
+        run: |
+          cargo run --locked -p spire_release -- download --version 4.4 --out dist/engine --download-templates
+          cargo run --locked -p spire_release -- demo --stage dist/stage --godot "$(cat dist/engine/godot-path)" --templates "$PWD/dist/engine/export/templates" --out dist/showcase
+          demo_archive=(dist/showcase/archives/*.zip)
+          [[ ${#demo_archive[@]} == 1 ]]
+          SPIRE_RELEASE_DEMO_ARCHIVE="$PWD/${demo_archive[0]}" cargo test --locked -p spire_release --test demo -- --ignored
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: evidence-showcase-${{ matrix.platform }}
+          path: |
+            dist/showcase/*.log
+            dist/showcase/prepare/*.log
+            dist/showcase/validation/*.log
+            dist/showcase/validation/*.json
+          if-no-files-found: warn
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: showcase-${{ matrix.platform }}
+          path: dist/showcase/archives/
+          if-no-files-found: error
+
   package:
     needs: [build, validate]
     runs-on: ubuntu-22.04
@@ -178,6 +223,9 @@ jobs:
           for platform in linux windows macos; do mv "dist/builds/build-$platform" "dist/staging/$platform"; done
           cargo test --locked -p spire_release --test desktop -- --ignored
           cargo run --locked -p spire_release -- package --staging dist/staging --reports dist/reports --out dist/archive
+          source_archive=(dist/archive/*-source.zip)
+          [[ ${#source_archive[@]} == 1 ]]
+          SPIRE_RELEASE_SOURCE_ARCHIVE="$PWD/${source_archive[0]}" cargo test --locked -p spire_release --test source -- --ignored
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: assembled-archive
@@ -185,7 +233,7 @@ jobs:
           if-no-files-found: error
 
   extracted_archive:
-    needs: [plan, package]
+    needs: [plan, package, showcase]
     strategy:
       fail-fast: false
       matrix:
@@ -203,15 +251,22 @@ jobs:
         with:
           name: assembled-archive
           path: dist/archive/
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: showcase-${{ matrix.host.platform }}
+          path: dist/showcase/
       - name: Download pinned Godot and templates
         env:
           VERSION: ${{ matrix.version }}
         run: cargo run --locked -p spire_release -- download --version "$VERSION" --out dist/engine --download-templates
       - name: Verify checksums, install, export and run the extracted customer archive
         run: |
-          archive=(dist/archive/*.zip)
+          archive=(dist/archive/*-desktop.zip)
           [[ ${#archive[@]} == 1 ]]
           cargo run --locked -p spire_release -- test-archive --archive "${archive[0]}" --godot "$(cat dist/engine/godot-path)" --templates "$PWD/dist/engine/export/templates" --out dist/archive-validation
+          demo_archive=(dist/showcase/*.zip)
+          [[ ${#demo_archive[@]} == 1 ]]
+          cargo run --locked -p spire_release -- test-demo --archive "${demo_archive[0]}" --out dist/demo-validation
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
         with:
@@ -219,6 +274,8 @@ jobs:
           path: |
             dist/archive-validation/*.json
             dist/archive-validation/*.log
+            dist/demo-validation/*.json
+            dist/demo-validation/*.log
           if-no-files-found: error
           retention-days: 14
 
@@ -230,6 +287,10 @@ jobs:
         with:
           name: assembled-archive
           path: archive/
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          pattern: showcase-*
+          path: archive/demos/
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: verified-desktop-package

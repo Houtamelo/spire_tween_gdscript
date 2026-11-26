@@ -1,0 +1,10 @@
+Initialize godot-rust (API v4.4.stable.official, runtime v4.4.stable.official, safeguards strict)
+Godot Engine v4.4.stable.official.4c311cbee - https://godotengine.org
+
+---------------------------------
+Test Started: test_helper_failure
+ERROR: TEST_ASSERTION_FAILED: 1 != 2
+   at: push_error (core/variant/variant_utility.cpp:1098)
+Test Finished: test_helper_failure
+TEST_FAIL res://examples/tests/runner_failure_fixture.tscn::test_helper_failure
+GDSCRIPT_TEST_RESULT total=1 failed=1 skipped=0

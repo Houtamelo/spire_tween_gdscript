@@ -1,0 +1,17 @@
+Initialize godot-rust (API v4.4.stable.official, runtime v4.4.stable.official, safeguards strict)
+Godot Engine v4.4.stable.official.4c311cbee - https://godotengine.org
+
+=== SpireTween Rust Test Runner ===
+Test Started: res://examples/tests/play_pause_stop.tscn::test_pause_play_works
+ERROR: [panic spire_tween_rust/src/tests/util.rs:347]
+  Abs(0.029427666666658858) is bigger than tolerance `0.017`
+  in <Callable>::spire_tween_rust::tests::util::checked_callback<spire_tween_rust::tests::util::assert_finished_timing<spire_tween::tweens::property::data::LerpPropertyData<godot_core::builtin::vectors::vector2::Vector2>>::{{closure}}>::{{closure}}()
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+(backtrace disabled, run application with `RUST_BACKTRACE=1` environment variable)
+ERROR: [panic spire_tween_rust/src/tests/util.rs:347]
+  Abs(0.029427666666658858) is bigger than tolerance `0.017`
+  in async task #1
+   at: godot_core::private::install_godot_rust_hook::{{closure}} (/home/houtamelo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/godot-core-0.5.5/src/private.rs:331)
+(backtrace disabled, run application with `RUST_BACKTRACE=1` environment variable)
+TEST_FAIL res://examples/tests/play_pause_stop.tscn::test_pause_play_works
+NATIVE_TEST_RESULT total=1 failed=1

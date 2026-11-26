@@ -54,7 +54,7 @@ fn desktop_archive_accepts_ad_hoc_macos_and_requires_full_validation() {
     let archive = fs::read_dir(&good)
         .unwrap()
         .map(|e| e.unwrap().path())
-        .find(|p| p.extension().is_some_and(|s| s == "zip"))
+        .find(|p| p.to_string_lossy().ends_with("-desktop.zip"))
         .unwrap();
     let mut zip = zip::ZipArchive::new(fs::File::open(archive).unwrap()).unwrap();
     assert_eq!(
