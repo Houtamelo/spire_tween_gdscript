@@ -58,7 +58,7 @@ EOF
 unset DISPLAY WAYLAND_DISPLAY XAUTHORITY
 export XDG_DATA_HOME="$preview_output/xdg/data" XDG_CONFIG_HOME="$preview_output/xdg/config" XDG_CACHE_HOME="$preview_output/xdg/cache"
 export LIBGL_ALWAYS_SOFTWARE=true LP_NUM_THREADS=2 OMP_NUM_THREADS=2
-Xvfb -displayfd 3 -screen 0 1440x1000x24 -nolisten tcp 3>"$preview_output/display-number" >"$preview_output/xvfb.log" 2>&1 </dev/null &
+Xvfb -displayfd 3 -screen 0 1600x1200x24 -nolisten tcp 3>"$preview_output/display-number" >"$preview_output/xvfb.log" 2>&1 </dev/null &
 preview_display_pid=$!
 trap 'kill "$preview_display_pid" 2>/dev/null || true' EXIT
 for _attempt in {1..100}; do

@@ -315,103 +315,76 @@ impl TemplatesTests {
         })
     }
 
-    /// Verifies `ignore_time_scale` against a control case:
-    /// - With `Engine::set_time_scale(0.5)`, a default tween (`ignore_time_scale=false`)
-    ///   advances at scaled rate, completing in 2 seconds of real time. tracker.timer
-    ///   accumulates 1.0 over those 2 real seconds (since `_process(delta)` receives
-    ///   scaled deltas). Captured timer at finish: ~1.0.
-    /// - A tween with `ignore_time_scale=true` advances at real rate, completing in
-    ///   1 second of real time. tracker.timer at finish: ~0.5.
-    /// - The two captured timers must differ by ~0.5, proving the flag actually
-    ///   affects the tween's processing rate.
+    /// At zero time scale, only the unscaled tween can finish. After resuming
+    /// at half speed, the control must consume its duration in Godot's scaled
+    /// clock. These clocks need not stay proportional under CI frame stalls.
     fn test_ignore_time_scale(&mut self) -> PinnedTestTask {
         let sprite = self.sprite.clone();
+        let leader = self.leader.clone();
         let initial = sprite.get_position();
+        let control_initial = leader.get_position();
         let target_a = initial + Vector2::new(100.0, 0.0);
-        let target_b = initial + Vector2::new(50.0, 0.0);
-
-        // Slow down the engine.
-        let mut engine = Engine::singleton();
-        engine.set_time_scale(0.5);
-
-        // ignore=true tween (advances at real-time rate).
-        let mut ignored = sprite.do_position(target_a, 1.0);
-        ignored.set_ignore_time_scale(true);
-        let ignored_handle = ignored.register();
+        let target_b = control_initial + Vector2::new(50.0, 0.0);
+        struct RestoreTimeScale(f64);
+        impl Drop for RestoreTimeScale {
+            fn drop(&mut self) { Engine::singleton().set_time_scale(self.0); }
+        }
+        let restore_time_scale = RestoreTimeScale(Engine::singleton().get_time_scale());
+        Engine::singleton().set_time_scale(0.0);
 
         let tracker = RcPtr::clone(&self.time_tracker);
 
-        // Capture timer at finish (synchronously) for both tweens.
-        let ignored_timer = RcPtr::new(None::<f64>);
-        let slot = ignored_timer.clone();
-        let tr = tracker.clone();
-        ignored_handle
-            .to_mut()
-            .finished_connect(move || *slot.to_mut() = Some(tr.timer), SpireFlags::ONE_SHOT);
-
         Box::pin(async move {
-            // Wait for the ignored tween (~1s real, ~0.5s scaled).
-            while !ignored_handle.is_stopped() {
+            // Let the new time scale take effect before registering either tween.
+            next_frame().await;
+            let mut ignored = sprite.do_position(target_a, 1.0);
+            ignored.set_ignore_time_scale(true);
+            let mut ignored_handle = ignored.register();
+            let mut control_handle = leader.do_position(target_b, 1.0).register();
+            let started = std::time::Instant::now();
+            while !ignored_handle.is_stopped() && started.elapsed().as_secs_f64() < 10.0 {
                 next_frame().await;
             }
-            let ignored_at_finish = ignored_timer
-                .to_mut()
-                .take()
-                .expect("ignored tween's finished closure must have fired");
-            assert_eq!(sprite.get_position(), target_a);
+            let ignored_completed = ignored_handle.is_stopped() && sprite.get_position() == target_a;
+            let control_frozen = control_handle.is_playing()
+                && control_handle.get_total_elapsed_time() == 0.0
+                && leader.get_position() == control_initial;
 
-            // Reset position for control tween.
-            let mut sprite_mut = sprite.clone();
-            sprite_mut.set_position(initial);
-
-            // Control: ignore_time_scale=false (default), same 1.0s duration.
-            // Should advance at scaled rate -> 2s real time -> tracker advances by 1.0.
+            Engine::singleton().set_time_scale(0.5);
             let timer_at_control_start = tracker.timer;
-            let control_handle = sprite.do_position(target_b, 1.0).register();
-
-            let control_timer = RcPtr::new(None::<f64>);
+            let control_timer = RcPtr::new(None::<(f64, f64)>);
             let slot = control_timer.clone();
             let tr = tracker.clone();
-            control_handle
-                .to_mut()
-                .finished_connect(move || *slot.to_mut() = Some(tr.timer), SpireFlags::ONE_SHOT);
+            let node = leader.clone();
+            control_handle.to_mut().finished_connect(
+                move || *slot.to_mut() = Some((tr.timer, node.get_process_delta_time())),
+                SpireFlags::ONE_SHOT,
+            );
 
-            while !control_handle.is_stopped() {
+            let started = std::time::Instant::now();
+            while !control_handle.is_stopped() && started.elapsed().as_secs_f64() < 30.0 {
                 next_frame().await;
             }
-            let control_at_finish = control_timer
+            let control_completed = control_handle.is_stopped() && leader.get_position() == target_b;
+            ignored_handle.stop();
+            control_handle.stop();
+            sprite.clone().set_position(initial);
+            leader.clone().set_position(control_initial);
+            drop(restore_time_scale);
+
+            assert!(ignored_completed, "ignore_time_scale=true must finish while Engine.time_scale is zero");
+            assert!(control_frozen, "default tween must stay unchanged while Engine.time_scale is zero");
+            assert!(control_completed, "default tween must finish after restoring a nonzero time scale");
+            let (control_at_finish, final_frame_delta) = control_timer
                 .to_mut()
                 .take()
                 .expect("control tween's finished closure must have fired");
-            assert_eq!(sprite.get_position(), target_b);
-
-            // Restore time_scale before any assertion that might panic.
-            Engine::singleton().set_time_scale(1.0);
-
-            // Each tween advances tracker by its own duration in scaled time.
-            // - ignored: advanced ~0.5 (1s real * 0.5 scale)
-            // - control: advanced ~1.0 (2s real * 0.5 scale)
             let control_delta = control_at_finish - timer_at_control_start;
             assert!(
-                (ignored_at_finish - 0.5).abs() < 0.1,
-                "ignore_time_scale=true: expected ~0.5 scaled-timer advance, got {ignored_at_finish}"
+                control_delta >= 1.0 - 1e-8 && control_delta <= 1.0 + final_frame_delta + 1e-8,
+                "default tween must consume 1s of scaled time, with at most its final frame's overshoot; got \
+                 {control_delta}, final frame {final_frame_delta}"
             );
-            assert!(
-                (control_delta - 1.0).abs() < 0.1,
-                "ignore_time_scale=false (control): expected ~1.0 scaled-timer advance, got {control_delta}"
-            );
-            // The whole point: the two cases must produce DIFFERENT timer advances,
-            // by approximately 0.5 (the flag halves the tween's apparent scaled duration).
-            let advance_diff = control_delta - ignored_at_finish;
-            assert!(
-                advance_diff > 0.3,
-                "ignore_time_scale must affect timing: ignored advance ~{ignored_at_finish}, control advance \
-                 ~{control_delta}, diff {advance_diff}"
-            );
-
-            // Cleanup: reset position.
-            let mut sprite_mut = sprite.clone();
-            sprite_mut.set_position(initial);
         })
     }
 }

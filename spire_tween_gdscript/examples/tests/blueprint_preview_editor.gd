@@ -34,19 +34,23 @@ func _click(button: Button) -> void:
 	var motion := InputEventMouseMotion.new()
 	motion.position = button.get_global_rect().get_center()
 	motion.global_position = motion.position
-	# Godot 4.4 routes the click using the physical cursor's hovered control.
+	# Godot routes the click using the physical cursor's hovered control.
 	# This cursor belongs exclusively to the harness's private Xvfb display.
-	if Engine.get_version_info().minor == 4:
-		Input.warp_mouse(motion.position)
+	DisplayServer.warp_mouse(DisplayServer.screen_get_size() - Vector2i.ONE)
+	await _frames(2)
+	Input.warp_mouse(motion.position)
 	Input.parse_input_event(motion)
 	await _frames(1)
+	check(button.is_hovered(), "Virtual cursor hovers Inspector button: " + button.text)
 	for pressed in [true, false]:
 		var event := InputEventMouseButton.new()
 		event.position = button.get_global_rect().get_center()
 		event.global_position = event.position
 		event.button_index = MOUSE_BUTTON_LEFT
 		event.pressed = pressed
+		event.button_mask = MOUSE_BUTTON_MASK_LEFT if pressed else 0
 		Input.parse_input_event(event)
+		await _frames(1)
 	await _frames()
 
 func _screenshot(name: String) -> void:
@@ -86,6 +90,12 @@ func _characters(label: SpireRichTextLabel) -> Array:
 
 func _run() -> void:
 	await _frames(8)
+	# Leave room outside the editor on the private display. Native hover tracking
+	# needs an actual window exit/enter, including on Godot 4.5 without a WM.
+	get_window().mode = Window.MODE_WINDOWED
+	get_window().size = Vector2i(1440, 1000)
+	get_window().position = Vector2i.ZERO
+	await _frames(2)
 	EditorInterface.open_scene_from_path("res://preview_scene.tscn")
 	EditorInterface.set_main_screen_editor("2D")
 	await _frames(10)

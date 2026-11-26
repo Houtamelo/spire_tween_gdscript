@@ -51,3 +51,30 @@ export. This was a Linux-hosted export of macOS binaries, not macOS execution.
 Native macOS execution and the full delivery still require a successful rerun.
 
 The `followup/` directory contains the relevant reproductions and passing logs.
+
+## Inspector input and independent clocks
+
+[The next hosted run](https://github.com/Houtamelo/spire_tween_gdscript/actions/runs/45738578012)
+passed all three native builds and all three standalone showcase exports, including
+the macOS metadata and real-export regressions. It exposed two more assumptions
+in the validation harness.
+
+Godot 4.5.2 received the synthetic mouse events but reported no hovered control
+in an editor maximized on a window-manager-free Xvfb display. This reproduced
+locally. The preview harness now gives the editor a bounded window on a larger
+private display and moves the actual virtual cursor out of and back into that
+window before clicking. It checks hover as well as visible/enabled buttons,
+animation movement, and synchronous restoration. All 230 editor checks and two
+runtime checks passed on Godot 4.4, 4.5.2, 4.6.3, and 4.7.2.
+
+Intel macOS 4.5.2/4.6.3 failed the unscaled-time test's assumption that one wall
+second always advances the half-speed simulation clock by approximately 0.5s.
+The 4.6.3 run measured 0.6s. The replacement checks the clock-selection contract:
+at zero engine time scale, an ordinary tween stays unchanged while an unscaled
+tween completes; after resuming at half speed, the control consumes one scaled
+second with at most the actual final frame's overshoot. Global time scale is
+restored even if the test task unwinds. No production timing behavior changed.
+
+The revised real-engine case passed locally on all four supported versions,
+including 4.7.2 at one frame per second. Logs in `followup/` record these checks;
+the complete hosted matrix and final artifact delivery still require a rerun.

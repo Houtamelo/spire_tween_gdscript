@@ -48,6 +48,12 @@ Godot/editor/template downloads are checked against committed upstream SHA-512 c
 
 Tests copy project source into isolated fixtures. Asset import runs in a separate project containing no extension or scripts; the runtime project receives asset caches, explicit resource paths, the script class list, and the extension list. This avoids the known cold headless GDExtension import crash and never relies on checked-in editor caches. Both aggregate suites use fixed 120 FPS simulation time. The native unscaled-time test runs separately with real pacing because it deliberately measures the wall clock; all 189 native cases remain required (188 simulation cases plus one real-time case). An empty-filter failure control checks that exclusion cannot falsely pass. Every child has a wall-clock deadline and must emit its expected completion marker as well as the expected exit code. Intentional failure controls must exit nonzero.
 
+The unscaled-time case requires an ordinary tween to remain frozen at zero
+engine time scale while its unscaled counterpart finishes. After resuming at
+half speed, the ordinary tween must consume its duration in Godot's simulation
+clock, allowing only its actual final frame's overshoot. It does not assume
+simulation time and wall time stay proportional during a stalled frame.
+
 The Linux validation jobs also run the scene-template, Blueprint-preview, and rendered text/preset suites in isolated graphical editor sessions. Glyph observation uses the native test extension; those helpers are excluded from customer addon libraries. Historical aggregate shutdown warnings were repaired in the test suite; new shutdown diagnostics still require investigation.
 
 Linux graphical validation installs Mesa's OpenGL and Vulkan drivers and pins
