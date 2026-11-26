@@ -47,7 +47,8 @@ deadline to terminate; the failure was not treated as a successful launch.
 All three existing real-artifact pipeline tests passed, including missing native
 libraries, staged template inventory, valid-checksum missing-script failure, and
 extra-file rejection. Release-tool CLI checks, formatting for that tool,
-actionlint 1.7.12, shell syntax and `git diff --check` passed.
+actionlint 1.7.12, shell syntax and source-only `git diff --check` passed. Raw
+engine logs retain their original whitespace.
 
 The exported showcase was also rendered on a private Xvfb display with software
 OpenGL. Its title, instructions, text cards, controls and scrolling layout were

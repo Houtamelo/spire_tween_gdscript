@@ -76,6 +76,7 @@ notarization/notarization=0
                 .arg(exported.join(filename))
                 .arg(&exported),
         )?;
+        verify_exported_framework(stage, &exported, "release")?;
         fs::remove_file(exported.join(filename))?;
     }
     let executable = executable(&exported, platform)?;

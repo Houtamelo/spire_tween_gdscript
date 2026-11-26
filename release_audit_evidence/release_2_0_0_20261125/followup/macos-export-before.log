@@ -1,0 +1,67 @@
+   Compiling spire_release v0.1.0 (/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/release/tools)
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.42s
+     Running tests/macos_export.rs (target/debug/build/spire_release/b62102a88cfd74a7/out/macos_export-b62102a88cfd74a7)
+
+running 1 test
+test universal_export_requires_astc_and_accepts_showcase_rendering_settings ... FAILED
+
+failures:
+
+---- universal_export_requires_astc_and_accepts_showcase_rendering_settings stdout ----
+
+thread 'universal_export_requires_astc_and_accepts_showcase_rendering_settings' (63) panicked at release/tools/tests/macos_export.rs:20:5:
+Godot Engine v4.4.stable.official.4c311cbee - https://godotengine.org
+
+first_scan_filesystem: begin: Project initialization steps: 5
+	first_scan_filesystem: step 0: Scanning file structure...
+	first_scan_filesystem: step 1: Loading global class names...
+	first_scan_filesystem: step 2: Verifying GDExtensions...
+	first_scan_filesystem: step 3: Creating autoload scripts...
+	first_scan_filesystem: step 4: Initializing plugins...
+	first_scan_filesystem: step 5: Starting file scan...
+first_scan_filesystem: end
+loading_editor_layout: begin: Loading editor steps: 5
+	loading_editor_layout: step 0: Loading editor layout...
+loading_editor_layout: end
+ERROR: Could not create directory: '/home/houtamelo/.local/share/godot/app_userdata/SpireTween Showcase'.
+   at: make_dir_recursive (core/io/dir_access.cpp:180)
+ERROR: Error attempting to create data dir: /home/houtamelo/.local/share/godot/app_userdata/SpireTween Showcase.
+   at: ensure_user_data_dir (core/os/os.cpp:410)
+ERROR: Cannot save file '/home/houtamelo/.config/godot/editor_settings-4.4.tres'.
+   at: save (scene/resources/resource_format_text.cpp:1719)
+ERROR: Error saving editor settings to /home/houtamelo/.config/godot/editor_settings-4.4.tres
+   at: save (editor/editor_settings.cpp:1317)
+ERROR: Couldn't find the given section "preset.0" and key "include_filter", and no default was given.
+   at: get_value (core/io/config_file.cpp:85)
+ERROR: Couldn't find the given section "preset.0" and key "exclude_filter", and no default was given.
+   at: get_value (core/io/config_file.cpp:85)
+ERROR: Cannot create file '/home/houtamelo/.cache/godot/editor_doc_cache-4.4.res'.
+   at: save (core/io/resource_format_binary.cpp:2158)
+ERROR: Cannot save editor help cache (/home/houtamelo/.cache/godot/editor_doc_cache-4.4.res).
+   at: _gen_doc_thread (editor/editor_help.cpp:2981)
+ERROR: Cannot export project with preset "Mac" due to configuration errors:
+No export template found at the expected path:
+/home/houtamelo/.local/share/godot/export_templates/4.4.stable/macos.zip
+Cannot export for universal or arm64 if ETC2 ASTC texture format is disabled. Enable it in the Project Settings (Rendering > Textures > VRAM Compression > Import ETC2 ASTC).
+
+   at: _fs_changed (editor/editor_node.cpp:1084)
+ERROR: Project export for preset "Mac" failed.
+   at: _fs_changed (editor/editor_node.cpp:1100)
+ERROR: Couldn't find the given section "preset.0" and key "include_filter", and no default was given.
+   at: get_value (core/io/config_file.cpp:85)
+ERROR: Couldn't find the given section "preset.0" and key "exclude_filter", and no default was given.
+   at: get_value (core/io/config_file.cpp:85)
+ERROR: Cannot save file '/home/houtamelo/.config/godot/editor_settings-4.4.tres'.
+   at: save (scene/resources/resource_format_text.cpp:1719)
+ERROR: Error saving editor settings to /home/houtamelo/.config/godot/editor_settings-4.4.tres
+   at: save (editor/editor_settings.cpp:1317)
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    universal_export_requires_astc_and_accepts_showcase_rendering_settings
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.18s
+
+error: test failed, to rerun pass `-p spire_release --test macos_export`

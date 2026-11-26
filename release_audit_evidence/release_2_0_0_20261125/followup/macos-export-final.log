@@ -1,0 +1,9 @@
+   Compiling spire_release v0.1.0 (/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/release/tools)
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.15s
+     Running tests/macos_export.rs (target/debug/build/spire_release/b62102a88cfd74a7/out/macos_export-b62102a88cfd74a7)
+
+running 1 test
+test universal_export_requires_astc_and_accepts_showcase_rendering_settings ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 11.21s
+

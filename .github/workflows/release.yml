@@ -119,7 +119,10 @@ jobs:
         if: matrix.host.platform == 'linux'
         run: |
           sudo apt-get update -qq
-          sudo apt-get install --yes --no-install-recommends ripgrep xvfb libgl1-mesa-dri
+          sudo apt-get install --yes --no-install-recommends ripgrep xvfb libgl1-mesa-dri mesa-vulkan-drivers
+          vulkan_icd=(/usr/share/vulkan/icd.d/lvp_icd*.json)
+          [[ ${#vulkan_icd[@]} == 1 && -f "${vulkan_icd[0]}" ]]
+          printf 'VK_ICD_FILENAMES=%s\n' "${vulkan_icd[0]}" >> "$GITHUB_ENV"
       - name: Download pinned Godot and templates
         env:
           VERSION: ${{ matrix.version }}
@@ -132,7 +135,13 @@ jobs:
         if: matrix.host.platform == 'linux'
         env:
           SPIRE_TEMPLATE_LIBRARY: ${{ github.workspace }}/dist/stage/addon/lib/x86_64-unknown-linux-gnu/debug/libspire_tween.so
-        run: bash scripts/test_scene_templates.sh "$(cat dist/engine/godot-path)" dist/template-validation
+        run: |
+          if VK_ICD_FILENAMES=/nonexistent-vulkan-driver.json bash scripts/test_scene_templates.sh "$(cat dist/engine/godot-path)" dist/render-driver-missing; then
+            printf 'Missing Vulkan driver unexpectedly passed validation\n' >&2
+            exit 1
+          fi
+          rg 'Required .*VK_KHR_surface.*not found' dist/render-driver-missing/import.log
+          bash scripts/test_scene_templates.sh "$(cat dist/engine/godot-path)" dist/template-validation
       - name: Validate Blueprint preview and restoration in the real editor
         if: matrix.host.platform == 'linux'
         env:
@@ -154,6 +163,7 @@ jobs:
             dist/validation/*.log
             dist/validation/*-prepare/*.log
             dist/template-validation/*.log
+            dist/render-driver-missing/*.log
             dist/template-validation/screenshots/*.png
             dist/preview-validation/*.log
             dist/preview-validation/xdg/data/godot/app_userdata/Spire Blueprint preview integration/*.png
@@ -182,9 +192,16 @@ jobs:
         run: |
           cargo run --locked -p spire_release -- download --version 4.4 --out dist/engine --download-templates
           cargo run --locked -p spire_release -- demo --stage dist/stage --godot "$(cat dist/engine/godot-path)" --templates "$PWD/dist/engine/export/templates" --out dist/showcase
+          SPIRE_RELEASE_GODOT="$(cat dist/engine/godot-path)" SPIRE_RELEASE_TEMPLATES="$PWD/dist/engine/export/templates" cargo test --locked -p spire_release --test macos_export -- --ignored
           demo_archive=(dist/showcase/archives/*.zip)
           [[ ${#demo_archive[@]} == 1 ]]
           SPIRE_RELEASE_DEMO_ARCHIVE="$PWD/${demo_archive[0]}" cargo test --locked -p spire_release --test demo -- --ignored
+      - name: Verify exported macOS framework metadata and its failure control
+        if: matrix.platform == 'macos'
+        env:
+          SPIRE_RELEASE_STAGE: ${{ github.workspace }}/dist/stage
+          SPIRE_RELEASE_MACOS_EXPORT: ${{ github.workspace }}/dist/showcase/exported
+        run: cargo test --locked -p spire_release --bin spire-release -- --ignored
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
         with:

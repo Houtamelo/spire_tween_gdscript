@@ -170,6 +170,68 @@ fn verify_macos_architectures(binary: &Path) -> Result<()> {
     Ok(())
 }
 
+fn framework_plist(version: &str, minimum: &str) -> String {
+    format!(
+        r#"<?xml version="1.0" encoding="UTF-8"?>
+<plist version="1.0"><dict>
+<key>CFBundleExecutable</key><string>spire_tween</string>
+<key>CFBundleIdentifier</key><string>com.houtamelo.spire-tween</string>
+<key>CFBundleInfoDictionaryVersion</key><string>6.0</string>
+<key>CFBundleName</key><string>spire_tween</string>
+<key>CFBundlePackageType</key><string>FMWK</string>
+<key>CFBundleSupportedPlatforms</key><array><string>MacOSX</string></array>
+<key>CFBundleVersion</key><string>{version}</string>
+<key>CFBundleShortVersionString</key><string>{version}</string>
+<key>LSMinimumSystemVersion</key><string>{minimum}</string>
+</dict></plist>
+"#
+    )
+}
+
+fn verify_exported_framework(stage: &Path, exported: &Path, profile: &str) -> Result<()> {
+    let expected =
+        stage.join(format!("addon/lib/universal-apple-darwin/{profile}/spire_tween.framework/Resources/Info.plist"));
+    let actual = files(exported)?
+        .into_iter()
+        .find(|path| path.ends_with("spire_tween.framework/Resources/Info.plist"))
+        .context("exported framework metadata missing")?;
+    ensure!(fs::read(expected)? == fs::read(actual)?, "Godot rewrote the framework metadata during export");
+    Ok(())
+}
+
+#[cfg(test)]
+mod exported_framework_tests {
+    use super::*;
+
+    #[test]
+    #[ignore = "requires SPIRE_RELEASE_STAGE and SPIRE_RELEASE_MACOS_EXPORT from an actual macOS showcase export"]
+    fn framework_metadata_survives_export_and_changed_versions_are_rejected() {
+        let stage = PathBuf::from(std::env::var("SPIRE_RELEASE_STAGE").unwrap());
+        let exported = PathBuf::from(std::env::var("SPIRE_RELEASE_MACOS_EXPORT").unwrap());
+        verify_exported_framework(&stage, &exported, "release").unwrap();
+        let plist = files(&exported)
+            .unwrap()
+            .into_iter()
+            .find(|path| path.ends_with("spire_tween.framework/Resources/Info.plist"))
+            .unwrap();
+        let original = fs::read_to_string(&plist).unwrap();
+        let pattern = Regex::new(r"(?s)(<key>CFBundleVersion</key>\s*<string>)[^<]*(</string>)").unwrap();
+        let changed = pattern
+            .replace(&original, |captures: &regex::Captures| format!("{}0.0.0{}", &captures[1], &captures[2]))
+            .into_owned();
+        assert_ne!(original, changed);
+        fs::write(&plist, changed).unwrap();
+        let result = verify_exported_framework(&stage, &exported, "release");
+        fs::write(&plist, original).unwrap();
+        assert!(
+            result
+                .unwrap_err()
+                .to_string()
+                .contains("rewrote the framework metadata")
+        );
+    }
+}
+
 #[cfg(all(test, target_os = "macos"))]
 mod macos_integration_tests {
     use std::time::{SystemTime, UNIX_EPOCH};
@@ -420,16 +482,9 @@ fn build(platform: &str, stage: &Path) -> Result<()> {
                     .arg(stage.join(format!("addon/lib/x86_64-apple-darwin/{profile}/libspire_tween.dylib"))),
             )?;
             verify_macos_architectures(&framework.join("spire_tween"))?;
-            let plist = format!(
-                "<?xml version=\"1.0\" encoding=\"UTF-8\"?><plist \
-                 version=\"1.0\"><dict><key>CFBundleExecutable</key><string>spire_tween</\
-                 string><key>CFBundleIdentifier</key><string>com.houtamelo.spire-tween</\
-                 string><key>CFBundlePackageType</key><string>FMWK</string><key>CFBundleVersion</key><string>{}</\
-                 string><key>CFBundleShortVersionString</key><string>{}</string><key>LSMinimumSystemVersion</\
-                 key><string>{}</string></dict></plist>",
+            let plist = framework_plist(
                 version["package"]["version"].as_str().unwrap(),
-                version["package"]["version"].as_str().unwrap(),
-                cfg["macos_deployment_target"].as_str().unwrap()
+                cfg["macos_deployment_target"].as_str().unwrap(),
             );
             fs::write(framework.join("Resources/Info.plist"), plist)?;
             output(
@@ -799,6 +854,8 @@ run/main_scene="res://smoke.tscn"
 config/use_hidden_project_data_directory=false
 [rendering]
 renderer/rendering_method="gl_compatibility"
+textures/vram_compression/import_s3tc_bptc=true
+textures/vram_compression/import_etc2_astc=true
 "#,
     )?;
     fs::write(project.join("godot/extension_list.cfg"), "res://addons/spire_tween/spire_tween.gdextension\n")?;
@@ -878,6 +935,7 @@ notarization/notarization=0
         )?;
         let executable = if platform == "macos" {
             output(Command::new("ditto").args(["-x", "-k"]).arg(&path).arg(&directory))?;
+            verify_exported_framework(stage, &directory, profile)?;
             files(&directory)?
                 .into_iter()
                 .find(|path| path.parent().is_some_and(|p| p.ends_with("Contents/MacOS")))

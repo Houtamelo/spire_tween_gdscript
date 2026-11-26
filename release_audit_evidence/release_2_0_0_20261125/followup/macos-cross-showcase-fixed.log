@@ -1,0 +1,124 @@
+Initialize godot-rust (API v4.4.stable.official, runtime v4.4.stable.official, safeguards strict)
+Godot Engine v4.4.stable.official.4c311cbee - https://godotengine.org
+
+first_scan_filesystem: begin: Project initialization steps: 5
+	first_scan_filesystem: step 0: Scanning file structure...
+	first_scan_filesystem: step 1: Loading global class names...
+	first_scan_filesystem: step 2: Verifying GDExtensions...
+	first_scan_filesystem: step 3: Creating autoload scripts...
+	first_scan_filesystem: step 4: Initializing plugins...
+	first_scan_filesystem: step 5: Starting file scan...
+first_scan_filesystem: end
+export: begin: Exporting for macOS steps: 3
+	export: step 0: Creating app bundle
+	export: step 1: Making PKG
+savepack: begin: Packing steps: 102
+	savepack: step 2: Storing File: res://addons/spire_tween/templates/canvas/continuous.gdc
+	savepack: step 4: Storing File: res://addons/spire_tween/templates/canvas/entrance.gdc
+	savepack: step 6: Storing File: res://addons/spire_tween/templates/canvas/interaction.gdc
+	savepack: step 8: Storing File: res://godot/exported/133200997/export-04648ca85dbd112bb61c9a0e9f7a8ea0-color_cycle.scn
+	savepack: step 10: Storing File: res://godot/exported/133200997/export-4c2950605cb6ee855f69f357301f3710-float.scn
+	savepack: step 12: Storing File: res://godot/exported/133200997/export-394c97bc8548ac96b46cc3f72957ce67-pulse.scn
+	savepack: step 14: Storing File: res://godot/exported/133200997/export-b98b68431d953e1f5bb59a2f94085d5f-spin.scn
+	savepack: step 16: Storing File: res://godot/exported/133200997/export-83315dd85119681730f930e854fc9e94-sway.scn
+	savepack: step 18: Storing File: res://godot/exported/133200997/export-3ac6ced3744f0065ae0a6393ab93b725-bounce.scn
+	savepack: step 20: Storing File: res://godot/exported/133200997/export-833e01e567e7275ccf62c0f7cc6875c3-fade.scn
+	savepack: step 22: Storing File: res://godot/exported/133200997/export-c2f75546784caf264b9f9e6792cdd640-flip.scn
+	savepack: step 24: Storing File: res://godot/exported/133200997/export-2aed5c62c1949caf2ea25f446d8258de-pop.scn
+	savepack: step 26: Storing File: res://godot/exported/133200997/export-986f4579e52f536088731733f3894a37-slide.scn
+	savepack: step 28: Storing File: res://godot/exported/133200997/export-86494cf29474fc83379f306928a5488b-spin.scn
+	savepack: step 30: Storing File: res://addons/spire_tween/templates/common/canvas_template.gdc
+	savepack: step 32: Storing File: res://addons/spire_tween/templates/common/easing.gdc
+	savepack: step 34: Storing File: res://addons/spire_tween/templates/common/template.gdc
+	savepack: step 36: Storing File: res://addons/spire_tween/templates/common/text_template.gdc
+	savepack: step 38: Storing File: res://godot/exported/133200997/export-659194b5b52067e28ba0affd4c528388-hover_focus.scn
+	savepack: step 40: Storing File: res://godot/exported/133200997/export-7886a2b56377c5c807353ce145154445-press.scn
+	savepack: step 42: Storing File: res://godot/exported/133200997/export-cdb1f29236021b44c865eeda198f0a4e-selection.scn
+	savepack: step 44: Storing File: res://addons/spire_tween/templates/text/continuous.gdc
+	savepack: step 46: Storing File: res://addons/spire_tween/templates/text/emphasis.gdc
+	savepack: step 48: Storing File: res://addons/spire_tween/templates/text/entrance.gdc
+	savepack: step 50: Storing File: res://godot/exported/133200997/export-fd324ea6352e366d7501857d86b8b9a4-alpha_pulse.scn
+	savepack: step 52: Storing File: res://godot/exported/133200997/export-7371644a93caab1c174bfa3f49f25d77-bob.scn
+	savepack: step 54: Storing File: res://godot/exported/133200997/export-58f9666d44bcb7f71f8c38331b71dc77-breathing.scn
+	savepack: step 56: Storing File: res://godot/exported/133200997/export-39d8009fd13e783537b62bca7dca9a7e-color_cycle.scn
+	savepack: step 58: Storing File: res://godot/exported/133200997/export-407485a9a3679cbcecb754e63d6599de-trembling.scn
+	savepack: step 60: Storing File: res://godot/exported/133200997/export-7fde99872165ae2cfe3e70a920fe97f8-wave.scn
+	savepack: step 62: Storing File: res://godot/exported/133200997/export-30771cf47c262ad38b2cf7811e0d7ac9-wobble.scn
+	savepack: step 64: Storing File: res://godot/exported/133200997/export-ee8a42bc3aed900e9e89bc88a9c4506a-color_flash.scn
+	savepack: step 66: Storing File: res://godot/exported/133200997/export-122d86312c67f8dd1c9789fa6a0a5d93-punch_offset.scn
+	savepack: step 68: Storing File: res://godot/exported/133200997/export-5195b0650cc8841ff51b5071879fa6bc-punch_rotation.scn
+	savepack: step 70: Storing File: res://godot/exported/133200997/export-71ee375603d27dc86c0b898441c867dc-punch_scale.scn
+	savepack: step 72: Storing File: res://godot/exported/133200997/export-ba2cd1d944d1887e2352972636d7af29-shake.scn
+	savepack: step 74: Storing File: res://godot/exported/133200997/export-093add3868b7dc980b866a332a4261a7-bounce.scn
+	savepack: step 76: Storing File: res://godot/exported/133200997/export-22a1cbfe95021283dbd3823a36e9276f-fade.scn
+	savepack: step 78: Storing File: res://godot/exported/133200997/export-36ad41041048710e32e2493e02772b48-flip.scn
+	savepack: step 80: Storing File: res://godot/exported/133200997/export-0517314643f434f352d589166a987de0-pop.scn
+	savepack: step 82: Storing File: res://godot/exported/133200997/export-6e471faa69ecd4221abe4726eedb2095-scatter.scn
+	savepack: step 84: Storing File: res://godot/exported/133200997/export-20fe49d732fe7d2f14e619f2d9f6c8dd-slide.scn
+	savepack: step 86: Storing File: res://godot/exported/133200997/export-314590d0721ca62a264f8fe42bebeb96-typewriter.scn
+	savepack: step 88: Storing File: res://addons/spire_tween/templates/catalog.json
+	savepack: step 90: Storing File: res://addons/spire_tween/spire_tween.gdextension
+	savepack: step 92: Storing File: res://examples/effect_templates/gallery.gdc
+	savepack: step 94: Storing File: res://godot/exported/133200997/export-c577060f17c45e2ac0fdb568bca6583f-gallery.scn
+	savepack: step 96: Storing File: res://main.gdc
+	savepack: step 98: Storing File: res://godot/exported/133200997/export-3070c538c03ee49b7677ff960a3f5195-main.scn
+	savepack: step 100: Storing File: res://template_state.gdc
+	savepack: step 100: Storing File: res://addons/spire_tween/templates/canvas/continuous.gd.remap
+	savepack: step 100: Storing File: res://addons/spire_tween/templates/canvas/entrance.gd.remap
+	savepack: step 100: Storing File: res://addons/spire_tween/templates/canvas/interaction.gd.remap
+	savepack: step 100: Storing File: res://addons/spire_tween/templates/canvas_continuous/color_cycle.tscn.remap
+	savepack: step 100: Storing File: res://addons/spire_tween/templates/canvas_continuous/float.tscn.remap
+	savepack: step 100: Storing File: res://addons/spire_tween/templates/canvas_continuous/pulse.tscn.remap
+	savepack: step 100: Storing File: res://addons/spire_tween/templates/canvas_continuous/spin.tscn.remap
+	savepack: step 100: Storing File: res://addons/spire_tween/templates/canvas_continuous/sway.tscn.remap
+	savepack: step 100: Storing File: res://addons/spire_tween/templates/canvas_entrances/bounce.tscn.remap
+	savepack: step 100: Storing File: res://addons/spire_tween/templates/canvas_entrances/fade.tscn.remap
+	savepack: step 100: Storing File: res://addons/spire_tween/templates/canvas_entrances/flip.tscn.remap
+	savepack: step 100: Storing File: res://addons/spire_tween/templates/canvas_entrances/pop.tscn.remap
+	savepack: step 100: Storing File: res://addons/spire_tween/templates/canvas_entrances/slide.tscn.remap
+	savepack: step 100: Storing File: res://addons/spire_tween/templates/canvas_entrances/spin.tscn.remap
+	savepack: step 100: Storing File: res://addons/spire_tween/templates/common/canvas_template.gd.remap
+	savepack: step 100: Storing File: res://addons/spire_tween/templates/common/easing.gd.remap
+	savepack: step 100: Storing File: res://addons/spire_tween/templates/common/template.gd.remap
+	savepack: step 100: Storing File: res://addons/spire_tween/templates/common/text_template.gd.remap
+	savepack: step 100: Storing File: res://addons/spire_tween/templates/interaction/hover_focus.tscn.remap
+	savepack: step 100: Storing File: res://addons/spire_tween/templates/interaction/press.tscn.remap
+	savepack: step 100: Storing File: res://addons/spire_tween/templates/interaction/selection.tscn.remap
+	savepack: step 100: Storing File: res://addons/spire_tween/templates/text/continuous.gd.remap
+	savepack: step 100: Storing File: res://addons/spire_tween/templates/text/emphasis.gd.remap
+	savepack: step 100: Storing File: res://addons/spire_tween/templates/text/entrance.gd.remap
+	savepack: step 100: Storing File: res://addons/spire_tween/templates/text_continuous/alpha_pulse.tscn.remap
+	savepack: step 100: Storing File: res://addons/spire_tween/templates/text_continuous/bob.tscn.remap
+	savepack: step 100: Storing File: res://addons/spire_tween/templates/text_continuous/breathing.tscn.remap
+	savepack: step 100: Storing File: res://addons/spire_tween/templates/text_continuous/color_cycle.tscn.remap
+	savepack: step 100: Storing File: res://addons/spire_tween/templates/text_continuous/trembling.tscn.remap
+	savepack: step 100: Storing File: res://addons/spire_tween/templates/text_continuous/wave.tscn.remap
+	savepack: step 100: Storing File: res://addons/spire_tween/templates/text_continuous/wobble.tscn.remap
+	savepack: step 100: Storing File: res://addons/spire_tween/templates/text_emphasis/color_flash.tscn.remap
+	savepack: step 100: Storing File: res://addons/spire_tween/templates/text_emphasis/punch_offset.tscn.remap
+	savepack: step 100: Storing File: res://addons/spire_tween/templates/text_emphasis/punch_rotation.tscn.remap
+	savepack: step 100: Storing File: res://addons/spire_tween/templates/text_emphasis/punch_scale.tscn.remap
+	savepack: step 100: Storing File: res://addons/spire_tween/templates/text_emphasis/shake.tscn.remap
+	savepack: step 100: Storing File: res://addons/spire_tween/templates/text_entrances/bounce.tscn.remap
+	savepack: step 100: Storing File: res://addons/spire_tween/templates/text_entrances/fade.tscn.remap
+	savepack: step 100: Storing File: res://addons/spire_tween/templates/text_entrances/flip.tscn.remap
+	savepack: step 100: Storing File: res://addons/spire_tween/templates/text_entrances/pop.tscn.remap
+	savepack: step 100: Storing File: res://addons/spire_tween/templates/text_entrances/scatter.tscn.remap
+	savepack: step 100: Storing File: res://addons/spire_tween/templates/text_entrances/slide.tscn.remap
+	savepack: step 100: Storing File: res://addons/spire_tween/templates/text_entrances/typewriter.tscn.remap
+	savepack: step 100: Storing File: res://examples/effect_templates/gallery.gd.remap
+	savepack: step 100: Storing File: res://examples/effect_templates/gallery.tscn.remap
+	savepack: step 100: Storing File: res://main.gd.remap
+	savepack: step 100: Storing File: res://main.tscn.remap
+	savepack: step 100: Storing File: res://template_state.gd.remap
+	savepack: step 100: Storing File: res://godot/global_script_class_cache.cfg
+	savepack: step 100: Storing File: res://godot/uid_cache.bin
+	savepack: step 100: Storing File: res://godot/extension_list.cfg
+	savepack: step 100: Storing File: res://project.binary
+savepack: end
+	export: step 2: Code signing bundle
+	export: step 3: Making ZIP
+export: end
+loading_editor_layout: begin: Loading editor steps: 5
+	loading_editor_layout: step 0: Loading editor layout...
+loading_editor_layout: end

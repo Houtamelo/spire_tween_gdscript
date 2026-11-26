@@ -50,6 +50,14 @@ Tests copy project source into isolated fixtures. Asset import runs in a separat
 
 The Linux validation jobs also run the scene-template, Blueprint-preview, and rendered text/preset suites in isolated graphical editor sessions. Glyph observation uses the native test extension; those helpers are excluded from customer addon libraries. Historical aggregate shutdown warnings were repaired in the test suite; new shutdown diagnostics still require investigation.
 
+Linux graphical validation installs Mesa's OpenGL and Vulkan drivers and pins
+Lavapipe for editor-side Vulkan probes, including when the project renders through
+OpenGL. An intentional missing-driver run must fail before the regular template
+checks. Universal macOS exports enable both desktop and ASTC texture imports.
+Framework metadata includes all bundle keys required by Godot, and export checks
+reject any rewrite of that metadata, preserving the release version and minimum
+macOS deployment target.
+
 ## Assemble the customer archive
 
 ```bash

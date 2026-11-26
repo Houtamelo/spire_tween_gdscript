@@ -1,0 +1,9 @@
+   Compiling spire_release v0.1.0 (/home/houtamelo/Documents/projects/libraries/spire_tween_asset_plugin/release/tools)
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.38s
+     Running unittests src/main.rs (target/debug/build/spire_release/c531ab99fb0fd4ba/out/spire_release-c531ab99fb0fd4ba)
+
+running 1 test
+test exported_framework_tests::framework_metadata_survives_export_and_changed_versions_are_rejected ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
